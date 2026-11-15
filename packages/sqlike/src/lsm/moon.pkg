@@ -1,0 +1,48 @@
+import {
+  "moonbitlang/core/buffer",
+  "moonbitlang/core/string",
+}
+
+options(
+  link: {
+    "js": {
+      "exports": [
+        "lsm_new",
+        "lsm_put",
+        "lsm_encode",
+        "lsm_decode",
+        "lsm_info",
+        "lsm_count",
+        "lsm_size",
+        "lsm_key",
+        "lsm_sequence",
+        "lsm_deleted",
+        "lsm_value",
+        "lsm_seek",
+        "lsm_merge",
+        "lsm_slice",
+      ],
+      "format": "esm",
+    },
+    "wasm-gc": {
+      "exports": [
+        "lsm_new",
+        "lsm_put",
+        "lsm_encode",
+        "lsm_decode",
+        "lsm_info",
+        "lsm_count",
+        "lsm_size",
+        "lsm_key",
+        "lsm_sequence",
+        "lsm_deleted",
+        "lsm_value",
+        "lsm_seek",
+        "lsm_merge",
+        "lsm_slice",
+      ],
+      "use-js-builtin-string": true,
+      "imported-string-constants": "_",
+    },
+  },
+)

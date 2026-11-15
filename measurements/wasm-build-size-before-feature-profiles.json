@@ -1,0 +1,153 @@
+{
+  "format": 1,
+  "measuredAt": "2026-11-14T21:05:57.704Z",
+  "node": "v24.22.2",
+  "method": "Moon release JS / Wasm GC with exactly matching full export names. JS minified via Vite library build, configFile=false, target=esnext, minify=true, all entry exports retained. Wasm release output without additional wasm-opt. gzip level 9 / Brotli quality 11; round-trip verified. Standalone engine artifacts only; excludes HTML, loader/adapters, workers, application catalog and storage. Not an application transfer measurement.",
+  "results": [
+    {
+      "name": "AOT + SQLite writer + LTX",
+      "exports": [
+        "aot_ack_delta",
+        "aot_apply_delta",
+        "aot_clone",
+        "aot_delta",
+        "aot_dump",
+        "aot_execute",
+        "aot_export_sqlite",
+        "aot_info",
+        "aot_open",
+        "aot_query_info",
+        "aot_restore",
+        "aot_set_clock",
+        "apply_ltx",
+        "apply_ltx_base64",
+        "encode_ltx",
+        "encode_ltx_base64",
+        "ltx_data",
+        "ltx_data_base64",
+        "ltx_info",
+        "sqlite_data",
+        "sqlite_data_base64",
+        "sqlite_info"
+      ],
+      "js": {
+        "path": "_build/js/release/build/mizchi/litestream-example/runtime/runtime.js",
+        "sha256": "30d0f0a64661951e4c00e93121761bf0cf3b20d631f8b9d9ba0cc865b440973c",
+        "generated": {
+          "raw": 1835028,
+          "gzip": 222622,
+          "brotli": 153922
+        },
+        "minified": {
+          "raw": 694802,
+          "gzip": 136540,
+          "brotli": 105430
+        },
+        "minifiedSHA256": "5bc741abc6df0980cd8a9c3ac44562d815095429d265864aa58fd470394f550e"
+      },
+      "wasm": {
+        "path": "_build/wasm-gc/release/build/mizchi/litestream-example/runtime/runtime.wasm",
+        "sha256": "211ee1703b0fa4c05c96d04c39824bce81857fd495dfc088b6eb051f796aa5c8",
+        "bytes": {
+          "raw": 413280,
+          "gzip": 165002,
+          "brotli": 130953
+        },
+        "nameSections": 1
+      }
+    },
+    {
+      "name": "SQLike dynamic SQL",
+      "exports": [
+        "database_ack_delta",
+        "database_apply_delta",
+        "database_autocommit",
+        "database_changeset",
+        "database_clone",
+        "database_delta",
+        "database_dump",
+        "database_exec",
+        "database_import_sqlite",
+        "database_import_sqlite_base64",
+        "database_is_readonly",
+        "database_open",
+        "database_query_values",
+        "database_restore",
+        "database_serial",
+        "database_set_clock",
+        "database_version"
+      ],
+      "js": {
+        "path": "_build/js/release/build/mizchi/sqlike/sqlike.js",
+        "sha256": "0ed5882b463e845530b9368eb12998a4c687eef374cfb76adaa7b9c5eb772487",
+        "generated": {
+          "raw": 2028630,
+          "gzip": 244782,
+          "brotli": 167064
+        },
+        "minified": {
+          "raw": 764470,
+          "gzip": 148535,
+          "brotli": 113269
+        },
+        "minifiedSHA256": "56c1227e7d2641460b66b00f69c01ce5eb4f6e99320edd7d370a5f8c01e6cf67"
+      },
+      "wasm": {
+        "path": "_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm",
+        "sha256": "c54e1a22f417ed8f1e2ec9af95e28e12c6192c519294aae74d0477fb19e116d6",
+        "bytes": {
+          "raw": 448739,
+          "gzip": 179705,
+          "brotli": 142366
+        },
+        "nameSections": 1
+      }
+    },
+    {
+      "name": "Litestream",
+      "exports": [
+        "apply_ltx",
+        "apply_ltx_base64",
+        "assess_apply",
+        "decode_changeset",
+        "decode_frame",
+        "encode_frame",
+        "encode_ltx",
+        "encode_ltx_base64",
+        "ltx_data",
+        "ltx_data_base64",
+        "ltx_info",
+        "note_policy",
+        "plan_changes",
+        "plan_ltx",
+        "revision_decision",
+        "sql_allowed"
+      ],
+      "js": {
+        "path": "_build/js/release/build/mizchi/litestream/litestream.js",
+        "sha256": "4eaf9bd5f3895df53cf851e2c81c8c43f1d1919a16364d7b6dc0b4eb13bb8dd2",
+        "generated": {
+          "raw": 538677,
+          "gzip": 77360,
+          "brotli": 59001
+        },
+        "minified": {
+          "raw": 224272,
+          "gzip": 52347,
+          "brotli": 42864
+        },
+        "minifiedSHA256": "190b6d14e4804a80a98b5e005fcdacb442c6b78a90c46eb20ea2fb55fe789c64"
+      },
+      "wasm": {
+        "path": "_build/wasm-gc/release/build/mizchi/litestream/litestream.wasm",
+        "sha256": "2414d45e1dedcd98fde2200bebb406977e5ffde6331f5680d266f0fb000359ae",
+        "bytes": {
+          "raw": 132760,
+          "gzip": 60476,
+          "brotli": 49950
+        },
+        "nameSections": 1
+      }
+    }
+  ]
+}

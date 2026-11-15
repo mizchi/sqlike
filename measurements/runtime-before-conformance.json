@@ -1,0 +1,2795 @@
+{
+  "format": 1,
+  "measuredAt": "2026-11-13T22:17:47.538Z",
+  "environment": {
+    "node": "v24.22.2",
+    "chromium": "158.0.8127.18",
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M5",
+    "systemMemoryBytes": 34359738368,
+    "packages": {
+      "sqlite": "3.54.1-build1",
+      "turso": "0.8.3"
+    }
+  },
+  "method": {
+    "compression": "gzip level 9 / Brotli quality 11; HTTP server serves Brotli",
+    "timing": "fresh Chromium process and empty OPFS per cold sample; warm/offline reload keep same profile; localhost; no CPU/network throttling; includes DB/outbox initialization, no server sync",
+    "memory": "separate instrumented process; recursive CDP attach for page and DB Workers; WebAssembly.Memory constructor WeakRefs; forced GC; shared Wasm imports not recounted; configuredBridgeBytes is source configuration, not a heap measurement; JS heap excludes Service Worker; RSS is summed browser processes and includes shared/allocator overhead; capacities are not RSS",
+    "memorySamplesPerEngine": 1,
+    "runs": 3
+  },
+  "assets": [
+    {
+      "path": "/index.html",
+      "bytes": {
+        "raw": 1680,
+        "gzip": 1049,
+        "brotli": 739
+      },
+      "sha256": "76a3b60ce7249bd6e5ebe5cc9528185d32933e00445957888bc52edbb6eea5ac"
+    },
+    {
+      "path": "/sw.js",
+      "bytes": {
+        "raw": 1007,
+        "gzip": 545,
+        "brotli": 460
+      },
+      "sha256": "253f1e687819319ee02e757668d22ffebb577f525b25fc94b5e5263f9dda37f6"
+    },
+    {
+      "path": "/assets/index-CI7XZ3JI.js",
+      "bytes": {
+        "raw": 12609,
+        "gzip": 3936,
+        "brotli": 3249
+      },
+      "sha256": "362f220ccaa1388796906224b65ef3304aba7e5649f7dafea67737053787ca66"
+    },
+    {
+      "path": "/assets/main.es-CSSHhyvk.js",
+      "bytes": {
+        "raw": 16090245,
+        "gzip": 5593694,
+        "brotli": 3745131
+      },
+      "sha256": "9b02974254b7be9c4e1aa0d099fe3aee20f7bf69ff7fde980dfef971029fcc92"
+    },
+    {
+      "path": "/assets/moon-database-C-HnhTP4.js",
+      "bytes": {
+        "raw": 291390,
+        "gzip": 74838,
+        "brotli": 61433
+      },
+      "sha256": "0a67fcedcf5d1ba38b26f992a73bf9075f6eb584d25f4e1ed1c93f82dddf626e"
+    },
+    {
+      "path": "/assets/moon-persistence-D3q8-DD-.js",
+      "bytes": {
+        "raw": 1616,
+        "gzip": 805,
+        "brotli": 698
+      },
+      "sha256": "0971ec992fb486472a56d8bba75b91008fef25736b409f7545055ea602d11252"
+    },
+    {
+      "path": "/assets/moon-persistence-worker-FEnnL2Ho.js",
+      "bytes": {
+        "raw": 2422,
+        "gzip": 1097,
+        "brotli": 956
+      },
+      "sha256": "fa1640413cc236b252d495eb3f0936d432f4c4f77e865e67dad2f5d0a940a7f9"
+    },
+    {
+      "path": "/assets/sqlite3-k2cTanUO.wasm",
+      "bytes": {
+        "raw": 879084,
+        "gzip": 407291,
+        "brotli": 352905
+      },
+      "sha256": "b8a92a19f441a90ff2339fe988fbe317c4adf3ed844096f12aee04aa72d58257"
+    },
+    {
+      "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+      "bytes": {
+        "raw": 32462,
+        "gzip": 10522,
+        "brotli": 8966
+      },
+      "sha256": "02c38ed7f2d41d2b57ee02241d7f8a09059e1ded16749013f2412137614aa459"
+    },
+    {
+      "path": "/assets/sqlite3-worker1-BiWhU4UN.js",
+      "bytes": {
+        "raw": 215860,
+        "gzip": 64041,
+        "brotli": 55555
+      },
+      "sha256": "e8e4cdd8dca666629f44a8bb3ddc86bdad20e7810731fb15b6990f3ecdc89efc"
+    },
+    {
+      "path": "/assets/turso-database-hHkTHclc.js",
+      "bytes": {
+        "raw": 3286,
+        "gzip": 1573,
+        "brotli": 1362
+      },
+      "sha256": "aa05e37c24f704efa28439eecb321d60d93860dac77d41b52d7a44b8119452b7"
+    },
+    {
+      "path": "/assets/turso-executor-C_NnEaMQ.js",
+      "bytes": {
+        "raw": 9578,
+        "gzip": 2669,
+        "brotli": 2190
+      },
+      "sha256": "4f38c937cb34a4bdbfb674f65c9f2a67f57aab5a53205b859d9c3eeeee67710a"
+    },
+    {
+      "path": "/assets/wasm-database-abgEHdBE.js",
+      "bytes": {
+        "raw": 220250,
+        "gzip": 65687,
+        "brotli": 56846
+      },
+      "sha256": "650c7c3456c1e8b3115f27556df5ffcae55139df16db32d6472b23bb6799250e"
+    },
+    {
+      "path": "/assets/worker-Ct3WtrzW.js",
+      "bytes": {
+        "raw": 181950,
+        "gzip": 55899,
+        "brotli": 47440
+      },
+      "sha256": "1b1ea52986da51d435526cde05dc701a29519cd50b28a9c210de66f4f5e1ff36"
+    },
+    {
+      "path": "/.vite/manifest.json",
+      "bytes": {
+        "raw": 188,
+        "gzip": 147,
+        "brotli": 125
+      },
+      "sha256": "a3d23e20fe02a3dd6c6d8c9c00b126685a0fdadf6168987cf9ef0c07091b9fc2"
+    }
+  ],
+  "engineArtifacts": [
+    {
+      "name": "sqlite-wasm",
+      "path": "node_modules/@sqlite.org/sqlite-wasm/dist/sqlite3.wasm",
+      "bytes": {
+        "raw": 879084,
+        "gzip": 407291,
+        "brotli": 352905
+      },
+      "sections": [
+        {
+          "id": 1,
+          "name": "type",
+          "payloadBytes": 737,
+          "totalBytes": 740
+        },
+        {
+          "id": 2,
+          "name": "import",
+          "payloadBytes": 961,
+          "totalBytes": 964
+        },
+        {
+          "id": 3,
+          "name": "function",
+          "payloadBytes": 2701,
+          "totalBytes": 2704
+        },
+        {
+          "id": 4,
+          "name": "table",
+          "payloadBytes": 5,
+          "totalBytes": 7
+        },
+        {
+          "id": 6,
+          "name": "global",
+          "payloadBytes": 8,
+          "totalBytes": 10
+        },
+        {
+          "id": 7,
+          "name": "export",
+          "payloadBytes": 6804,
+          "totalBytes": 6807
+        },
+        {
+          "id": 8,
+          "name": "start",
+          "payloadBytes": 1,
+          "totalBytes": 3
+        },
+        {
+          "id": 9,
+          "name": "element",
+          "payloadBytes": 1276,
+          "totalBytes": 1279
+        },
+        {
+          "id": 12,
+          "name": "data-count",
+          "payloadBytes": 2,
+          "totalBytes": 4
+        },
+        {
+          "id": 10,
+          "name": "code",
+          "payloadBytes": 769401,
+          "totalBytes": 769405
+        },
+        {
+          "id": 11,
+          "name": "data",
+          "payloadBytes": 97149,
+          "totalBytes": 97153
+        }
+      ]
+    },
+    {
+      "name": "turso-wasm",
+      "path": "node_modules/@tursodatabase/database-wasm/dist/turso.wasm32-wasi.wasm",
+      "bytes": {
+        "raw": 11613778,
+        "gzip": 3955247,
+        "brotli": 2667187
+      },
+      "sections": [
+        {
+          "id": 1,
+          "name": "type",
+          "payloadBytes": 1795,
+          "totalBytes": 1798
+        },
+        {
+          "id": 2,
+          "name": "import",
+          "payloadBytes": 2607,
+          "totalBytes": 2610
+        },
+        {
+          "id": 3,
+          "name": "function",
+          "payloadBytes": 10135,
+          "totalBytes": 10138
+        },
+        {
+          "id": 4,
+          "name": "table",
+          "payloadBytes": 7,
+          "totalBytes": 9
+        },
+        {
+          "id": 6,
+          "name": "global",
+          "payloadBytes": 30,
+          "totalBytes": 32
+        },
+        {
+          "id": 7,
+          "name": "export",
+          "payloadBytes": 3746,
+          "totalBytes": 3749
+        },
+        {
+          "id": 8,
+          "name": "start",
+          "payloadBytes": 2,
+          "totalBytes": 4
+        },
+        {
+          "id": 9,
+          "name": "element",
+          "payloadBytes": 7349,
+          "totalBytes": 7352
+        },
+        {
+          "id": 12,
+          "name": "data-count",
+          "payloadBytes": 1,
+          "totalBytes": 3
+        },
+        {
+          "id": 10,
+          "name": "code",
+          "payloadBytes": 9513272,
+          "totalBytes": 9513277
+        },
+        {
+          "id": 11,
+          "name": "data",
+          "payloadBytes": 2074591,
+          "totalBytes": 2074595
+        },
+        {
+          "id": 0,
+          "name": "custom",
+          "payloadBytes": 173,
+          "totalBytes": 176,
+          "customName": "target_features"
+        },
+        {
+          "id": 0,
+          "name": "custom",
+          "payloadBytes": 25,
+          "totalBytes": 27,
+          "customName": "build_id"
+        }
+      ]
+    },
+    {
+      "name": "moonbit-js-core",
+      "path": "_build/js/release/build/core/core.js",
+      "bytes": {
+        "raw": 485017,
+        "gzip": 69367,
+        "brotli": 53942
+      }
+    },
+    {
+      "name": "moonbit-js-sql",
+      "path": "_build/js/release/build/sql/sql.js",
+      "bytes": {
+        "raw": 1128695,
+        "gzip": 139050,
+        "brotli": 100563
+      }
+    },
+    {
+      "name": "moonbit-wasm-gc-sql",
+      "path": "_build/wasm-gc/release/build/sql/sql.wasm",
+      "bytes": {
+        "raw": 254477,
+        "gzip": 105842,
+        "brotli": 85281
+      },
+      "sections": [
+        {
+          "id": 1,
+          "name": "type",
+          "payloadBytes": 9513,
+          "totalBytes": 9516
+        },
+        {
+          "id": 2,
+          "name": "import",
+          "payloadBytes": 16205,
+          "totalBytes": 16208
+        },
+        {
+          "id": 3,
+          "name": "function",
+          "payloadBytes": 1921,
+          "totalBytes": 1924
+        },
+        {
+          "id": 4,
+          "name": "table",
+          "payloadBytes": 1,
+          "totalBytes": 3
+        },
+        {
+          "id": 5,
+          "name": "memory",
+          "payloadBytes": 3,
+          "totalBytes": 5
+        },
+        {
+          "id": 6,
+          "name": "global",
+          "payloadBytes": 1660,
+          "totalBytes": 1663
+        },
+        {
+          "id": 7,
+          "name": "export",
+          "payloadBytes": 224,
+          "totalBytes": 227
+        },
+        {
+          "id": 8,
+          "name": "start",
+          "payloadBytes": 2,
+          "totalBytes": 4
+        },
+        {
+          "id": 9,
+          "name": "element",
+          "payloadBytes": 79,
+          "totalBytes": 81
+        },
+        {
+          "id": 12,
+          "name": "data-count",
+          "payloadBytes": 1,
+          "totalBytes": 3
+        },
+        {
+          "id": 10,
+          "name": "code",
+          "payloadBytes": 224602,
+          "totalBytes": 224606
+        },
+        {
+          "id": 11,
+          "name": "data",
+          "payloadBytes": 111,
+          "totalBytes": 113
+        },
+        {
+          "id": 0,
+          "name": "custom",
+          "payloadBytes": 43,
+          "totalBytes": 45,
+          "customName": "name"
+        },
+        {
+          "id": 0,
+          "name": "custom",
+          "payloadBytes": 69,
+          "totalBytes": 71,
+          "customName": "producers"
+        }
+      ]
+    },
+    {
+      "name": "moonbit-wasm-gc-core",
+      "path": "_build/wasm-gc/release/build/core/core.wasm",
+      "bytes": {
+        "raw": 121531,
+        "gzip": 56506,
+        "brotli": 46344
+      },
+      "sections": [
+        {
+          "id": 1,
+          "name": "type",
+          "payloadBytes": 4018,
+          "totalBytes": 4021
+        },
+        {
+          "id": 2,
+          "name": "import",
+          "payloadBytes": 7159,
+          "totalBytes": 7162
+        },
+        {
+          "id": 3,
+          "name": "function",
+          "payloadBytes": 835,
+          "totalBytes": 838
+        },
+        {
+          "id": 4,
+          "name": "table",
+          "payloadBytes": 1,
+          "totalBytes": 3
+        },
+        {
+          "id": 5,
+          "name": "memory",
+          "payloadBytes": 3,
+          "totalBytes": 5
+        },
+        {
+          "id": 6,
+          "name": "global",
+          "payloadBytes": 1076,
+          "totalBytes": 1079
+        },
+        {
+          "id": 7,
+          "name": "export",
+          "payloadBytes": 210,
+          "totalBytes": 213
+        },
+        {
+          "id": 8,
+          "name": "start",
+          "payloadBytes": 2,
+          "totalBytes": 4
+        },
+        {
+          "id": 9,
+          "name": "element",
+          "payloadBytes": 32,
+          "totalBytes": 34
+        },
+        {
+          "id": 12,
+          "name": "data-count",
+          "payloadBytes": 1,
+          "totalBytes": 3
+        },
+        {
+          "id": 10,
+          "name": "code",
+          "payloadBytes": 107865,
+          "totalBytes": 107869
+        },
+        {
+          "id": 11,
+          "name": "data",
+          "payloadBytes": 172,
+          "totalBytes": 175
+        },
+        {
+          "id": 0,
+          "name": "custom",
+          "payloadBytes": 44,
+          "totalBytes": 46,
+          "customName": "name"
+        },
+        {
+          "id": 0,
+          "name": "custom",
+          "payloadBytes": 69,
+          "totalBytes": 71,
+          "customName": "producers"
+        }
+      ]
+    }
+  ],
+  "sqliteCompileOptions": [
+    "ATOMIC_INTRINSICS=1",
+    "COMPILER=clang-23.0.0",
+    "DEFAULT_AUTOVACUUM",
+    "DEFAULT_CACHE_SIZE=-16384",
+    "DEFAULT_FILE_FORMAT=4",
+    "DEFAULT_JOURNAL_SIZE_LIMIT=-1",
+    "DEFAULT_MMAP_SIZE=0",
+    "DEFAULT_PAGE_SIZE=8192",
+    "DEFAULT_PCACHE_INITSZ=20",
+    "DEFAULT_RECURSIVE_TRIGGERS",
+    "DEFAULT_SECTOR_SIZE=4096",
+    "DEFAULT_SYNCHRONOUS=2",
+    "DEFAULT_WAL_AUTOCHECKPOINT=1000",
+    "DEFAULT_WAL_SYNCHRONOUS=2",
+    "DEFAULT_WORKER_THREADS=0",
+    "DIRECT_OVERFLOW_READ",
+    "DQS=0",
+    "ENABLE_API_ARMOR",
+    "ENABLE_BYTECODE_VTAB",
+    "ENABLE_COLUMN_METADATA",
+    "ENABLE_DBPAGE_VTAB",
+    "ENABLE_DBSTAT_VTAB",
+    "ENABLE_FTS5",
+    "ENABLE_MATH_FUNCTIONS",
+    "ENABLE_OFFSET_SQL_FUNC",
+    "ENABLE_PERCENTILE",
+    "ENABLE_PREUPDATE_HOOK",
+    "ENABLE_RTREE",
+    "ENABLE_SESSION",
+    "ENABLE_STMTVTAB",
+    "ENABLE_UNKNOWN_SQL_FUNCTION",
+    "MALLOC_SOFT_LIMIT=1024",
+    "MAX_ATTACHED=10",
+    "MAX_COLUMN=2000",
+    "MAX_COMPOUND_SELECT=500",
+    "MAX_DEFAULT_PAGE_SIZE=8192",
+    "MAX_EXPR_DEPTH=1000",
+    "MAX_FUNCTION_ARG=1000",
+    "MAX_LENGTH=1000000000",
+    "MAX_LIKE_PATTERN_LENGTH=50000",
+    "MAX_MMAP_SIZE=0",
+    "MAX_PAGE_COUNT=0xfffffffe",
+    "MAX_PAGE_SIZE=65536",
+    "MAX_SCHEMA=10000000",
+    "MAX_SQL_LENGTH=1000000000",
+    "MAX_TRIGGER_DEPTH=1000",
+    "MAX_VARIABLE_NUMBER=32766",
+    "MAX_VDBE_OP=250000000",
+    "MAX_WORKER_THREADS=0",
+    "MUTEX_OMIT",
+    "OMIT_DEPRECATED",
+    "OMIT_LOAD_EXTENSION",
+    "OMIT_SHARED_CACHE",
+    "OMIT_UTF16",
+    "STRICT_SUBTYPE",
+    "SYSTEM_MALLOC",
+    "TEMP_STORE=2",
+    "THREADSAFE=0",
+    "USE_URI"
+  ],
+  "samples": [
+    {
+      "engine": "sqlite",
+      "run": 0,
+      "coldReadyMs": 150.6599999666214,
+      "offlineCapableMs": 154.67499995231628,
+      "readyNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1007,
+            "wireBytes": 460,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-Ct3WtrzW.js",
+            "rawBytes": 181950,
+            "wireBytes": 47440,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/wasm-database-abgEHdBE.js",
+            "rawBytes": 220250,
+            "wireBytes": 56846,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-k2cTanUO.wasm",
+            "rawBytes": 879084,
+            "wireBytes": 352905,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "rawBytes": 32462,
+            "wireBytes": 8966,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "rawBytes": 32462,
+            "wireBytes": 8966,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 484298,
+        "decodedBytes": 1377473
+      },
+      "offlineNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1007,
+            "wireBytes": 460,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-Ct3WtrzW.js",
+            "rawBytes": 181950,
+            "wireBytes": 47440,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/wasm-database-abgEHdBE.js",
+            "rawBytes": 220250,
+            "wireBytes": 56846,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-k2cTanUO.wasm",
+            "rawBytes": 879084,
+            "wireBytes": 352905,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "rawBytes": 32462,
+            "wireBytes": 8966,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "rawBytes": 32462,
+            "wireBytes": 8966,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 484298,
+        "decodedBytes": 1377473
+      },
+      "cache": {
+        "milliseconds": 154.67499995231628,
+        "bytes": 1362177,
+        "files": [
+          {
+            "path": "/",
+            "bytes": 1680
+          },
+          {
+            "path": "/index.html",
+            "bytes": 1680
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "bytes": 12609
+          },
+          {
+            "path": "/assets/worker-Ct3WtrzW.js",
+            "bytes": 181950
+          },
+          {
+            "path": "/assets/wasm-database-abgEHdBE.js",
+            "bytes": 220250
+          },
+          {
+            "path": "/assets/sqlite3-k2cTanUO.wasm",
+            "bytes": 879084
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "bytes": 32462
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "bytes": 32462
+          }
+        ]
+      },
+      "warmReadyMs": 61.074999928474426,
+      "warmNetwork": {
+        "requests": [],
+        "wireBytes": 0,
+        "decodedBytes": 0
+      },
+      "offlineReadyMs": 60.77999997138977
+    },
+    {
+      "engine": "sqlite",
+      "run": 1,
+      "coldReadyMs": 132.09999990463257,
+      "offlineCapableMs": 135.42499995231628,
+      "readyNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1007,
+            "wireBytes": 460,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-Ct3WtrzW.js",
+            "rawBytes": 181950,
+            "wireBytes": 47440,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/wasm-database-abgEHdBE.js",
+            "rawBytes": 220250,
+            "wireBytes": 56846,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-k2cTanUO.wasm",
+            "rawBytes": 879084,
+            "wireBytes": 352905,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "rawBytes": 32462,
+            "wireBytes": 8966,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "rawBytes": 32462,
+            "wireBytes": 8966,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 484298,
+        "decodedBytes": 1377473
+      },
+      "offlineNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1007,
+            "wireBytes": 460,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-Ct3WtrzW.js",
+            "rawBytes": 181950,
+            "wireBytes": 47440,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/wasm-database-abgEHdBE.js",
+            "rawBytes": 220250,
+            "wireBytes": 56846,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-k2cTanUO.wasm",
+            "rawBytes": 879084,
+            "wireBytes": 352905,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "rawBytes": 32462,
+            "wireBytes": 8966,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "rawBytes": 32462,
+            "wireBytes": 8966,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 484298,
+        "decodedBytes": 1377473
+      },
+      "cache": {
+        "milliseconds": 135.42499995231628,
+        "bytes": 1362177,
+        "files": [
+          {
+            "path": "/",
+            "bytes": 1680
+          },
+          {
+            "path": "/index.html",
+            "bytes": 1680
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "bytes": 12609
+          },
+          {
+            "path": "/assets/worker-Ct3WtrzW.js",
+            "bytes": 181950
+          },
+          {
+            "path": "/assets/wasm-database-abgEHdBE.js",
+            "bytes": 220250
+          },
+          {
+            "path": "/assets/sqlite3-k2cTanUO.wasm",
+            "bytes": 879084
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "bytes": 32462
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "bytes": 32462
+          }
+        ]
+      },
+      "warmReadyMs": 62.8400000333786,
+      "warmNetwork": {
+        "requests": [],
+        "wireBytes": 0,
+        "decodedBytes": 0
+      },
+      "offlineReadyMs": 60.4099999666214
+    },
+    {
+      "engine": "sqlite",
+      "run": 2,
+      "coldReadyMs": 114.10500001907349,
+      "offlineCapableMs": 117.70999991893768,
+      "readyNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1007,
+            "wireBytes": 460,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-Ct3WtrzW.js",
+            "rawBytes": 181950,
+            "wireBytes": 47440,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/wasm-database-abgEHdBE.js",
+            "rawBytes": 220250,
+            "wireBytes": 56846,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-k2cTanUO.wasm",
+            "rawBytes": 879084,
+            "wireBytes": 352905,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "rawBytes": 32462,
+            "wireBytes": 8966,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "rawBytes": 32462,
+            "wireBytes": 8966,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 484298,
+        "decodedBytes": 1377473
+      },
+      "offlineNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1007,
+            "wireBytes": 460,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-Ct3WtrzW.js",
+            "rawBytes": 181950,
+            "wireBytes": 47440,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/wasm-database-abgEHdBE.js",
+            "rawBytes": 220250,
+            "wireBytes": 56846,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-k2cTanUO.wasm",
+            "rawBytes": 879084,
+            "wireBytes": 352905,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "rawBytes": 32462,
+            "wireBytes": 8966,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "rawBytes": 32462,
+            "wireBytes": 8966,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 484298,
+        "decodedBytes": 1377473
+      },
+      "cache": {
+        "milliseconds": 117.70999991893768,
+        "bytes": 1362177,
+        "files": [
+          {
+            "path": "/",
+            "bytes": 1680
+          },
+          {
+            "path": "/index.html",
+            "bytes": 1680
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "bytes": 12609
+          },
+          {
+            "path": "/assets/worker-Ct3WtrzW.js",
+            "bytes": 181950
+          },
+          {
+            "path": "/assets/wasm-database-abgEHdBE.js",
+            "bytes": 220250
+          },
+          {
+            "path": "/assets/sqlite3-k2cTanUO.wasm",
+            "bytes": 879084
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "bytes": 32462
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "bytes": 32462
+          }
+        ]
+      },
+      "warmReadyMs": 61.2150000333786,
+      "warmNetwork": {
+        "requests": [],
+        "wireBytes": 0,
+        "decodedBytes": 0
+      },
+      "offlineReadyMs": 61.36500000953674
+    },
+    {
+      "engine": "turso",
+      "run": 0,
+      "coldReadyMs": 514.2599999904633,
+      "offlineCapableMs": 520.2849999666214,
+      "readyNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1007,
+            "wireBytes": 460,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-Ct3WtrzW.js",
+            "rawBytes": 181950,
+            "wireBytes": 47440,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/turso-database-hHkTHclc.js",
+            "rawBytes": 3286,
+            "wireBytes": 1362,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/turso-executor-C_NnEaMQ.js",
+            "rawBytes": 9578,
+            "wireBytes": 2190,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main.es-CSSHhyvk.js",
+            "rawBytes": 16090245,
+            "wireBytes": 3745131,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 3805298,
+        "decodedBytes": 16316324
+      },
+      "offlineNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1007,
+            "wireBytes": 460,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-Ct3WtrzW.js",
+            "rawBytes": 181950,
+            "wireBytes": 47440,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/turso-database-hHkTHclc.js",
+            "rawBytes": 3286,
+            "wireBytes": 1362,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/turso-executor-C_NnEaMQ.js",
+            "rawBytes": 9578,
+            "wireBytes": 2190,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main.es-CSSHhyvk.js",
+            "rawBytes": 16090245,
+            "wireBytes": 3745131,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 3805298,
+        "decodedBytes": 16316324
+      },
+      "cache": {
+        "milliseconds": 520.2849999666214,
+        "bytes": 16301028,
+        "files": [
+          {
+            "path": "/",
+            "bytes": 1680
+          },
+          {
+            "path": "/index.html",
+            "bytes": 1680
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "bytes": 12609
+          },
+          {
+            "path": "/assets/worker-Ct3WtrzW.js",
+            "bytes": 181950
+          },
+          {
+            "path": "/assets/turso-database-hHkTHclc.js",
+            "bytes": 3286
+          },
+          {
+            "path": "/assets/turso-executor-C_NnEaMQ.js",
+            "bytes": 9578
+          },
+          {
+            "path": "/assets/main.es-CSSHhyvk.js",
+            "bytes": 16090245
+          }
+        ]
+      },
+      "warmReadyMs": 426.97500002384186,
+      "warmNetwork": {
+        "requests": [],
+        "wireBytes": 0,
+        "decodedBytes": 0
+      },
+      "offlineReadyMs": 277.6200000047684
+    },
+    {
+      "engine": "turso",
+      "run": 1,
+      "coldReadyMs": 530.7999999523163,
+      "offlineCapableMs": 537.875,
+      "readyNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1007,
+            "wireBytes": 460,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-Ct3WtrzW.js",
+            "rawBytes": 181950,
+            "wireBytes": 47440,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/turso-database-hHkTHclc.js",
+            "rawBytes": 3286,
+            "wireBytes": 1362,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/turso-executor-C_NnEaMQ.js",
+            "rawBytes": 9578,
+            "wireBytes": 2190,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main.es-CSSHhyvk.js",
+            "rawBytes": 16090245,
+            "wireBytes": 3745131,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 3805298,
+        "decodedBytes": 16316324
+      },
+      "offlineNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1007,
+            "wireBytes": 460,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-Ct3WtrzW.js",
+            "rawBytes": 181950,
+            "wireBytes": 47440,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/turso-database-hHkTHclc.js",
+            "rawBytes": 3286,
+            "wireBytes": 1362,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/turso-executor-C_NnEaMQ.js",
+            "rawBytes": 9578,
+            "wireBytes": 2190,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main.es-CSSHhyvk.js",
+            "rawBytes": 16090245,
+            "wireBytes": 3745131,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 3805298,
+        "decodedBytes": 16316324
+      },
+      "cache": {
+        "milliseconds": 537.875,
+        "bytes": 16301028,
+        "files": [
+          {
+            "path": "/",
+            "bytes": 1680
+          },
+          {
+            "path": "/index.html",
+            "bytes": 1680
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "bytes": 12609
+          },
+          {
+            "path": "/assets/worker-Ct3WtrzW.js",
+            "bytes": 181950
+          },
+          {
+            "path": "/assets/turso-database-hHkTHclc.js",
+            "bytes": 3286
+          },
+          {
+            "path": "/assets/turso-executor-C_NnEaMQ.js",
+            "bytes": 9578
+          },
+          {
+            "path": "/assets/main.es-CSSHhyvk.js",
+            "bytes": 16090245
+          }
+        ]
+      },
+      "warmReadyMs": 442.86500000953674,
+      "warmNetwork": {
+        "requests": [],
+        "wireBytes": 0,
+        "decodedBytes": 0
+      },
+      "offlineReadyMs": 278.8400000333786
+    },
+    {
+      "engine": "turso",
+      "run": 2,
+      "coldReadyMs": 480.2549999952316,
+      "offlineCapableMs": 486.1200000047684,
+      "readyNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1007,
+            "wireBytes": 460,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-Ct3WtrzW.js",
+            "rawBytes": 181950,
+            "wireBytes": 47440,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/turso-database-hHkTHclc.js",
+            "rawBytes": 3286,
+            "wireBytes": 1362,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/turso-executor-C_NnEaMQ.js",
+            "rawBytes": 9578,
+            "wireBytes": 2190,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main.es-CSSHhyvk.js",
+            "rawBytes": 16090245,
+            "wireBytes": 3745131,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 3805298,
+        "decodedBytes": 16316324
+      },
+      "offlineNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1007,
+            "wireBytes": 460,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-Ct3WtrzW.js",
+            "rawBytes": 181950,
+            "wireBytes": 47440,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/turso-database-hHkTHclc.js",
+            "rawBytes": 3286,
+            "wireBytes": 1362,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/turso-executor-C_NnEaMQ.js",
+            "rawBytes": 9578,
+            "wireBytes": 2190,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main.es-CSSHhyvk.js",
+            "rawBytes": 16090245,
+            "wireBytes": 3745131,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 3805298,
+        "decodedBytes": 16316324
+      },
+      "cache": {
+        "milliseconds": 486.1200000047684,
+        "bytes": 16301028,
+        "files": [
+          {
+            "path": "/",
+            "bytes": 1680
+          },
+          {
+            "path": "/index.html",
+            "bytes": 1680
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "bytes": 12609
+          },
+          {
+            "path": "/assets/worker-Ct3WtrzW.js",
+            "bytes": 181950
+          },
+          {
+            "path": "/assets/turso-database-hHkTHclc.js",
+            "bytes": 3286
+          },
+          {
+            "path": "/assets/turso-executor-C_NnEaMQ.js",
+            "bytes": 9578
+          },
+          {
+            "path": "/assets/main.es-CSSHhyvk.js",
+            "bytes": 16090245
+          }
+        ]
+      },
+      "warmReadyMs": 393.6800000667572,
+      "warmNetwork": {
+        "requests": [],
+        "wireBytes": 0,
+        "decodedBytes": 0
+      },
+      "offlineReadyMs": 276.5149999856949
+    },
+    {
+      "engine": "moonbit",
+      "run": 0,
+      "coldReadyMs": 112.06000006198883,
+      "offlineCapableMs": 114.92500007152557,
+      "readyNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1007,
+            "wireBytes": 460,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-Ct3WtrzW.js",
+            "rawBytes": 181950,
+            "wireBytes": 47440,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-database-C-HnhTP4.js",
+            "rawBytes": 291390,
+            "wireBytes": 61433,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-persistence-D3q8-DD-.js",
+            "rawBytes": 1616,
+            "wireBytes": 698,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-persistence-worker-FEnnL2Ho.js",
+            "rawBytes": 2422,
+            "wireBytes": 956,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 119702,
+        "decodedBytes": 508643
+      },
+      "offlineNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1007,
+            "wireBytes": 460,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-Ct3WtrzW.js",
+            "rawBytes": 181950,
+            "wireBytes": 47440,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-database-C-HnhTP4.js",
+            "rawBytes": 291390,
+            "wireBytes": 61433,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-persistence-D3q8-DD-.js",
+            "rawBytes": 1616,
+            "wireBytes": 698,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-persistence-worker-FEnnL2Ho.js",
+            "rawBytes": 2422,
+            "wireBytes": 956,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 119702,
+        "decodedBytes": 508643
+      },
+      "cache": {
+        "milliseconds": 114.92500007152557,
+        "bytes": 493347,
+        "files": [
+          {
+            "path": "/",
+            "bytes": 1680
+          },
+          {
+            "path": "/index.html",
+            "bytes": 1680
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "bytes": 12609
+          },
+          {
+            "path": "/assets/worker-Ct3WtrzW.js",
+            "bytes": 181950
+          },
+          {
+            "path": "/assets/moon-database-C-HnhTP4.js",
+            "bytes": 291390
+          },
+          {
+            "path": "/assets/moon-persistence-D3q8-DD-.js",
+            "bytes": 1616
+          },
+          {
+            "path": "/assets/moon-persistence-worker-FEnnL2Ho.js",
+            "bytes": 2422
+          }
+        ]
+      },
+      "warmReadyMs": 43.985000014305115,
+      "warmNetwork": {
+        "requests": [],
+        "wireBytes": 0,
+        "decodedBytes": 0
+      },
+      "offlineReadyMs": 43.4650000333786
+    },
+    {
+      "engine": "moonbit",
+      "run": 1,
+      "coldReadyMs": 78.875,
+      "offlineCapableMs": 81.76499998569489,
+      "readyNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1007,
+            "wireBytes": 460,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-Ct3WtrzW.js",
+            "rawBytes": 181950,
+            "wireBytes": 47440,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-database-C-HnhTP4.js",
+            "rawBytes": 291390,
+            "wireBytes": 61433,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-persistence-D3q8-DD-.js",
+            "rawBytes": 1616,
+            "wireBytes": 698,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-persistence-worker-FEnnL2Ho.js",
+            "rawBytes": 2422,
+            "wireBytes": 956,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 119702,
+        "decodedBytes": 508643
+      },
+      "offlineNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1007,
+            "wireBytes": 460,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-Ct3WtrzW.js",
+            "rawBytes": 181950,
+            "wireBytes": 47440,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-database-C-HnhTP4.js",
+            "rawBytes": 291390,
+            "wireBytes": 61433,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-persistence-D3q8-DD-.js",
+            "rawBytes": 1616,
+            "wireBytes": 698,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-persistence-worker-FEnnL2Ho.js",
+            "rawBytes": 2422,
+            "wireBytes": 956,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 119702,
+        "decodedBytes": 508643
+      },
+      "cache": {
+        "milliseconds": 81.76499998569489,
+        "bytes": 493347,
+        "files": [
+          {
+            "path": "/",
+            "bytes": 1680
+          },
+          {
+            "path": "/index.html",
+            "bytes": 1680
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "bytes": 12609
+          },
+          {
+            "path": "/assets/worker-Ct3WtrzW.js",
+            "bytes": 181950
+          },
+          {
+            "path": "/assets/moon-database-C-HnhTP4.js",
+            "bytes": 291390
+          },
+          {
+            "path": "/assets/moon-persistence-D3q8-DD-.js",
+            "bytes": 1616
+          },
+          {
+            "path": "/assets/moon-persistence-worker-FEnnL2Ho.js",
+            "bytes": 2422
+          }
+        ]
+      },
+      "warmReadyMs": 43.03500008583069,
+      "warmNetwork": {
+        "requests": [],
+        "wireBytes": 0,
+        "decodedBytes": 0
+      },
+      "offlineReadyMs": 44.205000042915344
+    },
+    {
+      "engine": "moonbit",
+      "run": 2,
+      "coldReadyMs": 79.74500000476837,
+      "offlineCapableMs": 82.71000003814697,
+      "readyNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1007,
+            "wireBytes": 460,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-Ct3WtrzW.js",
+            "rawBytes": 181950,
+            "wireBytes": 47440,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-database-C-HnhTP4.js",
+            "rawBytes": 291390,
+            "wireBytes": 61433,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-persistence-D3q8-DD-.js",
+            "rawBytes": 1616,
+            "wireBytes": 698,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-persistence-worker-FEnnL2Ho.js",
+            "rawBytes": 2422,
+            "wireBytes": 956,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 119702,
+        "decodedBytes": 508643
+      },
+      "offlineNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1007,
+            "wireBytes": 460,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1680,
+            "wireBytes": 739,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "rawBytes": 12609,
+            "wireBytes": 3249,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-Ct3WtrzW.js",
+            "rawBytes": 181950,
+            "wireBytes": 47440,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-database-C-HnhTP4.js",
+            "rawBytes": 291390,
+            "wireBytes": 61433,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-persistence-D3q8-DD-.js",
+            "rawBytes": 1616,
+            "wireBytes": 698,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-persistence-worker-FEnnL2Ho.js",
+            "rawBytes": 2422,
+            "wireBytes": 956,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 119702,
+        "decodedBytes": 508643
+      },
+      "cache": {
+        "milliseconds": 82.71000003814697,
+        "bytes": 493347,
+        "files": [
+          {
+            "path": "/",
+            "bytes": 1680
+          },
+          {
+            "path": "/index.html",
+            "bytes": 1680
+          },
+          {
+            "path": "/assets/index-CI7XZ3JI.js",
+            "bytes": 12609
+          },
+          {
+            "path": "/assets/worker-Ct3WtrzW.js",
+            "bytes": 181950
+          },
+          {
+            "path": "/assets/moon-database-C-HnhTP4.js",
+            "bytes": 291390
+          },
+          {
+            "path": "/assets/moon-persistence-D3q8-DD-.js",
+            "bytes": 1616
+          },
+          {
+            "path": "/assets/moon-persistence-worker-FEnnL2Ho.js",
+            "bytes": 2422
+          }
+        ]
+      },
+      "warmReadyMs": 45.68499994277954,
+      "warmNetwork": {
+        "requests": [],
+        "wireBytes": 0,
+        "decodedBytes": 0
+      },
+      "offlineReadyMs": 43.19500005245209
+    }
+  ],
+  "memory": [
+    {
+      "engine": "sqlite",
+      "targets": [
+        {
+          "type": "page",
+          "url": "",
+          "heap": {
+            "usedSize": 1938524,
+            "totalSize": 2785280,
+            "embedderHeapUsedSize": 415928,
+            "backingStorageSize": 13003
+          },
+          "memories": [],
+          "linearBytes": 0
+        },
+        {
+          "type": "worker",
+          "url": "http://127.0.0.1:52854/assets/worker-Ct3WtrzW.js",
+          "heap": {
+            "usedSize": 1744668,
+            "totalSize": 2097152,
+            "embedderHeapUsedSize": 35656,
+            "backingStorageSize": 404711
+          },
+          "memories": [
+            {
+              "bytes": 8388608,
+              "shared": false
+            }
+          ],
+          "linearBytes": 8388608
+        },
+        {
+          "type": "worker",
+          "url": "http://127.0.0.1:52854/assets/sqlite3-opfs-async-proxy-DeAec6oc.js?vfs=opfs",
+          "heap": {
+            "usedSize": 318816,
+            "totalSize": 786432,
+            "embedderHeapUsedSize": 19768,
+            "backingStorageSize": 32541
+          },
+          "memories": [],
+          "linearBytes": 0
+        },
+        {
+          "type": "worker",
+          "url": "http://127.0.0.1:52854/assets/sqlite3-opfs-async-proxy-DeAec6oc.js?vfs=opfs-wl",
+          "heap": {
+            "usedSize": 319144,
+            "totalSize": 786432,
+            "embedderHeapUsedSize": 19768,
+            "backingStorageSize": 32547
+          },
+          "memories": [],
+          "linearBytes": 0
+        }
+      ],
+      "linearBytes": 8388608,
+      "jsHeapUsedBytes": 4321152,
+      "configuredBridgeBytes": 0,
+      "resident": {
+        "bytes": 397262848,
+        "processes": [
+          {
+            "pid": 47848,
+            "type": "browser",
+            "rssBytes": 102137856,
+            "virtualBytes": 497843552256
+          },
+          {
+            "pid": 47849,
+            "type": "GPU",
+            "rssBytes": 65863680,
+            "virtualBytes": 497704796160
+          },
+          {
+            "pid": 47850,
+            "type": "network.mojom.NetworkService",
+            "rssBytes": 47071232,
+            "virtualBytes": 497609424896
+          },
+          {
+            "pid": 47865,
+            "type": "renderer",
+            "rssBytes": 182190080,
+            "virtualBytes": 2003948027904
+          }
+        ]
+      },
+      "baseline": {
+        "bytes": 255197184,
+        "processes": [
+          {
+            "pid": 47848,
+            "type": "browser",
+            "rssBytes": 82395136,
+            "virtualBytes": 497843552256
+          },
+          {
+            "pid": 47849,
+            "type": "GPU",
+            "rssBytes": 57458688,
+            "virtualBytes": 497696931840
+          },
+          {
+            "pid": 47850,
+            "type": "network.mojom.NetworkService",
+            "rssBytes": 39878656,
+            "virtualBytes": 497609408512
+          },
+          {
+            "pid": 47851,
+            "type": "renderer",
+            "rssBytes": 75464704,
+            "virtualBytes": 1995776688128
+          }
+        ]
+      },
+      "rssDeltaBytes": 142065664
+    },
+    {
+      "engine": "turso",
+      "targets": [
+        {
+          "type": "page",
+          "url": "",
+          "heap": {
+            "usedSize": 1940228,
+            "totalSize": 2785280,
+            "embedderHeapUsedSize": 416088,
+            "backingStorageSize": 13009
+          },
+          "memories": [],
+          "linearBytes": 0
+        },
+        {
+          "type": "worker",
+          "url": "http://127.0.0.1:52854/assets/worker-Ct3WtrzW.js",
+          "heap": {
+            "usedSize": 522424,
+            "totalSize": 1310720,
+            "embedderHeapUsedSize": 27648,
+            "backingStorageSize": 185953
+          },
+          "memories": [],
+          "linearBytes": 0
+        },
+        {
+          "type": "worker",
+          "url": "http://127.0.0.1:52854/assets/turso-executor-C_NnEaMQ.js",
+          "heap": {
+            "usedSize": 1602068,
+            "totalSize": 2359296,
+            "embedderHeapUsedSize": 28952,
+            "backingStorageSize": 31758226
+          },
+          "memories": [
+            {
+              "bytes": 277020672,
+              "shared": true
+            }
+          ],
+          "linearBytes": 277020672
+        },
+        {
+          "type": "worker",
+          "url": "blob:http://127.0.0.1:52854/8a9851e2-a9fa-41a1-9c2f-5803821a1d13",
+          "heap": {
+            "usedSize": 852664,
+            "totalSize": 1572864,
+            "embedderHeapUsedSize": 22832,
+            "backingStorageSize": 173249
+          },
+          "memories": [],
+          "linearBytes": 0
+        }
+      ],
+      "linearBytes": 277020672,
+      "jsHeapUsedBytes": 4917384,
+      "configuredBridgeBytes": 67108872,
+      "resident": {
+        "bytes": 564690944,
+        "processes": [
+          {
+            "pid": 47931,
+            "type": "browser",
+            "rssBytes": 133201920,
+            "virtualBytes": 497842864128
+          },
+          {
+            "pid": 47932,
+            "type": "GPU",
+            "rssBytes": 65847296,
+            "virtualBytes": 497704976384
+          },
+          {
+            "pid": 47933,
+            "type": "network.mojom.NetworkService",
+            "rssBytes": 47235072,
+            "virtualBytes": 497609506816
+          },
+          {
+            "pid": 47948,
+            "type": "renderer",
+            "rssBytes": 318406656,
+            "virtualBytes": 2003972997120
+          }
+        ]
+      },
+      "baseline": {
+        "bytes": 255033344,
+        "processes": [
+          {
+            "pid": 47931,
+            "type": "browser",
+            "rssBytes": 82329600,
+            "virtualBytes": 497842864128
+          },
+          {
+            "pid": 47932,
+            "type": "GPU",
+            "rssBytes": 57458688,
+            "virtualBytes": 497697112064
+          },
+          {
+            "pid": 47933,
+            "type": "network.mojom.NetworkService",
+            "rssBytes": 39813120,
+            "virtualBytes": 497609490432
+          },
+          {
+            "pid": 47935,
+            "type": "renderer",
+            "rssBytes": 75431936,
+            "virtualBytes": 1995776606208
+          }
+        ]
+      },
+      "rssDeltaBytes": 309657600
+    },
+    {
+      "engine": "moonbit",
+      "targets": [
+        {
+          "type": "page",
+          "url": "",
+          "heap": {
+            "usedSize": 1938460,
+            "totalSize": 2785280,
+            "embedderHeapUsedSize": 415816,
+            "backingStorageSize": 13005
+          },
+          "memories": [],
+          "linearBytes": 0
+        },
+        {
+          "type": "worker",
+          "url": "http://127.0.0.1:52854/assets/worker-Ct3WtrzW.js",
+          "heap": {
+            "usedSize": 1415864,
+            "totalSize": 2097152,
+            "embedderHeapUsedSize": 29184,
+            "backingStorageSize": 476901
+          },
+          "memories": [],
+          "linearBytes": 0
+        },
+        {
+          "type": "worker",
+          "url": "http://127.0.0.1:52854/assets/moon-persistence-worker-FEnnL2Ho.js",
+          "heap": {
+            "usedSize": 313048,
+            "totalSize": 1310720,
+            "embedderHeapUsedSize": 24216,
+            "backingStorageSize": 2513
+          },
+          "memories": [],
+          "linearBytes": 0
+        }
+      ],
+      "linearBytes": 0,
+      "jsHeapUsedBytes": 3667372,
+      "configuredBridgeBytes": 4096,
+      "resident": {
+        "bytes": 358957056,
+        "processes": [
+          {
+            "pid": 47993,
+            "type": "browser",
+            "rssBytes": 99172352,
+            "virtualBytes": 497843470336
+          },
+          {
+            "pid": 47994,
+            "type": "GPU",
+            "rssBytes": 65912832,
+            "virtualBytes": 497705369600
+          },
+          {
+            "pid": 47995,
+            "type": "network.mojom.NetworkService",
+            "rssBytes": 47104000,
+            "virtualBytes": 497609834496
+          },
+          {
+            "pid": 48009,
+            "type": "renderer",
+            "rssBytes": 146767872,
+            "virtualBytes": 2001923997696
+          }
+        ]
+      },
+      "baseline": {
+        "bytes": 254738432,
+        "processes": [
+          {
+            "pid": 47993,
+            "type": "browser",
+            "rssBytes": 82165760,
+            "virtualBytes": 497843208192
+          },
+          {
+            "pid": 47994,
+            "type": "GPU",
+            "rssBytes": 57376768,
+            "virtualBytes": 497697505280
+          },
+          {
+            "pid": 47995,
+            "type": "network.mojom.NetworkService",
+            "rssBytes": 39845888,
+            "virtualBytes": 497609818112
+          },
+          {
+            "pid": 47996,
+            "type": "renderer",
+            "rssBytes": 75350016,
+            "virtualBytes": 1995776376832
+          }
+        ]
+      },
+      "rssDeltaBytes": 104218624
+    }
+  ]
+}

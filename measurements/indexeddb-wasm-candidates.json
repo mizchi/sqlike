@@ -1,0 +1,37 @@
+{
+  "measuredAt": "2026-11-13T21:08:45.589Z",
+  "package": "@journeyapps/wa-sqlite",
+  "version": "2.0.10",
+  "source": "https://registry.npmjs.org/@journeyapps/wa-sqlite/-/wa-sqlite-2.0.10.tgz",
+  "scope": "Wasm artifacts only. No JS glue, IndexedDB VFS, app integration, performance or compatibility certification.",
+  "compression": "gzip 9 / brotli 11",
+  "files": [
+    {
+      "name": "wa-sqlite.wasm",
+      "raw": 1121974,
+      "gzip": 520143,
+      "brotli": 435521,
+      "sha256": "d56db36a8dd12f898f452076da8161c178d4c579422af51dffb1ed80dec865e1",
+      "sessionExports": []
+    },
+    {
+      "name": "wa-sqlite-async.wasm",
+      "raw": 2279233,
+      "gzip": 789617,
+      "brotli": 608766,
+      "sha256": "3b14f2a6854e2577dbffbbaa99c6eecd22276b2a3afad2a1030af368bfd4f922",
+      "sessionExports": []
+    },
+    {
+      "name": "wa-sqlite-jspi.wasm",
+      "raw": 742113,
+      "gzip": 362618,
+      "brotli": 310936,
+      "sha256": "52734fe04baeb69b777541346d6ee3cf8eeb2a8ddff1acc21533ff644d6cb4ec",
+      "sessionExports": [
+        "sqlite3_serialize",
+        "sqlite3_deserialize"
+      ]
+    }
+  ]
+}

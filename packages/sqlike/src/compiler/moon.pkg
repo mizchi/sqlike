@@ -1,0 +1,31 @@
+import {
+  "mizchi/sqlike",
+}
+
+options(
+  link: {
+    "js": {
+      "exports": [
+        "compile_program",
+        "pack_program_binary",
+        "binary_catalog_schema",
+        "binary_catalog_statements",
+        "binary_catalog_storage",
+        "binary_catalog_info",
+      ],
+      "format": "esm",
+    },
+    "wasm-gc": {
+      "exports": [
+        "compile_program",
+        "pack_program_binary",
+        "binary_catalog_schema",
+        "binary_catalog_statements",
+        "binary_catalog_storage",
+        "binary_catalog_info",
+      ],
+      "use-js-builtin-string": true,
+      "imported-string-constants": "_",
+    },
+  },
+)

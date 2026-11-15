@@ -1,0 +1,230 @@
+{
+  "measuredAt": "2026-11-14T13:47:12.858Z",
+  "runtimeSHA256": "64a3e60afb295184f287f3f1ae63e8058870704e5cc0f0a0c456b980a1e66a57",
+  "method": "In-memory replacement of generated JS helpers; paired Vite minified DB Worker builds with the same catalog and host adapter. Production sources are unchanged. Native JSON is an optimistic size probe: duplicate-key, nesting-limit, error-position, formatting and numeric-key-order parity are not established. No size deltas are additive.",
+  "results": [
+    {
+      "mode": "baseline",
+      "bytes": {
+        "raw": 347273,
+        "gzip": 83988,
+        "brotli": 68871
+      },
+      "checks": {
+        "rows": true,
+        "image": true,
+        "sqlite": true,
+        "ltx": true,
+        "json": true
+      }
+    },
+    {
+      "mode": "base64",
+      "bytes": {
+        "raw": 344718,
+        "gzip": 83423,
+        "brotli": 68195
+      },
+      "checks": {
+        "rows": true,
+        "image": true,
+        "sqlite": true,
+        "ltx": true,
+        "json": true
+      }
+    },
+    {
+      "mode": "stringify",
+      "bytes": {
+        "raw": 345173,
+        "gzip": 83463,
+        "brotli": 68344
+      },
+      "checks": {
+        "rows": false,
+        "image": false,
+        "sqlite": false,
+        "ltx": false,
+        "json": true
+      }
+    },
+    {
+      "mode": "parse",
+      "bytes": {
+        "raw": 333868,
+        "gzip": 81377,
+        "brotli": 66633
+      },
+      "checks": {
+        "rows": true,
+        "image": true,
+        "sqlite": true,
+        "ltx": true,
+        "json": false
+      }
+    },
+    {
+      "mode": "parse-stringify",
+      "bytes": {
+        "raw": 331743,
+        "gzip": 80749,
+        "brotli": 66183
+      },
+      "checks": {
+        "rows": false,
+        "image": false,
+        "sqlite": false,
+        "ltx": false,
+        "json": false
+      }
+    },
+    {
+      "mode": "base64-parse-stringify",
+      "bytes": {
+        "raw": 328628,
+        "gzip": 80037,
+        "brotli": 65456
+      },
+      "checks": {
+        "rows": false,
+        "image": false,
+        "sqlite": false,
+        "ltx": false,
+        "json": false
+      }
+    }
+  ],
+  "lazyLtx": [
+    {
+      "lazy": false,
+      "bytes": {
+        "raw": 184220,
+        "gzip": 56785,
+        "brotli": 48248
+      },
+      "staticFiles": [
+        "assets/worker-Cw40jUzD.js"
+      ]
+    },
+    {
+      "lazy": true,
+      "bytes": {
+        "raw": 179269,
+        "gzip": 56516,
+        "brotli": 48092
+      },
+      "staticFiles": [
+        "assets/worker-DjRV6qsg.js",
+        "assets/http-BZ90Vg_H.js",
+        "assets/errors-jSt2Oqp9.js"
+      ]
+    }
+  ],
+  "libraries": [
+    {
+      "name": "sqlike",
+      "path": "_build/js/release/build/mizchi/sqlike/sqlike.js",
+      "bytes": {
+        "raw": 481000,
+        "gzip": 97536,
+        "brotli": 76595
+      }
+    },
+    {
+      "name": "litestream",
+      "path": "_build/js/release/build/mizchi/litestream/litestream.js",
+      "bytes": {
+        "raw": 224272,
+        "gzip": 52347,
+        "brotli": 42864
+      }
+    }
+  ],
+  "turso": [
+    {
+      "external": false,
+      "bytes": {
+        "raw": 15872888,
+        "gzip": 5552494,
+        "brotli": 3716364
+      },
+      "files": [
+        {
+          "name": "assets/turso-executor-C1LoVUfc.js",
+          "bytes": {
+            "raw": 11519,
+            "gzip": 3447,
+            "brotli": 2848
+          }
+        },
+        {
+          "name": "assets/main.es-C8rn27Nj.js",
+          "bytes": {
+            "raw": 15861369,
+            "gzip": 5549047,
+            "brotli": 3713516
+          }
+        }
+      ]
+    },
+    {
+      "external": true,
+      "bytes": {
+        "raw": 11999889,
+        "gzip": 4042517,
+        "brotli": 2742864
+      },
+      "files": [
+        {
+          "name": "assets/turso-executor-BC5gzHwJ.js",
+          "bytes": {
+            "raw": 11527,
+            "gzip": 3449,
+            "brotli": 2860
+          }
+        },
+        {
+          "name": "assets/promise-default-MlSoT1yH.js",
+          "bytes": {
+            "raw": 203666,
+            "gzip": 46409,
+            "brotli": 40296
+          }
+        },
+        {
+          "name": "assets/turso.wasm32-wasi-KrOvB4jh.wasm",
+          "bytes": {
+            "raw": 11613778,
+            "gzip": 3955247,
+            "brotli": 2667187
+          }
+        },
+        {
+          "name": "assets/worker-C3Ftajuj.js",
+          "bytes": {
+            "raw": 170918,
+            "gzip": 37412,
+            "brotli": 32521
+          }
+        }
+      ]
+    }
+  ],
+  "features": {
+    "base64": true,
+    "rawJSON": true,
+    "compression": {
+      "gzip": true,
+      "deflate": true,
+      "deflate-raw": true,
+      "brotli": false,
+      "zstd": false,
+      "lz4": false
+    }
+  },
+  "chromium": "158.0.8127.18",
+  "nodeFeatures": {
+    "base64": false,
+    "rawJSON": true
+  }
+}

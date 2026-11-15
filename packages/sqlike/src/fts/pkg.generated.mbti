@@ -1,0 +1,28 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "mizchi/sqlike/fts"
+
+// Values
+pub fn fts_delete(SearchIndex, String) -> String
+
+pub fn fts_dump(SearchIndex) -> String
+
+pub fn fts_info(SearchIndex) -> String
+
+pub fn fts_open(String, String) -> SearchIndex
+
+pub fn fts_put(SearchIndex, String, String) -> String
+
+pub fn fts_restore(SearchIndex, String) -> String
+
+pub fn fts_search(SearchIndex, String, Int32) -> String
+
+// Errors
+
+// Types and methods
+pub struct SearchIndex {
+  // private fields
+}
+
+// Type aliases
+
+// Traits

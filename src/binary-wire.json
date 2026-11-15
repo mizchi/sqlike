@@ -1,0 +1,710 @@
+{
+  "format": "sqlike-binary-wire@1",
+  "structs": {
+    "Ordering": [
+      {
+        "name": "expression",
+        "type": "Expr"
+      },
+      {
+        "name": "descending",
+        "type": "Bool"
+      }
+    ],
+    "Projection": [
+      {
+        "name": "expression",
+        "type": "Expr"
+      },
+      {
+        "name": "explicit_label",
+        "type": "Bool"
+      },
+      {
+        "name": "label",
+        "type": "String"
+      }
+    ],
+    "Source": [
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "qualifier",
+        "type": "String"
+      },
+      {
+        "name": "left",
+        "type": "Bool"
+      },
+      {
+        "name": "right",
+        "type": "Option[Bool]"
+      },
+      {
+        "name": "using_columns",
+        "type": "Option[Array[String]]"
+      },
+      {
+        "name": "natural",
+        "type": "Option[Bool]"
+      },
+      {
+        "name": "on",
+        "type": "Expr"
+      }
+    ],
+    "Selection": [
+      {
+        "name": "ctes",
+        "type": "Array[(String, Selection)]"
+      },
+      {
+        "name": "projections",
+        "type": "Array[Projection]"
+      },
+      {
+        "name": "sources",
+        "type": "Array[Source]"
+      },
+      {
+        "name": "predicate",
+        "type": "Expr"
+      },
+      {
+        "name": "groups",
+        "type": "Array[Expr]"
+      },
+      {
+        "name": "having",
+        "type": "Expr"
+      },
+      {
+        "name": "orders",
+        "type": "Array[Ordering]"
+      },
+      {
+        "name": "limit",
+        "type": "Expr"
+      },
+      {
+        "name": "offset",
+        "type": "Expr"
+      },
+      {
+        "name": "distinct",
+        "type": "Bool"
+      },
+      {
+        "name": "compound",
+        "type": "Option[Array[(String, Selection)]]"
+      },
+      {
+        "name": "recursive",
+        "type": "Option[Bool]"
+      },
+      {
+        "name": "cte_names",
+        "type": "Option[Array[(String, Array[String])]]"
+      }
+    ],
+    "ForeignKey": [
+      {
+        "name": "column",
+        "type": "Int32"
+      },
+      {
+        "name": "parent",
+        "type": "String"
+      },
+      {
+        "name": "target",
+        "type": "String"
+      },
+      {
+        "name": "cascade",
+        "type": "Bool"
+      },
+      {
+        "name": "columns",
+        "type": "Option[Array[Int32]]"
+      },
+      {
+        "name": "targets",
+        "type": "Option[Array[String]]"
+      },
+      {
+        "name": "delete_action",
+        "type": "Option[String]"
+      },
+      {
+        "name": "update_action",
+        "type": "Option[String]"
+      },
+      {
+        "name": "initially_deferred",
+        "type": "Option[Bool]"
+      }
+    ],
+    "ColumnDef": [
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "declared",
+        "type": "String"
+      },
+      {
+        "name": "not_null",
+        "type": "Bool"
+      },
+      {
+        "name": "primary",
+        "type": "Int32"
+      },
+      {
+        "name": "primary_desc",
+        "type": "Option[Bool]"
+      },
+      {
+        "name": "default_value",
+        "type": "Expr"
+      },
+      {
+        "name": "default_source",
+        "type": "Option[String]"
+      },
+      {
+        "name": "collation",
+        "type": "String"
+      }
+    ],
+    "Table": [
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "sql",
+        "type": "String"
+      },
+      {
+        "name": "columns",
+        "type": "Array[ColumnDef]"
+      },
+      {
+        "name": "unique_keys",
+        "type": "Array[Array[Int32]]"
+      },
+      {
+        "name": "checks",
+        "type": "Array[Expr]"
+      },
+      {
+        "name": "foreign_keys",
+        "type": "Array[ForeignKey]"
+      },
+      {
+        "name": "without_rowid",
+        "type": "Bool"
+      },
+      {
+        "name": "strict",
+        "type": "Option[Bool]"
+      },
+      {
+        "name": "autoincrement",
+        "type": "Bool"
+      }
+    ],
+    "SchemaObject": [
+      {
+        "name": "kind",
+        "type": "String"
+      },
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "table",
+        "type": "String"
+      },
+      {
+        "name": "sql",
+        "type": "String"
+      },
+      {
+        "name": "unique",
+        "type": "Bool"
+      },
+      {
+        "name": "columns",
+        "type": "Array[String]"
+      },
+      {
+        "name": "query",
+        "type": "String"
+      },
+      {
+        "name": "selection",
+        "type": "Option[Selection]"
+      },
+      {
+        "name": "index_terms",
+        "type": "Option[Array[Ordering]]"
+      },
+      {
+        "name": "index_predicate",
+        "type": "Option[Expr]"
+      },
+      {
+        "name": "trigger",
+        "type": "Option[TriggerDefinition]"
+      }
+    ],
+    "Store": [
+      {
+        "name": "encoding",
+        "type": "Option[Int32]"
+      },
+      {
+        "name": "tables",
+        "type": "Array[Table]"
+      },
+      {
+        "name": "objects",
+        "type": "Array[SchemaObject]"
+      },
+      {
+        "name": "cookie",
+        "type": "Int32"
+      },
+      {
+        "name": "foreign_keys",
+        "type": "Bool"
+      }
+    ],
+    "Insertion": [
+      {
+        "name": "table",
+        "type": "String"
+      },
+      {
+        "name": "columns",
+        "type": "Array[String]"
+      },
+      {
+        "name": "values",
+        "type": "Array[Array[Expr]]"
+      },
+      {
+        "name": "conflict",
+        "type": "String"
+      },
+      {
+        "name": "target",
+        "type": "Array[String]"
+      },
+      {
+        "name": "updates",
+        "type": "Array[(String, Expr)]"
+      },
+      {
+        "name": "predicate",
+        "type": "Expr"
+      },
+      {
+        "name": "returning",
+        "type": "Array[Projection]"
+      },
+      {
+        "name": "conflict_override",
+        "type": "Option[String]"
+      },
+      {
+        "name": "target_predicate",
+        "type": "Option[Expr]"
+      },
+      {
+        "name": "selection",
+        "type": "Option[Selection]"
+      }
+    ],
+    "TriggerDefinition": [
+      {
+        "name": "timing",
+        "type": "String"
+      },
+      {
+        "name": "event",
+        "type": "String"
+      },
+      {
+        "name": "columns",
+        "type": "Array[String]"
+      },
+      {
+        "name": "condition",
+        "type": "Expr"
+      },
+      {
+        "name": "body",
+        "type": "Array[DataStatement]"
+      }
+    ],
+    "WindowFrame": [
+      {
+        "name": "kind",
+        "type": "String"
+      },
+      {
+        "name": "start",
+        "type": "WindowBound"
+      },
+      {
+        "name": "end",
+        "type": "WindowBound"
+      }
+    ],
+    "CompiledQuery": [
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "parameters",
+        "type": "Int32"
+      },
+      {
+        "name": "names",
+        "type": "Array[String]"
+      },
+      {
+        "name": "statement",
+        "type": "DataStatement"
+      }
+    ],
+    "StoredRow": [
+      {
+        "name": "id",
+        "type": "Int64"
+      },
+      {
+        "name": "values",
+        "type": "Array[Value]"
+      }
+    ],
+    "StorageTree": [
+      {
+        "name": "name",
+        "type": "String"
+      },
+      {
+        "name": "table",
+        "type": "String"
+      },
+      {
+        "name": "root",
+        "type": "Int32"
+      },
+      {
+        "name": "kind",
+        "type": "String"
+      },
+      {
+        "name": "fields",
+        "type": "Array[StorageField]"
+      },
+      {
+        "name": "predicate",
+        "type": "Option[Expr]"
+      }
+    ],
+    "StorageField": [
+      {
+        "name": "column",
+        "type": "Int32"
+      },
+      {
+        "name": "collation",
+        "type": "String"
+      },
+      {
+        "name": "descending",
+        "type": "Bool"
+      },
+      {
+        "name": "expression",
+        "type": "Option[Expr]"
+      }
+    ]
+  },
+  "enums": {
+    "Expr": [
+      {
+        "tag": 0,
+        "name": "Literal",
+        "fields": [
+          "Value"
+        ]
+      },
+      {
+        "tag": 1,
+        "name": "TruthLiteral",
+        "fields": [
+          "Bool"
+        ]
+      },
+      {
+        "tag": 2,
+        "name": "CurrentTime",
+        "fields": [
+          "String"
+        ]
+      },
+      {
+        "tag": 3,
+        "name": "Parameter",
+        "fields": [
+          "Int32"
+        ]
+      },
+      {
+        "tag": 4,
+        "name": "Column",
+        "fields": [
+          "String",
+          "String"
+        ]
+      },
+      {
+        "tag": 5,
+        "name": "Star",
+        "fields": [
+          "String"
+        ]
+      },
+      {
+        "tag": 6,
+        "name": "Unary",
+        "fields": [
+          "String",
+          "Expr"
+        ]
+      },
+      {
+        "tag": 7,
+        "name": "Binary",
+        "fields": [
+          "String",
+          "Expr",
+          "Expr"
+        ]
+      },
+      {
+        "tag": 8,
+        "name": "Call",
+        "fields": [
+          "String",
+          "Array[Expr]"
+        ]
+      },
+      {
+        "tag": 9,
+        "name": "Collate",
+        "fields": [
+          "Expr",
+          "String"
+        ]
+      },
+      {
+        "tag": 10,
+        "name": "Cast",
+        "fields": [
+          "Expr",
+          "String"
+        ]
+      },
+      {
+        "tag": 11,
+        "name": "RowNumber",
+        "fields": [
+          "Array[Ordering]"
+        ]
+      },
+      {
+        "tag": 12,
+        "name": "Window",
+        "fields": [
+          "String",
+          "Array[Expr]",
+          "Array[Expr]",
+          "Array[Ordering]",
+          "WindowFrame"
+        ]
+      },
+      {
+        "tag": 13,
+        "name": "Between",
+        "fields": [
+          "Expr",
+          "Expr",
+          "Expr"
+        ]
+      },
+      {
+        "tag": 14,
+        "name": "Case",
+        "fields": [
+          "Option[Expr]",
+          "Array[(Expr, Expr)]",
+          "Expr"
+        ]
+      },
+      {
+        "tag": 15,
+        "name": "InSelect",
+        "fields": [
+          "Expr",
+          "Selection"
+        ]
+      },
+      {
+        "tag": 16,
+        "name": "ScalarSelect",
+        "fields": [
+          "Selection"
+        ]
+      },
+      {
+        "tag": 17,
+        "name": "Exists",
+        "fields": [
+          "Selection"
+        ]
+      }
+    ],
+    "DataStatement": [
+      {
+        "tag": 0,
+        "name": "PreparedTransaction",
+        "fields": [
+          "String",
+          "String"
+        ]
+      },
+      {
+        "tag": 1,
+        "name": "PreparedSelect",
+        "fields": [
+          "Selection"
+        ]
+      },
+      {
+        "tag": 2,
+        "name": "PreparedPragma",
+        "fields": [
+          "String",
+          "String"
+        ]
+      },
+      {
+        "tag": 3,
+        "name": "PreparedInsert",
+        "fields": [
+          "Insertion"
+        ]
+      },
+      {
+        "tag": 4,
+        "name": "PreparedUpdate",
+        "fields": [
+          "String",
+          "Array[(String, Expr)]",
+          "Expr",
+          "Array[Projection]"
+        ]
+      },
+      {
+        "tag": 5,
+        "name": "PreparedDelete",
+        "fields": [
+          "String",
+          "Expr",
+          "Array[Projection]"
+        ]
+      }
+    ],
+    "WindowBound": [
+      {
+        "tag": 0,
+        "name": "UnboundedPreceding",
+        "fields": []
+      },
+      {
+        "tag": 1,
+        "name": "Preceding",
+        "fields": [
+          "Expr"
+        ]
+      },
+      {
+        "tag": 2,
+        "name": "Current",
+        "fields": []
+      },
+      {
+        "tag": 3,
+        "name": "Following",
+        "fields": [
+          "Expr"
+        ]
+      },
+      {
+        "tag": 4,
+        "name": "UnboundedFollowing",
+        "fields": []
+      }
+    ],
+    "RowEdit": [
+      {
+        "tag": 0,
+        "name": "AppendRow",
+        "fields": [
+          "String",
+          "StoredRow"
+        ]
+      },
+      {
+        "tag": 1,
+        "name": "ReplaceRow",
+        "fields": [
+          "String",
+          "Int64",
+          "StoredRow"
+        ]
+      },
+      {
+        "tag": 2,
+        "name": "DeleteRow",
+        "fields": [
+          "String",
+          "Int64"
+        ]
+      },
+      {
+        "tag": 3,
+        "name": "PatchRow",
+        "fields": [
+          "String",
+          "Int64",
+          "Int64",
+          "Array[(Int32, Value)]"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "format": 1,
+  "measuredAt": "2026-11-15T14:06:29.919Z",
+  "method": "ABBA: exact pre-S01 runtime SHA-256 reproduced from an isolated source copy; fresh Chromium context per report, 100 rows / 64-byte TEXT, semantic strict IDB, 7x32 point and batch operations including checkpoints; equal weighting of each report mean. No parallel CPU work.",
+  "sourceHashes": {
+    "measurements/s01-before/source.patch": "e9d1e5e792323247ae377a02e0235d39f170a9dbc32fc90be0aa9b0a2a314278",
+    "package.json": "9284c91067ca0a1ba5e731c7027e7503e69be56c42d2fcb6d8e3fd1482bf7c2d",
+    "pnpm-lock.yaml": "4870ef6229cbf653e92d5ff6b4cb87feca3dfa5ddfe1c4972b3dfbd85a64310e",
+    "scripts/bench-indexeddb.ts": "8d3c9d7c38a77089b961bf161cca4dce1549fe1284d3d767351c5b9b085b2075",
+    "scripts/indexeddb-bench-workload.ts": "0dcd0d3912e175c0c1a3bf6b8ee96e1938dc15cf80552980d9ddbe8f3b0e9da5",
+    "scripts/measurement-manifest.ts": "615c0ab32c0b2e01c57ea1be690a2a08d2e9401b9b0c5d93574520253c16acdb"
+  },
+  "reports": {
+    "measurements/s01-before/small-pair-0.json": "83062033c0aa108fe0bb3b985a3b281b887da5c4e94c861a62578f24153e4fca",
+    "measurements/s01-small-pair-1.json": "c513c2a1c8fd1bf7bb7f703f08796e6a24232085ea6c85b583d7212dc779679a",
+    "measurements/s01-small-pair-2.json": "ba8e0e4ea2b1f2b6a4530e84f578b599bff623e5ec2381d0d90ab9fe5ad88266",
+    "measurements/s01-before/small-pair-3.json": "869fb6793973dc469ac73e227139c0222fcc5cc0666375d2a943273dc3a920ec"
+  },
+  "beforeRuntimeSHA256": "1a78e8eacca74a28a83bffdf283b82a61673146112d8ae2e50bae4d1144f450a",
+  "afterRuntimeSHA256": "e9f37ecaa7cb88c9fbfbbfdaab46adbb263cc452e8aa07888b9e6d23b711a70c",
+  "summary": [
+    {
+      "name": "point",
+      "beforeUs": 200.6808029753821,
+      "afterUs": 196.8750006386212,
+      "beforePrepareUs": 67.37723467605454,
+      "afterPrepareUs": 64.86607209912368
+    },
+    {
+      "name": "batch",
+      "beforeUs": 366.78571440279484,
+      "afterUs": 337.7901789333139,
+      "beforePrepareUs": 219.63169665208886,
+      "afterPrepareUs": 192.48884091419833
+    }
+  ]
+}

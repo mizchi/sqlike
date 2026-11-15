@@ -1,0 +1,665 @@
+{
+  "measuredAt": "2026-11-15T15:04:13.329Z",
+  "node": "v24.22.2",
+  "wrangler": "4.162.0",
+  "sourceHashes": {
+    "adapters/do-bindings.ts": "2d71e391b8e827812125f6c2c1d1be5ffeda4bae078bc6a6623302772b5f4a56",
+    "adapters/do-database.ts": "1f3f5d1773cec83457917f34767cd669cd217ab910b71921c5db37c64ac885d9",
+    "package.json": "9284c91067ca0a1ba5e731c7027e7503e69be56c42d2fcb6d8e3fd1482bf7c2d",
+    "pnpm-lock.yaml": "4870ef6229cbf653e92d5ff6b4cb87feca3dfa5ddfe1c4972b3dfbd85a64310e",
+    "scripts/bench-do.ts": "d533ed7fea83c1cb045b3770a2fac20bc58ce2001734c252ae6351aa86ead9b8",
+    "scripts/fixtures/do-bench-worker.ts": "7d8429d87143888f56918e6d1d1fd5a4f694acd753b8f4f272aec82c3b90808a",
+    "scripts/fixtures/wrangler-bench.jsonc": "71dedf8d9d37f0815d82ccff4785d14d3e9684d1e1830a9f81c847f3b32ab5a8",
+    "scripts/measurement-manifest.ts": "615c0ab32c0b2e01c57ea1be690a2a08d2e9401b9b0c5d93574520253c16acdb",
+    "src/protocol.ts": "1c405a09b249e25c976ca3536136db48e67239748c7d901876751b34cccd7a9f"
+  },
+  "method": "Local workerd SQLite DO, 1000 rows, sequential rotated raw/typed order, 7x10000 calls, 50 warmups. Millisecond-resolution clock; raw sample durations retained. Timing inside DO excludes HTTP and setup; typed includes transactionSync, metadata read, typeof/hex decoding and REAL binding checks. Raw API loses storage-class information and is a cost baseline, not a compatible replacement. Typed output verified for point/REAL; update sets same value. No process memory measurement.",
+  "artifacts": {
+    "adapters/do-database.ts": "1f3f5d1773cec83457917f34767cd669cd217ab910b71921c5db37c64ac885d9",
+    "adapters/do-bindings.ts": "2d71e391b8e827812125f6c2c1d1be5ffeda4bae078bc6a6623302772b5f4a56",
+    "scripts/fixtures/do-bench-worker.ts": "7d8429d87143888f56918e6d1d1fd5a4f694acd753b8f4f272aec82c3b90808a",
+    "scripts/bench-do.ts": "d533ed7fea83c1cb045b3770a2fac20bc58ce2001734c252ae6351aa86ead9b8"
+  },
+  "samples": [
+    {
+      "engine": "raw",
+      "query": "point",
+      "run": 0,
+      "iterations": 10000,
+      "milliseconds": 28,
+      "calls": 10000,
+      "rows": [
+        {
+          "id": 500,
+          "n": 1500
+        }
+      ]
+    },
+    {
+      "engine": "typed",
+      "query": "point",
+      "run": 0,
+      "iterations": 10000,
+      "milliseconds": 171,
+      "calls": 20000,
+      "rows": [
+        {
+          "id": {
+            "t": "integer",
+            "v": "500"
+          },
+          "n": {
+            "t": "integer",
+            "v": "1500"
+          }
+        }
+      ]
+    },
+    {
+      "engine": "typed",
+      "query": "point",
+      "run": 1,
+      "iterations": 10000,
+      "milliseconds": 161,
+      "calls": 20000,
+      "rows": [
+        {
+          "id": {
+            "t": "integer",
+            "v": "500"
+          },
+          "n": {
+            "t": "integer",
+            "v": "1500"
+          }
+        }
+      ]
+    },
+    {
+      "engine": "raw",
+      "query": "point",
+      "run": 1,
+      "iterations": 10000,
+      "milliseconds": 25,
+      "calls": 10000,
+      "rows": [
+        {
+          "id": 500,
+          "n": 1500
+        }
+      ]
+    },
+    {
+      "engine": "raw",
+      "query": "point",
+      "run": 2,
+      "iterations": 10000,
+      "milliseconds": 26,
+      "calls": 10000,
+      "rows": [
+        {
+          "id": 500,
+          "n": 1500
+        }
+      ]
+    },
+    {
+      "engine": "typed",
+      "query": "point",
+      "run": 2,
+      "iterations": 10000,
+      "milliseconds": 215,
+      "calls": 20000,
+      "rows": [
+        {
+          "id": {
+            "t": "integer",
+            "v": "500"
+          },
+          "n": {
+            "t": "integer",
+            "v": "1500"
+          }
+        }
+      ]
+    },
+    {
+      "engine": "typed",
+      "query": "point",
+      "run": 3,
+      "iterations": 10000,
+      "milliseconds": 180,
+      "calls": 20000,
+      "rows": [
+        {
+          "id": {
+            "t": "integer",
+            "v": "500"
+          },
+          "n": {
+            "t": "integer",
+            "v": "1500"
+          }
+        }
+      ]
+    },
+    {
+      "engine": "raw",
+      "query": "point",
+      "run": 3,
+      "iterations": 10000,
+      "milliseconds": 26,
+      "calls": 10000,
+      "rows": [
+        {
+          "id": 500,
+          "n": 1500
+        }
+      ]
+    },
+    {
+      "engine": "raw",
+      "query": "point",
+      "run": 4,
+      "iterations": 10000,
+      "milliseconds": 24,
+      "calls": 10000,
+      "rows": [
+        {
+          "id": 500,
+          "n": 1500
+        }
+      ]
+    },
+    {
+      "engine": "typed",
+      "query": "point",
+      "run": 4,
+      "iterations": 10000,
+      "milliseconds": 162,
+      "calls": 20000,
+      "rows": [
+        {
+          "id": {
+            "t": "integer",
+            "v": "500"
+          },
+          "n": {
+            "t": "integer",
+            "v": "1500"
+          }
+        }
+      ]
+    },
+    {
+      "engine": "typed",
+      "query": "point",
+      "run": 5,
+      "iterations": 10000,
+      "milliseconds": 164,
+      "calls": 20000,
+      "rows": [
+        {
+          "id": {
+            "t": "integer",
+            "v": "500"
+          },
+          "n": {
+            "t": "integer",
+            "v": "1500"
+          }
+        }
+      ]
+    },
+    {
+      "engine": "raw",
+      "query": "point",
+      "run": 5,
+      "iterations": 10000,
+      "milliseconds": 24,
+      "calls": 10000,
+      "rows": [
+        {
+          "id": 500,
+          "n": 1500
+        }
+      ]
+    },
+    {
+      "engine": "raw",
+      "query": "point",
+      "run": 6,
+      "iterations": 10000,
+      "milliseconds": 26,
+      "calls": 10000,
+      "rows": [
+        {
+          "id": 500,
+          "n": 1500
+        }
+      ]
+    },
+    {
+      "engine": "typed",
+      "query": "point",
+      "run": 6,
+      "iterations": 10000,
+      "milliseconds": 163,
+      "calls": 20000,
+      "rows": [
+        {
+          "id": {
+            "t": "integer",
+            "v": "500"
+          },
+          "n": {
+            "t": "integer",
+            "v": "1500"
+          }
+        }
+      ]
+    },
+    {
+      "engine": "raw",
+      "query": "real",
+      "run": 0,
+      "iterations": 10000,
+      "milliseconds": 26,
+      "calls": 10000,
+      "rows": [
+        {
+          "v": 1.5,
+          "t": "real"
+        }
+      ]
+    },
+    {
+      "engine": "typed",
+      "query": "real",
+      "run": 0,
+      "iterations": 10000,
+      "milliseconds": 225,
+      "calls": 40000,
+      "rows": [
+        {
+          "v": {
+            "t": "real",
+            "v": 1.5
+          },
+          "t": {
+            "t": "text",
+            "v": "real"
+          }
+        }
+      ]
+    },
+    {
+      "engine": "typed",
+      "query": "real",
+      "run": 1,
+      "iterations": 10000,
+      "milliseconds": 228,
+      "calls": 40000,
+      "rows": [
+        {
+          "v": {
+            "t": "real",
+            "v": 1.5
+          },
+          "t": {
+            "t": "text",
+            "v": "real"
+          }
+        }
+      ]
+    },
+    {
+      "engine": "raw",
+      "query": "real",
+      "run": 1,
+      "iterations": 10000,
+      "milliseconds": 25,
+      "calls": 10000,
+      "rows": [
+        {
+          "v": 1.5,
+          "t": "real"
+        }
+      ]
+    },
+    {
+      "engine": "raw",
+      "query": "real",
+      "run": 2,
+      "iterations": 10000,
+      "milliseconds": 26,
+      "calls": 10000,
+      "rows": [
+        {
+          "v": 1.5,
+          "t": "real"
+        }
+      ]
+    },
+    {
+      "engine": "typed",
+      "query": "real",
+      "run": 2,
+      "iterations": 10000,
+      "milliseconds": 258,
+      "calls": 40000,
+      "rows": [
+        {
+          "v": {
+            "t": "real",
+            "v": 1.5
+          },
+          "t": {
+            "t": "text",
+            "v": "real"
+          }
+        }
+      ]
+    },
+    {
+      "engine": "typed",
+      "query": "real",
+      "run": 3,
+      "iterations": 10000,
+      "milliseconds": 251,
+      "calls": 40000,
+      "rows": [
+        {
+          "v": {
+            "t": "real",
+            "v": 1.5
+          },
+          "t": {
+            "t": "text",
+            "v": "real"
+          }
+        }
+      ]
+    },
+    {
+      "engine": "raw",
+      "query": "real",
+      "run": 3,
+      "iterations": 10000,
+      "milliseconds": 30,
+      "calls": 10000,
+      "rows": [
+        {
+          "v": 1.5,
+          "t": "real"
+        }
+      ]
+    },
+    {
+      "engine": "raw",
+      "query": "real",
+      "run": 4,
+      "iterations": 10000,
+      "milliseconds": 35,
+      "calls": 10000,
+      "rows": [
+        {
+          "v": 1.5,
+          "t": "real"
+        }
+      ]
+    },
+    {
+      "engine": "typed",
+      "query": "real",
+      "run": 4,
+      "iterations": 10000,
+      "milliseconds": 292,
+      "calls": 40000,
+      "rows": [
+        {
+          "v": {
+            "t": "real",
+            "v": 1.5
+          },
+          "t": {
+            "t": "text",
+            "v": "real"
+          }
+        }
+      ]
+    },
+    {
+      "engine": "typed",
+      "query": "real",
+      "run": 5,
+      "iterations": 10000,
+      "milliseconds": 263,
+      "calls": 40000,
+      "rows": [
+        {
+          "v": {
+            "t": "real",
+            "v": 1.5
+          },
+          "t": {
+            "t": "text",
+            "v": "real"
+          }
+        }
+      ]
+    },
+    {
+      "engine": "raw",
+      "query": "real",
+      "run": 5,
+      "iterations": 10000,
+      "milliseconds": 26,
+      "calls": 10000,
+      "rows": [
+        {
+          "v": 1.5,
+          "t": "real"
+        }
+      ]
+    },
+    {
+      "engine": "raw",
+      "query": "real",
+      "run": 6,
+      "iterations": 10000,
+      "milliseconds": 31,
+      "calls": 10000,
+      "rows": [
+        {
+          "v": 1.5,
+          "t": "real"
+        }
+      ]
+    },
+    {
+      "engine": "typed",
+      "query": "real",
+      "run": 6,
+      "iterations": 10000,
+      "milliseconds": 240,
+      "calls": 40000,
+      "rows": [
+        {
+          "v": {
+            "t": "real",
+            "v": 1.5
+          },
+          "t": {
+            "t": "text",
+            "v": "real"
+          }
+        }
+      ]
+    },
+    {
+      "engine": "raw",
+      "query": "update",
+      "run": 0,
+      "iterations": 10000,
+      "milliseconds": 22,
+      "calls": 10000,
+      "rows": []
+    },
+    {
+      "engine": "typed",
+      "query": "update",
+      "run": 0,
+      "iterations": 10000,
+      "milliseconds": 46,
+      "calls": 10000,
+      "rows": []
+    },
+    {
+      "engine": "typed",
+      "query": "update",
+      "run": 1,
+      "iterations": 10000,
+      "milliseconds": 44,
+      "calls": 10000,
+      "rows": []
+    },
+    {
+      "engine": "raw",
+      "query": "update",
+      "run": 1,
+      "iterations": 10000,
+      "milliseconds": 22,
+      "calls": 10000,
+      "rows": []
+    },
+    {
+      "engine": "raw",
+      "query": "update",
+      "run": 2,
+      "iterations": 10000,
+      "milliseconds": 22,
+      "calls": 10000,
+      "rows": []
+    },
+    {
+      "engine": "typed",
+      "query": "update",
+      "run": 2,
+      "iterations": 10000,
+      "milliseconds": 53,
+      "calls": 10000,
+      "rows": []
+    },
+    {
+      "engine": "typed",
+      "query": "update",
+      "run": 3,
+      "iterations": 10000,
+      "milliseconds": 48,
+      "calls": 10000,
+      "rows": []
+    },
+    {
+      "engine": "raw",
+      "query": "update",
+      "run": 3,
+      "iterations": 10000,
+      "milliseconds": 26,
+      "calls": 10000,
+      "rows": []
+    },
+    {
+      "engine": "raw",
+      "query": "update",
+      "run": 4,
+      "iterations": 10000,
+      "milliseconds": 24,
+      "calls": 10000,
+      "rows": []
+    },
+    {
+      "engine": "typed",
+      "query": "update",
+      "run": 4,
+      "iterations": 10000,
+      "milliseconds": 48,
+      "calls": 10000,
+      "rows": []
+    },
+    {
+      "engine": "typed",
+      "query": "update",
+      "run": 5,
+      "iterations": 10000,
+      "milliseconds": 44,
+      "calls": 10000,
+      "rows": []
+    },
+    {
+      "engine": "raw",
+      "query": "update",
+      "run": 5,
+      "iterations": 10000,
+      "milliseconds": 22,
+      "calls": 10000,
+      "rows": []
+    },
+    {
+      "engine": "raw",
+      "query": "update",
+      "run": 6,
+      "iterations": 10000,
+      "milliseconds": 22,
+      "calls": 10000,
+      "rows": []
+    },
+    {
+      "engine": "typed",
+      "query": "update",
+      "run": 6,
+      "iterations": 10000,
+      "milliseconds": 49,
+      "calls": 10000,
+      "rows": []
+    }
+  ],
+  "summary": [
+    {
+      "query": "point",
+      "engine": "raw",
+      "microseconds": 2.6,
+      "callsPerOperation": 1
+    },
+    {
+      "query": "point",
+      "engine": "typed",
+      "microseconds": 16.400000000000002,
+      "callsPerOperation": 2
+    },
+    {
+      "query": "real",
+      "engine": "raw",
+      "microseconds": 2.6,
+      "callsPerOperation": 1
+    },
+    {
+      "query": "real",
+      "engine": "typed",
+      "microseconds": 25.1,
+      "callsPerOperation": 4
+    },
+    {
+      "query": "update",
+      "engine": "raw",
+      "microseconds": 2.2,
+      "callsPerOperation": 1
+    },
+    {
+      "query": "update",
+      "engine": "typed",
+      "microseconds": 4.8,
+      "callsPerOperation": 1
+    }
+  ]
+}

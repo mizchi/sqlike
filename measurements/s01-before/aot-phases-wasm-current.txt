@@ -1,0 +1,16 @@
+[mizchi/sqlike] bench aot_bench_wbtest.mbt:23 ("AOT phase prepare and finalize") ok
+time (mean ± σ)         range (min … max) 
+  38.11 ns ±   0.34 ns    37.76 ns …  38.83 ns  in 10 × 100000 runs
+[mizchi/sqlike] bench aot_bench_wbtest.mbt:37 ("AOT phase decode bind and reset") ok
+time (mean ± σ)         range (min … max) 
+ 282.97 ns ±   4.17 ns   276.58 ns … 290.88 ns  in 10 × 100000 runs
+[mizchi/sqlike] bench aot_bench_wbtest.mbt:57 ("AOT phase execute and reset") ok
+time (mean ± σ)         range (min … max) 
+ 164.96 ns ±   0.50 ns   164.16 ns … 165.60 ns  in 10 × 100000 runs
+[mizchi/sqlike] bench aot_bench_wbtest.mbt:75 ("AOT phase columns and JSON marshal") ok
+time (mean ± σ)         range (min … max) 
+ 790.41 ns ±  13.13 ns   777.66 ns … 811.62 ns  in 10 × 100000 runs
+[mizchi/sqlike] bench aot_bench_wbtest.mbt:105 ("AOT phase full JSON ABI") ok
+time (mean ± σ)         range (min … max) 
+   1.22 µs ±   4.58 ns     1.21 µs …   1.23 µs  in 10 ×  81816 runs
+Total tests: 5, passed: 5, failed: 0.

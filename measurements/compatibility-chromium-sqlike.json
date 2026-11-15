@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "measuredAt": "2026-11-15T20:59:52.107Z",
+  "id": "browser-sqlite@1",
+  "oracle": "native node:sqlite",
+  "scope": "ordinary tables and the cases/features listed here; not all possible SQLite programs",
+  "nonGoals": [
+    "native extensions",
+    "ATTACH",
+    "transaction-control SQL",
+    "virtual tables",
+    "triggers",
+    "query-plan equivalence",
+    "unspecified row order"
+  ],
+  "candidateEngine": "sqlike",
+  "browserName": "chromium",
+  "browserVersion": "158.0.8127.18",
+  "oracleVersion": "3.53.4",
+  "cases": 42,
+  "seeds": 32,
+  "steps": 842,
+  "corpusSHA256": "69f0041e668fcb13f02f25a33cfb69e38f4c2ba5adf28ba73344ab43d37c22e5"
+}

@@ -1,0 +1,75 @@
+import {
+  "moonbitlang/x/crypto",
+  "moonbitlang/core/bigint",
+  "moonbitlang/core/buffer",
+  "moonbitlang/core/encoding/utf8",
+  "moonbitlang/core/encoding/base64",
+  "moonbitlang/core/encoding/utf16",
+  "moonbitlang/core/json",
+  "moonbitlang/core/immut/vector" @rowvector,
+  "moonbitlang/core/immut/hashmap" @rowmap,
+  "moonbitlang/core/string",
+}
+
+import {
+  "moonbitlang/core/bench",
+} for "wbtest"
+
+// Match sqlite3.mbt's trait surface without promoting every public trait method.
+// Moon 0.1.20261104 emits warning 79 even for intentional unpromoted impls.
+
+warnings = "-79"
+
+options(
+  link: {
+    "js": {
+      "exports": [
+        "database_open",
+        "database_autocommit",
+        "database_set_clock",
+        "database_import_sqlite",
+        "database_import_sqlite_base64",
+        "database_exec",
+        "database_query_values",
+        "database_exec_values",
+        "database_dump",
+        "database_restore",
+        "database_version",
+        "database_changeset",
+        "database_is_readonly",
+        "database_clone",
+        "database_copy_connection_state",
+        "database_delta",
+        "database_ack_delta",
+        "database_apply_delta",
+        "database_serial",
+      ],
+      "format": "esm",
+    },
+    "wasm-gc": {
+      "exports": [
+        "database_open",
+        "database_autocommit",
+        "database_set_clock",
+        "database_import_sqlite",
+        "database_import_sqlite_base64",
+        "database_exec",
+        "database_query_values",
+        "database_exec_values",
+        "database_dump",
+        "database_restore",
+        "database_version",
+        "database_changeset",
+        "database_is_readonly",
+        "database_clone",
+        "database_copy_connection_state",
+        "database_delta",
+        "database_ack_delta",
+        "database_apply_delta",
+        "database_serial",
+      ],
+      "use-js-builtin-string": true,
+      "imported-string-constants": "_",
+    },
+  },
+)

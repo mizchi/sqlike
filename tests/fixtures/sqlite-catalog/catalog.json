@@ -1,0 +1,5718 @@
+{
+  "format": 1,
+  "retrievedAt": "2026-11-14T05:15:58.030Z",
+  "scope": "Entry-point inventory from official indexes; not an exhaustive list of behavioral requirements or SQL combinations",
+  "sources": [
+    {
+      "url": "https://www.sqlite.org/lang.html",
+      "sha256": "553c24101f0d975f1af72161806475ed71b1401363794f0a67dfdd500a1c2737",
+      "bytes": 34250
+    },
+    {
+      "url": "https://www.sqlite.org/lang_corefunc.html",
+      "sha256": "7250cc990c3b5fcbe23a64eb4fc16c463b18a9ba209dff92aa39103e2f32ea42",
+      "bytes": 43320
+    },
+    {
+      "url": "https://www.sqlite.org/lang_aggfunc.html",
+      "sha256": "e7697bd9db597d9d7de0b65f9d5c2e631f1d091ed6e809a3ec05cc229bdb0577",
+      "bytes": 307827
+    },
+    {
+      "url": "https://www.sqlite.org/lang_datefunc.html",
+      "sha256": "4e8179554f5097120b8a484192806a7251711fc38421cf9530f3678602655d1f",
+      "bytes": 29640
+    },
+    {
+      "url": "https://www.sqlite.org/lang_mathfunc.html",
+      "sha256": "0abb3bb0063244255ea833450cdaf3123c905995c37a506e91c4334e74359a4f",
+      "bytes": 11231
+    },
+    {
+      "url": "https://www.sqlite.org/windowfunctions.html",
+      "sha256": "541a738f7fd26efca132111ef51e74c2a3233054faa3471ee88f9696ebe97e98",
+      "bytes": 923326
+    },
+    {
+      "url": "https://www.sqlite.org/json1.html",
+      "sha256": "ed4c29cd9b47087c9a7e67ed13a1423837acbf5c3024ba83984c192ee97c442a",
+      "bytes": 71627
+    },
+    {
+      "url": "https://www.sqlite.org/pragma.html",
+      "sha256": "af75d7d7ab00c29e6eea98618cb1259a3919c308af60a6173215bf9798706034",
+      "bytes": 139936
+    },
+    {
+      "url": "https://www.sqlite.org/c3ref/funclist.html",
+      "sha256": "bc4a9cc5205065225ab8417af10d9f6b64e03a799344d95ed42a9a56dd7597a6",
+      "bytes": 25667
+    },
+    {
+      "url": "https://www.sqlite.org/c3ref/objlist.html",
+      "sha256": "cb8781012b90d87c844927df75f3017c1dd17ea4059c945520477c2576f5d394",
+      "bytes": 5669
+    },
+    {
+      "url": "https://www.sqlite.org/c3ref/constlist.html",
+      "sha256": "f5e95e31d5c992730f72c9246cc8304106f19d33f8a59b1075c161c3aefff2c8",
+      "bytes": 46792
+    },
+    {
+      "url": "https://www.sqlite.org/docs.html",
+      "sha256": "f557941d6c34cd84ff547f298ea60572d7aad79674966e5acff0dafd37859cbf",
+      "bytes": 34549
+    },
+    {
+      "url": "https://www.sqlite.org/testing.html",
+      "sha256": "d1a8b5c43a42e573f7165483fdf02b91c605076b869a823d924241fb308feb97",
+      "bytes": 59623
+    }
+  ],
+  "counts": {
+    "language": 42,
+    "scalar": 60,
+    "aggregate": 14,
+    "math": 30,
+    "pragma": 74,
+    "date": 7,
+    "window": 15,
+    "json": 36,
+    "api-function": 306,
+    "api-object": 29,
+    "api-constant": 497,
+    "extension": 16
+  },
+  "entries": [
+    {
+      "category": "language",
+      "name": "aggregate functions",
+      "source": "https://www.sqlite.org/lang_aggfunc.html"
+    },
+    {
+      "category": "language",
+      "name": "ALTER TABLE",
+      "source": "https://www.sqlite.org/lang_altertable.html"
+    },
+    {
+      "category": "language",
+      "name": "ANALYZE",
+      "source": "https://www.sqlite.org/lang_analyze.html"
+    },
+    {
+      "category": "language",
+      "name": "ATTACH DATABASE",
+      "source": "https://www.sqlite.org/lang_attach.html"
+    },
+    {
+      "category": "language",
+      "name": "BEGIN TRANSACTION",
+      "source": "https://www.sqlite.org/lang_transaction.html"
+    },
+    {
+      "category": "language",
+      "name": "comment",
+      "source": "https://www.sqlite.org/lang_comment.html"
+    },
+    {
+      "category": "language",
+      "name": "COMMIT TRANSACTION",
+      "source": "https://www.sqlite.org/lang_transaction.html"
+    },
+    {
+      "category": "language",
+      "name": "core functions",
+      "source": "https://www.sqlite.org/lang_corefunc.html"
+    },
+    {
+      "category": "language",
+      "name": "CREATE INDEX",
+      "source": "https://www.sqlite.org/lang_createindex.html"
+    },
+    {
+      "category": "language",
+      "name": "CREATE TABLE",
+      "source": "https://www.sqlite.org/lang_createtable.html"
+    },
+    {
+      "category": "language",
+      "name": "CREATE TRIGGER",
+      "source": "https://www.sqlite.org/lang_createtrigger.html"
+    },
+    {
+      "category": "language",
+      "name": "CREATE VIEW",
+      "source": "https://www.sqlite.org/lang_createview.html"
+    },
+    {
+      "category": "language",
+      "name": "CREATE VIRTUAL TABLE",
+      "source": "https://www.sqlite.org/lang_createvtab.html"
+    },
+    {
+      "category": "language",
+      "name": "date and time functions",
+      "source": "https://www.sqlite.org/lang_datefunc.html"
+    },
+    {
+      "category": "language",
+      "name": "DELETE",
+      "source": "https://www.sqlite.org/lang_delete.html"
+    },
+    {
+      "category": "language",
+      "name": "DETACH DATABASE",
+      "source": "https://www.sqlite.org/lang_detach.html"
+    },
+    {
+      "category": "language",
+      "name": "DROP INDEX",
+      "source": "https://www.sqlite.org/lang_dropindex.html"
+    },
+    {
+      "category": "language",
+      "name": "DROP TABLE",
+      "source": "https://www.sqlite.org/lang_droptable.html"
+    },
+    {
+      "category": "language",
+      "name": "DROP TRIGGER",
+      "source": "https://www.sqlite.org/lang_droptrigger.html"
+    },
+    {
+      "category": "language",
+      "name": "DROP VIEW",
+      "source": "https://www.sqlite.org/lang_dropview.html"
+    },
+    {
+      "category": "language",
+      "name": "END TRANSACTION",
+      "source": "https://www.sqlite.org/lang_transaction.html"
+    },
+    {
+      "category": "language",
+      "name": "EXPLAIN",
+      "source": "https://www.sqlite.org/lang_explain.html"
+    },
+    {
+      "category": "language",
+      "name": "expression",
+      "source": "https://www.sqlite.org/lang_expr.html"
+    },
+    {
+      "category": "language",
+      "name": "INDEXED BY",
+      "source": "https://www.sqlite.org/lang_indexedby.html"
+    },
+    {
+      "category": "language",
+      "name": "INSERT",
+      "source": "https://www.sqlite.org/lang_insert.html"
+    },
+    {
+      "category": "language",
+      "name": "JSON functions",
+      "source": "https://www.sqlite.org/json1.html"
+    },
+    {
+      "category": "language",
+      "name": "keywords",
+      "source": "https://www.sqlite.org/lang_keywords.html"
+    },
+    {
+      "category": "language",
+      "name": "math functions",
+      "source": "https://www.sqlite.org/lang_mathfunc.html"
+    },
+    {
+      "category": "language",
+      "name": "ON CONFLICT clause",
+      "source": "https://www.sqlite.org/lang_conflict.html"
+    },
+    {
+      "category": "language",
+      "name": "PRAGMA",
+      "source": "https://www.sqlite.org/pragma.html#syntax"
+    },
+    {
+      "category": "language",
+      "name": "REINDEX",
+      "source": "https://www.sqlite.org/lang_reindex.html"
+    },
+    {
+      "category": "language",
+      "name": "RELEASE SAVEPOINT",
+      "source": "https://www.sqlite.org/lang_savepoint.html"
+    },
+    {
+      "category": "language",
+      "name": "REPLACE",
+      "source": "https://www.sqlite.org/lang_replace.html"
+    },
+    {
+      "category": "language",
+      "name": "RETURNING clause",
+      "source": "https://www.sqlite.org/lang_returning.html"
+    },
+    {
+      "category": "language",
+      "name": "ROLLBACK TRANSACTION",
+      "source": "https://www.sqlite.org/lang_transaction.html"
+    },
+    {
+      "category": "language",
+      "name": "SAVEPOINT",
+      "source": "https://www.sqlite.org/lang_savepoint.html"
+    },
+    {
+      "category": "language",
+      "name": "SELECT",
+      "source": "https://www.sqlite.org/lang_select.html"
+    },
+    {
+      "category": "language",
+      "name": "UPDATE",
+      "source": "https://www.sqlite.org/lang_update.html"
+    },
+    {
+      "category": "language",
+      "name": "UPSERT",
+      "source": "https://www.sqlite.org/lang_upsert.html"
+    },
+    {
+      "category": "language",
+      "name": "VACUUM",
+      "source": "https://www.sqlite.org/lang_vacuum.html"
+    },
+    {
+      "category": "language",
+      "name": "window functions",
+      "source": "https://www.sqlite.org/windowfunctions.html"
+    },
+    {
+      "category": "language",
+      "name": "WITH clause",
+      "source": "https://www.sqlite.org/lang_with.html"
+    },
+    {
+      "category": "scalar",
+      "name": "abs(X)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#abs"
+    },
+    {
+      "category": "scalar",
+      "name": "changes()",
+      "source": "https://www.sqlite.org/lang_corefunc.html#changes"
+    },
+    {
+      "category": "scalar",
+      "name": "char(X1,X2,...,XN)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#char"
+    },
+    {
+      "category": "scalar",
+      "name": "coalesce(X,Y,...)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#coalesce"
+    },
+    {
+      "category": "scalar",
+      "name": "concat(X,...)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#concat"
+    },
+    {
+      "category": "scalar",
+      "name": "concat_ws(SEP,X,...)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#concat_ws"
+    },
+    {
+      "category": "scalar",
+      "name": "format(FORMAT,...)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#format"
+    },
+    {
+      "category": "scalar",
+      "name": "glob(X,Y)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#glob"
+    },
+    {
+      "category": "scalar",
+      "name": "hex(X)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#hex"
+    },
+    {
+      "category": "scalar",
+      "name": "if(B1,V1,...)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#iif"
+    },
+    {
+      "category": "scalar",
+      "name": "ifnull(X,Y)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#ifnull"
+    },
+    {
+      "category": "scalar",
+      "name": "iif(B1,V1,...)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#iif"
+    },
+    {
+      "category": "scalar",
+      "name": "instr(X,Y)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#instr"
+    },
+    {
+      "category": "scalar",
+      "name": "last_insert_rowid()",
+      "source": "https://www.sqlite.org/lang_corefunc.html#last_insert_rowid"
+    },
+    {
+      "category": "scalar",
+      "name": "length(X)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#length"
+    },
+    {
+      "category": "scalar",
+      "name": "like(X,Y)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#like"
+    },
+    {
+      "category": "scalar",
+      "name": "like(X,Y,Z)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#like"
+    },
+    {
+      "category": "scalar",
+      "name": "likelihood(X,Y)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#likelihood"
+    },
+    {
+      "category": "scalar",
+      "name": "likely(X)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#likely"
+    },
+    {
+      "category": "scalar",
+      "name": "load_extension(X)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#load_extension"
+    },
+    {
+      "category": "scalar",
+      "name": "load_extension(X,Y)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#load_extension"
+    },
+    {
+      "category": "scalar",
+      "name": "lower(X)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#lower"
+    },
+    {
+      "category": "scalar",
+      "name": "ltrim(X)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#ltrim"
+    },
+    {
+      "category": "scalar",
+      "name": "ltrim(X,Y)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#ltrim"
+    },
+    {
+      "category": "scalar",
+      "name": "max(X,Y,...)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#max_scalar"
+    },
+    {
+      "category": "scalar",
+      "name": "min(X,Y,...)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#min_scalar"
+    },
+    {
+      "category": "scalar",
+      "name": "nullif(X,Y)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#nullif"
+    },
+    {
+      "category": "scalar",
+      "name": "octet_length(X)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#octet_length"
+    },
+    {
+      "category": "scalar",
+      "name": "printf(FORMAT,...)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#printf"
+    },
+    {
+      "category": "scalar",
+      "name": "quote(X)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#quote"
+    },
+    {
+      "category": "scalar",
+      "name": "random()",
+      "source": "https://www.sqlite.org/lang_corefunc.html#random"
+    },
+    {
+      "category": "scalar",
+      "name": "randomblob(N)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#randomblob"
+    },
+    {
+      "category": "scalar",
+      "name": "replace(X,Y,Z)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#replace"
+    },
+    {
+      "category": "scalar",
+      "name": "round(X)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#round"
+    },
+    {
+      "category": "scalar",
+      "name": "round(X,Y)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#round"
+    },
+    {
+      "category": "scalar",
+      "name": "rtrim(X)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#rtrim"
+    },
+    {
+      "category": "scalar",
+      "name": "rtrim(X,Y)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#rtrim"
+    },
+    {
+      "category": "scalar",
+      "name": "sign(X)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#sign"
+    },
+    {
+      "category": "scalar",
+      "name": "soundex(X)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#soundex"
+    },
+    {
+      "category": "scalar",
+      "name": "sqlite_compileoption_get(N)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#sqlite_compileoption_get"
+    },
+    {
+      "category": "scalar",
+      "name": "sqlite_compileoption_used(X)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#sqlite_compileoption_used"
+    },
+    {
+      "category": "scalar",
+      "name": "sqlite_offset(X)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#sqlite_offset"
+    },
+    {
+      "category": "scalar",
+      "name": "sqlite_source_id()",
+      "source": "https://www.sqlite.org/lang_corefunc.html#sqlite_source_id"
+    },
+    {
+      "category": "scalar",
+      "name": "sqlite_version()",
+      "source": "https://www.sqlite.org/lang_corefunc.html#sqlite_version"
+    },
+    {
+      "category": "scalar",
+      "name": "substr(X,Y)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#substr"
+    },
+    {
+      "category": "scalar",
+      "name": "substr(X,Y,Z)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#substr"
+    },
+    {
+      "category": "scalar",
+      "name": "substring(X,Y)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#substr"
+    },
+    {
+      "category": "scalar",
+      "name": "substring(X,Y,Z)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#substr"
+    },
+    {
+      "category": "scalar",
+      "name": "total_changes()",
+      "source": "https://www.sqlite.org/lang_corefunc.html#total_changes"
+    },
+    {
+      "category": "scalar",
+      "name": "trim(X)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#trim"
+    },
+    {
+      "category": "scalar",
+      "name": "trim(X,Y)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#trim"
+    },
+    {
+      "category": "scalar",
+      "name": "typeof(X)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#typeof"
+    },
+    {
+      "category": "scalar",
+      "name": "unhex(X)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#unhex"
+    },
+    {
+      "category": "scalar",
+      "name": "unhex(X,Y)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#unhex"
+    },
+    {
+      "category": "scalar",
+      "name": "unicode(X)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#unicode"
+    },
+    {
+      "category": "scalar",
+      "name": "unistr(X)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#unistr"
+    },
+    {
+      "category": "scalar",
+      "name": "unistr_quote(X)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#unistr_quote"
+    },
+    {
+      "category": "scalar",
+      "name": "unlikely(X)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#unlikely"
+    },
+    {
+      "category": "scalar",
+      "name": "upper(X)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#upper"
+    },
+    {
+      "category": "scalar",
+      "name": "zeroblob(N)",
+      "source": "https://www.sqlite.org/lang_corefunc.html#zeroblob"
+    },
+    {
+      "category": "aggregate",
+      "name": "avg(X)",
+      "source": "https://www.sqlite.org/lang_aggfunc.html#avg"
+    },
+    {
+      "category": "aggregate",
+      "name": "count(*)",
+      "source": "https://www.sqlite.org/lang_aggfunc.html#count"
+    },
+    {
+      "category": "aggregate",
+      "name": "count(X)",
+      "source": "https://www.sqlite.org/lang_aggfunc.html#count"
+    },
+    {
+      "category": "aggregate",
+      "name": "group_concat(X)",
+      "source": "https://www.sqlite.org/lang_aggfunc.html#group_concat"
+    },
+    {
+      "category": "aggregate",
+      "name": "group_concat(X,Y)",
+      "source": "https://www.sqlite.org/lang_aggfunc.html#group_concat"
+    },
+    {
+      "category": "aggregate",
+      "name": "max(X)",
+      "source": "https://www.sqlite.org/lang_aggfunc.html#max_agg"
+    },
+    {
+      "category": "aggregate",
+      "name": "median(X)",
+      "source": "https://www.sqlite.org/lang_aggfunc.html#median"
+    },
+    {
+      "category": "aggregate",
+      "name": "min(X)",
+      "source": "https://www.sqlite.org/lang_aggfunc.html#min_agg"
+    },
+    {
+      "category": "aggregate",
+      "name": "percentile(Y,P)",
+      "source": "https://www.sqlite.org/lang_aggfunc.html#percentile"
+    },
+    {
+      "category": "aggregate",
+      "name": "percentile_cont(Y,P)",
+      "source": "https://www.sqlite.org/lang_aggfunc.html#percentile_cont"
+    },
+    {
+      "category": "aggregate",
+      "name": "percentile_disc(Y,P)",
+      "source": "https://www.sqlite.org/lang_aggfunc.html#percentile_disc"
+    },
+    {
+      "category": "aggregate",
+      "name": "string_agg(X,Y)",
+      "source": "https://www.sqlite.org/lang_aggfunc.html#group_concat"
+    },
+    {
+      "category": "aggregate",
+      "name": "sum(X)",
+      "source": "https://www.sqlite.org/lang_aggfunc.html#sumunc"
+    },
+    {
+      "category": "aggregate",
+      "name": "total(X)",
+      "source": "https://www.sqlite.org/lang_aggfunc.html#sumunc"
+    },
+    {
+      "category": "math",
+      "name": "pi()",
+      "source": "https://www.sqlite.org/lang_mathfunc.html#pi"
+    },
+    {
+      "category": "math",
+      "name": "acos(X)",
+      "source": "https://www.sqlite.org/lang_mathfunc.html#acos"
+    },
+    {
+      "category": "math",
+      "name": "acosh(X)",
+      "source": "https://www.sqlite.org/lang_mathfunc.html#acosh"
+    },
+    {
+      "category": "math",
+      "name": "asin(X)",
+      "source": "https://www.sqlite.org/lang_mathfunc.html#asin"
+    },
+    {
+      "category": "math",
+      "name": "asinh(X)",
+      "source": "https://www.sqlite.org/lang_mathfunc.html#asinh"
+    },
+    {
+      "category": "math",
+      "name": "atan(X)",
+      "source": "https://www.sqlite.org/lang_mathfunc.html#atan"
+    },
+    {
+      "category": "math",
+      "name": "atan2(Y,X)",
+      "source": "https://www.sqlite.org/lang_mathfunc.html#atan2"
+    },
+    {
+      "category": "math",
+      "name": "atanh(X)",
+      "source": "https://www.sqlite.org/lang_mathfunc.html#atanh"
+    },
+    {
+      "category": "math",
+      "name": "ceil(X)",
+      "source": "https://www.sqlite.org/lang_mathfunc.html#ceil"
+    },
+    {
+      "category": "math",
+      "name": "ceiling(X)",
+      "source": "https://www.sqlite.org/lang_mathfunc.html#ceil"
+    },
+    {
+      "category": "math",
+      "name": "cos(X)",
+      "source": "https://www.sqlite.org/lang_mathfunc.html#cos"
+    },
+    {
+      "category": "math",
+      "name": "cosh(X)",
+      "source": "https://www.sqlite.org/lang_mathfunc.html#cosh"
+    },
+    {
+      "category": "math",
+      "name": "degrees(X)",
+      "source": "https://www.sqlite.org/lang_mathfunc.html#degrees"
+    },
+    {
+      "category": "math",
+      "name": "exp(X)",
+      "source": "https://www.sqlite.org/lang_mathfunc.html#exp"
+    },
+    {
+      "category": "math",
+      "name": "floor(X)",
+      "source": "https://www.sqlite.org/lang_mathfunc.html#floor"
+    },
+    {
+      "category": "math",
+      "name": "ln(X)",
+      "source": "https://www.sqlite.org/lang_mathfunc.html#ln"
+    },
+    {
+      "category": "math",
+      "name": "log(B,X)",
+      "source": "https://www.sqlite.org/lang_mathfunc.html#log"
+    },
+    {
+      "category": "math",
+      "name": "log(X)",
+      "source": "https://www.sqlite.org/lang_mathfunc.html#log"
+    },
+    {
+      "category": "math",
+      "name": "log10(X)",
+      "source": "https://www.sqlite.org/lang_mathfunc.html#log"
+    },
+    {
+      "category": "math",
+      "name": "log2(X)",
+      "source": "https://www.sqlite.org/lang_mathfunc.html#log2"
+    },
+    {
+      "category": "math",
+      "name": "mod(X,Y)",
+      "source": "https://www.sqlite.org/lang_mathfunc.html#mod"
+    },
+    {
+      "category": "math",
+      "name": "pow(X,Y)",
+      "source": "https://www.sqlite.org/lang_mathfunc.html#pow"
+    },
+    {
+      "category": "math",
+      "name": "power(X,Y)",
+      "source": "https://www.sqlite.org/lang_mathfunc.html#pow"
+    },
+    {
+      "category": "math",
+      "name": "radians(X)",
+      "source": "https://www.sqlite.org/lang_mathfunc.html#radians"
+    },
+    {
+      "category": "math",
+      "name": "sin(X)",
+      "source": "https://www.sqlite.org/lang_mathfunc.html#sin"
+    },
+    {
+      "category": "math",
+      "name": "sinh(X)",
+      "source": "https://www.sqlite.org/lang_mathfunc.html#sinh"
+    },
+    {
+      "category": "math",
+      "name": "sqrt(X)",
+      "source": "https://www.sqlite.org/lang_mathfunc.html#sqrt"
+    },
+    {
+      "category": "math",
+      "name": "tan(X)",
+      "source": "https://www.sqlite.org/lang_mathfunc.html#tan"
+    },
+    {
+      "category": "math",
+      "name": "tanh(X)",
+      "source": "https://www.sqlite.org/lang_mathfunc.html#tanh"
+    },
+    {
+      "category": "math",
+      "name": "trunc(X)",
+      "source": "https://www.sqlite.org/lang_mathfunc.html#trunc"
+    },
+    {
+      "category": "pragma",
+      "name": "analysis_limit",
+      "source": "https://www.sqlite.org/pragma.html#pragma_analysis_limit"
+    },
+    {
+      "category": "pragma",
+      "name": "application_id",
+      "source": "https://www.sqlite.org/pragma.html#pragma_application_id"
+    },
+    {
+      "category": "pragma",
+      "name": "auto_vacuum",
+      "source": "https://www.sqlite.org/pragma.html#pragma_auto_vacuum"
+    },
+    {
+      "category": "pragma",
+      "name": "automatic_index",
+      "source": "https://www.sqlite.org/pragma.html#pragma_automatic_index"
+    },
+    {
+      "category": "pragma",
+      "name": "busy_timeout",
+      "source": "https://www.sqlite.org/pragma.html#pragma_busy_timeout"
+    },
+    {
+      "category": "pragma",
+      "name": "cache_size",
+      "source": "https://www.sqlite.org/pragma.html#pragma_cache_size"
+    },
+    {
+      "category": "pragma",
+      "name": "cache_spill",
+      "source": "https://www.sqlite.org/pragma.html#pragma_cache_spill"
+    },
+    {
+      "category": "pragma",
+      "name": "case_sensitive_like",
+      "source": "https://www.sqlite.org/pragma.html#pragma_case_sensitive_like"
+    },
+    {
+      "category": "pragma",
+      "name": "cell_size_check",
+      "source": "https://www.sqlite.org/pragma.html#pragma_cell_size_check"
+    },
+    {
+      "category": "pragma",
+      "name": "checkpoint_fullfsync",
+      "source": "https://www.sqlite.org/pragma.html#pragma_checkpoint_fullfsync"
+    },
+    {
+      "category": "pragma",
+      "name": "collation_list",
+      "source": "https://www.sqlite.org/pragma.html#pragma_collation_list"
+    },
+    {
+      "category": "pragma",
+      "name": "compile_options",
+      "source": "https://www.sqlite.org/pragma.html#pragma_compile_options"
+    },
+    {
+      "category": "pragma",
+      "name": "count_changes",
+      "source": "https://www.sqlite.org/pragma.html#pragma_count_changes"
+    },
+    {
+      "category": "pragma",
+      "name": "data_store_directory",
+      "source": "https://www.sqlite.org/pragma.html#pragma_data_store_directory"
+    },
+    {
+      "category": "pragma",
+      "name": "data_version",
+      "source": "https://www.sqlite.org/pragma.html#pragma_data_version"
+    },
+    {
+      "category": "pragma",
+      "name": "database_list",
+      "source": "https://www.sqlite.org/pragma.html#pragma_database_list"
+    },
+    {
+      "category": "pragma",
+      "name": "default_cache_size",
+      "source": "https://www.sqlite.org/pragma.html#pragma_default_cache_size"
+    },
+    {
+      "category": "pragma",
+      "name": "defer_foreign_keys",
+      "source": "https://www.sqlite.org/pragma.html#pragma_defer_foreign_keys"
+    },
+    {
+      "category": "pragma",
+      "name": "empty_result_callbacks",
+      "source": "https://www.sqlite.org/pragma.html#pragma_empty_result_callbacks"
+    },
+    {
+      "category": "pragma",
+      "name": "encoding",
+      "source": "https://www.sqlite.org/pragma.html#pragma_encoding"
+    },
+    {
+      "category": "pragma",
+      "name": "foreign_key_check",
+      "source": "https://www.sqlite.org/pragma.html#pragma_foreign_key_check"
+    },
+    {
+      "category": "pragma",
+      "name": "foreign_key_list",
+      "source": "https://www.sqlite.org/pragma.html#pragma_foreign_key_list"
+    },
+    {
+      "category": "pragma",
+      "name": "foreign_keys",
+      "source": "https://www.sqlite.org/pragma.html#pragma_foreign_keys"
+    },
+    {
+      "category": "pragma",
+      "name": "freelist_count",
+      "source": "https://www.sqlite.org/pragma.html#pragma_freelist_count"
+    },
+    {
+      "category": "pragma",
+      "name": "full_column_names",
+      "source": "https://www.sqlite.org/pragma.html#pragma_full_column_names"
+    },
+    {
+      "category": "pragma",
+      "name": "fullfsync",
+      "source": "https://www.sqlite.org/pragma.html#pragma_fullfsync"
+    },
+    {
+      "category": "pragma",
+      "name": "function_list",
+      "source": "https://www.sqlite.org/pragma.html#pragma_function_list"
+    },
+    {
+      "category": "pragma",
+      "name": "hard_heap_limit",
+      "source": "https://www.sqlite.org/pragma.html#pragma_hard_heap_limit"
+    },
+    {
+      "category": "pragma",
+      "name": "ignore_check_constraints",
+      "source": "https://www.sqlite.org/pragma.html#pragma_ignore_check_constraints"
+    },
+    {
+      "category": "pragma",
+      "name": "incremental_vacuum",
+      "source": "https://www.sqlite.org/pragma.html#pragma_incremental_vacuum"
+    },
+    {
+      "category": "pragma",
+      "name": "index_info",
+      "source": "https://www.sqlite.org/pragma.html#pragma_index_info"
+    },
+    {
+      "category": "pragma",
+      "name": "index_list",
+      "source": "https://www.sqlite.org/pragma.html#pragma_index_list"
+    },
+    {
+      "category": "pragma",
+      "name": "index_xinfo",
+      "source": "https://www.sqlite.org/pragma.html#pragma_index_xinfo"
+    },
+    {
+      "category": "pragma",
+      "name": "integrity_check",
+      "source": "https://www.sqlite.org/pragma.html#pragma_integrity_check"
+    },
+    {
+      "category": "pragma",
+      "name": "journal_mode",
+      "source": "https://www.sqlite.org/pragma.html#pragma_journal_mode"
+    },
+    {
+      "category": "pragma",
+      "name": "journal_size_limit",
+      "source": "https://www.sqlite.org/pragma.html#pragma_journal_size_limit"
+    },
+    {
+      "category": "pragma",
+      "name": "legacy_alter_table",
+      "source": "https://www.sqlite.org/pragma.html#pragma_legacy_alter_table"
+    },
+    {
+      "category": "pragma",
+      "name": "legacy_file_format",
+      "source": "https://www.sqlite.org/pragma.html#pragma_legacy_file_format"
+    },
+    {
+      "category": "pragma",
+      "name": "locking_mode",
+      "source": "https://www.sqlite.org/pragma.html#pragma_locking_mode"
+    },
+    {
+      "category": "pragma",
+      "name": "max_page_count",
+      "source": "https://www.sqlite.org/pragma.html#pragma_max_page_count"
+    },
+    {
+      "category": "pragma",
+      "name": "mmap_size",
+      "source": "https://www.sqlite.org/pragma.html#pragma_mmap_size"
+    },
+    {
+      "category": "pragma",
+      "name": "module_list",
+      "source": "https://www.sqlite.org/pragma.html#pragma_module_list"
+    },
+    {
+      "category": "pragma",
+      "name": "optimize",
+      "source": "https://www.sqlite.org/pragma.html#pragma_optimize"
+    },
+    {
+      "category": "pragma",
+      "name": "page_count",
+      "source": "https://www.sqlite.org/pragma.html#pragma_page_count"
+    },
+    {
+      "category": "pragma",
+      "name": "page_size",
+      "source": "https://www.sqlite.org/pragma.html#pragma_page_size"
+    },
+    {
+      "category": "pragma",
+      "name": "parser_trace",
+      "source": "https://www.sqlite.org/pragma.html#pragma_parser_trace"
+    },
+    {
+      "category": "pragma",
+      "name": "",
+      "source": "https://www.sqlite.org/pragma.html#pragma_pragma_list"
+    },
+    {
+      "category": "pragma",
+      "name": "query_only",
+      "source": "https://www.sqlite.org/pragma.html#pragma_query_only"
+    },
+    {
+      "category": "pragma",
+      "name": "quick_check",
+      "source": "https://www.sqlite.org/pragma.html#pragma_quick_check"
+    },
+    {
+      "category": "pragma",
+      "name": "read_uncommitted",
+      "source": "https://www.sqlite.org/pragma.html#pragma_read_uncommitted"
+    },
+    {
+      "category": "pragma",
+      "name": "recursive_triggers",
+      "source": "https://www.sqlite.org/pragma.html#pragma_recursive_triggers"
+    },
+    {
+      "category": "pragma",
+      "name": "reverse_unordered_selects",
+      "source": "https://www.sqlite.org/pragma.html#pragma_reverse_unordered_selects"
+    },
+    {
+      "category": "pragma",
+      "name": "schema_version",
+      "source": "https://www.sqlite.org/pragma.html#pragma_schema_version"
+    },
+    {
+      "category": "pragma",
+      "name": "secure_delete",
+      "source": "https://www.sqlite.org/pragma.html#pragma_secure_delete"
+    },
+    {
+      "category": "pragma",
+      "name": "short_column_names",
+      "source": "https://www.sqlite.org/pragma.html#pragma_short_column_names"
+    },
+    {
+      "category": "pragma",
+      "name": "shrink_memory",
+      "source": "https://www.sqlite.org/pragma.html#pragma_shrink_memory"
+    },
+    {
+      "category": "pragma",
+      "name": "soft_heap_limit",
+      "source": "https://www.sqlite.org/pragma.html#pragma_soft_heap_limit"
+    },
+    {
+      "category": "pragma",
+      "name": "stats",
+      "source": "https://www.sqlite.org/pragma.html#pragma_stats"
+    },
+    {
+      "category": "pragma",
+      "name": "synchronous",
+      "source": "https://www.sqlite.org/pragma.html#pragma_synchronous"
+    },
+    {
+      "category": "pragma",
+      "name": "table_info",
+      "source": "https://www.sqlite.org/pragma.html#pragma_table_info"
+    },
+    {
+      "category": "pragma",
+      "name": "table_list",
+      "source": "https://www.sqlite.org/pragma.html#pragma_table_list"
+    },
+    {
+      "category": "pragma",
+      "name": "table_xinfo",
+      "source": "https://www.sqlite.org/pragma.html#pragma_table_xinfo"
+    },
+    {
+      "category": "pragma",
+      "name": "temp_store",
+      "source": "https://www.sqlite.org/pragma.html#pragma_temp_store"
+    },
+    {
+      "category": "pragma",
+      "name": "temp_store_directory",
+      "source": "https://www.sqlite.org/pragma.html#pragma_temp_store_directory"
+    },
+    {
+      "category": "pragma",
+      "name": "threads",
+      "source": "https://www.sqlite.org/pragma.html#pragma_threads"
+    },
+    {
+      "category": "pragma",
+      "name": "trusted_schema",
+      "source": "https://www.sqlite.org/pragma.html#pragma_trusted_schema"
+    },
+    {
+      "category": "pragma",
+      "name": "user_version",
+      "source": "https://www.sqlite.org/pragma.html#pragma_user_version"
+    },
+    {
+      "category": "pragma",
+      "name": "vdbe_addoptrace",
+      "source": "https://www.sqlite.org/pragma.html#pragma_vdbe_addoptrace"
+    },
+    {
+      "category": "pragma",
+      "name": "vdbe_debug",
+      "source": "https://www.sqlite.org/pragma.html#pragma_vdbe_debug"
+    },
+    {
+      "category": "pragma",
+      "name": "vdbe_listing",
+      "source": "https://www.sqlite.org/pragma.html#pragma_vdbe_listing"
+    },
+    {
+      "category": "pragma",
+      "name": "vdbe_trace",
+      "source": "https://www.sqlite.org/pragma.html#pragma_vdbe_trace"
+    },
+    {
+      "category": "pragma",
+      "name": "wal_autocheckpoint",
+      "source": "https://www.sqlite.org/pragma.html#pragma_wal_autocheckpoint"
+    },
+    {
+      "category": "pragma",
+      "name": "wal_checkpoint",
+      "source": "https://www.sqlite.org/pragma.html#pragma_wal_checkpoint"
+    },
+    {
+      "category": "pragma",
+      "name": "writable_schema",
+      "source": "https://www.sqlite.org/pragma.html#pragma_writable_schema"
+    },
+    {
+      "category": "date",
+      "name": "date(time-value,modifier,modifier,...)",
+      "source": "https://www.sqlite.org/lang_datefunc.html"
+    },
+    {
+      "category": "date",
+      "name": "time(time-value,modifier,modifier,...)",
+      "source": "https://www.sqlite.org/lang_datefunc.html"
+    },
+    {
+      "category": "date",
+      "name": "datetime(time-value,modifier,modifier,...)",
+      "source": "https://www.sqlite.org/lang_datefunc.html"
+    },
+    {
+      "category": "date",
+      "name": "julianday(time-value,modifier,modifier,...)",
+      "source": "https://www.sqlite.org/lang_datefunc.html"
+    },
+    {
+      "category": "date",
+      "name": "unixepoch(time-value,modifier,modifier,...)",
+      "source": "https://www.sqlite.org/lang_datefunc.html"
+    },
+    {
+      "category": "date",
+      "name": "strftime(format,time-value,modifier,modifier,...)",
+      "source": "https://www.sqlite.org/lang_datefunc.html"
+    },
+    {
+      "category": "date",
+      "name": "timediff(time-value,time-value)",
+      "source": "https://www.sqlite.org/lang_datefunc.html"
+    },
+    {
+      "category": "window",
+      "name": "row_number()",
+      "source": "https://www.sqlite.org/windowfunctions.html"
+    },
+    {
+      "category": "window",
+      "name": "rank()",
+      "source": "https://www.sqlite.org/windowfunctions.html"
+    },
+    {
+      "category": "window",
+      "name": "dense_rank()",
+      "source": "https://www.sqlite.org/windowfunctions.html"
+    },
+    {
+      "category": "window",
+      "name": "percent_rank()",
+      "source": "https://www.sqlite.org/windowfunctions.html"
+    },
+    {
+      "category": "window",
+      "name": "cume_dist()",
+      "source": "https://www.sqlite.org/windowfunctions.html"
+    },
+    {
+      "category": "window",
+      "name": "ntile(N)",
+      "source": "https://www.sqlite.org/windowfunctions.html"
+    },
+    {
+      "category": "window",
+      "name": "lag(expr)",
+      "source": "https://www.sqlite.org/windowfunctions.html"
+    },
+    {
+      "category": "window",
+      "name": "lag(expr, offset)",
+      "source": "https://www.sqlite.org/windowfunctions.html"
+    },
+    {
+      "category": "window",
+      "name": "lag(expr, offset, default)",
+      "source": "https://www.sqlite.org/windowfunctions.html"
+    },
+    {
+      "category": "window",
+      "name": "lead(expr)",
+      "source": "https://www.sqlite.org/windowfunctions.html"
+    },
+    {
+      "category": "window",
+      "name": "lead(expr, offset)",
+      "source": "https://www.sqlite.org/windowfunctions.html"
+    },
+    {
+      "category": "window",
+      "name": "lead(expr, offset, default)",
+      "source": "https://www.sqlite.org/windowfunctions.html"
+    },
+    {
+      "category": "window",
+      "name": "first_value(expr)",
+      "source": "https://www.sqlite.org/windowfunctions.html"
+    },
+    {
+      "category": "window",
+      "name": "last_value(expr)",
+      "source": "https://www.sqlite.org/windowfunctions.html"
+    },
+    {
+      "category": "window",
+      "name": "nth_value(expr, N)",
+      "source": "https://www.sqlite.org/windowfunctions.html"
+    },
+    {
+      "category": "json",
+      "name": "json",
+      "source": "https://www.sqlite.org/json1.html#jmini"
+    },
+    {
+      "category": "json",
+      "name": "jsonb",
+      "source": "https://www.sqlite.org/json1.html#jminib"
+    },
+    {
+      "category": "json",
+      "name": "json_array",
+      "source": "https://www.sqlite.org/json1.html#jarray"
+    },
+    {
+      "category": "json",
+      "name": "jsonb_array",
+      "source": "https://www.sqlite.org/json1.html#jarrayb"
+    },
+    {
+      "category": "json",
+      "name": "jsonb_array_insert",
+      "source": "https://www.sqlite.org/json1.html#jarrayins"
+    },
+    {
+      "category": "json",
+      "name": "json_array_insert",
+      "source": "https://www.sqlite.org/json1.html#jarrayins"
+    },
+    {
+      "category": "json",
+      "name": "json_array_length",
+      "source": "https://www.sqlite.org/json1.html#jarraylen"
+    },
+    {
+      "category": "json",
+      "name": "json_error_position",
+      "source": "https://www.sqlite.org/json1.html#jerr"
+    },
+    {
+      "category": "json",
+      "name": "json_extract",
+      "source": "https://www.sqlite.org/json1.html#jex"
+    },
+    {
+      "category": "json",
+      "name": "jsonb_extract",
+      "source": "https://www.sqlite.org/json1.html#jexb"
+    },
+    {
+      "category": "json",
+      "name": "->",
+      "source": "https://www.sqlite.org/json1.html#jptr"
+    },
+    {
+      "category": "json",
+      "name": "->>",
+      "source": "https://www.sqlite.org/json1.html#jptr"
+    },
+    {
+      "category": "json",
+      "name": "json_insert",
+      "source": "https://www.sqlite.org/json1.html#jins"
+    },
+    {
+      "category": "json",
+      "name": "jsonb_insert",
+      "source": "https://www.sqlite.org/json1.html#jinsb"
+    },
+    {
+      "category": "json",
+      "name": "json_object",
+      "source": "https://www.sqlite.org/json1.html#jobj"
+    },
+    {
+      "category": "json",
+      "name": "jsonb_object",
+      "source": "https://www.sqlite.org/json1.html#jobjb"
+    },
+    {
+      "category": "json",
+      "name": "json_patch",
+      "source": "https://www.sqlite.org/json1.html#jpatch"
+    },
+    {
+      "category": "json",
+      "name": "jsonb_patch",
+      "source": "https://www.sqlite.org/json1.html#jpatchb"
+    },
+    {
+      "category": "json",
+      "name": "json_pretty",
+      "source": "https://www.sqlite.org/json1.html#jpretty"
+    },
+    {
+      "category": "json",
+      "name": "json_quote",
+      "source": "https://www.sqlite.org/json1.html#jquote"
+    },
+    {
+      "category": "json",
+      "name": "json_remove",
+      "source": "https://www.sqlite.org/json1.html#jrm"
+    },
+    {
+      "category": "json",
+      "name": "jsonb_remove",
+      "source": "https://www.sqlite.org/json1.html#jrmb"
+    },
+    {
+      "category": "json",
+      "name": "json_replace",
+      "source": "https://www.sqlite.org/json1.html#jrepl"
+    },
+    {
+      "category": "json",
+      "name": "jsonb_replace",
+      "source": "https://www.sqlite.org/json1.html#jreplb"
+    },
+    {
+      "category": "json",
+      "name": "json_set",
+      "source": "https://www.sqlite.org/json1.html#jset"
+    },
+    {
+      "category": "json",
+      "name": "jsonb_set",
+      "source": "https://www.sqlite.org/json1.html#jsetb"
+    },
+    {
+      "category": "json",
+      "name": "json_type",
+      "source": "https://www.sqlite.org/json1.html#jtype"
+    },
+    {
+      "category": "json",
+      "name": "json_valid",
+      "source": "https://www.sqlite.org/json1.html#jvalid"
+    },
+    {
+      "category": "json",
+      "name": "json_group_array",
+      "source": "https://www.sqlite.org/json1.html#jgrouparray"
+    },
+    {
+      "category": "json",
+      "name": "jsonb_group_array",
+      "source": "https://www.sqlite.org/json1.html#jgrouparrayb"
+    },
+    {
+      "category": "json",
+      "name": "json_group_object",
+      "source": "https://www.sqlite.org/json1.html#jgroupobject"
+    },
+    {
+      "category": "json",
+      "name": "jsonb_group_object",
+      "source": "https://www.sqlite.org/json1.html#jgroupobjectb"
+    },
+    {
+      "category": "json",
+      "name": "json_each",
+      "source": "https://www.sqlite.org/json1.html#jeach"
+    },
+    {
+      "category": "json",
+      "name": "json_tree",
+      "source": "https://www.sqlite.org/json1.html#jtree"
+    },
+    {
+      "category": "json",
+      "name": "jsonb_each",
+      "source": "https://www.sqlite.org/json1.html#jeach"
+    },
+    {
+      "category": "json",
+      "name": "jsonb_tree",
+      "source": "https://www.sqlite.org/json1.html#jtree"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_aggregate_context",
+      "source": "https://www.sqlite.org/c3ref/aggregate_context.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_aggregate_count",
+      "source": "https://www.sqlite.org/c3ref/funclist.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_auto_extension",
+      "source": "https://www.sqlite.org/c3ref/auto_extension.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_autovacuum_pages",
+      "source": "https://www.sqlite.org/c3ref/autovacuum_pages.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_backup_finish",
+      "source": "https://www.sqlite.org/c3ref/backup_finish.html#sqlite3backupfinish"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_backup_init",
+      "source": "https://www.sqlite.org/c3ref/backup_finish.html#sqlite3backupinit"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_backup_pagecount",
+      "source": "https://www.sqlite.org/c3ref/backup_finish.html#sqlite3backuppagecount"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_backup_remaining",
+      "source": "https://www.sqlite.org/c3ref/backup_finish.html#sqlite3backupremaining"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_backup_step",
+      "source": "https://www.sqlite.org/c3ref/backup_finish.html#sqlite3backupstep"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_bind_blob",
+      "source": "https://www.sqlite.org/c3ref/bind_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_bind_blob64",
+      "source": "https://www.sqlite.org/c3ref/bind_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_bind_double",
+      "source": "https://www.sqlite.org/c3ref/bind_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_bind_int",
+      "source": "https://www.sqlite.org/c3ref/bind_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_bind_int64",
+      "source": "https://www.sqlite.org/c3ref/bind_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_bind_null",
+      "source": "https://www.sqlite.org/c3ref/bind_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_bind_parameter_count",
+      "source": "https://www.sqlite.org/c3ref/bind_parameter_count.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_bind_parameter_index",
+      "source": "https://www.sqlite.org/c3ref/bind_parameter_index.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_bind_parameter_name",
+      "source": "https://www.sqlite.org/c3ref/bind_parameter_name.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_bind_pointer",
+      "source": "https://www.sqlite.org/c3ref/bind_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_bind_text",
+      "source": "https://www.sqlite.org/c3ref/bind_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_bind_text16",
+      "source": "https://www.sqlite.org/c3ref/bind_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_bind_text64",
+      "source": "https://www.sqlite.org/c3ref/bind_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_bind_value",
+      "source": "https://www.sqlite.org/c3ref/bind_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_bind_zeroblob",
+      "source": "https://www.sqlite.org/c3ref/bind_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_bind_zeroblob64",
+      "source": "https://www.sqlite.org/c3ref/bind_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_blob_bytes",
+      "source": "https://www.sqlite.org/c3ref/blob_bytes.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_blob_close",
+      "source": "https://www.sqlite.org/c3ref/blob_close.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_blob_open",
+      "source": "https://www.sqlite.org/c3ref/blob_open.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_blob_read",
+      "source": "https://www.sqlite.org/c3ref/blob_read.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_blob_reopen",
+      "source": "https://www.sqlite.org/c3ref/blob_reopen.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_blob_write",
+      "source": "https://www.sqlite.org/c3ref/blob_write.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_busy_handler",
+      "source": "https://www.sqlite.org/c3ref/busy_handler.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_busy_timeout",
+      "source": "https://www.sqlite.org/c3ref/busy_timeout.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_cancel_auto_extension",
+      "source": "https://www.sqlite.org/c3ref/cancel_auto_extension.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_carray_bind",
+      "source": "https://www.sqlite.org/c3ref/carray_bind.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_carray_bind_v2",
+      "source": "https://www.sqlite.org/c3ref/carray_bind.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_changes",
+      "source": "https://www.sqlite.org/c3ref/changes.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_changes64",
+      "source": "https://www.sqlite.org/c3ref/changes.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_clear_bindings",
+      "source": "https://www.sqlite.org/c3ref/clear_bindings.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_close",
+      "source": "https://www.sqlite.org/c3ref/close.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_close_v2",
+      "source": "https://www.sqlite.org/c3ref/close.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_collation_needed",
+      "source": "https://www.sqlite.org/c3ref/collation_needed.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_collation_needed16",
+      "source": "https://www.sqlite.org/c3ref/collation_needed.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_column_blob",
+      "source": "https://www.sqlite.org/c3ref/column_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_column_bytes",
+      "source": "https://www.sqlite.org/c3ref/column_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_column_bytes16",
+      "source": "https://www.sqlite.org/c3ref/column_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_column_count",
+      "source": "https://www.sqlite.org/c3ref/column_count.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_column_database_name",
+      "source": "https://www.sqlite.org/c3ref/column_database_name.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_column_database_name16",
+      "source": "https://www.sqlite.org/c3ref/column_database_name.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_column_decltype",
+      "source": "https://www.sqlite.org/c3ref/column_decltype.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_column_decltype16",
+      "source": "https://www.sqlite.org/c3ref/column_decltype.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_column_double",
+      "source": "https://www.sqlite.org/c3ref/column_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_column_int",
+      "source": "https://www.sqlite.org/c3ref/column_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_column_int64",
+      "source": "https://www.sqlite.org/c3ref/column_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_column_name",
+      "source": "https://www.sqlite.org/c3ref/column_name.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_column_name16",
+      "source": "https://www.sqlite.org/c3ref/column_name.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_column_origin_name",
+      "source": "https://www.sqlite.org/c3ref/column_database_name.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_column_origin_name16",
+      "source": "https://www.sqlite.org/c3ref/column_database_name.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_column_table_name",
+      "source": "https://www.sqlite.org/c3ref/column_database_name.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_column_table_name16",
+      "source": "https://www.sqlite.org/c3ref/column_database_name.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_column_text",
+      "source": "https://www.sqlite.org/c3ref/column_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_column_text16",
+      "source": "https://www.sqlite.org/c3ref/column_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_column_type",
+      "source": "https://www.sqlite.org/c3ref/column_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_column_value",
+      "source": "https://www.sqlite.org/c3ref/column_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_commit_hook",
+      "source": "https://www.sqlite.org/c3ref/commit_hook.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_compileoption_get",
+      "source": "https://www.sqlite.org/c3ref/compileoption_get.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_compileoption_used",
+      "source": "https://www.sqlite.org/c3ref/compileoption_get.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_complete",
+      "source": "https://www.sqlite.org/c3ref/complete.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_complete16",
+      "source": "https://www.sqlite.org/c3ref/complete.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_config",
+      "source": "https://www.sqlite.org/c3ref/config.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_context_db_handle",
+      "source": "https://www.sqlite.org/c3ref/context_db_handle.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_create_collation",
+      "source": "https://www.sqlite.org/c3ref/create_collation.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_create_collation16",
+      "source": "https://www.sqlite.org/c3ref/create_collation.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_create_collation_v2",
+      "source": "https://www.sqlite.org/c3ref/create_collation.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_create_filename",
+      "source": "https://www.sqlite.org/c3ref/create_filename.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_create_function",
+      "source": "https://www.sqlite.org/c3ref/create_function.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_create_function16",
+      "source": "https://www.sqlite.org/c3ref/create_function.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_create_function_v2",
+      "source": "https://www.sqlite.org/c3ref/create_function.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_create_module",
+      "source": "https://www.sqlite.org/c3ref/create_module.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_create_module_v2",
+      "source": "https://www.sqlite.org/c3ref/create_module.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_create_window_function",
+      "source": "https://www.sqlite.org/c3ref/create_function.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_data_count",
+      "source": "https://www.sqlite.org/c3ref/data_count.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_database_file_object",
+      "source": "https://www.sqlite.org/c3ref/database_file_object.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_db_cacheflush",
+      "source": "https://www.sqlite.org/c3ref/db_cacheflush.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_db_config",
+      "source": "https://www.sqlite.org/c3ref/db_config.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_db_filename",
+      "source": "https://www.sqlite.org/c3ref/db_filename.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_db_handle",
+      "source": "https://www.sqlite.org/c3ref/db_handle.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_db_mutex",
+      "source": "https://www.sqlite.org/c3ref/db_mutex.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_db_name",
+      "source": "https://www.sqlite.org/c3ref/db_name.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_db_readonly",
+      "source": "https://www.sqlite.org/c3ref/db_readonly.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_db_release_memory",
+      "source": "https://www.sqlite.org/c3ref/db_release_memory.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_db_status",
+      "source": "https://www.sqlite.org/c3ref/db_status.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_db_status64",
+      "source": "https://www.sqlite.org/c3ref/db_status.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_declare_vtab",
+      "source": "https://www.sqlite.org/c3ref/declare_vtab.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_deserialize",
+      "source": "https://www.sqlite.org/c3ref/deserialize.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_drop_modules",
+      "source": "https://www.sqlite.org/c3ref/drop_modules.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_enable_load_extension",
+      "source": "https://www.sqlite.org/c3ref/enable_load_extension.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_enable_shared_cache",
+      "source": "https://www.sqlite.org/c3ref/enable_shared_cache.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_errcode",
+      "source": "https://www.sqlite.org/c3ref/errcode.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_errmsg",
+      "source": "https://www.sqlite.org/c3ref/errcode.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_errmsg16",
+      "source": "https://www.sqlite.org/c3ref/errcode.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_error_offset",
+      "source": "https://www.sqlite.org/c3ref/errcode.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_errstr",
+      "source": "https://www.sqlite.org/c3ref/errcode.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_exec",
+      "source": "https://www.sqlite.org/c3ref/exec.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_expanded_sql",
+      "source": "https://www.sqlite.org/c3ref/expanded_sql.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_expired",
+      "source": "https://www.sqlite.org/c3ref/funclist.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_extended_errcode",
+      "source": "https://www.sqlite.org/c3ref/errcode.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_extended_result_codes",
+      "source": "https://www.sqlite.org/c3ref/extended_result_codes.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_file_control",
+      "source": "https://www.sqlite.org/c3ref/file_control.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_filename_database",
+      "source": "https://www.sqlite.org/c3ref/filename_database.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_filename_journal",
+      "source": "https://www.sqlite.org/c3ref/filename_database.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_filename_wal",
+      "source": "https://www.sqlite.org/c3ref/filename_database.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_finalize",
+      "source": "https://www.sqlite.org/c3ref/finalize.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_free",
+      "source": "https://www.sqlite.org/c3ref/free.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_free_filename",
+      "source": "https://www.sqlite.org/c3ref/create_filename.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_free_table",
+      "source": "https://www.sqlite.org/c3ref/free_table.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_get_autocommit",
+      "source": "https://www.sqlite.org/c3ref/get_autocommit.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_get_auxdata",
+      "source": "https://www.sqlite.org/c3ref/get_auxdata.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_get_clientdata",
+      "source": "https://www.sqlite.org/c3ref/get_clientdata.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_get_table",
+      "source": "https://www.sqlite.org/c3ref/free_table.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_global_recover",
+      "source": "https://www.sqlite.org/c3ref/funclist.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_hard_heap_limit64",
+      "source": "https://www.sqlite.org/c3ref/hard_heap_limit64.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_incomplete",
+      "source": "https://www.sqlite.org/c3ref/complete.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_initialize",
+      "source": "https://www.sqlite.org/c3ref/initialize.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_interrupt",
+      "source": "https://www.sqlite.org/c3ref/interrupt.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_is_interrupted",
+      "source": "https://www.sqlite.org/c3ref/interrupt.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_keyword_check",
+      "source": "https://www.sqlite.org/c3ref/keyword_check.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_keyword_count",
+      "source": "https://www.sqlite.org/c3ref/keyword_check.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_keyword_name",
+      "source": "https://www.sqlite.org/c3ref/keyword_check.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_last_insert_rowid",
+      "source": "https://www.sqlite.org/c3ref/last_insert_rowid.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_libversion",
+      "source": "https://www.sqlite.org/c3ref/libversion.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_libversion_number",
+      "source": "https://www.sqlite.org/c3ref/libversion.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_limit",
+      "source": "https://www.sqlite.org/c3ref/limit.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_load_extension",
+      "source": "https://www.sqlite.org/c3ref/load_extension.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_log",
+      "source": "https://www.sqlite.org/c3ref/log.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_malloc",
+      "source": "https://www.sqlite.org/c3ref/free.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_malloc64",
+      "source": "https://www.sqlite.org/c3ref/free.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_memory_alarm",
+      "source": "https://www.sqlite.org/c3ref/funclist.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_memory_highwater",
+      "source": "https://www.sqlite.org/c3ref/memory_highwater.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_memory_used",
+      "source": "https://www.sqlite.org/c3ref/memory_highwater.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_mprintf",
+      "source": "https://www.sqlite.org/c3ref/mprintf.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_msize",
+      "source": "https://www.sqlite.org/c3ref/free.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_mutex_alloc",
+      "source": "https://www.sqlite.org/c3ref/mutex_alloc.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_mutex_enter",
+      "source": "https://www.sqlite.org/c3ref/mutex_alloc.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_mutex_free",
+      "source": "https://www.sqlite.org/c3ref/mutex_alloc.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_mutex_held",
+      "source": "https://www.sqlite.org/c3ref/mutex_held.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_mutex_leave",
+      "source": "https://www.sqlite.org/c3ref/mutex_alloc.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_mutex_notheld",
+      "source": "https://www.sqlite.org/c3ref/mutex_held.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_mutex_try",
+      "source": "https://www.sqlite.org/c3ref/mutex_alloc.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_next_stmt",
+      "source": "https://www.sqlite.org/c3ref/next_stmt.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_normalized_sql",
+      "source": "https://www.sqlite.org/c3ref/expanded_sql.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_open",
+      "source": "https://www.sqlite.org/c3ref/open.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_open16",
+      "source": "https://www.sqlite.org/c3ref/open.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_open_v2",
+      "source": "https://www.sqlite.org/c3ref/open.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_os_end",
+      "source": "https://www.sqlite.org/c3ref/initialize.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_os_init",
+      "source": "https://www.sqlite.org/c3ref/initialize.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_overload_function",
+      "source": "https://www.sqlite.org/c3ref/overload_function.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_prepare",
+      "source": "https://www.sqlite.org/c3ref/prepare.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_prepare16",
+      "source": "https://www.sqlite.org/c3ref/prepare.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_prepare16_v2",
+      "source": "https://www.sqlite.org/c3ref/prepare.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_prepare16_v3",
+      "source": "https://www.sqlite.org/c3ref/prepare.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_prepare_v2",
+      "source": "https://www.sqlite.org/c3ref/prepare.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_prepare_v3",
+      "source": "https://www.sqlite.org/c3ref/prepare.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_preupdate_blobwrite",
+      "source": "https://www.sqlite.org/c3ref/preupdate_blobwrite.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_preupdate_count",
+      "source": "https://www.sqlite.org/c3ref/preupdate_blobwrite.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_preupdate_depth",
+      "source": "https://www.sqlite.org/c3ref/preupdate_blobwrite.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_preupdate_hook",
+      "source": "https://www.sqlite.org/c3ref/preupdate_blobwrite.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_preupdate_new",
+      "source": "https://www.sqlite.org/c3ref/preupdate_blobwrite.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_preupdate_old",
+      "source": "https://www.sqlite.org/c3ref/preupdate_blobwrite.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_profile",
+      "source": "https://www.sqlite.org/c3ref/funclist.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_progress_handler",
+      "source": "https://www.sqlite.org/c3ref/progress_handler.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_randomness",
+      "source": "https://www.sqlite.org/c3ref/randomness.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_realloc",
+      "source": "https://www.sqlite.org/c3ref/free.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_realloc64",
+      "source": "https://www.sqlite.org/c3ref/free.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_release_memory",
+      "source": "https://www.sqlite.org/c3ref/release_memory.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_reset",
+      "source": "https://www.sqlite.org/c3ref/reset.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_reset_auto_extension",
+      "source": "https://www.sqlite.org/c3ref/reset_auto_extension.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_result_blob",
+      "source": "https://www.sqlite.org/c3ref/result_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_result_blob64",
+      "source": "https://www.sqlite.org/c3ref/result_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_result_double",
+      "source": "https://www.sqlite.org/c3ref/result_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_result_error",
+      "source": "https://www.sqlite.org/c3ref/result_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_result_error16",
+      "source": "https://www.sqlite.org/c3ref/result_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_result_error_code",
+      "source": "https://www.sqlite.org/c3ref/result_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_result_error_nomem",
+      "source": "https://www.sqlite.org/c3ref/result_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_result_error_toobig",
+      "source": "https://www.sqlite.org/c3ref/result_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_result_int",
+      "source": "https://www.sqlite.org/c3ref/result_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_result_int64",
+      "source": "https://www.sqlite.org/c3ref/result_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_result_null",
+      "source": "https://www.sqlite.org/c3ref/result_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_result_pointer",
+      "source": "https://www.sqlite.org/c3ref/result_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_result_str",
+      "source": "https://www.sqlite.org/c3ref/result_str.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_result_subtype",
+      "source": "https://www.sqlite.org/c3ref/result_subtype.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_result_text",
+      "source": "https://www.sqlite.org/c3ref/result_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_result_text16",
+      "source": "https://www.sqlite.org/c3ref/result_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_result_text16be",
+      "source": "https://www.sqlite.org/c3ref/result_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_result_text16le",
+      "source": "https://www.sqlite.org/c3ref/result_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_result_text64",
+      "source": "https://www.sqlite.org/c3ref/result_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_result_value",
+      "source": "https://www.sqlite.org/c3ref/result_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_result_zeroblob",
+      "source": "https://www.sqlite.org/c3ref/result_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_result_zeroblob64",
+      "source": "https://www.sqlite.org/c3ref/result_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_rollback_hook",
+      "source": "https://www.sqlite.org/c3ref/commit_hook.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_serialize",
+      "source": "https://www.sqlite.org/c3ref/serialize.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_set_authorizer",
+      "source": "https://www.sqlite.org/c3ref/set_authorizer.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_set_auxdata",
+      "source": "https://www.sqlite.org/c3ref/get_auxdata.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_set_clientdata",
+      "source": "https://www.sqlite.org/c3ref/get_clientdata.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_set_errmsg",
+      "source": "https://www.sqlite.org/c3ref/set_errmsg.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_set_last_insert_rowid",
+      "source": "https://www.sqlite.org/c3ref/set_last_insert_rowid.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_setlk_timeout",
+      "source": "https://www.sqlite.org/c3ref/setlk_timeout.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_shutdown",
+      "source": "https://www.sqlite.org/c3ref/initialize.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_sleep",
+      "source": "https://www.sqlite.org/c3ref/sleep.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_snapshot_cmp",
+      "source": "https://www.sqlite.org/c3ref/snapshot_cmp.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_snapshot_free",
+      "source": "https://www.sqlite.org/c3ref/snapshot_free.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_snapshot_get",
+      "source": "https://www.sqlite.org/c3ref/snapshot_get.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_snapshot_open",
+      "source": "https://www.sqlite.org/c3ref/snapshot_open.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_snapshot_recover",
+      "source": "https://www.sqlite.org/c3ref/snapshot_recover.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_snprintf",
+      "source": "https://www.sqlite.org/c3ref/mprintf.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_soft_heap_limit",
+      "source": "https://www.sqlite.org/c3ref/funclist.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_soft_heap_limit64",
+      "source": "https://www.sqlite.org/c3ref/hard_heap_limit64.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_sourceid",
+      "source": "https://www.sqlite.org/c3ref/libversion.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_sql",
+      "source": "https://www.sqlite.org/c3ref/expanded_sql.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_status",
+      "source": "https://www.sqlite.org/c3ref/status.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_status64",
+      "source": "https://www.sqlite.org/c3ref/status.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_step",
+      "source": "https://www.sqlite.org/c3ref/step.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_stmt_busy",
+      "source": "https://www.sqlite.org/c3ref/stmt_busy.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_stmt_explain",
+      "source": "https://www.sqlite.org/c3ref/stmt_explain.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_stmt_isexplain",
+      "source": "https://www.sqlite.org/c3ref/stmt_isexplain.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_stmt_readonly",
+      "source": "https://www.sqlite.org/c3ref/stmt_readonly.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_stmt_scanstatus",
+      "source": "https://www.sqlite.org/c3ref/stmt_scanstatus.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_stmt_scanstatus_reset",
+      "source": "https://www.sqlite.org/c3ref/stmt_scanstatus_reset.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_stmt_scanstatus_v2",
+      "source": "https://www.sqlite.org/c3ref/stmt_scanstatus.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_stmt_status",
+      "source": "https://www.sqlite.org/c3ref/stmt_status.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_str_append",
+      "source": "https://www.sqlite.org/c3ref/str_append.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_str_appendall",
+      "source": "https://www.sqlite.org/c3ref/str_append.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_str_appendchar",
+      "source": "https://www.sqlite.org/c3ref/str_append.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_str_appendf",
+      "source": "https://www.sqlite.org/c3ref/str_append.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_str_errcode",
+      "source": "https://www.sqlite.org/c3ref/str_errcode.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_str_finish",
+      "source": "https://www.sqlite.org/c3ref/str_finish.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_str_free",
+      "source": "https://www.sqlite.org/c3ref/str_finish.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_str_length",
+      "source": "https://www.sqlite.org/c3ref/str_errcode.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_str_new",
+      "source": "https://www.sqlite.org/c3ref/str_new.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_str_reset",
+      "source": "https://www.sqlite.org/c3ref/str_append.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_str_truncate",
+      "source": "https://www.sqlite.org/c3ref/str_append.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_str_value",
+      "source": "https://www.sqlite.org/c3ref/str_errcode.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_str_vappendf",
+      "source": "https://www.sqlite.org/c3ref/str_append.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_strglob",
+      "source": "https://www.sqlite.org/c3ref/strglob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_stricmp",
+      "source": "https://www.sqlite.org/c3ref/stricmp.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_strlike",
+      "source": "https://www.sqlite.org/c3ref/strlike.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_strnicmp",
+      "source": "https://www.sqlite.org/c3ref/stricmp.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_system_errno",
+      "source": "https://www.sqlite.org/c3ref/system_errno.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_table_column_metadata",
+      "source": "https://www.sqlite.org/c3ref/table_column_metadata.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_test_control",
+      "source": "https://www.sqlite.org/c3ref/test_control.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_thread_cleanup",
+      "source": "https://www.sqlite.org/c3ref/funclist.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_threadsafe",
+      "source": "https://www.sqlite.org/c3ref/threadsafe.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_total_changes",
+      "source": "https://www.sqlite.org/c3ref/total_changes.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_total_changes64",
+      "source": "https://www.sqlite.org/c3ref/total_changes.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_trace",
+      "source": "https://www.sqlite.org/c3ref/funclist.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_trace_v2",
+      "source": "https://www.sqlite.org/c3ref/trace_v2.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_transfer_bindings",
+      "source": "https://www.sqlite.org/c3ref/funclist.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_txn_state",
+      "source": "https://www.sqlite.org/c3ref/txn_state.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_unlock_notify",
+      "source": "https://www.sqlite.org/c3ref/unlock_notify.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_update_hook",
+      "source": "https://www.sqlite.org/c3ref/update_hook.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_uri_boolean",
+      "source": "https://www.sqlite.org/c3ref/uri_boolean.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_uri_int64",
+      "source": "https://www.sqlite.org/c3ref/uri_boolean.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_uri_key",
+      "source": "https://www.sqlite.org/c3ref/uri_boolean.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_uri_parameter",
+      "source": "https://www.sqlite.org/c3ref/uri_boolean.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_user_data",
+      "source": "https://www.sqlite.org/c3ref/user_data.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_value_blob",
+      "source": "https://www.sqlite.org/c3ref/value_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_value_bytes",
+      "source": "https://www.sqlite.org/c3ref/value_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_value_bytes16",
+      "source": "https://www.sqlite.org/c3ref/value_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_value_double",
+      "source": "https://www.sqlite.org/c3ref/value_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_value_dup",
+      "source": "https://www.sqlite.org/c3ref/value_dup.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_value_encoding",
+      "source": "https://www.sqlite.org/c3ref/value_encoding.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_value_free",
+      "source": "https://www.sqlite.org/c3ref/value_dup.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_value_frombind",
+      "source": "https://www.sqlite.org/c3ref/value_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_value_int",
+      "source": "https://www.sqlite.org/c3ref/value_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_value_int64",
+      "source": "https://www.sqlite.org/c3ref/value_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_value_nochange",
+      "source": "https://www.sqlite.org/c3ref/value_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_value_numeric_type",
+      "source": "https://www.sqlite.org/c3ref/value_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_value_pointer",
+      "source": "https://www.sqlite.org/c3ref/value_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_value_subtype",
+      "source": "https://www.sqlite.org/c3ref/value_subtype.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_value_text",
+      "source": "https://www.sqlite.org/c3ref/value_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_value_text16",
+      "source": "https://www.sqlite.org/c3ref/value_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_value_text16be",
+      "source": "https://www.sqlite.org/c3ref/value_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_value_text16le",
+      "source": "https://www.sqlite.org/c3ref/value_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_value_type",
+      "source": "https://www.sqlite.org/c3ref/value_blob.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_version",
+      "source": "https://www.sqlite.org/c3ref/libversion.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_vfs_find",
+      "source": "https://www.sqlite.org/c3ref/vfs_find.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_vfs_register",
+      "source": "https://www.sqlite.org/c3ref/vfs_find.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_vfs_unregister",
+      "source": "https://www.sqlite.org/c3ref/vfs_find.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_vmprintf",
+      "source": "https://www.sqlite.org/c3ref/mprintf.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_vsnprintf",
+      "source": "https://www.sqlite.org/c3ref/mprintf.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_vtab_collation",
+      "source": "https://www.sqlite.org/c3ref/vtab_collation.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_vtab_config",
+      "source": "https://www.sqlite.org/c3ref/vtab_config.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_vtab_distinct",
+      "source": "https://www.sqlite.org/c3ref/vtab_distinct.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_vtab_in",
+      "source": "https://www.sqlite.org/c3ref/vtab_in.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_vtab_in_first",
+      "source": "https://www.sqlite.org/c3ref/vtab_in_first.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_vtab_in_next",
+      "source": "https://www.sqlite.org/c3ref/vtab_in_first.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_vtab_nochange",
+      "source": "https://www.sqlite.org/c3ref/vtab_nochange.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_vtab_on_conflict",
+      "source": "https://www.sqlite.org/c3ref/vtab_on_conflict.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_vtab_rhs_value",
+      "source": "https://www.sqlite.org/c3ref/vtab_rhs_value.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_wal_autocheckpoint",
+      "source": "https://www.sqlite.org/c3ref/wal_autocheckpoint.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_wal_checkpoint",
+      "source": "https://www.sqlite.org/c3ref/wal_checkpoint.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_wal_checkpoint_v2",
+      "source": "https://www.sqlite.org/c3ref/wal_checkpoint_v2.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_wal_hook",
+      "source": "https://www.sqlite.org/c3ref/wal_hook.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_win32_set_directory",
+      "source": "https://www.sqlite.org/c3ref/win32_set_directory.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_win32_set_directory16",
+      "source": "https://www.sqlite.org/c3ref/win32_set_directory.html"
+    },
+    {
+      "category": "api-function",
+      "name": "sqlite3_win32_set_directory8",
+      "source": "https://www.sqlite.org/c3ref/win32_set_directory.html"
+    },
+    {
+      "category": "api-object",
+      "name": "sqlite3",
+      "source": "https://www.sqlite.org/c3ref/sqlite3.html"
+    },
+    {
+      "category": "api-object",
+      "name": "sqlite3_api_routines",
+      "source": "https://www.sqlite.org/c3ref/api_routines.html"
+    },
+    {
+      "category": "api-object",
+      "name": "sqlite3_backup",
+      "source": "https://www.sqlite.org/c3ref/backup.html"
+    },
+    {
+      "category": "api-object",
+      "name": "sqlite3_blob",
+      "source": "https://www.sqlite.org/c3ref/blob.html"
+    },
+    {
+      "category": "api-object",
+      "name": "sqlite3_context",
+      "source": "https://www.sqlite.org/c3ref/context.html"
+    },
+    {
+      "category": "api-object",
+      "name": "sqlite3_data_directory",
+      "source": "https://www.sqlite.org/c3ref/data_directory.html"
+    },
+    {
+      "category": "api-object",
+      "name": "sqlite3_file",
+      "source": "https://www.sqlite.org/c3ref/file.html"
+    },
+    {
+      "category": "api-object",
+      "name": "sqlite3_filename",
+      "source": "https://www.sqlite.org/c3ref/filename.html"
+    },
+    {
+      "category": "api-object",
+      "name": "sqlite3_index_info",
+      "source": "https://www.sqlite.org/c3ref/index_info.html"
+    },
+    {
+      "category": "api-object",
+      "name": "sqlite3_int64",
+      "source": "https://www.sqlite.org/c3ref/int64.html"
+    },
+    {
+      "category": "api-object",
+      "name": "sqlite3_uint64",
+      "source": "https://www.sqlite.org/c3ref/int64.html"
+    },
+    {
+      "category": "api-object",
+      "name": "sqlite_int64",
+      "source": "https://www.sqlite.org/c3ref/int64.html"
+    },
+    {
+      "category": "api-object",
+      "name": "sqlite_uint64",
+      "source": "https://www.sqlite.org/c3ref/int64.html"
+    },
+    {
+      "category": "api-object",
+      "name": "sqlite3_io_methods",
+      "source": "https://www.sqlite.org/c3ref/io_methods.html"
+    },
+    {
+      "category": "api-object",
+      "name": "sqlite3_mem_methods",
+      "source": "https://www.sqlite.org/c3ref/mem_methods.html"
+    },
+    {
+      "category": "api-object",
+      "name": "sqlite3_module",
+      "source": "https://www.sqlite.org/c3ref/module.html"
+    },
+    {
+      "category": "api-object",
+      "name": "sqlite3_mutex",
+      "source": "https://www.sqlite.org/c3ref/mutex.html"
+    },
+    {
+      "category": "api-object",
+      "name": "sqlite3_mutex_methods",
+      "source": "https://www.sqlite.org/c3ref/mutex_methods.html"
+    },
+    {
+      "category": "api-object",
+      "name": "sqlite3_pcache",
+      "source": "https://www.sqlite.org/c3ref/pcache.html"
+    },
+    {
+      "category": "api-object",
+      "name": "sqlite3_pcache_methods2",
+      "source": "https://www.sqlite.org/c3ref/pcache_methods2.html"
+    },
+    {
+      "category": "api-object",
+      "name": "sqlite3_pcache_page",
+      "source": "https://www.sqlite.org/c3ref/pcache_page.html"
+    },
+    {
+      "category": "api-object",
+      "name": "sqlite3_snapshot",
+      "source": "https://www.sqlite.org/c3ref/snapshot.html"
+    },
+    {
+      "category": "api-object",
+      "name": "sqlite3_stmt",
+      "source": "https://www.sqlite.org/c3ref/stmt.html"
+    },
+    {
+      "category": "api-object",
+      "name": "sqlite3_str",
+      "source": "https://www.sqlite.org/c3ref/str.html"
+    },
+    {
+      "category": "api-object",
+      "name": "sqlite3_temp_directory",
+      "source": "https://www.sqlite.org/c3ref/temp_directory.html"
+    },
+    {
+      "category": "api-object",
+      "name": "sqlite3_value",
+      "source": "https://www.sqlite.org/c3ref/value.html"
+    },
+    {
+      "category": "api-object",
+      "name": "sqlite3_vfs",
+      "source": "https://www.sqlite.org/c3ref/vfs.html"
+    },
+    {
+      "category": "api-object",
+      "name": "sqlite3_vtab",
+      "source": "https://www.sqlite.org/c3ref/vtab.html"
+    },
+    {
+      "category": "api-object",
+      "name": "sqlite3_vtab_cursor",
+      "source": "https://www.sqlite.org/c3ref/vtab_cursor.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_ABORT",
+      "source": "https://www.sqlite.org/rescode.html#abort"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_ABORT_ROLLBACK",
+      "source": "https://www.sqlite.org/rescode.html#abort_rollback"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_ACCESS_EXISTS",
+      "source": "https://www.sqlite.org/c3ref/c_access_exists.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_ACCESS_READ",
+      "source": "https://www.sqlite.org/c3ref/c_access_exists.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_ACCESS_READWRITE",
+      "source": "https://www.sqlite.org/c3ref/c_access_exists.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_ALTER_TABLE",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_ANALYZE",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_ANY",
+      "source": "https://www.sqlite.org/c3ref/c_any.html#sqliteany"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_ATTACH",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_AUTH",
+      "source": "https://www.sqlite.org/rescode.html#auth"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_AUTH_USER",
+      "source": "https://www.sqlite.org/rescode.html#auth_user"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_BLOB",
+      "source": "https://www.sqlite.org/c3ref/c_blob.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_BUSY",
+      "source": "https://www.sqlite.org/rescode.html#busy"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_BUSY_RECOVERY",
+      "source": "https://www.sqlite.org/rescode.html#busy_recovery"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_BUSY_SNAPSHOT",
+      "source": "https://www.sqlite.org/rescode.html#busy_snapshot"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_BUSY_TIMEOUT",
+      "source": "https://www.sqlite.org/rescode.html#busy_timeout"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CANTOPEN",
+      "source": "https://www.sqlite.org/rescode.html#cantopen"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CANTOPEN_CONVPATH",
+      "source": "https://www.sqlite.org/rescode.html#cantopen_convpath"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CANTOPEN_DIRTYWAL",
+      "source": "https://www.sqlite.org/rescode.html#cantopen_dirtywal"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CANTOPEN_FULLPATH",
+      "source": "https://www.sqlite.org/rescode.html#cantopen_fullpath"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CANTOPEN_ISDIR",
+      "source": "https://www.sqlite.org/rescode.html#cantopen_isdir"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CANTOPEN_NOTEMPDIR",
+      "source": "https://www.sqlite.org/rescode.html#cantopen_notempdir"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CANTOPEN_SYMLINK",
+      "source": "https://www.sqlite.org/rescode.html#cantopen_symlink"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CARRAY_BLOB",
+      "source": "https://www.sqlite.org/c3ref/c_carray_blob.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CARRAY_DOUBLE",
+      "source": "https://www.sqlite.org/c3ref/c_carray_blob.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CARRAY_INT32",
+      "source": "https://www.sqlite.org/c3ref/c_carray_blob.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CARRAY_INT64",
+      "source": "https://www.sqlite.org/c3ref/c_carray_blob.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CARRAY_TEXT",
+      "source": "https://www.sqlite.org/c3ref/c_carray_blob.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CHECKPOINT_FULL",
+      "source": "https://www.sqlite.org/c3ref/c_checkpoint_full.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CHECKPOINT_NOOP",
+      "source": "https://www.sqlite.org/c3ref/c_checkpoint_full.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CHECKPOINT_PASSIVE",
+      "source": "https://www.sqlite.org/c3ref/c_checkpoint_full.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CHECKPOINT_RESTART",
+      "source": "https://www.sqlite.org/c3ref/c_checkpoint_full.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CHECKPOINT_TRUNCATE",
+      "source": "https://www.sqlite.org/c3ref/c_checkpoint_full.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONFIG_COVERING_INDEX_SCAN",
+      "source": "https://www.sqlite.org/c3ref/c_config_covering_index_scan.html#sqliteconfigcoveringindexscan"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONFIG_GETMALLOC",
+      "source": "https://www.sqlite.org/c3ref/c_config_covering_index_scan.html#sqliteconfiggetmalloc"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONFIG_GETMUTEX",
+      "source": "https://www.sqlite.org/c3ref/c_config_covering_index_scan.html#sqliteconfiggetmutex"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONFIG_GETPCACHE",
+      "source": "https://www.sqlite.org/c3ref/c_config_covering_index_scan.html#sqliteconfiggetpcache"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONFIG_GETPCACHE2",
+      "source": "https://www.sqlite.org/c3ref/c_config_covering_index_scan.html#sqliteconfiggetpcache2"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONFIG_HEAP",
+      "source": "https://www.sqlite.org/c3ref/c_config_covering_index_scan.html#sqliteconfigheap"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONFIG_LOG",
+      "source": "https://www.sqlite.org/c3ref/c_config_covering_index_scan.html#sqliteconfiglog"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONFIG_LOOKASIDE",
+      "source": "https://www.sqlite.org/c3ref/c_config_covering_index_scan.html#sqliteconfiglookaside"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONFIG_MALLOC",
+      "source": "https://www.sqlite.org/c3ref/c_config_covering_index_scan.html#sqliteconfigmalloc"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONFIG_MEMDB_MAXSIZE",
+      "source": "https://www.sqlite.org/c3ref/c_config_covering_index_scan.html#sqliteconfigmemdbmaxsize"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONFIG_MEMSTATUS",
+      "source": "https://www.sqlite.org/c3ref/c_config_covering_index_scan.html#sqliteconfigmemstatus"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONFIG_MMAP_SIZE",
+      "source": "https://www.sqlite.org/c3ref/c_config_covering_index_scan.html#sqliteconfigmmapsize"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONFIG_MULTITHREAD",
+      "source": "https://www.sqlite.org/c3ref/c_config_covering_index_scan.html#sqliteconfigmultithread"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONFIG_MUTEX",
+      "source": "https://www.sqlite.org/c3ref/c_config_covering_index_scan.html#sqliteconfigmutex"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONFIG_PAGECACHE",
+      "source": "https://www.sqlite.org/c3ref/c_config_covering_index_scan.html#sqliteconfigpagecache"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONFIG_PCACHE",
+      "source": "https://www.sqlite.org/c3ref/c_config_covering_index_scan.html#sqliteconfigpcache"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONFIG_PCACHE2",
+      "source": "https://www.sqlite.org/c3ref/c_config_covering_index_scan.html#sqliteconfigpcache2"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONFIG_PCACHE_HDRSZ",
+      "source": "https://www.sqlite.org/c3ref/c_config_covering_index_scan.html#sqliteconfigpcachehdrsz"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONFIG_PMASZ",
+      "source": "https://www.sqlite.org/c3ref/c_config_covering_index_scan.html#sqliteconfigpmasz"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONFIG_ROWID_IN_VIEW",
+      "source": "https://www.sqlite.org/c3ref/c_config_covering_index_scan.html#sqliteconfigrowidinview"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONFIG_SCRATCH",
+      "source": "https://www.sqlite.org/c3ref/c_config_covering_index_scan.html#sqliteconfigscratch"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONFIG_SERIALIZED",
+      "source": "https://www.sqlite.org/c3ref/c_config_covering_index_scan.html#sqliteconfigserialized"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONFIG_SINGLETHREAD",
+      "source": "https://www.sqlite.org/c3ref/c_config_covering_index_scan.html#sqliteconfigsinglethread"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONFIG_SMALL_MALLOC",
+      "source": "https://www.sqlite.org/c3ref/c_config_covering_index_scan.html#sqliteconfigsmallmalloc"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONFIG_SORTERREF_SIZE",
+      "source": "https://www.sqlite.org/c3ref/c_config_covering_index_scan.html#sqliteconfigsorterrefsize"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONFIG_SQLLOG",
+      "source": "https://www.sqlite.org/c3ref/c_config_covering_index_scan.html#sqliteconfigsqllog"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONFIG_STMTJRNL_SPILL",
+      "source": "https://www.sqlite.org/c3ref/c_config_covering_index_scan.html#sqliteconfigstmtjrnlspill"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONFIG_URI",
+      "source": "https://www.sqlite.org/c3ref/c_config_covering_index_scan.html#sqliteconfiguri"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONFIG_WIN32_HEAPSIZE",
+      "source": "https://www.sqlite.org/c3ref/c_config_covering_index_scan.html#sqliteconfigwin32heapsize"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONSTRAINT",
+      "source": "https://www.sqlite.org/rescode.html#constraint"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONSTRAINT_CHECK",
+      "source": "https://www.sqlite.org/rescode.html#constraint_check"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONSTRAINT_COMMITHOOK",
+      "source": "https://www.sqlite.org/rescode.html#constraint_commithook"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONSTRAINT_DATATYPE",
+      "source": "https://www.sqlite.org/rescode.html#constraint_datatype"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONSTRAINT_FOREIGNKEY",
+      "source": "https://www.sqlite.org/rescode.html#constraint_foreignkey"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONSTRAINT_FUNCTION",
+      "source": "https://www.sqlite.org/rescode.html#constraint_function"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONSTRAINT_NOTNULL",
+      "source": "https://www.sqlite.org/rescode.html#constraint_notnull"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONSTRAINT_PINNED",
+      "source": "https://www.sqlite.org/rescode.html#constraint_pinned"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONSTRAINT_PRIMARYKEY",
+      "source": "https://www.sqlite.org/rescode.html#constraint_primarykey"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONSTRAINT_ROWID",
+      "source": "https://www.sqlite.org/rescode.html#constraint_rowid"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONSTRAINT_TRIGGER",
+      "source": "https://www.sqlite.org/rescode.html#constraint_trigger"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONSTRAINT_UNIQUE",
+      "source": "https://www.sqlite.org/rescode.html#constraint_unique"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CONSTRAINT_VTAB",
+      "source": "https://www.sqlite.org/rescode.html#constraint_vtab"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_COPY",
+      "source": "https://www.sqlite.org/c3ref/c_copy.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CORRUPT",
+      "source": "https://www.sqlite.org/rescode.html#corrupt"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CORRUPT_INDEX",
+      "source": "https://www.sqlite.org/rescode.html#corrupt_index"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CORRUPT_SEQUENCE",
+      "source": "https://www.sqlite.org/rescode.html#corrupt_sequence"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CORRUPT_VTAB",
+      "source": "https://www.sqlite.org/rescode.html#corrupt_vtab"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CREATE_INDEX",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CREATE_TABLE",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CREATE_TEMP_INDEX",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CREATE_TEMP_TABLE",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CREATE_TEMP_TRIGGER",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CREATE_TEMP_VIEW",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CREATE_TRIGGER",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CREATE_VIEW",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_CREATE_VTABLE",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBCONFIG_DEFENSIVE",
+      "source": "https://www.sqlite.org/c3ref/c_dbconfig_defensive.html#sqlitedbconfigdefensive"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBCONFIG_DQS_DDL",
+      "source": "https://www.sqlite.org/c3ref/c_dbconfig_defensive.html#sqlitedbconfigdqsddl"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBCONFIG_DQS_DML",
+      "source": "https://www.sqlite.org/c3ref/c_dbconfig_defensive.html#sqlitedbconfigdqsdml"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBCONFIG_ENABLE_ATTACH_CREATE",
+      "source": "https://www.sqlite.org/c3ref/c_dbconfig_defensive.html#sqlitedbconfigenableattachcreate"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBCONFIG_ENABLE_ATTACH_WRITE",
+      "source": "https://www.sqlite.org/c3ref/c_dbconfig_defensive.html#sqlitedbconfigenableattachwrite"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBCONFIG_ENABLE_COMMENTS",
+      "source": "https://www.sqlite.org/c3ref/c_dbconfig_defensive.html#sqlitedbconfigenablecomments"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBCONFIG_ENABLE_FKEY",
+      "source": "https://www.sqlite.org/c3ref/c_dbconfig_defensive.html#sqlitedbconfigenablefkey"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBCONFIG_ENABLE_FTS3_TOKENIZER",
+      "source": "https://www.sqlite.org/c3ref/c_dbconfig_defensive.html#sqlitedbconfigenablefts3tokenizer"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBCONFIG_ENABLE_LOAD_EXTENSION",
+      "source": "https://www.sqlite.org/c3ref/c_dbconfig_defensive.html#sqlitedbconfigenableloadextension"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBCONFIG_ENABLE_QPSG",
+      "source": "https://www.sqlite.org/c3ref/c_dbconfig_defensive.html#sqlitedbconfigenableqpsg"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBCONFIG_ENABLE_TRIGGER",
+      "source": "https://www.sqlite.org/c3ref/c_dbconfig_defensive.html#sqlitedbconfigenabletrigger"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBCONFIG_ENABLE_VIEW",
+      "source": "https://www.sqlite.org/c3ref/c_dbconfig_defensive.html#sqlitedbconfigenableview"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBCONFIG_FP_DIGITS",
+      "source": "https://www.sqlite.org/c3ref/c_dbconfig_defensive.html#sqlitedbconfigfpdigits"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBCONFIG_LEGACY_ALTER_TABLE",
+      "source": "https://www.sqlite.org/c3ref/c_dbconfig_defensive.html#sqlitedbconfiglegacyaltertable"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBCONFIG_LEGACY_FILE_FORMAT",
+      "source": "https://www.sqlite.org/c3ref/c_dbconfig_defensive.html#sqlitedbconfiglegacyfileformat"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBCONFIG_LOOKASIDE",
+      "source": "https://www.sqlite.org/c3ref/c_dbconfig_defensive.html#sqlitedbconfiglookaside"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBCONFIG_MAINDBNAME",
+      "source": "https://www.sqlite.org/c3ref/c_dbconfig_defensive.html#sqlitedbconfigmaindbname"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBCONFIG_MAX",
+      "source": "https://www.sqlite.org/c3ref/c_dbconfig_defensive.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBCONFIG_NO_CKPT_ON_CLOSE",
+      "source": "https://www.sqlite.org/c3ref/c_dbconfig_defensive.html#sqlitedbconfignockptonclose"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBCONFIG_RESET_DATABASE",
+      "source": "https://www.sqlite.org/c3ref/c_dbconfig_defensive.html#sqlitedbconfigresetdatabase"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBCONFIG_REVERSE_SCANORDER",
+      "source": "https://www.sqlite.org/c3ref/c_dbconfig_defensive.html#sqlitedbconfigreversescanorder"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBCONFIG_STMT_SCANSTATUS",
+      "source": "https://www.sqlite.org/c3ref/c_dbconfig_defensive.html#sqlitedbconfigstmtscanstatus"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBCONFIG_TRIGGER_EQP",
+      "source": "https://www.sqlite.org/c3ref/c_dbconfig_defensive.html#sqlitedbconfigtriggereqp"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBCONFIG_TRUSTED_SCHEMA",
+      "source": "https://www.sqlite.org/c3ref/c_dbconfig_defensive.html#sqlitedbconfigtrustedschema"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBCONFIG_WRITABLE_SCHEMA",
+      "source": "https://www.sqlite.org/c3ref/c_dbconfig_defensive.html#sqlitedbconfigwritableschema"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBSTATUS_CACHE_HIT",
+      "source": "https://www.sqlite.org/c3ref/c_dbstatus_options.html#sqlitedbstatuscachehit"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBSTATUS_CACHE_MISS",
+      "source": "https://www.sqlite.org/c3ref/c_dbstatus_options.html#sqlitedbstatuscachemiss"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBSTATUS_CACHE_SPILL",
+      "source": "https://www.sqlite.org/c3ref/c_dbstatus_options.html#sqlitedbstatuscachespill"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBSTATUS_CACHE_USED",
+      "source": "https://www.sqlite.org/c3ref/c_dbstatus_options.html#sqlitedbstatuscacheused"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBSTATUS_CACHE_USED_SHARED",
+      "source": "https://www.sqlite.org/c3ref/c_dbstatus_options.html#sqlitedbstatuscacheusedshared"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBSTATUS_CACHE_WRITE",
+      "source": "https://www.sqlite.org/c3ref/c_dbstatus_options.html#sqlitedbstatuscachewrite"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBSTATUS_DEFERRED_FKS",
+      "source": "https://www.sqlite.org/c3ref/c_dbstatus_options.html#sqlitedbstatusdeferredfks"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBSTATUS_LOOKASIDE_HIT",
+      "source": "https://www.sqlite.org/c3ref/c_dbstatus_options.html#sqlitedbstatuslookasidehit"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBSTATUS_LOOKASIDE_MISS_FULL",
+      "source": "https://www.sqlite.org/c3ref/c_dbstatus_options.html#sqlitedbstatuslookasidemissfull"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBSTATUS_LOOKASIDE_MISS_SIZE",
+      "source": "https://www.sqlite.org/c3ref/c_dbstatus_options.html#sqlitedbstatuslookasidemisssize"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBSTATUS_LOOKASIDE_USED",
+      "source": "https://www.sqlite.org/c3ref/c_dbstatus_options.html#sqlitedbstatuslookasideused"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBSTATUS_MAX",
+      "source": "https://www.sqlite.org/c3ref/c_dbstatus_options.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBSTATUS_SCHEMA_USED",
+      "source": "https://www.sqlite.org/c3ref/c_dbstatus_options.html#sqlitedbstatusschemaused"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBSTATUS_STMT_USED",
+      "source": "https://www.sqlite.org/c3ref/c_dbstatus_options.html#sqlitedbstatusstmtused"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DBSTATUS_TEMPBUF_SPILL",
+      "source": "https://www.sqlite.org/c3ref/c_dbstatus_options.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DELETE",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DENY",
+      "source": "https://www.sqlite.org/c3ref/c_deny.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DESERIALIZE_FREEONCLOSE",
+      "source": "https://www.sqlite.org/c3ref/c_deserialize_freeonclose.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DESERIALIZE_READONLY",
+      "source": "https://www.sqlite.org/c3ref/c_deserialize_freeonclose.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DESERIALIZE_RESIZEABLE",
+      "source": "https://www.sqlite.org/c3ref/c_deserialize_freeonclose.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DETACH",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DETERMINISTIC",
+      "source": "https://www.sqlite.org/c3ref/c_deterministic.html#sqlitedeterministic"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DIRECTONLY",
+      "source": "https://www.sqlite.org/c3ref/c_deterministic.html#sqlitedirectonly"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DONE",
+      "source": "https://www.sqlite.org/rescode.html#done"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DROP_INDEX",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DROP_TABLE",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DROP_TEMP_INDEX",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DROP_TEMP_TABLE",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DROP_TEMP_TRIGGER",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DROP_TEMP_VIEW",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DROP_TRIGGER",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DROP_VIEW",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_DROP_VTABLE",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_EMPTY",
+      "source": "https://www.sqlite.org/rescode.html#empty"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_ERROR",
+      "source": "https://www.sqlite.org/rescode.html#error"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_ERROR_KEY",
+      "source": "https://www.sqlite.org/c3ref/c_abort_rollback.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_ERROR_MISSING_COLLSEQ",
+      "source": "https://www.sqlite.org/rescode.html#error_missing_collseq"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_ERROR_RESERVESIZE",
+      "source": "https://www.sqlite.org/c3ref/c_abort_rollback.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_ERROR_RETRY",
+      "source": "https://www.sqlite.org/rescode.html#error_retry"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_ERROR_SNAPSHOT",
+      "source": "https://www.sqlite.org/rescode.html#error_snapshot"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_ERROR_UNABLE",
+      "source": "https://www.sqlite.org/c3ref/c_abort_rollback.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FAIL",
+      "source": "https://www.sqlite.org/c3ref/c_fail.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_BEGIN_ATOMIC_WRITE",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntlbeginatomicwrite"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_BLOCK_ON_CONNECT",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntlblockonconnect"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_BUSYHANDLER",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntlbusyhandler"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_CHUNK_SIZE",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntlchunksize"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_CKPT_DONE",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntlckptdone"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_CKPT_START",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntlckptstart"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_CKSM_FILE",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntlcksmfile"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_COMMIT_ATOMIC_WRITE",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntlcommitatomicwrite"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_COMMIT_PHASETWO",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntlcommitphasetwo"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_DATA_VERSION",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntldataversion"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_EXTERNAL_READER",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntlexternalreader"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_FILESTAT",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntlfilestat"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_FILE_POINTER",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntlfilepointer"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_GET_LOCKPROXYFILE",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_HAS_MOVED",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntlhasmoved"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_JOURNAL_POINTER",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntljournalpointer"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_LAST_ERRNO",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_LOCKSTATE",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntllockstate"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_LOCK_TIMEOUT",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntllocktimeout"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_MMAP_SIZE",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntlmmapsize"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_NULL_IO",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntlnullio"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_OVERWRITE",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntloverwrite"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_PDB",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_PERSIST_WAL",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntlpersistwal"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_POWERSAFE_OVERWRITE",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntlpowersafeoverwrite"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_PRAGMA",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntlpragma"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_RBU",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntlrbu"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_RESERVE_BYTES",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_RESET_CACHE",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntlresetcache"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_ROLLBACK_ATOMIC_WRITE",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntlrollbackatomicwrite"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_SET_LOCKPROXYFILE",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_SIZE_HINT",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntlsizehint"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_SIZE_LIMIT",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntlsizelimit"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_SYNC",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntlsync"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_SYNC_OMITTED",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntlsyncomitted"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_TEMPFILENAME",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntltempfilename"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_TRACE",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntltrace"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_VFSNAME",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntlvfsname"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_VFS_POINTER",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntlvfspointer"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_WAL_BLOCK",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntlwalblock"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_WIN32_AV_RETRY",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntlwin32avretry"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_WIN32_GET_HANDLE",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntlwin32gethandle"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_WIN32_SET_HANDLE",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntlwin32sethandle"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FCNTL_ZIPVFS",
+      "source": "https://www.sqlite.org/c3ref/c_fcntl_begin_atomic_write.html#sqlitefcntlzipvfs"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FINISH",
+      "source": "https://www.sqlite.org/c3ref/c_copy.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FLOAT",
+      "source": "https://www.sqlite.org/c3ref/c_blob.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FORMAT",
+      "source": "https://www.sqlite.org/rescode.html#format"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FULL",
+      "source": "https://www.sqlite.org/rescode.html#full"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_FUNCTION",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IGNORE",
+      "source": "https://www.sqlite.org/c3ref/c_deny.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_INDEX_CONSTRAINT_EQ",
+      "source": "https://www.sqlite.org/c3ref/c_index_constraint_eq.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_INDEX_CONSTRAINT_FUNCTION",
+      "source": "https://www.sqlite.org/c3ref/c_index_constraint_eq.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_INDEX_CONSTRAINT_GE",
+      "source": "https://www.sqlite.org/c3ref/c_index_constraint_eq.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_INDEX_CONSTRAINT_GLOB",
+      "source": "https://www.sqlite.org/c3ref/c_index_constraint_eq.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_INDEX_CONSTRAINT_GT",
+      "source": "https://www.sqlite.org/c3ref/c_index_constraint_eq.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_INDEX_CONSTRAINT_IS",
+      "source": "https://www.sqlite.org/c3ref/c_index_constraint_eq.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_INDEX_CONSTRAINT_ISNOT",
+      "source": "https://www.sqlite.org/c3ref/c_index_constraint_eq.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_INDEX_CONSTRAINT_ISNOTNULL",
+      "source": "https://www.sqlite.org/c3ref/c_index_constraint_eq.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_INDEX_CONSTRAINT_ISNULL",
+      "source": "https://www.sqlite.org/c3ref/c_index_constraint_eq.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_INDEX_CONSTRAINT_LE",
+      "source": "https://www.sqlite.org/c3ref/c_index_constraint_eq.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_INDEX_CONSTRAINT_LIKE",
+      "source": "https://www.sqlite.org/c3ref/c_index_constraint_eq.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_INDEX_CONSTRAINT_LIMIT",
+      "source": "https://www.sqlite.org/c3ref/c_index_constraint_eq.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_INDEX_CONSTRAINT_LT",
+      "source": "https://www.sqlite.org/c3ref/c_index_constraint_eq.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_INDEX_CONSTRAINT_MATCH",
+      "source": "https://www.sqlite.org/c3ref/c_index_constraint_eq.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_INDEX_CONSTRAINT_NE",
+      "source": "https://www.sqlite.org/c3ref/c_index_constraint_eq.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_INDEX_CONSTRAINT_OFFSET",
+      "source": "https://www.sqlite.org/c3ref/c_index_constraint_eq.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_INDEX_CONSTRAINT_REGEXP",
+      "source": "https://www.sqlite.org/c3ref/c_index_constraint_eq.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_INDEX_SCAN_HEX",
+      "source": "https://www.sqlite.org/c3ref/c_index_scan_hex.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_INDEX_SCAN_UNIQUE",
+      "source": "https://www.sqlite.org/c3ref/c_index_scan_hex.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_INNOCUOUS",
+      "source": "https://www.sqlite.org/c3ref/c_deterministic.html#sqliteinnocuous"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_INSERT",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_INTEGER",
+      "source": "https://www.sqlite.org/c3ref/c_blob.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_INTERNAL",
+      "source": "https://www.sqlite.org/rescode.html#internal"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_INTERRUPT",
+      "source": "https://www.sqlite.org/rescode.html#interrupt"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOCAP_ATOMIC",
+      "source": "https://www.sqlite.org/c3ref/c_iocap_atomic.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOCAP_ATOMIC16K",
+      "source": "https://www.sqlite.org/c3ref/c_iocap_atomic.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOCAP_ATOMIC1K",
+      "source": "https://www.sqlite.org/c3ref/c_iocap_atomic.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOCAP_ATOMIC2K",
+      "source": "https://www.sqlite.org/c3ref/c_iocap_atomic.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOCAP_ATOMIC32K",
+      "source": "https://www.sqlite.org/c3ref/c_iocap_atomic.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOCAP_ATOMIC4K",
+      "source": "https://www.sqlite.org/c3ref/c_iocap_atomic.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOCAP_ATOMIC512",
+      "source": "https://www.sqlite.org/c3ref/c_iocap_atomic.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOCAP_ATOMIC64K",
+      "source": "https://www.sqlite.org/c3ref/c_iocap_atomic.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOCAP_ATOMIC8K",
+      "source": "https://www.sqlite.org/c3ref/c_iocap_atomic.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOCAP_BATCH_ATOMIC",
+      "source": "https://www.sqlite.org/c3ref/c_iocap_atomic.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOCAP_IMMUTABLE",
+      "source": "https://www.sqlite.org/c3ref/c_iocap_atomic.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOCAP_POWERSAFE_OVERWRITE",
+      "source": "https://www.sqlite.org/c3ref/c_iocap_atomic.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOCAP_SAFE_APPEND",
+      "source": "https://www.sqlite.org/c3ref/c_iocap_atomic.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOCAP_SEQUENTIAL",
+      "source": "https://www.sqlite.org/c3ref/c_iocap_atomic.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOCAP_SUBPAGE_READ",
+      "source": "https://www.sqlite.org/c3ref/c_iocap_atomic.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOCAP_UNDELETABLE_WHEN_OPEN",
+      "source": "https://www.sqlite.org/c3ref/c_iocap_atomic.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR",
+      "source": "https://www.sqlite.org/rescode.html#ioerr"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_ACCESS",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_access"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_AUTH",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_auth"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_BADKEY",
+      "source": "https://www.sqlite.org/c3ref/c_abort_rollback.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_BEGIN_ATOMIC",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_begin_atomic"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_BLOCKED",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_blocked"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_CHECKRESERVEDLOCK",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_checkreservedlock"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_CLOSE",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_close"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_CODEC",
+      "source": "https://www.sqlite.org/c3ref/c_abort_rollback.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_COMMIT_ATOMIC",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_commit_atomic"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_CONVPATH",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_convpath"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_CORRUPTFS",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_corruptfs"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_DATA",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_data"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_DELETE",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_delete"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_DELETE_NOENT",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_delete_noent"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_DIR_CLOSE",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_dir_close"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_DIR_FSYNC",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_dir_fsync"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_FSTAT",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_fstat"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_FSYNC",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_fsync"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_GETTEMPPATH",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_gettemppath"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_IN_PAGE",
+      "source": "https://www.sqlite.org/c3ref/c_abort_rollback.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_LOCK",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_lock"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_MMAP",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_mmap"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_NOMEM",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_nomem"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_RDLOCK",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_rdlock"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_READ",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_read"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_ROLLBACK_ATOMIC",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_rollback_atomic"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_SEEK",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_seek"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_SHMLOCK",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_shmlock"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_SHMMAP",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_shmmap"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_SHMOPEN",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_shmopen"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_SHMSIZE",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_shmsize"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_SHORT_READ",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_short_read"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_TRUNCATE",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_truncate"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_UNLOCK",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_unlock"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_VNODE",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_vnode"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_IOERR_WRITE",
+      "source": "https://www.sqlite.org/rescode.html#ioerr_write"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_LIMIT_ATTACHED",
+      "source": "https://www.sqlite.org/c3ref/c_limit_attached.html#sqlitelimitattached"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_LIMIT_COLUMN",
+      "source": "https://www.sqlite.org/c3ref/c_limit_attached.html#sqlitelimitcolumn"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_LIMIT_COMPOUND_SELECT",
+      "source": "https://www.sqlite.org/c3ref/c_limit_attached.html#sqlitelimitcompoundselect"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_LIMIT_EXPR_DEPTH",
+      "source": "https://www.sqlite.org/c3ref/c_limit_attached.html#sqlitelimitexprdepth"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_LIMIT_FUNCTION_ARG",
+      "source": "https://www.sqlite.org/c3ref/c_limit_attached.html#sqlitelimitfunctionarg"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_LIMIT_LENGTH",
+      "source": "https://www.sqlite.org/c3ref/c_limit_attached.html#sqlitelimitlength"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_LIMIT_LIKE_PATTERN_LENGTH",
+      "source": "https://www.sqlite.org/c3ref/c_limit_attached.html#sqlitelimitlikepatternlength"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_LIMIT_PARSER_DEPTH",
+      "source": "https://www.sqlite.org/c3ref/c_limit_attached.html#sqlitelimitparserdepth"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_LIMIT_SCHEMA",
+      "source": "https://www.sqlite.org/c3ref/c_limit_attached.html#sqlitelimitschema"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_LIMIT_SQL_LENGTH",
+      "source": "https://www.sqlite.org/c3ref/c_limit_attached.html#sqlitelimitsqllength"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_LIMIT_TRIGGER_DEPTH",
+      "source": "https://www.sqlite.org/c3ref/c_limit_attached.html#sqlitelimittriggerdepth"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_LIMIT_TRIGGER_STEPS",
+      "source": "https://www.sqlite.org/c3ref/c_limit_attached.html#sqlitelimittriggersteps"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_LIMIT_VARIABLE_NUMBER",
+      "source": "https://www.sqlite.org/c3ref/c_limit_attached.html#sqlitelimitvariablenumber"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_LIMIT_VDBE_OP",
+      "source": "https://www.sqlite.org/c3ref/c_limit_attached.html#sqlitelimitvdbeop"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_LIMIT_WORKER_THREADS",
+      "source": "https://www.sqlite.org/c3ref/c_limit_attached.html#sqlitelimitworkerthreads"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_LOCKED",
+      "source": "https://www.sqlite.org/rescode.html#locked"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_LOCKED_SHAREDCACHE",
+      "source": "https://www.sqlite.org/rescode.html#locked_sharedcache"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_LOCKED_VTAB",
+      "source": "https://www.sqlite.org/rescode.html#locked_vtab"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_LOCK_EXCLUSIVE",
+      "source": "https://www.sqlite.org/c3ref/c_lock_exclusive.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_LOCK_NONE",
+      "source": "https://www.sqlite.org/c3ref/c_lock_exclusive.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_LOCK_PENDING",
+      "source": "https://www.sqlite.org/c3ref/c_lock_exclusive.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_LOCK_RESERVED",
+      "source": "https://www.sqlite.org/c3ref/c_lock_exclusive.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_LOCK_SHARED",
+      "source": "https://www.sqlite.org/c3ref/c_lock_exclusive.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_MISMATCH",
+      "source": "https://www.sqlite.org/rescode.html#mismatch"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_MISUSE",
+      "source": "https://www.sqlite.org/rescode.html#misuse"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_MUTEX_FAST",
+      "source": "https://www.sqlite.org/c3ref/c_mutex_fast.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_MUTEX_RECURSIVE",
+      "source": "https://www.sqlite.org/c3ref/c_mutex_fast.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_MUTEX_STATIC_APP1",
+      "source": "https://www.sqlite.org/c3ref/c_mutex_fast.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_MUTEX_STATIC_APP2",
+      "source": "https://www.sqlite.org/c3ref/c_mutex_fast.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_MUTEX_STATIC_APP3",
+      "source": "https://www.sqlite.org/c3ref/c_mutex_fast.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_MUTEX_STATIC_LRU",
+      "source": "https://www.sqlite.org/c3ref/c_mutex_fast.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_MUTEX_STATIC_LRU2",
+      "source": "https://www.sqlite.org/c3ref/c_mutex_fast.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_MUTEX_STATIC_MAIN",
+      "source": "https://www.sqlite.org/c3ref/c_mutex_fast.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_MUTEX_STATIC_MEM",
+      "source": "https://www.sqlite.org/c3ref/c_mutex_fast.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_MUTEX_STATIC_MEM2",
+      "source": "https://www.sqlite.org/c3ref/c_mutex_fast.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_MUTEX_STATIC_OPEN",
+      "source": "https://www.sqlite.org/c3ref/c_mutex_fast.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_MUTEX_STATIC_PMEM",
+      "source": "https://www.sqlite.org/c3ref/c_mutex_fast.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_MUTEX_STATIC_PRNG",
+      "source": "https://www.sqlite.org/c3ref/c_mutex_fast.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_MUTEX_STATIC_VFS1",
+      "source": "https://www.sqlite.org/c3ref/c_mutex_fast.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_MUTEX_STATIC_VFS2",
+      "source": "https://www.sqlite.org/c3ref/c_mutex_fast.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_MUTEX_STATIC_VFS3",
+      "source": "https://www.sqlite.org/c3ref/c_mutex_fast.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_NOLFS",
+      "source": "https://www.sqlite.org/rescode.html#nolfs"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_NOMEM",
+      "source": "https://www.sqlite.org/rescode.html#nomem"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_NOTADB",
+      "source": "https://www.sqlite.org/rescode.html#notadb"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_NOTFOUND",
+      "source": "https://www.sqlite.org/rescode.html#notfound"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_NOTICE",
+      "source": "https://www.sqlite.org/rescode.html#notice"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_NOTICE_RBU",
+      "source": "https://www.sqlite.org/c3ref/c_abort_rollback.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_NOTICE_RECOVER_ROLLBACK",
+      "source": "https://www.sqlite.org/rescode.html#notice_recover_rollback"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_NOTICE_RECOVER_WAL",
+      "source": "https://www.sqlite.org/rescode.html#notice_recover_wal"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_NULL",
+      "source": "https://www.sqlite.org/c3ref/c_blob.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_OK",
+      "source": "https://www.sqlite.org/rescode.html#ok"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_OK_LOAD_PERMANENTLY",
+      "source": "https://www.sqlite.org/rescode.html#ok_load_permanently"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_OK_SYMLINK",
+      "source": "https://www.sqlite.org/c3ref/c_abort_rollback.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_OPEN_AUTOPROXY",
+      "source": "https://www.sqlite.org/c3ref/c_open_autoproxy.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_OPEN_CREATE",
+      "source": "https://www.sqlite.org/c3ref/c_open_autoproxy.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_OPEN_DELETEONCLOSE",
+      "source": "https://www.sqlite.org/c3ref/c_open_autoproxy.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_OPEN_EXCLUSIVE",
+      "source": "https://www.sqlite.org/c3ref/c_open_autoproxy.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_OPEN_EXRESCODE",
+      "source": "https://www.sqlite.org/c3ref/c_open_autoproxy.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_OPEN_FULLMUTEX",
+      "source": "https://www.sqlite.org/c3ref/c_open_autoproxy.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_OPEN_MAIN_DB",
+      "source": "https://www.sqlite.org/c3ref/c_open_autoproxy.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_OPEN_MAIN_JOURNAL",
+      "source": "https://www.sqlite.org/c3ref/c_open_autoproxy.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_OPEN_MEMORY",
+      "source": "https://www.sqlite.org/c3ref/c_open_autoproxy.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_OPEN_NOFOLLOW",
+      "source": "https://www.sqlite.org/c3ref/c_open_autoproxy.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_OPEN_NOMUTEX",
+      "source": "https://www.sqlite.org/c3ref/c_open_autoproxy.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_OPEN_PRIVATECACHE",
+      "source": "https://www.sqlite.org/c3ref/c_open_autoproxy.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_OPEN_READONLY",
+      "source": "https://www.sqlite.org/c3ref/c_open_autoproxy.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_OPEN_READWRITE",
+      "source": "https://www.sqlite.org/c3ref/c_open_autoproxy.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_OPEN_SHAREDCACHE",
+      "source": "https://www.sqlite.org/c3ref/c_open_autoproxy.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_OPEN_SUBJOURNAL",
+      "source": "https://www.sqlite.org/c3ref/c_open_autoproxy.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_OPEN_SUPER_JOURNAL",
+      "source": "https://www.sqlite.org/c3ref/c_open_autoproxy.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_OPEN_TEMP_DB",
+      "source": "https://www.sqlite.org/c3ref/c_open_autoproxy.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_OPEN_TEMP_JOURNAL",
+      "source": "https://www.sqlite.org/c3ref/c_open_autoproxy.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_OPEN_TRANSIENT_DB",
+      "source": "https://www.sqlite.org/c3ref/c_open_autoproxy.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_OPEN_URI",
+      "source": "https://www.sqlite.org/c3ref/c_open_autoproxy.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_OPEN_WAL",
+      "source": "https://www.sqlite.org/c3ref/c_open_autoproxy.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_PERM",
+      "source": "https://www.sqlite.org/rescode.html#perm"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_PRAGMA",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_PREPARE_DONT_LOG",
+      "source": "https://www.sqlite.org/c3ref/c_prepare_dont_log.html#sqlitepreparedontlog"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_PREPARE_FROM_DDL",
+      "source": "https://www.sqlite.org/c3ref/c_prepare_dont_log.html#sqlitepreparefromddl"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_PREPARE_NORMALIZE",
+      "source": "https://www.sqlite.org/c3ref/c_prepare_dont_log.html#sqlitepreparenormalize"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_PREPARE_NO_VTAB",
+      "source": "https://www.sqlite.org/c3ref/c_prepare_dont_log.html#sqlitepreparenovtab"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_PREPARE_PERSISTENT",
+      "source": "https://www.sqlite.org/c3ref/c_prepare_dont_log.html#sqlitepreparepersistent"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_PROTOCOL",
+      "source": "https://www.sqlite.org/rescode.html#protocol"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_RANGE",
+      "source": "https://www.sqlite.org/rescode.html#range"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_READ",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_READONLY",
+      "source": "https://www.sqlite.org/rescode.html#readonly"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_READONLY_CANTINIT",
+      "source": "https://www.sqlite.org/rescode.html#readonly_cantinit"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_READONLY_CANTLOCK",
+      "source": "https://www.sqlite.org/rescode.html#readonly_cantlock"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_READONLY_DBMOVED",
+      "source": "https://www.sqlite.org/rescode.html#readonly_dbmoved"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_READONLY_DIRECTORY",
+      "source": "https://www.sqlite.org/rescode.html#readonly_directory"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_READONLY_RECOVERY",
+      "source": "https://www.sqlite.org/rescode.html#readonly_recovery"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_READONLY_ROLLBACK",
+      "source": "https://www.sqlite.org/rescode.html#readonly_rollback"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_RECURSIVE",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_REINDEX",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_REPLACE",
+      "source": "https://www.sqlite.org/c3ref/c_fail.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_RESULT_SUBTYPE",
+      "source": "https://www.sqlite.org/c3ref/c_deterministic.html#sqliteresultsubtype"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_ROLLBACK",
+      "source": "https://www.sqlite.org/c3ref/c_fail.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_ROW",
+      "source": "https://www.sqlite.org/rescode.html#row"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_SAVEPOINT",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_SCANSTAT_COMPLEX",
+      "source": "https://www.sqlite.org/c3ref/c_scanstat_complex.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_SCANSTAT_EST",
+      "source": "https://www.sqlite.org/c3ref/c_scanstat_est.html#sqlitescanstatest"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_SCANSTAT_EXPLAIN",
+      "source": "https://www.sqlite.org/c3ref/c_scanstat_est.html#sqlitescanstatexplain"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_SCANSTAT_NAME",
+      "source": "https://www.sqlite.org/c3ref/c_scanstat_est.html#sqlitescanstatname"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_SCANSTAT_NCYCLE",
+      "source": "https://www.sqlite.org/c3ref/c_scanstat_est.html#sqlitescanstatncycle"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_SCANSTAT_NLOOP",
+      "source": "https://www.sqlite.org/c3ref/c_scanstat_est.html#sqlitescanstatnloop"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_SCANSTAT_NVISIT",
+      "source": "https://www.sqlite.org/c3ref/c_scanstat_est.html#sqlitescanstatnvisit"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_SCANSTAT_PARENTID",
+      "source": "https://www.sqlite.org/c3ref/c_scanstat_est.html#sqlitescanstatparentid"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_SCANSTAT_SELECTID",
+      "source": "https://www.sqlite.org/c3ref/c_scanstat_est.html#sqlitescanstatselectid"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_SCHEMA",
+      "source": "https://www.sqlite.org/rescode.html#schema"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_SCM_BRANCH",
+      "source": "https://www.sqlite.org/c3ref/c_scm_branch.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_SCM_DATETIME",
+      "source": "https://www.sqlite.org/c3ref/c_scm_branch.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_SCM_TAGS",
+      "source": "https://www.sqlite.org/c3ref/c_scm_branch.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_SELECT",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_SELFORDER1",
+      "source": "https://www.sqlite.org/c3ref/c_deterministic.html#sqliteselforder1"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_SERIALIZE_NOCOPY",
+      "source": "https://www.sqlite.org/c3ref/c_serialize_nocopy.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_SETLK_BLOCK_ON_CONNECT",
+      "source": "https://www.sqlite.org/c3ref/c_setlk_block_on_connect.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_SHM_EXCLUSIVE",
+      "source": "https://www.sqlite.org/c3ref/c_shm_exclusive.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_SHM_LOCK",
+      "source": "https://www.sqlite.org/c3ref/c_shm_exclusive.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_SHM_NLOCK",
+      "source": "https://www.sqlite.org/c3ref/c_shm_nlock.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_SHM_SHARED",
+      "source": "https://www.sqlite.org/c3ref/c_shm_exclusive.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_SHM_UNLOCK",
+      "source": "https://www.sqlite.org/c3ref/c_shm_exclusive.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_SOURCE_ID",
+      "source": "https://www.sqlite.org/c3ref/c_scm_branch.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_STATIC",
+      "source": "https://www.sqlite.org/c3ref/c_static.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_STATUS_MALLOC_COUNT",
+      "source": "https://www.sqlite.org/c3ref/c_status_malloc_count.html#sqlitestatusmalloccount"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_STATUS_MALLOC_SIZE",
+      "source": "https://www.sqlite.org/c3ref/c_status_malloc_count.html#sqlitestatusmallocsize"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_STATUS_MEMORY_USED",
+      "source": "https://www.sqlite.org/c3ref/c_status_malloc_count.html#sqlitestatusmemoryused"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_STATUS_PAGECACHE_OVERFLOW",
+      "source": "https://www.sqlite.org/c3ref/c_status_malloc_count.html#sqlitestatuspagecacheoverflow"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_STATUS_PAGECACHE_SIZE",
+      "source": "https://www.sqlite.org/c3ref/c_status_malloc_count.html#sqlitestatuspagecachesize"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_STATUS_PAGECACHE_USED",
+      "source": "https://www.sqlite.org/c3ref/c_status_malloc_count.html#sqlitestatuspagecacheused"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_STATUS_PARSER_STACK",
+      "source": "https://www.sqlite.org/c3ref/c_status_malloc_count.html#sqlitestatusparserstack"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_STATUS_SCRATCH_OVERFLOW",
+      "source": "https://www.sqlite.org/c3ref/c_status_malloc_count.html#sqlitestatusscratchoverflow"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_STATUS_SCRATCH_SIZE",
+      "source": "https://www.sqlite.org/c3ref/c_status_malloc_count.html#sqlitestatusscratchsize"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_STATUS_SCRATCH_USED",
+      "source": "https://www.sqlite.org/c3ref/c_status_malloc_count.html#sqlitestatusscratchused"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_STMTSTATUS_AUTOINDEX",
+      "source": "https://www.sqlite.org/c3ref/c_stmtstatus_counter.html#sqlitestmtstatusautoindex"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_STMTSTATUS_FILTER_HIT",
+      "source": "https://www.sqlite.org/c3ref/c_stmtstatus_counter.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_STMTSTATUS_FILTER_MISS",
+      "source": "https://www.sqlite.org/c3ref/c_stmtstatus_counter.html#sqlitestmtstatusfiltermiss"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_STMTSTATUS_FULLSCAN_STEP",
+      "source": "https://www.sqlite.org/c3ref/c_stmtstatus_counter.html#sqlitestmtstatusfullscanstep"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_STMTSTATUS_MEMUSED",
+      "source": "https://www.sqlite.org/c3ref/c_stmtstatus_counter.html#sqlitestmtstatusmemused"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_STMTSTATUS_REPREPARE",
+      "source": "https://www.sqlite.org/c3ref/c_stmtstatus_counter.html#sqlitestmtstatusreprepare"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_STMTSTATUS_RUN",
+      "source": "https://www.sqlite.org/c3ref/c_stmtstatus_counter.html#sqlitestmtstatusrun"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_STMTSTATUS_SORT",
+      "source": "https://www.sqlite.org/c3ref/c_stmtstatus_counter.html#sqlitestmtstatussort"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_STMTSTATUS_VM_STEP",
+      "source": "https://www.sqlite.org/c3ref/c_stmtstatus_counter.html#sqlitestmtstatusvmstep"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_SUBTYPE",
+      "source": "https://www.sqlite.org/c3ref/c_deterministic.html#sqlitesubtype"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_SYNC_DATAONLY",
+      "source": "https://www.sqlite.org/c3ref/c_sync_dataonly.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_SYNC_FULL",
+      "source": "https://www.sqlite.org/c3ref/c_sync_dataonly.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_SYNC_NORMAL",
+      "source": "https://www.sqlite.org/c3ref/c_sync_dataonly.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_ALWAYS",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_ASSERT",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_ATOF",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_BENIGN_MALLOC_HOOKS",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_BITVEC_TEST",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_BYTEORDER",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_EXPLAIN_STMT",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_EXTRA_SCHEMA_CHECKS",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_FAULT_INSTALL",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_FIRST",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_FK_NO_ACTION",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_GETOPT",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_IMPOSTER",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_INTERNAL_FUNCTIONS",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_ISINIT",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_ISKEYWORD",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_JSON_SELFCHECK",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_LAST",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_LOCALTIME_FAULT",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_LOGEST",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_NEVER_CORRUPT",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_ONCE_RESET_THRESHOLD",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_OPTIMIZATIONS",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_PARSER_COVERAGE",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_PENDING_BYTE",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_PRNG_RESET",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_PRNG_RESTORE",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_PRNG_SAVE",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_PRNG_SEED",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_RESERVE",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_RESULT_INTREAL",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_SCRATCHMALLOC",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_SEEK_COUNT",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_SORTER_MMAP",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_TRACEFLAGS",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_TUNE",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_USELONGDOUBLE",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TESTCTRL_VDBE_COVERAGE",
+      "source": "https://www.sqlite.org/c3ref/c_testctrl_always.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TEXT",
+      "source": "https://www.sqlite.org/c3ref/c_blob.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TOOBIG",
+      "source": "https://www.sqlite.org/rescode.html#toobig"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TRACE",
+      "source": "https://www.sqlite.org/c3ref/c_trace.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TRACE_CLOSE",
+      "source": "https://www.sqlite.org/c3ref/c_trace.html#sqlitetraceclose"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TRACE_PROFILE",
+      "source": "https://www.sqlite.org/c3ref/c_trace.html#sqlitetraceprofile"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TRACE_ROW",
+      "source": "https://www.sqlite.org/c3ref/c_trace.html#sqlitetracerow"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TRACE_STMT",
+      "source": "https://www.sqlite.org/c3ref/c_trace.html#sqlitetracestmt"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TRANSACTION",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TRANSIENT",
+      "source": "https://www.sqlite.org/c3ref/c_static.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TXN_NONE",
+      "source": "https://www.sqlite.org/c3ref/c_txn_none.html#sqlitetxnnone"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TXN_READ",
+      "source": "https://www.sqlite.org/c3ref/c_txn_none.html#sqlitetxnread"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_TXN_WRITE",
+      "source": "https://www.sqlite.org/c3ref/c_txn_none.html#sqlitetxnwrite"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_UPDATE",
+      "source": "https://www.sqlite.org/c3ref/c_alter_table.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_UTF16",
+      "source": "https://www.sqlite.org/c3ref/c_any.html#sqliteutf16"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_UTF16BE",
+      "source": "https://www.sqlite.org/c3ref/c_any.html#sqliteutf16be"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_UTF16LE",
+      "source": "https://www.sqlite.org/c3ref/c_any.html#sqliteutf16le"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_UTF16_ALIGNED",
+      "source": "https://www.sqlite.org/c3ref/c_any.html#sqliteutf16aligned"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_UTF8",
+      "source": "https://www.sqlite.org/c3ref/c_any.html#sqliteutf8"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_UTF8_ZT",
+      "source": "https://www.sqlite.org/c3ref/c_any.html#sqliteutf8zt"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_VERSION",
+      "source": "https://www.sqlite.org/c3ref/c_scm_branch.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_VERSION_NUMBER",
+      "source": "https://www.sqlite.org/c3ref/c_scm_branch.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_VTAB_CONSTRAINT_SUPPORT",
+      "source": "https://www.sqlite.org/c3ref/c_vtab_constraint_support.html#sqlitevtabconstraintsupport"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_VTAB_DIRECTONLY",
+      "source": "https://www.sqlite.org/c3ref/c_vtab_constraint_support.html#sqlitevtabdirectonly"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_VTAB_INNOCUOUS",
+      "source": "https://www.sqlite.org/c3ref/c_vtab_constraint_support.html#sqlitevtabinnocuous"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_VTAB_USES_ALL_SCHEMAS",
+      "source": "https://www.sqlite.org/c3ref/c_vtab_constraint_support.html#sqlitevtabusesallschemas"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_WARNING",
+      "source": "https://www.sqlite.org/rescode.html#warning"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_WARNING_AUTOINDEX",
+      "source": "https://www.sqlite.org/rescode.html#warning_autoindex"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_WIN32_DATA_DIRECTORY_TYPE",
+      "source": "https://www.sqlite.org/c3ref/c_win32_data_directory_type.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_WIN32_TEMP_DIRECTORY_TYPE",
+      "source": "https://www.sqlite.org/c3ref/c_win32_data_directory_type.html"
+    },
+    {
+      "category": "api-constant",
+      "name": "SQLITE_XFER",
+      "source": "https://www.sqlite.org/c3ref/c_copy.html"
+    },
+    {
+      "category": "extension",
+      "name": "JSON Functions",
+      "source": "https://www.sqlite.org/json1.html"
+    },
+    {
+      "category": "extension",
+      "name": "FTS5 - Full Text Search",
+      "source": "https://www.sqlite.org/fts5.html"
+    },
+    {
+      "category": "extension",
+      "name": "FTS3 - Full Text Search",
+      "source": "https://www.sqlite.org/fts3.html"
+    },
+    {
+      "category": "extension",
+      "name": "R-Tree Module",
+      "source": "https://www.sqlite.org/rtree.html"
+    },
+    {
+      "category": "extension",
+      "name": "Sessions",
+      "source": "https://www.sqlite.org/sessionintro.html"
+    },
+    {
+      "category": "extension",
+      "name": "Run-Time Loadable Extensions",
+      "source": "https://www.sqlite.org/loadext.html"
+    },
+    {
+      "category": "extension",
+      "name": "Dbstat Virtual Table",
+      "source": "https://www.sqlite.org/dbstat.html"
+    },
+    {
+      "category": "extension",
+      "name": "Csv Virtual Table",
+      "source": "https://www.sqlite.org/csv.html"
+    },
+    {
+      "category": "extension",
+      "name": "Carray",
+      "source": "https://www.sqlite.org/carray.html"
+    },
+    {
+      "category": "extension",
+      "name": "generate_series",
+      "source": "https://www.sqlite.org/series.html"
+    },
+    {
+      "category": "extension",
+      "name": "Spellfix1",
+      "source": "https://www.sqlite.org/spellfix1.html"
+    },
+    {
+      "category": "extension",
+      "name": "Zipfile",
+      "source": "https://www.sqlite.org/zipfile.html"
+    },
+    {
+      "category": "extension",
+      "name": "The IEEE754 Extension",
+      "source": "https://www.sqlite.org/floatingpoint.html#the_ieee754_c_extension"
+    },
+    {
+      "category": "extension",
+      "name": "The Decimal Extension",
+      "source": "https://www.sqlite.org/floatingpoint.html#the_decimal_c_extension"
+    },
+    {
+      "category": "extension",
+      "name": "The UINT Collating Sequence",
+      "source": "https://www.sqlite.org/uintcseq.html"
+    },
+    {
+      "category": "extension",
+      "name": "The Percentile Extension",
+      "source": "https://www.sqlite.org/percentile.html"
+    }
+  ]
+}

@@ -1,0 +1,3787 @@
+{
+  "sourceHashes": {
+    "adapters/aot-database.ts": "5715b9360c2a5323c69b0f51c53bf1c45a423dc9cd2883b80164392ae51046fc",
+    "adapters/moon-image-store.ts": "303f1e4c134233a5e7013f9947c8636ad78b0ce5533f359a431c363f59e5dbe2",
+    "package.json": "9284c91067ca0a1ba5e731c7027e7503e69be56c42d2fcb6d8e3fd1482bf7c2d",
+    "pnpm-lock.yaml": "4870ef6229cbf653e92d5ff6b4cb87feca3dfa5ddfe1c4972b3dfbd85a64310e",
+    "scripts/bench-indexeddb.ts": "8d3c9d7c38a77089b961bf161cca4dce1549fe1284d3d767351c5b9b085b2075",
+    "scripts/heap-sampling.ts": "346335a5eeb5a4740882323b8da795f2f2a7ba06994ea9826932f8dc217e70b0",
+    "scripts/indexeddb-bench-workload.ts": "0dcd0d3912e175c0c1a3bf6b8ee96e1938dc15cf80552980d9ddbe8f3b0e9da5",
+    "scripts/measurement-manifest.ts": "615c0ab32c0b2e01c57ea1be690a2a08d2e9401b9b0c5d93574520253c16acdb",
+    "src/aot-values.ts": "6edf9316e1e5cb42b4099c148c9f9b84bf0acf3903c5409975d4ce8b0f5aa438"
+  },
+  "format": 1,
+  "measuredAt": "2026-11-15T14:03:17.464Z",
+  "smoke": false,
+  "payloadStorageClass": "text",
+  "selection": {
+    "dataset": "100-64",
+    "strategy": "semantic",
+    "runtime": "/Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/litestream-example/runtime/runtime.js"
+  },
+  "environment": {
+    "node": "v24.22.2",
+    "chromium": "158.0.8127.18",
+    "cpu": "Apple M5",
+    "platform": "darwin",
+    "arch": "arm64",
+    "moon": "moon 0.1.20261104 (940aa18 2026-11-04)",
+    "nativeOracle": "3.53.4"
+  },
+  "method": {
+    "runs": 7,
+    "iterations": 32,
+    "warmup": 2,
+    "description": "Same MoonBit release JS AOT artifact, bound SQL and data. Snapshot = existing full SavedState JSON per strict IDB commit. Semantic = materialized column patches (v2, with v1 replay) plus binary side attachments. Pages = full SQLite export, full-buffer 4096-byte comparison and binary dirty pages in the same IDB journal contract; not a lazy pager and not OS-aligned I/O. Both incremental paths compact at 128 records or 4 MiB. Point updates alternate equal-width INTEGER values; batch alternates +/-1 on 16 adjacent rows. Per-call total, preparation and IDB submission+strict-complete recorded; all 7x32 operations retained including compactions. ASCII payload lengths count submitted image/delta bytes, excluding constant generation metadata; --blob stores the same pseudorandom ASCII bytes as BLOB instead of TEXT. Both layouts use two puts per commit. Native typed-result hashes checked after each workload and after replay; page files reopened by native SQLite. CPU run sequentially on one machine, no throttling. Separate fresh Chromium context/page per layout/dataset.",
+    "memory": "Baseline/retained/prepared/after use CDP Runtime.getHeapUsage after forced GC. Used JS heap and backingStorageSize are separate. observedPeak samples without forced GC during a separate untimed 64-update workload at a requested 2ms interval, recording timestamps and simultaneous combined bytes; CDP latency and synchronous work can hide transient peaks. It is a sampled high-water observation, not an exact allocation peak, RSS or IndexedDB service memory. Prepared is paused just before IDB submission. Current engine keeps all rows; pages add a full SQLite buffer."
+  },
+  "artifacts": {
+    "runnerSHA256": "c459fbc1982578fee6d26f9326f2d918e115d95333cb93cb4efbb43847cef5e3",
+    "aotRuntimeSHA256": "e9f37ecaa7cb88c9fbfbbfdaab46adbb263cc452e8aa07888b9e6d23b711a70c",
+    "programSHA256": "b60252099215a1175a5051e1f31e23da693d95c3d849ce3e01eaad630bb96dfc"
+  },
+  "results": [
+    {
+      "rows": 100,
+      "payloadBytesPerRow": 64,
+      "strategy": "semantic",
+      "setupMs": 25.49258400000008,
+      "workloads": [
+        {
+          "name": "point",
+          "samples": [
+            [
+              {
+                "totalMs": 0.38999998569488525,
+                "prepareMs": 0.2200000286102295,
+                "idbMs": 0.1549999713897705,
+                "bytes": 457,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3450000286102295,
+                "prepareMs": 0.20000004768371582,
+                "idbMs": 0.13999998569488525,
+                "bytes": 457,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.36000001430511475,
+                "prepareMs": 0.18500006198883057,
+                "idbMs": 0.15999996662139893,
+                "bytes": 457,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3700000047683716,
+                "prepareMs": 0.20000004768371582,
+                "idbMs": 0.1549999713897705,
+                "bytes": 457,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3250000476837158,
+                "prepareMs": 0.16999995708465576,
+                "idbMs": 0.15000009536743164,
+                "bytes": 457,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2799999713897705,
+                "prepareMs": 0.13499999046325684,
+                "idbMs": 0.13999998569488525,
+                "bytes": 457,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2749999761581421,
+                "prepareMs": 0.13499999046325684,
+                "idbMs": 0.13499999046325684,
+                "bytes": 458,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.26499998569488525,
+                "prepareMs": 0.13499999046325684,
+                "idbMs": 0.125,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2200000286102295,
+                "prepareMs": 0.08500003814697266,
+                "idbMs": 0.125,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.23500001430511475,
+                "prepareMs": 0.11000001430511475,
+                "idbMs": 0.125,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2200000286102295,
+                "prepareMs": 0.0849999189376831,
+                "idbMs": 0.13000011444091797,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.25999999046325684,
+                "prepareMs": 0.09999990463256836,
+                "idbMs": 0.14500010013580322,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2549999952316284,
+                "prepareMs": 0.12999999523162842,
+                "idbMs": 0.12000000476837158,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.25999999046325684,
+                "prepareMs": 0.08999991416931152,
+                "idbMs": 0.16000008583068848,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2849999666213989,
+                "prepareMs": 0.13999998569488525,
+                "idbMs": 0.13999998569488525,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.20000004768371582,
+                "prepareMs": 0.08500003814697266,
+                "idbMs": 0.11500000953674316,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.26999998092651367,
+                "prepareMs": 0.09499990940093994,
+                "idbMs": 0.1650000810623169,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2200000286102295,
+                "prepareMs": 0.07999992370605469,
+                "idbMs": 0.13000011444091797,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.19999992847442627,
+                "prepareMs": 0.07999992370605469,
+                "idbMs": 0.12000000476837158,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.20500004291534424,
+                "prepareMs": 0.08500003814697266,
+                "idbMs": 0.12000000476837158,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2200000286102295,
+                "prepareMs": 0.06999993324279785,
+                "idbMs": 0.14500010013580322,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.21499991416931152,
+                "prepareMs": 0.08999991416931152,
+                "idbMs": 0.12000000476837158,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18500006198883057,
+                "prepareMs": 0.0700000524520874,
+                "idbMs": 0.11000001430511475,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2049999237060547,
+                "prepareMs": 0.07999992370605469,
+                "idbMs": 0.125,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.19000005722045898,
+                "prepareMs": 0.07500004768371582,
+                "idbMs": 0.11000001430511475,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18499994277954102,
+                "prepareMs": 0.0700000524520874,
+                "idbMs": 0.1099998950958252,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18000006675720215,
+                "prepareMs": 0.0700000524520874,
+                "idbMs": 0.11000001430511475,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18499994277954102,
+                "prepareMs": 0.06999993324279785,
+                "idbMs": 0.11000001430511475,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18500006198883057,
+                "prepareMs": 0.07500004768371582,
+                "idbMs": 0.11000001430511475,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.16999995708465576,
+                "prepareMs": 0.06499993801116943,
+                "idbMs": 0.10500001907348633,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1950000524520874,
+                "prepareMs": 0.07500004768371582,
+                "idbMs": 0.12000000476837158,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18499994277954102,
+                "prepareMs": 0.06499993801116943,
+                "idbMs": 0.11500000953674316,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              }
+            ],
+            [
+              {
+                "totalMs": 0.1950000524520874,
+                "prepareMs": 0.07500004768371582,
+                "idbMs": 0.11500000953674316,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.19499993324279785,
+                "prepareMs": 0.06499993801116943,
+                "idbMs": 0.125,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2600001096725464,
+                "prepareMs": 0.08000004291534424,
+                "idbMs": 0.17500007152557373,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18499994277954102,
+                "prepareMs": 0.06499993801116943,
+                "idbMs": 0.12000000476837158,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.20500004291534424,
+                "prepareMs": 0.07500004768371582,
+                "idbMs": 0.125,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.17499995231628418,
+                "prepareMs": 0.06499993801116943,
+                "idbMs": 0.11000001430511475,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1950000524520874,
+                "prepareMs": 0.0700000524520874,
+                "idbMs": 0.12000000476837158,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.19999992847442627,
+                "prepareMs": 0.07499992847442627,
+                "idbMs": 0.12000000476837158,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.19000005722045898,
+                "prepareMs": 0.060000061988830566,
+                "idbMs": 0.125,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2200000286102295,
+                "prepareMs": 0.10000002384185791,
+                "idbMs": 0.12000000476837158,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.19499993324279785,
+                "prepareMs": 0.07999992370605469,
+                "idbMs": 0.11500000953674316,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18500006198883057,
+                "prepareMs": 0.06500005722045898,
+                "idbMs": 0.12000000476837158,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1799999475479126,
+                "prepareMs": 0.06499993801116943,
+                "idbMs": 0.11500000953674316,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.17499995231628418,
+                "prepareMs": 0.06500005722045898,
+                "idbMs": 0.1099998950958252,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.17500007152557373,
+                "prepareMs": 0.06500005722045898,
+                "idbMs": 0.11000001430511475,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1799999475479126,
+                "prepareMs": 0.06999993324279785,
+                "idbMs": 0.10500001907348633,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.19000005722045898,
+                "prepareMs": 0.0700000524520874,
+                "idbMs": 0.11500000953674316,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18999993801116943,
+                "prepareMs": 0.07499992847442627,
+                "idbMs": 0.11000001430511475,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.23000001907348633,
+                "prepareMs": 0.10000002384185791,
+                "idbMs": 0.12000000476837158,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.19000005722045898,
+                "prepareMs": 0.07500004768371582,
+                "idbMs": 0.11000001430511475,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.26499998569488525,
+                "prepareMs": 0.07999992370605469,
+                "idbMs": 0.18000006675720215,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.19999992847442627,
+                "prepareMs": 0.06499993801116943,
+                "idbMs": 0.12999999523162842,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.21000003814697266,
+                "prepareMs": 0.07500004768371582,
+                "idbMs": 0.12999999523162842,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.19000005722045898,
+                "prepareMs": 0.06500005722045898,
+                "idbMs": 0.125,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2049999237060547,
+                "prepareMs": 0.07999992370605469,
+                "idbMs": 0.125,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2200000286102295,
+                "prepareMs": 0.07500004768371582,
+                "idbMs": 0.13999998569488525,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1799999475479126,
+                "prepareMs": 0.06499993801116943,
+                "idbMs": 0.11500000953674316,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.20000004768371582,
+                "prepareMs": 0.08000004291534424,
+                "idbMs": 0.12000000476837158,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.20500004291534424,
+                "prepareMs": 0.08000004291534424,
+                "idbMs": 0.12000000476837158,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.19999992847442627,
+                "prepareMs": 0.07499992847442627,
+                "idbMs": 0.125,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.20500004291534424,
+                "prepareMs": 0.06500005722045898,
+                "idbMs": 0.12999999523162842,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18499994277954102,
+                "prepareMs": 0.06499993801116943,
+                "idbMs": 0.12000000476837158,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              }
+            ],
+            [
+              {
+                "totalMs": 0.18500006198883057,
+                "prepareMs": 0.0700000524520874,
+                "idbMs": 0.11000001430511475,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.21500003337860107,
+                "prepareMs": 0.07499992847442627,
+                "idbMs": 0.1350001096725464,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1799999475479126,
+                "prepareMs": 0.06999993324279785,
+                "idbMs": 0.11000001430511475,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.19000005722045898,
+                "prepareMs": 0.08000004291534424,
+                "idbMs": 0.11000001430511475,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.19499993324279785,
+                "prepareMs": 0.06499993801116943,
+                "idbMs": 0.12000000476837158,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18500006198883057,
+                "prepareMs": 0.060000061988830566,
+                "idbMs": 0.12000000476837158,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18999993801116943,
+                "prepareMs": 0.059999942779541016,
+                "idbMs": 0.125,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.23000001907348633,
+                "prepareMs": 0.0700000524520874,
+                "idbMs": 0.15999996662139893,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.20000004768371582,
+                "prepareMs": 0.07500004768371582,
+                "idbMs": 0.12000000476837158,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2349998950958252,
+                "prepareMs": 0.09499990940093994,
+                "idbMs": 0.13499999046325684,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.20000004768371582,
+                "prepareMs": 0.07500004768371582,
+                "idbMs": 0.12000000476837158,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1950000524520874,
+                "prepareMs": 0.0700000524520874,
+                "idbMs": 0.125,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2099999189376831,
+                "prepareMs": 0.07499992847442627,
+                "idbMs": 0.13499999046325684,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1950000524520874,
+                "prepareMs": 0.0700000524520874,
+                "idbMs": 0.12000000476837158,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.21000003814697266,
+                "prepareMs": 0.08000004291534424,
+                "idbMs": 0.125,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.21499991416931152,
+                "prepareMs": 0.06999993324279785,
+                "idbMs": 0.14499998092651367,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.20000004768371582,
+                "prepareMs": 0.06500005722045898,
+                "idbMs": 0.12999999523162842,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.21500003337860107,
+                "prepareMs": 0.08000004291534424,
+                "idbMs": 0.12999999523162842,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2099999189376831,
+                "prepareMs": 0.06999993324279785,
+                "idbMs": 0.13499999046325684,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.21000003814697266,
+                "prepareMs": 0.0700000524520874,
+                "idbMs": 0.13499999046325684,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.16499996185302734,
+                "prepareMs": 0.04999995231628418,
+                "idbMs": 0.11000001430511475,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18000006675720215,
+                "prepareMs": 0.060000061988830566,
+                "idbMs": 0.12000000476837158,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.19999992847442627,
+                "prepareMs": 0.06499993801116943,
+                "idbMs": 0.12999999523162842,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1950000524520874,
+                "prepareMs": 0.060000061988830566,
+                "idbMs": 0.12999999523162842,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1799999475479126,
+                "prepareMs": 0.04999995231628418,
+                "idbMs": 0.12999999523162842,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.21500003337860107,
+                "prepareMs": 0.05000007152557373,
+                "idbMs": 0.16499996185302734,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1950000524520874,
+                "prepareMs": 0.06500005722045898,
+                "idbMs": 0.12999999523162842,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18499994277954102,
+                "prepareMs": 0.0549999475479126,
+                "idbMs": 0.12999999523162842,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.16000008583068848,
+                "prepareMs": 0.05000007152557373,
+                "idbMs": 0.10500001907348633,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18999993801116943,
+                "prepareMs": 0.059999942779541016,
+                "idbMs": 0.125,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18000006675720215,
+                "prepareMs": 0.04999995231628418,
+                "idbMs": 0.125,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2049999237060547,
+                "prepareMs": 0.059999942779541016,
+                "idbMs": 0.13999998569488525,
+                "bytes": 459,
+                "records": 2,
+                "kind": "delta"
+              }
+            ],
+            [
+              {
+                "totalMs": 0.21500003337860107,
+                "prepareMs": 0.06500005722045898,
+                "idbMs": 0.14499998092651367,
+                "bytes": 460,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18999993801116943,
+                "prepareMs": 0.06999993324279785,
+                "idbMs": 0.11500000953674316,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.19000005722045898,
+                "prepareMs": 0.05500006675720215,
+                "idbMs": 0.12999999523162842,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.20000004768371582,
+                "prepareMs": 0.06499993801116943,
+                "idbMs": 0.12999999523162842,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.16999995708465576,
+                "prepareMs": 0.0549999475479126,
+                "idbMs": 0.10500001907348633,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1799999475479126,
+                "prepareMs": 0.04999995231628418,
+                "idbMs": 0.12999999523162842,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.16000008583068848,
+                "prepareMs": 0.04500007629394531,
+                "idbMs": 0.11500000953674316,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18999993801116943,
+                "prepareMs": 0.059999942779541016,
+                "idbMs": 0.125,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.16499996185302734,
+                "prepareMs": 0.05500006675720215,
+                "idbMs": 0.1099998950958252,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.16000008583068848,
+                "prepareMs": 0.05000007152557373,
+                "idbMs": 0.11000001430511475,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.19499993324279785,
+                "prepareMs": 0.059999942779541016,
+                "idbMs": 0.13499999046325684,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.16000008583068848,
+                "prepareMs": 0.05000007152557373,
+                "idbMs": 0.11000001430511475,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18499994277954102,
+                "prepareMs": 0.04999995231628418,
+                "idbMs": 0.12999999523162842,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.16999995708465576,
+                "prepareMs": 0.04999995231628418,
+                "idbMs": 0.12000000476837158,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18000006675720215,
+                "prepareMs": 0.05000007152557373,
+                "idbMs": 0.125,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.17499995231628418,
+                "prepareMs": 0.04999995231628418,
+                "idbMs": 0.12000000476837158,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1700000762939453,
+                "prepareMs": 0.05000007152557373,
+                "idbMs": 0.11500000953674316,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.19999992847442627,
+                "prepareMs": 0.06999993324279785,
+                "idbMs": 0.125,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1650000810623169,
+                "prepareMs": 0.05000007152557373,
+                "idbMs": 0.1099998950958252,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.16999995708465576,
+                "prepareMs": 0.0549999475479126,
+                "idbMs": 0.11000001430511475,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18999993801116943,
+                "prepareMs": 0.059999942779541016,
+                "idbMs": 0.125,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1650000810623169,
+                "prepareMs": 0.05000007152557373,
+                "idbMs": 0.11000001430511475,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.16499996185302734,
+                "prepareMs": 0.04499995708465576,
+                "idbMs": 0.11500000953674316,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.21000003814697266,
+                "prepareMs": 0.060000061988830566,
+                "idbMs": 0.14499998092651367,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.19499993324279785,
+                "prepareMs": 0.0549999475479126,
+                "idbMs": 0.13499999046325684,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18500006198883057,
+                "prepareMs": 0.05000007152557373,
+                "idbMs": 0.13499999046325684,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18999993801116943,
+                "prepareMs": 0.0549999475479126,
+                "idbMs": 0.13499999046325684,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.23000001907348633,
+                "prepareMs": 0.05500006675720215,
+                "idbMs": 0.17499995231628418,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1950000524520874,
+                "prepareMs": 0.060000061988830566,
+                "idbMs": 0.13499999046325684,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18999993801116943,
+                "prepareMs": 0.06499993801116943,
+                "idbMs": 0.12000000476837158,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.75,
+                "prepareMs": 0.4450000524520874,
+                "idbMs": 0.3049999475479126,
+                "bytes": 19176,
+                "records": 2,
+                "kind": "checkpoint"
+              },
+              {
+                "totalMs": 0.19000005722045898,
+                "prepareMs": 0.0700000524520874,
+                "idbMs": 0.12000000476837158,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              }
+            ],
+            [
+              {
+                "totalMs": 0.2200000286102295,
+                "prepareMs": 0.07499992847442627,
+                "idbMs": 0.13499999046325684,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.24499988555908203,
+                "prepareMs": 0.06999993324279785,
+                "idbMs": 0.16999995708465576,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.21000003814697266,
+                "prepareMs": 0.05500006675720215,
+                "idbMs": 0.1549999713897705,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.25999999046325684,
+                "prepareMs": 0.05000007152557373,
+                "idbMs": 0.19999992847442627,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.23000001907348633,
+                "prepareMs": 0.06500005722045898,
+                "idbMs": 0.16499996185302734,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.19000005722045898,
+                "prepareMs": 0.060000061988830566,
+                "idbMs": 0.125,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.19499993324279785,
+                "prepareMs": 0.059999942779541016,
+                "idbMs": 0.13499999046325684,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.16499996185302734,
+                "prepareMs": 0.04500007629394531,
+                "idbMs": 0.11999988555908203,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.19000005722045898,
+                "prepareMs": 0.05000007152557373,
+                "idbMs": 0.13499999046325684,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.23500001430511475,
+                "prepareMs": 0.04499995708465576,
+                "idbMs": 0.18500006198883057,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18999993801116943,
+                "prepareMs": 0.06499993801116943,
+                "idbMs": 0.125,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.16000008583068848,
+                "prepareMs": 0.04500007629394531,
+                "idbMs": 0.11500000953674316,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.16999995708465576,
+                "prepareMs": 0.04499995708465576,
+                "idbMs": 0.12000000476837158,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.17499995231628418,
+                "prepareMs": 0.060000061988830566,
+                "idbMs": 0.11499989032745361,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.16000008583068848,
+                "prepareMs": 0.040000081062316895,
+                "idbMs": 0.11500000953674316,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.17499995231628418,
+                "prepareMs": 0.039999961853027344,
+                "idbMs": 0.125,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.20500004291534424,
+                "prepareMs": 0.0700000524520874,
+                "idbMs": 0.12999999523162842,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18499994277954102,
+                "prepareMs": 0.0549999475479126,
+                "idbMs": 0.125,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1700000762939453,
+                "prepareMs": 0.05000007152557373,
+                "idbMs": 0.12000000476837158,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.16499996185302734,
+                "prepareMs": 0.04999995231628418,
+                "idbMs": 0.11000001430511475,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1499999761581421,
+                "prepareMs": 0.039999961853027344,
+                "idbMs": 0.11000001430511475,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1950000524520874,
+                "prepareMs": 0.04500007629394531,
+                "idbMs": 0.1499999761581421,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1799999475479126,
+                "prepareMs": 0.059999942779541016,
+                "idbMs": 0.11500000953674316,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.21000003814697266,
+                "prepareMs": 0.04500007629394531,
+                "idbMs": 0.16499996185302734,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18999993801116943,
+                "prepareMs": 0.04999995231628418,
+                "idbMs": 0.13999998569488525,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18500006198883057,
+                "prepareMs": 0.05000007152557373,
+                "idbMs": 0.12999999523162842,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.21500003337860107,
+                "prepareMs": 0.0549999475479126,
+                "idbMs": 0.15500009059906006,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.17499995231628418,
+                "prepareMs": 0.04499995708465576,
+                "idbMs": 0.12999999523162842,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.16499996185302734,
+                "prepareMs": 0.039999961853027344,
+                "idbMs": 0.11500000953674316,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1700000762939453,
+                "prepareMs": 0.040000081062316895,
+                "idbMs": 0.12999999523162842,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1799999475479126,
+                "prepareMs": 0.04499995708465576,
+                "idbMs": 0.125,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.16499996185302734,
+                "prepareMs": 0.034999966621398926,
+                "idbMs": 0.125,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              }
+            ],
+            [
+              {
+                "totalMs": 0.16000008583068848,
+                "prepareMs": 0.040000081062316895,
+                "idbMs": 0.12000000476837158,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.16499996185302734,
+                "prepareMs": 0.039999961853027344,
+                "idbMs": 0.12000000476837158,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1799999475479126,
+                "prepareMs": 0.039999961853027344,
+                "idbMs": 0.13999998569488525,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1650000810623169,
+                "prepareMs": 0.040000081062316895,
+                "idbMs": 0.125,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.19499993324279785,
+                "prepareMs": 0.0549999475479126,
+                "idbMs": 0.13999998569488525,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.17500007152557373,
+                "prepareMs": 0.05000007152557373,
+                "idbMs": 0.125,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.17499995231628418,
+                "prepareMs": 0.04499995708465576,
+                "idbMs": 0.125,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1549999713897705,
+                "prepareMs": 0.039999961853027344,
+                "idbMs": 0.11000001430511475,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.17500007152557373,
+                "prepareMs": 0.04500007629394531,
+                "idbMs": 0.12999999523162842,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.15999996662139893,
+                "prepareMs": 0.039999961853027344,
+                "idbMs": 0.12000000476837158,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18500006198883057,
+                "prepareMs": 0.04999995231628418,
+                "idbMs": 0.125,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.21499991416931152,
+                "prepareMs": 0.04499995708465576,
+                "idbMs": 0.15999996662139893,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1650000810623169,
+                "prepareMs": 0.040000081062316895,
+                "idbMs": 0.12000000476837158,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.15999996662139893,
+                "prepareMs": 0.04499995708465576,
+                "idbMs": 0.11500000953674316,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.17499995231628418,
+                "prepareMs": 0.04499995708465576,
+                "idbMs": 0.125,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18000006675720215,
+                "prepareMs": 0.05000007152557373,
+                "idbMs": 0.12999999523162842,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.17499995231628418,
+                "prepareMs": 0.04999995231628418,
+                "idbMs": 0.125,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.14499998092651367,
+                "prepareMs": 0.039999961853027344,
+                "idbMs": 0.10000002384185791,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18500006198883057,
+                "prepareMs": 0.05000007152557373,
+                "idbMs": 0.12999999523162842,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.16499996185302734,
+                "prepareMs": 0.04999995231628418,
+                "idbMs": 0.11500000953674316,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.16999995708465576,
+                "prepareMs": 0.04999995231628418,
+                "idbMs": 0.12000000476837158,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18500006198883057,
+                "prepareMs": 0.04500007629394531,
+                "idbMs": 0.12999999523162842,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.16499996185302734,
+                "prepareMs": 0.039999961853027344,
+                "idbMs": 0.12000000476837158,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1700000762939453,
+                "prepareMs": 0.040000081062316895,
+                "idbMs": 0.125,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.15999996662139893,
+                "prepareMs": 0.039999961853027344,
+                "idbMs": 0.11500000953674316,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.16999995708465576,
+                "prepareMs": 0.04499995708465576,
+                "idbMs": 0.12000000476837158,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.16000008583068848,
+                "prepareMs": 0.040000081062316895,
+                "idbMs": 0.11499989032745361,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1549999713897705,
+                "prepareMs": 0.034999966621398926,
+                "idbMs": 0.12000000476837158,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18999993801116943,
+                "prepareMs": 0.04499995708465576,
+                "idbMs": 0.14499998092651367,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.17500007152557373,
+                "prepareMs": 0.04500007629394531,
+                "idbMs": 0.12999999523162842,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.15999996662139893,
+                "prepareMs": 0.039999961853027344,
+                "idbMs": 0.12000000476837158,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1549999713897705,
+                "prepareMs": 0.034999966621398926,
+                "idbMs": 0.11500000953674316,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              }
+            ],
+            [
+              {
+                "totalMs": 0.1650000810623169,
+                "prepareMs": 0.04500007629394531,
+                "idbMs": 0.11499989032745361,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.16999995708465576,
+                "prepareMs": 0.04999995231628418,
+                "idbMs": 0.12000000476837158,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1499999761581421,
+                "prepareMs": 0.034999966621398926,
+                "idbMs": 0.11500000953674316,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.15999996662139893,
+                "prepareMs": 0.039999961853027344,
+                "idbMs": 0.12000000476837158,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.17500007152557373,
+                "prepareMs": 0.04500007629394531,
+                "idbMs": 0.12999999523162842,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.15999996662139893,
+                "prepareMs": 0.039999961853027344,
+                "idbMs": 0.11500000953674316,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.16999995708465576,
+                "prepareMs": 0.034999966621398926,
+                "idbMs": 0.12999999523162842,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1700000762939453,
+                "prepareMs": 0.040000081062316895,
+                "idbMs": 0.12999999523162842,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.17499995231628418,
+                "prepareMs": 0.04999995231628418,
+                "idbMs": 0.12000000476837158,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1700000762939453,
+                "prepareMs": 0.04500007629394531,
+                "idbMs": 0.12000000476837158,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.16499996185302734,
+                "prepareMs": 0.034999966621398926,
+                "idbMs": 0.125,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.15999996662139893,
+                "prepareMs": 0.039999961853027344,
+                "idbMs": 0.12000000476837158,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1700000762939453,
+                "prepareMs": 0.040000081062316895,
+                "idbMs": 0.12999999523162842,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2099999189376831,
+                "prepareMs": 0.04499995708465576,
+                "idbMs": 0.16499996185302734,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.17500007152557373,
+                "prepareMs": 0.05000007152557373,
+                "idbMs": 0.12000000476837158,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.16999995708465576,
+                "prepareMs": 0.039999961853027344,
+                "idbMs": 0.12999999523162842,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18499994277954102,
+                "prepareMs": 0.04499995708465576,
+                "idbMs": 0.13499999046325684,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1700000762939453,
+                "prepareMs": 0.03500008583068848,
+                "idbMs": 0.13499999046325684,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.17499995231628418,
+                "prepareMs": 0.04499995708465576,
+                "idbMs": 0.12999999523162842,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18500006198883057,
+                "prepareMs": 0.05500006675720215,
+                "idbMs": 0.12999999523162842,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.16999995708465576,
+                "prepareMs": 0.034999966621398926,
+                "idbMs": 0.12999999523162842,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1499999761581421,
+                "prepareMs": 0.039999961853027344,
+                "idbMs": 0.10500001907348633,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.18500006198883057,
+                "prepareMs": 0.04500007629394531,
+                "idbMs": 0.13499999046325684,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1549999713897705,
+                "prepareMs": 0.04499995708465576,
+                "idbMs": 0.11000001430511475,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1799999475479126,
+                "prepareMs": 0.04499995708465576,
+                "idbMs": 0.12999999523162842,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.17500007152557373,
+                "prepareMs": 0.04500007629394531,
+                "idbMs": 0.12999999523162842,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.15999996662139893,
+                "prepareMs": 0.034999966621398926,
+                "idbMs": 0.125,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1499999761581421,
+                "prepareMs": 0.034999966621398926,
+                "idbMs": 0.11500000953674316,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.15500009059906006,
+                "prepareMs": 0.040000081062316895,
+                "idbMs": 0.11500000953674316,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.17499995231628418,
+                "prepareMs": 0.04999995231628418,
+                "idbMs": 0.125,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.17499995231628418,
+                "prepareMs": 0.039999961853027344,
+                "idbMs": 0.13499999046325684,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.1700000762939453,
+                "prepareMs": 0.060000061988830566,
+                "idbMs": 0.11000001430511475,
+                "bytes": 461,
+                "records": 2,
+                "kind": "delta"
+              }
+            ]
+          ],
+          "summary": {
+            "medianRunUs": 197.34375178813934,
+            "meanUs": 195.75892921004976,
+            "prepareUs": 64.55357159887042,
+            "idbUs": 127.83482138599669,
+            "meanPayloadBytes": 543.6294642857143,
+            "medianDeltaBytes": 461,
+            "checkpoints": 1
+          },
+          "expectedSHA256": "f85687f36d231a8c6386516faafa575dd92d01a6e83aa4e8d1c418f72e437585"
+        },
+        {
+          "name": "batch",
+          "samples": [
+            [
+              {
+                "totalMs": 0.5299999713897705,
+                "prepareMs": 0.3500000238418579,
+                "idbMs": 0.17499995231628418,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.7150000333786011,
+                "prepareMs": 0.36000001430511475,
+                "idbMs": 0.3450000286102295,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 2.409999966621399,
+                "prepareMs": 0.6299999952316284,
+                "idbMs": 1.7699999809265137,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.48000001907348633,
+                "prepareMs": 0.30500006675720215,
+                "idbMs": 0.16999995708465576,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.375,
+                "prepareMs": 0.24000000953674316,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.5249999761581421,
+                "prepareMs": 0.36500000953674316,
+                "idbMs": 0.1549999713897705,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.5300000905990601,
+                "prepareMs": 0.2950000762939453,
+                "idbMs": 0.22499990463256836,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.4099999666213989,
+                "prepareMs": 0.25999999046325684,
+                "idbMs": 0.1499999761581421,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3999999761581421,
+                "prepareMs": 0.23500001430511475,
+                "idbMs": 0.15999996662139893,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.4950000047683716,
+                "prepareMs": 0.33000004291534424,
+                "idbMs": 0.1549999713897705,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.4650000333786011,
+                "prepareMs": 0.3049999475479126,
+                "idbMs": 0.15500009059906006,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3700000047683716,
+                "prepareMs": 0.22499990463256836,
+                "idbMs": 0.1400001049041748,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.36500000953674316,
+                "prepareMs": 0.24000000953674316,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.34999990463256836,
+                "prepareMs": 0.22499990463256836,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.375,
+                "prepareMs": 0.2250000238418579,
+                "idbMs": 0.1499999761581421,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.36000001430511475,
+                "prepareMs": 0.23000001907348633,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3799999952316284,
+                "prepareMs": 0.23500001430511475,
+                "idbMs": 0.14499998092651367,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.36000001430511475,
+                "prepareMs": 0.24500000476837158,
+                "idbMs": 0.11500000953674316,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.46000003814697266,
+                "prepareMs": 0.25,
+                "idbMs": 0.21000003814697266,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3999999761581421,
+                "prepareMs": 0.23500001430511475,
+                "idbMs": 0.16499996185302734,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3500000238418579,
+                "prepareMs": 0.21500003337860107,
+                "idbMs": 0.13499999046325684,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3400000333786011,
+                "prepareMs": 0.20500004291534424,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3599998950958252,
+                "prepareMs": 0.21499991416931152,
+                "idbMs": 0.14499998092651367,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.36500000953674316,
+                "prepareMs": 0.23000001907348633,
+                "idbMs": 0.12999999523162842,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.33000004291534424,
+                "prepareMs": 0.20000004768371582,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.33000004291534424,
+                "prepareMs": 0.20500004291534424,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3799999952316284,
+                "prepareMs": 0.19999992847442627,
+                "idbMs": 0.17500007152557373,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.34499990940093994,
+                "prepareMs": 0.21499991416931152,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.33000004291534424,
+                "prepareMs": 0.20500004291534424,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.6549999713897705,
+                "prepareMs": 0.39499998092651367,
+                "idbMs": 0.25,
+                "bytes": 19177,
+                "records": 2,
+                "kind": "checkpoint"
+              },
+              {
+                "totalMs": 0.45500004291534424,
+                "prepareMs": 0.31000006198883057,
+                "idbMs": 0.13999998569488525,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3400000333786011,
+                "prepareMs": 0.21500003337860107,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              }
+            ],
+            [
+              {
+                "totalMs": 0.36500000953674316,
+                "prepareMs": 0.2250000238418579,
+                "idbMs": 0.13499999046325684,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3450000286102295,
+                "prepareMs": 0.21000003814697266,
+                "idbMs": 0.13499999046325684,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3700000047683716,
+                "prepareMs": 0.21000003814697266,
+                "idbMs": 0.15999996662139893,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3500000238418579,
+                "prepareMs": 0.20500004291534424,
+                "idbMs": 0.13999998569488525,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.34499990940093994,
+                "prepareMs": 0.2049999237060547,
+                "idbMs": 0.12999999523162842,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.315000057220459,
+                "prepareMs": 0.19000005722045898,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3450000286102295,
+                "prepareMs": 0.20500004291534424,
+                "idbMs": 0.13499999046325684,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3700000047683716,
+                "prepareMs": 0.23500001430511475,
+                "idbMs": 0.12999999523162842,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3349999189376831,
+                "prepareMs": 0.19999992847442627,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3200000524520874,
+                "prepareMs": 0.19000005722045898,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3450000286102295,
+                "prepareMs": 0.19000005722045898,
+                "idbMs": 0.1549999713897705,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3399999141693115,
+                "prepareMs": 0.2049999237060547,
+                "idbMs": 0.12999999523162842,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3250000476837158,
+                "prepareMs": 0.19000005722045898,
+                "idbMs": 0.12999999523162842,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3400000333786011,
+                "prepareMs": 0.21000003814697266,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.32499992847442627,
+                "prepareMs": 0.19499993324279785,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3200000524520874,
+                "prepareMs": 0.1950000524520874,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3200000524520874,
+                "prepareMs": 0.18499994277954102,
+                "idbMs": 0.1350001096725464,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3299999237060547,
+                "prepareMs": 0.19499993324279785,
+                "idbMs": 0.12999999523162842,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3500000238418579,
+                "prepareMs": 0.19000005722045898,
+                "idbMs": 0.1549999713897705,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3250000476837158,
+                "prepareMs": 0.1950000524520874,
+                "idbMs": 0.12999999523162842,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.32499992847442627,
+                "prepareMs": 0.19999992847442627,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.31000006198883057,
+                "prepareMs": 0.1950000524520874,
+                "idbMs": 0.11500000953674316,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.35500001907348633,
+                "prepareMs": 0.19999992847442627,
+                "idbMs": 0.15500009059906006,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.32499992847442627,
+                "prepareMs": 0.18999993801116943,
+                "idbMs": 0.12999999523162842,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3200000524520874,
+                "prepareMs": 0.19000005722045898,
+                "idbMs": 0.12999999523162842,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.31499993801116943,
+                "prepareMs": 0.19499993324279785,
+                "idbMs": 0.11500000953674316,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3700000047683716,
+                "prepareMs": 0.2200000286102295,
+                "idbMs": 0.1499999761581421,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3200000524520874,
+                "prepareMs": 0.20000004768371582,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3349999189376831,
+                "prepareMs": 0.2099999189376831,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3400000333786011,
+                "prepareMs": 0.19000005722045898,
+                "idbMs": 0.14499998092651367,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.35500001907348633,
+                "prepareMs": 0.21000003814697266,
+                "idbMs": 0.14499998092651367,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3700000047683716,
+                "prepareMs": 0.2250000238418579,
+                "idbMs": 0.14499998092651367,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              }
+            ],
+            [
+              {
+                "totalMs": 0.3250000476837158,
+                "prepareMs": 0.18999993801116943,
+                "idbMs": 0.13000011444091797,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.309999942779541,
+                "prepareMs": 0.18499994277954102,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.36500000953674316,
+                "prepareMs": 0.20000004768371582,
+                "idbMs": 0.15999996662139893,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.35500001907348633,
+                "prepareMs": 0.21500003337860107,
+                "idbMs": 0.13999998569488525,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3299999237060547,
+                "prepareMs": 0.18999993801116943,
+                "idbMs": 0.13499999046325684,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.33500003814697266,
+                "prepareMs": 0.20000004768371582,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3250000476837158,
+                "prepareMs": 0.1950000524520874,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.31999993324279785,
+                "prepareMs": 0.18999993801116943,
+                "idbMs": 0.12999999523162842,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.315000057220459,
+                "prepareMs": 0.18500006198883057,
+                "idbMs": 0.12999999523162842,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.31499993801116943,
+                "prepareMs": 0.18499994277954102,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.33000004291534424,
+                "prepareMs": 0.18000006675720215,
+                "idbMs": 0.14499998092651367,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3049999475479126,
+                "prepareMs": 0.18499994277954102,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.30500006675720215,
+                "prepareMs": 0.18000006675720215,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.31999993324279785,
+                "prepareMs": 0.17499995231628418,
+                "idbMs": 0.14499998092651367,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.375,
+                "prepareMs": 0.19000005722045898,
+                "idbMs": 0.18499994277954102,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.315000057220459,
+                "prepareMs": 0.18500006198883057,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3049999475479126,
+                "prepareMs": 0.18999993801116943,
+                "idbMs": 0.11500000953674316,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.43000006675720215,
+                "prepareMs": 0.20000004768371582,
+                "idbMs": 0.2250000238418579,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3500000238418579,
+                "prepareMs": 0.19499993324279785,
+                "idbMs": 0.14500010013580322,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3700000047683716,
+                "prepareMs": 0.2099999189376831,
+                "idbMs": 0.15500009059906006,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.31499993801116943,
+                "prepareMs": 0.18499994277954102,
+                "idbMs": 0.12999999523162842,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2999999523162842,
+                "prepareMs": 0.18000006675720215,
+                "idbMs": 0.11499989032745361,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3500000238418579,
+                "prepareMs": 0.19000005722045898,
+                "idbMs": 0.15999996662139893,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.315000057220459,
+                "prepareMs": 0.17500007152557373,
+                "idbMs": 0.13499999046325684,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.31999993324279785,
+                "prepareMs": 0.19499993324279785,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.315000057220459,
+                "prepareMs": 0.1950000524520874,
+                "idbMs": 0.11500000953674316,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.35500001907348633,
+                "prepareMs": 0.20500004291534424,
+                "idbMs": 0.1499999761581421,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.309999942779541,
+                "prepareMs": 0.1799999475479126,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.315000057220459,
+                "prepareMs": 0.19000005722045898,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.31999993324279785,
+                "prepareMs": 0.1799999475479126,
+                "idbMs": 0.13999998569488525,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.35500001907348633,
+                "prepareMs": 0.17500007152557373,
+                "idbMs": 0.17499995231628418,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.33000004291534424,
+                "prepareMs": 0.1950000524520874,
+                "idbMs": 0.12999999523162842,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              }
+            ],
+            [
+              {
+                "totalMs": 0.3049999475479126,
+                "prepareMs": 0.1799999475479126,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.315000057220459,
+                "prepareMs": 0.18500006198883057,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.36000001430511475,
+                "prepareMs": 0.18999993801116943,
+                "idbMs": 0.1650000810623169,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3049999475479126,
+                "prepareMs": 0.18499994277954102,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.315000057220459,
+                "prepareMs": 0.19000005722045898,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.31999993324279785,
+                "prepareMs": 0.18999993801116943,
+                "idbMs": 0.12999999523162842,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.38499999046325684,
+                "prepareMs": 0.17500007152557373,
+                "idbMs": 0.2099999189376831,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2950000762939453,
+                "prepareMs": 0.17500007152557373,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2849999666213989,
+                "prepareMs": 0.16999995708465576,
+                "idbMs": 0.11500000953674316,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.29499995708465576,
+                "prepareMs": 0.17499995231628418,
+                "idbMs": 0.11500000953674316,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3200000524520874,
+                "prepareMs": 0.1700000762939453,
+                "idbMs": 0.14499998092651367,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3500000238418579,
+                "prepareMs": 0.17499995231628418,
+                "idbMs": 0.1700000762939453,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3399999141693115,
+                "prepareMs": 0.19999992847442627,
+                "idbMs": 0.13999998569488525,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2950000762939453,
+                "prepareMs": 0.1700000762939453,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3399999141693115,
+                "prepareMs": 0.17499995231628418,
+                "idbMs": 0.16499996185302734,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.30500006675720215,
+                "prepareMs": 0.17500007152557373,
+                "idbMs": 0.12999999523162842,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.309999942779541,
+                "prepareMs": 0.1799999475479126,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.30500006675720215,
+                "prepareMs": 0.1700000762939453,
+                "idbMs": 0.12999999523162842,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2999999523162842,
+                "prepareMs": 0.1799999475479126,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2900000810623169,
+                "prepareMs": 0.1700000762939453,
+                "idbMs": 0.11500000953674316,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.309999942779541,
+                "prepareMs": 0.1799999475479126,
+                "idbMs": 0.12999999523162842,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2849999666213989,
+                "prepareMs": 0.16499996185302734,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.315000057220459,
+                "prepareMs": 0.1700000762939453,
+                "idbMs": 0.13999998569488525,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.31499993801116943,
+                "prepareMs": 0.17499995231628418,
+                "idbMs": 0.13999998569488525,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2950000762939453,
+                "prepareMs": 0.1650000810623169,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2849999666213989,
+                "prepareMs": 0.16499996185302734,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3200000524520874,
+                "prepareMs": 0.16999995708465576,
+                "idbMs": 0.14500010013580322,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.28999996185302734,
+                "prepareMs": 0.16999995708465576,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.29499995708465576,
+                "prepareMs": 0.16499996185302734,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2799999713897705,
+                "prepareMs": 0.16000008583068848,
+                "idbMs": 0.11499989032745361,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.28000009059906006,
+                "prepareMs": 0.1700000762939453,
+                "idbMs": 0.10500001907348633,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.28999996185302734,
+                "prepareMs": 0.16499996185302734,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              }
+            ],
+            [
+              {
+                "totalMs": 0.29499995708465576,
+                "prepareMs": 0.16499996185302734,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2850000858306885,
+                "prepareMs": 0.1650000810623169,
+                "idbMs": 0.11500000953674316,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2749999761581421,
+                "prepareMs": 0.15999996662139893,
+                "idbMs": 0.11500000953674316,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.28999996185302734,
+                "prepareMs": 0.16499996185302734,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2849999666213989,
+                "prepareMs": 0.1650000810623169,
+                "idbMs": 0.11999988555908203,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2900000810623169,
+                "prepareMs": 0.1650000810623169,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.28999996185302734,
+                "prepareMs": 0.16499996185302734,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2849999666213989,
+                "prepareMs": 0.17500007152557373,
+                "idbMs": 0.1099998950958252,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.27500009536743164,
+                "prepareMs": 0.1650000810623169,
+                "idbMs": 0.11000001430511475,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3049999475479126,
+                "prepareMs": 0.17499995231628418,
+                "idbMs": 0.12999999523162842,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3049999475479126,
+                "prepareMs": 0.16999995708465576,
+                "idbMs": 0.12999999523162842,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.27500009536743164,
+                "prepareMs": 0.16000008583068848,
+                "idbMs": 0.11500000953674316,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.28999996185302734,
+                "prepareMs": 0.16999995708465576,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.28999996185302734,
+                "prepareMs": 0.16999995708465576,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2950000762939453,
+                "prepareMs": 0.1700000762939453,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.28999996185302734,
+                "prepareMs": 0.16999995708465576,
+                "idbMs": 0.11500000953674316,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2849999666213989,
+                "prepareMs": 0.16999995708465576,
+                "idbMs": 0.11500000953674316,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2900000810623169,
+                "prepareMs": 0.1700000762939453,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3049999475479126,
+                "prepareMs": 0.16499996185302734,
+                "idbMs": 0.13499999046325684,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.29499995708465576,
+                "prepareMs": 0.16499996185302734,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.30500006675720215,
+                "prepareMs": 0.18000006675720215,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2849999666213989,
+                "prepareMs": 0.15999996662139893,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.31000006198883057,
+                "prepareMs": 0.16000008583068848,
+                "idbMs": 0.14499998092651367,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3049999475479126,
+                "prepareMs": 0.18499994277954102,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2950000762939453,
+                "prepareMs": 0.17500007152557373,
+                "idbMs": 0.11499989032745361,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3049999475479126,
+                "prepareMs": 0.17499995231628418,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.31499993801116943,
+                "prepareMs": 0.16999995708465576,
+                "idbMs": 0.13999998569488525,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2950000762939453,
+                "prepareMs": 0.1700000762939453,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.29499995708465576,
+                "prepareMs": 0.16999995708465576,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.30000007152557373,
+                "prepareMs": 0.17500007152557373,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.5699999332427979,
+                "prepareMs": 0.3049999475479126,
+                "idbMs": 0.26499998569488525,
+                "bytes": 19177,
+                "records": 2,
+                "kind": "checkpoint"
+              },
+              {
+                "totalMs": 0.30000007152557373,
+                "prepareMs": 0.18000006675720215,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              }
+            ],
+            [
+              {
+                "totalMs": 0.2999999523162842,
+                "prepareMs": 0.16999995708465576,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2849999666213989,
+                "prepareMs": 0.16499996185302734,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.31000006198883057,
+                "prepareMs": 0.1650000810623169,
+                "idbMs": 0.13999998569488525,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2999999523162842,
+                "prepareMs": 0.16499996185302734,
+                "idbMs": 0.13499999046325684,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.28999996185302734,
+                "prepareMs": 0.15999996662139893,
+                "idbMs": 0.12999999523162842,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2900000810623169,
+                "prepareMs": 0.16000008583068848,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2999999523162842,
+                "prepareMs": 0.16499996185302734,
+                "idbMs": 0.13499999046325684,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.30000007152557373,
+                "prepareMs": 0.1700000762939453,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.29499995708465576,
+                "prepareMs": 0.16499996185302734,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3049999475479126,
+                "prepareMs": 0.16499996185302734,
+                "idbMs": 0.13499999046325684,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2950000762939453,
+                "prepareMs": 0.16000008583068848,
+                "idbMs": 0.13499999046325684,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.28999996185302734,
+                "prepareMs": 0.16499996185302734,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2849999666213989,
+                "prepareMs": 0.16999995708465576,
+                "idbMs": 0.11500000953674316,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.30000007152557373,
+                "prepareMs": 0.18000006675720215,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.309999942779541,
+                "prepareMs": 0.16499996185302734,
+                "idbMs": 0.13999998569488525,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3700000047683716,
+                "prepareMs": 0.18000006675720215,
+                "idbMs": 0.18499994277954102,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.35500001907348633,
+                "prepareMs": 0.18500006198883057,
+                "idbMs": 0.16999995708465576,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3200000524520874,
+                "prepareMs": 0.19000005722045898,
+                "idbMs": 0.12999999523162842,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3599998950958252,
+                "prepareMs": 0.1799999475479126,
+                "idbMs": 0.17499995231628418,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2900000810623169,
+                "prepareMs": 0.1650000810623169,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3299999237060547,
+                "prepareMs": 0.18499994277954102,
+                "idbMs": 0.13999998569488525,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3700000047683716,
+                "prepareMs": 0.1950000524520874,
+                "idbMs": 0.17499995231628418,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.33000004291534424,
+                "prepareMs": 0.18500006198883057,
+                "idbMs": 0.13999998569488525,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.33000004291534424,
+                "prepareMs": 0.19000005722045898,
+                "idbMs": 0.13999998569488525,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.31499993801116943,
+                "prepareMs": 0.17499995231628418,
+                "idbMs": 0.13999998569488525,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3450000286102295,
+                "prepareMs": 0.20000004768371582,
+                "idbMs": 0.13999998569488525,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3200000524520874,
+                "prepareMs": 0.17499995231628418,
+                "idbMs": 0.14500010013580322,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.31499993801116943,
+                "prepareMs": 0.17499995231628418,
+                "idbMs": 0.13999998569488525,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2999999523162842,
+                "prepareMs": 0.17499995231628418,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.30000007152557373,
+                "prepareMs": 0.18000006675720215,
+                "idbMs": 0.11500000953674316,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.31499993801116943,
+                "prepareMs": 0.17499995231628418,
+                "idbMs": 0.13499999046325684,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2950000762939453,
+                "prepareMs": 0.16000008583068848,
+                "idbMs": 0.13499999046325684,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              }
+            ],
+            [
+              {
+                "totalMs": 0.31499993801116943,
+                "prepareMs": 0.1799999475479126,
+                "idbMs": 0.13499999046325684,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.30500006675720215,
+                "prepareMs": 0.18500006198883057,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3049999475479126,
+                "prepareMs": 0.16999995708465576,
+                "idbMs": 0.13499999046325684,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2849999666213989,
+                "prepareMs": 0.16499996185302734,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3450000286102295,
+                "prepareMs": 0.1950000524520874,
+                "idbMs": 0.1499999761581421,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.30500006675720215,
+                "prepareMs": 0.17500007152557373,
+                "idbMs": 0.12999999523162842,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.29499995708465576,
+                "prepareMs": 0.16999995708465576,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.29499995708465576,
+                "prepareMs": 0.16499996185302734,
+                "idbMs": 0.12999999523162842,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.31000006198883057,
+                "prepareMs": 0.1650000810623169,
+                "idbMs": 0.14499998092651367,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.28999996185302734,
+                "prepareMs": 0.16499996185302734,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.36000001430511475,
+                "prepareMs": 0.17500007152557373,
+                "idbMs": 0.18499994277954102,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.33000004291534424,
+                "prepareMs": 0.19000005722045898,
+                "idbMs": 0.13999998569488525,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.29499995708465576,
+                "prepareMs": 0.16999995708465576,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2999999523162842,
+                "prepareMs": 0.16499996185302734,
+                "idbMs": 0.12999999523162842,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3250000476837158,
+                "prepareMs": 0.1700000762939453,
+                "idbMs": 0.1549999713897705,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.31000006198883057,
+                "prepareMs": 0.19000005722045898,
+                "idbMs": 0.11499989032745361,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.29499995708465576,
+                "prepareMs": 0.16499996185302734,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.29499995708465576,
+                "prepareMs": 0.16499996185302734,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.30000007152557373,
+                "prepareMs": 0.1700000762939453,
+                "idbMs": 0.12999999523162842,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3049999475479126,
+                "prepareMs": 0.16999995708465576,
+                "idbMs": 0.12999999523162842,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.31000006198883057,
+                "prepareMs": 0.17499995231628418,
+                "idbMs": 0.13000011444091797,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.28999996185302734,
+                "prepareMs": 0.15999996662139893,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2799999713897705,
+                "prepareMs": 0.15999996662139893,
+                "idbMs": 0.11500000953674316,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.28999996185302734,
+                "prepareMs": 0.17500007152557373,
+                "idbMs": 0.11499989032745361,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2950000762939453,
+                "prepareMs": 0.17500007152557373,
+                "idbMs": 0.11500000953674316,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2849999666213989,
+                "prepareMs": 0.16999995708465576,
+                "idbMs": 0.11500000953674316,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.31000006198883057,
+                "prepareMs": 0.17499995231628418,
+                "idbMs": 0.13000011444091797,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.28999996185302734,
+                "prepareMs": 0.16999995708465576,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.28999996185302734,
+                "prepareMs": 0.15999996662139893,
+                "idbMs": 0.12999999523162842,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.2950000762939453,
+                "prepareMs": 0.1700000762939453,
+                "idbMs": 0.12000000476837158,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.3049999475479126,
+                "prepareMs": 0.16999995708465576,
+                "idbMs": 0.12999999523162842,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              },
+              {
+                "totalMs": 0.28999996185302734,
+                "prepareMs": 0.16499996185302734,
+                "idbMs": 0.125,
+                "bytes": 1467,
+                "records": 2,
+                "kind": "delta"
+              }
+            ]
+          ],
+          "summary": {
+            "medianRunUs": 312.96874955296516,
+            "meanUs": 339.441964668887,
+            "prepareUs": 193.37054075939315,
+            "idbUs": 143.12499655144555,
+            "meanPayloadBytes": 1625.125,
+            "medianDeltaBytes": 1467,
+            "checkpoints": 2
+          },
+          "expectedSHA256": "f85687f36d231a8c6386516faafa575dd92d01a6e83aa4e8d1c418f72e437585"
+        }
+      ],
+      "memory": {
+        "baseline": {
+          "usedSize": 1160288,
+          "totalSize": 2097152,
+          "embedderHeapUsedSize": 304736,
+          "backingStorageSize": 1643583
+        },
+        "retained": {
+          "usedSize": 3397808,
+          "totalSize": 4636672,
+          "embedderHeapUsedSize": 354496,
+          "backingStorageSize": 1669969
+        },
+        "prepared": {
+          "usedSize": 3876052,
+          "totalSize": 5242880,
+          "embedderHeapUsedSize": 322480,
+          "backingStorageSize": 1670112
+        },
+        "after": {
+          "usedSize": 3858352,
+          "totalSize": 4194304,
+          "embedderHeapUsedSize": 312600,
+          "backingStorageSize": 1670112
+        },
+        "observedPeak": {
+          "samples": [
+            {
+              "milliseconds": 0,
+              "usedSize": 3397808,
+              "totalSize": 4636672,
+              "embedderHeapUsedSize": 354496,
+              "backingStorageSize": 1669969
+            },
+            {
+              "milliseconds": 1.5602499999999964,
+              "usedSize": 3750552,
+              "totalSize": 4898816,
+              "embedderHeapUsedSize": 838240,
+              "backingStorageSize": 1671813
+            },
+            {
+              "milliseconds": 4.483500000000049,
+              "usedSize": 4035124,
+              "totalSize": 6209536,
+              "embedderHeapUsedSize": 838240,
+              "backingStorageSize": 1681033
+            },
+            {
+              "milliseconds": 7.345583000000033,
+              "usedSize": 4293400,
+              "totalSize": 6995968,
+              "embedderHeapUsedSize": 838240,
+              "backingStorageSize": 1692097
+            },
+            {
+              "milliseconds": 10.126708000000008,
+              "usedSize": 4077852,
+              "totalSize": 6995968,
+              "embedderHeapUsedSize": 838240,
+              "backingStorageSize": 1705927
+            },
+            {
+              "milliseconds": 12.98112500000002,
+              "usedSize": 3868812,
+              "totalSize": 6995968,
+              "embedderHeapUsedSize": 838240,
+              "backingStorageSize": 1719757
+            },
+            {
+              "milliseconds": 15.791541000000052,
+              "usedSize": 4486308,
+              "totalSize": 6995968,
+              "embedderHeapUsedSize": 838240,
+              "backingStorageSize": 1749075
+            },
+            {
+              "milliseconds": 17.545708000000104,
+              "usedSize": 3925796,
+              "totalSize": 6995968,
+              "embedderHeapUsedSize": 838240,
+              "backingStorageSize": 1749075
+            }
+          ],
+          "peak": {
+            "usedSize": 4486308,
+            "backingStorageSize": 1749075,
+            "combinedBytes": 6235383
+          }
+        }
+      },
+      "fixtureSHA256": "b672da18fc8c21329fdafe704718ad52dcf2f91d4b4ee85d6a57feeaadbbf8ec"
+    }
+  ]
+}

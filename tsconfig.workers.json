@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["@cloudflare/workers-types"],
+    "lib": ["ES2023"]
+  },
+  "include": [
+    "adapters/durable-object.ts",
+    "scripts/fixtures/do-bench-worker.ts",
+    "scripts/fixtures/do-consumer-worker.ts",
+    "scripts/fixtures/drizzle-worker.ts",
+    "types"
+  ],
+  "exclude": []
+}

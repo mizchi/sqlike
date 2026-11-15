@@ -1,0 +1,9 @@
+{
+  "name": "browser-litestream-do-bench",
+  "main": "do-bench-worker.ts",
+  "compatibility_date": "2026-11-13",
+  "durable_objects": {
+    "bindings": [{ "name": "ROOMS", "class_name": "BenchRoom" }],
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["BenchRoom"] }],
+}

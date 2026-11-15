@@ -1,0 +1,233 @@
+{
+  "format": 1,
+  "measuredAt": "2026-11-14T10:23:56.826Z",
+  "environment": {
+    "node": "v24.22.2",
+    "cpu": "Apple M5",
+    "platform": "darwin",
+    "arch": "arm64",
+    "moon": "moon 0.1.20261104 (940aa18 2026-11-04)"
+  },
+  "workload": {
+    "schema": "CREATE TABLE t(id INTEGER PRIMARY KEY,n INTEGER,title TEXT)",
+    "rows": 100,
+    "warmup": 1000,
+    "runs": 7,
+    "queries": [
+      {
+        "name": "add",
+        "sql": "INSERT INTO t VALUES(?,?,?)"
+      },
+      {
+        "name": "constant",
+        "sql": "SELECT ?+1 AS n,upper(?) AS t"
+      },
+      {
+        "name": "point",
+        "sql": "SELECT id,n,title FROM t WHERE id=?"
+      }
+    ],
+    "iterations": {
+      "constant": 10000,
+      "point": 2000
+    }
+  },
+  "workloadSHA256": "06014b1bc5095b7a1322bb9ec128b0616885986c3db1b0a9868441d1a2a37950",
+  "artifacts": {
+    "sqlike": "01710a9a3e26ad878299f883b579473dd2277b043186299de8e8698d3882304d",
+    "runtime": "64a3e60afb295184f287f3f1ae63e8058870704e5cc0f0a0c456b980a1e66a57"
+  },
+  "method": "Node JS backend, no storage/RPC; same typed SQLite oracle checked before measurement; alternating engine order; medians of 7 after 1000 warmups. AOT includes result JSON decoding; dynamic includes SQL parse and positional result decoding.",
+  "samples": [
+    {
+      "name": "constant",
+      "engine": "aot",
+      "run": 0,
+      "milliseconds": 45.67837499999999
+    },
+    {
+      "name": "constant",
+      "engine": "dynamic",
+      "run": 0,
+      "milliseconds": 107.98891700000001
+    },
+    {
+      "name": "constant",
+      "engine": "dynamic",
+      "run": 1,
+      "milliseconds": 96.06620899999996
+    },
+    {
+      "name": "constant",
+      "engine": "aot",
+      "run": 1,
+      "milliseconds": 34.69554199999999
+    },
+    {
+      "name": "constant",
+      "engine": "aot",
+      "run": 2,
+      "milliseconds": 34.014875000000075
+    },
+    {
+      "name": "constant",
+      "engine": "dynamic",
+      "run": 2,
+      "milliseconds": 95.03466700000001
+    },
+    {
+      "name": "constant",
+      "engine": "dynamic",
+      "run": 3,
+      "milliseconds": 94.61687499999994
+    },
+    {
+      "name": "constant",
+      "engine": "aot",
+      "run": 3,
+      "milliseconds": 34.07291699999996
+    },
+    {
+      "name": "constant",
+      "engine": "aot",
+      "run": 4,
+      "milliseconds": 33.20183300000008
+    },
+    {
+      "name": "constant",
+      "engine": "dynamic",
+      "run": 4,
+      "milliseconds": 95.67220899999995
+    },
+    {
+      "name": "constant",
+      "engine": "dynamic",
+      "run": 5,
+      "milliseconds": 99.63358300000004
+    },
+    {
+      "name": "constant",
+      "engine": "aot",
+      "run": 5,
+      "milliseconds": 34.42166700000007
+    },
+    {
+      "name": "constant",
+      "engine": "aot",
+      "run": 6,
+      "milliseconds": 33.944417000000044
+    },
+    {
+      "name": "constant",
+      "engine": "dynamic",
+      "run": 6,
+      "milliseconds": 98.9809160000002
+    },
+    {
+      "name": "point",
+      "engine": "aot",
+      "run": 0,
+      "milliseconds": 220.22629200000006
+    },
+    {
+      "name": "point",
+      "engine": "dynamic",
+      "run": 0,
+      "milliseconds": 236.83120899999994
+    },
+    {
+      "name": "point",
+      "engine": "dynamic",
+      "run": 1,
+      "milliseconds": 237.9019159999998
+    },
+    {
+      "name": "point",
+      "engine": "aot",
+      "run": 1,
+      "milliseconds": 210.69683399999985
+    },
+    {
+      "name": "point",
+      "engine": "aot",
+      "run": 2,
+      "milliseconds": 209.26241600000003
+    },
+    {
+      "name": "point",
+      "engine": "dynamic",
+      "run": 2,
+      "milliseconds": 235.68787500000008
+    },
+    {
+      "name": "point",
+      "engine": "dynamic",
+      "run": 3,
+      "milliseconds": 236.50204200000007
+    },
+    {
+      "name": "point",
+      "engine": "aot",
+      "run": 3,
+      "milliseconds": 209.4107079999999
+    },
+    {
+      "name": "point",
+      "engine": "aot",
+      "run": 4,
+      "milliseconds": 212.26333399999976
+    },
+    {
+      "name": "point",
+      "engine": "dynamic",
+      "run": 4,
+      "milliseconds": 236.32075000000032
+    },
+    {
+      "name": "point",
+      "engine": "dynamic",
+      "run": 5,
+      "milliseconds": 236.1731249999998
+    },
+    {
+      "name": "point",
+      "engine": "aot",
+      "run": 5,
+      "milliseconds": 215.20725000000039
+    },
+    {
+      "name": "point",
+      "engine": "aot",
+      "run": 6,
+      "milliseconds": 208.87316699999974
+    },
+    {
+      "name": "point",
+      "engine": "dynamic",
+      "run": 6,
+      "milliseconds": 236.80337500000041
+    }
+  ],
+  "medians": [
+    {
+      "name": "constant",
+      "engine": "aot",
+      "milliseconds": 34.07291699999996
+    },
+    {
+      "name": "constant",
+      "engine": "dynamic",
+      "milliseconds": 96.06620899999996
+    },
+    {
+      "name": "point",
+      "engine": "aot",
+      "milliseconds": 210.69683399999985
+    },
+    {
+      "name": "point",
+      "engine": "dynamic",
+      "milliseconds": 236.50204200000007
+    }
+  ]
+}

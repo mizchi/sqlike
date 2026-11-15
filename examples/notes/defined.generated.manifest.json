@@ -1,0 +1,51 @@
+{
+  "format": "sqlike-defined-build@1",
+  "schemaId": "07838c1ed152a6de2ce16de9c4cc254e2340afe19617498dabd608b948a92cad",
+  "programId": "e951aaf1400ee04bd0a598cb0eaaae93c16c59ad81fa1e14316aba394c144e6d",
+  "schemaSHA256": "2247f39912b1a5b258d7db8599c23dcf969a43a888340b7296ed07cdb42d2eb1",
+  "statementsSHA256": "d245d703bec6761b5102cf8cb090f932fb71f239efdcccead6de665bb8440510",
+  "storageSHA256": "808078d82d9dc62c45e34f1cb747982a544e59cc882a9f4522057ead255a20b8",
+  "sourceSHA256": "4b4414bcb06aa3bbf82c31d99cc6fcf6846352d9ade7fd0e3ff215cf44b8b068",
+  "queries": [
+    {
+      "name": "add",
+      "parameters": 3,
+      "columns": []
+    },
+    {
+      "name": "edit",
+      "parameters": 3,
+      "columns": []
+    },
+    {
+      "name": "erase",
+      "parameters": 1,
+      "columns": []
+    },
+    {
+      "name": "list",
+      "parameters": 0,
+      "columns": [
+        "id",
+        "title",
+        "score"
+      ]
+    },
+    {
+      "name": "get",
+      "parameters": 1,
+      "columns": [
+        "id",
+        "title",
+        "score"
+      ]
+    },
+    {
+      "name": "count",
+      "parameters": 0,
+      "columns": [
+        "count"
+      ]
+    }
+  ]
+}

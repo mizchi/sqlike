@@ -1,0 +1,50 @@
+{
+  "format": "moon-aot-build@1",
+  "artifactSHA256": "a6af7a52769d67773842aae483fcb856b46f628e31180d44afa14d2201bc2de2",
+  "sourceSHA256": "4b4414bcb06aa3bbf82c31d99cc6fcf6846352d9ade7fd0e3ff215cf44b8b068",
+  "templateSHA256": "da88250a29a6ad99651c6c613c2bdb74d30a30e46e38b6d28b09d891f60b95e8",
+  "pageSize": 4096,
+  "nativeSQLite": "3.53.4",
+  "queries": [
+    {
+      "name": "add",
+      "parameters": 3,
+      "columns": []
+    },
+    {
+      "name": "edit",
+      "parameters": 3,
+      "columns": []
+    },
+    {
+      "name": "erase",
+      "parameters": 1,
+      "columns": []
+    },
+    {
+      "name": "list",
+      "parameters": 0,
+      "columns": [
+        "id",
+        "title",
+        "score"
+      ]
+    },
+    {
+      "name": "get",
+      "parameters": 1,
+      "columns": [
+        "id",
+        "title",
+        "score"
+      ]
+    },
+    {
+      "name": "count",
+      "parameters": 0,
+      "columns": [
+        "count"
+      ]
+    }
+  ]
+}

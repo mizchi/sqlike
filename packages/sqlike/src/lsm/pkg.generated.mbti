@@ -1,0 +1,42 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "mizchi/sqlike/lsm"
+
+// Values
+pub fn lsm_count(Block) -> Int32
+
+pub fn lsm_decode(Bytes) -> Block
+
+pub fn lsm_deleted(Block, Int32) -> Bool
+
+pub fn lsm_encode(Block) -> Bytes
+
+pub fn lsm_info(Block) -> String
+
+pub fn lsm_key(Block, Int32) -> String
+
+pub fn lsm_merge(Block, Block) -> Block
+
+pub fn lsm_new() -> Block
+
+pub fn lsm_put(Block, String, Int32, Bytes, Bool) -> String
+
+pub fn lsm_seek(Block, String) -> Int32
+
+pub fn lsm_sequence(Block, Int32) -> Int32
+
+pub fn lsm_size(Block) -> Int32
+
+pub fn lsm_slice(Block, Int32, Int32) -> Block
+
+pub fn lsm_value(Block, Int32) -> Bytes
+
+// Errors
+
+// Types and methods
+pub struct Block {
+  // private fields
+}
+
+// Type aliases
+
+// Traits

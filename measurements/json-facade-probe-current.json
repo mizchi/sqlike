@@ -1,0 +1,883 @@
+{
+  "measuredAt": "2026-11-15T20:20:57.723Z",
+  "node": "v24.22.2",
+  "library": "/Users/mz/ghq/github.com/mizchi/x",
+  "commit": "e7c14c82b28c1aa85e6a6e0ccc45873c763269e6",
+  "method": "Isolated copy of actual mizchi/x/json development checkout, same public probe API, Oxc minify retaining exports. Standalone JSON codec microbenchmark, not a SQL/runtime size or query benchmark. Parse_count materializes full Json tree then observes container length. Stringify_sample serializes the same prebuilt 50-object Json value; small/large labels do not change this serialize fixture. Eight alternating runs after warmup. Full roundtrip differences are semantic blockers for blanket replacement.",
+  "sourceHashes": {
+    "/Users/mz/ghq/github.com/mizchi/x/src/json/json.mbt": "1befecf1582f76ab53f32a2f9bd3082c0751397b6fcd817f5566a315f1362d6d",
+    "/Users/mz/ghq/github.com/mizchi/x/src/json/json_js.mbt": "ae0f6cc774904c529777ba1b96624f3d83007b55fec8cb35ba032ccccff09905",
+    "/Users/mz/ghq/github.com/mizchi/x/src/json/json_default.mbt": "abdf9fc648a7b1d515a435baf350f6bca28299612feca0dad69ee260c2f2e046",
+    "/Users/mz/ghq/github.com/mizchi/x/src/json/moon.pkg": "071c99372f932fc166e9ff698fb02388d1659f465b6416e7630558203492b68c",
+    "measurements/json-facade-probe.mjs": "219b59b7e5a837821d61a5f8a92319b094163879896d2637db6f764e414716f9",
+    "scripts/oxc-runtime.ts": "24406b458799bdb150e1a986353c7d965d57964e60067f1a421e1cc010e57fce"
+  },
+  "sizes": {
+    "core": {
+      "raw": 86018,
+      "gzip": 29916,
+      "brotli": 24965
+    },
+    "facade": {
+      "raw": 18792,
+      "gzip": 6340,
+      "brotli": 5597
+    }
+  },
+  "behaviour": [
+    {
+      "name": "ordinary",
+      "input": "{\"id\":1,\"name\":\"hello\",\"active\":true}",
+      "core": "{\"id\":1,\"name\":\"hello\",\"active\":true}",
+      "facade": "{\"id\":1,\"name\":\"hello\",\"active\":true}",
+      "coreValid": true,
+      "facadeValid": true,
+      "matched": true
+    },
+    {
+      "name": "int64",
+      "input": "{\"n\":9223372036854775807}",
+      "core": "{\"n\":9223372036854775807}",
+      "facade": "{\"n\":9223372036854776000}",
+      "coreValid": true,
+      "facadeValid": true,
+      "matched": false
+    },
+    {
+      "name": "precision",
+      "input": "{\"n\":9007199254740993}",
+      "core": "{\"n\":9007199254740993}",
+      "facade": "{\"n\":9007199254740992}",
+      "coreValid": true,
+      "facadeValid": true,
+      "matched": false
+    },
+    {
+      "name": "negative-zero",
+      "input": "{\"n\":-0.0}",
+      "core": "{\"n\":0}",
+      "facade": "{\"n\":0}",
+      "coreValid": true,
+      "facadeValid": true,
+      "matched": true
+    },
+    {
+      "name": "numeric-keys",
+      "input": "{\"2\":\"two\",\"1\":\"one\"}",
+      "core": "{\"2\":\"two\",\"1\":\"one\"}",
+      "facade": "{\"1\":\"one\",\"2\":\"two\"}",
+      "coreValid": true,
+      "facadeValid": true,
+      "matched": false
+    },
+    {
+      "name": "duplicate-keys",
+      "input": "{\"k\":1,\"k\":2}",
+      "core": "{\"k\":2}",
+      "facade": "{\"k\":2}",
+      "coreValid": true,
+      "facadeValid": true,
+      "matched": true
+    },
+    {
+      "name": "proto-key",
+      "input": "{\"__proto__\":{\"x\":1},\"constructor\":\"ok\"}",
+      "core": "{\"__proto__\":{\"x\":1},\"constructor\":\"ok\"}",
+      "facade": "{\"constructor\":\"ok\"}",
+      "coreValid": true,
+      "facadeValid": true,
+      "matched": false
+    },
+    {
+      "name": "escaped-surrogate",
+      "input": "\"\\ud800\"",
+      "core": "ERROR:Invalid character '\\\\' at line 1, column 1",
+      "facade": "\"\\ud800\"",
+      "coreValid": false,
+      "facadeValid": true,
+      "matched": false
+    },
+    {
+      "name": "overflow",
+      "input": "{\"n\":1e999}",
+      "core": "{\"n\":1e999}",
+      "facade": "{\"n\":\"Infinity\"}",
+      "coreValid": true,
+      "facadeValid": true,
+      "matched": false
+    },
+    {
+      "name": "binding-envelope",
+      "input": "[{\"t\":\"integer\",\"v\":\"9223372036854775807\"},{\"t\":\"real\",\"v\":-0.0},{\"t\":\"blob\",\"v\":[0,255]},{\"t\":\"text\",\"v\":\"\\ufeffa\\u0000\"}]",
+      "core": "[{\"t\":\"integer\",\"v\":\"9223372036854775807\"},{\"t\":\"real\",\"v\":0},{\"t\":\"blob\",\"v\":[0,255]},{\"t\":\"text\",\"v\":\"﻿a\\u0000\"}]",
+      "facade": "[{\"t\":\"integer\",\"v\":\"9223372036854775807\"},{\"t\":\"real\",\"v\":0},{\"t\":\"blob\",\"v\":[0,255]},{\"t\":\"text\",\"v\":\"﻿a\\u0000\"}]",
+      "coreValid": true,
+      "facadeValid": true,
+      "matched": true
+    },
+    {
+      "name": "malformed",
+      "input": "[1,]",
+      "core": "ERROR:Invalid character ']' at line 1, column 3",
+      "facade": "ERROR:Invalid character '[' at line 1, column 0",
+      "coreValid": false,
+      "facadeValid": false,
+      "matched": false
+    },
+    {
+      "name": "explicit-number-repr",
+      "input": "preconstructed Json::number with repr",
+      "core": "{\"zero\":-0.0,\"integer\":9007199254740993}",
+      "facade": "{\"zero\":0,\"integer\":9007199254740992}",
+      "matched": false
+    }
+  ],
+  "summary": [
+    {
+      "workload": "small",
+      "operation": "parse_count",
+      "backend": "core",
+      "microseconds": 0.9401249999999977
+    },
+    {
+      "workload": "small",
+      "operation": "parse_count",
+      "backend": "facade",
+      "microseconds": 1.1572832999999974
+    },
+    {
+      "workload": "small",
+      "operation": "valid",
+      "backend": "core",
+      "microseconds": 0.9696875000000034
+    },
+    {
+      "workload": "small",
+      "operation": "valid",
+      "backend": "facade",
+      "microseconds": 0.4508999000000017
+    },
+    {
+      "workload": "small",
+      "operation": "stringify_sample",
+      "backend": "core",
+      "microseconds": 14.618854499999998
+    },
+    {
+      "workload": "small",
+      "operation": "stringify_sample",
+      "backend": "facade",
+      "microseconds": 11.824583499999989
+    },
+    {
+      "workload": "large",
+      "operation": "parse_count",
+      "backend": "core",
+      "microseconds": 29.628637500000004
+    },
+    {
+      "workload": "large",
+      "operation": "parse_count",
+      "backend": "facade",
+      "microseconds": 26.902012499999977
+    },
+    {
+      "workload": "large",
+      "operation": "valid",
+      "backend": "core",
+      "microseconds": 29.225774900000037
+    },
+    {
+      "workload": "large",
+      "operation": "valid",
+      "backend": "facade",
+      "microseconds": 7.699375000000009
+    },
+    {
+      "workload": "large",
+      "operation": "stringify_sample",
+      "backend": "core",
+      "microseconds": 14.407458499999848
+    },
+    {
+      "workload": "large",
+      "operation": "stringify_sample",
+      "backend": "facade",
+      "microseconds": 12.07510400000001
+    }
+  ],
+  "times": [
+    {
+      "workload": "small",
+      "operation": "parse_count",
+      "backend": "core",
+      "run": 0,
+      "microseconds": 1.8703584000000035
+    },
+    {
+      "workload": "small",
+      "operation": "parse_count",
+      "backend": "facade",
+      "run": 0,
+      "microseconds": 1.6213415999999996
+    },
+    {
+      "workload": "small",
+      "operation": "parse_count",
+      "backend": "facade",
+      "run": 1,
+      "microseconds": 1.1854333999999995
+    },
+    {
+      "workload": "small",
+      "operation": "parse_count",
+      "backend": "core",
+      "run": 1,
+      "microseconds": 1.0153999999999996
+    },
+    {
+      "workload": "small",
+      "operation": "parse_count",
+      "backend": "core",
+      "run": 2,
+      "microseconds": 0.9871416000000011
+    },
+    {
+      "workload": "small",
+      "operation": "parse_count",
+      "backend": "facade",
+      "run": 2,
+      "microseconds": 1.167750000000001
+    },
+    {
+      "workload": "small",
+      "operation": "parse_count",
+      "backend": "facade",
+      "run": 3,
+      "microseconds": 1.162791599999997
+    },
+    {
+      "workload": "small",
+      "operation": "parse_count",
+      "backend": "core",
+      "run": 3,
+      "microseconds": 0.9359583999999984
+    },
+    {
+      "workload": "small",
+      "operation": "parse_count",
+      "backend": "core",
+      "run": 4,
+      "microseconds": 0.9249166000000003
+    },
+    {
+      "workload": "small",
+      "operation": "parse_count",
+      "backend": "facade",
+      "run": 4,
+      "microseconds": 1.1368750000000034
+    },
+    {
+      "workload": "small",
+      "operation": "parse_count",
+      "backend": "facade",
+      "run": 5,
+      "microseconds": 1.1517749999999978
+    },
+    {
+      "workload": "small",
+      "operation": "parse_count",
+      "backend": "core",
+      "run": 5,
+      "microseconds": 0.9157249999999977
+    },
+    {
+      "workload": "small",
+      "operation": "parse_count",
+      "backend": "core",
+      "run": 6,
+      "microseconds": 0.9234500000000025
+    },
+    {
+      "workload": "small",
+      "operation": "parse_count",
+      "backend": "facade",
+      "run": 6,
+      "microseconds": 1.1488584000000002
+    },
+    {
+      "workload": "small",
+      "operation": "parse_count",
+      "backend": "facade",
+      "run": 7,
+      "microseconds": 1.1376666000000002
+    },
+    {
+      "workload": "small",
+      "operation": "parse_count",
+      "backend": "core",
+      "run": 7,
+      "microseconds": 0.9442915999999968
+    },
+    {
+      "workload": "small",
+      "operation": "valid",
+      "backend": "core",
+      "run": 0,
+      "microseconds": 0.9933668000000012
+    },
+    {
+      "workload": "small",
+      "operation": "valid",
+      "backend": "facade",
+      "run": 0,
+      "microseconds": 0.4712917999999945
+    },
+    {
+      "workload": "small",
+      "operation": "valid",
+      "backend": "facade",
+      "run": 1,
+      "microseconds": 0.45467499999999744
+    },
+    {
+      "workload": "small",
+      "operation": "valid",
+      "backend": "core",
+      "run": 1,
+      "microseconds": 1.005658399999993
+    },
+    {
+      "workload": "small",
+      "operation": "valid",
+      "backend": "core",
+      "run": 2,
+      "microseconds": 0.9871999999999956
+    },
+    {
+      "workload": "small",
+      "operation": "valid",
+      "backend": "facade",
+      "run": 2,
+      "microseconds": 0.4541332000000011
+    },
+    {
+      "workload": "small",
+      "operation": "valid",
+      "backend": "facade",
+      "run": 3,
+      "microseconds": 0.44716660000000275
+    },
+    {
+      "workload": "small",
+      "operation": "valid",
+      "backend": "core",
+      "run": 3,
+      "microseconds": 0.959441800000002
+    },
+    {
+      "workload": "small",
+      "operation": "valid",
+      "backend": "core",
+      "run": 4,
+      "microseconds": 0.939975000000004
+    },
+    {
+      "workload": "small",
+      "operation": "valid",
+      "backend": "facade",
+      "run": 4,
+      "microseconds": 0.4476666000000023
+    },
+    {
+      "workload": "small",
+      "operation": "valid",
+      "backend": "facade",
+      "run": 5,
+      "microseconds": 0.46302499999999325
+    },
+    {
+      "workload": "small",
+      "operation": "valid",
+      "backend": "core",
+      "run": 5,
+      "microseconds": 0.9753084000000057
+    },
+    {
+      "workload": "small",
+      "operation": "valid",
+      "backend": "core",
+      "run": 6,
+      "microseconds": 0.9513084000000049
+    },
+    {
+      "workload": "small",
+      "operation": "valid",
+      "backend": "facade",
+      "run": 6,
+      "microseconds": 0.4429081999999994
+    },
+    {
+      "workload": "small",
+      "operation": "valid",
+      "backend": "facade",
+      "run": 7,
+      "microseconds": 0.42633339999999864
+    },
+    {
+      "workload": "small",
+      "operation": "valid",
+      "backend": "core",
+      "run": 7,
+      "microseconds": 0.964066600000001
+    },
+    {
+      "workload": "small",
+      "operation": "stringify_sample",
+      "backend": "core",
+      "run": 0,
+      "microseconds": 14.668541000000005
+    },
+    {
+      "workload": "small",
+      "operation": "stringify_sample",
+      "backend": "facade",
+      "run": 0,
+      "microseconds": 11.941041999999982
+    },
+    {
+      "workload": "small",
+      "operation": "stringify_sample",
+      "backend": "facade",
+      "run": 1,
+      "microseconds": 11.732458000000008
+    },
+    {
+      "workload": "small",
+      "operation": "stringify_sample",
+      "backend": "core",
+      "run": 1,
+      "microseconds": 14.433666000000015
+    },
+    {
+      "workload": "small",
+      "operation": "stringify_sample",
+      "backend": "core",
+      "run": 2,
+      "microseconds": 16.264166999999986
+    },
+    {
+      "workload": "small",
+      "operation": "stringify_sample",
+      "backend": "facade",
+      "run": 2,
+      "microseconds": 11.820625000000007
+    },
+    {
+      "workload": "small",
+      "operation": "stringify_sample",
+      "backend": "facade",
+      "run": 3,
+      "microseconds": 11.804916999999989
+    },
+    {
+      "workload": "small",
+      "operation": "stringify_sample",
+      "backend": "core",
+      "run": 3,
+      "microseconds": 14.422958999999992
+    },
+    {
+      "workload": "small",
+      "operation": "stringify_sample",
+      "backend": "core",
+      "run": 4,
+      "microseconds": 14.624167
+    },
+    {
+      "workload": "small",
+      "operation": "stringify_sample",
+      "backend": "facade",
+      "run": 4,
+      "microseconds": 11.953249999999969
+    },
+    {
+      "workload": "small",
+      "operation": "stringify_sample",
+      "backend": "facade",
+      "run": 5,
+      "microseconds": 11.82854199999997
+    },
+    {
+      "workload": "small",
+      "operation": "stringify_sample",
+      "backend": "core",
+      "run": 5,
+      "microseconds": 14.613541999999995
+    },
+    {
+      "workload": "small",
+      "operation": "stringify_sample",
+      "backend": "core",
+      "run": 6,
+      "microseconds": 15.20316700000001
+    },
+    {
+      "workload": "small",
+      "operation": "stringify_sample",
+      "backend": "facade",
+      "run": 6,
+      "microseconds": 12.480749999999944
+    },
+    {
+      "workload": "small",
+      "operation": "stringify_sample",
+      "backend": "facade",
+      "run": 7,
+      "microseconds": 11.696333999999979
+    },
+    {
+      "workload": "small",
+      "operation": "stringify_sample",
+      "backend": "core",
+      "run": 7,
+      "microseconds": 14.115000000000009
+    },
+    {
+      "workload": "large",
+      "operation": "parse_count",
+      "backend": "core",
+      "run": 0,
+      "microseconds": 29.647849999999995
+    },
+    {
+      "workload": "large",
+      "operation": "parse_count",
+      "backend": "facade",
+      "run": 0,
+      "microseconds": 27.367875000000005
+    },
+    {
+      "workload": "large",
+      "operation": "parse_count",
+      "backend": "facade",
+      "run": 1,
+      "microseconds": 26.4083834
+    },
+    {
+      "workload": "large",
+      "operation": "parse_count",
+      "backend": "core",
+      "run": 1,
+      "microseconds": 30.067383400000015
+    },
+    {
+      "workload": "large",
+      "operation": "parse_count",
+      "backend": "core",
+      "run": 2,
+      "microseconds": 29.984633399999986
+    },
+    {
+      "workload": "large",
+      "operation": "parse_count",
+      "backend": "facade",
+      "run": 2,
+      "microseconds": 26.250091599999998
+    },
+    {
+      "workload": "large",
+      "operation": "parse_count",
+      "backend": "facade",
+      "run": 3,
+      "microseconds": 26.653716599999964
+    },
+    {
+      "workload": "large",
+      "operation": "parse_count",
+      "backend": "core",
+      "run": 3,
+      "microseconds": 29.721166599999968
+    },
+    {
+      "workload": "large",
+      "operation": "parse_count",
+      "backend": "core",
+      "run": 4,
+      "microseconds": 28.772208399999997
+    },
+    {
+      "workload": "large",
+      "operation": "parse_count",
+      "backend": "facade",
+      "run": 4,
+      "microseconds": 26.556058399999987
+    },
+    {
+      "workload": "large",
+      "operation": "parse_count",
+      "backend": "facade",
+      "run": 5,
+      "microseconds": 27.241591800000013
+    },
+    {
+      "workload": "large",
+      "operation": "parse_count",
+      "backend": "core",
+      "run": 5,
+      "microseconds": 29.023341799999983
+    },
+    {
+      "workload": "large",
+      "operation": "parse_count",
+      "backend": "core",
+      "run": 6,
+      "microseconds": 29.609425000000012
+    },
+    {
+      "workload": "large",
+      "operation": "parse_count",
+      "backend": "facade",
+      "run": 6,
+      "microseconds": 27.302433399999973
+    },
+    {
+      "workload": "large",
+      "operation": "parse_count",
+      "backend": "facade",
+      "run": 7,
+      "microseconds": 27.150308399999993
+    },
+    {
+      "workload": "large",
+      "operation": "parse_count",
+      "backend": "core",
+      "run": 7,
+      "microseconds": 29.569675000000007
+    },
+    {
+      "workload": "large",
+      "operation": "valid",
+      "backend": "core",
+      "run": 0,
+      "microseconds": 29.291600000000017
+    },
+    {
+      "workload": "large",
+      "operation": "valid",
+      "backend": "facade",
+      "run": 0,
+      "microseconds": 7.720200000000023
+    },
+    {
+      "workload": "large",
+      "operation": "valid",
+      "backend": "facade",
+      "run": 1,
+      "microseconds": 7.660908399999971
+    },
+    {
+      "workload": "large",
+      "operation": "valid",
+      "backend": "core",
+      "run": 1,
+      "microseconds": 28.56810839999998
+    },
+    {
+      "workload": "large",
+      "operation": "valid",
+      "backend": "core",
+      "run": 2,
+      "microseconds": 28.48686660000003
+    },
+    {
+      "workload": "large",
+      "operation": "valid",
+      "backend": "facade",
+      "run": 2,
+      "microseconds": 7.6198581999999995
+    },
+    {
+      "workload": "large",
+      "operation": "valid",
+      "backend": "facade",
+      "run": 3,
+      "microseconds": 7.7682499999999886
+    },
+    {
+      "workload": "large",
+      "operation": "valid",
+      "backend": "core",
+      "run": 3,
+      "microseconds": 29.47932499999997
+    },
+    {
+      "workload": "large",
+      "operation": "valid",
+      "backend": "core",
+      "run": 4,
+      "microseconds": 30.200608199999987
+    },
+    {
+      "workload": "large",
+      "operation": "valid",
+      "backend": "facade",
+      "run": 4,
+      "microseconds": 7.738116600000011
+    },
+    {
+      "workload": "large",
+      "operation": "valid",
+      "backend": "facade",
+      "run": 5,
+      "microseconds": 7.716991599999982
+    },
+    {
+      "workload": "large",
+      "operation": "valid",
+      "backend": "core",
+      "run": 5,
+      "microseconds": 28.811633400000026
+    },
+    {
+      "workload": "large",
+      "operation": "valid",
+      "backend": "core",
+      "run": 6,
+      "microseconds": 29.215591599999975
+    },
+    {
+      "workload": "large",
+      "operation": "valid",
+      "backend": "facade",
+      "run": 6,
+      "microseconds": 7.681758400000035
+    },
+    {
+      "workload": "large",
+      "operation": "valid",
+      "backend": "facade",
+      "run": 7,
+      "microseconds": 7.591683200000079
+    },
+    {
+      "workload": "large",
+      "operation": "valid",
+      "backend": "core",
+      "run": 7,
+      "microseconds": 29.2359582000001
+    },
+    {
+      "workload": "large",
+      "operation": "stringify_sample",
+      "backend": "core",
+      "run": 0,
+      "microseconds": 14.470333999999639
+    },
+    {
+      "workload": "large",
+      "operation": "stringify_sample",
+      "backend": "facade",
+      "run": 0,
+      "microseconds": 12.141791000000012
+    },
+    {
+      "workload": "large",
+      "operation": "stringify_sample",
+      "backend": "facade",
+      "run": 1,
+      "microseconds": 12.191249999999854
+    },
+    {
+      "workload": "large",
+      "operation": "stringify_sample",
+      "backend": "core",
+      "run": 1,
+      "microseconds": 14.235125000000153
+    },
+    {
+      "workload": "large",
+      "operation": "stringify_sample",
+      "backend": "core",
+      "run": 2,
+      "microseconds": 14.405291999999463
+    },
+    {
+      "workload": "large",
+      "operation": "stringify_sample",
+      "backend": "facade",
+      "run": 2,
+      "microseconds": 11.891458999999486
+    },
+    {
+      "workload": "large",
+      "operation": "stringify_sample",
+      "backend": "facade",
+      "run": 3,
+      "microseconds": 12.477167000000009
+    },
+    {
+      "workload": "large",
+      "operation": "stringify_sample",
+      "backend": "core",
+      "run": 3,
+      "microseconds": 14.804417000000285
+    },
+    {
+      "workload": "large",
+      "operation": "stringify_sample",
+      "backend": "core",
+      "run": 4,
+      "microseconds": 14.309832999999344
+    },
+    {
+      "workload": "large",
+      "operation": "stringify_sample",
+      "backend": "facade",
+      "run": 4,
+      "microseconds": 11.912500000000364
+    },
+    {
+      "workload": "large",
+      "operation": "stringify_sample",
+      "backend": "facade",
+      "run": 5,
+      "microseconds": 12.008417000000009
+    },
+    {
+      "workload": "large",
+      "operation": "stringify_sample",
+      "backend": "core",
+      "run": 5,
+      "microseconds": 14.38733300000058
+    },
+    {
+      "workload": "large",
+      "operation": "stringify_sample",
+      "backend": "core",
+      "run": 6,
+      "microseconds": 14.409625000000233
+    },
+    {
+      "workload": "large",
+      "operation": "stringify_sample",
+      "backend": "facade",
+      "run": 6,
+      "microseconds": 12.222791999999572
+    },
+    {
+      "workload": "large",
+      "operation": "stringify_sample",
+      "backend": "facade",
+      "run": 7,
+      "microseconds": 11.872707999999875
+    },
+    {
+      "workload": "large",
+      "operation": "stringify_sample",
+      "backend": "core",
+      "run": 7,
+      "microseconds": 15.279582999999548
+    }
+  ]
+}

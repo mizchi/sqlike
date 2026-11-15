@@ -1,0 +1,667 @@
+--- a/packages/sqlike/src/data.mbt
++++ b/packages/sqlike/src/data.mbt
+@@ -59,7 +59,8 @@
+           },
+         ) {
+         let row = if with_triggers {
+-          guard table_row_by_id(store, table, candidate.id) is Some(current) else {
++          guard table.rows.iter().find_first(r => r.id == candidate.id)
++            is Some(current) else {
+             continue
+           }
+           current
+@@ -155,7 +156,8 @@
+           },
+         ) {
+         let row = if with_triggers {
+-          guard table_row_by_id(store, table, candidate.id) is Some(current) else {
++          guard table.rows.iter().find_first(r => r.id == candidate.id)
++            is Some(current) else {
+             continue
+           }
+           current
+--- a/packages/sqlike/src/index_cache.mbt
++++ b/packages/sqlike/src/index_cache.mbt
+@@ -160,12 +160,14 @@
+ ) -> Unit {
+   invalidate_table_indexes(store, table)
+   dirty_snapshot(store)
+-  table.rows = row_pages(rows)
++  table.rows = rows
++  table.rows_shared = None
+ }
+ 
+ ///|
+ fn append_table_row(store : Store, table : Table, row : StoredRow) -> Unit {
+   update_table_indexes(store, table, None, Some(row))
++  own_table_rows(table)
+   table.rows.push(row)
+   dirty_edit(store, AppendRow(table.name, row))
+ }
+@@ -183,7 +185,7 @@
+     None
+   }
+   let position = slot.unwrap_or_else(() => {
+-    for (i, row) in table.rows.slot_entries() {
++    for i, row in table.rows {
+       if row.id == previous.id {
+         return i
+       }
+@@ -194,26 +196,18 @@
+     return
+   }
+   update_table_indexes(store, table, Some(previous), Some(next))
+-  table.rows.set_slot(position, next)
++  own_table_rows(table)
++  table.rows[position] = next
+   dirty_replace(store, table.name, previous, next)
+ }
+ 
+ ///|
+ fn remove_table_row(store : Store, table : Table, row : StoredRow) -> Unit {
+-  let position = if FEATURE_PRIMARY_INDEX {
+-    primary_index(store, table).slots.get(row.id)
+-  } else {
+-    table.rows
+-    .slot_entries()
+-    .find_first(pair => pair.1.id == row.id)
+-    .map(pair => pair.0)
+-  }
+-  guard position is Some(position) else { return }
+   update_table_indexes(store, table, Some(row), None)
+-  if table.rows.remove_slot(position) {
+-    // Stable slots survive ordinary deletes; repacking invalidates this root only.
+-    ignore(store.primary_indexes.remove(table.name))
+-  }
++  table.rows = table.rows.filter(r => r.id != row.id)
++  table.rows_shared = None
++  // Deletion shifts physical slots; reconstruct lazily on the next point lookup.
++  ignore(store.primary_indexes.remove(table.name))
+   dirty_edit(store, DeleteRow(table.name, row.id))
+ }
+ 
+@@ -314,3 +308,11 @@
+   }
+   low
+ }
++
++///|
++fn own_table_rows(table : Table) -> Unit {
++  if table.rows_shared == Some(true) {
++    table.rows = table.rows.copy()
++    table.rows_shared = None
++  }
++}
+--- a/packages/sqlike/src/index_definition.mbt
++++ b/packages/sqlike/src/index_definition.mbt
+@@ -235,9 +235,9 @@
+       index.parts[0].column == ipk &&
+       index.parts[0].collation == table.columns[ipk].collation &&
+       values[ipk] is Integer(id) {
+-      return primary_row(primary_index(store, table), table, id).filter(row => {
+-        excluded != Some(row.id)
+-      })
++      return primary_index(store, table).rowids
++        .get(id)
++        .filter(row => excluded != Some(row.id))
+     }
+   }
+   guard index_values(store, table, index, values) is Some(key) &&
+@@ -251,9 +251,9 @@
+       p.column >= 0 && p.collation == table.columns[p.column].collation
+     }) {
+     if primary_value_key(table, values) is Some(key) {
+-      return primary_key_row(primary_index(store, table), table, key).filter(row => {
+-        excluded != Some(row.id)
+-      })
++      return primary_index(store, table).keys
++        .get(key)
++        .filter(row => excluded != Some(row.id))
+     }
+   }
+   for row in table.rows {
+--- a/packages/sqlike/src/migration.mbt
++++ b/packages/sqlike/src/migration.mbt
+@@ -371,15 +371,13 @@
+         t.unique_keys
+       },
+       rows: if drop && own {
+-        row_pages(
+-          t.rows.map(row => {
+-            ..row,
+-            values: row.values
+-            .mapi((i, v) => (i, v))
+-            .filter(p => p.0 != index)
+-            .map(p => p.1),
+-          }),
+-        )
++        t.rows.map(row => {
++          ..row,
++          values: row.values
++          .mapi((i, v) => (i, v))
++          .filter(p => p.0 != index)
++          .map(p => p.1),
++        })
+       } else {
+         t.rows
+       },
+--- a/packages/sqlike/src/model.mbt
++++ b/packages/sqlike/src/model.mbt
+@@ -127,7 +127,9 @@
+   autoincrement : Bool
+   mut sequence : Int64
+   mut sequence_present : Bool?
+-  mut rows : RowPages
++  mut rows : Array[StoredRow]
++  // Derived ownership only; omitted from logical images and compiled programs.
++  mut rows_shared : Bool?
+ }
+ 
+ ///|
+@@ -398,15 +400,12 @@
+   {
+     ..store,
+     tables: store.tables.map(t => {
+-      ..t,
+-      rows: t.rows.fork(),
+-      columns: t.columns.map(c => { ..c, }),
++      t.rows_shared = Some(true)
++      { ..t, columns: t.columns.map(c => { ..c, }), }
+     }),
+     objects: store.objects.copy(),
+     indexes: Map([]),
+-    primary_indexes: Map(
+-      store.primary_indexes.to_array().map(pair => (pair.0, { ..pair.1, })),
+-    ),
++    primary_indexes: Map([]),
+     declaration_sources: Map(store.declaration_sources.to_array()),
+     dirty: { ..store.dirty, edits: store.dirty.edits.copy(), },
+     transactions: {
+--- a/packages/sqlike/src/moon.pkg
++++ b/packages/sqlike/src/moon.pkg
+@@ -5,8 +5,6 @@
+   "moonbitlang/core/encoding/base64",
+   "moonbitlang/core/encoding/utf16",
+   "moonbitlang/core/json",
+-  "moonbitlang/core/immut/vector" @rowvector,
+-  "moonbitlang/core/immut/hashmap" @rowmap,
+   "moonbitlang/core/string",
+ }
+ 
+--- a/packages/sqlike/src/parser.mbt
++++ b/packages/sqlike/src/parser.mbt
+@@ -998,7 +998,8 @@
+         autoincrement,
+         sequence: 0L,
+         sequence_present: None,
+-        rows: row_pages([]),
++        rows: [],
++        rows_shared: None,
+       }
+       for pos, name in primary {
+         table.columns[column_index(table, name)].primary = pos + 1
+--- a/packages/sqlike/src/persistence.mbt
++++ b/packages/sqlike/src/persistence.mbt
+@@ -159,8 +159,7 @@
+       fail("invalid flush real")
+     }
+   }
+-  guard table_row_by_id(store, table, row.id).filter(r => Some(r.id) != except)
+-    is None else {
++  guard !table.rows.any(r => r.id == row.id && Some(r.id) != except) else {
+     fail("duplicate flush rowid")
+   }
+   check_row(store, table, row.values, [])
+@@ -239,7 +238,7 @@
+       }
+       ReplaceRow(name, id, row) => {
+         let table = get_table(store, name)
+-        guard table_row_by_id(store, table, id) is Some(previous) else {
++        guard table.rows.iter().find_first(r => r.id == id) is Some(previous) else {
+           fail("missing flush row")
+         }
+         flush_row(store, table, row, Some(id))
+@@ -250,7 +249,7 @@
+           fail("invalid flush patch version")
+         }
+         let table = get_table(store, name)
+-        guard table_row_by_id(store, table, id) is Some(previous) else {
++        guard table.rows.iter().find_first(r => r.id == id) is Some(previous) else {
+           fail("missing flush row")
+         }
+         let values = previous.values.copy()
+@@ -268,7 +267,7 @@
+       }
+       DeleteRow(name, id) => {
+         let table = get_table(store, name)
+-        guard table_row_by_id(store, table, id) is Some(row) else {
++        guard table.rows.iter().find_first(r => r.id == id) is Some(row) else {
+           fail("missing flush row")
+         }
+         remove_table_row(store, table, row)
+--- a/packages/sqlike/src/primary_index.mbt
++++ b/packages/sqlike/src/primary_index.mbt
+@@ -1,9 +1,10 @@
+ ///|
+-/// Derived persistent point indexes. Fork mutable wrappers, share immutable
+-/// roots, and read current row values through stable physical slots.
++/// Derived point indexes. Images, transaction copies and schema changes never
++/// retain these mutable maps; ordinary row edits update a built map in place.
+ priv struct PrimaryIndex {
+-  mut slots : @rowmap.HashMap[Int64, Int32]
+-  mut keys : @rowmap.HashMap[String, Int64]
++  rowids : Map[Int64, StoredRow]
++  slots : Map[Int64, Int32]
++  keys : Map[String, StoredRow]
+ }
+ 
+ ///|
+@@ -51,18 +52,14 @@
+   if store.primary_indexes.get(table.name) is Some(index) {
+     return index
+   }
+-  let slots : Array[(Int64, Int32)] = []
+-  let keys : Array[(String, Int64)] = []
++  let index : PrimaryIndex = { rowids: Map([]), slots: Map([]), keys: Map([]), }
+   let composite = integer_primary(table) < 0
+-  for (slot, row) in table.rows.slot_entries() {
+-    slots.push((row.id, slot))
++  for i, row in table.rows {
++    index.slots[row.id] = i
++    index.rowids[row.id] = row
+     if composite && primary_value_key(table, row.values) is Some(key) {
+-      keys.push((key, row.id))
+-    }
+-  }
+-  let index : PrimaryIndex = {
+-    slots: @rowmap.HashMap(slots[:]),
+-    keys: @rowmap.HashMap(keys[:]),
++      index.keys[key] = row
++    }
+   }
+   if store.primary_indexes.length() >= 4 {
+     store.primary_indexes.clear()
+@@ -83,57 +80,37 @@
+   }
+   if store.primary_indexes.get(table.name) is Some(index) {
+     let slot = match previous {
+-      Some(row) => index.slots.get(row.id).unwrap_or(table.rows.used)
+-      None => table.rows.used
+-    }
+-    if previous is Some(row) && next.map(r => r.id) != Some(row.id) {
+-      index.slots = index.slots.remove(row.id)
+-    }
+-    if next is Some(row) && index.slots.get(row.id) != Some(slot) {
+-      index.slots = index.slots.add(row.id, slot)
++      Some(row) => index.slots.get(row.id).unwrap_or(table.rows.length())
++      None => table.rows.length()
++    }
++    if previous is Some(row) {
++      ignore(index.slots.remove(row.id))
++    }
++    if next is Some(row) {
++      index.slots[row.id] = slot
+     }
+     if integer_primary(table) >= 0 {
++      if previous is Some(row) &&
++        (next is None || next.map(r => r.id) != Some(row.id)) {
++        ignore(index.rowids.remove(row.id))
++      }
++      if next is Some(row) {
++        index.rowids[row.id] = row
++      }
+       return
+     }
+     if previous is Some(row) {
++      ignore(index.rowids.remove(row.id))
+       if primary_value_key(table, row.values) is Some(key) {
+-        index.keys = index.keys.remove(key)
++        ignore(index.keys.remove(key))
+       }
+     }
+     if next is Some(row) {
++      index.rowids[row.id] = row
+       if primary_value_key(table, row.values) is Some(key) {
+-        index.keys = index.keys.add(key, row.id)
+-      }
+-    }
+-  }
+-}
+-
+-///|
+-fn primary_row(index : PrimaryIndex, table : Table, id : Int64) -> StoredRow? {
+-  match index.slots.get(id) {
+-    Some(slot) => table.rows.get_slot(slot)
+-    None => None
+-  }
+-}
+-
+-///|
+-fn primary_key_row(
+-  index : PrimaryIndex,
+-  table : Table,
+-  key : String,
+-) -> StoredRow? {
+-  match index.keys.get(key) {
+-    Some(id) => primary_row(index, table, id)
+-    None => None
+-  }
+-}
+-
+-///|
+-fn table_row_by_id(store : Store, table : Table, id : Int64) -> StoredRow? {
+-  if FEATURE_PRIMARY_INDEX {
+-    primary_row(primary_index(store, table), table, id)
+-  } else {
+-    table.rows.iter().find_first(row => row.id == id)
++        index.keys[key] = row
++      }
++    }
+   }
+ }
+ 
+@@ -188,9 +165,7 @@
+   }
+   if rowid_equality(table, predicate, params, qualifier) is Some(id) {
+     return Some(
+-      primary_row(primary_index(store, table), table, id)
+-      .map(r => [r])
+-      .unwrap_or([]),
++      primary_index(store, table).rowids.get(id).map(r => [r]).unwrap_or([]),
+     )
+   }
+   let keys = primary_key(table)
+@@ -227,18 +202,14 @@
+     return Some(
+       match id {
+         Some(n) =>
+-          primary_row(primary_index(store, table), table, n)
+-          .map(r => [r])
+-          .unwrap_or([])
++          primary_index(store, table).rowids.get(n).map(r => [r]).unwrap_or([])
+         None => []
+       },
+     )
+   }
+   if primary_value_key(table, row) is Some(key) {
+     return Some(
+-      primary_key_row(primary_index(store, table), table, key)
+-      .map(r => [r])
+-      .unwrap_or([]),
++      primary_index(store, table).keys.get(key).map(r => [r]).unwrap_or([]),
+     )
+   }
+   Some([])
+--- a/packages/sqlike/src/query_plan.mbt
++++ b/packages/sqlike/src/query_plan.mbt
+@@ -57,9 +57,7 @@
+ ) -> Array[StoredRow] {
+   if rowid is Some(id) {
+     if FEATURE_PRIMARY_INDEX {
+-      primary_row(primary_index(store, table), table, id)
+-      .map(r => [r])
+-      .unwrap_or([])
++      primary_index(store, table).rowids.get(id).map(r => [r]).unwrap_or([])
+     } else {
+       table.rows.filter(r => r.id == id)
+     }
+--- a/packages/sqlike/src/row_pages.mbt
++++ /dev/null
+@@ -1,246 +0,0 @@
+-///|
+-/// An epoch is an identity-bearing mutable cell. Freezing a root also freezes
+-/// pages owned by that epoch; the next writer takes a fresh one.
+-priv struct RowEpoch {
+-  mut shared : Bool
+-}
+-
+-///|
+-priv struct RowPage {
+-  epoch : RowEpoch
+-  rows : Array[StoredRow?]
+-}
+-
+-///|
+-/// Stable physical slots, ordered iteration and bounded page copy-on-write.
+-/// Only roots/epochs are forked. All persistent metadata stays out of images.
+-priv struct RowPages {
+-  mut pages : @rowvector.Vector[RowPage]
+-  mut epoch : RowEpoch
+-  mut count : Int32
+-  mut used : Int32
+-}
+-
+-///|
+-fn row_pages(rows : Array[StoredRow]) -> RowPages {
+-  let epoch = { shared: false, }
+-  let pages : Array[RowPage] = []
+-  let mut start = 0
+-  while start < rows.length() {
+-    let offset = start
+-    pages.push({
+-      epoch,
+-      rows: Array::makei((rows.length() - start).min(64), i => {
+-        Some(rows[offset + i])
+-      }),
+-    })
+-    start += 64
+-  }
+-  {
+-    pages: @rowvector.Vector(pages[:]),
+-    epoch,
+-    count: rows.length(),
+-    used: rows.length(),
+-  }
+-}
+-
+-///|
+-fn RowPages::fork(self : RowPages) -> RowPages {
+-  self.epoch.shared = true
+-  { ..self, epoch: { shared: false, }, }
+-}
+-
+-///|
+-fn RowPages::length(self : RowPages) -> Int32 {
+-  self.count
+-}
+-
+-///|
+-fn RowPages::is_empty(self : RowPages) -> Bool {
+-  self.count == 0
+-}
+-
+-///|
+-fn RowPages::get_slot(self : RowPages, slot : Int32) -> StoredRow? {
+-  if slot < 0 || slot >= self.used {
+-    None
+-  } else {
+-    self.pages[slot / 64].rows[slot % 64]
+-  }
+-}
+-
+-///|
+-/// Logical indexing is needed only at compatibility/DDL boundaries. Point
+-/// lookup and mutation use stable slots, never dense ordinal positions.
+-#alias("_[_]")
+-fn RowPages::at(self : RowPages, index : Int32) -> StoredRow {
+-  guard index >= 0 && index < self.count else {
+-    abort("row index out of bounds")
+-  }
+-  if self.count == self.used {
+-    return self.get_slot(index).unwrap()
+-  }
+-  let mut logical = 0
+-  for page in self.pages {
+-    for row in page.rows {
+-      if row is Some(row) {
+-        if logical == index {
+-          return row
+-        }
+-        logical += 1
+-      }
+-    }
+-  }
+-  abort("row count mismatch")
+-}
+-
+-///|
+-fn RowPages::own_page(self : RowPages, index : Int32) -> RowPage {
+-  if self.epoch.shared {
+-    self.epoch = { shared: false, }
+-  }
+-  let previous = self.pages[index]
+-  if physical_equal(previous.epoch, self.epoch) {
+-    return previous
+-  }
+-  let page = { epoch: self.epoch, rows: previous.rows.copy(), }
+-  self.pages = self.pages.set(index, page)
+-  page
+-}
+-
+-///|
+-fn RowPages::push(self : RowPages, row : StoredRow) -> Unit {
+-  if self.epoch.shared {
+-    self.epoch = { shared: false, }
+-  }
+-  if self.used % 64 == 0 {
+-    self.pages = self.pages.push({ epoch: self.epoch, rows: [Some(row)], })
+-  } else {
+-    self.own_page(self.used / 64).rows.push(Some(row))
+-  }
+-  self.count += 1
+-  self.used += 1
+-}
+-
+-///|
+-fn RowPages::set_slot(self : RowPages, slot : Int32, row : StoredRow) -> Unit {
+-  guard self.get_slot(slot) is Some(_) else { abort("missing row slot") }
+-  self.own_page(slot / 64).rows[slot % 64] = Some(row)
+-}
+-
+-///|
+-/// Deletion leaves other physical slots unchanged. Occasionally repack after
+-/// at least half the slots are empty; this bounds tombstones, amortizing O(N).
+-fn RowPages::remove_slot(self : RowPages, slot : Int32) -> Bool {
+-  guard self.get_slot(slot) is Some(_) else { abort("missing row slot") }
+-  self.own_page(slot / 64).rows[slot % 64] = None
+-  self.count -= 1
+-  if self.count == 0 || (self.used > 128 && self.used > self.count * 2) {
+-    let packed = row_pages(self.copy())
+-    self.pages = packed.pages
+-    self.epoch = packed.epoch
+-    self.used = packed.used
+-    return true
+-  }
+-  false
+-}
+-
+-///|
+-/// Iterators retain the old page root, even when a callback mutates this table.
+-fn RowPages::cursor(self : RowPages) -> RowCursor {
+-  self.epoch.shared = true
+-  { pages: self.pages, page: 0, offset: 0, }
+-}
+-
+-///|
+-priv struct RowCursor {
+-  pages : @rowvector.Vector[RowPage]
+-  mut page : Int32
+-  mut offset : Int32
+-}
+-
+-///|
+-fn RowCursor::next(self : RowCursor) -> StoredRow? {
+-  while self.page < self.pages.length() {
+-    let page = self.pages[self.page]
+-    if self.offset >= page.rows.length() {
+-      self.page += 1
+-      self.offset = 0
+-      continue
+-    }
+-    let row = page.rows[self.offset]
+-    self.offset += 1
+-    if row is Some(row) {
+-      return Some(row)
+-    }
+-  }
+-  None
+-}
+-
+-///|
+-fn RowPages::slot_entries(self : RowPages) -> Iter[(Int32, StoredRow)] {
+-  let cursor = self.cursor()
+-  Iter::new(fn() {
+-    cursor.next().map(row => (cursor.page * 64 + cursor.offset - 1, row))
+-  })
+-}
+-
+-///|
+-fn RowPages::iter(self : RowPages) -> Iter[StoredRow] {
+-  let cursor = self.cursor()
+-  Iter::new(fn() { cursor.next() })
+-}
+-
+-///|
+-fn RowPages::copy(self : RowPages) -> Array[StoredRow] {
+-  self.iter().collect()
+-}
+-
+-///|
+-fn[T] RowPages::map(
+-  self : RowPages,
+-  f : (StoredRow) -> T raise?,
+-) -> Array[T] raise? {
+-  let result : Array[T] = []
+-  for row in self.iter() {
+-    result.push(f(row))
+-  }
+-  result
+-}
+-
+-///|
+-fn RowPages::filter(
+-  self : RowPages,
+-  f : (StoredRow) -> Bool raise?,
+-) -> Array[StoredRow] raise? {
+-  let result : Array[StoredRow] = []
+-  for row in self.iter() {
+-    if f(row) {
+-      result.push(row)
+-    }
+-  }
+-  result
+-}
+-
+-///|
+-fn RowPages::any(
+-  self : RowPages,
+-  f : (StoredRow) -> Bool raise?,
+-) -> Bool raise? {
+-  for row in self.iter() {
+-    if f(row) {
+-      return true
+-    }
+-  }
+-  false
+-}
+-
+-///|
+-impl @json.ToJson for RowPages with fn to_json(self) {
+-  Json::array(self.map(row => @json.to_json(row)))
+-}
+-
+-///|
+-impl @json.FromJson for RowPages with fn from_json(json, path) {
+-  row_pages(@json.from_json(json, path~))
+-}
+--- a/packages/sqlike/src/strict.mbt
++++ b/packages/sqlike/src/strict.mbt
+@@ -11,7 +11,7 @@
+   autoincrement : Bool
+   sequence : Int64
+   sequence_present : Bool?
+-  rows : RowPages
++  rows : Array[StoredRow]
+ }
+ 
+ ///|

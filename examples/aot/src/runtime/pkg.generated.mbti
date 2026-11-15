@@ -1,0 +1,62 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "mizchi/litestream-example/runtime"
+
+import {
+  "mizchi/litestream",
+  "mizchi/sqlike",
+}
+
+// Values
+pub fn aot_ack_delta(@sqlike.AotDatabase, Int32) -> String
+
+pub fn aot_apply_delta(@sqlike.AotDatabase, String) -> String
+
+pub fn aot_clone(@sqlike.AotDatabase) -> @sqlike.AotDatabase
+
+pub fn aot_copy_connection_state(@sqlike.AotDatabase, @sqlike.AotDatabase) -> String
+
+pub fn aot_delta(@sqlike.AotDatabase, Bool) -> String
+
+pub fn aot_dump(@sqlike.AotDatabase) -> String
+
+pub fn aot_execute(@sqlike.AotDatabase, String, String) -> String
+
+pub fn aot_export_sqlite(@sqlike.AotDatabase) -> @sqlike.SqliteResult
+
+pub fn aot_info(@sqlike.AotDatabase) -> String
+
+pub fn aot_open(String, String) -> @sqlike.AotDatabase
+
+pub fn aot_query_info(@sqlike.AotDatabase, String) -> String
+
+pub fn aot_restore(@sqlike.AotDatabase, String) -> String
+
+pub fn aot_set_clock(@sqlike.AotDatabase, String) -> String
+
+pub fn apply_ltx(Bytes, String, Bytes, Int32) -> @litestream.LtxResult
+
+pub fn apply_ltx_base64(String, String, String, Int32) -> @litestream.LtxResult
+
+pub fn encode_ltx(Bytes, Bytes, String, String, String) -> @litestream.LtxResult
+
+pub fn encode_ltx_base64(String, String, String, String, String) -> @litestream.LtxResult
+
+pub fn ltx_data(@litestream.LtxResult) -> Bytes
+
+pub fn ltx_data_base64(@litestream.LtxResult) -> String
+
+pub fn ltx_info(@litestream.LtxResult) -> String
+
+pub fn sqlite_data(@sqlike.SqliteResult) -> Bytes
+
+pub fn sqlite_data_base64(@sqlike.SqliteResult) -> String
+
+pub fn sqlite_info(@sqlike.SqliteResult) -> String
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits

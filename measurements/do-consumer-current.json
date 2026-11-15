@@ -1,0 +1,89 @@
+{
+  "measuredAt": "2026-11-15T20:59:53.031Z",
+  "sourceHashes": {
+    "_build/js/release/build/mizchi/litestream/litestream.js": "4eaf9bd5f3895df53cf851e2c81c8c43f1d1919a16364d7b6dc0b4eb13bb8dd2",
+    "adapters/do-bindings.ts": "d82d5ce3de8aa0298b10e49ee061cc89a44476b394addc27be6c2d3f1f3bc042",
+    "adapters/do-database.ts": "582d9eecbe96642da3ba2cca8c9f9510d3e25ab45fc301d12547597d228f79e1",
+    "adapters/do-returning.ts": "fe76b5ee702f143b31300b5c27a9a0589337b2e237c36f1131f15b2e5c43740e",
+    "adapters/do-statement.ts": "c905a7555cd892aff7eedc5243843c35a22074768a768d367912ddb2295035ba",
+    "e2e/do-consumer.spec.ts": "c95493f5b702418e169e37651d4c8adb6c9ba0b5e44a040cc0e91d07da6d1b7a",
+    "package.json": "b586b167fe20b075b1ac31216be6af17316e0642869ae1315c91733396206845",
+    "pnpm-lock.yaml": "6d494af239141d7fc70115e739d57c83fbf23be0ada6e23ec13d7dfe8f0e2040",
+    "scripts/fixtures/do-consumer-worker.ts": "599ca6a734fce82759dc148fb2834c82d680fd72ff48d2f63fe2836d4e02892e",
+    "scripts/fixtures/wrangler-do-consumer.jsonc": "d6e902639d88bebb5372d65611c61910fbbc35884ebd970d92f8f444a233c8b4",
+    "scripts/measurement-manifest.ts": "615c0ab32c0b2e01c57ea1be690a2a08d2e9401b9b0c5d93574520253c16acdb",
+    "src/protocol.ts": "1c405a09b249e25c976ca3536136db48e67239748c7d901876751b34cccd7a9f",
+    "tests/compatibility/do-consumer-cases.ts": "8816fc2fced3d88aaed203268554c605457260e430275624e44053b94f218284"
+  },
+  "node": "v24.22.2",
+  "nativeSQLite": "3.53.4",
+  "method": "Sequential fixed consumer SQL in an isolated local workerd SQLite DO; native typed results and tables/audit after every operation; changes()/last_insert_rowid() and total_changes() delta from SQL-recorded bootstrap baseline checked at successful probes (DO internal initial writes differ). Trusted fixture bootstrap can create triggers outside DODatabase. Synthetic decoding failure checks rollback of table data, not restoration of connection counters.",
+  "cases": [
+    {
+      "id": "cte-values-types",
+      "steps": 8,
+      "sqlite": "unavailable",
+      "sqliteVersionError": "not authorized to use function: sqlite_version at offset 7: SQLITE_ERROR",
+      "initialTotalChanges": "3",
+      "matches": 8,
+      "explicitRejections": 0,
+      "nativeErrors": 0,
+      "verified": true
+    },
+    {
+      "id": "cte-application-dml",
+      "steps": 6,
+      "sqlite": "unavailable",
+      "sqliteVersionError": "not authorized to use function: sqlite_version at offset 7: SQLITE_ERROR",
+      "initialTotalChanges": "3",
+      "matches": 5,
+      "explicitRejections": 0,
+      "nativeErrors": 1,
+      "verified": true
+    },
+    {
+      "id": "metadata",
+      "steps": 13,
+      "sqlite": "unavailable",
+      "sqliteVersionError": "not authorized to use function: sqlite_version at offset 7: SQLITE_ERROR",
+      "initialTotalChanges": "3",
+      "matches": 5,
+      "explicitRejections": 8,
+      "nativeErrors": 0,
+      "verified": true
+    },
+    {
+      "id": "returning-columns",
+      "steps": 15,
+      "sqlite": "unavailable",
+      "sqliteVersionError": "not authorized to use function: sqlite_version at offset 7: SQLITE_ERROR",
+      "initialTotalChanges": "4",
+      "matches": 11,
+      "explicitRejections": 4,
+      "nativeErrors": 0,
+      "verified": true
+    },
+    {
+      "id": "returning-identifiers",
+      "steps": 4,
+      "sqlite": "unavailable",
+      "sqliteVersionError": "not authorized to use function: sqlite_version at offset 7: SQLITE_ERROR",
+      "initialTotalChanges": "1",
+      "matches": 3,
+      "explicitRejections": 1,
+      "nativeErrors": 0,
+      "verified": true
+    },
+    {
+      "id": "reject-atomically",
+      "steps": 7,
+      "sqlite": "unavailable",
+      "sqliteVersionError": "not authorized to use function: sqlite_version at offset 7: SQLITE_ERROR",
+      "initialTotalChanges": "3",
+      "matches": 1,
+      "explicitRejections": 6,
+      "nativeErrors": 0,
+      "verified": true
+    }
+  ]
+}

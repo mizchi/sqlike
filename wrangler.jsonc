@@ -1,0 +1,16 @@
+{
+  "name": "browser-litestream",
+  "main": "adapters/durable-object.ts",
+  "compatibility_date": "2026-11-01",
+  "durable_objects": {
+    "bindings": [
+      { "name": "SYNC_ROOMS", "class_name": "SyncRoom" },
+      { "name": "PEER_RELAYS", "class_name": "PeerRelay" },
+      { "name": "AOT_LTX_ROOMS", "class_name": "AotLtxRoom" },
+    ],
+  },
+  "migrations": [
+    { "tag": "v1", "new_sqlite_classes": ["SyncRoom", "PeerRelay"] },
+    { "tag": "v2", "new_sqlite_classes": ["AotLtxRoom"] },
+  ],
+}

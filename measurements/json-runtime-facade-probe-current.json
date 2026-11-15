@@ -1,0 +1,160 @@
+{
+  "sourceHashes": {
+    "measurements/json-runtime-facade-probe.mjs": "b0e8603904029788e5b9cbe3e0d76d9ededfe35e6688a66aaa3ad568942964ba",
+    "scripts/build-sqlike-runtime.ts": "c62fbcdf9c3c4791cfc7c088b36bdf5e4411f4c0dfd30cf8d142c36ab86ccc7e",
+    "scripts/oxc-runtime.ts": "24406b458799bdb150e1a986353c7d965d57964e60067f1a421e1cc010e57fce",
+    "packages/sqlike/src/aot.mbt": "a77b6a74c793f0b09d9ccf48196ac602aefc2514dc1cf2107e6edff87af62db9",
+    "packages/sqlike/src/model.mbt": "19082f03d8b9f49d9f8573f88ed5c5f70b7ba51f0f19d78421ce70451fcfe5ec",
+    "/Users/mz/ghq/github.com/mizchi/x/src/json/json.mbt": "1befecf1582f76ab53f32a2f9bd3082c0751397b6fcd817f5566a315f1362d6d",
+    "/Users/mz/ghq/github.com/mizchi/x/src/json/json_js.mbt": "ae0f6cc774904c529777ba1b96624f3d83007b55fec8cb35ba032ccccff09905",
+    "/Users/mz/ghq/github.com/mizchi/x/src/json/json_default.mbt": "abdf9fc648a7b1d515a435baf350f6bca28299612feca0dad69ee260c2f2e046",
+    "/Users/mz/ghq/github.com/mizchi/x/src/json/moon.pkg": "071c99372f932fc166e9ff698fb02388d1659f465b6416e7630558203492b68c"
+  },
+  "library": "/Users/mz/ghq/github.com/mizchi/x",
+  "commit": "e7c14c82b28c1aa85e6a6e0ccc45873c763269e6",
+  "measuredAt": "2026-11-15T20:21:00.120Z",
+  "node": "v24.22.2",
+  "method": "Transient workspace, actual copied mizchi/x/json code from the recorded checkout and source hashes. Only aot_execute binding parse replaced, no serializer/SQL JSON/schema/snapshot change. Same defined entry exports, primaryKeyIndex only, Oxc with annotations preserved. Eight alternating warmed Node runs, 5000 executions each; host bind encoding and output JSON.parse excluded from timing. No production source/dependency changes. Lone-surrogate response mismatch prevents blanket default adoption.",
+  "sizes": {
+    "core": {
+      "raw": 422666,
+      "gzip": 103027,
+      "brotli": 83039,
+      "SHA256": "dd2ef299c8189f3a27e1d419d45b5725aeadef30ee73ffc9537a946a0dbef97c"
+    },
+    "facade": {
+      "raw": 409093,
+      "gzip": 100909,
+      "brotli": 81263,
+      "SHA256": "830ad22877bad46dfabbdf34dea1b494f30f3fe1cbbddc019334ef657470f065"
+    }
+  },
+  "summary": {
+    "core": 3.8716292000000068,
+    "facade": 4.377241700000013
+  },
+  "samples": [
+    {
+      "backend": "core",
+      "run": 0,
+      "microseconds": 5.451699999999983
+    },
+    {
+      "backend": "facade",
+      "run": 0,
+      "microseconds": 5.548391599999968
+    },
+    {
+      "backend": "facade",
+      "run": 1,
+      "microseconds": 4.673691599999984
+    },
+    {
+      "backend": "core",
+      "run": 1,
+      "microseconds": 4.309299999999984
+    },
+    {
+      "backend": "core",
+      "run": 2,
+      "microseconds": 3.953783199999998
+    },
+    {
+      "backend": "facade",
+      "run": 2,
+      "microseconds": 4.374500000000035
+    },
+    {
+      "backend": "facade",
+      "run": 3,
+      "microseconds": 4.428566799999999
+    },
+    {
+      "backend": "core",
+      "run": 3,
+      "microseconds": 3.8208583999999974
+    },
+    {
+      "backend": "core",
+      "run": 4,
+      "microseconds": 3.9018833999999973
+    },
+    {
+      "backend": "facade",
+      "run": 4,
+      "microseconds": 4.3173999999999975
+    },
+    {
+      "backend": "facade",
+      "run": 5,
+      "microseconds": 4.317533400000002
+    },
+    {
+      "backend": "core",
+      "run": 5,
+      "microseconds": 3.819091600000001
+    },
+    {
+      "backend": "core",
+      "run": 6,
+      "microseconds": 3.7537749999999956
+    },
+    {
+      "backend": "facade",
+      "run": 6,
+      "microseconds": 4.3799833999999915
+    },
+    {
+      "backend": "facade",
+      "run": 7,
+      "microseconds": 4.288116600000012
+    },
+    {
+      "backend": "core",
+      "run": 7,
+      "microseconds": 3.841375000000016
+    }
+  ],
+  "behaviour": [
+    {
+      "name": "typed-bindings",
+      "matched": true
+    },
+    {
+      "name": "lone-surrogate",
+      "core": {
+        "error": "Invalid character '\\\\' at line 1, column 61"
+      },
+      "facade": {
+        "names": [
+          "id",
+          "n",
+          "text",
+          "blob"
+        ],
+        "rows": [
+          [
+            {
+              "t": "integer",
+              "v": "1"
+            },
+            {
+              "t": "real",
+              "v": 1
+            },
+            {
+              "t": "text",
+              "v": "\ud800"
+            },
+            {
+              "t": "blob",
+              "v": []
+            }
+          ]
+        ],
+        "readonly": true,
+        "changes": 0
+      }
+    }
+  ]
+}

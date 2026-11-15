@@ -1,0 +1,55 @@
+import {
+  "mizchi/sqlike",
+}
+
+options(
+  link: {
+    "js": {
+      "exports": [
+        "defined_open",
+        "defined_info",
+        "defined_execute",
+        "defined_query_info",
+        "defined_set_clock",
+        "defined_clone",
+        "defined_copy_connection_state",
+        "defined_snapshot",
+        "defined_restore",
+        "defined_delta",
+        "defined_apply_delta",
+        "defined_ack_delta",
+        "binary_data",
+        "binary_info",
+        "defined_open_base64",
+        "binary_data_base64",
+        "defined_restore_base64",
+        "defined_apply_delta_base64",
+      ],
+      "format": "esm",
+    },
+    "wasm-gc": {
+      "exports": [
+        "defined_open",
+        "defined_info",
+        "defined_execute",
+        "defined_query_info",
+        "defined_set_clock",
+        "defined_clone",
+        "defined_copy_connection_state",
+        "defined_snapshot",
+        "defined_restore",
+        "defined_delta",
+        "defined_apply_delta",
+        "defined_ack_delta",
+        "binary_data",
+        "binary_info",
+        "defined_open_base64",
+        "binary_data_base64",
+        "defined_restore_base64",
+        "defined_apply_delta_base64",
+      ],
+      "use-js-builtin-string": true,
+      "imported-string-constants": "_",
+    },
+  },
+)

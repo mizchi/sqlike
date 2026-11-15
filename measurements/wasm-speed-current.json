@@ -1,0 +1,4144 @@
+{
+  "format": 1,
+  "measuredAt": "2026-11-14T14:13:12.698Z",
+  "environment": {
+    "node": "v24.22.2",
+    "v8": "13.6.233.17-node.63",
+    "cpu": "Apple M5",
+    "platform": "darwin",
+    "osRelease": "25.6.0",
+    "arch": "arm64",
+    "moon": "moon 0.1.20261104 (940aa18 2026-11-04)",
+    "chromium": "158.0.8127.18",
+    "nativeSQLite": "3.53.4"
+  },
+  "artifacts": {
+    "aotJS": {
+      "path": "_build/js/release/build/mizchi/litestream-example/runtime/runtime.js",
+      "sha256": "64a3e60afb295184f287f3f1ae63e8058870704e5cc0f0a0c456b980a1e66a57",
+      "bytes": 1225449
+    },
+    "sqlJS": {
+      "path": "_build/js/release/build/mizchi/sqlike/sqlike.js",
+      "sha256": "01710a9a3e26ad878299f883b579473dd2277b043186299de8e8698d3882304d",
+      "bytes": 1247301
+    },
+    "aotWasm": {
+      "path": "_build/wasm-gc/release/build/mizchi/litestream-example/runtime/runtime.wasm",
+      "sha256": "487191e942fb96f64d659cb0516d0b2594c5e8db4048c3a2b42f384e29d18abf",
+      "bytes": 297095
+    },
+    "sqlWasm": {
+      "path": "_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm",
+      "sha256": "a1eb25c3216d029a4d2e749d655a140676d6c43ac46e45ff0d78cf86f68900cd",
+      "bytes": 294947
+    }
+  },
+  "method": "Release builds. Identical pre-encoded bindings and JSON result decoding for JS and Wasm GC public string ABI. In-memory only: no storage, RPC, network or module compilation in timed regions. SQL checked against native SQLite, UPDATE side effects checked, exported SQLite integrity/rows checked by native SQLite, LTX also checked via the MoonBit decoder byte API; JS/Wasm identical bytes and round trip required before/after timing. Rotate engine order, 7 samples after 1000 SQL warmups / 3 checkpoint warmups. Idempotent UPDATE; LTX full snapshot with base64 input/output for both engines. No forced GC; one Node process and one headless Chromium page.",
+  "workload": {
+    "schema": "CREATE TABLE t(id INTEGER PRIMARY KEY,n INTEGER,title TEXT)",
+    "rows": 100,
+    "runs": 7,
+    "warmup": 1000,
+    "queries": [
+      {
+        "name": "constant",
+        "sql": "SELECT ?+1 AS n,upper(?) AS t",
+        "bindings": "[{\"t\":\"integer\",\"v\":\"2\"},{\"t\":\"text\",\"v\":\"hello\"}]",
+        "expected": [
+          [
+            {
+              "t": "integer",
+              "v": "3"
+            },
+            {
+              "t": "text",
+              "v": "HELLO"
+            }
+          ]
+        ],
+        "write": false,
+        "iterations": 10000
+      },
+      {
+        "name": "point",
+        "sql": "SELECT id,n,title FROM t WHERE id=?",
+        "bindings": "[{\"t\":\"integer\",\"v\":\"50\"}]",
+        "expected": [
+          [
+            {
+              "t": "integer",
+              "v": "50"
+            },
+            {
+              "t": "integer",
+              "v": "49"
+            },
+            {
+              "t": "text",
+              "v": "note49"
+            }
+          ]
+        ],
+        "write": false,
+        "iterations": 2000
+      },
+      {
+        "name": "scan",
+        "sql": "SELECT id,n,title FROM t ORDER BY id",
+        "bindings": "[]",
+        "expected": [
+          [
+            {
+              "t": "integer",
+              "v": "1"
+            },
+            {
+              "t": "integer",
+              "v": "0"
+            },
+            {
+              "t": "text",
+              "v": "note0"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "2"
+            },
+            {
+              "t": "integer",
+              "v": "1"
+            },
+            {
+              "t": "text",
+              "v": "note1"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "3"
+            },
+            {
+              "t": "integer",
+              "v": "2"
+            },
+            {
+              "t": "text",
+              "v": "note2"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "4"
+            },
+            {
+              "t": "integer",
+              "v": "3"
+            },
+            {
+              "t": "text",
+              "v": "note3"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "5"
+            },
+            {
+              "t": "integer",
+              "v": "4"
+            },
+            {
+              "t": "text",
+              "v": "note4"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "6"
+            },
+            {
+              "t": "integer",
+              "v": "5"
+            },
+            {
+              "t": "text",
+              "v": "note5"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "7"
+            },
+            {
+              "t": "integer",
+              "v": "6"
+            },
+            {
+              "t": "text",
+              "v": "note6"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "8"
+            },
+            {
+              "t": "integer",
+              "v": "7"
+            },
+            {
+              "t": "text",
+              "v": "note7"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "9"
+            },
+            {
+              "t": "integer",
+              "v": "8"
+            },
+            {
+              "t": "text",
+              "v": "note8"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "10"
+            },
+            {
+              "t": "integer",
+              "v": "9"
+            },
+            {
+              "t": "text",
+              "v": "note9"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "11"
+            },
+            {
+              "t": "integer",
+              "v": "10"
+            },
+            {
+              "t": "text",
+              "v": "note10"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "12"
+            },
+            {
+              "t": "integer",
+              "v": "11"
+            },
+            {
+              "t": "text",
+              "v": "note11"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "13"
+            },
+            {
+              "t": "integer",
+              "v": "12"
+            },
+            {
+              "t": "text",
+              "v": "note12"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "14"
+            },
+            {
+              "t": "integer",
+              "v": "13"
+            },
+            {
+              "t": "text",
+              "v": "note13"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "15"
+            },
+            {
+              "t": "integer",
+              "v": "14"
+            },
+            {
+              "t": "text",
+              "v": "note14"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "16"
+            },
+            {
+              "t": "integer",
+              "v": "15"
+            },
+            {
+              "t": "text",
+              "v": "note15"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "17"
+            },
+            {
+              "t": "integer",
+              "v": "16"
+            },
+            {
+              "t": "text",
+              "v": "note16"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "18"
+            },
+            {
+              "t": "integer",
+              "v": "17"
+            },
+            {
+              "t": "text",
+              "v": "note17"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "19"
+            },
+            {
+              "t": "integer",
+              "v": "18"
+            },
+            {
+              "t": "text",
+              "v": "note18"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "20"
+            },
+            {
+              "t": "integer",
+              "v": "19"
+            },
+            {
+              "t": "text",
+              "v": "note19"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "21"
+            },
+            {
+              "t": "integer",
+              "v": "20"
+            },
+            {
+              "t": "text",
+              "v": "note20"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "22"
+            },
+            {
+              "t": "integer",
+              "v": "21"
+            },
+            {
+              "t": "text",
+              "v": "note21"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "23"
+            },
+            {
+              "t": "integer",
+              "v": "22"
+            },
+            {
+              "t": "text",
+              "v": "note22"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "24"
+            },
+            {
+              "t": "integer",
+              "v": "23"
+            },
+            {
+              "t": "text",
+              "v": "note23"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "25"
+            },
+            {
+              "t": "integer",
+              "v": "24"
+            },
+            {
+              "t": "text",
+              "v": "note24"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "26"
+            },
+            {
+              "t": "integer",
+              "v": "25"
+            },
+            {
+              "t": "text",
+              "v": "note25"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "27"
+            },
+            {
+              "t": "integer",
+              "v": "26"
+            },
+            {
+              "t": "text",
+              "v": "note26"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "28"
+            },
+            {
+              "t": "integer",
+              "v": "27"
+            },
+            {
+              "t": "text",
+              "v": "note27"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "29"
+            },
+            {
+              "t": "integer",
+              "v": "28"
+            },
+            {
+              "t": "text",
+              "v": "note28"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "30"
+            },
+            {
+              "t": "integer",
+              "v": "29"
+            },
+            {
+              "t": "text",
+              "v": "note29"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "31"
+            },
+            {
+              "t": "integer",
+              "v": "30"
+            },
+            {
+              "t": "text",
+              "v": "note30"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "32"
+            },
+            {
+              "t": "integer",
+              "v": "31"
+            },
+            {
+              "t": "text",
+              "v": "note31"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "33"
+            },
+            {
+              "t": "integer",
+              "v": "32"
+            },
+            {
+              "t": "text",
+              "v": "note32"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "34"
+            },
+            {
+              "t": "integer",
+              "v": "33"
+            },
+            {
+              "t": "text",
+              "v": "note33"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "35"
+            },
+            {
+              "t": "integer",
+              "v": "34"
+            },
+            {
+              "t": "text",
+              "v": "note34"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "36"
+            },
+            {
+              "t": "integer",
+              "v": "35"
+            },
+            {
+              "t": "text",
+              "v": "note35"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "37"
+            },
+            {
+              "t": "integer",
+              "v": "36"
+            },
+            {
+              "t": "text",
+              "v": "note36"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "38"
+            },
+            {
+              "t": "integer",
+              "v": "37"
+            },
+            {
+              "t": "text",
+              "v": "note37"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "39"
+            },
+            {
+              "t": "integer",
+              "v": "38"
+            },
+            {
+              "t": "text",
+              "v": "note38"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "40"
+            },
+            {
+              "t": "integer",
+              "v": "39"
+            },
+            {
+              "t": "text",
+              "v": "note39"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "41"
+            },
+            {
+              "t": "integer",
+              "v": "40"
+            },
+            {
+              "t": "text",
+              "v": "note40"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "42"
+            },
+            {
+              "t": "integer",
+              "v": "41"
+            },
+            {
+              "t": "text",
+              "v": "note41"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "43"
+            },
+            {
+              "t": "integer",
+              "v": "42"
+            },
+            {
+              "t": "text",
+              "v": "note42"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "44"
+            },
+            {
+              "t": "integer",
+              "v": "43"
+            },
+            {
+              "t": "text",
+              "v": "note43"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "45"
+            },
+            {
+              "t": "integer",
+              "v": "44"
+            },
+            {
+              "t": "text",
+              "v": "note44"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "46"
+            },
+            {
+              "t": "integer",
+              "v": "45"
+            },
+            {
+              "t": "text",
+              "v": "note45"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "47"
+            },
+            {
+              "t": "integer",
+              "v": "46"
+            },
+            {
+              "t": "text",
+              "v": "note46"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "48"
+            },
+            {
+              "t": "integer",
+              "v": "47"
+            },
+            {
+              "t": "text",
+              "v": "note47"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "49"
+            },
+            {
+              "t": "integer",
+              "v": "48"
+            },
+            {
+              "t": "text",
+              "v": "note48"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "50"
+            },
+            {
+              "t": "integer",
+              "v": "49"
+            },
+            {
+              "t": "text",
+              "v": "note49"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "51"
+            },
+            {
+              "t": "integer",
+              "v": "50"
+            },
+            {
+              "t": "text",
+              "v": "note50"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "52"
+            },
+            {
+              "t": "integer",
+              "v": "51"
+            },
+            {
+              "t": "text",
+              "v": "note51"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "53"
+            },
+            {
+              "t": "integer",
+              "v": "52"
+            },
+            {
+              "t": "text",
+              "v": "note52"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "54"
+            },
+            {
+              "t": "integer",
+              "v": "53"
+            },
+            {
+              "t": "text",
+              "v": "note53"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "55"
+            },
+            {
+              "t": "integer",
+              "v": "54"
+            },
+            {
+              "t": "text",
+              "v": "note54"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "56"
+            },
+            {
+              "t": "integer",
+              "v": "55"
+            },
+            {
+              "t": "text",
+              "v": "note55"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "57"
+            },
+            {
+              "t": "integer",
+              "v": "56"
+            },
+            {
+              "t": "text",
+              "v": "note56"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "58"
+            },
+            {
+              "t": "integer",
+              "v": "57"
+            },
+            {
+              "t": "text",
+              "v": "note57"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "59"
+            },
+            {
+              "t": "integer",
+              "v": "58"
+            },
+            {
+              "t": "text",
+              "v": "note58"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "60"
+            },
+            {
+              "t": "integer",
+              "v": "59"
+            },
+            {
+              "t": "text",
+              "v": "note59"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "61"
+            },
+            {
+              "t": "integer",
+              "v": "60"
+            },
+            {
+              "t": "text",
+              "v": "note60"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "62"
+            },
+            {
+              "t": "integer",
+              "v": "61"
+            },
+            {
+              "t": "text",
+              "v": "note61"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "63"
+            },
+            {
+              "t": "integer",
+              "v": "62"
+            },
+            {
+              "t": "text",
+              "v": "note62"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "64"
+            },
+            {
+              "t": "integer",
+              "v": "63"
+            },
+            {
+              "t": "text",
+              "v": "note63"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "65"
+            },
+            {
+              "t": "integer",
+              "v": "64"
+            },
+            {
+              "t": "text",
+              "v": "note64"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "66"
+            },
+            {
+              "t": "integer",
+              "v": "65"
+            },
+            {
+              "t": "text",
+              "v": "note65"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "67"
+            },
+            {
+              "t": "integer",
+              "v": "66"
+            },
+            {
+              "t": "text",
+              "v": "note66"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "68"
+            },
+            {
+              "t": "integer",
+              "v": "67"
+            },
+            {
+              "t": "text",
+              "v": "note67"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "69"
+            },
+            {
+              "t": "integer",
+              "v": "68"
+            },
+            {
+              "t": "text",
+              "v": "note68"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "70"
+            },
+            {
+              "t": "integer",
+              "v": "69"
+            },
+            {
+              "t": "text",
+              "v": "note69"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "71"
+            },
+            {
+              "t": "integer",
+              "v": "70"
+            },
+            {
+              "t": "text",
+              "v": "note70"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "72"
+            },
+            {
+              "t": "integer",
+              "v": "71"
+            },
+            {
+              "t": "text",
+              "v": "note71"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "73"
+            },
+            {
+              "t": "integer",
+              "v": "72"
+            },
+            {
+              "t": "text",
+              "v": "note72"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "74"
+            },
+            {
+              "t": "integer",
+              "v": "73"
+            },
+            {
+              "t": "text",
+              "v": "note73"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "75"
+            },
+            {
+              "t": "integer",
+              "v": "74"
+            },
+            {
+              "t": "text",
+              "v": "note74"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "76"
+            },
+            {
+              "t": "integer",
+              "v": "75"
+            },
+            {
+              "t": "text",
+              "v": "note75"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "77"
+            },
+            {
+              "t": "integer",
+              "v": "76"
+            },
+            {
+              "t": "text",
+              "v": "note76"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "78"
+            },
+            {
+              "t": "integer",
+              "v": "77"
+            },
+            {
+              "t": "text",
+              "v": "note77"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "79"
+            },
+            {
+              "t": "integer",
+              "v": "78"
+            },
+            {
+              "t": "text",
+              "v": "note78"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "80"
+            },
+            {
+              "t": "integer",
+              "v": "79"
+            },
+            {
+              "t": "text",
+              "v": "note79"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "81"
+            },
+            {
+              "t": "integer",
+              "v": "80"
+            },
+            {
+              "t": "text",
+              "v": "note80"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "82"
+            },
+            {
+              "t": "integer",
+              "v": "81"
+            },
+            {
+              "t": "text",
+              "v": "note81"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "83"
+            },
+            {
+              "t": "integer",
+              "v": "82"
+            },
+            {
+              "t": "text",
+              "v": "note82"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "84"
+            },
+            {
+              "t": "integer",
+              "v": "83"
+            },
+            {
+              "t": "text",
+              "v": "note83"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "85"
+            },
+            {
+              "t": "integer",
+              "v": "84"
+            },
+            {
+              "t": "text",
+              "v": "note84"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "86"
+            },
+            {
+              "t": "integer",
+              "v": "85"
+            },
+            {
+              "t": "text",
+              "v": "note85"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "87"
+            },
+            {
+              "t": "integer",
+              "v": "86"
+            },
+            {
+              "t": "text",
+              "v": "note86"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "88"
+            },
+            {
+              "t": "integer",
+              "v": "87"
+            },
+            {
+              "t": "text",
+              "v": "note87"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "89"
+            },
+            {
+              "t": "integer",
+              "v": "88"
+            },
+            {
+              "t": "text",
+              "v": "note88"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "90"
+            },
+            {
+              "t": "integer",
+              "v": "89"
+            },
+            {
+              "t": "text",
+              "v": "note89"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "91"
+            },
+            {
+              "t": "integer",
+              "v": "90"
+            },
+            {
+              "t": "text",
+              "v": "note90"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "92"
+            },
+            {
+              "t": "integer",
+              "v": "91"
+            },
+            {
+              "t": "text",
+              "v": "note91"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "93"
+            },
+            {
+              "t": "integer",
+              "v": "92"
+            },
+            {
+              "t": "text",
+              "v": "note92"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "94"
+            },
+            {
+              "t": "integer",
+              "v": "93"
+            },
+            {
+              "t": "text",
+              "v": "note93"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "95"
+            },
+            {
+              "t": "integer",
+              "v": "94"
+            },
+            {
+              "t": "text",
+              "v": "note94"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "96"
+            },
+            {
+              "t": "integer",
+              "v": "95"
+            },
+            {
+              "t": "text",
+              "v": "note95"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "97"
+            },
+            {
+              "t": "integer",
+              "v": "96"
+            },
+            {
+              "t": "text",
+              "v": "note96"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "98"
+            },
+            {
+              "t": "integer",
+              "v": "97"
+            },
+            {
+              "t": "text",
+              "v": "note97"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "99"
+            },
+            {
+              "t": "integer",
+              "v": "98"
+            },
+            {
+              "t": "text",
+              "v": "note98"
+            }
+          ],
+          [
+            {
+              "t": "integer",
+              "v": "100"
+            },
+            {
+              "t": "integer",
+              "v": "99"
+            },
+            {
+              "t": "text",
+              "v": "note99"
+            }
+          ]
+        ],
+        "write": false,
+        "iterations": 500
+      },
+      {
+        "name": "update",
+        "sql": "UPDATE t SET n=? WHERE id=?",
+        "bindings": "[{\"t\":\"integer\",\"v\":\"7\"},{\"t\":\"integer\",\"v\":\"50\"}]",
+        "expected": [],
+        "write": true,
+        "iterations": 500,
+        "check": {
+          "name": "point",
+          "sql": "SELECT id,n,title FROM t WHERE id=?",
+          "bindings": "[{\"t\":\"integer\",\"v\":\"50\"}]",
+          "expected": [
+            [
+              {
+                "t": "integer",
+                "v": "50"
+              },
+              {
+                "t": "integer",
+                "v": "7"
+              },
+              {
+                "t": "text",
+                "v": "note49"
+              }
+            ]
+          ]
+        }
+      }
+    ],
+    "checkpointIterations": 10,
+    "checkpointWarmup": 3,
+    "sqliteExportBytes": 8192,
+    "ltxInputBytes": 270336,
+    "ltxOutputBytes": 137121,
+    "sha256": "33113848f59e77b8006457cd49a488a27510b8bd48cf3a53ed5e21aa53de93fc"
+  },
+  "node": {
+    "samples": [
+      {
+        "name": "constant",
+        "engine": "js/aot",
+        "run": 0,
+        "iterations": 10000,
+        "milliseconds": 63.058667000000014
+      },
+      {
+        "name": "constant",
+        "engine": "js/dynamic",
+        "run": 0,
+        "iterations": 10000,
+        "milliseconds": 123.45466599999997
+      },
+      {
+        "name": "constant",
+        "engine": "wasm/aot",
+        "run": 0,
+        "iterations": 10000,
+        "milliseconds": 38.530250000000024
+      },
+      {
+        "name": "constant",
+        "engine": "wasm/dynamic",
+        "run": 0,
+        "iterations": 10000,
+        "milliseconds": 57.32258399999989
+      },
+      {
+        "name": "constant",
+        "engine": "js/aot",
+        "run": 1,
+        "iterations": 10000,
+        "milliseconds": 42.650458999999955
+      },
+      {
+        "name": "constant",
+        "engine": "wasm/dynamic",
+        "run": 1,
+        "iterations": 10000,
+        "milliseconds": 68.33966699999996
+      },
+      {
+        "name": "constant",
+        "engine": "wasm/aot",
+        "run": 1,
+        "iterations": 10000,
+        "milliseconds": 75.21670800000015
+      },
+      {
+        "name": "constant",
+        "engine": "js/dynamic",
+        "run": 1,
+        "iterations": 10000,
+        "milliseconds": 204.73704199999997
+      },
+      {
+        "name": "constant",
+        "engine": "wasm/aot",
+        "run": 2,
+        "iterations": 10000,
+        "milliseconds": 27.51262500000007
+      },
+      {
+        "name": "constant",
+        "engine": "wasm/dynamic",
+        "run": 2,
+        "iterations": 10000,
+        "milliseconds": 51.96195799999987
+      },
+      {
+        "name": "constant",
+        "engine": "js/aot",
+        "run": 2,
+        "iterations": 10000,
+        "milliseconds": 42.55616699999996
+      },
+      {
+        "name": "constant",
+        "engine": "js/dynamic",
+        "run": 2,
+        "iterations": 10000,
+        "milliseconds": 113.27208300000007
+      },
+      {
+        "name": "constant",
+        "engine": "wasm/aot",
+        "run": 3,
+        "iterations": 10000,
+        "milliseconds": 25.225459
+      },
+      {
+        "name": "constant",
+        "engine": "js/dynamic",
+        "run": 3,
+        "iterations": 10000,
+        "milliseconds": 140.22216600000002
+      },
+      {
+        "name": "constant",
+        "engine": "js/aot",
+        "run": 3,
+        "iterations": 10000,
+        "milliseconds": 42.24370900000008
+      },
+      {
+        "name": "constant",
+        "engine": "wasm/dynamic",
+        "run": 3,
+        "iterations": 10000,
+        "milliseconds": 43.886916000000156
+      },
+      {
+        "name": "constant",
+        "engine": "js/aot",
+        "run": 4,
+        "iterations": 10000,
+        "milliseconds": 42.18245900000011
+      },
+      {
+        "name": "constant",
+        "engine": "js/dynamic",
+        "run": 4,
+        "iterations": 10000,
+        "milliseconds": 105.97941600000013
+      },
+      {
+        "name": "constant",
+        "engine": "wasm/aot",
+        "run": 4,
+        "iterations": 10000,
+        "milliseconds": 35.59179200000017
+      },
+      {
+        "name": "constant",
+        "engine": "wasm/dynamic",
+        "run": 4,
+        "iterations": 10000,
+        "milliseconds": 52.625583000000006
+      },
+      {
+        "name": "constant",
+        "engine": "js/aot",
+        "run": 5,
+        "iterations": 10000,
+        "milliseconds": 46.05745900000011
+      },
+      {
+        "name": "constant",
+        "engine": "wasm/dynamic",
+        "run": 5,
+        "iterations": 10000,
+        "milliseconds": 47.23158299999977
+      },
+      {
+        "name": "constant",
+        "engine": "wasm/aot",
+        "run": 5,
+        "iterations": 10000,
+        "milliseconds": 25.556833000000097
+      },
+      {
+        "name": "constant",
+        "engine": "js/dynamic",
+        "run": 5,
+        "iterations": 10000,
+        "milliseconds": 115.31170799999973
+      },
+      {
+        "name": "constant",
+        "engine": "wasm/aot",
+        "run": 6,
+        "iterations": 10000,
+        "milliseconds": 26.340166999999838
+      },
+      {
+        "name": "constant",
+        "engine": "wasm/dynamic",
+        "run": 6,
+        "iterations": 10000,
+        "milliseconds": 46.792209000000184
+      },
+      {
+        "name": "constant",
+        "engine": "js/aot",
+        "run": 6,
+        "iterations": 10000,
+        "milliseconds": 42.59333300000026
+      },
+      {
+        "name": "constant",
+        "engine": "js/dynamic",
+        "run": 6,
+        "iterations": 10000,
+        "milliseconds": 109.23233399999981
+      },
+      {
+        "name": "point",
+        "engine": "js/aot",
+        "run": 0,
+        "iterations": 2000,
+        "milliseconds": 261.34183299999995
+      },
+      {
+        "name": "point",
+        "engine": "js/dynamic",
+        "run": 0,
+        "iterations": 2000,
+        "milliseconds": 273.05295799999976
+      },
+      {
+        "name": "point",
+        "engine": "wasm/aot",
+        "run": 0,
+        "iterations": 2000,
+        "milliseconds": 228.10612500000025
+      },
+      {
+        "name": "point",
+        "engine": "wasm/dynamic",
+        "run": 0,
+        "iterations": 2000,
+        "milliseconds": 224.3239169999997
+      },
+      {
+        "name": "point",
+        "engine": "js/aot",
+        "run": 1,
+        "iterations": 2000,
+        "milliseconds": 274.1857920000002
+      },
+      {
+        "name": "point",
+        "engine": "wasm/dynamic",
+        "run": 1,
+        "iterations": 2000,
+        "milliseconds": 209.87283399999978
+      },
+      {
+        "name": "point",
+        "engine": "wasm/aot",
+        "run": 1,
+        "iterations": 2000,
+        "milliseconds": 200.88779200000045
+      },
+      {
+        "name": "point",
+        "engine": "js/dynamic",
+        "run": 1,
+        "iterations": 2000,
+        "milliseconds": 284.0154590000002
+      },
+      {
+        "name": "point",
+        "engine": "wasm/aot",
+        "run": 2,
+        "iterations": 2000,
+        "milliseconds": 206.07620900000074
+      },
+      {
+        "name": "point",
+        "engine": "wasm/dynamic",
+        "run": 2,
+        "iterations": 2000,
+        "milliseconds": 200.1035410000004
+      },
+      {
+        "name": "point",
+        "engine": "js/aot",
+        "run": 2,
+        "iterations": 2000,
+        "milliseconds": 258.98291599999993
+      },
+      {
+        "name": "point",
+        "engine": "js/dynamic",
+        "run": 2,
+        "iterations": 2000,
+        "milliseconds": 264.1343339999994
+      },
+      {
+        "name": "point",
+        "engine": "wasm/aot",
+        "run": 3,
+        "iterations": 2000,
+        "milliseconds": 215.00704200000018
+      },
+      {
+        "name": "point",
+        "engine": "js/dynamic",
+        "run": 3,
+        "iterations": 2000,
+        "milliseconds": 272.06358400000045
+      },
+      {
+        "name": "point",
+        "engine": "js/aot",
+        "run": 3,
+        "iterations": 2000,
+        "milliseconds": 252.39191699999992
+      },
+      {
+        "name": "point",
+        "engine": "wasm/dynamic",
+        "run": 3,
+        "iterations": 2000,
+        "milliseconds": 255.7227499999999
+      },
+      {
+        "name": "point",
+        "engine": "js/aot",
+        "run": 4,
+        "iterations": 2000,
+        "milliseconds": 253.65587500000038
+      },
+      {
+        "name": "point",
+        "engine": "js/dynamic",
+        "run": 4,
+        "iterations": 2000,
+        "milliseconds": 294.93170799999916
+      },
+      {
+        "name": "point",
+        "engine": "wasm/aot",
+        "run": 4,
+        "iterations": 2000,
+        "milliseconds": 207.96412500000042
+      },
+      {
+        "name": "point",
+        "engine": "wasm/dynamic",
+        "run": 4,
+        "iterations": 2000,
+        "milliseconds": 200.0137080000004
+      },
+      {
+        "name": "point",
+        "engine": "js/aot",
+        "run": 5,
+        "iterations": 2000,
+        "milliseconds": 255.89520899999934
+      },
+      {
+        "name": "point",
+        "engine": "wasm/dynamic",
+        "run": 5,
+        "iterations": 2000,
+        "milliseconds": 205.1869579999984
+      },
+      {
+        "name": "point",
+        "engine": "wasm/aot",
+        "run": 5,
+        "iterations": 2000,
+        "milliseconds": 197.16795900000034
+      },
+      {
+        "name": "point",
+        "engine": "js/dynamic",
+        "run": 5,
+        "iterations": 2000,
+        "milliseconds": 312.5076659999995
+      },
+      {
+        "name": "point",
+        "engine": "wasm/aot",
+        "run": 6,
+        "iterations": 2000,
+        "milliseconds": 201.875
+      },
+      {
+        "name": "point",
+        "engine": "wasm/dynamic",
+        "run": 6,
+        "iterations": 2000,
+        "milliseconds": 201.81945799999994
+      },
+      {
+        "name": "point",
+        "engine": "js/aot",
+        "run": 6,
+        "iterations": 2000,
+        "milliseconds": 252.88216699999975
+      },
+      {
+        "name": "point",
+        "engine": "js/dynamic",
+        "run": 6,
+        "iterations": 2000,
+        "milliseconds": 263.81524999999965
+      },
+      {
+        "name": "scan",
+        "engine": "js/aot",
+        "run": 0,
+        "iterations": 500,
+        "milliseconds": 290.2021249999998
+      },
+      {
+        "name": "scan",
+        "engine": "js/dynamic",
+        "run": 0,
+        "iterations": 500,
+        "milliseconds": 307.78091700000004
+      },
+      {
+        "name": "scan",
+        "engine": "wasm/aot",
+        "run": 0,
+        "iterations": 500,
+        "milliseconds": 334.7167499999996
+      },
+      {
+        "name": "scan",
+        "engine": "wasm/dynamic",
+        "run": 0,
+        "iterations": 500,
+        "milliseconds": 286.8545409999988
+      },
+      {
+        "name": "scan",
+        "engine": "js/aot",
+        "run": 1,
+        "iterations": 500,
+        "milliseconds": 304.2250409999997
+      },
+      {
+        "name": "scan",
+        "engine": "wasm/dynamic",
+        "run": 1,
+        "iterations": 500,
+        "milliseconds": 249.32458300000144
+      },
+      {
+        "name": "scan",
+        "engine": "wasm/aot",
+        "run": 1,
+        "iterations": 500,
+        "milliseconds": 270.59850000000006
+      },
+      {
+        "name": "scan",
+        "engine": "js/dynamic",
+        "run": 1,
+        "iterations": 500,
+        "milliseconds": 285.66141699999935
+      },
+      {
+        "name": "scan",
+        "engine": "wasm/aot",
+        "run": 2,
+        "iterations": 500,
+        "milliseconds": 327.9263749999991
+      },
+      {
+        "name": "scan",
+        "engine": "wasm/dynamic",
+        "run": 2,
+        "iterations": 500,
+        "milliseconds": 275.2084999999988
+      },
+      {
+        "name": "scan",
+        "engine": "js/aot",
+        "run": 2,
+        "iterations": 500,
+        "milliseconds": 334.86633299999994
+      },
+      {
+        "name": "scan",
+        "engine": "js/dynamic",
+        "run": 2,
+        "iterations": 500,
+        "milliseconds": 321.1411250000001
+      },
+      {
+        "name": "scan",
+        "engine": "wasm/aot",
+        "run": 3,
+        "iterations": 500,
+        "milliseconds": 270.5966670000016
+      },
+      {
+        "name": "scan",
+        "engine": "js/dynamic",
+        "run": 3,
+        "iterations": 500,
+        "milliseconds": 380.30091600000014
+      },
+      {
+        "name": "scan",
+        "engine": "js/aot",
+        "run": 3,
+        "iterations": 500,
+        "milliseconds": 374.27750000000015
+      },
+      {
+        "name": "scan",
+        "engine": "wasm/dynamic",
+        "run": 3,
+        "iterations": 500,
+        "milliseconds": 267.20524999999907
+      },
+      {
+        "name": "scan",
+        "engine": "js/aot",
+        "run": 4,
+        "iterations": 500,
+        "milliseconds": 361.8410839999997
+      },
+      {
+        "name": "scan",
+        "engine": "js/dynamic",
+        "run": 4,
+        "iterations": 500,
+        "milliseconds": 294.88070900000093
+      },
+      {
+        "name": "scan",
+        "engine": "wasm/aot",
+        "run": 4,
+        "iterations": 500,
+        "milliseconds": 276.0275419999998
+      },
+      {
+        "name": "scan",
+        "engine": "wasm/dynamic",
+        "run": 4,
+        "iterations": 500,
+        "milliseconds": 251.64199999999983
+      },
+      {
+        "name": "scan",
+        "engine": "js/aot",
+        "run": 5,
+        "iterations": 500,
+        "milliseconds": 320.895790999999
+      },
+      {
+        "name": "scan",
+        "engine": "wasm/dynamic",
+        "run": 5,
+        "iterations": 500,
+        "milliseconds": 293.4375409999993
+      },
+      {
+        "name": "scan",
+        "engine": "wasm/aot",
+        "run": 5,
+        "iterations": 500,
+        "milliseconds": 260.32583299999897
+      },
+      {
+        "name": "scan",
+        "engine": "js/dynamic",
+        "run": 5,
+        "iterations": 500,
+        "milliseconds": 370.38654099999985
+      },
+      {
+        "name": "scan",
+        "engine": "wasm/aot",
+        "run": 6,
+        "iterations": 500,
+        "milliseconds": 259.78229099999953
+      },
+      {
+        "name": "scan",
+        "engine": "wasm/dynamic",
+        "run": 6,
+        "iterations": 500,
+        "milliseconds": 268.60858400000143
+      },
+      {
+        "name": "scan",
+        "engine": "js/aot",
+        "run": 6,
+        "iterations": 500,
+        "milliseconds": 396.62966700000106
+      },
+      {
+        "name": "scan",
+        "engine": "js/dynamic",
+        "run": 6,
+        "iterations": 500,
+        "milliseconds": 368.4355420000029
+      },
+      {
+        "name": "update",
+        "engine": "js/aot",
+        "run": 0,
+        "iterations": 500,
+        "milliseconds": 66.79824999999983
+      },
+      {
+        "name": "update",
+        "engine": "js/dynamic",
+        "run": 0,
+        "iterations": 500,
+        "milliseconds": 89.63516700000037
+      },
+      {
+        "name": "update",
+        "engine": "wasm/aot",
+        "run": 0,
+        "iterations": 500,
+        "milliseconds": 67.93716700000004
+      },
+      {
+        "name": "update",
+        "engine": "wasm/dynamic",
+        "run": 0,
+        "iterations": 500,
+        "milliseconds": 58.67670899999939
+      },
+      {
+        "name": "update",
+        "engine": "js/aot",
+        "run": 1,
+        "iterations": 500,
+        "milliseconds": 65.26341700000194
+      },
+      {
+        "name": "update",
+        "engine": "wasm/dynamic",
+        "run": 1,
+        "iterations": 500,
+        "milliseconds": 50.936375000001135
+      },
+      {
+        "name": "update",
+        "engine": "wasm/aot",
+        "run": 1,
+        "iterations": 500,
+        "milliseconds": 50.31658400000015
+      },
+      {
+        "name": "update",
+        "engine": "js/dynamic",
+        "run": 1,
+        "iterations": 500,
+        "milliseconds": 65.04733299999862
+      },
+      {
+        "name": "update",
+        "engine": "wasm/aot",
+        "run": 2,
+        "iterations": 500,
+        "milliseconds": 49.456874999999854
+      },
+      {
+        "name": "update",
+        "engine": "wasm/dynamic",
+        "run": 2,
+        "iterations": 500,
+        "milliseconds": 48.53870800000004
+      },
+      {
+        "name": "update",
+        "engine": "js/aot",
+        "run": 2,
+        "iterations": 500,
+        "milliseconds": 61.05550000000221
+      },
+      {
+        "name": "update",
+        "engine": "js/dynamic",
+        "run": 2,
+        "iterations": 500,
+        "milliseconds": 68.46870800000033
+      },
+      {
+        "name": "update",
+        "engine": "wasm/aot",
+        "run": 3,
+        "iterations": 500,
+        "milliseconds": 60.145292000001064
+      },
+      {
+        "name": "update",
+        "engine": "js/dynamic",
+        "run": 3,
+        "iterations": 500,
+        "milliseconds": 83.06166599999779
+      },
+      {
+        "name": "update",
+        "engine": "js/aot",
+        "run": 3,
+        "iterations": 500,
+        "milliseconds": 77.1103750000002
+      },
+      {
+        "name": "update",
+        "engine": "wasm/dynamic",
+        "run": 3,
+        "iterations": 500,
+        "milliseconds": 57.03545899999881
+      },
+      {
+        "name": "update",
+        "engine": "js/aot",
+        "run": 4,
+        "iterations": 500,
+        "milliseconds": 60.45112499999959
+      },
+      {
+        "name": "update",
+        "engine": "js/dynamic",
+        "run": 4,
+        "iterations": 500,
+        "milliseconds": 64.65091699999903
+      },
+      {
+        "name": "update",
+        "engine": "wasm/aot",
+        "run": 4,
+        "iterations": 500,
+        "milliseconds": 50.234167000002344
+      },
+      {
+        "name": "update",
+        "engine": "wasm/dynamic",
+        "run": 4,
+        "iterations": 500,
+        "milliseconds": 48.63341700000092
+      },
+      {
+        "name": "update",
+        "engine": "js/aot",
+        "run": 5,
+        "iterations": 500,
+        "milliseconds": 96.67616599999747
+      },
+      {
+        "name": "update",
+        "engine": "wasm/dynamic",
+        "run": 5,
+        "iterations": 500,
+        "milliseconds": 71.10075000000143
+      },
+      {
+        "name": "update",
+        "engine": "wasm/aot",
+        "run": 5,
+        "iterations": 500,
+        "milliseconds": 72.71708299999955
+      },
+      {
+        "name": "update",
+        "engine": "js/dynamic",
+        "run": 5,
+        "iterations": 500,
+        "milliseconds": 113.41487500000221
+      },
+      {
+        "name": "update",
+        "engine": "wasm/aot",
+        "run": 6,
+        "iterations": 500,
+        "milliseconds": 117.78537499999948
+      },
+      {
+        "name": "update",
+        "engine": "wasm/dynamic",
+        "run": 6,
+        "iterations": 500,
+        "milliseconds": 132.75974999999744
+      },
+      {
+        "name": "update",
+        "engine": "js/aot",
+        "run": 6,
+        "iterations": 500,
+        "milliseconds": 112.53620799999771
+      },
+      {
+        "name": "update",
+        "engine": "js/dynamic",
+        "run": 6,
+        "iterations": 500,
+        "milliseconds": 76.67158299999937
+      },
+      {
+        "name": "export-sqlite",
+        "engine": "js",
+        "run": 0,
+        "iterations": 10,
+        "milliseconds": 8.072000000000116
+      },
+      {
+        "name": "export-sqlite",
+        "engine": "wasm",
+        "run": 0,
+        "iterations": 10,
+        "milliseconds": 3.2255420000001322
+      },
+      {
+        "name": "export-sqlite",
+        "engine": "js",
+        "run": 1,
+        "iterations": 10,
+        "milliseconds": 4.334624999999505
+      },
+      {
+        "name": "export-sqlite",
+        "engine": "wasm",
+        "run": 1,
+        "iterations": 10,
+        "milliseconds": 3.1777920000022277
+      },
+      {
+        "name": "export-sqlite",
+        "engine": "js",
+        "run": 2,
+        "iterations": 10,
+        "milliseconds": 3.8789169999981823
+      },
+      {
+        "name": "export-sqlite",
+        "engine": "wasm",
+        "run": 2,
+        "iterations": 10,
+        "milliseconds": 2.5527079999992566
+      },
+      {
+        "name": "export-sqlite",
+        "engine": "js",
+        "run": 3,
+        "iterations": 10,
+        "milliseconds": 3.7030830000003334
+      },
+      {
+        "name": "export-sqlite",
+        "engine": "wasm",
+        "run": 3,
+        "iterations": 10,
+        "milliseconds": 2.666165999999066
+      },
+      {
+        "name": "export-sqlite",
+        "engine": "js",
+        "run": 4,
+        "iterations": 10,
+        "milliseconds": 3.701083000003564
+      },
+      {
+        "name": "export-sqlite",
+        "engine": "wasm",
+        "run": 4,
+        "iterations": 10,
+        "milliseconds": 3.297083000001294
+      },
+      {
+        "name": "export-sqlite",
+        "engine": "js",
+        "run": 5,
+        "iterations": 10,
+        "milliseconds": 5.148041000000376
+      },
+      {
+        "name": "export-sqlite",
+        "engine": "wasm",
+        "run": 5,
+        "iterations": 10,
+        "milliseconds": 2.393207999997685
+      },
+      {
+        "name": "export-sqlite",
+        "engine": "js",
+        "run": 6,
+        "iterations": 10,
+        "milliseconds": 3.031290999999328
+      },
+      {
+        "name": "export-sqlite",
+        "engine": "wasm",
+        "run": 6,
+        "iterations": 10,
+        "milliseconds": 2.331500000000233
+      },
+      {
+        "name": "encode-ltx",
+        "engine": "js",
+        "run": 0,
+        "iterations": 10,
+        "milliseconds": 175.55758399999831
+      },
+      {
+        "name": "encode-ltx",
+        "engine": "wasm",
+        "run": 0,
+        "iterations": 10,
+        "milliseconds": 87.25125000000116
+      },
+      {
+        "name": "encode-ltx",
+        "engine": "js",
+        "run": 1,
+        "iterations": 10,
+        "milliseconds": 190.8630830000002
+      },
+      {
+        "name": "encode-ltx",
+        "engine": "wasm",
+        "run": 1,
+        "iterations": 10,
+        "milliseconds": 74.32929199999853
+      },
+      {
+        "name": "encode-ltx",
+        "engine": "js",
+        "run": 2,
+        "iterations": 10,
+        "milliseconds": 164.01870800000324
+      },
+      {
+        "name": "encode-ltx",
+        "engine": "wasm",
+        "run": 2,
+        "iterations": 10,
+        "milliseconds": 72.28108300000167
+      },
+      {
+        "name": "encode-ltx",
+        "engine": "js",
+        "run": 3,
+        "iterations": 10,
+        "milliseconds": 183.95624999999927
+      },
+      {
+        "name": "encode-ltx",
+        "engine": "wasm",
+        "run": 3,
+        "iterations": 10,
+        "milliseconds": 97.36449999999968
+      },
+      {
+        "name": "encode-ltx",
+        "engine": "js",
+        "run": 4,
+        "iterations": 10,
+        "milliseconds": 171.4015419999996
+      },
+      {
+        "name": "encode-ltx",
+        "engine": "wasm",
+        "run": 4,
+        "iterations": 10,
+        "milliseconds": 68.9399169999997
+      },
+      {
+        "name": "encode-ltx",
+        "engine": "js",
+        "run": 5,
+        "iterations": 10,
+        "milliseconds": 169.29475000000093
+      },
+      {
+        "name": "encode-ltx",
+        "engine": "wasm",
+        "run": 5,
+        "iterations": 10,
+        "milliseconds": 76.71099999999933
+      },
+      {
+        "name": "encode-ltx",
+        "engine": "js",
+        "run": 6,
+        "iterations": 10,
+        "milliseconds": 178.56216700000004
+      },
+      {
+        "name": "encode-ltx",
+        "engine": "wasm",
+        "run": 6,
+        "iterations": 10,
+        "milliseconds": 71.21808299999975
+      },
+      {
+        "name": "apply-ltx",
+        "engine": "js",
+        "run": 0,
+        "iterations": 10,
+        "milliseconds": 155.29100000000108
+      },
+      {
+        "name": "apply-ltx",
+        "engine": "wasm",
+        "run": 0,
+        "iterations": 10,
+        "milliseconds": 90.01304199999868
+      },
+      {
+        "name": "apply-ltx",
+        "engine": "js",
+        "run": 1,
+        "iterations": 10,
+        "milliseconds": 177.2631250000013
+      },
+      {
+        "name": "apply-ltx",
+        "engine": "wasm",
+        "run": 1,
+        "iterations": 10,
+        "milliseconds": 93.79883400000108
+      },
+      {
+        "name": "apply-ltx",
+        "engine": "js",
+        "run": 2,
+        "iterations": 10,
+        "milliseconds": 148.01508399999875
+      },
+      {
+        "name": "apply-ltx",
+        "engine": "wasm",
+        "run": 2,
+        "iterations": 10,
+        "milliseconds": 96.48712499999965
+      },
+      {
+        "name": "apply-ltx",
+        "engine": "js",
+        "run": 3,
+        "iterations": 10,
+        "milliseconds": 207.86691599999904
+      },
+      {
+        "name": "apply-ltx",
+        "engine": "wasm",
+        "run": 3,
+        "iterations": 10,
+        "milliseconds": 116.41499999999724
+      },
+      {
+        "name": "apply-ltx",
+        "engine": "js",
+        "run": 4,
+        "iterations": 10,
+        "milliseconds": 178.3370419999992
+      },
+      {
+        "name": "apply-ltx",
+        "engine": "wasm",
+        "run": 4,
+        "iterations": 10,
+        "milliseconds": 92.45754099999976
+      },
+      {
+        "name": "apply-ltx",
+        "engine": "js",
+        "run": 5,
+        "iterations": 10,
+        "milliseconds": 158.78137499999866
+      },
+      {
+        "name": "apply-ltx",
+        "engine": "wasm",
+        "run": 5,
+        "iterations": 10,
+        "milliseconds": 86.80979200000002
+      },
+      {
+        "name": "apply-ltx",
+        "engine": "js",
+        "run": 6,
+        "iterations": 10,
+        "milliseconds": 182.80916699999943
+      },
+      {
+        "name": "apply-ltx",
+        "engine": "wasm",
+        "run": 6,
+        "iterations": 10,
+        "milliseconds": 98.20908399999826
+      }
+    ],
+    "verified": [
+      "constant/js/aot",
+      "constant/js/dynamic",
+      "constant/wasm/aot",
+      "constant/wasm/dynamic",
+      "point/js/aot",
+      "point/js/dynamic",
+      "point/wasm/aot",
+      "point/wasm/dynamic",
+      "scan/js/aot",
+      "scan/js/dynamic",
+      "scan/wasm/aot",
+      "scan/wasm/dynamic",
+      "update/js/aot",
+      "update/js/dynamic",
+      "update/wasm/aot",
+      "update/wasm/dynamic",
+      "export-sqlite/js",
+      "export-sqlite/wasm",
+      "encode-ltx/js",
+      "encode-ltx/wasm",
+      "apply-ltx/js",
+      "apply-ltx/wasm"
+    ],
+    "medians": [
+      {
+        "name": "constant",
+        "engine": "js/aot",
+        "iterations": 10000,
+        "milliseconds": 42.59333300000026,
+        "microsecondsPerOperation": 4.259333300000026,
+        "minMilliseconds": 42.18245900000011,
+        "maxMilliseconds": 63.058667000000014
+      },
+      {
+        "name": "constant",
+        "engine": "js/dynamic",
+        "iterations": 10000,
+        "milliseconds": 115.31170799999973,
+        "microsecondsPerOperation": 11.531170799999972,
+        "minMilliseconds": 105.97941600000013,
+        "maxMilliseconds": 204.73704199999997
+      },
+      {
+        "name": "constant",
+        "engine": "wasm/aot",
+        "iterations": 10000,
+        "milliseconds": 27.51262500000007,
+        "microsecondsPerOperation": 2.7512625000000073,
+        "minMilliseconds": 25.225459,
+        "maxMilliseconds": 75.21670800000015
+      },
+      {
+        "name": "constant",
+        "engine": "wasm/dynamic",
+        "iterations": 10000,
+        "milliseconds": 51.96195799999987,
+        "microsecondsPerOperation": 5.196195799999987,
+        "minMilliseconds": 43.886916000000156,
+        "maxMilliseconds": 68.33966699999996
+      },
+      {
+        "name": "point",
+        "engine": "js/aot",
+        "iterations": 2000,
+        "milliseconds": 255.89520899999934,
+        "microsecondsPerOperation": 127.94760449999967,
+        "minMilliseconds": 252.39191699999992,
+        "maxMilliseconds": 274.1857920000002
+      },
+      {
+        "name": "point",
+        "engine": "js/dynamic",
+        "iterations": 2000,
+        "milliseconds": 273.05295799999976,
+        "microsecondsPerOperation": 136.52647899999988,
+        "minMilliseconds": 263.81524999999965,
+        "maxMilliseconds": 312.5076659999995
+      },
+      {
+        "name": "point",
+        "engine": "wasm/aot",
+        "iterations": 2000,
+        "milliseconds": 206.07620900000074,
+        "microsecondsPerOperation": 103.03810450000036,
+        "minMilliseconds": 197.16795900000034,
+        "maxMilliseconds": 228.10612500000025
+      },
+      {
+        "name": "point",
+        "engine": "wasm/dynamic",
+        "iterations": 2000,
+        "milliseconds": 205.1869579999984,
+        "microsecondsPerOperation": 102.5934789999992,
+        "minMilliseconds": 200.0137080000004,
+        "maxMilliseconds": 255.7227499999999
+      },
+      {
+        "name": "scan",
+        "engine": "js/aot",
+        "iterations": 500,
+        "milliseconds": 334.86633299999994,
+        "microsecondsPerOperation": 669.7326659999999,
+        "minMilliseconds": 290.2021249999998,
+        "maxMilliseconds": 396.62966700000106
+      },
+      {
+        "name": "scan",
+        "engine": "js/dynamic",
+        "iterations": 500,
+        "milliseconds": 321.1411250000001,
+        "microsecondsPerOperation": 642.2822500000002,
+        "minMilliseconds": 285.66141699999935,
+        "maxMilliseconds": 380.30091600000014
+      },
+      {
+        "name": "scan",
+        "engine": "wasm/aot",
+        "iterations": 500,
+        "milliseconds": 270.59850000000006,
+        "microsecondsPerOperation": 541.1970000000001,
+        "minMilliseconds": 259.78229099999953,
+        "maxMilliseconds": 334.7167499999996
+      },
+      {
+        "name": "scan",
+        "engine": "wasm/dynamic",
+        "iterations": 500,
+        "milliseconds": 268.60858400000143,
+        "microsecondsPerOperation": 537.2171680000029,
+        "minMilliseconds": 249.32458300000144,
+        "maxMilliseconds": 293.4375409999993
+      },
+      {
+        "name": "update",
+        "engine": "js/aot",
+        "iterations": 500,
+        "milliseconds": 66.79824999999983,
+        "microsecondsPerOperation": 133.59649999999965,
+        "minMilliseconds": 60.45112499999959,
+        "maxMilliseconds": 112.53620799999771
+      },
+      {
+        "name": "update",
+        "engine": "js/dynamic",
+        "iterations": 500,
+        "milliseconds": 76.67158299999937,
+        "microsecondsPerOperation": 153.34316599999875,
+        "minMilliseconds": 64.65091699999903,
+        "maxMilliseconds": 113.41487500000221
+      },
+      {
+        "name": "update",
+        "engine": "wasm/aot",
+        "iterations": 500,
+        "milliseconds": 60.145292000001064,
+        "microsecondsPerOperation": 120.29058400000213,
+        "minMilliseconds": 49.456874999999854,
+        "maxMilliseconds": 117.78537499999948
+      },
+      {
+        "name": "update",
+        "engine": "wasm/dynamic",
+        "iterations": 500,
+        "milliseconds": 57.03545899999881,
+        "microsecondsPerOperation": 114.07091799999762,
+        "minMilliseconds": 48.53870800000004,
+        "maxMilliseconds": 132.75974999999744
+      },
+      {
+        "name": "export-sqlite",
+        "engine": "js",
+        "iterations": 10,
+        "milliseconds": 3.8789169999981823,
+        "microsecondsPerOperation": 387.89169999981823,
+        "minMilliseconds": 3.031290999999328,
+        "maxMilliseconds": 8.072000000000116
+      },
+      {
+        "name": "export-sqlite",
+        "engine": "wasm",
+        "iterations": 10,
+        "milliseconds": 2.666165999999066,
+        "microsecondsPerOperation": 266.6165999999066,
+        "minMilliseconds": 2.331500000000233,
+        "maxMilliseconds": 3.297083000001294
+      },
+      {
+        "name": "encode-ltx",
+        "engine": "js",
+        "iterations": 10,
+        "milliseconds": 175.55758399999831,
+        "microsecondsPerOperation": 17555.75839999983,
+        "minMilliseconds": 164.01870800000324,
+        "maxMilliseconds": 190.8630830000002
+      },
+      {
+        "name": "encode-ltx",
+        "engine": "wasm",
+        "iterations": 10,
+        "milliseconds": 74.32929199999853,
+        "microsecondsPerOperation": 7432.929199999853,
+        "minMilliseconds": 68.9399169999997,
+        "maxMilliseconds": 97.36449999999968
+      },
+      {
+        "name": "apply-ltx",
+        "engine": "js",
+        "iterations": 10,
+        "milliseconds": 177.2631250000013,
+        "microsecondsPerOperation": 17726.31250000013,
+        "minMilliseconds": 148.01508399999875,
+        "maxMilliseconds": 207.86691599999904
+      },
+      {
+        "name": "apply-ltx",
+        "engine": "wasm",
+        "iterations": 10,
+        "milliseconds": 93.79883400000108,
+        "microsecondsPerOperation": 9379.883400000108,
+        "minMilliseconds": 86.80979200000002,
+        "maxMilliseconds": 116.41499999999724
+      }
+    ]
+  },
+  "chromium": {
+    "samples": [
+      {
+        "name": "constant",
+        "engine": "js/aot",
+        "run": 0,
+        "iterations": 10000,
+        "milliseconds": 47.60000002384186
+      },
+      {
+        "name": "constant",
+        "engine": "js/dynamic",
+        "run": 0,
+        "iterations": 10000,
+        "milliseconds": 187.30000007152557
+      },
+      {
+        "name": "constant",
+        "engine": "wasm/aot",
+        "run": 0,
+        "iterations": 10000,
+        "milliseconds": 34.60000002384186
+      },
+      {
+        "name": "constant",
+        "engine": "wasm/dynamic",
+        "run": 0,
+        "iterations": 10000,
+        "milliseconds": 42.699999928474426
+      },
+      {
+        "name": "constant",
+        "engine": "js/aot",
+        "run": 1,
+        "iterations": 10000,
+        "milliseconds": 39.10000002384186
+      },
+      {
+        "name": "constant",
+        "engine": "wasm/dynamic",
+        "run": 1,
+        "iterations": 10000,
+        "milliseconds": 36.700000047683716
+      },
+      {
+        "name": "constant",
+        "engine": "wasm/aot",
+        "run": 1,
+        "iterations": 10000,
+        "milliseconds": 20.899999976158142
+      },
+      {
+        "name": "constant",
+        "engine": "js/dynamic",
+        "run": 1,
+        "iterations": 10000,
+        "milliseconds": 167.79999995231628
+      },
+      {
+        "name": "constant",
+        "engine": "wasm/aot",
+        "run": 2,
+        "iterations": 10000,
+        "milliseconds": 24.700000047683716
+      },
+      {
+        "name": "constant",
+        "engine": "wasm/dynamic",
+        "run": 2,
+        "iterations": 10000,
+        "milliseconds": 34.09999990463257
+      },
+      {
+        "name": "constant",
+        "engine": "js/aot",
+        "run": 2,
+        "iterations": 10000,
+        "milliseconds": 37.40000009536743
+      },
+      {
+        "name": "constant",
+        "engine": "js/dynamic",
+        "run": 2,
+        "iterations": 10000,
+        "milliseconds": 173.5
+      },
+      {
+        "name": "constant",
+        "engine": "wasm/aot",
+        "run": 3,
+        "iterations": 10000,
+        "milliseconds": 33
+      },
+      {
+        "name": "constant",
+        "engine": "js/dynamic",
+        "run": 3,
+        "iterations": 10000,
+        "milliseconds": 185.90000009536743
+      },
+      {
+        "name": "constant",
+        "engine": "js/aot",
+        "run": 3,
+        "iterations": 10000,
+        "milliseconds": 42.199999928474426
+      },
+      {
+        "name": "constant",
+        "engine": "wasm/dynamic",
+        "run": 3,
+        "iterations": 10000,
+        "milliseconds": 33.60000002384186
+      },
+      {
+        "name": "constant",
+        "engine": "js/aot",
+        "run": 4,
+        "iterations": 10000,
+        "milliseconds": 35.60000002384186
+      },
+      {
+        "name": "constant",
+        "engine": "js/dynamic",
+        "run": 4,
+        "iterations": 10000,
+        "milliseconds": 178.69999992847443
+      },
+      {
+        "name": "constant",
+        "engine": "wasm/aot",
+        "run": 4,
+        "iterations": 10000,
+        "milliseconds": 26.200000047683716
+      },
+      {
+        "name": "constant",
+        "engine": "wasm/dynamic",
+        "run": 4,
+        "iterations": 10000,
+        "milliseconds": 32.60000002384186
+      },
+      {
+        "name": "constant",
+        "engine": "js/aot",
+        "run": 5,
+        "iterations": 10000,
+        "milliseconds": 49.199999928474426
+      },
+      {
+        "name": "constant",
+        "engine": "wasm/dynamic",
+        "run": 5,
+        "iterations": 10000,
+        "milliseconds": 35.700000047683716
+      },
+      {
+        "name": "constant",
+        "engine": "wasm/aot",
+        "run": 5,
+        "iterations": 10000,
+        "milliseconds": 20
+      },
+      {
+        "name": "constant",
+        "engine": "js/dynamic",
+        "run": 5,
+        "iterations": 10000,
+        "milliseconds": 183.39999997615814
+      },
+      {
+        "name": "constant",
+        "engine": "wasm/aot",
+        "run": 6,
+        "iterations": 10000,
+        "milliseconds": 25.299999952316284
+      },
+      {
+        "name": "constant",
+        "engine": "wasm/dynamic",
+        "run": 6,
+        "iterations": 10000,
+        "milliseconds": 32.10000002384186
+      },
+      {
+        "name": "constant",
+        "engine": "js/aot",
+        "run": 6,
+        "iterations": 10000,
+        "milliseconds": 39.60000002384186
+      },
+      {
+        "name": "constant",
+        "engine": "js/dynamic",
+        "run": 6,
+        "iterations": 10000,
+        "milliseconds": 187.29999995231628
+      },
+      {
+        "name": "point",
+        "engine": "js/aot",
+        "run": 0,
+        "iterations": 2000,
+        "milliseconds": 187.60000002384186
+      },
+      {
+        "name": "point",
+        "engine": "js/dynamic",
+        "run": 0,
+        "iterations": 2000,
+        "milliseconds": 263.89999997615814
+      },
+      {
+        "name": "point",
+        "engine": "wasm/aot",
+        "run": 0,
+        "iterations": 2000,
+        "milliseconds": 205.69999992847443
+      },
+      {
+        "name": "point",
+        "engine": "wasm/dynamic",
+        "run": 0,
+        "iterations": 2000,
+        "milliseconds": 203.20000004768372
+      },
+      {
+        "name": "point",
+        "engine": "js/aot",
+        "run": 1,
+        "iterations": 2000,
+        "milliseconds": 187.29999995231628
+      },
+      {
+        "name": "point",
+        "engine": "wasm/dynamic",
+        "run": 1,
+        "iterations": 2000,
+        "milliseconds": 206.80000007152557
+      },
+      {
+        "name": "point",
+        "engine": "wasm/aot",
+        "run": 1,
+        "iterations": 2000,
+        "milliseconds": 202.89999997615814
+      },
+      {
+        "name": "point",
+        "engine": "js/dynamic",
+        "run": 1,
+        "iterations": 2000,
+        "milliseconds": 259.7999999523163
+      },
+      {
+        "name": "point",
+        "engine": "wasm/aot",
+        "run": 2,
+        "iterations": 2000,
+        "milliseconds": 204.70000004768372
+      },
+      {
+        "name": "point",
+        "engine": "wasm/dynamic",
+        "run": 2,
+        "iterations": 2000,
+        "milliseconds": 198.10000002384186
+      },
+      {
+        "name": "point",
+        "engine": "js/aot",
+        "run": 2,
+        "iterations": 2000,
+        "milliseconds": 187.10000002384186
+      },
+      {
+        "name": "point",
+        "engine": "js/dynamic",
+        "run": 2,
+        "iterations": 2000,
+        "milliseconds": 266.7999999523163
+      },
+      {
+        "name": "point",
+        "engine": "wasm/aot",
+        "run": 3,
+        "iterations": 2000,
+        "milliseconds": 205.20000004768372
+      },
+      {
+        "name": "point",
+        "engine": "js/dynamic",
+        "run": 3,
+        "iterations": 2000,
+        "milliseconds": 259
+      },
+      {
+        "name": "point",
+        "engine": "js/aot",
+        "run": 3,
+        "iterations": 2000,
+        "milliseconds": 194.09999990463257
+      },
+      {
+        "name": "point",
+        "engine": "wasm/dynamic",
+        "run": 3,
+        "iterations": 2000,
+        "milliseconds": 205
+      },
+      {
+        "name": "point",
+        "engine": "js/aot",
+        "run": 4,
+        "iterations": 2000,
+        "milliseconds": 186.10000002384186
+      },
+      {
+        "name": "point",
+        "engine": "js/dynamic",
+        "run": 4,
+        "iterations": 2000,
+        "milliseconds": 264
+      },
+      {
+        "name": "point",
+        "engine": "wasm/aot",
+        "run": 4,
+        "iterations": 2000,
+        "milliseconds": 194.89999997615814
+      },
+      {
+        "name": "point",
+        "engine": "wasm/dynamic",
+        "run": 4,
+        "iterations": 2000,
+        "milliseconds": 189.80000007152557
+      },
+      {
+        "name": "point",
+        "engine": "js/aot",
+        "run": 5,
+        "iterations": 2000,
+        "milliseconds": 201.60000002384186
+      },
+      {
+        "name": "point",
+        "engine": "wasm/dynamic",
+        "run": 5,
+        "iterations": 2000,
+        "milliseconds": 195.39999997615814
+      },
+      {
+        "name": "point",
+        "engine": "wasm/aot",
+        "run": 5,
+        "iterations": 2000,
+        "milliseconds": 189
+      },
+      {
+        "name": "point",
+        "engine": "js/dynamic",
+        "run": 5,
+        "iterations": 2000,
+        "milliseconds": 246.60000002384186
+      },
+      {
+        "name": "point",
+        "engine": "wasm/aot",
+        "run": 6,
+        "iterations": 2000,
+        "milliseconds": 195.29999995231628
+      },
+      {
+        "name": "point",
+        "engine": "wasm/dynamic",
+        "run": 6,
+        "iterations": 2000,
+        "milliseconds": 188.39999997615814
+      },
+      {
+        "name": "point",
+        "engine": "js/aot",
+        "run": 6,
+        "iterations": 2000,
+        "milliseconds": 175.20000004768372
+      },
+      {
+        "name": "point",
+        "engine": "js/dynamic",
+        "run": 6,
+        "iterations": 2000,
+        "milliseconds": 245.79999995231628
+      },
+      {
+        "name": "scan",
+        "engine": "js/aot",
+        "run": 0,
+        "iterations": 500,
+        "milliseconds": 207.30000007152557
+      },
+      {
+        "name": "scan",
+        "engine": "js/dynamic",
+        "run": 0,
+        "iterations": 500,
+        "milliseconds": 234.10000002384186
+      },
+      {
+        "name": "scan",
+        "engine": "wasm/aot",
+        "run": 0,
+        "iterations": 500,
+        "milliseconds": 227
+      },
+      {
+        "name": "scan",
+        "engine": "wasm/dynamic",
+        "run": 0,
+        "iterations": 500,
+        "milliseconds": 211.69999992847443
+      },
+      {
+        "name": "scan",
+        "engine": "js/aot",
+        "run": 1,
+        "iterations": 500,
+        "milliseconds": 212.30000007152557
+      },
+      {
+        "name": "scan",
+        "engine": "wasm/dynamic",
+        "run": 1,
+        "iterations": 500,
+        "milliseconds": 219.79999995231628
+      },
+      {
+        "name": "scan",
+        "engine": "wasm/aot",
+        "run": 1,
+        "iterations": 500,
+        "milliseconds": 217.89999997615814
+      },
+      {
+        "name": "scan",
+        "engine": "js/dynamic",
+        "run": 1,
+        "iterations": 500,
+        "milliseconds": 231.39999997615814
+      },
+      {
+        "name": "scan",
+        "engine": "wasm/aot",
+        "run": 2,
+        "iterations": 500,
+        "milliseconds": 224.40000009536743
+      },
+      {
+        "name": "scan",
+        "engine": "wasm/dynamic",
+        "run": 2,
+        "iterations": 500,
+        "milliseconds": 208.69999992847443
+      },
+      {
+        "name": "scan",
+        "engine": "js/aot",
+        "run": 2,
+        "iterations": 500,
+        "milliseconds": 207.89999997615814
+      },
+      {
+        "name": "scan",
+        "engine": "js/dynamic",
+        "run": 2,
+        "iterations": 500,
+        "milliseconds": 238.90000009536743
+      },
+      {
+        "name": "scan",
+        "engine": "wasm/aot",
+        "run": 3,
+        "iterations": 500,
+        "milliseconds": 225.59999990463257
+      },
+      {
+        "name": "scan",
+        "engine": "js/dynamic",
+        "run": 3,
+        "iterations": 500,
+        "milliseconds": 238.80000007152557
+      },
+      {
+        "name": "scan",
+        "engine": "js/aot",
+        "run": 3,
+        "iterations": 500,
+        "milliseconds": 219.5
+      },
+      {
+        "name": "scan",
+        "engine": "wasm/dynamic",
+        "run": 3,
+        "iterations": 500,
+        "milliseconds": 215
+      },
+      {
+        "name": "scan",
+        "engine": "js/aot",
+        "run": 4,
+        "iterations": 500,
+        "milliseconds": 220.69999992847443
+      },
+      {
+        "name": "scan",
+        "engine": "js/dynamic",
+        "run": 4,
+        "iterations": 500,
+        "milliseconds": 232.90000009536743
+      },
+      {
+        "name": "scan",
+        "engine": "wasm/aot",
+        "run": 4,
+        "iterations": 500,
+        "milliseconds": 216.5
+      },
+      {
+        "name": "scan",
+        "engine": "wasm/dynamic",
+        "run": 4,
+        "iterations": 500,
+        "milliseconds": 224.89999997615814
+      },
+      {
+        "name": "scan",
+        "engine": "js/aot",
+        "run": 5,
+        "iterations": 500,
+        "milliseconds": 218.5
+      },
+      {
+        "name": "scan",
+        "engine": "wasm/dynamic",
+        "run": 5,
+        "iterations": 500,
+        "milliseconds": 209.89999997615814
+      },
+      {
+        "name": "scan",
+        "engine": "wasm/aot",
+        "run": 5,
+        "iterations": 500,
+        "milliseconds": 215.89999997615814
+      },
+      {
+        "name": "scan",
+        "engine": "js/dynamic",
+        "run": 5,
+        "iterations": 500,
+        "milliseconds": 236.30000007152557
+      },
+      {
+        "name": "scan",
+        "engine": "wasm/aot",
+        "run": 6,
+        "iterations": 500,
+        "milliseconds": 214.69999992847443
+      },
+      {
+        "name": "scan",
+        "engine": "wasm/dynamic",
+        "run": 6,
+        "iterations": 500,
+        "milliseconds": 212.10000002384186
+      },
+      {
+        "name": "scan",
+        "engine": "js/aot",
+        "run": 6,
+        "iterations": 500,
+        "milliseconds": 213.19999992847443
+      },
+      {
+        "name": "scan",
+        "engine": "js/dynamic",
+        "run": 6,
+        "iterations": 500,
+        "milliseconds": 227
+      },
+      {
+        "name": "update",
+        "engine": "js/aot",
+        "run": 0,
+        "iterations": 500,
+        "milliseconds": 46.89999997615814
+      },
+      {
+        "name": "update",
+        "engine": "js/dynamic",
+        "run": 0,
+        "iterations": 500,
+        "milliseconds": 51.60000002384186
+      },
+      {
+        "name": "update",
+        "engine": "wasm/aot",
+        "run": 0,
+        "iterations": 500,
+        "milliseconds": 43.700000047683716
+      },
+      {
+        "name": "update",
+        "engine": "wasm/dynamic",
+        "run": 0,
+        "iterations": 500,
+        "milliseconds": 42.699999928474426
+      },
+      {
+        "name": "update",
+        "engine": "js/aot",
+        "run": 1,
+        "iterations": 500,
+        "milliseconds": 41.700000047683716
+      },
+      {
+        "name": "update",
+        "engine": "wasm/dynamic",
+        "run": 1,
+        "iterations": 500,
+        "milliseconds": 42.39999997615814
+      },
+      {
+        "name": "update",
+        "engine": "wasm/aot",
+        "run": 1,
+        "iterations": 500,
+        "milliseconds": 43.89999997615814
+      },
+      {
+        "name": "update",
+        "engine": "js/dynamic",
+        "run": 1,
+        "iterations": 500,
+        "milliseconds": 52.90000009536743
+      },
+      {
+        "name": "update",
+        "engine": "wasm/aot",
+        "run": 2,
+        "iterations": 500,
+        "milliseconds": 44.799999952316284
+      },
+      {
+        "name": "update",
+        "engine": "wasm/dynamic",
+        "run": 2,
+        "iterations": 500,
+        "milliseconds": 44
+      },
+      {
+        "name": "update",
+        "engine": "js/aot",
+        "run": 2,
+        "iterations": 500,
+        "milliseconds": 43.299999952316284
+      },
+      {
+        "name": "update",
+        "engine": "js/dynamic",
+        "run": 2,
+        "iterations": 500,
+        "milliseconds": 53.40000009536743
+      },
+      {
+        "name": "update",
+        "engine": "wasm/aot",
+        "run": 3,
+        "iterations": 500,
+        "milliseconds": 43.699999928474426
+      },
+      {
+        "name": "update",
+        "engine": "js/dynamic",
+        "run": 3,
+        "iterations": 500,
+        "milliseconds": 51.200000047683716
+      },
+      {
+        "name": "update",
+        "engine": "js/aot",
+        "run": 3,
+        "iterations": 500,
+        "milliseconds": 41.39999997615814
+      },
+      {
+        "name": "update",
+        "engine": "wasm/dynamic",
+        "run": 3,
+        "iterations": 500,
+        "milliseconds": 43.10000002384186
+      },
+      {
+        "name": "update",
+        "engine": "js/aot",
+        "run": 4,
+        "iterations": 500,
+        "milliseconds": 40.699999928474426
+      },
+      {
+        "name": "update",
+        "engine": "js/dynamic",
+        "run": 4,
+        "iterations": 500,
+        "milliseconds": 49.700000047683716
+      },
+      {
+        "name": "update",
+        "engine": "wasm/aot",
+        "run": 4,
+        "iterations": 500,
+        "milliseconds": 42.60000002384186
+      },
+      {
+        "name": "update",
+        "engine": "wasm/dynamic",
+        "run": 4,
+        "iterations": 500,
+        "milliseconds": 41.199999928474426
+      },
+      {
+        "name": "update",
+        "engine": "js/aot",
+        "run": 5,
+        "iterations": 500,
+        "milliseconds": 41
+      },
+      {
+        "name": "update",
+        "engine": "wasm/dynamic",
+        "run": 5,
+        "iterations": 500,
+        "milliseconds": 43.5
+      },
+      {
+        "name": "update",
+        "engine": "wasm/aot",
+        "run": 5,
+        "iterations": 500,
+        "milliseconds": 44.300000071525574
+      },
+      {
+        "name": "update",
+        "engine": "js/dynamic",
+        "run": 5,
+        "iterations": 500,
+        "milliseconds": 54
+      },
+      {
+        "name": "update",
+        "engine": "wasm/aot",
+        "run": 6,
+        "iterations": 500,
+        "milliseconds": 45.299999952316284
+      },
+      {
+        "name": "update",
+        "engine": "wasm/dynamic",
+        "run": 6,
+        "iterations": 500,
+        "milliseconds": 45.10000002384186
+      },
+      {
+        "name": "update",
+        "engine": "js/aot",
+        "run": 6,
+        "iterations": 500,
+        "milliseconds": 43.39999997615814
+      },
+      {
+        "name": "update",
+        "engine": "js/dynamic",
+        "run": 6,
+        "iterations": 500,
+        "milliseconds": 51.800000071525574
+      },
+      {
+        "name": "export-sqlite",
+        "engine": "js",
+        "run": 0,
+        "iterations": 10,
+        "milliseconds": 5.400000095367432
+      },
+      {
+        "name": "export-sqlite",
+        "engine": "wasm",
+        "run": 0,
+        "iterations": 10,
+        "milliseconds": 3.399999976158142
+      },
+      {
+        "name": "export-sqlite",
+        "engine": "js",
+        "run": 1,
+        "iterations": 10,
+        "milliseconds": 3.799999952316284
+      },
+      {
+        "name": "export-sqlite",
+        "engine": "wasm",
+        "run": 1,
+        "iterations": 10,
+        "milliseconds": 3.3000000715255737
+      },
+      {
+        "name": "export-sqlite",
+        "engine": "js",
+        "run": 2,
+        "iterations": 10,
+        "milliseconds": 2.6999999284744263
+      },
+      {
+        "name": "export-sqlite",
+        "engine": "wasm",
+        "run": 2,
+        "iterations": 10,
+        "milliseconds": 2.5
+      },
+      {
+        "name": "export-sqlite",
+        "engine": "js",
+        "run": 3,
+        "iterations": 10,
+        "milliseconds": 3.100000023841858
+      },
+      {
+        "name": "export-sqlite",
+        "engine": "wasm",
+        "run": 3,
+        "iterations": 10,
+        "milliseconds": 3.399999976158142
+      },
+      {
+        "name": "export-sqlite",
+        "engine": "js",
+        "run": 4,
+        "iterations": 10,
+        "milliseconds": 2.8000000715255737
+      },
+      {
+        "name": "export-sqlite",
+        "engine": "wasm",
+        "run": 4,
+        "iterations": 10,
+        "milliseconds": 2.5
+      },
+      {
+        "name": "export-sqlite",
+        "engine": "js",
+        "run": 5,
+        "iterations": 10,
+        "milliseconds": 3
+      },
+      {
+        "name": "export-sqlite",
+        "engine": "wasm",
+        "run": 5,
+        "iterations": 10,
+        "milliseconds": 3.0999999046325684
+      },
+      {
+        "name": "export-sqlite",
+        "engine": "js",
+        "run": 6,
+        "iterations": 10,
+        "milliseconds": 2.700000047683716
+      },
+      {
+        "name": "export-sqlite",
+        "engine": "wasm",
+        "run": 6,
+        "iterations": 10,
+        "milliseconds": 2.399999976158142
+      },
+      {
+        "name": "encode-ltx",
+        "engine": "js",
+        "run": 0,
+        "iterations": 10,
+        "milliseconds": 118.39999997615814
+      },
+      {
+        "name": "encode-ltx",
+        "engine": "wasm",
+        "run": 0,
+        "iterations": 10,
+        "milliseconds": 69.29999995231628
+      },
+      {
+        "name": "encode-ltx",
+        "engine": "js",
+        "run": 1,
+        "iterations": 10,
+        "milliseconds": 125.39999997615814
+      },
+      {
+        "name": "encode-ltx",
+        "engine": "wasm",
+        "run": 1,
+        "iterations": 10,
+        "milliseconds": 71.10000002384186
+      },
+      {
+        "name": "encode-ltx",
+        "engine": "js",
+        "run": 2,
+        "iterations": 10,
+        "milliseconds": 122
+      },
+      {
+        "name": "encode-ltx",
+        "engine": "wasm",
+        "run": 2,
+        "iterations": 10,
+        "milliseconds": 68.89999997615814
+      },
+      {
+        "name": "encode-ltx",
+        "engine": "js",
+        "run": 3,
+        "iterations": 10,
+        "milliseconds": 120.10000002384186
+      },
+      {
+        "name": "encode-ltx",
+        "engine": "wasm",
+        "run": 3,
+        "iterations": 10,
+        "milliseconds": 68.80000007152557
+      },
+      {
+        "name": "encode-ltx",
+        "engine": "js",
+        "run": 4,
+        "iterations": 10,
+        "milliseconds": 123.29999995231628
+      },
+      {
+        "name": "encode-ltx",
+        "engine": "wasm",
+        "run": 4,
+        "iterations": 10,
+        "milliseconds": 71
+      },
+      {
+        "name": "encode-ltx",
+        "engine": "js",
+        "run": 5,
+        "iterations": 10,
+        "milliseconds": 122
+      },
+      {
+        "name": "encode-ltx",
+        "engine": "wasm",
+        "run": 5,
+        "iterations": 10,
+        "milliseconds": 68.70000004768372
+      },
+      {
+        "name": "encode-ltx",
+        "engine": "js",
+        "run": 6,
+        "iterations": 10,
+        "milliseconds": 118.69999992847443
+      },
+      {
+        "name": "encode-ltx",
+        "engine": "wasm",
+        "run": 6,
+        "iterations": 10,
+        "milliseconds": 67.80000007152557
+      },
+      {
+        "name": "apply-ltx",
+        "engine": "js",
+        "run": 0,
+        "iterations": 10,
+        "milliseconds": 123.70000004768372
+      },
+      {
+        "name": "apply-ltx",
+        "engine": "wasm",
+        "run": 0,
+        "iterations": 10,
+        "milliseconds": 113.89999997615814
+      },
+      {
+        "name": "apply-ltx",
+        "engine": "js",
+        "run": 1,
+        "iterations": 10,
+        "milliseconds": 124
+      },
+      {
+        "name": "apply-ltx",
+        "engine": "wasm",
+        "run": 1,
+        "iterations": 10,
+        "milliseconds": 89.19999992847443
+      },
+      {
+        "name": "apply-ltx",
+        "engine": "js",
+        "run": 2,
+        "iterations": 10,
+        "milliseconds": 121.5
+      },
+      {
+        "name": "apply-ltx",
+        "engine": "wasm",
+        "run": 2,
+        "iterations": 10,
+        "milliseconds": 93.20000004768372
+      },
+      {
+        "name": "apply-ltx",
+        "engine": "js",
+        "run": 3,
+        "iterations": 10,
+        "milliseconds": 129
+      },
+      {
+        "name": "apply-ltx",
+        "engine": "wasm",
+        "run": 3,
+        "iterations": 10,
+        "milliseconds": 90.39999997615814
+      },
+      {
+        "name": "apply-ltx",
+        "engine": "js",
+        "run": 4,
+        "iterations": 10,
+        "milliseconds": 120.20000004768372
+      },
+      {
+        "name": "apply-ltx",
+        "engine": "wasm",
+        "run": 4,
+        "iterations": 10,
+        "milliseconds": 87
+      },
+      {
+        "name": "apply-ltx",
+        "engine": "js",
+        "run": 5,
+        "iterations": 10,
+        "milliseconds": 121.60000002384186
+      },
+      {
+        "name": "apply-ltx",
+        "engine": "wasm",
+        "run": 5,
+        "iterations": 10,
+        "milliseconds": 91.69999992847443
+      },
+      {
+        "name": "apply-ltx",
+        "engine": "js",
+        "run": 6,
+        "iterations": 10,
+        "milliseconds": 128.70000004768372
+      },
+      {
+        "name": "apply-ltx",
+        "engine": "wasm",
+        "run": 6,
+        "iterations": 10,
+        "milliseconds": 98.60000002384186
+      }
+    ],
+    "verified": [
+      "constant/js/aot",
+      "constant/js/dynamic",
+      "constant/wasm/aot",
+      "constant/wasm/dynamic",
+      "point/js/aot",
+      "point/js/dynamic",
+      "point/wasm/aot",
+      "point/wasm/dynamic",
+      "scan/js/aot",
+      "scan/js/dynamic",
+      "scan/wasm/aot",
+      "scan/wasm/dynamic",
+      "update/js/aot",
+      "update/js/dynamic",
+      "update/wasm/aot",
+      "update/wasm/dynamic",
+      "export-sqlite/js",
+      "export-sqlite/wasm",
+      "encode-ltx/js",
+      "encode-ltx/wasm",
+      "apply-ltx/js",
+      "apply-ltx/wasm"
+    ],
+    "medians": [
+      {
+        "name": "constant",
+        "engine": "js/aot",
+        "iterations": 10000,
+        "milliseconds": 39.60000002384186,
+        "microsecondsPerOperation": 3.9600000023841857,
+        "minMilliseconds": 35.60000002384186,
+        "maxMilliseconds": 49.199999928474426
+      },
+      {
+        "name": "constant",
+        "engine": "js/dynamic",
+        "iterations": 10000,
+        "milliseconds": 183.39999997615814,
+        "microsecondsPerOperation": 18.339999997615813,
+        "minMilliseconds": 167.79999995231628,
+        "maxMilliseconds": 187.30000007152557
+      },
+      {
+        "name": "constant",
+        "engine": "wasm/aot",
+        "iterations": 10000,
+        "milliseconds": 25.299999952316284,
+        "microsecondsPerOperation": 2.5299999952316283,
+        "minMilliseconds": 20,
+        "maxMilliseconds": 34.60000002384186
+      },
+      {
+        "name": "constant",
+        "engine": "wasm/dynamic",
+        "iterations": 10000,
+        "milliseconds": 34.09999990463257,
+        "microsecondsPerOperation": 3.4099999904632567,
+        "minMilliseconds": 32.10000002384186,
+        "maxMilliseconds": 42.699999928474426
+      },
+      {
+        "name": "point",
+        "engine": "js/aot",
+        "iterations": 2000,
+        "milliseconds": 187.29999995231628,
+        "microsecondsPerOperation": 93.64999997615814,
+        "minMilliseconds": 175.20000004768372,
+        "maxMilliseconds": 201.60000002384186
+      },
+      {
+        "name": "point",
+        "engine": "js/dynamic",
+        "iterations": 2000,
+        "milliseconds": 259.7999999523163,
+        "microsecondsPerOperation": 129.89999997615814,
+        "minMilliseconds": 245.79999995231628,
+        "maxMilliseconds": 266.7999999523163
+      },
+      {
+        "name": "point",
+        "engine": "wasm/aot",
+        "iterations": 2000,
+        "milliseconds": 202.89999997615814,
+        "microsecondsPerOperation": 101.44999998807907,
+        "minMilliseconds": 189,
+        "maxMilliseconds": 205.69999992847443
+      },
+      {
+        "name": "point",
+        "engine": "wasm/dynamic",
+        "iterations": 2000,
+        "milliseconds": 198.10000002384186,
+        "microsecondsPerOperation": 99.05000001192093,
+        "minMilliseconds": 188.39999997615814,
+        "maxMilliseconds": 206.80000007152557
+      },
+      {
+        "name": "scan",
+        "engine": "js/aot",
+        "iterations": 500,
+        "milliseconds": 213.19999992847443,
+        "microsecondsPerOperation": 426.39999985694885,
+        "minMilliseconds": 207.30000007152557,
+        "maxMilliseconds": 220.69999992847443
+      },
+      {
+        "name": "scan",
+        "engine": "js/dynamic",
+        "iterations": 500,
+        "milliseconds": 234.10000002384186,
+        "microsecondsPerOperation": 468.2000000476837,
+        "minMilliseconds": 227,
+        "maxMilliseconds": 238.90000009536743
+      },
+      {
+        "name": "scan",
+        "engine": "wasm/aot",
+        "iterations": 500,
+        "milliseconds": 217.89999997615814,
+        "microsecondsPerOperation": 435.7999999523163,
+        "minMilliseconds": 214.69999992847443,
+        "maxMilliseconds": 227
+      },
+      {
+        "name": "scan",
+        "engine": "wasm/dynamic",
+        "iterations": 500,
+        "milliseconds": 212.10000002384186,
+        "microsecondsPerOperation": 424.2000000476837,
+        "minMilliseconds": 208.69999992847443,
+        "maxMilliseconds": 224.89999997615814
+      },
+      {
+        "name": "update",
+        "engine": "js/aot",
+        "iterations": 500,
+        "milliseconds": 41.700000047683716,
+        "microsecondsPerOperation": 83.40000009536743,
+        "minMilliseconds": 40.699999928474426,
+        "maxMilliseconds": 46.89999997615814
+      },
+      {
+        "name": "update",
+        "engine": "js/dynamic",
+        "iterations": 500,
+        "milliseconds": 51.800000071525574,
+        "microsecondsPerOperation": 103.60000014305115,
+        "minMilliseconds": 49.700000047683716,
+        "maxMilliseconds": 54
+      },
+      {
+        "name": "update",
+        "engine": "wasm/aot",
+        "iterations": 500,
+        "milliseconds": 43.89999997615814,
+        "microsecondsPerOperation": 87.79999995231628,
+        "minMilliseconds": 42.60000002384186,
+        "maxMilliseconds": 45.299999952316284
+      },
+      {
+        "name": "update",
+        "engine": "wasm/dynamic",
+        "iterations": 500,
+        "milliseconds": 43.10000002384186,
+        "microsecondsPerOperation": 86.20000004768372,
+        "minMilliseconds": 41.199999928474426,
+        "maxMilliseconds": 45.10000002384186
+      },
+      {
+        "name": "export-sqlite",
+        "engine": "js",
+        "iterations": 10,
+        "milliseconds": 3,
+        "microsecondsPerOperation": 300,
+        "minMilliseconds": 2.6999999284744263,
+        "maxMilliseconds": 5.400000095367432
+      },
+      {
+        "name": "export-sqlite",
+        "engine": "wasm",
+        "iterations": 10,
+        "milliseconds": 3.0999999046325684,
+        "microsecondsPerOperation": 309.99999046325684,
+        "minMilliseconds": 2.399999976158142,
+        "maxMilliseconds": 3.399999976158142
+      },
+      {
+        "name": "encode-ltx",
+        "engine": "js",
+        "iterations": 10,
+        "milliseconds": 122,
+        "microsecondsPerOperation": 12200,
+        "minMilliseconds": 118.39999997615814,
+        "maxMilliseconds": 125.39999997615814
+      },
+      {
+        "name": "encode-ltx",
+        "engine": "wasm",
+        "iterations": 10,
+        "milliseconds": 68.89999997615814,
+        "microsecondsPerOperation": 6889.999997615814,
+        "minMilliseconds": 67.80000007152557,
+        "maxMilliseconds": 71.10000002384186
+      },
+      {
+        "name": "apply-ltx",
+        "engine": "js",
+        "iterations": 10,
+        "milliseconds": 123.70000004768372,
+        "microsecondsPerOperation": 12370.000004768372,
+        "minMilliseconds": 120.20000004768372,
+        "maxMilliseconds": 129
+      },
+      {
+        "name": "apply-ltx",
+        "engine": "wasm",
+        "iterations": 10,
+        "milliseconds": 91.69999992847443,
+        "microsecondsPerOperation": 9169.999992847443,
+        "minMilliseconds": 87,
+        "maxMilliseconds": 113.89999997615814
+      }
+    ]
+  }
+}

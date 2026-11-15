@@ -1,0 +1,55 @@
+import {
+  "moonbitlang/core/buffer",
+  "moonbitlang/core/encoding/utf8",
+  "moonbitlang/core/encoding/base64",
+  "moonbitlang/core/json",
+  "moonbitlang/core/string",
+}
+
+options(
+  link: {
+    "js": {
+      "exports": [
+        "encode_frame",
+        "decode_frame",
+        "decode_changeset",
+        "plan_changes",
+        "revision_decision",
+        "sql_allowed",
+        "apply_ltx",
+        "encode_ltx",
+        "encode_ltx_base64",
+        "apply_ltx_base64",
+        "ltx_data",
+        "ltx_info",
+        "ltx_data_base64",
+        "plan_ltx",
+        "assess_apply",
+        "note_policy",
+      ],
+      "format": "esm",
+    },
+    "wasm-gc": {
+      "exports": [
+        "encode_frame",
+        "decode_frame",
+        "decode_changeset",
+        "plan_changes",
+        "revision_decision",
+        "sql_allowed",
+        "apply_ltx",
+        "encode_ltx",
+        "encode_ltx_base64",
+        "apply_ltx_base64",
+        "ltx_data",
+        "ltx_info",
+        "ltx_data_base64",
+        "plan_ltx",
+        "assess_apply",
+        "note_policy",
+      ],
+      "use-js-builtin-string": true,
+      "imported-string-constants": "_",
+    },
+  },
+)

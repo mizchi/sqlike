@@ -1,0 +1,230 @@
+--- a/packages/sqlike/src/persistence.mbt
++++ b/packages/sqlike/src/persistence.mbt
+@@ -6,7 +6,6 @@
+   AppendRow(String, StoredRow)
+   ReplaceRow(String, Int64, StoredRow)
+   DeleteRow(String, Int64)
+-  PatchRow(String, Int64, Int64, Array[(Int32, Value)])
+ }
+ 
+ ///|
+@@ -36,55 +35,6 @@
+       store.dirty.edits.push(edit)
+     }
+   }
+-}
+-
+-///|
+-/// Storage equality must not use SQL comparison/affinity, or merge +0 / -0.
+-/// Unchanged TEXT/BLOB values usually share the immutable Value object.
+-fn same_stored_value(before : Value, after : Value) -> Bool {
+-  if physical_equal(before, after) {
+-    return true
+-  }
+-  match (before, after) {
+-    (Real(a), Real(b)) => a.reinterpret_as_uint64() == b.reinterpret_as_uint64()
+-    _ => before == after
+-  }
+-}
+-
+-///|
+-/// Capture at row replacement, without dumping/diffing the database or keeping
+-/// the previous row alive. Published patch arrays and row values are immutable.
+-fn dirty_replace(
+-  store : Store,
+-  name : String,
+-  before : StoredRow,
+-  after : StoredRow,
+-) -> Unit {
+-  if store.dirty.full {
+-    return
+-  }
+-  if store.dirty.edits.length() >= 4096 {
+-    dirty_snapshot(store)
+-    return
+-  }
+-  let columns : Array[(Int32, Value)] = []
+-  for i, value in after.values {
+-    if !same_stored_value(before.values[i], value) {
+-      columns.push((i, value))
+-    }
+-  }
+-  if columns.is_empty() && before.id == after.id {
+-    return
+-  }
+-  // A complete replacement is more compact when every column changed.
+-  dirty_edit(
+-    store,
+-    if columns.length() == after.values.length() {
+-      ReplaceRow(name, before.id, after)
+-    } else {
+-      PatchRow(name, before.id, after.id, columns)
+-    },
+-  )
+ }
+ 
+ ///|
+@@ -122,7 +72,7 @@
+     }
+     (
+       {
+-        "format": "sqlike-flush@2",
++        "format": "sqlike-flush@1",
+         "full": false,
+         "base": store.dirty.base,
+         "serial": db.serial,
+@@ -173,17 +123,13 @@
+   guard text.length() <= 67108864 else { fail("flush resource limit") }
+   let json = @json.parse(text)
+   guard json
+-    is { "format": String(format), "serial": serial, "full": is_full, .. } &&
+-    (format == "sqlike-flush@1" || format == "sqlike-flush@2") else {
++    is { "format": "sqlike-flush@1", "serial": serial, "full": is_full, .. } else {
+     fail("invalid flush format")
+   }
+-  let serial = flush_integer(serial)
++  let serial : Int32 = @json.from_json(serial)
+   let full : Bool = @json.from_json(is_full)
+   guard serial >= 0 else { fail("invalid flush serial") }
+   if full {
+-    guard format == "sqlike-flush@1" else {
+-      fail("invalid flush snapshot version")
+-    }
+     guard json is { "state": state, .. } else { fail("missing flush snapshot") }
+     let store : Store = @json.from_json(state)
+     return (store, serial, true)
+@@ -191,15 +137,10 @@
+   guard json is { "base": base, "meta": meta, "edits": edits, .. } else {
+     fail("invalid flush delta")
+   }
+-  let base = flush_integer(base)
++  let base : Int32 = @json.from_json(base)
+   guard base == db.serial && serial > base else {
+     fail("flush serial mismatch")
+   }
+-  guard meta is { "cookie": cookie, "changes": changes, .. } else {
+-    fail("invalid flush metadata")
+-  }
+-  ignore(flush_integer(cookie))
+-  ignore(flush_integer(changes))
+   let meta : FlushMetadata = @json.from_json(meta)
+   guard meta.cookie == db.store.cookie &&
+     meta.encoding == db.store.encoding &&
+@@ -207,22 +148,6 @@
+     !meta.deferred &&
+     meta.sequences.length() == db.store.tables.length() else {
+     fail("flush metadata mismatch")
+-  }
+-  // FromJson[Int32] truncates fractions. Validate wire positions before typed
+-  // decoding so a malformed index cannot silently target a different column.
+-  guard edits is Array(raw_edits) && raw_edits.length() <= 100000 else {
+-    fail("flush edit limit")
+-  }
+-  for edit in raw_edits {
+-    if edit is Array([String("PatchRow"), _, _, _, Array(columns)]) {
+-      guard format == "sqlike-flush@2" else {
+-        fail("invalid flush patch version")
+-      }
+-      for column in columns {
+-        guard column is Array([index, _]) else { fail("invalid flush column") }
+-        ignore(flush_integer(index))
+-      }
+-    }
+   }
+   let edits : Array[RowEdit] = @json.from_json(edits)
+   guard edits.length() <= 100000 else { fail("flush edit limit") }
+@@ -244,27 +169,6 @@
+         flush_row(store, table, row, Some(id))
+         replace_table_row(store, table, previous, row)
+       }
+-      PatchRow(name, id, next_id, columns) => {
+-        guard format == "sqlike-flush@2" else {
+-          fail("invalid flush patch version")
+-        }
+-        let table = get_table(store, name)
+-        guard table.rows.iter().find_first(r => r.id == id) is Some(previous) else {
+-          fail("missing flush row")
+-        }
+-        let values = previous.values.copy()
+-        let mut last = -1
+-        for (index, value) in columns {
+-          guard index > last && index < values.length() else {
+-            fail("invalid flush column index")
+-          }
+-          values[index] = value
+-          last = index
+-        }
+-        let row = { id: next_id, values, }
+-        flush_row(store, table, row, Some(id))
+-        replace_table_row(store, table, previous, row)
+-      }
+       DeleteRow(name, id) => {
+         let table = get_table(store, name)
+         guard table.rows.iter().find_first(r => r.id == id) is Some(row) else {
+@@ -289,17 +193,6 @@
+ }
+ 
+ ///|
+-fn flush_integer(value : Json) -> Int32 raise SqlError {
+-  guard value is Number(number, ..) &&
+-    number >= 0.0 &&
+-    number <= 2147483647.0 &&
+-    number.to_int().to_double() == number else {
+-    fail("invalid flush integer")
+-  }
+-  number.to_int()
+-}
+-
+-///|
+ fn publish_flush(db : Database, store : Store, serial : Int32) -> Unit {
+   store.dirty = { full: false, base: serial, edits: [], }
+   db.store = store
+--- a/packages/sqlike/src/index_cache.mbt
++++ b/packages/sqlike/src/index_cache.mbt
+@@ -198,7 +198,7 @@
+   update_table_indexes(store, table, Some(previous), Some(next))
+   own_table_rows(table)
+   table.rows[position] = next
+-  dirty_replace(store, table.name, previous, next)
++  dirty_edit(store, ReplaceRow(table.name, previous.id, next))
+ }
+ 
+ ///|
+--- a/packages/sqlike/src/model.mbt
++++ b/packages/sqlike/src/model.mbt
+@@ -461,11 +461,6 @@
+     Null => Null
+     Integer(n) => Integer(n)
+     Real(n) => {
+-      if n.reinterpret_as_uint64() == 0x8000000000000000UL {
+-        // Nested JSON parse/stringify (AOT journal envelopes, JS hosts) may
+-        // normalize numeric -0. Use the same tagged extension as infinity.
+-        return [Json::string("Real"), Json::string("-0")]
+-      }
+       if !n.is_finite() {
+         return [
+           Json::string("Real"),
+@@ -482,9 +477,6 @@
+ 
+ ///|
+ impl @json.FromJson for Value with fn from_json(json, path) {
+-  if json is Array([String("Real"), String("-0")]) {
+-    return Real(0x8000000000000000UL.reinterpret_as_double())
+-  }
+   if json is Array([String("Real"), String("Infinity")]) {
+     return Real(0x7ff0000000000000UL.reinterpret_as_double())
+   }
+@@ -495,12 +487,7 @@
+   match legacy {
+     Null => Null
+     Integer(n) => Integer(n)
+-    Real(n) => {
+-      guard !n.is_nan() else {
+-        raise @json.JsonDecodeError((path, "invalid stored REAL"))
+-      }
+-      Real(n)
+-    }
++    Real(n) => sql_real(n)
+     Text(s) => Text(s)
+     Blob(b) => Blob(b)
+   }

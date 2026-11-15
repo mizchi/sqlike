@@ -1,0 +1,109 @@
+{
+  "measuredAt": "2026-11-15T17:21:35.827Z",
+  "sourceHashes": {
+    "_build/js/release/build/mizchi/litestream-example/runtime/runtime.js": "f23a265e01186af2469bc35f1e280106136a0b9dbdc379ef512aab3b77806b02",
+    "measurements/js-size-probe.mjs": "7d3e0effc2519021bf7299996e0a05f14be4be45935e768beea5bcda08b88239",
+    "measurements/sqlike-feature-profiles-current.json": "29c43366ca273a83a94eba5d8a3273c552f4d6d9a72321f7ad434fcef5a897e7",
+    "measurements/wasm-build-size-current.json": "bf37834de8c56c9fd3b1afa3a2972eb4317a8622fd4cef848ccafb77f6e5e37d",
+    "package.json": "0a76845f54a8de1ad6638614513104b034f3bbc2add70c3bd7f6f3a8edd2a7d3",
+    "pnpm-lock.yaml": "6d494af239141d7fc70115e739d57c83fbf23be0ada6e23ec13d7dfe8f0e2040",
+    "scripts/measurement-manifest.ts": "615c0ab32c0b2e01c57ea1be690a2a08d2e9401b9b0c5d93574520253c16acdb"
+  },
+  "artifactSHA256": "f23a265e01186af2469bc35f1e280106136a0b9dbdc379ef512aab3b77806b02",
+  "method": "Transient generated-JS root ablation followed by dead-code elimination; invalid runtimes used only to measure reachable code, not production-compatible profiles; deltas are not additive.",
+  "results": [
+    {
+      "name": "baseline",
+      "roots": [],
+      "raw": 830467,
+      "gzip": 159921,
+      "brotli": 121992
+    },
+    {
+      "name": "datetime",
+      "roots": [
+        "_M0FP26mizchi6sqlike14datetime__call"
+      ],
+      "raw": 811141,
+      "gzip": 156230,
+      "brotli": 119108,
+      "removed": {
+        "raw": 19326,
+        "gzip": 3691,
+        "brotli": 2884
+      }
+    },
+    {
+      "name": "sqlJson",
+      "roots": [
+        "_M0FP26mizchi6sqlike10json__call"
+      ],
+      "raw": 807118,
+      "gzip": 155493,
+      "brotli": 118607,
+      "removed": {
+        "raw": 23349,
+        "gzip": 4428,
+        "brotli": 3385
+      }
+    },
+    {
+      "name": "windows",
+      "roots": [
+        "_M0FP26mizchi6sqlike16compute__windows"
+      ],
+      "raw": 813885,
+      "gzip": 156692,
+      "brotli": 119688,
+      "removed": {
+        "raw": 16582,
+        "gzip": 3229,
+        "brotli": 2304
+      }
+    },
+    {
+      "name": "all-three",
+      "roots": [
+        "_M0FP26mizchi6sqlike14datetime__call",
+        "_M0FP26mizchi6sqlike10json__call",
+        "_M0FP26mizchi6sqlike16compute__windows"
+      ],
+      "raw": 771227,
+      "gzip": 148659,
+      "brotli": 113484,
+      "removed": {
+        "raw": 59240,
+        "gzip": 11262,
+        "brotli": 8508
+      }
+    }
+  ],
+  "staticProfiles": {
+    "pagesLtx": {
+      "raw": 72398,
+      "gzip": 14890,
+      "brotli": 10918
+    },
+    "executionOptions": {
+      "raw": 58680,
+      "gzip": 10361,
+      "brotli": 7374
+    },
+    "dynamicSqlMode": {
+      "raw": 76759,
+      "gzip": 15137,
+      "brotli": 10780
+    },
+    "minimalAot": {
+      "raw": 699456,
+      "gzip": 134729,
+      "brotli": 103793
+    }
+  },
+  "caveats": [
+    "Temporary ablations replace function bodies with throws and are not valid feature-selectable builds.",
+    "Compressed differences are marginal in each build and cannot be added.",
+    "Static-profile builds and public-API builds use different export wrappers; compare only paired entries.",
+    "No production runtime or compatibility contract changed."
+  ]
+}

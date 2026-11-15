@@ -1,0 +1,17 @@
+import {
+  "mizchi/sqlike",
+}
+
+options(
+  link: {
+    "js": {
+      "exports": [ "defined_export_sqlite", "sqlite_data", "sqlite_info" ],
+      "format": "esm",
+    },
+    "wasm-gc": {
+      "exports": [ "defined_export_sqlite", "sqlite_data", "sqlite_info" ],
+      "use-js-builtin-string": true,
+      "imported-string-constants": "_",
+    },
+  },
+)

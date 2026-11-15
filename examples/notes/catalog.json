@@ -1,0 +1,14 @@
+{
+  "schema": [
+    "CREATE TABLE notes(id INTEGER PRIMARY KEY,title TEXT NOT NULL,score INTEGER NOT NULL DEFAULT 0)",
+    "CREATE INDEX notes_title ON notes(title)"
+  ],
+  "queries": [
+    {"name":"add","sql":"INSERT INTO notes(id,title,score) VALUES(?,?,?)"},
+    {"name":"edit","sql":"UPDATE notes SET title=?,score=? WHERE id=?"},
+    {"name":"erase","sql":"DELETE FROM notes WHERE id=?"},
+    {"name":"list","sql":"SELECT id,title,score FROM notes ORDER BY id"},
+    {"name":"get","sql":"SELECT id,title,score FROM notes WHERE id=?"},
+    {"name":"count","sql":"SELECT count(*) AS count FROM notes"}
+  ]
+}

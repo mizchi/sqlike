@@ -1,0 +1,2784 @@
+{
+  "format": 1,
+  "measuredAt": "2026-11-14T13:28:51.698Z",
+  "environment": {
+    "node": "v24.22.2",
+    "chromium": "158.0.8127.18",
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M5",
+    "systemMemoryBytes": 34359738368,
+    "packages": {
+      "sqlite": "3.54.1-build1",
+      "turso": "0.8.3"
+    }
+  },
+  "method": {
+    "compression": "gzip level 9 / Brotli quality 11; HTTP server serves Brotli",
+    "timing": "fresh Chromium process and empty OPFS per cold sample; warm/offline reload keep same profile; localhost; no CPU/network throttling; includes DB/outbox initialization, no server sync",
+    "memory": "separate instrumented process; recursive CDP attach for page and DB Workers; WebAssembly.Memory constructor WeakRefs; forced GC; shared Wasm imports not recounted; configuredBridgeBytes is source configuration, not a heap measurement; JS heap excludes Service Worker; RSS is summed browser processes and includes shared/allocator overhead; capacities are not RSS",
+    "memorySamplesPerEngine": 1,
+    "runs": 3
+  },
+  "assets": [
+    {
+      "path": "/index.html",
+      "bytes": {
+        "raw": 1768,
+        "gzip": 1088,
+        "brotli": 776
+      },
+      "sha256": "22e9dc2beb3d633c27197bd0d034cf9d0c22d6592f1da121addae703eae0a664"
+    },
+    {
+      "path": "/sw.js",
+      "bytes": {
+        "raw": 1032,
+        "gzip": 577,
+        "brotli": 476
+      },
+      "sha256": "139f81b4b417478b373930e006591c668b52ab207d5acbaa0e0347bd47ff8aeb"
+    },
+    {
+      "path": "/lite/index.html",
+      "bytes": {
+        "raw": 2149,
+        "gzip": 1265,
+        "brotli": 903
+      },
+      "sha256": "cc68cfa48f070dab018349664470b64319747b64889388a04ab3acbfd376880f"
+    },
+    {
+      "path": "/lite/sw.js",
+      "bytes": {
+        "raw": 1051,
+        "gzip": 583,
+        "brotli": 481
+      },
+      "sha256": "f28643a4d966cbef7235f0a59e1ad2be4aa6de2ff3bce65606d304e2417324a5"
+    },
+    {
+      "path": "/lite/assets/aot-worker-Cc9CH8-D.js",
+      "bytes": {
+        "raw": 347466,
+        "gzip": 83946,
+        "brotli": 68603
+      },
+      "sha256": "40842ee1e738a90d39ad69e8c7cb4301a54dfe7b108b615f0169e1eeec208d45"
+    },
+    {
+      "path": "/assets/lite-DUQc2VWI.js",
+      "bytes": {
+        "raw": 3554,
+        "gzip": 1497,
+        "brotli": 1236
+      },
+      "sha256": "b7ac63735334f597db2afb1949d89f2e483271f75cbc5245e3b5676065f41487"
+    },
+    {
+      "path": "/assets/main-DHIPejk7.js",
+      "bytes": {
+        "raw": 12647,
+        "gzip": 3801,
+        "brotli": 3127
+      },
+      "sha256": "a0afe4583437e22b7193c99c98d85fa97a8f32397f95ae22f65d21f66fb30dbb"
+    },
+    {
+      "path": "/assets/main.es-CSSHhyvk.js",
+      "bytes": {
+        "raw": 16090245,
+        "gzip": 5593694,
+        "brotli": 3745131
+      },
+      "sha256": "9b02974254b7be9c4e1aa0d099fe3aee20f7bf69ff7fde980dfef971029fcc92"
+    },
+    {
+      "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+      "bytes": {
+        "raw": 670,
+        "gzip": 389,
+        "brotli": 325
+      },
+      "sha256": "418c206484b89b68ef5f067277831e583fc9193a62aadf4de269acaaeb12a85f"
+    },
+    {
+      "path": "/assets/moon-database-DsePVikk.js",
+      "bytes": {
+        "raw": 333101,
+        "gzip": 83266,
+        "brotli": 67923
+      },
+      "sha256": "01e2b28ba6cb637a3bff566fbf4ddcf6f29681130beafcf8b9b223aa0dd78ce0"
+    },
+    {
+      "path": "/assets/moon-persistence-D3q8-DD-.js",
+      "bytes": {
+        "raw": 1616,
+        "gzip": 805,
+        "brotli": 698
+      },
+      "sha256": "0971ec992fb486472a56d8bba75b91008fef25736b409f7545055ea602d11252"
+    },
+    {
+      "path": "/assets/moon-persistence-worker-FEnnL2Ho.js",
+      "bytes": {
+        "raw": 2422,
+        "gzip": 1097,
+        "brotli": 956
+      },
+      "sha256": "fa1640413cc236b252d495eb3f0936d432f4c4f77e865e67dad2f5d0a940a7f9"
+    },
+    {
+      "path": "/assets/sqlite3-k2cTanUO.wasm",
+      "bytes": {
+        "raw": 879084,
+        "gzip": 407291,
+        "brotli": 352905
+      },
+      "sha256": "b8a92a19f441a90ff2339fe988fbe317c4adf3ed844096f12aee04aa72d58257"
+    },
+    {
+      "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+      "bytes": {
+        "raw": 32462,
+        "gzip": 10522,
+        "brotli": 8966
+      },
+      "sha256": "02c38ed7f2d41d2b57ee02241d7f8a09059e1ded16749013f2412137614aa459"
+    },
+    {
+      "path": "/assets/sqlite3-worker1-BiWhU4UN.js",
+      "bytes": {
+        "raw": 215860,
+        "gzip": 64041,
+        "brotli": 55555
+      },
+      "sha256": "e8e4cdd8dca666629f44a8bb3ddc86bdad20e7810731fb15b6990f3ecdc89efc"
+    },
+    {
+      "path": "/assets/turso-database-DlC3wxr3.js",
+      "bytes": {
+        "raw": 3171,
+        "gzip": 1531,
+        "brotli": 1306
+      },
+      "sha256": "70cde72ff0ab6b3398a56ee75c27871db3740944abc068b893c631fde51f3d62"
+    },
+    {
+      "path": "/assets/turso-executor-DuHW4VQ9.js",
+      "bytes": {
+        "raw": 9905,
+        "gzip": 2718,
+        "brotli": 2198
+      },
+      "sha256": "7f11dacd1f4b2c6d585ada139e09d3889e13352411fb61925ef0063515d3fcc6"
+    },
+    {
+      "path": "/assets/wasm-database-rirnfUfl.js",
+      "bytes": {
+        "raw": 220443,
+        "gzip": 65758,
+        "brotli": 56892
+      },
+      "sha256": "4d316164a1a5c49324962148268edc98f023bab5a584974b6c0249f6af8c24dd"
+    },
+    {
+      "path": "/assets/worker-apidqFYU.js",
+      "bytes": {
+        "raw": 182812,
+        "gzip": 56103,
+        "brotli": 47619
+      },
+      "sha256": "6ce329c5a0e619142d0a67cf098d9a3fcfb8a8cce6345e4917501cc5f7a9ba05"
+    },
+    {
+      "path": "/.vite/manifest.json",
+      "bytes": {
+        "raw": 667,
+        "gzip": 251,
+        "brotli": 219
+      },
+      "sha256": "e2955c6a60c88761b1fb1d7a0109486c2bab38655f5f305ccc26e25d5fb987b1"
+    }
+  ],
+  "engineArtifacts": [
+    {
+      "name": "sqlite-wasm",
+      "path": "node_modules/@sqlite.org/sqlite-wasm/dist/sqlite3.wasm",
+      "bytes": {
+        "raw": 879084,
+        "gzip": 407291,
+        "brotli": 352905
+      },
+      "sections": [
+        {
+          "id": 1,
+          "name": "type",
+          "payloadBytes": 737,
+          "totalBytes": 740
+        },
+        {
+          "id": 2,
+          "name": "import",
+          "payloadBytes": 961,
+          "totalBytes": 964
+        },
+        {
+          "id": 3,
+          "name": "function",
+          "payloadBytes": 2701,
+          "totalBytes": 2704
+        },
+        {
+          "id": 4,
+          "name": "table",
+          "payloadBytes": 5,
+          "totalBytes": 7
+        },
+        {
+          "id": 6,
+          "name": "global",
+          "payloadBytes": 8,
+          "totalBytes": 10
+        },
+        {
+          "id": 7,
+          "name": "export",
+          "payloadBytes": 6804,
+          "totalBytes": 6807
+        },
+        {
+          "id": 8,
+          "name": "start",
+          "payloadBytes": 1,
+          "totalBytes": 3
+        },
+        {
+          "id": 9,
+          "name": "element",
+          "payloadBytes": 1276,
+          "totalBytes": 1279
+        },
+        {
+          "id": 12,
+          "name": "data-count",
+          "payloadBytes": 2,
+          "totalBytes": 4
+        },
+        {
+          "id": 10,
+          "name": "code",
+          "payloadBytes": 769401,
+          "totalBytes": 769405
+        },
+        {
+          "id": 11,
+          "name": "data",
+          "payloadBytes": 97149,
+          "totalBytes": 97153
+        }
+      ]
+    },
+    {
+      "name": "turso-wasm",
+      "path": "node_modules/@tursodatabase/database-wasm/dist/turso.wasm32-wasi.wasm",
+      "bytes": {
+        "raw": 11613778,
+        "gzip": 3955247,
+        "brotli": 2667187
+      },
+      "sections": [
+        {
+          "id": 1,
+          "name": "type",
+          "payloadBytes": 1795,
+          "totalBytes": 1798
+        },
+        {
+          "id": 2,
+          "name": "import",
+          "payloadBytes": 2607,
+          "totalBytes": 2610
+        },
+        {
+          "id": 3,
+          "name": "function",
+          "payloadBytes": 10135,
+          "totalBytes": 10138
+        },
+        {
+          "id": 4,
+          "name": "table",
+          "payloadBytes": 7,
+          "totalBytes": 9
+        },
+        {
+          "id": 6,
+          "name": "global",
+          "payloadBytes": 30,
+          "totalBytes": 32
+        },
+        {
+          "id": 7,
+          "name": "export",
+          "payloadBytes": 3746,
+          "totalBytes": 3749
+        },
+        {
+          "id": 8,
+          "name": "start",
+          "payloadBytes": 2,
+          "totalBytes": 4
+        },
+        {
+          "id": 9,
+          "name": "element",
+          "payloadBytes": 7349,
+          "totalBytes": 7352
+        },
+        {
+          "id": 12,
+          "name": "data-count",
+          "payloadBytes": 1,
+          "totalBytes": 3
+        },
+        {
+          "id": 10,
+          "name": "code",
+          "payloadBytes": 9513272,
+          "totalBytes": 9513277
+        },
+        {
+          "id": 11,
+          "name": "data",
+          "payloadBytes": 2074591,
+          "totalBytes": 2074595
+        },
+        {
+          "id": 0,
+          "name": "custom",
+          "payloadBytes": 173,
+          "totalBytes": 176,
+          "customName": "target_features"
+        },
+        {
+          "id": 0,
+          "name": "custom",
+          "payloadBytes": 25,
+          "totalBytes": 27,
+          "customName": "build_id"
+        }
+      ]
+    },
+    {
+      "name": "moonbit-js-core",
+      "path": "_build/js/release/build/mizchi/litestream/litestream.js",
+      "bytes": {
+        "raw": 538677,
+        "gzip": 77360,
+        "brotli": 59001
+      }
+    },
+    {
+      "name": "moonbit-js-sql",
+      "path": "_build/js/release/build/mizchi/sqlike/sqlike.js",
+      "bytes": {
+        "raw": 1247301,
+        "gzip": 156159,
+        "brotli": 112147
+      }
+    },
+    {
+      "name": "moonbit-wasm-gc-sql",
+      "path": "_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm",
+      "bytes": {
+        "raw": 294947,
+        "gzip": 121805,
+        "brotli": 97346
+      },
+      "sections": [
+        {
+          "id": 1,
+          "name": "type",
+          "payloadBytes": 10907,
+          "totalBytes": 10910
+        },
+        {
+          "id": 2,
+          "name": "import",
+          "payloadBytes": 18244,
+          "totalBytes": 18248
+        },
+        {
+          "id": 3,
+          "name": "function",
+          "payloadBytes": 2211,
+          "totalBytes": 2214
+        },
+        {
+          "id": 4,
+          "name": "table",
+          "payloadBytes": 1,
+          "totalBytes": 3
+        },
+        {
+          "id": 5,
+          "name": "memory",
+          "payloadBytes": 3,
+          "totalBytes": 5
+        },
+        {
+          "id": 6,
+          "name": "global",
+          "payloadBytes": 1842,
+          "totalBytes": 1845
+        },
+        {
+          "id": 7,
+          "name": "export",
+          "payloadBytes": 248,
+          "totalBytes": 251
+        },
+        {
+          "id": 8,
+          "name": "start",
+          "payloadBytes": 2,
+          "totalBytes": 4
+        },
+        {
+          "id": 9,
+          "name": "element",
+          "payloadBytes": 98,
+          "totalBytes": 100
+        },
+        {
+          "id": 12,
+          "name": "data-count",
+          "payloadBytes": 1,
+          "totalBytes": 3
+        },
+        {
+          "id": 10,
+          "name": "code",
+          "payloadBytes": 261113,
+          "totalBytes": 261117
+        },
+        {
+          "id": 11,
+          "name": "data",
+          "payloadBytes": 136,
+          "totalBytes": 139
+        },
+        {
+          "id": 0,
+          "name": "custom",
+          "payloadBytes": 27,
+          "totalBytes": 29,
+          "customName": "name"
+        },
+        {
+          "id": 0,
+          "name": "custom",
+          "payloadBytes": 69,
+          "totalBytes": 71,
+          "customName": "producers"
+        }
+      ]
+    },
+    {
+      "name": "moonbit-wasm-gc-core",
+      "path": "_build/wasm-gc/release/build/mizchi/litestream/litestream.wasm",
+      "bytes": {
+        "raw": 132760,
+        "gzip": 60476,
+        "brotli": 49892
+      },
+      "sections": [
+        {
+          "id": 1,
+          "name": "type",
+          "payloadBytes": 4376,
+          "totalBytes": 4379
+        },
+        {
+          "id": 2,
+          "name": "import",
+          "payloadBytes": 7978,
+          "totalBytes": 7981
+        },
+        {
+          "id": 3,
+          "name": "function",
+          "payloadBytes": 946,
+          "totalBytes": 949
+        },
+        {
+          "id": 4,
+          "name": "table",
+          "payloadBytes": 1,
+          "totalBytes": 3
+        },
+        {
+          "id": 5,
+          "name": "memory",
+          "payloadBytes": 3,
+          "totalBytes": 5
+        },
+        {
+          "id": 6,
+          "name": "global",
+          "payloadBytes": 1197,
+          "totalBytes": 1200
+        },
+        {
+          "id": 7,
+          "name": "export",
+          "payloadBytes": 243,
+          "totalBytes": 246
+        },
+        {
+          "id": 8,
+          "name": "start",
+          "payloadBytes": 2,
+          "totalBytes": 4
+        },
+        {
+          "id": 9,
+          "name": "element",
+          "payloadBytes": 62,
+          "totalBytes": 64
+        },
+        {
+          "id": 12,
+          "name": "data-count",
+          "payloadBytes": 1,
+          "totalBytes": 3
+        },
+        {
+          "id": 10,
+          "name": "code",
+          "payloadBytes": 117635,
+          "totalBytes": 117639
+        },
+        {
+          "id": 11,
+          "name": "data",
+          "payloadBytes": 172,
+          "totalBytes": 175
+        },
+        {
+          "id": 0,
+          "name": "custom",
+          "payloadBytes": 31,
+          "totalBytes": 33,
+          "customName": "name"
+        },
+        {
+          "id": 0,
+          "name": "custom",
+          "payloadBytes": 69,
+          "totalBytes": 71,
+          "customName": "producers"
+        }
+      ]
+    }
+  ],
+  "sqliteCompileOptions": [
+    "ATOMIC_INTRINSICS=1",
+    "COMPILER=clang-23.0.0",
+    "DEFAULT_AUTOVACUUM",
+    "DEFAULT_CACHE_SIZE=-16384",
+    "DEFAULT_FILE_FORMAT=4",
+    "DEFAULT_JOURNAL_SIZE_LIMIT=-1",
+    "DEFAULT_MMAP_SIZE=0",
+    "DEFAULT_PAGE_SIZE=8192",
+    "DEFAULT_PCACHE_INITSZ=20",
+    "DEFAULT_RECURSIVE_TRIGGERS",
+    "DEFAULT_SECTOR_SIZE=4096",
+    "DEFAULT_SYNCHRONOUS=2",
+    "DEFAULT_WAL_AUTOCHECKPOINT=1000",
+    "DEFAULT_WAL_SYNCHRONOUS=2",
+    "DEFAULT_WORKER_THREADS=0",
+    "DIRECT_OVERFLOW_READ",
+    "DQS=0",
+    "ENABLE_API_ARMOR",
+    "ENABLE_BYTECODE_VTAB",
+    "ENABLE_COLUMN_METADATA",
+    "ENABLE_DBPAGE_VTAB",
+    "ENABLE_DBSTAT_VTAB",
+    "ENABLE_FTS5",
+    "ENABLE_MATH_FUNCTIONS",
+    "ENABLE_OFFSET_SQL_FUNC",
+    "ENABLE_PERCENTILE",
+    "ENABLE_PREUPDATE_HOOK",
+    "ENABLE_RTREE",
+    "ENABLE_SESSION",
+    "ENABLE_STMTVTAB",
+    "ENABLE_UNKNOWN_SQL_FUNCTION",
+    "MALLOC_SOFT_LIMIT=1024",
+    "MAX_ATTACHED=10",
+    "MAX_COLUMN=2000",
+    "MAX_COMPOUND_SELECT=500",
+    "MAX_DEFAULT_PAGE_SIZE=8192",
+    "MAX_EXPR_DEPTH=1000",
+    "MAX_FUNCTION_ARG=1000",
+    "MAX_LENGTH=1000000000",
+    "MAX_LIKE_PATTERN_LENGTH=50000",
+    "MAX_MMAP_SIZE=0",
+    "MAX_PAGE_COUNT=0xfffffffe",
+    "MAX_PAGE_SIZE=65536",
+    "MAX_SCHEMA=10000000",
+    "MAX_SQL_LENGTH=1000000000",
+    "MAX_TRIGGER_DEPTH=1000",
+    "MAX_VARIABLE_NUMBER=32766",
+    "MAX_VDBE_OP=250000000",
+    "MAX_WORKER_THREADS=0",
+    "MUTEX_OMIT",
+    "OMIT_DEPRECATED",
+    "OMIT_LOAD_EXTENSION",
+    "OMIT_SHARED_CACHE",
+    "OMIT_UTF16",
+    "STRICT_SUBTYPE",
+    "SYSTEM_MALLOC",
+    "TEMP_STORE=2",
+    "THREADSAFE=0",
+    "USE_URI"
+  ],
+  "samples": [
+    {
+      "engine": "sqlite",
+      "run": 0,
+      "coldReadyMs": 152.6799999475479,
+      "offlineCapableMs": 156.88999998569489,
+      "readyNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1032,
+            "wireBytes": 476,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-apidqFYU.js",
+            "rawBytes": 182812,
+            "wireBytes": 47619,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/wasm-database-rirnfUfl.js",
+            "rawBytes": 220443,
+            "wireBytes": 56892,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-k2cTanUO.wasm",
+            "rawBytes": 879084,
+            "wireBytes": 352905,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "rawBytes": 32462,
+            "wireBytes": 8966,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "rawBytes": 32462,
+            "wireBytes": 8966,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 485056,
+        "decodedBytes": 1380233
+      },
+      "offlineNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1032,
+            "wireBytes": 476,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-apidqFYU.js",
+            "rawBytes": 182812,
+            "wireBytes": 47619,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/wasm-database-rirnfUfl.js",
+            "rawBytes": 220443,
+            "wireBytes": 56892,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-k2cTanUO.wasm",
+            "rawBytes": 879084,
+            "wireBytes": 352905,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "rawBytes": 32462,
+            "wireBytes": 8966,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "rawBytes": 32462,
+            "wireBytes": 8966,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 485056,
+        "decodedBytes": 1380233
+      },
+      "cache": {
+        "milliseconds": 156.88999998569489,
+        "bytes": 1364116,
+        "files": [
+          {
+            "path": "/",
+            "bytes": 1768
+          },
+          {
+            "path": "/index.html",
+            "bytes": 1768
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "bytes": 12647
+          },
+          {
+            "path": "/assets/worker-apidqFYU.js",
+            "bytes": 182812
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "bytes": 670
+          },
+          {
+            "path": "/assets/wasm-database-rirnfUfl.js",
+            "bytes": 220443
+          },
+          {
+            "path": "/assets/sqlite3-k2cTanUO.wasm",
+            "bytes": 879084
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "bytes": 32462
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "bytes": 32462
+          }
+        ]
+      },
+      "warmReadyMs": 75.08000004291534,
+      "warmNetwork": {
+        "requests": [],
+        "wireBytes": 0,
+        "decodedBytes": 0
+      },
+      "offlineReadyMs": 60.53999996185303
+    },
+    {
+      "engine": "sqlite",
+      "run": 1,
+      "coldReadyMs": 112.18500006198883,
+      "offlineCapableMs": 115.61500000953674,
+      "readyNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1032,
+            "wireBytes": 476,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-apidqFYU.js",
+            "rawBytes": 182812,
+            "wireBytes": 47619,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/wasm-database-rirnfUfl.js",
+            "rawBytes": 220443,
+            "wireBytes": 56892,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-k2cTanUO.wasm",
+            "rawBytes": 879084,
+            "wireBytes": 352905,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "rawBytes": 32462,
+            "wireBytes": 8966,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "rawBytes": 32462,
+            "wireBytes": 8966,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 485056,
+        "decodedBytes": 1380233
+      },
+      "offlineNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1032,
+            "wireBytes": 476,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-apidqFYU.js",
+            "rawBytes": 182812,
+            "wireBytes": 47619,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/wasm-database-rirnfUfl.js",
+            "rawBytes": 220443,
+            "wireBytes": 56892,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-k2cTanUO.wasm",
+            "rawBytes": 879084,
+            "wireBytes": 352905,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "rawBytes": 32462,
+            "wireBytes": 8966,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "rawBytes": 32462,
+            "wireBytes": 8966,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 485056,
+        "decodedBytes": 1380233
+      },
+      "cache": {
+        "milliseconds": 115.61500000953674,
+        "bytes": 1364116,
+        "files": [
+          {
+            "path": "/",
+            "bytes": 1768
+          },
+          {
+            "path": "/index.html",
+            "bytes": 1768
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "bytes": 12647
+          },
+          {
+            "path": "/assets/worker-apidqFYU.js",
+            "bytes": 182812
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "bytes": 670
+          },
+          {
+            "path": "/assets/wasm-database-rirnfUfl.js",
+            "bytes": 220443
+          },
+          {
+            "path": "/assets/sqlite3-k2cTanUO.wasm",
+            "bytes": 879084
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "bytes": 32462
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "bytes": 32462
+          }
+        ]
+      },
+      "warmReadyMs": 61.1599999666214,
+      "warmNetwork": {
+        "requests": [],
+        "wireBytes": 0,
+        "decodedBytes": 0
+      },
+      "offlineReadyMs": 60.25
+    },
+    {
+      "engine": "sqlite",
+      "run": 2,
+      "coldReadyMs": 120.26499998569489,
+      "offlineCapableMs": 123.70499992370605,
+      "readyNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1032,
+            "wireBytes": 476,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-apidqFYU.js",
+            "rawBytes": 182812,
+            "wireBytes": 47619,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/wasm-database-rirnfUfl.js",
+            "rawBytes": 220443,
+            "wireBytes": 56892,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-k2cTanUO.wasm",
+            "rawBytes": 879084,
+            "wireBytes": 352905,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "rawBytes": 32462,
+            "wireBytes": 8966,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "rawBytes": 32462,
+            "wireBytes": 8966,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 485056,
+        "decodedBytes": 1380233
+      },
+      "offlineNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1032,
+            "wireBytes": 476,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-apidqFYU.js",
+            "rawBytes": 182812,
+            "wireBytes": 47619,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/wasm-database-rirnfUfl.js",
+            "rawBytes": 220443,
+            "wireBytes": 56892,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-k2cTanUO.wasm",
+            "rawBytes": 879084,
+            "wireBytes": 352905,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "rawBytes": 32462,
+            "wireBytes": 8966,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "rawBytes": 32462,
+            "wireBytes": 8966,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 485056,
+        "decodedBytes": 1380233
+      },
+      "cache": {
+        "milliseconds": 123.70499992370605,
+        "bytes": 1364116,
+        "files": [
+          {
+            "path": "/",
+            "bytes": 1768
+          },
+          {
+            "path": "/index.html",
+            "bytes": 1768
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "bytes": 12647
+          },
+          {
+            "path": "/assets/worker-apidqFYU.js",
+            "bytes": 182812
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "bytes": 670
+          },
+          {
+            "path": "/assets/wasm-database-rirnfUfl.js",
+            "bytes": 220443
+          },
+          {
+            "path": "/assets/sqlite3-k2cTanUO.wasm",
+            "bytes": 879084
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "bytes": 32462
+          },
+          {
+            "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+            "bytes": 32462
+          }
+        ]
+      },
+      "warmReadyMs": 59.97000002861023,
+      "warmNetwork": {
+        "requests": [],
+        "wireBytes": 0,
+        "decodedBytes": 0
+      },
+      "offlineReadyMs": 60.205000042915344
+    },
+    {
+      "engine": "turso",
+      "run": 0,
+      "coldReadyMs": 462.3399999141693,
+      "offlineCapableMs": 468.31499993801117,
+      "readyNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1032,
+            "wireBytes": 476,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-apidqFYU.js",
+            "rawBytes": 182812,
+            "wireBytes": 47619,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/turso-database-DlC3wxr3.js",
+            "rawBytes": 3171,
+            "wireBytes": 1306,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/turso-executor-DuHW4VQ9.js",
+            "rawBytes": 9905,
+            "wireBytes": 2198,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main.es-CSSHhyvk.js",
+            "rawBytes": 16090245,
+            "wireBytes": 3745131,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 3805962,
+        "decodedBytes": 16319103
+      },
+      "offlineNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1032,
+            "wireBytes": 476,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-apidqFYU.js",
+            "rawBytes": 182812,
+            "wireBytes": 47619,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/turso-database-DlC3wxr3.js",
+            "rawBytes": 3171,
+            "wireBytes": 1306,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/turso-executor-DuHW4VQ9.js",
+            "rawBytes": 9905,
+            "wireBytes": 2198,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main.es-CSSHhyvk.js",
+            "rawBytes": 16090245,
+            "wireBytes": 3745131,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 3805962,
+        "decodedBytes": 16319103
+      },
+      "cache": {
+        "milliseconds": 468.31499993801117,
+        "bytes": 16302986,
+        "files": [
+          {
+            "path": "/",
+            "bytes": 1768
+          },
+          {
+            "path": "/index.html",
+            "bytes": 1768
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "bytes": 12647
+          },
+          {
+            "path": "/assets/worker-apidqFYU.js",
+            "bytes": 182812
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "bytes": 670
+          },
+          {
+            "path": "/assets/turso-database-DlC3wxr3.js",
+            "bytes": 3171
+          },
+          {
+            "path": "/assets/turso-executor-DuHW4VQ9.js",
+            "bytes": 9905
+          },
+          {
+            "path": "/assets/main.es-CSSHhyvk.js",
+            "bytes": 16090245
+          }
+        ]
+      },
+      "warmReadyMs": 377.0700000524521,
+      "warmNetwork": {
+        "requests": [],
+        "wireBytes": 0,
+        "decodedBytes": 0
+      },
+      "offlineReadyMs": 260.5
+    },
+    {
+      "engine": "turso",
+      "run": 1,
+      "coldReadyMs": 462.3799999952316,
+      "offlineCapableMs": 468.1449999809265,
+      "readyNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1032,
+            "wireBytes": 476,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-apidqFYU.js",
+            "rawBytes": 182812,
+            "wireBytes": 47619,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/turso-database-DlC3wxr3.js",
+            "rawBytes": 3171,
+            "wireBytes": 1306,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/turso-executor-DuHW4VQ9.js",
+            "rawBytes": 9905,
+            "wireBytes": 2198,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main.es-CSSHhyvk.js",
+            "rawBytes": 16090245,
+            "wireBytes": 3745131,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 3805962,
+        "decodedBytes": 16319103
+      },
+      "offlineNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1032,
+            "wireBytes": 476,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-apidqFYU.js",
+            "rawBytes": 182812,
+            "wireBytes": 47619,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/turso-database-DlC3wxr3.js",
+            "rawBytes": 3171,
+            "wireBytes": 1306,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/turso-executor-DuHW4VQ9.js",
+            "rawBytes": 9905,
+            "wireBytes": 2198,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main.es-CSSHhyvk.js",
+            "rawBytes": 16090245,
+            "wireBytes": 3745131,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 3805962,
+        "decodedBytes": 16319103
+      },
+      "cache": {
+        "milliseconds": 468.1449999809265,
+        "bytes": 16302986,
+        "files": [
+          {
+            "path": "/",
+            "bytes": 1768
+          },
+          {
+            "path": "/index.html",
+            "bytes": 1768
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "bytes": 12647
+          },
+          {
+            "path": "/assets/worker-apidqFYU.js",
+            "bytes": 182812
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "bytes": 670
+          },
+          {
+            "path": "/assets/turso-database-DlC3wxr3.js",
+            "bytes": 3171
+          },
+          {
+            "path": "/assets/turso-executor-DuHW4VQ9.js",
+            "bytes": 9905
+          },
+          {
+            "path": "/assets/main.es-CSSHhyvk.js",
+            "bytes": 16090245
+          }
+        ]
+      },
+      "warmReadyMs": 376.1200000047684,
+      "warmNetwork": {
+        "requests": [],
+        "wireBytes": 0,
+        "decodedBytes": 0
+      },
+      "offlineReadyMs": 260.1399999856949
+    },
+    {
+      "engine": "turso",
+      "run": 2,
+      "coldReadyMs": 461.625,
+      "offlineCapableMs": 467.33000004291534,
+      "readyNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1032,
+            "wireBytes": 476,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-apidqFYU.js",
+            "rawBytes": 182812,
+            "wireBytes": 47619,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/turso-database-DlC3wxr3.js",
+            "rawBytes": 3171,
+            "wireBytes": 1306,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/turso-executor-DuHW4VQ9.js",
+            "rawBytes": 9905,
+            "wireBytes": 2198,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main.es-CSSHhyvk.js",
+            "rawBytes": 16090245,
+            "wireBytes": 3745131,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 3805962,
+        "decodedBytes": 16319103
+      },
+      "offlineNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1032,
+            "wireBytes": 476,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-apidqFYU.js",
+            "rawBytes": 182812,
+            "wireBytes": 47619,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/turso-database-DlC3wxr3.js",
+            "rawBytes": 3171,
+            "wireBytes": 1306,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/turso-executor-DuHW4VQ9.js",
+            "rawBytes": 9905,
+            "wireBytes": 2198,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main.es-CSSHhyvk.js",
+            "rawBytes": 16090245,
+            "wireBytes": 3745131,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 3805962,
+        "decodedBytes": 16319103
+      },
+      "cache": {
+        "milliseconds": 467.33000004291534,
+        "bytes": 16302986,
+        "files": [
+          {
+            "path": "/",
+            "bytes": 1768
+          },
+          {
+            "path": "/index.html",
+            "bytes": 1768
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "bytes": 12647
+          },
+          {
+            "path": "/assets/worker-apidqFYU.js",
+            "bytes": 182812
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "bytes": 670
+          },
+          {
+            "path": "/assets/turso-database-DlC3wxr3.js",
+            "bytes": 3171
+          },
+          {
+            "path": "/assets/turso-executor-DuHW4VQ9.js",
+            "bytes": 9905
+          },
+          {
+            "path": "/assets/main.es-CSSHhyvk.js",
+            "bytes": 16090245
+          }
+        ]
+      },
+      "warmReadyMs": 393.3000000715256,
+      "warmNetwork": {
+        "requests": [],
+        "wireBytes": 0,
+        "decodedBytes": 0
+      },
+      "offlineReadyMs": 260.0700000524521
+    },
+    {
+      "engine": "sqlike",
+      "run": 0,
+      "coldReadyMs": 78.89499998092651,
+      "offlineCapableMs": 81.92499995231628,
+      "readyNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1032,
+            "wireBytes": 476,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-apidqFYU.js",
+            "rawBytes": 182812,
+            "wireBytes": 47619,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-database-DsePVikk.js",
+            "rawBytes": 333101,
+            "wireBytes": 67923,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-persistence-D3q8-DD-.js",
+            "rawBytes": 1616,
+            "wireBytes": 698,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-persistence-worker-FEnnL2Ho.js",
+            "rawBytes": 2422,
+            "wireBytes": 956,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 126904,
+        "decodedBytes": 552921
+      },
+      "offlineNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1032,
+            "wireBytes": 476,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-apidqFYU.js",
+            "rawBytes": 182812,
+            "wireBytes": 47619,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-database-DsePVikk.js",
+            "rawBytes": 333101,
+            "wireBytes": 67923,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-persistence-D3q8-DD-.js",
+            "rawBytes": 1616,
+            "wireBytes": 698,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-persistence-worker-FEnnL2Ho.js",
+            "rawBytes": 2422,
+            "wireBytes": 956,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 126904,
+        "decodedBytes": 552921
+      },
+      "cache": {
+        "milliseconds": 81.92499995231628,
+        "bytes": 536804,
+        "files": [
+          {
+            "path": "/",
+            "bytes": 1768
+          },
+          {
+            "path": "/index.html",
+            "bytes": 1768
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "bytes": 12647
+          },
+          {
+            "path": "/assets/worker-apidqFYU.js",
+            "bytes": 182812
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "bytes": 670
+          },
+          {
+            "path": "/assets/moon-database-DsePVikk.js",
+            "bytes": 333101
+          },
+          {
+            "path": "/assets/moon-persistence-D3q8-DD-.js",
+            "bytes": 1616
+          },
+          {
+            "path": "/assets/moon-persistence-worker-FEnnL2Ho.js",
+            "bytes": 2422
+          }
+        ]
+      },
+      "warmReadyMs": 43.394999980926514,
+      "warmNetwork": {
+        "requests": [],
+        "wireBytes": 0,
+        "decodedBytes": 0
+      },
+      "offlineReadyMs": 43.38499999046326
+    },
+    {
+      "engine": "sqlike",
+      "run": 1,
+      "coldReadyMs": 78.87999999523163,
+      "offlineCapableMs": 81.8199999332428,
+      "readyNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1032,
+            "wireBytes": 476,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-apidqFYU.js",
+            "rawBytes": 182812,
+            "wireBytes": 47619,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-database-DsePVikk.js",
+            "rawBytes": 333101,
+            "wireBytes": 67923,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-persistence-D3q8-DD-.js",
+            "rawBytes": 1616,
+            "wireBytes": 698,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-persistence-worker-FEnnL2Ho.js",
+            "rawBytes": 2422,
+            "wireBytes": 956,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 126904,
+        "decodedBytes": 552921
+      },
+      "offlineNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1032,
+            "wireBytes": 476,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-apidqFYU.js",
+            "rawBytes": 182812,
+            "wireBytes": 47619,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-database-DsePVikk.js",
+            "rawBytes": 333101,
+            "wireBytes": 67923,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-persistence-D3q8-DD-.js",
+            "rawBytes": 1616,
+            "wireBytes": 698,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-persistence-worker-FEnnL2Ho.js",
+            "rawBytes": 2422,
+            "wireBytes": 956,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 126904,
+        "decodedBytes": 552921
+      },
+      "cache": {
+        "milliseconds": 81.8199999332428,
+        "bytes": 536804,
+        "files": [
+          {
+            "path": "/",
+            "bytes": 1768
+          },
+          {
+            "path": "/index.html",
+            "bytes": 1768
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "bytes": 12647
+          },
+          {
+            "path": "/assets/worker-apidqFYU.js",
+            "bytes": 182812
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "bytes": 670
+          },
+          {
+            "path": "/assets/moon-database-DsePVikk.js",
+            "bytes": 333101
+          },
+          {
+            "path": "/assets/moon-persistence-D3q8-DD-.js",
+            "bytes": 1616
+          },
+          {
+            "path": "/assets/moon-persistence-worker-FEnnL2Ho.js",
+            "bytes": 2422
+          }
+        ]
+      },
+      "warmReadyMs": 43.34500002861023,
+      "warmNetwork": {
+        "requests": [],
+        "wireBytes": 0,
+        "decodedBytes": 0
+      },
+      "offlineReadyMs": 43.18999993801117
+    },
+    {
+      "engine": "sqlike",
+      "run": 2,
+      "coldReadyMs": 79.01499998569489,
+      "offlineCapableMs": 82.00499999523163,
+      "readyNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1032,
+            "wireBytes": 476,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-apidqFYU.js",
+            "rawBytes": 182812,
+            "wireBytes": 47619,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-database-DsePVikk.js",
+            "rawBytes": 333101,
+            "wireBytes": 67923,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-persistence-D3q8-DD-.js",
+            "rawBytes": 1616,
+            "wireBytes": 698,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-persistence-worker-FEnnL2Ho.js",
+            "rawBytes": 2422,
+            "wireBytes": 956,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 126904,
+        "decodedBytes": 552921
+      },
+      "offlineNetwork": {
+        "requests": [
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/sw.js",
+            "rawBytes": 1032,
+            "wireBytes": 476,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/index.html",
+            "rawBytes": 1768,
+            "wireBytes": 776,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "rawBytes": 12647,
+            "wireBytes": 3127,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/worker-apidqFYU.js",
+            "rawBytes": 182812,
+            "wireBytes": 47619,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-database-DsePVikk.js",
+            "rawBytes": 333101,
+            "wireBytes": 67923,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-persistence-D3q8-DD-.js",
+            "rawBytes": 1616,
+            "wireBytes": 698,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/moon-persistence-worker-FEnnL2Ho.js",
+            "rawBytes": 2422,
+            "wireBytes": 956,
+            "encoding": "br",
+            "status": 200
+          }
+        ],
+        "wireBytes": 126904,
+        "decodedBytes": 552921
+      },
+      "cache": {
+        "milliseconds": 82.00499999523163,
+        "bytes": 536804,
+        "files": [
+          {
+            "path": "/",
+            "bytes": 1768
+          },
+          {
+            "path": "/index.html",
+            "bytes": 1768
+          },
+          {
+            "path": "/assets/main-DHIPejk7.js",
+            "bytes": 12647
+          },
+          {
+            "path": "/assets/worker-apidqFYU.js",
+            "bytes": 182812
+          },
+          {
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "bytes": 670
+          },
+          {
+            "path": "/assets/moon-database-DsePVikk.js",
+            "bytes": 333101
+          },
+          {
+            "path": "/assets/moon-persistence-D3q8-DD-.js",
+            "bytes": 1616
+          },
+          {
+            "path": "/assets/moon-persistence-worker-FEnnL2Ho.js",
+            "bytes": 2422
+          }
+        ]
+      },
+      "warmReadyMs": 42.56499993801117,
+      "warmNetwork": {
+        "requests": [],
+        "wireBytes": 0,
+        "decodedBytes": 0
+      },
+      "offlineReadyMs": 43.299999952316284
+    }
+  ],
+  "memory": []
+}

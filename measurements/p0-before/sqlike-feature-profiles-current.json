@@ -1,0 +1,407 @@
+{
+  "format": 1,
+  "measuredAt": "2026-11-15T07:24:17.004Z",
+  "node": "v24.22.2",
+  "method": "Moon release static feature specialization; isolated builds. JS ESM all entry exports retained, Vite minification; gzip9/Brotli11. Wasm GC release without wasm-opt. Engine only: excludes host adapter, catalog and persistence. AOT excludes SQL parser. Minimal keeps the existing core SQL subset, JSON/date/window/secondary-index features; optional flags cover the listed features only.",
+  "results": [
+    {
+      "mode": "aot",
+      "name": "minimal",
+      "features": [],
+      "js": {
+        "raw": 644558,
+        "gzip": 125826,
+        "brotli": 97395
+      },
+      "wasm": {
+        "raw": 391638,
+        "gzip": 155769,
+        "brotli": 124214
+      },
+      "absent": {
+        "triggerImplementation": true,
+        "foreignKeyActions": true,
+        "strictTypeChecks": true,
+        "usingJoin": true,
+        "primaryKeyMap": true
+      }
+    },
+    {
+      "mode": "aot",
+      "name": "rightFullJoin",
+      "features": [
+        "rightFullJoin"
+      ],
+      "js": {
+        "raw": 651187,
+        "gzip": 127229,
+        "brotli": 98370
+      },
+      "wasm": {
+        "raw": 395162,
+        "gzip": 157612,
+        "brotli": 125507
+      },
+      "absent": {
+        "triggerImplementation": true,
+        "foreignKeyActions": true,
+        "strictTypeChecks": true,
+        "usingJoin": false,
+        "primaryKeyMap": true
+      }
+    },
+    {
+      "mode": "aot",
+      "name": "strictTables",
+      "features": [
+        "strictTables"
+      ],
+      "js": {
+        "raw": 645724,
+        "gzip": 126123,
+        "brotli": 97517
+      },
+      "wasm": {
+        "raw": 392334,
+        "gzip": 156003,
+        "brotli": 124545
+      },
+      "absent": {
+        "triggerImplementation": true,
+        "foreignKeyActions": true,
+        "strictTypeChecks": false,
+        "usingJoin": true,
+        "primaryKeyMap": true
+      }
+    },
+    {
+      "mode": "aot",
+      "name": "primaryKeyIndex",
+      "features": [
+        "primaryKeyIndex"
+      ],
+      "js": {
+        "raw": 666087,
+        "gzip": 128475,
+        "brotli": 99202
+      },
+      "wasm": {
+        "raw": 403702,
+        "gzip": 160481,
+        "brotli": 127140
+      },
+      "absent": {
+        "triggerImplementation": true,
+        "foreignKeyActions": true,
+        "strictTypeChecks": true,
+        "usingJoin": true,
+        "primaryKeyMap": false
+      }
+    },
+    {
+      "mode": "aot",
+      "name": "triggers",
+      "features": [
+        "triggers"
+      ],
+      "js": {
+        "raw": 650268,
+        "gzip": 127084,
+        "brotli": 98266
+      },
+      "wasm": {
+        "raw": 393974,
+        "gzip": 156993,
+        "brotli": 124980
+      },
+      "absent": {
+        "triggerImplementation": false,
+        "foreignKeyActions": true,
+        "strictTypeChecks": true,
+        "usingJoin": true,
+        "primaryKeyMap": true
+      }
+    },
+    {
+      "mode": "aot",
+      "name": "foreignKeys",
+      "features": [
+        "foreignKeys"
+      ],
+      "js": {
+        "raw": 660203,
+        "gzip": 128722,
+        "brotli": 99416
+      },
+      "wasm": {
+        "raw": 397597,
+        "gzip": 158134,
+        "brotli": 125855
+      },
+      "absent": {
+        "triggerImplementation": true,
+        "foreignKeyActions": false,
+        "strictTypeChecks": true,
+        "usingJoin": true,
+        "primaryKeyMap": true
+      }
+    },
+    {
+      "mode": "aot",
+      "name": "all-execution",
+      "features": [
+        "foreignKeys",
+        "primaryKeyIndex",
+        "rightFullJoin",
+        "strictTables",
+        "triggers"
+      ],
+      "js": {
+        "raw": 695217,
+        "gzip": 134131,
+        "brotli": 103145
+      },
+      "wasm": {
+        "raw": 417117,
+        "gzip": 165726,
+        "brotli": 131078
+      },
+      "absent": {
+        "triggerImplementation": false,
+        "foreignKeyActions": false,
+        "strictTypeChecks": false,
+        "usingJoin": false,
+        "primaryKeyMap": false
+      }
+    },
+    {
+      "mode": "aot",
+      "name": "all-with-pages-ltx",
+      "features": [
+        "foreignKeys",
+        "ltx",
+        "primaryKeyIndex",
+        "rightFullJoin",
+        "sqlitePages",
+        "strictTables",
+        "triggers"
+      ],
+      "js": {
+        "raw": 767874,
+        "gzip": 149038,
+        "brotli": 113855
+      },
+      "wasm": {
+        "raw": 454351,
+        "gzip": 179889,
+        "brotli": 142064
+      },
+      "absent": {
+        "triggerImplementation": false,
+        "foreignKeyActions": false,
+        "strictTypeChecks": false,
+        "usingJoin": false,
+        "primaryKeyMap": false
+      }
+    },
+    {
+      "mode": "sql",
+      "name": "minimal",
+      "features": [],
+      "js": {
+        "raw": 714604,
+        "gzip": 139413,
+        "brotli": 106917
+      },
+      "wasm": {
+        "raw": 431025,
+        "gzip": 173412,
+        "brotli": 136791
+      },
+      "absent": {
+        "triggerImplementation": true,
+        "foreignKeyActions": true,
+        "strictTypeChecks": true,
+        "usingJoin": true,
+        "primaryKeyMap": true
+      }
+    },
+    {
+      "mode": "sql",
+      "name": "rightFullJoin",
+      "features": [
+        "rightFullJoin"
+      ],
+      "js": {
+        "raw": 721240,
+        "gzip": 140856,
+        "brotli": 107490
+      },
+      "wasm": {
+        "raw": 434420,
+        "gzip": 174834,
+        "brotli": 137835
+      },
+      "absent": {
+        "triggerImplementation": true,
+        "foreignKeyActions": true,
+        "strictTypeChecks": true,
+        "usingJoin": false,
+        "primaryKeyMap": true
+      }
+    },
+    {
+      "mode": "sql",
+      "name": "strictTables",
+      "features": [
+        "strictTables"
+      ],
+      "js": {
+        "raw": 716139,
+        "gzip": 139749,
+        "brotli": 107172
+      },
+      "wasm": {
+        "raw": 431074,
+        "gzip": 173622,
+        "brotli": 136881
+      },
+      "absent": {
+        "triggerImplementation": true,
+        "foreignKeyActions": true,
+        "strictTypeChecks": false,
+        "usingJoin": true,
+        "primaryKeyMap": true
+      }
+    },
+    {
+      "mode": "sql",
+      "name": "primaryKeyIndex",
+      "features": [
+        "primaryKeyIndex"
+      ],
+      "js": {
+        "raw": 736153,
+        "gzip": 141889,
+        "brotli": 108620
+      },
+      "wasm": {
+        "raw": 441949,
+        "gzip": 177001,
+        "brotli": 139364
+      },
+      "absent": {
+        "triggerImplementation": true,
+        "foreignKeyActions": true,
+        "strictTypeChecks": true,
+        "usingJoin": true,
+        "primaryKeyMap": false
+      }
+    },
+    {
+      "mode": "sql",
+      "name": "triggers",
+      "features": [
+        "triggers"
+      ],
+      "js": {
+        "raw": 725457,
+        "gzip": 141770,
+        "brotli": 108493
+      },
+      "wasm": {
+        "raw": 436745,
+        "gzip": 175538,
+        "brotli": 138648
+      },
+      "absent": {
+        "triggerImplementation": false,
+        "foreignKeyActions": true,
+        "strictTypeChecks": true,
+        "usingJoin": true,
+        "primaryKeyMap": true
+      }
+    },
+    {
+      "mode": "sql",
+      "name": "foreignKeys",
+      "features": [
+        "foreignKeys"
+      ],
+      "js": {
+        "raw": 730175,
+        "gzip": 142333,
+        "brotli": 108855
+      },
+      "wasm": {
+        "raw": 435865,
+        "gzip": 175313,
+        "brotli": 138236
+      },
+      "absent": {
+        "triggerImplementation": true,
+        "foreignKeyActions": false,
+        "strictTypeChecks": true,
+        "usingJoin": true,
+        "primaryKeyMap": true
+      }
+    },
+    {
+      "mode": "sql",
+      "name": "all-execution",
+      "features": [
+        "foreignKeys",
+        "primaryKeyIndex",
+        "rightFullJoin",
+        "strictTables",
+        "triggers"
+      ],
+      "js": {
+        "raw": 770709,
+        "gzip": 148723,
+        "brotli": 113226
+      },
+      "wasm": {
+        "raw": 458739,
+        "gzip": 183529,
+        "brotli": 144651
+      },
+      "absent": {
+        "triggerImplementation": false,
+        "foreignKeyActions": false,
+        "strictTypeChecks": false,
+        "usingJoin": false,
+        "primaryKeyMap": false
+      }
+    },
+    {
+      "mode": "sql",
+      "name": "all-with-binary",
+      "features": [
+        "binarySync",
+        "foreignKeys",
+        "primaryKeyIndex",
+        "rightFullJoin",
+        "strictTables",
+        "triggers"
+      ],
+      "js": {
+        "raw": 778582,
+        "gzip": 150314,
+        "brotli": 114254
+      },
+      "wasm": {
+        "raw": 462645,
+        "gzip": 185279,
+        "brotli": 145494
+      },
+      "absent": {
+        "triggerImplementation": false,
+        "foreignKeyActions": false,
+        "strictTypeChecks": false,
+        "usingJoin": false,
+        "primaryKeyMap": false
+      }
+    }
+  ]
+}

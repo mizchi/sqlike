@@ -1,0 +1,44 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "mizchi/litestream"
+
+// Values
+pub fn apply_ltx(Bytes, String, Bytes, Int32) -> LtxResult
+
+pub fn apply_ltx_base64(String, String, String, Int32) -> LtxResult
+
+pub fn assess_apply(Int32, Int32, Int32, Bool, Bool, Bool, Bool) -> String
+
+pub fn decode_changeset(Bytes) -> String
+
+pub fn decode_frame(Bytes) -> String
+
+pub fn encode_frame(Int32, Int32, String, Bytes) -> Bytes
+
+pub fn encode_ltx(Bytes, Bytes, String, String, String) -> LtxResult
+
+pub fn encode_ltx_base64(String, String, String, String, String) -> LtxResult
+
+pub fn ltx_data(LtxResult) -> Bytes
+
+pub fn ltx_data_base64(LtxResult) -> String
+
+pub fn ltx_info(LtxResult) -> String
+
+pub fn note_policy(String) -> String
+
+pub fn plan_changes(String, String) -> String
+
+pub fn plan_ltx(String, String, String) -> String
+
+pub fn revision_decision(Int32, Int32, Int32, Bool) -> String
+
+pub fn sql_allowed(String) -> Bool
+
+// Errors
+
+// Types and methods
+type LtxResult
+
+// Type aliases
+
+// Traits

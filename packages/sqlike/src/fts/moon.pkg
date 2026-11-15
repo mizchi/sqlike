@@ -1,0 +1,36 @@
+import {
+  "moonbitlang/core/json",
+  "moonbitlang/core/encoding/utf8",
+  "moonbitlang/core/string",
+  "moonbitlang/core/math",
+}
+
+options(
+  link: {
+    "js": {
+      "exports": [
+        "fts_open",
+        "fts_info",
+        "fts_put",
+        "fts_delete",
+        "fts_search",
+        "fts_dump",
+        "fts_restore",
+      ],
+      "format": "esm",
+    },
+    "wasm-gc": {
+      "exports": [
+        "fts_open",
+        "fts_info",
+        "fts_put",
+        "fts_delete",
+        "fts_search",
+        "fts_dump",
+        "fts_restore",
+      ],
+      "use-js-builtin-string": true,
+      "imported-string-constants": "_",
+    },
+  },
+)

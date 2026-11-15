@@ -1,0 +1,162 @@
+{
+  "description": "Captured from the pre-S01 sqlike-flush@1 producer; INTEGER/REAL/BLOB and rowid replacement.",
+  "snapshot": {
+    "format": "sqlike-flush@1",
+    "full": true,
+    "serial": 2,
+    "state": {
+      "tables": [
+        {
+          "name": "t",
+          "sql": "CREATE TABLE t(id INTEGER PRIMARY KEY,n BLOB,body BLOB)",
+          "columns": [
+            {
+              "name": "id",
+              "declared": "INTEGER",
+              "not_null": false,
+              "primary": 1,
+              "default_value": [
+                "Literal",
+                "Null"
+              ],
+              "collation": "binary",
+              "default_source": ""
+            },
+            {
+              "name": "n",
+              "declared": "BLOB",
+              "not_null": false,
+              "primary": 0,
+              "default_value": [
+                "Literal",
+                "Null"
+              ],
+              "collation": "binary",
+              "default_source": ""
+            },
+            {
+              "name": "body",
+              "declared": "BLOB",
+              "not_null": false,
+              "primary": 0,
+              "default_value": [
+                "Literal",
+                "Null"
+              ],
+              "collation": "binary",
+              "default_source": ""
+            }
+          ],
+          "unique_keys": [
+            [
+              0
+            ]
+          ],
+          "checks": [],
+          "foreign_keys": [],
+          "without_rowid": false,
+          "autoincrement": false,
+          "sequence": "2",
+          "rows": [
+            {
+              "id": "1",
+              "values": [
+                [
+                  "Integer",
+                  "1"
+                ],
+                [
+                  "Real",
+                  1
+                ],
+                [
+                  "Blob",
+                  "\\x00\\xff"
+                ]
+              ]
+            },
+            {
+              "id": "2",
+              "values": [
+                [
+                  "Integer",
+                  "2"
+                ],
+                [
+                  "Integer",
+                  "2"
+                ],
+                [
+                  "Blob",
+                  "\\x124"
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "objects": [],
+      "cookie": 1,
+      "changes": 2,
+      "last_rowid": "2",
+      "foreign_keys": true,
+      "deferred": false
+    }
+  },
+  "delta": {
+    "format": "sqlike-flush@1",
+    "full": false,
+    "base": 2,
+    "serial": 3,
+    "meta": {
+      "cookie": 1,
+      "changes": 1,
+      "last_rowid": "2",
+      "foreign_keys": true,
+      "deferred": false,
+      "sequences": [
+        [
+          "t",
+          "2",
+          null
+        ]
+      ]
+    },
+    "edits": [
+      [
+        "ReplaceRow",
+        "t",
+        "1",
+        {
+          "id": "9",
+          "values": [
+            [
+              "Integer",
+              "9"
+            ],
+            [
+              "Real",
+              2.5
+            ],
+            [
+              "Blob",
+              "\\x00\\xff"
+            ]
+          ]
+        }
+      ]
+    ]
+  },
+  "expected": [
+    [
+      2,
+      "integer",
+      "1234"
+    ],
+    [
+      2.5,
+      "real",
+      "00FF"
+    ]
+  ]
+}
