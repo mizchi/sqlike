@@ -4,6 +4,8 @@
 
 SQLikeにはJSの実行エンジン、固定DDL / statementのバイナリ実行、独立したNode用compiler、任意のDrizzle entryとWasm GCのassetを含む。compiler・SQLite exporter・Drizzleは別entry。SQLikeのroot / definedにはLitestream、SQLite WASM、Turso、FTS、実験的LSMを読み込まない。機能選択ビルドそのもののツールはリポジトリから使い、生成したruntimeを注入する。
 
+2026-11-16に両packageの0.1.0をnpmへ公開した。registry版を匿名installする外部consumerで、Node、型検査、ChromiumのIndexedDB / offline / 再読込、Wasm GC、Drizzle migration / savepointを確認済み。配布物とregistryのSRIは[検証記録](../../measurements/npm-registry-current.json)に保存する。初回公開は手元から行ったもので、GitHub OIDCによる公開実績とは区別する。
+
 Litestreamは同期engine / client、policy、HTTP / peer / LTX transport、Session codec、LTX、IndexedDBのreplica storeとNode SQLiteのadapterを公開する。依存は同期のhash用`@noble/hashes`で、DBエンジンの本体は含めない。デモ用notes schemaの初期化は既存engine / clientの動作に含まれる。全driverの全SQLを受理するものではない。
 
 ## 作成・検査
@@ -48,6 +50,15 @@ npm trust list @mizchi/litestream
 ```
 
 `--file`はファイル名のみ。workflowを改名した場合は登録も更新する。CLIが要求する追加認証はnpmの画面で行う。登録済みかどうかは`npm trust list`の実際の結果で確認する。
+
+2026-11-16に両packageの登録と`npm trust list`による照合を完了した。
+
+| package | Trusted Publisher ID |
+| --- | --- |
+| `@mizchi/sqlike` | `07cd26aa-4359-4fce-9853-77e997f2300d` |
+| `@mizchi/litestream` | `83a005a5-2b9c-4595-8480-406fe1a70efc` |
+
+いずれもGitHubの`mizchi/sqlike` / `npm-release.yml`に対して、publishとstage publishを許可する。GitHub上でもworkflowがactiveであることを確認した。OIDC経由の実公開は、次回の新しいversionタグで確認する。
 
 workflowはNode 24、pnpm 10.28.2、npm 11.19.1、MoonBit `0.10.20+65efd5b93`を使い、actionはcommit SHAで固定する。タグ、ルートと両packageのversionを照合し、MoonBit JS / Wasm、独立したnpm consumerのNode / Chromium、型検査を通してから検査済みtarballを公開する。pre-releaseは`next`、通常版は`latest`を使用する。公開後に匿名のregistry consumer検査を実行する。
 

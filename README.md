@@ -15,13 +15,15 @@
 
 ## インストール
 
-JavaScript / TypeScript向けのnpm形式パッケージは、[GitHub Releases](https://github.com/mizchi/sqlike/releases/tag/v0.1.0)から導入できます。ESM、Node.js 24以上と現行ブラウザ向けです。実行にMoonBitコンパイラは不要です。
+JavaScript / TypeScript向けに、[SQLike](https://www.npmjs.com/package/@mizchi/sqlike)と[Litestream](https://www.npmjs.com/package/@mizchi/litestream)をnpmで公開しています。ESM、Node.js 24以上と現行ブラウザ向けです。実行にMoonBitコンパイラは不要です。
 
 ```sh
-pnpm add https://github.com/mizchi/sqlike/releases/download/v0.1.0/mizchi-sqlike-0.1.0.tgz
+pnpm add @mizchi/sqlike
 # 同期・LTXも使う場合
-pnpm add https://github.com/mizchi/sqlike/releases/download/v0.1.0/mizchi-litestream-0.1.0.tgz
+pnpm add @mizchi/litestream
 ```
+
+[GitHub Releases](https://github.com/mizchi/sqlike/releases/tag/v0.1.0)にも配布用アーカイブを用意しています。
 
 ## SQLを実行する
 
