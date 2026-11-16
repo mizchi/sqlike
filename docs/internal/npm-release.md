@@ -28,10 +28,37 @@ npm view @mizchi/sqlike@0.1.0 version
 npm view @mizchi/litestream@0.1.0 version
 ```
 
-`npm-publish`は再ビルド・検査後、実際に検査したtarballを`--access public`で公開する。初回はnpmのブラウザ認証 / 2FAが必要となる。認証情報をリポジトリに保存しない。既存の公開バージョンを上書きしない。同じversionがある場合はrepositoryとtarballのintegrityが一致するretryだけを許可する。公開後は認証なしのregistry installと同じ外部consumer検査を通す。
+`npm-publish`は再ビルド・検査後、実際に検査したtarballを`--access public`で公開する。初回はnpmのブラウザ認証 / 2FAが必要となる。認証情報をリポジトリに保存しない。既存の公開バージョンを上書きしない。同じversionがある場合はrepositoryとtarballのintegrityを確認する。npm側の正規化で圧縮tarballが変わった場合は、registryから再取得したtarballのSRI、全ファイル名、各ファイルの内容を照合する。`package.json`の書式だけは許容し、manifestの値やJS / Wasm / 型定義の差異は拒否する。公開後は認証なしのregistry installと同じ外部consumer検査を通す。
+
+staged publishingになった場合は`npm stage list <package>`で確認し、`npm stage view <stage-id>`と`npm stage download <stage-id>`で配布物を検査してから、2FAを伴う`npm stage approve <stage-id>`で公開する。OIDCのpublish権限でstageをapproveすることはできない。既に占有された同じversionへpublishし直さない。
 
 GitHub / Mooncakesの既存`v0.1.0`タグは動かさない。npm向けhost API・package定義は追加commitで管理する。npm registry上の0.1.0は初回配布であり、既存のMooncakesの0.1.0の上書きではない。
 
 ## 以後の自動公開
 
-初回公開後、2FAが有効なアカウントで各packageにnpm Trusted Publisherを登録できる。登録したworkflow名・GitHub repositoryと`repository.url`を一致させる。タグ起点のworkflowと、そのタグの保護を整えてから自動公開へ移行する。現時点ではローカルの`npm-publish`が公開経路であり、OIDC登録やタグ保護の設定を完了したとは扱わない。
+`.github/workflows/npm-release.yml`を使用する。GitHub hosted Ubuntu runner上で、`v*`タグのpushを受けて公開する。repositoryは`mizchi/sqlike`、workflow名は`npm-release.yml`、GitHub Environmentは指定しない。
+
+両packageに、2FAが有効なownerのアカウントで登録する。npm CLI 11.15以上が必要。
+
+```sh
+npm trust github @mizchi/sqlike --repo mizchi/sqlike --file npm-release.yml --allow-publish --allow-stage-publish -y
+npm trust github @mizchi/litestream --repo mizchi/sqlike --file npm-release.yml --allow-publish --allow-stage-publish -y
+npm trust list @mizchi/sqlike
+npm trust list @mizchi/litestream
+```
+
+`--file`はファイル名のみ。workflowを改名した場合は登録も更新する。CLIが要求する追加認証はnpmの画面で行う。登録済みかどうかは`npm trust list`の実際の結果で確認する。
+
+workflowはNode 24、pnpm 10.28.2、npm 11.19.1、MoonBit `0.10.20+65efd5b93`を使い、actionはcommit SHAで固定する。タグ、ルートと両packageのversionを照合し、MoonBit JS / Wasm、独立したnpm consumerのNode / Chromium、型検査を通してから検査済みtarballを公開する。pre-releaseは`next`、通常版は`latest`を使用する。公開後に匿名のregistry consumer検査を実行する。
+
+`id-token: write`でGitHubのOIDCを使用する。`NPM_TOKEN`や`NODE_AUTH_TOKEN`をsecretから渡さない。公開scriptの`--oidc`は対象repositoryのtag pushとOIDC環境変数を検査し、ローカル公開用の`npm whoami`を省略する。npm自身がOIDCを検証し、Trusted Publishingではprovenanceが自動的に付く。
+
+公開時はversionと変更履歴をcommitし、新しい`v<version>`タグをpushする。既存の`v0.1.0`はworkflow追加前のリリースなので動かさない。ローカル検証が通っても、GitHub上で実行するOIDC公開の成功とは区別する。
+
+`v*`タグの管理者限定rulesetとworkflowのレビュー体制を別途維持する。設定確認:
+
+```sh
+gh api repos/mizchi/sqlike/rulesets --jq '.[] | {name, enforcement}'
+```
+
+公式手順: [npm trust](https://docs.npmjs.com/cli/v11/commands/npm-trust/)、[Trusted publishing](https://docs.npmjs.com/trusted-publishers/)、[staged publishing](https://docs.npmjs.com/staged-publishing/)。

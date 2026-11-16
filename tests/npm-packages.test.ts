@@ -11,7 +11,7 @@ import { pathToFileURL } from "node:url";
 import { parseLogicTest, differentialLogicTest } from "./compatibility/sqllogictest.ts";
 import { nativeValues } from "./compatibility/native-values.ts";
 import { NodeDatabase } from "../adapters/node-database.ts";
-import { createHash } from "node:crypto";
+import { verifyPublishedArchive } from "../scripts/npm-publication.ts";
 
 test("packed npm packages work without this workspace and keep optional entries separate", async () => {
   const audit = JSON.parse(await readFile("generated/npm/audit.json", "utf8"));
@@ -46,7 +46,7 @@ test("packed npm packages work without this workspace and keep optional entries 
     }));
     if (fromRegistry) for (const pkg of audit.packages) {
       const integrity = JSON.parse(execFileSync("npm", ["view", `${pkg.name}@${audit.version}`, "dist.integrity", "--json"], { encoding: "utf8", env: { ...process.env, npm_config_userconfig: "/dev/null" } }));
-      assert.equal(integrity, "sha512-" + createHash("sha512").update(await readFile(pkg.tarball)).digest("base64"));
+      verifyPublishedArchive(resolve(pkg.tarball), pkg.name, audit.version, integrity);
     }
     execFileSync("pnpm", ["install", "--ignore-scripts", "--lockfile=false"], {
       cwd: dir, stdio: "pipe", timeout: 120000,
