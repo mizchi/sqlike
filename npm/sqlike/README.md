@@ -3,7 +3,7 @@
 MoonBit製のSQLiteサブセット。実行にMoonBitコンパイラやSQLite WASMは不要。ESM、Node.js 24以上と現行ブラウザ向け。SQLite全機能互換は未達で、対応範囲外は明示的に拒否する。
 
 ```sh
-pnpm add @mizchi/sqlike
+pnpm add https://github.com/mizchi/sqlike/releases/download/v0.1.0/mizchi-sqlike-0.1.0.tgz
 ```
 
 ```js

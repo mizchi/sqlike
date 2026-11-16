@@ -4,4 +4,4 @@
 
 ライブラリの `mizchi/sqlike` と `mizchi/litestream` は相互に依存せず、サンプルが両者に依存する。`moon.work` からまとめてビルドする。
 
-`just build-lite` 後に `/lite/` を開く。[カタログ](../notes/catalog.json)、[利用手順](../../docs/aot-ltx-plan.md)を参照。
+`just build-lite` 後に `/lite/` を開く。[カタログ](../notes/catalog.json)、[利用手順](../../docs/internal/aot-ltx-plan.md)を参照。

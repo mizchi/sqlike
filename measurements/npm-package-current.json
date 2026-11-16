@@ -6,19 +6,19 @@
       "name": "@mizchi/sqlike",
       "version": "0.1.0",
       "tarball": "generated/npm/mizchi-sqlike-0.1.0.tgz",
-      "size": 905201,
-      "unpackedSize": 3073236,
+      "size": 905225,
+      "unpackedSize": 3073303,
       "entryCount": 57,
-      "integrity": "sha512-bsbLx4Mwl/pF3gwV71hBuZadgsjLnWXhwdBBgoBRaWtw2/5eyHgT7pQ1vA4ezRwn4kpR++L/L0jRDsEaMj/w5g=="
+      "integrity": "sha512-ZW5h0QLxWymQm86AW4Blam4HK6wIGVv54n+35jvSX+cTEFlixTwNSeLX/H5gHb+bBUCvFMopf9V+OsVxu7EljA=="
     },
     {
       "name": "@mizchi/litestream",
       "version": "0.1.0",
       "tarball": "generated/npm/mizchi-litestream-0.1.0.tgz",
-      "size": 130599,
-      "unpackedSize": 364958,
+      "size": 130619,
+      "unpackedSize": 365025,
       "entryCount": 34,
-      "integrity": "sha512-vEXO9Z/MnbKfItxO0u8sJ+isMQEnbHa9AAUUaCjS9RVaAj0GobGdrdD/pUznBT/G/DtpbeZ8uC1C7opONQl15A=="
+      "integrity": "sha512-boHBXuiAMEXVsF8wTBA0Y84OVoY58dEWut8uM52sEODz+VTrab4njmcsrys6KVpjmR5m2woef6yY/gBYPp500g=="
     }
   ],
   "checks": {
@@ -36,12 +36,40 @@
     "moonTestsPerTarget": 53
   },
   "sourceHashes": {
+    "adapters/defined-database-core.ts": "58773d392f540cf07447e4cfeab0c65e2e865dc98869c78984b59db5ce9ce62f",
+    "npm/litestream/LICENSE": "c5f6ee341fb447b0b69264d5e304186f1d9cd2e9d1b9d33095d08879888defc1",
+    "npm/litestream/README.md": "ca489289d4a7d1587222a1bc325e37005a88531161a8fcee277aa4c5e7f6b50f",
+    "npm/litestream/index.ts": "c43e0184a198e87c857252b550d08efbef8df130fea2ac8491e030145582597f",
+    "npm/litestream/ltx.ts": "8c68eab15a43114f6a52d1ea3c0cab3b122543f90a8596024b74d4a8084281ea",
+    "npm/litestream/node.ts": "020d0b11a00dc4f8e077a4f62f9d048c25cf93807e6f3dc4bee094507f0ad876",
+    "npm/litestream/package.json": "ed3deae5a96c6a2a9e2b8a539b1a52113be40dc84c4941ada53d30dbc82bc240",
+    "npm/litestream/protocol.ts": "21a6dde45fe42bc470f0611a80963df89b495a4a985743b1a244392244d69845",
+    "npm/sqlike/LICENSE": "c5f6ee341fb447b0b69264d5e304186f1d9cd2e9d1b9d33095d08879888defc1",
+    "npm/sqlike/README.md": "c3f1815672715d1c4ff1f70cdd8cc958cbe80585212644825329087cc4b10291",
+    "npm/sqlike/compiler.ts": "0be77ee337d2e18fd1ff81811472fec4d0da03b1450ee5977e70e6f34704e60c",
+    "npm/sqlike/defined-core.ts": "373e66c971729c01fa00ae091befdd08bc2fc0a6002a6ea894332111d7c933e7",
+    "npm/sqlike/defined-sqlite.ts": "245efa417d6577c85dc2b33681d4f463f4f1bcd839b62c3f5fd4190bc39939b9",
+    "npm/sqlike/defined-wasm.ts": "60f5e93fe23c331eae8968235b92e4bd93d69def59406f6dd171a83a83eb5a00",
+    "npm/sqlike/defined.ts": "27308c84b63b6501a717ebb9f9911733a03ea08ba1a1550ca5f20bb563267b20",
+    "npm/sqlike/drizzle-node.ts": "beda0ed7ad7d75c4432e91b6486dc44085f8e1034e7ef690718afaf12c84244a",
+    "npm/sqlike/drizzle.ts": "cabf8e3cf39b4b7a95d18a51879040d27c694e6d40a7794c9cd46a57e3ebf507",
+    "npm/sqlike/features.ts": "92dd05d6f5d70292432a896437002db1972c9c52096fa75f328da8e7f13229d3",
+    "npm/sqlike/index.ts": "e55ed5ff8fc2be6300e56aeb7c609a063d7b46882bea3be81479c738a6b0fc71",
+    "npm/sqlike/package.json": "5f1b474727156682dd5ed17a0045b696c349261350297518efa91dd77f19d89d",
+    "npm/sqlike/runtime.ts": "4d6b5b3ea5b29c5e345e5dc4a45c7696fdea19f95e2fab12fca271e3dd603f66",
     "package.json": "3e4a7e1aeacbeea883521a2195fe400f70154f841f125e93fd040c54949ad5a9",
     "pnpm-lock.yaml": "62a9334c27b9f3876361edc3c9f74a0ed5e11866e28403cc065e1bdba7d70012",
     "scripts/build-npm-packages.ts": "ebb8f47b0c6b889f74f88e8098ec1f479a361f05270d6b4c252420a57a4e3f84",
+    "scripts/npm-publication.ts": "1d1a4eff30c1549238d0f77653b2ed875ad72e469f8c52b1424feebfd786194a",
     "scripts/publish-npm-packages.ts": "c6a7be700e8663234a0adc8a2b8988d633ea5be2cfd30979a612d90a7a3a12ef",
+    "src/defined-database-contract.ts": "ff7cdec20f9314866d6923e2fffb6eb7f983f802e240f123af36bfa7cbdc0114",
     "src/sqlike-runtime.ts": "3ac5b97e07f6fb44b6661c04628806e5479fa62ad101cd313985f7f621570f46",
-    "src/defined-database-contract.ts": "ff7cdec20f9314866d6923e2fffb6eb7f983f802e240f123af36bfa7cbdc0114"
+    "types/moon-compiler.d.ts": "c0ab70d30b3f905d764e52d03a14d900a8c8eb5d08231399d60c5b465c20635a",
+    "types/moon-defined.d.ts": "fdff638f3243c48eefc5a2daf6da709eeeb007a78eb99af477489b1db3b22be2",
+    "types/moon-runtime.d.ts": "8c1b87ef00b72918c1f2a3df518f95ca095e736a1418db43395bb0bdae6636b2",
+    "types/moon-sql.d.ts": "ba82fb71549e38cbf2e03ed7894e24b9ba42b284213f59cef198c693e7276dec",
+    "types/moonbit.d.ts": "e1bf6ed7ee9214c8166350c4eaa0ceca560ef5e0e099c00aaa7845a576b5808e",
+    "types/turso.d.ts": "dc2e244a5548561f4b544acba873b7d3e95dbbf57b21821a1772379cac1ff6a0"
   },
-  "measuredAt": "2026-11-16T03:04:33.319837+00:00"
+  "measuredAt": "2026-11-16T03:17:08.306278+00:00"
 }

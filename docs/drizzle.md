@@ -1,9 +1,9 @@
 # Drizzleを使う
 
-動的SQLの接続をDrizzleの同期SQLite driverとして使えます。対応するバージョンは`drizzle-orm@0.45.4`です。
+[SQLikeを導入](../README.md#インストール)した後、動的SQLの接続をDrizzleの同期SQLite driverとして使えます。対応するバージョンは`drizzle-orm@0.45.4`です。
 
 ```sh
-pnpm add @mizchi/sqlike drizzle-orm@0.45.4
+pnpm add drizzle-orm@0.45.4
 ```
 
 ```ts
