@@ -52,6 +52,30 @@ pnpm add @mizchi/litestream
 
 [計測条件・ファイル別サイズ](measurements/bundle-size-current.json)。再計測は`just bundle-size`で行えます。
 
+## SQLiteとの速度比較
+
+5,000行のテーブルでの**μs/操作**（小さいほど高速）、ウォームアップ後7サンプルの中央値です。通常SQLは毎回SQLをパース・prepareし、prepared列はSQLiteのstatementを再利用します。
+
+<!-- sqlite-benchmark:start -->
+| 処理 | SQLike JS・通常SQL | SQLike Wasm GC・通常SQL | SQLite WASM・通常SQL | SQLite WASM・prepared |
+| --- | ---: | ---: | ---: | ---: |
+| 主キーで1行検索 | 27.98 | 6.26 | 3.78 | 1.44 |
+| 存在しない主キーの検索 | 26.96 | 5.53 | 2.59 | 0.50 |
+| 二次索引の範囲検索・10行 | 49.89 | 13.65 | 14.61 | 10.41 |
+| ORDER BY id LIMIT 10 | 50.77 | 11.07 | 12.60 | 9.13 |
+| sum(n), count(*) | 93.74 | 50.86 | 106.82 | 104.34 |
+| 全5,000行取得 | 4,609.09 | 2,694.74 | 4,563.64 | 4,500.00 |
+| 索引列の更新＋範囲10行取得 | 66.25 | 18.71 | 19.14 | 11.97 |
+<!-- sqlite-benchmark:end -->
+
+2026-11-16、Apple M5 / macOS arm64 / Chromium 158.0.8127.18で計測。SQLike 0.1.0のMoonBit release出力（JSはminify前）と、SQLite WASM 3.54.1を同じページ内のインメモリDBで実行しています。
+
+主キー・二次索引はウォーム状態です。更新の行は索引列の値を交互に変更し、その後の範囲検索までを含みます。結果の型変換と復号を含むエンジンAPIの比較で、host wrapper、起動・Wasmコンパイル、IndexedDB、通信は含みません。計測前後にnative SQLite由来の期待値と更新結果を照合しています。
+
+通常SQLではパースとホスト境界のコストがあり、特に小さな検索でSQLiteとの差が残っています。実アプリの速度はクエリ・返却行数・永続化方式でも変わります。
+
+[生データ・クエリ・全サンプル](measurements/sqlite-speed-current.json)。再計測は`just sqlite-bench --profiles=false`で行えます。
+
 ## SQLを実行する
 
 ```ts
