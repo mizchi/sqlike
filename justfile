@@ -310,3 +310,15 @@ release-pack:
     moon -C packages/sqlike publish --dry-run
     moon -C packages/litestream publish --dry-run
     pnpm exec tsx scripts/check-release-pack.ts
+
+# Independent npm artifacts: exact tarballs, strict types, Node, Chromium IDB,
+# offline writes, Wasm GC, LTX and the optional Drizzle entry.
+npm-check:
+    pnpm test:core
+    pnpm test:npm
+    pnpm typecheck
+
+# First publication needs an authenticated npm account and may request 2FA.
+npm-publish: npm-check
+    pnpm exec tsx scripts/publish-npm-packages.ts
+    SQLIKE_NPM_REGISTRY=1 pnpm exec tsx --test tests/npm-packages.test.ts

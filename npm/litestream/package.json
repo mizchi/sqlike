@@ -1,0 +1,58 @@
+{
+  "name": "@mizchi/litestream",
+  "version": "0.1.0",
+  "description": "Database-independent offline synchronization, SQLite Session codecs and LTX replication",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=24"
+  },
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/types/npm/litestream/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/npm/litestream/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./protocol": {
+      "types": "./dist/types/npm/litestream/protocol.d.ts",
+      "import": "./dist/protocol.js"
+    },
+    "./ltx": {
+      "types": "./dist/types/npm/litestream/ltx.d.ts",
+      "import": "./dist/ltx.js"
+    },
+    "./node": {
+      "types": "./dist/types/npm/litestream/node.d.ts",
+      "import": "./dist/node.js"
+    },
+    "./engine": {
+      "types": "./dist/types/_build/js/release/build/mizchi/litestream/litestream.d.ts",
+      "import": "./dist/engine.js"
+    },
+    "./wasm/litestream.wasm": "./dist/wasm/litestream.wasm",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mizchi/sqlike.git",
+    "directory": "npm/litestream"
+  },
+  "homepage": "https://github.com/mizchi/sqlike",
+  "bugs": {
+    "url": "https://github.com/mizchi/sqlike/issues"
+  },
+  "dependencies": {
+    "@noble/hashes": "^2.4.0"
+  }
+}

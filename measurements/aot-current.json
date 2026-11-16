@@ -1,12 +1,12 @@
 {
   "sourceHashes": {
-    "package.json": "b586b167fe20b075b1ac31216be6af17316e0642869ae1315c91733396206845",
-    "pnpm-lock.yaml": "6d494af239141d7fc70115e739d57c83fbf23be0ada6e23ec13d7dfe8f0e2040",
+    "package.json": "3e4a7e1aeacbeea883521a2195fe400f70154f841f125e93fd040c54949ad5a9",
+    "pnpm-lock.yaml": "62a9334c27b9f3876361edc3c9f74a0ed5e11866e28403cc065e1bdba7d70012",
     "scripts/measure-aot.ts": "cabede7fdd300160c612c6d542cf4396a8b103506b9df979b87e9bfc2058aaac",
     "scripts/measurement-manifest.ts": "615c0ab32c0b2e01c57ea1be690a2a08d2e9401b9b0c5d93574520253c16acdb"
   },
   "format": 1,
-  "measuredAt": "2026-11-15T20:56:01.928Z",
+  "measuredAt": "2026-11-16T02:30:18.837Z",
   "environment": {
     "node": "v24.22.2",
     "chromium": "158.0.8127.18",
@@ -67,7 +67,7 @@
     {
       "engine": "aot",
       "run": 0,
-      "coldReadyMs": 125.29999995231628,
+      "coldReadyMs": 126.79999995231628,
       "wireBytes": 116400,
       "decodedBytes": 595356,
       "requests": [
@@ -158,15 +158,15 @@
           "bytes": 3823
         }
       ],
-      "offlineReadyMs": 44.169999957084656,
-      "durable100Ms": 24.34500002861023,
-      "read100Ms": 2.6850000619888306,
-      "checkpointMs": 8.5
+      "offlineReadyMs": 43.20999991893768,
+      "durable100Ms": 24.225000023841858,
+      "read100Ms": 2.590000033378601,
+      "checkpointMs": 8.245000004768372
     },
     {
       "engine": "aot",
       "run": 1,
-      "coldReadyMs": 91.07000005245209,
+      "coldReadyMs": 89.26499998569489,
       "wireBytes": 116400,
       "decodedBytes": 595356,
       "requests": [
@@ -257,15 +257,15 @@
           "bytes": 3823
         }
       ],
-      "offlineReadyMs": 40.38499999046326,
-      "durable100Ms": 24.290000081062317,
-      "read100Ms": 2.7649999856948853,
-      "checkpointMs": 8.105000019073486
+      "offlineReadyMs": 39.05999994277954,
+      "durable100Ms": 24.180000066757202,
+      "read100Ms": 2.569999933242798,
+      "checkpointMs": 8.18500006198883
     },
     {
       "engine": "aot",
       "run": 2,
-      "coldReadyMs": 91.8050000667572,
+      "coldReadyMs": 92.05999994277954,
       "wireBytes": 116400,
       "decodedBytes": 595356,
       "requests": [
@@ -312,15 +312,15 @@
           "status": 200
         },
         {
-          "path": "/lite/assets/aot-worker-DL74ww0l.js",
-          "raw": 573690,
-          "wire": 108085,
-          "status": 200
-        },
-        {
           "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
           "raw": 670,
           "wire": 325,
+          "status": 200
+        },
+        {
+          "path": "/lite/assets/aot-worker-DL74ww0l.js",
+          "raw": 573690,
+          "wire": 108085,
           "status": 200
         },
         {
@@ -356,15 +356,15 @@
           "bytes": 3823
         }
       ],
-      "offlineReadyMs": 40.6599999666214,
-      "durable100Ms": 24.164999961853027,
-      "read100Ms": 2.6500000953674316,
-      "checkpointMs": 8.409999966621399
+      "offlineReadyMs": 39.675000071525574,
+      "durable100Ms": 24.835000038146973,
+      "read100Ms": 2.709999918937683,
+      "checkpointMs": 8.165000081062317
     },
     {
       "engine": "sqlike",
       "run": 0,
-      "coldReadyMs": 90.375,
+      "coldReadyMs": 89.5550000667572,
       "wireBytes": 172709,
       "decodedBytes": 820218,
       "requests": [
@@ -411,15 +411,15 @@
           "status": 200
         },
         {
-          "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
-          "raw": 670,
-          "wire": 325,
-          "status": 200
-        },
-        {
           "path": "/assets/worker-ByV3QgNc.js",
           "raw": 186329,
           "wire": 48431,
+          "status": 200
+        },
+        {
+          "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+          "raw": 670,
+          "wire": 325,
           "status": 200
         },
         {
@@ -475,12 +475,12 @@
           "bytes": 4502
         }
       ],
-      "offlineReadyMs": 37.43499994277954
+      "offlineReadyMs": 37.920000076293945
     },
     {
       "engine": "sqlike",
       "run": 1,
-      "coldReadyMs": 91.75,
+      "coldReadyMs": 88.91500008106232,
       "wireBytes": 172709,
       "decodedBytes": 820218,
       "requests": [
@@ -591,12 +591,12 @@
           "bytes": 4502
         }
       ],
-      "offlineReadyMs": 37.25999999046326
+      "offlineReadyMs": 40.20999991893768
     },
     {
       "engine": "sqlike",
       "run": 2,
-      "coldReadyMs": 91.64999997615814,
+      "coldReadyMs": 91.33500003814697,
       "wireBytes": 172709,
       "decodedBytes": 820218,
       "requests": [
@@ -707,12 +707,12 @@
           "bytes": 4502
         }
       ],
-      "offlineReadyMs": 37.484999895095825
+      "offlineReadyMs": 37.31499993801117
     },
     {
       "engine": "sqlite",
       "run": 0,
-      "coldReadyMs": 125.32499992847443,
+      "coldReadyMs": 125.06000006198883,
       "wireBytes": 486360,
       "decodedBytes": 1385545,
       "requests": [
@@ -753,9 +753,9 @@
           "status": 200
         },
         {
-          "path": "/assets/worker-ByV3QgNc.js",
-          "raw": 186329,
-          "wire": 48431,
+          "path": "/assets/main-10BPCP6t.js",
+          "raw": 12677,
+          "wire": 3143,
           "status": 200
         },
         {
@@ -765,9 +765,9 @@
           "status": 200
         },
         {
-          "path": "/assets/main-10BPCP6t.js",
-          "raw": 12677,
-          "wire": 3143,
+          "path": "/assets/worker-ByV3QgNc.js",
+          "raw": 186329,
+          "wire": 48431,
           "status": 200
         },
         {
@@ -833,12 +833,12 @@
           "bytes": 32462
         }
       ],
-      "offlineReadyMs": 54.37000000476837
+      "offlineReadyMs": 54.44000005722046
     },
     {
       "engine": "sqlite",
       "run": 1,
-      "coldReadyMs": 109.13499999046326,
+      "coldReadyMs": 105.97500002384186,
       "wireBytes": 486360,
       "decodedBytes": 1385545,
       "requests": [
@@ -959,12 +959,12 @@
           "bytes": 32462
         }
       ],
-      "offlineReadyMs": 53.875
+      "offlineReadyMs": 55.72000002861023
     },
     {
       "engine": "sqlite",
       "run": 2,
-      "coldReadyMs": 150.39999997615814,
+      "coldReadyMs": 105.64499998092651,
       "wireBytes": 486360,
       "decodedBytes": 1385545,
       "requests": [
@@ -1085,27 +1085,27 @@
           "bytes": 32462
         }
       ],
-      "offlineReadyMs": 54.25999999046326
+      "offlineReadyMs": 55.15499997138977
     }
   ],
   "summary": [
     {
       "engine": "aot",
       "wireBytes": 116400,
-      "coldReadyMs": 91.8050000667572,
-      "offlineReadyMs": 40.6599999666214
+      "coldReadyMs": 92.05999994277954,
+      "offlineReadyMs": 39.675000071525574
     },
     {
       "engine": "sqlike",
       "wireBytes": 172709,
-      "coldReadyMs": 91.64999997615814,
-      "offlineReadyMs": 37.43499994277954
+      "coldReadyMs": 89.5550000667572,
+      "offlineReadyMs": 37.920000076293945
     },
     {
       "engine": "sqlite",
       "wireBytes": 486360,
-      "coldReadyMs": 125.32499992847443,
-      "offlineReadyMs": 54.25999999046326
+      "coldReadyMs": 105.97500002384186,
+      "offlineReadyMs": 55.15499997138977
     }
   ],
   "cpu": [
@@ -1114,140 +1114,140 @@
       "engine": "aot",
       "run": 0,
       "iterations": 10000,
-      "milliseconds": 41.21962499999972
+      "milliseconds": 42.069250000000466
     },
     {
       "name": "constant",
       "engine": "dynamic",
       "run": 0,
       "iterations": 10000,
-      "milliseconds": 122.00620899999922
+      "milliseconds": 117.19599999999991
     },
     {
       "name": "constant",
       "engine": "dynamic",
       "run": 1,
       "iterations": 10000,
-      "milliseconds": 114.35591700000077
+      "milliseconds": 109.76795800000036
     },
     {
       "name": "constant",
       "engine": "aot",
       "run": 1,
       "iterations": 10000,
-      "milliseconds": 36.707124999998996
+      "milliseconds": 34.08849999999984
     },
     {
       "name": "constant",
       "engine": "aot",
       "run": 2,
       "iterations": 10000,
-      "milliseconds": 34.491291000000274
+      "milliseconds": 33.93983300000036
     },
     {
       "name": "constant",
       "engine": "dynamic",
       "run": 2,
       "iterations": 10000,
-      "milliseconds": 106.43791700000111
+      "milliseconds": 105.2840840000008
     },
     {
       "name": "constant",
       "engine": "dynamic",
       "run": 3,
       "iterations": 10000,
-      "milliseconds": 104.97191600000042
+      "milliseconds": 103.79237499999908
     },
     {
       "name": "constant",
       "engine": "aot",
       "run": 3,
       "iterations": 10000,
-      "milliseconds": 31.23741699999846
+      "milliseconds": 31.41808300000048
     },
     {
       "name": "constant",
       "engine": "aot",
       "run": 4,
       "iterations": 10000,
-      "milliseconds": 31.465958999999202
+      "milliseconds": 30.89337500000147
     },
     {
       "name": "constant",
       "engine": "dynamic",
       "run": 4,
       "iterations": 10000,
-      "milliseconds": 104.30816599999889
+      "milliseconds": 104.61474999999882
     },
     {
       "name": "point",
       "engine": "aot",
       "run": 0,
       "iterations": 2000,
-      "milliseconds": 5.858416999999463
+      "milliseconds": 5.677207999999155
     },
     {
       "name": "point",
       "engine": "dynamic",
       "run": 0,
       "iterations": 2000,
-      "milliseconds": 34.418791999998575
+      "milliseconds": 34.38850000000093
     },
     {
       "name": "point",
       "engine": "dynamic",
       "run": 1,
       "iterations": 2000,
-      "milliseconds": 34.03179099999943
+      "milliseconds": 34.1502500000006
     },
     {
       "name": "point",
       "engine": "aot",
       "run": 1,
       "iterations": 2000,
-      "milliseconds": 6.68212499999936
+      "milliseconds": 5.620707999998558
     },
     {
       "name": "point",
       "engine": "aot",
       "run": 2,
       "iterations": 2000,
-      "milliseconds": 7.465791999999055
+      "milliseconds": 5.594750000000204
     },
     {
       "name": "point",
       "engine": "dynamic",
       "run": 2,
       "iterations": 2000,
-      "milliseconds": 36.10725000000093
+      "milliseconds": 33.76024999999936
     },
     {
       "name": "point",
       "engine": "dynamic",
       "run": 3,
       "iterations": 2000,
-      "milliseconds": 35.69366600000103
+      "milliseconds": 33.42420799999854
     },
     {
       "name": "point",
       "engine": "aot",
       "run": 3,
       "iterations": 2000,
-      "milliseconds": 5.929792000000816
+      "milliseconds": 5.618624999999156
     },
     {
       "name": "point",
       "engine": "aot",
       "run": 4,
       "iterations": 2000,
-      "milliseconds": 5.898458000001483
+      "milliseconds": 5.546041999999943
     },
     {
       "name": "point",
       "engine": "dynamic",
       "run": 4,
       "iterations": 2000,
-      "milliseconds": 35.32716699999946
+      "milliseconds": 33.227624999999534
     }
   ]
 }

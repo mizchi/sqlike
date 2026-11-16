@@ -1,0 +1,13 @@
+export { SyncEngine, SyncError, applyChanges, importSnapshot, validateChanges } from "../../src/engine.ts";
+export { OfflineClient, RemoteError, statement } from "../../src/client.ts";
+export type { Transport, PreparedSnapshot, SessionDatabase } from "../../src/client.ts";
+export { HttpTransport, PeerTransport, hostPeer } from "../../src/transport.ts";
+export { LtxTransport } from "../../src/ltx-transport.ts";
+export { IndexedReplicaStore, ReplicaVersionError } from "../../adapters/indexeddb-store.ts";
+export { IndexedDbImages } from "../../adapters/indexeddb-images.ts";
+export { withMaterializedReplication } from "../../src/materialized-replication.ts";
+export { SyncFailure } from "../../src/errors.ts";
+export * from "../../src/protocol.ts";
+export type * from "../../src/contract.ts";
+export type * from "../../src/safety-contract.ts";
+export type * from "../../src/persistence-contract.ts";

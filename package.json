@@ -14,7 +14,7 @@
     "build:lite": "pnpm build:core && pnpm build:catalog && pnpm build:defined && vite build --mode lite && node scripts/service-worker.mjs",
     "measure:aot": "pnpm build && pnpm build:moon-wasm && tsx scripts/measure-aot.ts",
     "test:core": "moon test --target js && moon test --target wasm-gc",
-    "test:unit": "pnpm build:core && pnpm build:moon-wasm && node --import tsx --test tests/*.test.ts",
+    "test:unit": "pnpm build:npm && node --import tsx --test tests/*.test.ts",
     "test:e2e": "playwright test",
     "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.workers.json",
     "dev": "pnpm build:core && vite --host 127.0.0.1",
@@ -27,7 +27,9 @@
     "test:conformance": "pnpm build && pnpm build:moon-wasm && node --import tsx --test tests/sqllogictest.test.ts tests/sqlite-expressions.test.ts tests/sqlite-float.test.ts tests/sqlite-conformance-*.test.ts tests/sqlike-scalars.test.ts && playwright test e2e/sqlite-conformance.spec.ts",
     "audit:sqlite": "pnpm build && pnpm build:moon-wasm && tsx scripts/audit-sqlite.ts && playwright test --config playwright.audit.config.ts && tsx scripts/check-sqlite-audit.ts",
     "build:moon-wasm": "moon build --target wasm-gc --release",
-    "build:defined": "tsx scripts/compile-defined.ts examples/notes/catalog.json examples/notes/defined.generated --sqlite-export"
+    "build:defined": "tsx scripts/compile-defined.ts examples/notes/catalog.json examples/notes/defined.generated --sqlite-export",
+    "build:npm": "pnpm build:core && pnpm build:moon-wasm && tsx scripts/build-npm-packages.ts",
+    "test:npm": "pnpm build:npm && tsx --test tests/npm-*.test.ts"
   },
   "dependencies": {
     "@noble/hashes": "^2.4.0",

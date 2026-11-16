@@ -1,4 +1,4 @@
-import type * as defaultRuntime from "../_build/js/release/build/mizchi/sqlike/defined/defined.js";
+import type { DefinedRuntime, DefinedExecution, DefinedDatabaseFactory } from "../src/defined-database-contract.ts";
 import type { DefinedCatalog } from "../src/defined-contract.ts";
 import type { Value, ResultCell } from "../src/contract.ts";
 import type {
@@ -12,13 +12,7 @@ import {
   toBase64,
   fromBase64,
 } from "../src/aot-values.ts";
-export type DefinedRuntime = typeof defaultRuntime;
-export interface DefinedExecution {
-  names: string[];
-  rows: Value[][];
-  readonly: boolean;
-  changes: number;
-}
+export type { DefinedRuntime, DefinedExecution } from "../src/defined-database-contract.ts";
 interface Info {
   schemaId: string;
   programId: string;
@@ -51,7 +45,7 @@ const decode = <T>(text: string): T => {
   return value;
 };
 /** Bind a runtime once, without importing a default engine. */
-export function createDefinedDatabase(defaultRuntime: DefinedRuntime) {
+export function createDefinedDatabase(defaultRuntime: DefinedRuntime): DefinedDatabaseFactory {
   /** Fixed-schema, named-statement execution. Persistent publication uses the
    * existing strict ImageStore/CAS boundary; core images contain no schema. */
   class DefinedDatabase {

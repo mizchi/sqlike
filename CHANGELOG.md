@@ -4,6 +4,8 @@
 
 ### Added
 
+- npm向けの独立した `@mizchi/sqlike` / `@mizchi/litestream` パッケージ定義、型、JS / Wasm asset、配布tarballの外部consumer検証。通常SQL・parserを含まないbinary実行・compiler・Drizzle・LTXをentryで分離。
+
 - 独立したMoonBitモジュール `mizchi/sqlike` と `mizchi/litestream`。JS / Wasm GCに対応。
 - SQLiteサブセットの動的SQL・AOT実行、RETURNING、index、基本trigger、FK、STRICT、RIGHT / FULL JOIN。
 - 固定DDLとprepared statementのバイナリ定義、パーサを含まない実行ランタイム、機能別ビルドとOxc圧縮。

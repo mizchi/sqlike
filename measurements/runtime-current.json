@@ -1,14 +1,14 @@
 {
   "sourceHashes": {
-    "package.json": "b586b167fe20b075b1ac31216be6af17316e0642869ae1315c91733396206845",
-    "pnpm-lock.yaml": "6d494af239141d7fc70115e739d57c83fbf23be0ada6e23ec13d7dfe8f0e2040",
+    "package.json": "3e4a7e1aeacbeea883521a2195fe400f70154f841f125e93fd040c54949ad5a9",
+    "pnpm-lock.yaml": "62a9334c27b9f3876361edc3c9f74a0ed5e11866e28403cc065e1bdba7d70012",
     "scripts/measure-runtime.ts": "36b0a03f11e355368d44b8b96e79d35117982ed5ddb13ac9e9c34c76e2c6b7b8",
     "scripts/measurement-manifest.ts": "615c0ab32c0b2e01c57ea1be690a2a08d2e9401b9b0c5d93574520253c16acdb",
     "scripts/runtime-cdp.ts": "28d3d2bb0e2dad888ca8e980818b41581b4aef794e6ca5a2ca3559a9fa719271",
     "scripts/runtime-metrics.ts": "1c65e8f456c287dc16f19112c5861eb7879e0180be20f7aed6ea2fe3d5075fb4"
   },
   "format": 1,
-  "measuredAt": "2026-11-15T20:56:49.107Z",
+  "measuredAt": "2026-11-16T02:31:06.743Z",
   "environment": {
     "node": "v24.22.2",
     "chromium": "158.0.8127.18",
@@ -672,8 +672,8 @@
     {
       "engine": "sqlite",
       "run": 0,
-      "coldReadyMs": 137.5199999809265,
-      "offlineCapableMs": 141.54499995708466,
+      "coldReadyMs": 137.4099999666214,
+      "offlineCapableMs": 149.0700000524521,
       "readyNetwork": {
         "requests": [
           {
@@ -869,7 +869,7 @@
         "decodedBytes": 1385545
       },
       "cache": {
-        "milliseconds": 141.54499995708466,
+        "milliseconds": 149.0700000524521,
         "bytes": 1369379,
         "files": [
           {
@@ -910,19 +910,19 @@
           }
         ]
       },
-      "warmReadyMs": 80.06000006198883,
+      "warmReadyMs": 97.1450001001358,
       "warmNetwork": {
         "requests": [],
         "wireBytes": 0,
         "decodedBytes": 0
       },
-      "offlineReadyMs": 64.41999995708466
+      "offlineReadyMs": 65.52999997138977
     },
     {
       "engine": "sqlite",
       "run": 1,
-      "coldReadyMs": 132.60000002384186,
-      "offlineCapableMs": 136.24500000476837,
+      "coldReadyMs": 131.7850000858307,
+      "offlineCapableMs": 135.64000010490417,
       "readyNetwork": {
         "requests": [
           {
@@ -1118,7 +1118,7 @@
         "decodedBytes": 1385545
       },
       "cache": {
-        "milliseconds": 136.24500000476837,
+        "milliseconds": 135.64000010490417,
         "bytes": 1369379,
         "files": [
           {
@@ -1159,19 +1159,19 @@
           }
         ]
       },
-      "warmReadyMs": 61.139999985694885,
+      "warmReadyMs": 61.83999991416931,
       "warmNetwork": {
         "requests": [],
         "wireBytes": 0,
         "decodedBytes": 0
       },
-      "offlineReadyMs": 60.950000047683716
+      "offlineReadyMs": 61.60000002384186
     },
     {
       "engine": "sqlite",
       "run": 2,
-      "coldReadyMs": 131.6800000667572,
-      "offlineCapableMs": 135.15000009536743,
+      "coldReadyMs": 119.39999997615814,
+      "offlineCapableMs": 122.98500001430511,
       "readyNetwork": {
         "requests": [
           {
@@ -1217,13 +1217,6 @@
             "status": 200
           },
           {
-            "path": "/assets/main-10BPCP6t.js",
-            "rawBytes": 12677,
-            "wireBytes": 3143,
-            "encoding": "br",
-            "status": 200
-          },
-          {
             "path": "/assets/worker-ByV3QgNc.js",
             "rawBytes": 186329,
             "wireBytes": 48431,
@@ -1234,6 +1227,13 @@
             "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
             "rawBytes": 670,
             "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-10BPCP6t.js",
+            "rawBytes": 12677,
+            "wireBytes": 3143,
             "encoding": "br",
             "status": 200
           },
@@ -1314,13 +1314,6 @@
             "status": 200
           },
           {
-            "path": "/assets/main-10BPCP6t.js",
-            "rawBytes": 12677,
-            "wireBytes": 3143,
-            "encoding": "br",
-            "status": 200
-          },
-          {
             "path": "/assets/worker-ByV3QgNc.js",
             "rawBytes": 186329,
             "wireBytes": 48431,
@@ -1331,6 +1324,13 @@
             "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
             "rawBytes": 670,
             "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-10BPCP6t.js",
+            "rawBytes": 12677,
+            "wireBytes": 3143,
             "encoding": "br",
             "status": 200
           },
@@ -1367,7 +1367,7 @@
         "decodedBytes": 1385545
       },
       "cache": {
-        "milliseconds": 135.15000009536743,
+        "milliseconds": 122.98500001430511,
         "bytes": 1369379,
         "files": [
           {
@@ -1408,19 +1408,19 @@
           }
         ]
       },
-      "warmReadyMs": 63.70999991893768,
+      "warmReadyMs": 61.829999923706055,
       "warmNetwork": {
         "requests": [],
         "wireBytes": 0,
         "decodedBytes": 0
       },
-      "offlineReadyMs": 61.08500003814697
+      "offlineReadyMs": 61.5900000333786
     },
     {
       "engine": "turso",
       "run": 0,
-      "coldReadyMs": 483.0199999809265,
-      "offlineCapableMs": 488.9800000190735,
+      "coldReadyMs": 519.710000038147,
+      "offlineCapableMs": 525.8600000143051,
       "readyNetwork": {
         "requests": [
           {
@@ -1473,16 +1473,16 @@
             "status": 200
           },
           {
-            "path": "/assets/main-10BPCP6t.js",
-            "rawBytes": 12677,
-            "wireBytes": 3143,
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
             "encoding": "br",
             "status": 200
           },
           {
-            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
-            "rawBytes": 670,
-            "wireBytes": 325,
+            "path": "/assets/main-10BPCP6t.js",
+            "rawBytes": 12677,
+            "wireBytes": 3143,
             "encoding": "br",
             "status": 200
           },
@@ -1563,16 +1563,16 @@
             "status": 200
           },
           {
-            "path": "/assets/main-10BPCP6t.js",
-            "rawBytes": 12677,
-            "wireBytes": 3143,
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
             "encoding": "br",
             "status": 200
           },
           {
-            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
-            "rawBytes": 670,
-            "wireBytes": 325,
+            "path": "/assets/main-10BPCP6t.js",
+            "rawBytes": 12677,
+            "wireBytes": 3143,
             "encoding": "br",
             "status": 200
           },
@@ -1602,7 +1602,7 @@
         "decodedBytes": 16323326
       },
       "cache": {
-        "milliseconds": 488.9800000190735,
+        "milliseconds": 525.8600000143051,
         "bytes": 16307160,
         "files": [
           {
@@ -1639,19 +1639,19 @@
           }
         ]
       },
-      "warmReadyMs": 395.7350000143051,
+      "warmReadyMs": 409.1949999332428,
       "warmNetwork": {
         "requests": [],
         "wireBytes": 0,
         "decodedBytes": 0
       },
-      "offlineReadyMs": 276.1749999523163
+      "offlineReadyMs": 279.70500004291534
     },
     {
       "engine": "turso",
       "run": 1,
-      "coldReadyMs": 497.8049999475479,
-      "offlineCapableMs": 504.8600000143051,
+      "coldReadyMs": 532.4099999666214,
+      "offlineCapableMs": 539.7350000143051,
       "readyNetwork": {
         "requests": [
           {
@@ -1697,13 +1697,6 @@
             "status": 200
           },
           {
-            "path": "/assets/main-10BPCP6t.js",
-            "rawBytes": 12677,
-            "wireBytes": 3143,
-            "encoding": "br",
-            "status": 200
-          },
-          {
             "path": "/assets/worker-ByV3QgNc.js",
             "rawBytes": 186329,
             "wireBytes": 48431,
@@ -1714,6 +1707,13 @@
             "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
             "rawBytes": 670,
             "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-10BPCP6t.js",
+            "rawBytes": 12677,
+            "wireBytes": 3143,
             "encoding": "br",
             "status": 200
           },
@@ -1787,13 +1787,6 @@
             "status": 200
           },
           {
-            "path": "/assets/main-10BPCP6t.js",
-            "rawBytes": 12677,
-            "wireBytes": 3143,
-            "encoding": "br",
-            "status": 200
-          },
-          {
             "path": "/assets/worker-ByV3QgNc.js",
             "rawBytes": 186329,
             "wireBytes": 48431,
@@ -1804,6 +1797,13 @@
             "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
             "rawBytes": 670,
             "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-10BPCP6t.js",
+            "rawBytes": 12677,
+            "wireBytes": 3143,
             "encoding": "br",
             "status": 200
           },
@@ -1833,7 +1833,7 @@
         "decodedBytes": 16323326
       },
       "cache": {
-        "milliseconds": 504.8600000143051,
+        "milliseconds": 539.7350000143051,
         "bytes": 16307160,
         "files": [
           {
@@ -1870,19 +1870,19 @@
           }
         ]
       },
-      "warmReadyMs": 410.8250000476837,
+      "warmReadyMs": 427.625,
       "warmNetwork": {
         "requests": [],
         "wireBytes": 0,
         "decodedBytes": 0
       },
-      "offlineReadyMs": 280.2699999809265
+      "offlineReadyMs": 295.57999992370605
     },
     {
       "engine": "turso",
       "run": 2,
-      "coldReadyMs": 497.88499999046326,
-      "offlineCapableMs": 504.8600000143051,
+      "coldReadyMs": 515.6449999809265,
+      "offlineCapableMs": 521.7599999904633,
       "readyNetwork": {
         "requests": [
           {
@@ -1935,16 +1935,16 @@
             "status": 200
           },
           {
-            "path": "/assets/worker-ByV3QgNc.js",
-            "rawBytes": 186329,
-            "wireBytes": 48431,
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
             "encoding": "br",
             "status": 200
           },
           {
-            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
-            "rawBytes": 670,
-            "wireBytes": 325,
+            "path": "/assets/worker-ByV3QgNc.js",
+            "rawBytes": 186329,
+            "wireBytes": 48431,
             "encoding": "br",
             "status": 200
           },
@@ -2025,16 +2025,16 @@
             "status": 200
           },
           {
-            "path": "/assets/worker-ByV3QgNc.js",
-            "rawBytes": 186329,
-            "wireBytes": 48431,
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
             "encoding": "br",
             "status": 200
           },
           {
-            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
-            "rawBytes": 670,
-            "wireBytes": 325,
+            "path": "/assets/worker-ByV3QgNc.js",
+            "rawBytes": 186329,
+            "wireBytes": 48431,
             "encoding": "br",
             "status": 200
           },
@@ -2064,7 +2064,7 @@
         "decodedBytes": 16323326
       },
       "cache": {
-        "milliseconds": 504.8600000143051,
+        "milliseconds": 521.7599999904633,
         "bytes": 16307160,
         "files": [
           {
@@ -2101,19 +2101,19 @@
           }
         ]
       },
-      "warmReadyMs": 406.4249999523163,
+      "warmReadyMs": 394.4850000143051,
       "warmNetwork": {
         "requests": [],
         "wireBytes": 0,
         "decodedBytes": 0
       },
-      "offlineReadyMs": 263.81500005722046
+      "offlineReadyMs": 260.9100000858307
     },
     {
       "engine": "sqlike",
       "run": 0,
-      "coldReadyMs": 97.51999998092651,
-      "offlineCapableMs": 100.58999991416931,
+      "coldReadyMs": 98.6800000667572,
+      "offlineCapableMs": 102.06500005722046,
       "readyNetwork": {
         "requests": [
           {
@@ -2159,6 +2159,13 @@
             "status": 200
           },
           {
+            "path": "/assets/main-10BPCP6t.js",
+            "rawBytes": 12677,
+            "wireBytes": 3143,
+            "encoding": "br",
+            "status": 200
+          },
+          {
             "path": "/assets/worker-ByV3QgNc.js",
             "rawBytes": 186329,
             "wireBytes": 48431,
@@ -2169,13 +2176,6 @@
             "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
             "rawBytes": 670,
             "wireBytes": 325,
-            "encoding": "br",
-            "status": 200
-          },
-          {
-            "path": "/assets/main-10BPCP6t.js",
-            "rawBytes": 12677,
-            "wireBytes": 3143,
             "encoding": "br",
             "status": 200
           },
@@ -2249,6 +2249,13 @@
             "status": 200
           },
           {
+            "path": "/assets/main-10BPCP6t.js",
+            "rawBytes": 12677,
+            "wireBytes": 3143,
+            "encoding": "br",
+            "status": 200
+          },
+          {
             "path": "/assets/worker-ByV3QgNc.js",
             "rawBytes": 186329,
             "wireBytes": 48431,
@@ -2259,13 +2266,6 @@
             "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
             "rawBytes": 670,
             "wireBytes": 325,
-            "encoding": "br",
-            "status": 200
-          },
-          {
-            "path": "/assets/main-10BPCP6t.js",
-            "rawBytes": 12677,
-            "wireBytes": 3143,
             "encoding": "br",
             "status": 200
           },
@@ -2295,7 +2295,7 @@
         "decodedBytes": 820218
       },
       "cache": {
-        "milliseconds": 100.58999991416931,
+        "milliseconds": 102.06500005722046,
         "bytes": 804052,
         "files": [
           {
@@ -2332,19 +2332,19 @@
           }
         ]
       },
-      "warmReadyMs": 43.36500000953674,
+      "warmReadyMs": 98.24000000953674,
       "warmNetwork": {
         "requests": [],
         "wireBytes": 0,
         "decodedBytes": 0
       },
-      "offlineReadyMs": 47.420000076293945
+      "offlineReadyMs": 92.04999995231628
     },
     {
       "engine": "sqlike",
       "run": 1,
-      "coldReadyMs": 101.04000008106232,
-      "offlineCapableMs": 104.20000004768372,
+      "coldReadyMs": 99.57500004768372,
+      "offlineCapableMs": 102.48000001907349,
       "readyNetwork": {
         "requests": [
           {
@@ -2390,13 +2390,6 @@
             "status": 200
           },
           {
-            "path": "/assets/main-10BPCP6t.js",
-            "rawBytes": 12677,
-            "wireBytes": 3143,
-            "encoding": "br",
-            "status": 200
-          },
-          {
             "path": "/assets/worker-ByV3QgNc.js",
             "rawBytes": 186329,
             "wireBytes": 48431,
@@ -2407,6 +2400,13 @@
             "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
             "rawBytes": 670,
             "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-10BPCP6t.js",
+            "rawBytes": 12677,
+            "wireBytes": 3143,
             "encoding": "br",
             "status": 200
           },
@@ -2480,13 +2480,6 @@
             "status": 200
           },
           {
-            "path": "/assets/main-10BPCP6t.js",
-            "rawBytes": 12677,
-            "wireBytes": 3143,
-            "encoding": "br",
-            "status": 200
-          },
-          {
             "path": "/assets/worker-ByV3QgNc.js",
             "rawBytes": 186329,
             "wireBytes": 48431,
@@ -2497,6 +2490,13 @@
             "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
             "rawBytes": 670,
             "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-10BPCP6t.js",
+            "rawBytes": 12677,
+            "wireBytes": 3143,
             "encoding": "br",
             "status": 200
           },
@@ -2526,7 +2526,7 @@
         "decodedBytes": 820218
       },
       "cache": {
-        "milliseconds": 104.20000004768372,
+        "milliseconds": 102.48000001907349,
         "bytes": 804052,
         "files": [
           {
@@ -2563,19 +2563,19 @@
           }
         ]
       },
-      "warmReadyMs": 45.62999999523163,
+      "warmReadyMs": 61.3050000667572,
       "warmNetwork": {
         "requests": [],
         "wireBytes": 0,
         "decodedBytes": 0
       },
-      "offlineReadyMs": 46.05999994277954
+      "offlineReadyMs": 44.27999997138977
     },
     {
       "engine": "sqlike",
       "run": 2,
-      "coldReadyMs": 98.42000007629395,
-      "offlineCapableMs": 101.54500007629395,
+      "coldReadyMs": 98.5,
+      "offlineCapableMs": 101.69500005245209,
       "readyNetwork": {
         "requests": [
           {
@@ -2621,6 +2621,13 @@
             "status": 200
           },
           {
+            "path": "/assets/main-10BPCP6t.js",
+            "rawBytes": 12677,
+            "wireBytes": 3143,
+            "encoding": "br",
+            "status": 200
+          },
+          {
             "path": "/assets/worker-ByV3QgNc.js",
             "rawBytes": 186329,
             "wireBytes": 48431,
@@ -2631,13 +2638,6 @@
             "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
             "rawBytes": 670,
             "wireBytes": 325,
-            "encoding": "br",
-            "status": 200
-          },
-          {
-            "path": "/assets/main-10BPCP6t.js",
-            "rawBytes": 12677,
-            "wireBytes": 3143,
             "encoding": "br",
             "status": 200
           },
@@ -2711,6 +2711,13 @@
             "status": 200
           },
           {
+            "path": "/assets/main-10BPCP6t.js",
+            "rawBytes": 12677,
+            "wireBytes": 3143,
+            "encoding": "br",
+            "status": 200
+          },
+          {
             "path": "/assets/worker-ByV3QgNc.js",
             "rawBytes": 186329,
             "wireBytes": 48431,
@@ -2721,13 +2728,6 @@
             "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
             "rawBytes": 670,
             "wireBytes": 325,
-            "encoding": "br",
-            "status": 200
-          },
-          {
-            "path": "/assets/main-10BPCP6t.js",
-            "rawBytes": 12677,
-            "wireBytes": 3143,
             "encoding": "br",
             "status": 200
           },
@@ -2757,7 +2757,7 @@
         "decodedBytes": 820218
       },
       "cache": {
-        "milliseconds": 101.54500007629395,
+        "milliseconds": 101.69500005245209,
         "bytes": 804052,
         "files": [
           {
@@ -2794,13 +2794,13 @@
           }
         ]
       },
-      "warmReadyMs": 43.74500000476837,
+      "warmReadyMs": 43.825000047683716,
       "warmNetwork": {
         "requests": [],
         "wireBytes": 0,
         "decodedBytes": 0
       },
-      "offlineReadyMs": 45.169999957084656
+      "offlineReadyMs": 47.8199999332428
     }
   ],
   "memory": [
@@ -2812,7 +2812,7 @@
           "url": "",
           "heap": {
             "usedSize": 1946808,
-            "totalSize": 2523136,
+            "totalSize": 2785280,
             "embedderHeapUsedSize": 417920,
             "backingStorageSize": 13834
           },
@@ -2821,9 +2821,9 @@
         },
         {
           "type": "worker",
-          "url": "http://127.0.0.1:63654/assets/worker-ByV3QgNc.js",
+          "url": "http://127.0.0.1:52806/assets/worker-ByV3QgNc.js",
           "heap": {
-            "usedSize": 1735864,
+            "usedSize": 1740112,
             "totalSize": 2097152,
             "embedderHeapUsedSize": 35656,
             "backingStorageSize": 411929
@@ -2838,7 +2838,7 @@
         },
         {
           "type": "worker",
-          "url": "http://127.0.0.1:63654/assets/sqlite3-opfs-async-proxy-DeAec6oc.js?vfs=opfs",
+          "url": "http://127.0.0.1:52806/assets/sqlite3-opfs-async-proxy-DeAec6oc.js?vfs=opfs",
           "heap": {
             "usedSize": 318816,
             "totalSize": 786432,
@@ -2850,7 +2850,7 @@
         },
         {
           "type": "worker",
-          "url": "http://127.0.0.1:63654/assets/sqlite3-opfs-async-proxy-DeAec6oc.js?vfs=opfs-wl",
+          "url": "http://127.0.0.1:52806/assets/sqlite3-opfs-async-proxy-DeAec6oc.js?vfs=opfs-wl",
           "heap": {
             "usedSize": 319144,
             "totalSize": 786432,
@@ -2862,67 +2862,67 @@
         }
       ],
       "linearBytes": 8388608,
-      "jsHeapUsedBytes": 4320632,
+      "jsHeapUsedBytes": 4324880,
       "configuredBridgeBytes": 0,
       "resident": {
-        "bytes": 397852672,
+        "bytes": 396754944,
         "processes": [
           {
-            "pid": 9684,
+            "pid": 52876,
             "type": "browser",
-            "rssBytes": 102072320,
-            "virtualBytes": 497843372032
+            "rssBytes": 101285888,
+            "virtualBytes": 497827102720
           },
           {
-            "pid": 9685,
+            "pid": 52877,
             "type": "GPU",
-            "rssBytes": 65896448,
-            "virtualBytes": 497705091072
+            "rssBytes": 65798144,
+            "virtualBytes": 497704894464
           },
           {
-            "pid": 9686,
+            "pid": 52878,
             "type": "network.mojom.NetworkService",
-            "rssBytes": 46989312,
-            "virtualBytes": 497609605120
+            "rssBytes": 47054848,
+            "virtualBytes": 497609310208
           },
           {
-            "pid": 9699,
+            "pid": 52892,
             "type": "renderer",
-            "rssBytes": 182894592,
-            "virtualBytes": 2003948077056
+            "rssBytes": 182616064,
+            "virtualBytes": 2003947847680
           }
         ]
       },
       "baseline": {
-        "bytes": 255066112,
+        "bytes": 255049728,
         "processes": [
           {
-            "pid": 9684,
+            "pid": 52876,
             "type": "browser",
-            "rssBytes": 82264064,
-            "virtualBytes": 497843372032
+            "rssBytes": 82296832,
+            "virtualBytes": 497826840576
           },
           {
-            "pid": 9685,
+            "pid": 52877,
             "type": "GPU",
-            "rssBytes": 57507840,
-            "virtualBytes": 497697226752
+            "rssBytes": 57442304,
+            "virtualBytes": 497697030144
           },
           {
-            "pid": 9686,
+            "pid": 52878,
             "type": "network.mojom.NetworkService",
-            "rssBytes": 39829504,
-            "virtualBytes": 497609588736
+            "rssBytes": 39878656,
+            "virtualBytes": 497609293824
           },
           {
-            "pid": 9687,
+            "pid": 52879,
             "type": "renderer",
-            "rssBytes": 75464704,
-            "virtualBytes": 1995776524288
+            "rssBytes": 75431936,
+            "virtualBytes": 1995776458752
           }
         ]
       },
-      "rssDeltaBytes": 142786560
+      "rssDeltaBytes": 141705216
     },
     {
       "engine": "turso",
@@ -2941,7 +2941,7 @@
         },
         {
           "type": "worker",
-          "url": "http://127.0.0.1:63654/assets/worker-ByV3QgNc.js",
+          "url": "http://127.0.0.1:52806/assets/worker-ByV3QgNc.js",
           "heap": {
             "usedSize": 528776,
             "totalSize": 1310720,
@@ -2953,7 +2953,7 @@
         },
         {
           "type": "worker",
-          "url": "http://127.0.0.1:63654/assets/turso-executor-BlxPGhXM.js",
+          "url": "http://127.0.0.1:52806/assets/turso-executor-BlxPGhXM.js",
           "heap": {
             "usedSize": 1606488,
             "totalSize": 2359296,
@@ -2970,7 +2970,7 @@
         },
         {
           "type": "worker",
-          "url": "blob:http://127.0.0.1:63654/00808d85-34e3-4940-8ab4-1c31f172ccd6",
+          "url": "blob:http://127.0.0.1:52806/d490c80e-fe40-4966-8d6c-7d1df4f133cb",
           "heap": {
             "usedSize": 852664,
             "totalSize": 1572864,
@@ -2985,64 +2985,64 @@
       "jsHeapUsedBytes": 4936504,
       "configuredBridgeBytes": 67108872,
       "resident": {
-        "bytes": 566624256,
+        "bytes": 567443456,
         "processes": [
           {
-            "pid": 9737,
+            "pid": 52937,
             "type": "browser",
-            "rssBytes": 132349952,
-            "virtualBytes": 497842601984
+            "rssBytes": 133414912,
+            "virtualBytes": 497835589632
           },
           {
-            "pid": 9738,
+            "pid": 52938,
             "type": "GPU",
-            "rssBytes": 65798144,
-            "virtualBytes": 497704632320
+            "rssBytes": 65847296,
+            "virtualBytes": 497704517632
           },
           {
-            "pid": 9739,
+            "pid": 52939,
             "type": "network.mojom.NetworkService",
-            "rssBytes": 47316992,
+            "rssBytes": 47284224,
             "virtualBytes": 497609949184
           },
           {
-            "pid": 9752,
+            "pid": 52952,
             "type": "renderer",
-            "rssBytes": 321159168,
-            "virtualBytes": 2003972358144
+            "rssBytes": 320897024,
+            "virtualBytes": 2003973242880
           }
         ]
       },
       "baseline": {
-        "bytes": 254623744,
+        "bytes": 255131648,
         "processes": [
           {
-            "pid": 9737,
+            "pid": 52937,
             "type": "browser",
-            "rssBytes": 82182144,
-            "virtualBytes": 497842601984
+            "rssBytes": 82411520,
+            "virtualBytes": 497835327488
           },
           {
-            "pid": 9738,
+            "pid": 52938,
             "type": "GPU",
-            "rssBytes": 57262080,
-            "virtualBytes": 497696768000
+            "rssBytes": 57409536,
+            "virtualBytes": 497696653312
           },
           {
-            "pid": 9739,
+            "pid": 52939,
             "type": "network.mojom.NetworkService",
-            "rssBytes": 39829504,
+            "rssBytes": 39845888,
             "virtualBytes": 497609932800
           },
           {
-            "pid": 9740,
+            "pid": 52940,
             "type": "renderer",
-            "rssBytes": 75350016,
-            "virtualBytes": 1995776933888
+            "rssBytes": 75464704,
+            "virtualBytes": 1995776507904
           }
         ]
       },
-      "rssDeltaBytes": 312000512
+      "rssDeltaBytes": 312311808
     },
     {
       "engine": "sqlike",
@@ -3061,10 +3061,10 @@
         },
         {
           "type": "worker",
-          "url": "http://127.0.0.1:63654/assets/worker-ByV3QgNc.js",
+          "url": "http://127.0.0.1:52806/assets/worker-ByV3QgNc.js",
           "heap": {
-            "usedSize": 1986028,
-            "totalSize": 2621440,
+            "usedSize": 1986040,
+            "totalSize": 2883584,
             "embedderHeapUsedSize": 29184,
             "backingStorageSize": 784598
           },
@@ -3073,7 +3073,7 @@
         },
         {
           "type": "worker",
-          "url": "http://127.0.0.1:63654/assets/moon-persistence-worker-DLrHYK94.js",
+          "url": "http://127.0.0.1:52806/assets/moon-persistence-worker-DLrHYK94.js",
           "heap": {
             "usedSize": 319788,
             "totalSize": 1310720,
@@ -3085,67 +3085,67 @@
         }
       ],
       "linearBytes": 0,
-      "jsHeapUsedBytes": 4252624,
+      "jsHeapUsedBytes": 4252636,
       "configuredBridgeBytes": 4096,
       "resident": {
-        "bytes": 363872256,
+        "bytes": 363266048,
         "processes": [
           {
-            "pid": 9788,
+            "pid": 52983,
             "type": "browser",
-            "rssBytes": 100220928,
-            "virtualBytes": 497843044352
+            "rssBytes": 100122624,
+            "virtualBytes": 497833787392
           },
           {
-            "pid": 9790,
+            "pid": 52984,
             "type": "GPU",
-            "rssBytes": 65880064,
-            "virtualBytes": 497704681472
+            "rssBytes": 65929216,
+            "virtualBytes": 497704321024
           },
           {
-            "pid": 9791,
+            "pid": 52985,
             "type": "network.mojom.NetworkService",
-            "rssBytes": 46792704,
-            "virtualBytes": 497610375168
+            "rssBytes": 46874624,
+            "virtualBytes": 497609277440
           },
           {
-            "pid": 9810,
+            "pid": 52998,
             "type": "renderer",
-            "rssBytes": 150978560,
-            "virtualBytes": 2001923817472
+            "rssBytes": 150339584,
+            "virtualBytes": 2001923883008
           }
         ]
       },
       "baseline": {
-        "bytes": 254705664,
+        "bytes": 255148032,
         "processes": [
           {
-            "pid": 9788,
+            "pid": 52983,
             "type": "browser",
-            "rssBytes": 82116608,
-            "virtualBytes": 497843044352
+            "rssBytes": 82378752,
+            "virtualBytes": 497833787392
           },
           {
-            "pid": 9790,
+            "pid": 52984,
             "type": "GPU",
-            "rssBytes": 57344000,
-            "virtualBytes": 497696817152
+            "rssBytes": 57556992,
+            "virtualBytes": 497696456704
           },
           {
-            "pid": 9791,
+            "pid": 52985,
             "type": "network.mojom.NetworkService",
-            "rssBytes": 39813120,
-            "virtualBytes": 497610358784
+            "rssBytes": 39895040,
+            "virtualBytes": 497609261056
           },
           {
-            "pid": 9792,
+            "pid": 52986,
             "type": "renderer",
-            "rssBytes": 75431936,
-            "virtualBytes": 1995777114112
+            "rssBytes": 75317248,
+            "virtualBytes": 1995776065536
           }
         ]
       },
-      "rssDeltaBytes": 109166592
+      "rssDeltaBytes": 108118016
     }
   ]
 }

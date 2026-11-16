@@ -1,0 +1,88 @@
+{
+  "name": "@mizchi/sqlike",
+  "version": "0.1.0",
+  "description": "MoonBit SQLite subset with typed SQL, precompiled binary schemas and IndexedDB persistence",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=24"
+  },
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/types/npm/sqlike/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/npm/sqlike/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./defined": {
+      "types": "./dist/types/npm/sqlike/defined.d.ts",
+      "import": "./dist/defined.js"
+    },
+    "./defined/core": {
+      "types": "./dist/types/npm/sqlike/defined-core.d.ts",
+      "import": "./dist/defined-core.js"
+    },
+    "./defined/sqlite": {
+      "types": "./dist/types/npm/sqlike/defined-sqlite.d.ts",
+      "import": "./dist/defined-sqlite.js"
+    },
+    "./defined/wasm": {
+      "types": "./dist/types/npm/sqlike/defined-wasm.d.ts",
+      "import": "./dist/defined-wasm.js"
+    },
+    "./compiler": {
+      "types": "./dist/types/npm/sqlike/compiler.d.ts",
+      "import": "./dist/compiler.js"
+    },
+    "./runtime": {
+      "types": "./dist/types/npm/sqlike/runtime.d.ts",
+      "import": "./dist/runtime.js"
+    },
+    "./features": {
+      "types": "./dist/types/npm/sqlike/features.d.ts",
+      "import": "./dist/features.js"
+    },
+    "./drizzle": {
+      "types": "./dist/types/npm/sqlike/drizzle.d.ts",
+      "import": "./dist/drizzle.js"
+    },
+    "./drizzle/node": {
+      "types": "./dist/types/npm/sqlike/drizzle-node.d.ts",
+      "import": "./dist/drizzle-node.js"
+    },
+    "./engine": {
+      "types": "./dist/types/_build/js/release/build/mizchi/sqlike/sqlike.d.ts",
+      "import": "./dist/engine.js"
+    },
+    "./wasm/defined.wasm": "./dist/wasm/defined.wasm",
+    "./wasm/sql.wasm": "./dist/wasm/sql.wasm",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mizchi/sqlike.git",
+    "directory": "npm/sqlike"
+  },
+  "homepage": "https://github.com/mizchi/sqlike",
+  "bugs": {
+    "url": "https://github.com/mizchi/sqlike/issues"
+  },
+  "peerDependencies": {
+    "drizzle-orm": "0.45.4"
+  },
+  "peerDependenciesMeta": {
+    "drizzle-orm": {
+      "optional": true
+    }
+  }
+}

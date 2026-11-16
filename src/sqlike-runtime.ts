@@ -1,4 +1,5 @@
 import type { ResultCell, Value } from "./contract.ts";
+import type { BrowserDatabase } from "./backend-contract.ts";
 import { aotBindings, aotValue } from "./aot-values.ts";
 /** Opaque handles belong to the injected generated runtime, including Wasm GC. */
 export interface CompiledRuntime<Handle = unknown> {
@@ -80,17 +81,22 @@ export interface SqlRuntime<Handle = unknown> {
   database_copy_connection_state(target: Handle, source: Handle): void;
   database_version(db: Handle): number;
   database_changeset?(db: Handle, before: Handle): string;
+  database_exec_values?(db: Handle, sql: string, bindings: string): string;
   database_set_clock(db: Handle, milliseconds: string): string;
+}
+export interface SqlConnection extends BrowserDatabase {
+  values(sql: string, params?: Value[]): Value[][];
+  savepoint<T>(body: () => T): T;
+  runMigration(sql: string): void;
+  dump(): string;
+  close(): void;
 }
 /** Synchronous SQL driver with an injected feature-selected runtime. No default
  * engine, sync protocol, persistence worker, FTS or LSM import is reachable here. */
 export function openSql<Handle>(
   runtime: SqlRuntime<Handle>,
   image?: string,
-): import("./backend-contract.ts").BrowserDatabase & {
-  dump(): string;
-  close(): void;
-} {
+): SqlConnection {
   let db = runtime.database_open(),
     active = false,
     closed = false;
@@ -114,6 +120,17 @@ export function openSql<Handle>(
     query: (sql: string, params?: Value[]) => execute(sql, params, true),
     run: (sql: string, params?: Value[]) => {
       execute(sql, params);
+    },
+    runMigration: (sql: string) => { execute(sql); },
+    values(sql: string, params: Value[] = []): Value[][] {
+      if (closed) throw Error("Sqlike connection is closed");
+      if (!runtime.database_exec_values)
+        throw Error("runtime does not support positional results");
+      checked(runtime.database_set_clock(db, String(Date.now())));
+      const result = checked<{ rows: ResultCell[][] }>(
+        runtime.database_exec_values(db, sql, aotBindings(params)),
+      );
+      return result.rows.map((row) => row.map(aotValue));
     },
     schemaVersion: () => runtime.database_version(db),
     dump: () => {
@@ -156,6 +173,22 @@ export function openSql<Handle>(
           execute(`PRAGMA foreign_keys=${enabled === 1n ? "ON" : "OFF"}`);
         }
       });
+    },
+    savepoint<T>(body: () => T): T {
+      if (closed || !active) throw Error("savepoint requires an active transaction");
+      if (body.constructor.name === "AsyncFunction")
+        throw Error("savepoint must be synchronous");
+      const before = runtime.database_clone(db);
+      try {
+        const result = body();
+        if (result && typeof (result as { then?: unknown }).then === "function")
+          throw Error("savepoint must be synchronous");
+        return result;
+      } catch (error) {
+        runtime.database_copy_connection_state(before, db);
+        db = before;
+        throw error;
+      }
     },
     ...(runtime.database_changeset
       ? {

@@ -1,0 +1,27 @@
+import { openDatabase } from "@mizchi/sqlike";
+import { DefinedDatabase } from "@mizchi/sqlike/defined";
+import { createDefinedDatabase } from "@mizchi/sqlike/defined/core";
+import { definedWasm } from "@mizchi/sqlike/defined/wasm";
+import { encodeFrame, decodeFrame } from "@mizchi/litestream/protocol";
+
+// Replaced by the fixture writer with build-time data before serving.
+const catalog = __NPM_CATALOG__;
+let wasmBytes: ArrayBuffer | undefined;
+(globalThis as unknown as { npmCheck: () => Promise<unknown> }).npmCheck = async () => {
+  const db = openDatabase();
+  if (db.values("SELECT 7")[0]?.[0] !== 7n) throw Error("browser SQL mismatch");
+  db.close();
+  const fixed = await DefinedDatabase.open("npmpackage", catalog);
+  await fixed.execute("add", [1n, "persistent"]);
+  const rows = (await fixed.prepare("get").all()).map(row => row.map(value => typeof value === "bigint" ? String(value) : value));
+  await fixed.close();
+  const bytes = wasmBytes ??= await fetch("/node_modules/@mizchi/sqlike/dist/wasm/defined.wasm").then(r=>r.arrayBuffer());
+  const { instance } = await WebAssembly.instantiate(bytes, {}, { builtins: ["js-string"], importedStringConstants: "_" });
+  const wasm = await createDefinedDatabase(definedWasm(instance.exports)).memory(catalog);
+  await wasm.execute("add", [1n, "wasm"]);
+  if ((await wasm.prepare("get").get())?.[1] !== "wasm") throw Error("browser Wasm mismatch");
+  await wasm.close();
+  const frame = {kind:1 as const,base:0,opId:crypto.randomUUID(),payload:new Uint8Array([1,2])};
+  const decoded = decodeFrame(encodeFrame(frame));
+  return { rows, protocol: decoded.opId === frame.opId, wasm: true };
+};
