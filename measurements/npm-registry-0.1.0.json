@@ -1,0 +1,82 @@
+{
+  "verifiedAt": "2026-11-16T06:30:20.940Z",
+  "version": "0.1.0",
+  "status": "published",
+  "verificationCommit": "a989b4cbbb8049f4e2362d74d402366f8d15250b",
+  "packages": [
+    {
+      "name": "@mizchi/sqlike",
+      "version": "0.1.0",
+      "repository": {
+        "url": "git+https://github.com/mizchi/sqlike.git",
+        "type": "git",
+        "directory": "npm/sqlike"
+      },
+      "preparedIntegrity": "sha512-ZW5h0QLxWymQm86AW4Blam4HK6wIGVv54n+35jvSX+cTEFlixTwNSeLX/H5gHb+bBUCvFMopf9V+OsVxu7EljA==",
+      "registry": {
+        "tarball": "https://registry.npmjs.org/@mizchi/sqlike/-/sqlike-0.1.0.tgz",
+        "integrity": "sha512-5O7jHdtbu+MKfFNMwrKVZs/06oNlTz4vZmxr1uBph6gyQ5zVQa5h+7QxM/Q4bzcPKaug04S5USN8euLFsofvhg==",
+        "fileCount": 57,
+        "unpackedSize": 3073304
+      }
+    },
+    {
+      "name": "@mizchi/litestream",
+      "version": "0.1.0",
+      "repository": {
+        "url": "git+https://github.com/mizchi/sqlike.git",
+        "type": "git",
+        "directory": "npm/litestream"
+      },
+      "preparedIntegrity": "sha512-boHBXuiAMEXVsF8wTBA0Y84OVoY58dEWut8uM52sEODz+VTrab4njmcsrys6KVpjmR5m2woef6yY/gBYPp500g==",
+      "registry": {
+        "tarball": "https://registry.npmjs.org/@mizchi/litestream/-/litestream-0.1.0.tgz",
+        "integrity": "sha512-boHBXuiAMEXVsF8wTBA0Y84OVoY58dEWut8uM52sEODz+VTrab4njmcsrys6KVpjmR5m2woef6yY/gBYPp500g==",
+        "fileCount": 34,
+        "unpackedSize": 365025
+      }
+    }
+  ],
+  "checks": {
+    "registrySRI": "passed",
+    "archiveFileContents": "passed; manifest formatting only may differ",
+    "anonymousRegistryConsumer": "passed",
+    "isolatedNodeConsumer": "passed",
+    "upstreamSelect1Queries": 1000,
+    "strictTypesWithoutWorkspace": "passed",
+    "chromiumIndexedDBOfflineAndReload": "passed",
+    "definedWasmGC": "passed",
+    "drizzleMigrationAndSavepoint": "passed"
+  },
+  "trustedPublishing": {
+    "repository": "mizchi/sqlike",
+    "workflow": "npm-release.yml",
+    "workflowActive": true,
+    "configurationVerified": true,
+    "oidcPublishExecuted": false,
+    "publishers": [
+      {
+        "package": "@mizchi/sqlike",
+        "id": "07cd26aa-4359-4fce-9853-77e997f2300d",
+        "type": "github",
+        "file": "npm-release.yml",
+        "repository": "mizchi/sqlike",
+        "permissions": [
+          "createPackage",
+          "createStagedPackage"
+        ]
+      },
+      {
+        "package": "@mizchi/litestream",
+        "id": "83a005a5-2b9c-4595-8480-406fe1a70efc",
+        "type": "github",
+        "file": "npm-release.yml",
+        "repository": "mizchi/sqlike",
+        "permissions": [
+          "createPackage",
+          "createStagedPackage"
+        ]
+      }
+    ]
+  }
+}
