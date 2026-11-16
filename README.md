@@ -43,14 +43,14 @@ The horizontal axis is logarithmic: each tick doubles the size. Labels show KiB.
 <!-- bundle-size:start -->
 | Build | minified, uncompressed | Brotli |
 | --- | ---: | ---: |
-| SQLike 0.1.0 (source) / SQL / JS | 596.71 KiB | 112.61 KiB |
-| SQLike 0.1.0 (source) / SQL / Wasm GC | 527.99 KiB | 166.33 KiB |
-| SQLike 0.1.0 (source) / Predefined, all execution features / JS | 488.33 KiB | 98.07 KiB |
-| SQLike 0.1.0 (source) / Predefined, all execution features / Wasm GC | 434.18 KiB | 140.14 KiB |
-| SQLike 0.1.0 (source) / Predefined, no JSON/date/window / JS | 451.73 KiB | 90.34 KiB |
-| SQLike 0.1.0 (source) / Predefined, no JSON/date/window / Wasm GC | 406.20 KiB | 130.17 KiB |
-| SQLike 0.1.0 (source) / Predefined, primary-key index only / JS | 430.43 KiB | 86.22 KiB |
-| SQLike 0.1.0 (source) / Predefined, primary-key index only / Wasm GC | 387.51 KiB | 124.83 KiB |
+| SQLike 0.1.0 (source) / SQL / JS | 601.98 KiB | 113.76 KiB |
+| SQLike 0.1.0 (source) / SQL / Wasm GC | 533.02 KiB | 167.36 KiB |
+| SQLike 0.1.0 (source) / Predefined, all execution features / JS | 491.03 KiB | 98.42 KiB |
+| SQLike 0.1.0 (source) / Predefined, all execution features / Wasm GC | 436.93 KiB | 140.90 KiB |
+| SQLike 0.1.0 (source) / Predefined, no JSON/date/window / JS | 454.43 KiB | 90.83 KiB |
+| SQLike 0.1.0 (source) / Predefined, no JSON/date/window / Wasm GC | 408.78 KiB | 130.84 KiB |
+| SQLike 0.1.0 (source) / Predefined, primary-key index only / JS | 433.13 KiB | 86.79 KiB |
+| SQLike 0.1.0 (source) / Predefined, primary-key index only / Wasm GC | 390.19 KiB | 125.75 KiB |
 | sqlite-wasm 3.54.1-build1 | 1313.74 KiB | 462.33 KiB |
 | Turso 0.8.3 | 11709.66 KiB | 2675.96 KiB |
 <!-- bundle-size:end -->
@@ -79,13 +79,13 @@ Each panel starts at zero and uses its own scale. Bars show medians; whiskers sh
 <!-- sqlite-benchmark:start -->
 | Workload | SQLike JS, SQL | SQLike Wasm GC, SQL | SQLite WASM, SQL | SQLite WASM, prepared |
 | --- | ---: | ---: | ---: | ---: |
-| Primary-key lookup | 26.29 | 6.25 | 3.69 | 1.41 |
-| Missing primary key | 25.78 | 5.64 | 2.53 | 0.47 |
-| Indexed range · 10 rows | 48.58 | 13.56 | 14.44 | 10.49 |
-| ORDER BY id · LIMIT 10 | 45.17 | 10.89 | 12.35 | 9.14 |
-| SUM + COUNT · 5,000 rows | 93.02 | 50.25 | 106.14 | 103.48 |
-| Fetch all 5,000 rows | 4,772.73 | 2,668.42 | 4,458.33 | 4,375.00 |
-| Indexed UPDATE + range read | 69.21 | 19.03 | 19.34 | 12.24 |
+| Primary-key lookup | 27.47 | 6.46 | 3.69 | 1.48 |
+| Missing primary key | 27.70 | 5.84 | 2.66 | 0.50 |
+| Indexed range · 10 rows | 48.55 | 13.58 | 14.40 | 10.59 |
+| ORDER BY id · LIMIT 10 | 46.48 | 10.87 | 12.33 | 9.23 |
+| SUM + COUNT · 5,000 rows | 96.21 | 51.08 | 110.31 | 107.53 |
+| Fetch all 5,000 rows | 4,863.64 | 2,689.47 | 4,583.33 | 4,541.67 |
+| Indexed UPDATE + range read | 69.98 | 20.37 | 19.91 | 12.56 |
 <!-- sqlite-benchmark:end -->
 
 </details>

@@ -43,14 +43,14 @@ SQLikeはnpm 0.1.0以後の未リリース変更を含む現行ソースで計�
 <!-- bundle-size:start -->
 | ビルド | minified・未圧縮 | Brotli |
 | --- | ---: | ---: |
-| SQLike 0.1.0 (source) / 通常SQL / JS | 596.71 KiB | 112.61 KiB |
-| SQLike 0.1.0 (source) / 通常SQL / Wasm GC | 527.99 KiB | 166.33 KiB |
-| SQLike 0.1.0 (source) / 事前定義・全実行機能 / JS | 488.33 KiB | 98.07 KiB |
-| SQLike 0.1.0 (source) / 事前定義・全実行機能 / Wasm GC | 434.18 KiB | 140.14 KiB |
-| SQLike 0.1.0 (source) / 事前定義・JSON・日時・windowなし / JS | 451.73 KiB | 90.34 KiB |
-| SQLike 0.1.0 (source) / 事前定義・JSON・日時・windowなし / Wasm GC | 406.20 KiB | 130.17 KiB |
-| SQLike 0.1.0 (source) / 事前定義・主キー索引のみ / JS | 430.43 KiB | 86.22 KiB |
-| SQLike 0.1.0 (source) / 事前定義・主キー索引のみ / Wasm GC | 387.51 KiB | 124.83 KiB |
+| SQLike 0.1.0 (source) / 通常SQL / JS | 601.98 KiB | 113.76 KiB |
+| SQLike 0.1.0 (source) / 通常SQL / Wasm GC | 533.02 KiB | 167.36 KiB |
+| SQLike 0.1.0 (source) / 事前定義・全実行機能 / JS | 491.03 KiB | 98.42 KiB |
+| SQLike 0.1.0 (source) / 事前定義・全実行機能 / Wasm GC | 436.93 KiB | 140.90 KiB |
+| SQLike 0.1.0 (source) / 事前定義・JSON・日時・windowなし / JS | 454.43 KiB | 90.83 KiB |
+| SQLike 0.1.0 (source) / 事前定義・JSON・日時・windowなし / Wasm GC | 408.78 KiB | 130.84 KiB |
+| SQLike 0.1.0 (source) / 事前定義・主キー索引のみ / JS | 433.13 KiB | 86.79 KiB |
+| SQLike 0.1.0 (source) / 事前定義・主キー索引のみ / Wasm GC | 390.19 KiB | 125.75 KiB |
 | sqlite-wasm 3.54.1-build1 | 1313.74 KiB | 462.33 KiB |
 | Turso 0.8.3 | 11709.66 KiB | 2675.96 KiB |
 <!-- bundle-size:end -->
@@ -79,13 +79,13 @@ SQLikeはnpm 0.1.0以後の未リリース変更を含む現行ソースで計�
 <!-- sqlite-benchmark:start -->
 | 処理 | SQLike JS・通常SQL | SQLike Wasm GC・通常SQL | SQLite WASM・通常SQL | SQLite WASM・prepared |
 | --- | ---: | ---: | ---: | ---: |
-| 主キーで1行検索 | 26.29 | 6.25 | 3.69 | 1.41 |
-| 存在しない主キーの検索 | 25.78 | 5.64 | 2.53 | 0.47 |
-| 二次索引の範囲検索・10行 | 48.58 | 13.56 | 14.44 | 10.49 |
-| ORDER BY id LIMIT 10 | 45.17 | 10.89 | 12.35 | 9.14 |
-| sum(n), count(*) | 93.02 | 50.25 | 106.14 | 103.48 |
-| 全5,000行取得 | 4,772.73 | 2,668.42 | 4,458.33 | 4,375.00 |
-| 索引列の更新＋範囲10行取得 | 69.21 | 19.03 | 19.34 | 12.24 |
+| 主キーで1行検索 | 27.47 | 6.46 | 3.69 | 1.48 |
+| 存在しない主キーの検索 | 27.70 | 5.84 | 2.66 | 0.50 |
+| 二次索引の範囲検索・10行 | 48.55 | 13.58 | 14.40 | 10.59 |
+| ORDER BY id LIMIT 10 | 46.48 | 10.87 | 12.33 | 9.23 |
+| sum(n), count(*) | 96.21 | 51.08 | 110.31 | 107.53 |
+| 全5,000行取得 | 4,863.64 | 2,689.47 | 4,583.33 | 4,541.67 |
+| 索引列の更新＋範囲10行取得 | 69.98 | 20.37 | 19.91 | 12.56 |
 <!-- sqlite-benchmark:end -->
 
 </details>

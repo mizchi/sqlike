@@ -6,6 +6,8 @@
 
 続いて、LIKE ESCAPE・scalar min/max、NULL順序・名前付きSQL bind、索引metadata、FROM subquery・集約FILTER、JSON集約を追加した。大きめの実装は`schemaMetadata` / `aggregateFilter` / `sqlJson`で選択する。[Drizzle事前コンパイルentry](../drizzle-prepared.md)も追加し、query builderとSQL parserを配信せずに固定したクエリを実行できる。
 
+S02ではGLOB・charをcoreへ追加し、16進・桁区切り数値literalをcompiler側で既存の値へ変換する。charのサロゲート値はTEXTで正確に表現できないため拒否する。GLOB・LIKE・unicodeがU+FFFE / U+FFFFを読むときの本家との差も修正した。
+
 P0のV01 / C01 / R01と、P1のP01 / S01 / P02 / R02は完了。C02の[DO対応](do-consumer-sql.md)に続き、[Drizzle driver・RETURNING式・migration](drizzle.md)を追加した。[P0の基準](p0-results.md)、[P01](p01-aot-results.md)、[S01の列差分](column-delta.md)、[P02の行ページ](row-store.md)、[R02のLTX送信](aot-ltx-upload.md)、[受入条件](release-acceptance.md)、[現行の回帰・計測証拠](../../measurements/p0-completion.json)を保存した。C02の集約代表行などは未完了として維持する。
 
 目標は、**SQLite互換の出力を保ち、軽量なブラウザ実行とオフライン同期を実現すること**。未対応は明示拒否できるが、成功した結果を別の値・型へ読み替えない。[出力互換の契約](sqlite-output-compatibility.md)を優先し、速度のためにこの条件を緩めない。0.1.0は[U01〜U09のアプリシナリオ](roadmap-0.1.0.md)の横断検証で判断する。SQLite全機能互換を0.1.0の条件とはしない。
@@ -38,11 +40,11 @@ P0のV01 / C01 / R01と、P1のP01 / S01 / P02 / R02は完了。C02の[DO対応]
 
 | 分野 | 対応している範囲 | 制約・残る範囲 | 主な検証・詳細 |
 | --- | --- | --- | --- |
-| 値・式 | NULL / int64 / REAL / TEXT / BLOB、affinity・三値論理、BINARY / ASCII NOCASE / RTRIM、CAST・CASE・IN・BETWEEN・相関subquery | 独自collation・関数は不可。表現できないTEXT変換は拒否 | [値・式の差分](../../tests/sqlite-expressions.test.ts)、[出力契約](sqlite-output-compatibility.md) |
+| 値・式 | NULL / int64 / REAL / TEXT / BLOB、16進・桁区切り数値literal、affinity・三値論理、BINARY / ASCII NOCASE / RTRIM、CAST・CASE・IN・BETWEEN・GLOB・相関subquery | 独自collation・関数は不可。表現できないTEXT変換は拒否 | [値・式の差分](../../tests/sqlite-expressions.test.ts)、[基本式の追加](../../tests/sqlike-basic-expressions.test.ts)、[出力契約](sqlite-output-compatibility.md) |
 | CRUD | 複数VALUES、INSERT SELECT、UPDATE / DELETE、UPSERT、IGNORE / REPLACE、RETURNING、bind | 全conflict構文・任意のSQLite拡張を受理するものではない | [4実行経路の差分](../../tests/compatibility/sqlike-paths.ts)、[追加差分](sqlite-differential-findings.md) |
 | SELECT | INNER / CROSS / LEFT / RIGHT / FULL、ON / USING / NATURAL、WHERE・DISTINCT・ORDER BY・NULLS FIRST / LAST・LIMIT、GROUP BY / HAVING、複合SELECT、CTE、FROM subquery | 集約のbare column・derived tableの重複列名は保守的に拒否。複雑な問い合わせの高速化は限定的 | [外部結合・STRICT](../../tests/sqlike-outer-strict.test.ts)、[複合SELECT](../../tests/sqlike-compound.test.ts)、[FROM subquery](../../tests/sqlike-derived-table.test.ts) |
 | 集約・window | COUNT / SUM / TOTAL / AVG / MIN / MAX、group_concat / string_agg、DISTINCT引数、FILTER（選択機能）、順位・lag/lead・値参照、ROWS / RANGE / GROUPSの対応frame | named WINDOW / EXCLUDE / 引数内ORDER BY等は未対応 | [windowの差分](../../tests/sqlike-window.test.ts)、[FILTER](../../tests/sqlike-aggregate-filter.test.ts) |
-| JSON・日時・文字列 | JSON構築・抽出・編集・patch、順序と重複キーの保持、UTC日時・基本modifier・clock注入、基本scalar | JSON5 / JSONB、json_each / json_tree、timediff・ホストtimezone変換、全関数・全arityは未対応 | [関数の範囲](sqlike-app-features.md)、[重複JSON等の修正](sqlite-differential-findings.md) |
+| JSON・日時・文字列 | JSON構築・抽出・編集・patch、順序と重複キーの保持、UTC日時・基本modifier・clock注入、charを含む基本scalar | JSON5 / JSONB、json_each / json_tree、timediff・ホストtimezone変換、全関数・全arityは未対応 | [関数の範囲](sqlike-app-features.md)、[重複JSON等の修正](sqlite-differential-findings.md) |
 | schema・制約 | 通常 / STRICT / WITHOUT ROWID、IPK / AUTOINCREMENT、複合PK / UNIQUE、NOT NULL / CHECK、VIEW、基本ALTER | ATTACH / TEMP / 仮想table、任意のALTER、C ABI全体は未対応 | [移行](../../tests/sqlike-migration.test.ts)、[STRICT・機能選択](sqlike-feature-profiles.md) |
 | index | 複合列・ASC / DESC / COLLATE、部分 / 式indexの宣言・一意性・保存、PK等値探索、列indexの等値prefix＋次列範囲 | 式indexによる検索高速化、複雑なORのplanner最適化、EXPLAIN計画互換は未対応 | [index範囲](sqlike-index-trigger.md)、[PK索引](../../tests/sqlike-primary-index.test.ts) |
 | trigger | AFTER 3イベント、BEFOREのSELECT検証、OLD / NEW・WHEN・UPDATE OF、RAISE(ABORT / IGNORE)、再帰上限32 | BEFOREの書込、INSTEAD OF / TEMP、RAISE(FAIL / ROLLBACK)、本体RETURNINGは未対応 | [trigger範囲](sqlike-index-trigger.md)、[差分](../../tests/sqlike-trigger.test.ts) |
@@ -87,7 +89,7 @@ JSONの重複キーは、初期実装での拒否から**保持する実装へ�
 - ビルド時プロファイルでRIGHT/FULL・STRICT・PK索引・trigger・FK・SQL JSON・日時・window・索引metadata・集約FILTER・binary捕捉・SQLiteページ・LTXを選択する。無効機能のschema / ASTは拒否し、PK索引なしは走査へ戻す。バイナリ定義の`defined`モードも選択可能。通常の集約・CTE等の細分化は未実施。
 - `mizchi/sqlike/fts`は独立した検索API。ascii / trigram・phrase / prefix / boolean・BM25を比較検証した。FTS5のSQL構文・ファイル形式の互換実装ではなく、SQL更新と別々に行った検索index更新は原子的ではない。
 - LSMは独立したordered KVの**実験**。SQLike / LTXへ未接続で、reader保護付き物理GCも未実装。既定の行ジャーナルと通常 / lite / Workerのバンドルに含めない。
-- 主な上限はSQL 1 MiB・10,000 tokens・式深さ64・SELECT深さ16、表 / 中間結果100,000行、画像64 MiB、AOT Program 1 MiB / 1,000 queries。経路ごとの追加制限もある。上限までの低メモリ・一定時間動作を保証する値ではない。Firefox / WebKitは未検証。
+- 主な上限はSQL 1 MiB・10,000 tokens・式深さ64・SELECT深さ16・関数1,000引数、表 / 中間結果100,000行、画像64 MiB、AOT Program 1 MiB / 1,000 queries。経路ごとの追加制限もある。上限までの低メモリ・一定時間動作を保証する値ではない。Firefox / WebKitは未検証。
 
 詳細: [機能プロファイル](sqlike-feature-profiles.md)、[全文検索](sqlike-app-features.md)、[LSM実験](lsm-experiment.md)、[資源上限と物理reader](moon-sql.md)。
 
@@ -114,18 +116,18 @@ Web標準APIによるBase64 / JSON置換、Turso WASMの外部配信は[試作](
 
 ### 現行の正しさの記録
 
-段階的な互換機能の追加後の回帰はMoonBit **53件×JS / Wasm GC**、Node **335件**、Playwright **56件**と型チェック・本家Litestream復元を通過した。件数はこの更新時点の記録で、将来のテスト件数の固定目標ではない。
+段階的な互換機能の追加後の回帰はMoonBit **53件×JS / Wasm GC**、Node **344件**、Playwright **56件**と型チェック・本家Litestream復元を通過した。件数はこの更新時点の記録で、将来のテスト件数の固定目標ではない。
 
 | ゲート | 現在の観測 | 合格が意味すること |
 | --- | --- | --- |
-| `just sqlite-output-check` | JS / Wasm GC / Chromium JSそれぞれ449 probe一致、253 atomic拒否、出力不一致0 | 324生成ケースを追加。観測した成功出力と拒否時の非変更が一致。未対応を一致へ合算せず、誤受理・内部例外・証拠欠落も検出 |
+| `just sqlite-output-check` | JS / Wasm GC / Chromium JSそれぞれ454 probe一致、248 atomic拒否、出力不一致0 | 324生成ケースを追加。観測した成功出力と拒否時の非変更が一致。未対応を一致へ合算せず、誤受理・内部例外・証拠欠落も検出 |
 | `just differential-audit` | 566ケース・8経路。各環境2,256一致、4件の双方AOT prepare拒否、4件のAOT対象外DDL、不一致0 | 対応済みコーパスの新たな拒否も退行として検出。行・型・列位置・失敗後状態・接続カウンターを照合 |
 | `just sqlite-audit` | **不合格を維持**。台帳1,618件中、未公開API 306・未検証599・参照ビルドになし11などが残る | 全機能互換と判定しない。出力互換ゲートの通過とは別の条件 |
 | `just do-consumer-check` | 実workerdの6シナリオ・53ステップ。33一致・19明示拒否・1双方制約エラー | 型付き行と各操作後の表・監査表をnative SQLiteと照合。絶対値の初期total_changesは一致すると仮定しない |
 | `just drizzle-check` | Kit生成6本＋custom 2本。Node / SQLike JS・Wasm / SQLite WASM、ブラウザIDB、実DOで通過 | 各段階のデータ・FK保持、RETURNING、再適用、履歴・失敗時rollback、オフライン再開。[制限](drizzle.md)を含む固定consumerの検証 |
 | `just defined-check` | 固定バイナリDDL / named statement、JS / Wasm、IDBオフライン再開 | 上流1,000クエリをJSON / binaryのJS / Wasmで本家と照合。型・FK / trigger・wire破損・snapshot / patch・失敗時の非公開を検査 |
 | `just optional-functions-check` | SQL JSON / 日時 / window / 索引metadata / 集約FILTERの個別選択・一括除去 | 必要機能不足の初期化時拒否、3モードのJS / Wasm、上流1,000クエリの6経路照合、選択したcoreだけの配信とIDBオフライン再開 |
-| `just staged-compat-check` | 基本演算・優先6項目の38テスト | 型・NULL・collation・優先順位・JSON表記、機能選択、JS / Wasm・バイナリcatalog・Drizzle事前定義・Chromiumの最小ビルドとIDB再開を確認 |
+| `just staged-compat-check` | 基本演算・優先6項目・S02の47テスト | 型・NULL・collation・優先順位・JSON表記・GLOB・char・数値literal、機能選択、JS / Wasm・バイナリcatalog・Drizzle事前定義・Chromiumの最小ビルドとIDB再開を確認 |
 
 現行の証拠: [全機能監査Node](../../measurements/sqlite-feature-audit-node.json) / [Chromium](../../measurements/sqlite-feature-audit-chromium.json)、[差分Node](../../measurements/sqlike-differential-node.json) / [Chromium](../../measurements/sqlike-differential-chromium.json)。Node SQLite 3.53.4 / Chromium SQLite WASM 3.54.1を使用した。checkerは台帳・入力・ソース・成果物のhashを検査する。未検証の入力までの数学的な互換性証明ではない。
 

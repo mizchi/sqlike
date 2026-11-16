@@ -2,7 +2,7 @@
 
 不足している機能と、成功時の非互換出力を分けて扱う。[出力互換の契約](sqlite-output-compatibility.md)と`just sqlite-output-check`を追加した。下の`just sqlite-audit`は、引き続き全機能・全検証項目を要求する別のゲートである。
 
-2026-11-16、既存の[index・trigger](sqlike-index-trigger.md)、[一般アプリ向けSQL・任意の全文検索](sqlike-app-features.md)、[差分修正](sqlite-differential-findings.md)に、[段階的な互換機能](staged-sqlite-compatibility.md)を追加して再採取した。今回の優先6項目の追加前後では固定・生成プローブの一致は437→449件、候補エラーは265→253件、出力不一致は0件。全機能互換が未達であることは変わらない。任意の全文検索APIは、FTS5仮想テーブルのSQL互換として数えない。
+2026-11-16、既存の[index・trigger](sqlike-index-trigger.md)、[一般アプリ向けSQL・任意の全文検索](sqlike-app-features.md)、[差分修正](sqlite-differential-findings.md)に、[段階的な互換機能](staged-sqlite-compatibility.md)を追加して再採取した。優先6項目に続くS02の追加前後では固定・生成プローブの一致は449→454件、候補エラーは253→248件、出力不一致は0件。全機能互換が未達であることは変わらない。任意の全文検索APIは、FTS5仮想テーブルのSQL互換として数えない。
 
 **現在の MoonBit engine は SQLite 全機能互換ではない。** Node 24.22.2 の SQLite 3.53.4 を参照実装として、JS / Wasm GC / Chromium JS を検証した。3対象で同じ結果となり、全互換の判定は失敗した。
 
@@ -14,12 +14,12 @@ just sqlite-audit
 
 ## 実測結果
 
-追加SQLと既存の文字列・条件関数を含め、一致した固定・生成プローブは449件。各署名だけでなく、境界値の差分コーパスと4実行経路のアプリ機能テストも別途照合する。253件の候補エラーは拒否と非変更の証拠を保持し、出力互換ゲートでは許容するが、全機能監査の一致には数えない。
+追加SQLと既存の文字列・条件関数を含め、一致した固定・生成プローブは454件。各署名だけでなく、境界値の差分コーパスと4実行経路のアプリ機能テストも別途照合する。248件の候補エラーは拒否と非変更の証拠を保持し、出力互換ゲートでは許容するが、全機能監査の一致には数えない。
 
 | 観測 | 件数 | 意味 |
 | --- | ---: | --- |
-| `matched-probe` | 449 | その項目の固定・生成プローブが本家と一致 |
-| `candidate-error` | 253 | 本家が受理した SQL を拒否、または意図したエラー契約と相違 |
+| `matched-probe` | 454 | その項目の固定・生成プローブが本家と一致 |
+| `candidate-error` | 248 | 本家が受理した SQL を拒否、または意図したエラー契約と相違 |
 | `value-mismatch` | 0 | 実行したプローブの値・型・順序の不一致。今回見つけた GROUP BY の差は修正済み |
 | `missing-api` | 306 | 本家の公開 C 関数名に相当するエクスポートがない |
 | `not-tested` | 599 | C の型・定数、未実行の関数・拡張・障害試験など |
@@ -32,7 +32,7 @@ just sqlite-audit
 | 本家索引の区分 | 項目 | プローブ一致 | 拒否・エラー差 | 参照ビルドになし | 未検証 |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | SQL 言語の見出し | 42 | 33 | 9 | 0 | 0 |
-| Core scalar の署名 | 60 | 37 | 19 | 2 | 2 |
+| Core scalar の署名 | 60 | 39 | 17 | 2 | 2 |
 | Aggregate の署名 | 14 | 10 | 4 | 0 | 0 |
 | Math の署名 | 30 | 0 | 30 | 0 | 0 |
 | Date/time | 7 | 6 | 1 | 0 | 0 |
@@ -55,7 +55,7 @@ CREATE VIRTUAL TABLE vt USING fts5(body);
 SELECT json_group_array(n ORDER BY id) FROM t;
 ```
 
-CAST、基本日時、再帰CTE、SQLトランザクション、複合SELECT、複合FKと参照動作に加え、scalar min/max、LIKE ESCAPE、NULL順序、FROM subquery、任意の索引metadata・集約FILTER・JSON集約を追加した。生成列、timediff・数学関数、windowの全frame構文、JSON5 / JSONB・table-valued JSONなどは未対応。署名の固定プローブ一致を、全入力・全組合せの互換性へ読み替えない。
+CAST、基本日時、再帰CTE、SQLトランザクション、複合SELECT、複合FKと参照動作に加え、scalar min/max、LIKE ESCAPE、NULL順序、FROM subquery、任意の索引metadata・集約FILTER・JSON集約、S02のGLOB・char・数値literalを追加した。生成列、timediff・数学関数、windowの全frame構文、JSON5 / JSONB・table-valued JSONなどは未対応。署名の固定プローブ一致を、全入力・全組合せの互換性へ読み替えない。
 
 上のJSON例の準備文は`CREATE TABLE t(id INTEGER PRIMARY KEY,n INTEGER);`。JSON集約自体の差分テストは通過したが、監査プローブは未対応の引数内ORDER BYを含むため候補エラーを維持する。通常のindex_infoは一致へ変わったが、宣言順や方向を復元できない自動索引metadataは明示拒否する。
 

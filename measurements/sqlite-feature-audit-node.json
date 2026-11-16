@@ -2,12 +2,12 @@
   "format": 1,
   "catalogSHA256": "f2c74c7141ad2dcec40a9c1275aadf3b6864b2ad356d3ed36aa3ad445910adfb",
   "planSHA256": "6c935a1bcef2c6ae9219ac41a1879366f673b0876ab546ffa7e142036d93e378",
-  "sourceSHA256": "5dc287e0ebc53e0003a376af0db57e1fe46a0821ebfcd69d4c8be357fb6d138c",
+  "sourceSHA256": "1167fce7adda20ba611ef58c299c280c4bee8bba7ce6d3b5e00d8551610a2d43",
   "harnessSHA256": "53f05faa08f2ff889afddd6fdf499465c4baa522ef5351709432ef2385a9a104",
   "oracleSHA256": "52601ee35951c46becd53a00cf88129ff42c7544b91c2a9dc98fd7906bc96c61",
   "artifacts": {
-    "js": "501731bcc4fb331916383b592a38a9ea387d1d8bcbc2df67ceeeb5c4432f964a",
-    "wasmGC": "fba7005ab70df1947c24db7fc83d227114fef3495d2f2c46ba7ef3b843e3ddc3"
+    "js": "311106bed169111738793e17e3d1d2ca05af65a559ac4a8fd48a4832c741101b",
+    "wasmGC": "8a6e96f609ee8530e7f44fdcb7752230d54ac0c2bc356d7c7fbd955a2a6c35d2"
   },
   "oracle": {
     "engine": "native node:sqlite",
@@ -28340,16 +28340,16 @@
       "reason": "Native build advertises this module; no complete module fixture/API verification is available"
     }
   ],
-  "measuredAt": "2026-11-16T12:00:37.652Z",
+  "measuredAt": "2026-11-16T14:00:24.021Z",
   "scope": "Official entry-point inventory plus explicit behavior/system requirements; matched-probe does not prove every input or combination",
   "targets": {
     "js": {
       "summary": {
         "total": 1618,
         "counts": {
-          "matched-probe": 449,
+          "matched-probe": 454,
           "value-mismatch": 0,
-          "candidate-error": 253,
+          "candidate-error": 248,
           "oracle-error": 0,
           "oracle-unavailable": 11,
           "not-tested": 599,
@@ -28771,14 +28771,8 @@
           "category": "scalar",
           "title": "char(X1,X2,...,XN)",
           "source": "https://www.sqlite.org/lang_corefunc.html#char",
-          "status": "candidate-error",
-          "witness": {
-            "step": 4,
-            "sql": "SELECT char(65,128512)",
-            "error": "unsupported SQL function or arity: char",
-            "candidateRejected": true,
-            "rejectionAtomic": true
-          }
+          "status": "matched-probe",
+          "rejectionsVerified": true
         },
         {
           "id": "scalar/coalesce(X,Y,...)",
@@ -28823,14 +28817,8 @@
           "category": "scalar",
           "title": "glob(X,Y)",
           "source": "https://www.sqlite.org/lang_corefunc.html#glob",
-          "status": "candidate-error",
-          "witness": {
-            "step": 4,
-            "sql": "SELECT glob('a*','abc')",
-            "error": "unsupported SQL function or arity: glob",
-            "candidateRejected": true,
-            "rejectionAtomic": true
-          }
+          "status": "matched-probe",
+          "rejectionsVerified": true
         },
         {
           "id": "scalar/hex(X)",
@@ -38243,14 +38231,8 @@
           "category": "expression",
           "title": "glob",
           "source": "https://www.sqlite.org/lang_expr.html",
-          "status": "candidate-error",
-          "witness": {
-            "step": 4,
-            "sql": "SELECT 'abc' GLOB 'a*'",
-            "error": "unsupported or trailing SQL: GLOB",
-            "candidateRejected": true,
-            "rejectionAtomic": true
-          }
+          "status": "matched-probe",
+          "rejectionsVerified": true
         },
         {
           "id": "behavior/like-escape",
@@ -38279,28 +38261,16 @@
           "category": "expression",
           "title": "numeric-hex",
           "source": "https://www.sqlite.org/lang_expr.html",
-          "status": "candidate-error",
-          "witness": {
-            "step": 4,
-            "sql": "SELECT 0x7fffffffffffffff,0x8000000000000000",
-            "error": "unsupported or trailing SQL: x7fffffffffffffff",
-            "candidateRejected": true,
-            "rejectionAtomic": true
-          }
+          "status": "matched-probe",
+          "rejectionsVerified": true
         },
         {
           "id": "behavior/numeric-underscore",
           "category": "expression",
           "title": "numeric-underscore",
           "source": "https://www.sqlite.org/lang_expr.html",
-          "status": "candidate-error",
-          "witness": {
-            "step": 4,
-            "sql": "SELECT 1_000,0xF_F,1.2_3e+2",
-            "error": "unsupported or trailing SQL: _000",
-            "candidateRejected": true,
-            "rejectionAtomic": true
-          }
+          "status": "matched-probe",
+          "rejectionsVerified": true
         },
         {
           "id": "behavior/bind-positional",
@@ -42831,9 +42801,9 @@
       "summary": {
         "total": 1618,
         "counts": {
-          "matched-probe": 449,
+          "matched-probe": 454,
           "value-mismatch": 0,
-          "candidate-error": 253,
+          "candidate-error": 248,
           "oracle-error": 0,
           "oracle-unavailable": 11,
           "not-tested": 599,
@@ -43255,14 +43225,8 @@
           "category": "scalar",
           "title": "char(X1,X2,...,XN)",
           "source": "https://www.sqlite.org/lang_corefunc.html#char",
-          "status": "candidate-error",
-          "witness": {
-            "step": 4,
-            "sql": "SELECT char(65,128512)",
-            "error": "unsupported SQL function or arity: char",
-            "candidateRejected": true,
-            "rejectionAtomic": true
-          }
+          "status": "matched-probe",
+          "rejectionsVerified": true
         },
         {
           "id": "scalar/coalesce(X,Y,...)",
@@ -43307,14 +43271,8 @@
           "category": "scalar",
           "title": "glob(X,Y)",
           "source": "https://www.sqlite.org/lang_corefunc.html#glob",
-          "status": "candidate-error",
-          "witness": {
-            "step": 4,
-            "sql": "SELECT glob('a*','abc')",
-            "error": "unsupported SQL function or arity: glob",
-            "candidateRejected": true,
-            "rejectionAtomic": true
-          }
+          "status": "matched-probe",
+          "rejectionsVerified": true
         },
         {
           "id": "scalar/hex(X)",
@@ -52727,14 +52685,8 @@
           "category": "expression",
           "title": "glob",
           "source": "https://www.sqlite.org/lang_expr.html",
-          "status": "candidate-error",
-          "witness": {
-            "step": 4,
-            "sql": "SELECT 'abc' GLOB 'a*'",
-            "error": "unsupported or trailing SQL: GLOB",
-            "candidateRejected": true,
-            "rejectionAtomic": true
-          }
+          "status": "matched-probe",
+          "rejectionsVerified": true
         },
         {
           "id": "behavior/like-escape",
@@ -52763,28 +52715,16 @@
           "category": "expression",
           "title": "numeric-hex",
           "source": "https://www.sqlite.org/lang_expr.html",
-          "status": "candidate-error",
-          "witness": {
-            "step": 4,
-            "sql": "SELECT 0x7fffffffffffffff,0x8000000000000000",
-            "error": "unsupported or trailing SQL: x7fffffffffffffff",
-            "candidateRejected": true,
-            "rejectionAtomic": true
-          }
+          "status": "matched-probe",
+          "rejectionsVerified": true
         },
         {
           "id": "behavior/numeric-underscore",
           "category": "expression",
           "title": "numeric-underscore",
           "source": "https://www.sqlite.org/lang_expr.html",
-          "status": "candidate-error",
-          "witness": {
-            "step": 4,
-            "sql": "SELECT 1_000,0xF_F,1.2_3e+2",
-            "error": "unsupported or trailing SQL: _000",
-            "candidateRejected": true,
-            "rejectionAtomic": true
-          }
+          "status": "matched-probe",
+          "rejectionsVerified": true
         },
         {
           "id": "behavior/bind-positional",

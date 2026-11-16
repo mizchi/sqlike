@@ -345,11 +345,35 @@ fn arithmetic(op : String, a : Value, b : Value) -> Value {
 }
 
 ///|
+/// SQLite's UTF-8 reader maps these two BMP noncharacters to U+FFFD while
+/// retaining their original bytes in stored TEXT and char() results.
+fn sqlite_utf8_char(c : Char) -> Char {
+  if c == '\u{fffe}' || c == '\u{ffff}' {
+    '\u{fffd}'
+  } else {
+    c
+  }
+}
+
+///|
+fn pattern_chars(text : String) -> Array[Char] {
+  let chars : Array[Char] = []
+  for c in text.iter() {
+    if c == '\u{0}' {
+      break
+    }
+    chars.push(sqlite_utf8_char(c))
+  }
+  chars
+}
+
+///|
 /// Iterative wildcard matching avoids recursive blowups on hostile LIKE input.
 fn like(text : String, pattern : String, escape : Char?) -> Bool {
-  let text = nocase_prefix(text).to_array()
-  let original = pattern.to_array()
-  let pattern = nocase_prefix(pattern).to_array()
+  let text = pattern_chars(nocase_prefix(text))
+  let original = pattern_chars(pattern)
+  let pattern = pattern_chars(nocase_prefix(pattern))
+  let escape = escape.map(sqlite_utf8_char)
   let mut previous = Array::make(text.length() + 1, false)
   previous[0] = true
   let mut index = 0

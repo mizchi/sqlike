@@ -74,14 +74,14 @@ LITESTREAM_BIN=/path/to/litestream just p0-check
 - [x] **5. JSON集約** — `sqlJson`へ`json_group_array` / `json_group_object`を追加。空集合、順序、重複キー、subtype、DISTINCT、FILTERの組合せを照合。BLOB値・NULLのobject label・JSON集約のwindow利用は明示拒否する。
 - [x] **6. Drizzleの事前コンパイル** — [compilerと実行entry](../drizzle-prepared.md)を分割。query builderのSQL・constant / placeholder配置・標準codecをビルド時にデータ化。実行側にORM / parserを含めない。JS / Wasm、Chromiumの最小ビルド・IndexedDB再開、破損・不正bind後の非変更を検証する。
 
-共通の回帰は`just staged-compat-check`の38テスト。Drizzleから見つかった、整数へ損失なく変換できるREAL / TEXTのLIMIT・OFFSETも本家に合わせた。JSON数値は既存のSQLite互換formatterを再利用し、負のゼロ・指数・Infinity表記の差を修正した。内部IR用の関数をSQLから直接呼んで受理される問題も、native / 動的JS・Wasm / MoonBit compilerの拒否テストを追加して修正した。
+この6項目の追加時点では`just staged-compat-check`の38テストを通過。Drizzleから見つかった、整数へ損失なく変換できるREAL / TEXTのLIMIT・OFFSETも本家に合わせた。JSON数値は既存のSQLite互換formatterを再利用し、負のゼロ・指数・Infinity表記の差を修正した。内部IR用の関数をSQLから直接呼んで受理される問題も、native / 動的JS・Wasm / MoonBit compilerの拒否テストを追加して修正した。
 
-最終の`just p0-check`はMoonBit 53件×JS / Wasm、Node 335件、Chromium E2E 56件を通過。566ケース×8経路の差分監査は失敗0。全機能監査は449 probe一致・253 atomic拒否・出力不一致0で、未対応・未検証が残るため全機能互換とは判定しない。[現行の検証記録](../../measurements/p0-completion.json)。
+`ae5df09`時点の`just p0-check`はMoonBit 53件×JS / Wasm、Node 335件、Chromium E2E 56件を通過。566ケース×8経路の差分監査は失敗0。全機能監査は449 probe一致・253 atomic拒否・出力不一致0で、未対応・未検証が残るため全機能互換とは判定しない。[現行の検証記録](../../measurements/p0-completion.json)は後続の変更も含む。
 
 大きめの追加は既存の選択APIへ入れる。バイナリの必要機能bitは`schemaMetadata=128`、`aggregateFilter=256`。旧readerや機能を外したruntimeは、未実行の定義も初期化時に拒否する。NULL順序の内部CallはORDER BYの外で受理せず、旧runtimeも未知の関数として拒否する。AST / wireのfieldやvariantは増やしていない。
 
 <!-- priority-size:start -->
-基準は`ea36a5f`の[追加前](../../measurements/basic-query-before.json)、追加後は[現行レポート](../../measurements/bundle-size-current.json)。単位はB。未圧縮はminify後。
+基準は`ea36a5f`の[追加前](../../measurements/basic-query-before.json)、追加後は`ae5df09`時点の[次段階の基準](../../measurements/basic-expression-before.json)。単位はB。未圧縮はminify後。
 
 | 構成 | 未圧縮・追加後 | 未圧縮の増分 | Brotli・追加後 | Brotliの増分 |
 | --- | ---: | ---: | ---: | ---: |
@@ -99,13 +99,56 @@ LITESTREAM_BIN=/path/to/litestream just p0-check
 任意のDrizzle prepared adapter単体はminified 4,092 B / Brotli 1,420 B。既定entryへ追加せず、注入するengine / factory・catalog・binding planは別資産。[計測](../../measurements/drizzle-defined-size-current.json)。別々の圧縮値を全アプリの増分として単純加算しない。
 <!-- priority-size:end -->
 
+### S02 基本式の追加
+
+- [x] GLOB / NOT GLOBを既存のCall IRへ変換し、glob(pattern,text)と共通評価する。大小文字・範囲・否定class・`]` / `-`・Unicode・NUL・NULL・BLOB変換を本家と比較する。
+- [x] char()はコード点からTEXTを構築し、NUL・型変換・範囲外のU+FFFDを保持する。サロゲートは不正UTF-8を別の値へ置換せず、文の変更を公開する前に拒否する。
+- [x] 16進・桁区切り数値literalはparserで既存のINTEGER / REALへ変換する。符号付き64bit境界、先頭ゼロ、桁あふれ、separatorの位置、列名の元表記を検証する。CAST / bindの数値変換は従来の十進構文を維持する。
+- [x] 単項演算子をCOLLATEより先に結合させる。負の16進最小値は本家と同じく拒否し、COLLATEを内側で括弧に包んだ式との違いも検証する。
+- [x] U+FFFE / U+FFFFの保存bytesを変えず、GLOB / LIKE / unicodeがコード点を読む時だけ本家と同じU+FFFDへ写像する。サロゲートとBMP以外の非文字は区別する。
+- [x] 関数の1,000引数上限を準備時に検査する。char / concat / scalar minの1,001引数を拒否し、上限ちょうどのcharを本家と比較する。INリストは関数上限の対象にせず、内部用のin()のSQLからの直接呼出しは拒否する。
+- [x] 新規9テストを追加し、`just staged-compat-check`は47テスト。動的 / AOTのJS・Wasmに加え、全任意機能を外したSQL / AOT / definedのJS・Wasmで実行し、数値parserが配信されないことも検査する。Chromiumの既存scalar corpusにも8入力を追加する。
+
+GLOBはpatternを一度解析し、直近の`*`の位置だけを保存して反復照合する。再帰・指数的な分岐探索を使わず、patternと入力の文字列長に比例する補助メモリを使う。最大時間はpattern長×入力長に比例し得る。50,000 byte上限は最初のNUL以降も含むpattern全体に適用する。
+
+全回帰はMoonBit 53件×JS / Wasm、Node 344件、Chromium E2E 56件と型チェック・本家Litestream復元を通過。566ケース×8経路の差分監査は失敗0。全機能監査は454 probe一致・248 atomic拒否・出力不一致0で、未対応・未検証を一致へ含めない。
+
+<!-- s02-size:start -->
+容量の基準は`ae5df09`の[追加前](../../measurements/basic-expression-before.json)、追加後は[現行レポート](../../measurements/bundle-size-current.json)。公開entry・Oxc設定・集計対象・Brotli quality 11をそろえた。単位はB、未圧縮はminify後。
+
+| 構成 | 未圧縮・追加後 | 未圧縮の増分 | Brotli・追加後 | Brotliの増分 |
+| --- | ---: | ---: | ---: | ---: |
+| 通常SQL / JS | 616,425 | +5,397 | 116,490 | +1,173 |
+| 通常SQL / Wasm | 545,809 | +5,152 | 171,379 | +1,053 |
+| 事前定義・全実行機能 / JS | 502,811 | +2,762 | 100,784 | +358 |
+| 事前定義・全実行機能 / Wasm | 447,412 | +2,808 | 144,277 | +778 |
+| 事前定義・JSON/日時/windowなし / JS | 465,336 | +2,763 | 93,007 | +502 |
+| 事前定義・JSON/日時/windowなし / Wasm | 418,589 | +2,639 | 133,980 | +691 |
+| 事前定義・主キー索引のみ / JS | 443,526 | +2,762 | 88,872 | +584 |
+| 事前定義・主キー索引のみ / Wasm | 399,554 | +2,743 | 128,769 | +946 |
+
+主キー索引のみのJS版はBrotli 86.79 KiB・+584 B（約0.66%）、全実行機能の事前定義JS版は98.42 KiB・+358 B。通常SQLのJS版は+1,173 Bで、literal用parserの追加も含む。GLOB / charを小さいcore機能として採用し、追加のfeature tokenは増やさない。圧縮後の増分は構成ごとの辞書・配置にも依存する。sqlite-wasm / Tursoと、任意Drizzle prepared adapter単体の容量は同一。
+<!-- s02-size:end -->
+
+既存の1,000行・AOT workloadの再計測。単位はµs / 操作、7回の中央値。[追加前](https://github.com/mizchi/sqlike/blob/ae5df09/measurements/sqlite-speed-current.json)と[追加後](../../measurements/sqlite-speed-current.json)は同じ入力・計測方法を使う。永続化・RPCを含まない。
+
+| 処理 | JS 前→後 | Wasm 前→後 | SQLite prepared 前→後 |
+| --- | ---: | ---: | ---: |
+| 主キー検索 | 2.33→2.31 | 1.62→1.71 | 1.41→1.56 |
+| SUM＋COUNT | 16.21→17.06 | 10.68→11.17 | 21.52→22.82 |
+| 1行UPDATE | 4.45→4.87 | 3.55→3.73 | 1.27→1.38 |
+
+SQLite側も約6〜11%変動しており、絶対時間の増分を機能追加だけの費用とは断定しない。JS / SQLite比ではSUM＋COUNTは約0.75のまま、UPDATEは約3.50→3.53。この固定workloadの観測を、GLOBの全patternや全workloadでの高速性の証明には使わない。行ストアの保持・ピークメモリとIndexedDB保存も[現行の計測](../../measurements/p0-completion.json)へ再採取した。
+
+仕様参照: [SQLiteの数値literal・GLOB](https://www.sqlite.org/lang_expr.html)、[char / glob](https://www.sqlite.org/lang_corefunc.html)、[UTF-8 reader](https://github.com/sqlite/sqlite/blob/master/src/utf.c)。検証入力は[基本式の差分テスト](../../tests/sqlike-basic-expressions.test.ts)に固定する。
+
 ### 残る導入単位
 
 以下の導入単位は計画。未実装のfeature tokenや空のAPIは公開しない。各段階をさらに小さい変更に分け、差分テストと有効 / 無効ビルドの容量を示してから完了にする。
 
 | 段階 | 機能 | 導入先と条件 |
 | --- | --- | --- |
-| [ ] S02 基本式の残り | GLOB、char、16進・桁区切り数値literal | parserのみの機能はビルド時compiler側に置く。評価器の増分を測り、小さければcoreへ加える。pattern照合のNULL・Unicode・NULを差分検証する |
+| [x] S02 基本式 | GLOB、char、16進・桁区切り数値literal | 上記の範囲でcore / compilerへ導入。サロゲート値は明示拒否し、数値parserを事前定義runtimeへ含めない |
 | [ ] S03 scalar拡張 | format / printf、random / randomblob、数学関数 | 書式処理・乱数源・数学関数群を別の任意実装にする。丸め・型・overflow、乱数源の注入と同期時の扱いを固定する |
 | [ ] S04 問い合わせの残り | UPDATE FROM、row value、CTE MATERIALIZED指定 | 必要なIRだけcompilerから記録。大きい実行器変更は任意のquery拡張へ分ける。名前解決、複数一致、順序、実体化と非決定関数の評価回数を検証する |
 | [ ] S05 集約・windowの残り | 引数内ORDER BY、named WINDOW、EXCLUDE、集約bare column | window拡張は既存windowFunctions内。集約拡張は容量に応じて分離し、既存の小さい集約を維持する。tie・NULL・frame・代表行の規則を本家と比較する |

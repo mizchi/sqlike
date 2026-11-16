@@ -81,6 +81,9 @@ SELECT '{"n":1}' -> 'n', '{"n":1}' ->> 'n'; -- TEXT '1', INTEGER 1
 | 機能 | 選択ビルドでの扱い |
 | --- | --- |
 | `LIKE … ESCAPE` / `like(pattern,text,escape?)`、複数引数のscalar `min/max` | core。NULL・型・collationを保持する |
+| `GLOB` / `NOT GLOB` / `glob(pattern,text)` | core。大文字小文字を区別し、`*` / `?` / `[…]` / `[^…]`・Unicode範囲を扱う。patternは50,000 byteまで |
+| `char(codepoint,…)` | core。NULを保持し、NULLはコード点0、範囲外はU+FFFD。サロゲート値は明示拒否 |
+| `0xF_F` / `1_000`などの数値literal | SQL parserで既存のINTEGER / REALへ変換。文字列やbind値の数値変換には拡張しない |
 | `ORDER BY … NULLS FIRST/LAST` | core。列番号・別名・windowのORDER BYにも対応 |
 | `:name` / `@name` / `$name` | SQL解析時に位置へ解決。同じ名前は同じbind位置、大文字小文字・接頭辞は区別 |
 | FROM内subquery | 既存CTE実行器を再利用。重複列名の自動改名は拒否するため、内側の列に一意な別名を付ける |
@@ -94,6 +97,16 @@ db.values('SELECT :x,:x,@x', [1n, 2n]); // [[1n,1n,2n]]
 
 SQL APIへ渡すbindは位置順の配列です。Drizzleのnamed placeholderをobjectで渡す用途には[事前コンパイルentry](drizzle-prepared.md)を使います。
 
-必要機能はバイナリcatalogにも記録し、機能を外したruntimeでは初期化時に拒否します。整数へ損失なく変換できるREAL / TEXTのLIMIT / OFFSETも受理します。内部IR用の`$`で始まる関数名をSQLから直接呼ぶことはできません。
+```sql
+SELECT 'image.png' GLOB '*.[a-z][a-z][a-z]'; -- 1
+SELECT hex(char(65,0,233));                  -- '4100C3A9'
+SELECT 0xFFFFFFFFFFFFFFFF,1_000;             -- INTEGER -1, 1000
+```
+
+GLOBとLIKEは最初のNULまでを照合します。`char()`が返すTEXTのNUL以降も値としては保持されます。16進literalは符号付き64bitの2の補数で解釈し、桁あふれは拒否します。数値literalの追加構文は事前コンパイル時に解決されるため、`defined` / `aot`のランタイムにSQL parserは不要です。
+
+関数の引数は1,000個までで、上限超過は準備時に拒否します。
+
+必要機能はバイナリcatalogにも記録し、機能を外したruntimeでは初期化時に拒否します。整数へ損失なく変換できるREAL / TEXTのLIMIT / OFFSETも受理します。内部IR用の`$`で始まる関数名と`in()`のSQLからの直接呼出しは拒否します。IN演算子のリストは関数引数の上限には含めません。
 
 クエリ実行時には行データをメモリに保持します。IndexedDBへ保存する用途は[事前定義したSQL](prepared.md)を参照してください。

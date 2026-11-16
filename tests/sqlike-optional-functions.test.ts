@@ -170,7 +170,10 @@ test("optional execution features reject at load, including unused schema expres
           "index__metadata",
         ])
           assert.equal(new RegExp(`function [^\\n]*${symbol}\\(`).test(code), enabled, symbol);
-        if (mode !== "sql") assert.doesNotMatch(code, /function [^\n]*parse__statement\(/);
+        if (mode !== "sql") {
+          assert.doesNotMatch(code, /function [^\n]*parse__statement\(/);
+          assert.doesNotMatch(code, /function [^\n]*sql__(digits|number)\(/);
+        }
         assert.equal(code.includes("invalid aggregate FILTER"), enabled);
         const js = await import(pathToFileURL(join(built.directory, "runtime.js")).href);
         const wasm = (
@@ -229,7 +232,7 @@ test("optional execution features reject at load, including unused schema expres
             { name: "add", sql: "INSERT INTO t VALUES(?,?) RETURNING id,v" },
             {
               name: "core",
-              sql: "SELECT ~id,id & 3,id | 4294967296,sign(-id),min(id,2),v LIKE '%n%' ESCAPE '!',id IS DISTINCT FROM NULL,id IS NOT DISTINCT FROM 1 FROM t ORDER BY id NULLS LAST",
+              sql: "SELECT ~id,id & 3,id | 4294967296,sign(-id),min(id,2),v LIKE '%n%' ESCAPE '!',v GLOB '*n*',glob('*n*',v),char(65,0,128512),0xF_F,1_000,id IS DISTINCT FROM NULL,id IS NOT DISTINCT FROM 1 FROM t ORDER BY id NULLS LAST",
             },
             {
               name: "get",

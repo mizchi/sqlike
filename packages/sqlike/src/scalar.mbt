@@ -2,6 +2,8 @@
 /// Function metadata is checked while preparing, including unselected branches.
 fn scalar_arity(name : String, count : Int32) -> Bool {
   match name {
+    "char" => true
+    "glob" => count == 2
     "like" => count == 2 || count == 3
     "min" | "max" => count >= 2
     "substr" | "substring" => count == 2 || count == 3
@@ -123,6 +125,34 @@ fn scalar_call(
   encoding : Int32,
 ) -> Value raise SqlError {
   match name {
+    "glob" => {
+      let pattern = if values[0] is Null {
+        ""
+      } else {
+        checked_text_value(values[0])
+      }
+      guard @utf8.encode(pattern).length() <= 50000 else {
+        fail("LIKE or GLOB pattern too complex")
+      }
+      if values[0] is Null || values[1] is Null {
+        Null
+      } else {
+        boolean(glob(checked_text_value(values[1]), pattern))
+      }
+    }
+    "char" => {
+      let b = StringBuilder()
+      for value in values {
+        let n = integer_value(value)
+        guard n < 55296L || n > 57343L else {
+          fail("unsupported SQL: char surrogate is not Unicode scalar text")
+        }
+        b.write_char(
+          (if n < 0L || n > 1114111L { 65533 } else { n.to_int() }).unsafe_to_char(),
+        )
+      }
+      Text(b.to_string())
+    }
     "sign" =>
       match numeric(values[0], true) {
         Integer(n) =>
@@ -135,7 +165,11 @@ fn scalar_call(
         return Null
       }
       for c in checked_text_value(values[0]).iter() {
-        return if c == '\u{0}' { Null } else { Integer(c.to_int().to_int64()) }
+        return if c == '\u{0}' {
+          Null
+        } else {
+          Integer(sqlite_utf8_char(c).to_int().to_int64())
+        }
       }
       Null
     }

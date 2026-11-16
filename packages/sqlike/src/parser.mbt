@@ -19,6 +19,67 @@ priv struct Parser {
 }
 
 ///|
+fn sql_digit(c : Byte, hex : Bool) -> Int32 {
+  if c >= b'0' && c <= b'9' {
+    c.to_int() - 48
+  } else if hex && c >= b'a' && c <= b'f' {
+    c.to_int() - 87
+  } else if hex && c >= b'A' && c <= b'F' {
+    c.to_int() - 55
+  } else {
+    -1
+  }
+}
+
+///|
+/// Separators belong to SQL source only, never numeric TEXT conversion.
+fn sql_digits(bytes : Bytes, start : Int32, hex : Bool) -> Int32 raise SqlError {
+  let mut i = start
+  while i < bytes.length() {
+    if sql_digit(bytes[i], hex) >= 0 {
+      i += 1
+    } else if bytes[i] == b'_' {
+      guard i > start &&
+        i + 1 < bytes.length() &&
+        sql_digit(bytes[i - 1], hex) >= 0 &&
+        sql_digit(bytes[i + 1], hex) >= 0 else {
+        fail("invalid SQL numeric separator")
+      }
+      i += 1
+    } else {
+      break
+    }
+  }
+  i
+}
+
+///|
+fn sql_number(text : String) -> Value raise SqlError {
+  let bytes = @utf8.encode(text)
+  if bytes.length() >= 2 &&
+    bytes[0] == b'0' &&
+    (bytes[1] == b'x' || bytes[1] == b'X') {
+    let mut number = 0UL
+    for i in 2..<bytes.length() {
+      guard number <= 0x0FFFFFFFFFFFFFFFUL else { fail("hex literal too big") }
+      number = (number << 4) | sql_digit(bytes[i], true).to_uint64()
+    }
+    Integer(number.reinterpret_as_int64())
+  } else {
+    parse_number(text)
+  }
+}
+
+///|
+fn sql_integer_min(e : Expr) -> Bool {
+  match e {
+    Literal(Integer(-9223372036854775808L)) => true
+    Unary("+", e) => sql_integer_min(e)
+    _ => false
+  }
+}
+
+///|
 fn lex(sql : String) -> Parser raise SqlError {
   let bytes = @utf8.encode(sql)
   guard !bytes.to_array().contains(b'\x00') else {
@@ -124,22 +185,46 @@ fn lex(sql : String) -> Parser raise SqlError {
         bytes[i + 1] >= b'0' &&
         bytes[i + 1] <= b'9'
       ) {
-      i += 1
-      while i < bytes.length() &&
-            ((bytes[i] >= b'0' && bytes[i] <= b'9') || bytes[i] == b'.') {
-        i += 1
-      }
-      if i < bytes.length() && (bytes[i] == b'e' || bytes[i] == b'E') {
-        i += 1
-        if i < bytes.length() && (bytes[i] == b'+' || bytes[i] == b'-') {
-          i += 1
-        }
+      // ?NNN uses decimal digits without separators or other literal syntax.
+      let parameter = !tokens.is_empty() &&
+        tokens[tokens.length() - 1].word == "?" &&
+        tokens[tokens.length() - 1].end == start
+      if parameter {
         while i < bytes.length() && bytes[i] >= b'0' && bytes[i] <= b'9' {
           i += 1
         }
+      } else if c == 48 &&
+        i + 1 < bytes.length() &&
+        (bytes[i + 1] == b'x' || bytes[i + 1] == b'X') {
+        i = sql_digits(bytes, i + 2, true)
+        guard i > start + 2 else { fail("invalid SQL hex literal") }
+      } else {
+        i = sql_digits(bytes, i, false)
+        if i < bytes.length() && bytes[i] == b'.' {
+          i += 1
+          i = sql_digits(bytes, i, false)
+        }
+        if i < bytes.length() && (bytes[i] == b'e' || bytes[i] == b'E') {
+          i += 1
+          if i < bytes.length() && (bytes[i] == b'+' || bytes[i] == b'-') {
+            i += 1
+          }
+          let first = i
+          i = sql_digits(bytes, i, false)
+          guard i > first else { fail("invalid SQL numeric exponent") }
+        }
+      }
+      if !parameter && i < bytes.length() {
+        let n = bytes[i].to_int()
+        guard !((n >= 65 && n <= 90) ||
+          (n >= 97 && n <= 122) ||
+          n == 95 ||
+          n >= 128) else {
+          fail("invalid SQL number")
+        }
       }
       tokens.push({
-        word: @utf8.decode_lossy(bytes[start:i]),
+        word: @utf8.decode_lossy(bytes[start:i]).replace_all(old="_", new=""),
         kind: 3,
         start,
         end: i,
@@ -273,7 +358,16 @@ fn precedence(word : String) -> Int32 {
   match word {
     "or" => 1
     "and" => 2
-    "=" | "==" | "!=" | "<>" | "is" | "like" | "not" | "in" | "between" => 3
+    "="
+    | "=="
+    | "!="
+    | "<>"
+    | "is"
+    | "like"
+    | "glob"
+    | "not"
+    | "in"
+    | "between" => 3
     "<" | ">" | "<=" | ">=" => 4
     "<<" | ">>" | "&" | "|" => 5
     "+" | "-" => 6
@@ -294,7 +388,7 @@ fn Parser::expression(p : Parser, minimum : Int32) -> Expr raise SqlError {
   let mut left : Expr = if token.kind == 1 {
     Literal(Text(token.word))
   } else if token.kind == 3 {
-    Literal(parse_number(token.word))
+    Literal(sql_number(token.word))
   } else if word == "null" {
     Literal(Null)
   } else if word == "true" {
@@ -380,7 +474,16 @@ fn Parser::expression(p : Parser, minimum : Int32) -> Expr raise SqlError {
     p.position += 1
     Literal(Integer(-9223372036854775808L))
   } else if word == "-" || word == "+" || word == "not" || word == "~" {
-    Unary(word, p.expression(if word == "not" { 3 } else { 9 }))
+    let start = p.position
+    let e = p.expression(if word == "not" { 3 } else { 10 })
+    if word == "-" &&
+      sql_integer_min(e) &&
+      p.tokens[start:p.position].any(t => {
+        t.kind == 3 && identifier(t.word).has_prefix("0x")
+      }) {
+      fail("hex literal too big")
+    }
+    Unary(word, e)
   } else if word == "*" {
     Star("")
   } else if word == "x" && p.tokens[p.position].kind == 1 {
@@ -398,7 +501,7 @@ fn Parser::expression(p : Parser, minimum : Int32) -> Expr raise SqlError {
     Literal(Blob(b.to_bytes()))
   } else if token.kind == 0 || token.kind == 2 {
     if p.take("(") {
-      guard !token.word.has_prefix("$") else {
+      guard !token.word.has_prefix("$") && identifier(token.word) != "in" else {
         fail("unsupported SQL reserved function name")
       }
       let arguments : Array[Expr] = []
@@ -481,7 +584,11 @@ fn Parser::expression(p : Parser, minimum : Int32) -> Expr raise SqlError {
       }
       let op = if negate != distinct { "is not" } else { "is" }
       left = Binary(op, left, p.expression(prec + 1))
-    } else if op == "not" || op == "between" || op == "in" || op == "like" {
+    } else if op == "not" ||
+      op == "between" ||
+      op == "in" ||
+      op == "like" ||
+      op == "glob" {
       let negate = op == "not"
       let operator = if negate {
         let o = p.peek()
@@ -511,6 +618,8 @@ fn Parser::expression(p : Parser, minimum : Int32) -> Expr raise SqlError {
           }
           Call("in", arguments)
         }
+      } else if operator == "glob" {
+        Call("glob", [p.expression(prec + 1), left])
       } else if operator == "like" {
         let pattern = p.expression(prec + 1)
         if p.take("escape") {

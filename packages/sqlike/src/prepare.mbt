@@ -114,6 +114,10 @@ fn prepare_expression(
       }
     }
     Call(name, args) => {
+      // IN is a lowered SQL operator, not a variadic function invocation.
+      guard name == "in" || args.length() <= 1000 else {
+        fail("SQL function argument limit")
+      }
       validate_function_features(name)
       if name == "$distinct" {
         guard aggregates && args.length() == 1 else {
