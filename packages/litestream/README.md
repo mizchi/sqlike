@@ -1,21 +1,20 @@
 # mizchi/litestream
 
-現在は **0.1.0**。一般的なアプリのオフライン更新・復旧・競合解決を、各バックエンドの必須プロファイルで検証した。[対応計画・完了条件](https://github.com/mizchi/sqlike/blob/v0.1.0/docs/roadmap-0.1.0.md)を参照。
+DBエンジンに依存しないSQLite同期・LTXのMoonBitモジュールです。JS / Wasm GCに対応し、SQLike・SQLite・Tursoの本体を依存に含めません。
 
-DB エンジンに依存しない MoonBit 製の SQLite 同期・LTX 実装。JS / Wasm GC で動作し、LTX v3 の生成・適用、LZ4 / CRC64、SQLite Session codec、revision・適用可否と競合解決を扱う。SQLike・SQLite・Turso のドライバーを本モジュールの依存に含めない。
-
-`moon.pkg` に `"mizchi/litestream"` を import し、`@litestream` から利用する。SQLite イメージを受け取る LTX API は、そのイメージを作成・読取する DB ドライバーから独立している。SQLike なしでの利用を [外部 consumer test](https://github.com/mizchi/sqlike/blob/v0.1.0/tests/workspace.test.ts) で検査する。
-
-ホスト側の [共通契約](https://github.com/mizchi/sqlike/blob/v0.1.0/docs/backend-contract.md) に SQLike / SQLite WASM / Turso WASM のアダプターが従う。三つとも SQL 同期と原子的な outbox 保存を使える。Session capture と SQLite 物理イメージは optional な機能として分け、Turso の現行アダプターは SQL 同期を使う。
-
-SQLike と LTX を組み合わせる AOT export はアプリ側の `examples/aot`、`mizchi/litestream-example/runtime` にある。これにより両ライブラリの依存を独立させている。
-
-ルートの `just test-litestream` で JS / Wasm GC を検証する。`just aot-check /absolute/path/to/litestream` は上流 Go decoder・実 Litestream・SQLite とブラウザで検証する。[全体構成](https://github.com/mizchi/sqlike/blob/v0.1.0/README.md)、[AOT の利用手順](https://github.com/mizchi/sqlike/blob/v0.1.0/docs/aot-ltx-plan.md)を参照。
-
-`moon.mod`に依存を追加する。
-
-```moonbit
-import {
-  "mizchi/litestream@0.1.0",
-}
+```sh
+moon add mizchi/litestream@0.1.0
 ```
+
+`moon.pkg`から`"mizchi/litestream"`をimportし、`@litestream`のAPIを使います。
+
+- LTX v3の生成・適用、TXIDとchecksumの検査。
+- SQLite Session changesetのdecodeとSQL適用計画。
+- transport frameのencode / decode、revisionと適用可否の判定。
+- LZ4 / CRC64。
+
+SQLite画像を受け取るLTX APIは、その画像を作るDBドライバーから独立しています。SessionやLTXに必要なdriverの能力は、利用側で提供します。
+
+JavaScript / TypeScriptのhost APIは`@mizchi/litestream`です。HTTP / P2P transport、オフライン編集、再送、利用側policyによる競合処理を組み込めます。
+
+[同期・競合処理・LTXの利用ガイド](https://github.com/mizchi/sqlike/blob/main/docs/sync.md) / [全体の導入](https://github.com/mizchi/sqlike)。MIT。

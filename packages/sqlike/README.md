@@ -1,27 +1,33 @@
 # mizchi/sqlike
 
-現在は **0.1.0**。[index・trigger](https://github.com/mizchi/sqlike/blob/v0.1.0/docs/sqlike-index-trigger.md)、[SQLトランザクション・CAST・JSON・日時・window・再帰CTE・移行](https://github.com/mizchi/sqlike/blob/v0.1.0/docs/sqlike-app-features.md)を実装済み。全文検索は任意の `mizchi/sqlike/fts` に分離し、通常バンドルには含めない。一般的なアプリの利用シナリオと永続化・同期の必須プロファイルを検証した。[対応計画・完了条件](https://github.com/mizchi/sqlike/blob/v0.1.0/docs/roadmap-0.1.0.md)を参照。
+MoonBitから使えるSQLiteサブセットです。動的SQLと事前コンパイルした問い合わせを実行でき、SQLite画像の読取・書き出しも扱います。Litestreamへの依存はありません。JS / Wasm GCに対応します。
 
-[機能選択プロファイル](https://github.com/mizchi/sqlike/blob/v0.1.0/docs/sqlike-feature-profiles.md)でRIGHT/FULL JOIN、STRICT、主キー索引、trigger、FKなどを選択し、JS/Wasmを生成できる。AOTはパーサを含まない。binaryの副作用適用は別entryの任意wrapperで有効にする。
+```sh
+moon add mizchi/sqlike@0.1.0
+```
 
-MoonBit 製の SQLite サブセット。値・SQL parser・評価・制約・行ストア、SQLite ファイルの読取・出力を持つ。`mizchi/litestream` に依存せず利用できる。[開発方針](https://github.com/mizchi/sqlike/blob/v0.1.0/docs/sqlike-development.md)に従い、速度と既存の互換性を維持しながら SQLite の対応範囲を広げる。全機能の互換性は未達。
+`moon.pkg`から`"mizchi/sqlike"`をimportします。
+
+```moonbit
+let db = @sqlike.Connection::open(":memory:")
+let statement = db.prepare("SELECT ?")
+statement.bind(index=1, 9007199254740993L)
+if statement.step() {
+  let value : Int64 = statement.column(index=0)
+  assert_eq(value, 9007199254740993L)
+}
+statement.finalize()
+db.close()
+```
+
+bindは1始まり、columnは0始まりです。`Connection` / `Statement` / `Bind` / `Column` / `Value`を公開します。
 
 | パッケージ | 用途 |
 | --- | --- |
-| `mizchi/sqlike` | `Connection` / `Statement` / `Bind` / `Column` / `Value`、事前コンパイルした `Program`、DB イメージと SQLite ページ |
-| `mizchi/sqlike/compiler` | ビルド時の `compile_program`。SQL 文字列を解析して固定スキーマとクエリ AST を生成 |
-| `mizchi/sqlike/fts` | 任意の転置index・phrase / prefix / boolean検索・BM25。通常のSQL runtimeから独立 |
+| `mizchi/sqlike` | SQL実行、型付き値、事前コンパイルしたProgram、DB画像・SQLiteページ |
+| `mizchi/sqlike/compiler` | schemaとSQLの事前コンパイル |
+| `mizchi/sqlike/fts` | 任意の全文検索。通常のSQL runtimeから独立 |
 
-利用する `moon.pkg` から `"mizchi/sqlike"` を import し、`@sqlike.Connection::open(":memory:")` または `Connection::from_program` を使う。bind は1始まり、column は0始まり。型付き API は [sqlite3.mbt](https://github.com/moonbit-community/sqlite3.mbt/blob/main/column.mbt) を参考にしている。
+CRUD、RETURNING、JOIN、index、制約、基本trigger、transaction等を扱います。SQLite全機能互換ではありません。[SQLの対応範囲](https://github.com/mizchi/sqlike/blob/main/docs/sql.md)を参照してください。
 
-リポジトリの `moon.work` ではローカルソースから解決する。`just sqlike-check` で native SQLite との直接差分、`just sqlike-bench` で速度を検査する。ルートで `just test-sqlike` を実行すると JS / Wasm GC のモジュールテストを行う。外部ワークスペースからの利用も [consumer test](https://github.com/mizchi/sqlike/blob/v0.1.0/tests/workspace.test.ts) で確認する。
-
-ブラウザの parser を除外した実行モジュールは `mizchi/litestream-example/runtime` が構成する。[SQL の検証範囲](https://github.com/mizchi/sqlike/blob/v0.1.0/docs/moon-sql.md)、[AOT の利用手順](https://github.com/mizchi/sqlike/blob/v0.1.0/docs/aot-ltx-plan.md)を参照。
-
-`moon.mod`に依存を追加する。
-
-```moonbit
-import {
-  "mizchi/sqlike@0.1.0",
-}
-```
+JavaScript / TypeScriptからは`@mizchi/sqlike`を使えます。[導入と利用例](https://github.com/mizchi/sqlike) / [固定schema・IndexedDB](https://github.com/mizchi/sqlike/blob/main/docs/prepared.md)。MIT。

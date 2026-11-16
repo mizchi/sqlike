@@ -10,4 +10,4 @@ Changing the inventory invalidates previous feature-audit reports.
 
 This is an inventory of documented entry points, not an exhaustive behavioral
 specification, a copy of the upstream Tcl/TH3 tests, or a proof of compatibility.
-See `docs/sqlite-feature-audit.md` for the measured gaps and strict gate.
+See `docs/internal/sqlite-feature-audit.md` for the measured gaps and strict gate.
