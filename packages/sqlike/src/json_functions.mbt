@@ -346,8 +346,15 @@ fn json_argument(
   }
   match value {
     Null => SqlJson::null()
-    Integer(n) => parse_sql_json(n.to_string()) catch { _ => SqlJson::null() }
-    Real(n) => parse_sql_json(n.to_string()) catch { _ => SqlJson::null() }
+    Integer(n) => SqlJson::Number(n.to_double(), Some(n.to_string()))
+    Real(n) =>
+      if n.is_inf() {
+        SqlJson::Number(n, Some(if n < 0 { "-9.0e+999" } else { "9.0e+999" }))
+      } else if n.is_nan() {
+        SqlJson::null()
+      } else {
+        SqlJson::Number(n, Some(sqlite_real_text(n)))
+      }
     Text(s) => SqlJson::string(s)
     Blob(_) => fail("JSON cannot hold BLOB values")
   }
@@ -706,7 +713,7 @@ fn json_subtype(expr : Expr, ctx : Evaluation) -> Bool raise SqlError {
     Call(name, _) =>
       [
         "json", "json_quote", "json_array", "json_object", "json_set", "json_insert",
-        "json_replace", "json_remove", "json_patch", "->",
+        "json_replace", "json_remove", "json_patch", "->", "json_group_array", "json_group_object",
       ].contains(name)
     Case(base, arms, other) => {
       let selected = evaluate(

@@ -78,10 +78,14 @@ fn prepare_expression(
       guard windows && window_arity(name, args.length()) else {
         fail("misuse of window function: " + name)
       }
-      guard !args.any(e => e is Call("$distinct", _)) else {
+      guard !args.any(e => filter_input(e) is Call("$distinct", _)) else {
         fail("DISTINCT is not supported for window functions")
       }
-      for e in args {
+      for i, e in args {
+        if i == 0 && e is Call("$filter", _) {
+          prepare_filtered_argument(e, ctx, name, true, args.length())
+          continue
+        }
         if !(e is Star(_)) {
           prepare_expression(e, ctx, true, false)
         } else {
@@ -92,7 +96,7 @@ fn prepare_expression(
         prepare_expression(e, ctx, true, false)
       }
       for o in orders {
-        prepare_expression(o.expression, ctx, true, false)
+        prepare_expression(ordering_expression(o.expression), ctx, true, false)
       }
       for bound in [frame.start, frame.end] {
         match bound {
@@ -106,21 +110,13 @@ fn prepare_expression(
       guard FEATURE_WINDOWS else { fail("feature disabled: windowFunctions") }
       guard windows else { fail("misuse of window function") }
       for o in orders {
-        prepare_expression(o.expression, ctx, false, false)
+        prepare_expression(ordering_expression(o.expression), ctx, false, false)
       }
     }
     Call(name, args) => {
       validate_function_features(name)
       if name == "$distinct" {
-        guard aggregates &&
-          (
-            args.length() == 1 ||
-            (
-              (name == "group_concat" || name == "string_agg") &&
-              args.length() == 2
-            )
-          ) &&
-          (name != "string_agg" || args.length() == 2) else {
+        guard aggregates && args.length() == 1 else {
           fail("misuse of DISTINCT aggregate")
         }
         prepare_expression(args[0], ctx, false, false)
@@ -136,17 +132,22 @@ fn prepare_expression(
         }
         return
       }
-      let grouped = aggregate_name(name)
+      let grouped = aggregate_name(name, args.length())
       if grouped {
         guard aggregates &&
           (
             args.length() == 1 ||
             (
-              (name == "group_concat" || name == "string_agg") &&
+              (
+                name == "group_concat" ||
+                name == "string_agg" ||
+                name == "json_group_object"
+              ) &&
               args.length() == 2
             )
           ) &&
-          (name != "string_agg" || args.length() == 2) else {
+          (name != "string_agg" || args.length() == 2) &&
+          (name != "json_group_object" || args.length() == 2) else {
           fail("misuse of aggregate function: " + name)
         }
       } else {
@@ -164,8 +165,10 @@ fn prepare_expression(
         }
         guard valid else { fail("unsupported SQL function or arity: " + name) }
       }
-      for arg in args {
-        if arg is Star(_) {
+      for i, arg in args {
+        if i == 0 && arg is Call("$filter", _) {
+          prepare_filtered_argument(arg, ctx, name, false, args.length())
+        } else if arg is Star(_) {
           guard name == "count" else { fail("unsupported function * argument") }
         } else if arg is Call("$distinct", [e]) {
           guard grouped && args.length() == 1 else {

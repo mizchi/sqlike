@@ -27,6 +27,8 @@ const flags = {
   SQL_JSON: "sqlJson",
   DATETIME: "dateTime",
   WINDOWS: "windowFunctions",
+  SCHEMA_METADATA: "schemaMetadata",
+  AGGREGATE_FILTER: "aggregateFilter",
 } as const;
 const aot = [
   "aot_open",

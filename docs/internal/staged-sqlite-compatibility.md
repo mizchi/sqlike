@@ -30,7 +30,7 @@ await buildSqlikeRuntime(
 
 検証は[基本演算](../../tests/sqlike-basic-compat.test.ts)、[JSON演算子](../../tests/sqlike-json-operators.test.ts)、[機能選択](../../tests/sqlike-optional-functions.test.ts)。動的SQL / AOTのJS / Wasm、バイナリcatalogのJS / Wasmを含む。文の途中でJSON pathエラーになった場合のrollbackも確認する。
 
-`just staged-compat-check`の18テストと`just p0-check`を通過。MoonBit 53件×JS / Wasm、Node 315件、Chromium E2E 56件、566ケース×8経路の差分監査で失敗0。全機能監査のprobe一致は432→437、候補エラーは270→265、出力不一致は0。全機能互換の判定は未達のまま維持する。
+最初の段階（`ea36a5f`）では18テストと`just p0-check`を通過。MoonBit 53件×JS / Wasm、Node 315件、Chromium E2E 56件、566ケース×8経路の差分監査で失敗0。全機能監査のprobe一致は432→437、候補エラーは270→265、出力不一致は0。現行の追加分は次節に記録する。
 
 ```sh
 just staged-compat-check
@@ -40,7 +40,7 @@ LITESTREAM_BIN=/path/to/litestream just p0-check
 
 ## 容量の判定
 
-追加前はcommit `79efe6d`の[固定した計測](../../measurements/staged-compat-before.json)、追加後は[現行の計測](../../measurements/bundle-size-current.json)を使う。同じ公開entry・Oxc設定で全JS chunk / Worker / Wasmを合算し、Brotliはファイルごとにquality 11で測る。バイナリschema / statementは従来どおり別のアプリ資産で、この表には含めない。
+この表は最初の段階の記録。追加前はcommit `79efe6d`の[固定した計測](../../measurements/staged-compat-before.json)、追加後は`ea36a5f`時点の[次段階の基準](../../measurements/basic-query-before.json)を使う。同じ公開entry・Oxc設定で全JS chunk / Worker / Wasmを合算し、Brotliはファイルごとにquality 11で測る。バイナリschema / statementは別のアプリ資産で、この表には含めない。
 
 <!-- staged-size:start -->
 単位はB（byte）。未圧縮はminify後の配信物の合計。
@@ -63,18 +63,56 @@ LITESTREAM_BIN=/path/to/litestream just p0-check
 
 ## 後続のチェックリスト
 
+### 承認された優先順の実装
+
+次の順番で実装した。0.1.0以後の未リリース変更である。
+
+- [x] **1. LIKE ESCAPE / scalar min・max** — 既存Call / Binary IRとint64比較を再利用。NULL・storage class・同値時の返却型・collation・escapeの優先順位を差分検証。LIKEの50,000 byte上限とNULの扱いも合わせる。
+- [x] **2. NULLS FIRST / LAST・名前付きSQL parameter** — NULL順序の指定はORDER BY専用の内部Callへ記録し、式を1回評価したkeyを比較する。`:name` / `@name` / `$name`は大文字小文字・接頭辞を区別し、同じ名前を同じParameter位置へ解決する。`?NNN`との混在、Tcl形式も検証。既存SQL APIのbindは位置順配列のままで、named objectの受付はDrizzle事前定義entryが担当する。
+- [x] **3. 索引metadata** — `schemaMetadata`で`index_list` / `index_info` / `index_xinfo`を選択。通常・部分・式・対応範囲の自動索引、WITHOUT ROWIDのkey / 補助列を返す。旧Table形式からPKとUNIQUEの宣言順やPK方向を復元できない場合は明示拒否する。
+- [x] **4. FROM subquery・集約FILTER** — FROM subqueryをprivate CTEへ変換し、実行器を再利用する。private名は宣言の正規化・rename・再開で安定する。重複列名の自動改名は未対応として拒否。`aggregateFilter`で通常 / DISTINCT / window集約のFILTERを選択でき、除外した行の引数を評価しない。
+- [x] **5. JSON集約** — `sqlJson`へ`json_group_array` / `json_group_object`を追加。空集合、順序、重複キー、subtype、DISTINCT、FILTERの組合せを照合。BLOB値・NULLのobject label・JSON集約のwindow利用は明示拒否する。
+- [x] **6. Drizzleの事前コンパイル** — [compilerと実行entry](../drizzle-prepared.md)を分割。query builderのSQL・constant / placeholder配置・標準codecをビルド時にデータ化。実行側にORM / parserを含めない。JS / Wasm、Chromiumの最小ビルド・IndexedDB再開、破損・不正bind後の非変更を検証する。
+
+共通の回帰は`just staged-compat-check`の38テスト。Drizzleから見つかった、整数へ損失なく変換できるREAL / TEXTのLIMIT・OFFSETも本家に合わせた。JSON数値は既存のSQLite互換formatterを再利用し、負のゼロ・指数・Infinity表記の差を修正した。内部IR用の関数をSQLから直接呼んで受理される問題も、native / 動的JS・Wasm / MoonBit compilerの拒否テストを追加して修正した。
+
+最終の`just p0-check`はMoonBit 53件×JS / Wasm、Node 335件、Chromium E2E 56件を通過。566ケース×8経路の差分監査は失敗0。全機能監査は449 probe一致・253 atomic拒否・出力不一致0で、未対応・未検証が残るため全機能互換とは判定しない。[現行の検証記録](../../measurements/p0-completion.json)。
+
+大きめの追加は既存の選択APIへ入れる。バイナリの必要機能bitは`schemaMetadata=128`、`aggregateFilter=256`。旧readerや機能を外したruntimeは、未実行の定義も初期化時に拒否する。NULL順序の内部CallはORDER BYの外で受理せず、旧runtimeも未知の関数として拒否する。AST / wireのfieldやvariantは増やしていない。
+
+<!-- priority-size:start -->
+基準は`ea36a5f`の[追加前](../../measurements/basic-query-before.json)、追加後は[現行レポート](../../measurements/bundle-size-current.json)。単位はB。未圧縮はminify後。
+
+| 構成 | 未圧縮・追加後 | 未圧縮の増分 | Brotli・追加後 | Brotliの増分 |
+| --- | ---: | ---: | ---: | ---: |
+| 通常SQL / JS | 611,028 | +15,869 | 115,317 | +2,763 |
+| 通常SQL / Wasm | 540,657 | +12,863 | 170,326 | +4,261 |
+| 事前定義・全実行機能 / JS | 500,049 | +13,467 | 100,426 | +2,880 |
+| 事前定義・全実行機能 / Wasm | 444,604 | +11,390 | 143,499 | +3,609 |
+| 事前定義・JSON/日時/windowなし / JS | 462,573 | +11,115 | 92,505 | +2,452 |
+| 事前定義・JSON/日時/windowなし / Wasm | 415,950 | +9,832 | 133,289 | +3,141 |
+| 事前定義・主キー索引のみ / JS | 440,764 | +5,135 | 88,288 | +1,014 |
+| 事前定義・主キー索引のみ / Wasm | 396,811 | +4,359 | 127,823 | +1,628 |
+
+主キー索引のみのJS版はBrotli +1,014 B（約1.16%）。通常SQLのJS版は+2,763 B、全実行機能の事前定義JS版は+2,880 B。JSON・日時・windowを外した構成にもschemaMetadata / aggregateFilterは含まれる。これらも不要ならfeaturesから省く。sqlite-wasm / Tursoの容量は同一。
+
+任意のDrizzle prepared adapter単体はminified 4,092 B / Brotli 1,420 B。既定entryへ追加せず、注入するengine / factory・catalog・binding planは別資産。[計測](../../measurements/drizzle-defined-size-current.json)。別々の圧縮値を全アプリの増分として単純加算しない。
+<!-- priority-size:end -->
+
+### 残る導入単位
+
 以下の導入単位は計画。未実装のfeature tokenや空のAPIは公開しない。各段階をさらに小さい変更に分け、差分テストと有効 / 無効ビルドの容量を示してから完了にする。
 
 | 段階 | 機能 | 導入先と条件 |
 | --- | --- | --- |
-| [ ] S02 基本式 | GLOB、LIKE ESCAPE、複数引数min/max、char、名前付きbind、16進・桁区切り数値literal | parserのみの機能はビルド時compiler側に置く。評価器の増分を測り、小さければcoreへ加える。pattern照合のNULL・Unicode・NUL、bind番号と名前の割当を差分検証する |
+| [ ] S02 基本式の残り | GLOB、char、16進・桁区切り数値literal | parserのみの機能はビルド時compiler側に置く。評価器の増分を測り、小さければcoreへ加える。pattern照合のNULL・Unicode・NULを差分検証する |
 | [ ] S03 scalar拡張 | format / printf、random / randomblob、数学関数 | 書式処理・乱数源・数学関数群を別の任意実装にする。丸め・型・overflow、乱数源の注入と同期時の扱いを固定する |
-| [ ] S04 問い合わせ | FROM subquery、UPDATE FROM、row value、NULLS FIRST / LAST、CTE MATERIALIZED指定 | 必要なIRだけcompilerから記録。大きい実行器変更は任意のquery拡張へ分ける。名前解決、複数一致、順序、実体化と非決定関数の評価回数を検証する |
-| [ ] S05 集約・window | aggregate FILTER / 引数内ORDER BY、named WINDOW、EXCLUDE、集約bare column | window拡張は既存windowFunctions内。集約拡張は容量に応じて分離し、既存の小さい集約を維持する。tie・NULL・frame・代表行の規則を本家と比較する |
+| [ ] S04 問い合わせの残り | UPDATE FROM、row value、CTE MATERIALIZED指定 | 必要なIRだけcompilerから記録。大きい実行器変更は任意のquery拡張へ分ける。名前解決、複数一致、順序、実体化と非決定関数の評価回数を検証する |
+| [ ] S05 集約・windowの残り | 引数内ORDER BY、named WINDOW、EXCLUDE、集約bare column | window拡張は既存windowFunctions内。集約拡張は容量に応じて分離し、既存の小さい集約を維持する。tie・NULL・frame・代表行の規則を本家と比較する |
 | [ ] S06 schema | VIRTUAL / STORED生成列、expression DEFAULT、CREATE TABLE AS SELECT、TEMP、ATTACH / DETACH | schema compilerとruntime評価を分離。生成列は保存形式・再開時の再計算・table_xinfo・制約を含めて設計する。複数DB名前空間は独立した拡張にする |
 | [ ] S07 trigger・競合 | BEFOREの書込、INSTEAD OF、RAISE(FAIL / ROLLBACK)、INSERT OR FAIL / ROLLBACK | 既存triggersに必要な追加能力を明示する。部分成功・文rollback・transaction rollbackを区別し、host transactionと同期journalの契約も検証する |
-| [ ] S08 JSON・日時 | json_group_array/object、json_each/tree、JSON5 / JSONB、timediff・timezone modifier | 通常JSONの小さい追加とtable-valued / JSONB / timezone実装を別に扱う。sqlJsonやdateTimeを選ぶだけで全拡張が入らない構成を目指す |
-| [ ] S09 管理・診断 | index_info等PRAGMA、ANALYZE、REINDEX、VACUUM、EXPLAIN、integrity_check | 小さいmetadata照会は測定後coreへ。planner・整合性検査・保守処理は別entry。実際に検査・再構築せず成功扱いにする実装はしない |
+| [ ] S08 JSON・日時の残り | JSON集約window・NULL label、json_each/tree、JSON5 / JSONB、timediff・timezone modifier | 通常JSONの小さい追加とtable-valued / JSONB / timezone実装を別に扱う。sqlJsonやdateTimeを選ぶだけで全拡張が入らない構成を目指す |
+| [ ] S09 管理・診断の残り | 索引宣言順・方向の保存、その他PRAGMA、ANALYZE、REINDEX、VACUUM、EXPLAIN、integrity_check | 不足するmetadataはversionと移行を含めて追加する。planner・整合性検査・保守処理は別entry。実際に検査・再構築せず成功扱いにする実装はしない |
 | [ ] S10 仮想table | SQLite FTS5、RTree、汎用virtual table API | 既存の任意FTS APIとは別のSQL / 保存互換。登録APIと実装を別モジュールにし、未登録は明示拒否する |
 | [ ] S11 保存・native接続 | 上限付きpager、WAL writer / recovery、VFS lock、backup、native ABI | SQL evaluatorとは別のインフラ契約・adapter。IndexedDBの行差分は維持し、SQLite page互換・LTX・多接続の耐障害差分を追加する |
 

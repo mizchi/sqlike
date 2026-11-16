@@ -25,3 +25,9 @@ const FEATURE_DATETIME : Bool = true
 
 ///|
 const FEATURE_WINDOWS : Bool = true
+
+///|
+const FEATURE_SCHEMA_METADATA : Bool = true
+
+///|
+const FEATURE_AGGREGATE_FILTER : Bool = true

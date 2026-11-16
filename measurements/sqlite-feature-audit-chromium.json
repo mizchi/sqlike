@@ -1,15 +1,15 @@
 {
   "format": 1,
-  "measuredAt": "2026-11-16T10:14:02.631Z",
+  "measuredAt": "2026-11-16T12:00:40.177Z",
   "scope": "Audit execution completed; use each feature status and the separate strict gate for compatibility",
   "catalogSHA256": "f2c74c7141ad2dcec40a9c1275aadf3b6864b2ad356d3ed36aa3ad445910adfb",
   "planSHA256": "6c935a1bcef2c6ae9219ac41a1879366f673b0876ab546ffa7e142036d93e378",
-  "sourceSHA256": "0821e0cbe54852cab983bf676b5313f0df050fa581d69c793f8146ea8b3cf587",
+  "sourceSHA256": "5dc287e0ebc53e0003a376af0db57e1fe46a0821ebfcd69d4c8be357fb6d138c",
   "harnessSHA256": "53f05faa08f2ff889afddd6fdf499465c4baa522ef5351709432ef2385a9a104",
   "oracleSHA256": "52601ee35951c46becd53a00cf88129ff42c7544b91c2a9dc98fd7906bc96c61",
   "artifacts": {
-    "js": "5a7c90a277edfe7148e2c1693b723e8a129849c961e3243ee1d5dac7f3c0af1a",
-    "wasmGC": "1ee5bbe5864aaecae1012f425cb4604df3779fa4264e60994569704facfaf29a"
+    "js": "501731bcc4fb331916383b592a38a9ea387d1d8bcbc2df67ceeeb5c4432f964a",
+    "wasmGC": "fba7005ab70df1947c24db7fc83d227114fef3495d2f2c46ba7ef3b843e3ddc3"
   },
   "target": "chromium-js",
   "browserVersion": "158.0.8127.18",
@@ -1901,9 +1901,9 @@
   "summary": {
     "total": 1618,
     "counts": {
-      "matched-probe": 437,
+      "matched-probe": 449,
       "value-mismatch": 0,
-      "candidate-error": 265,
+      "candidate-error": 253,
       "oracle-error": 0,
       "oracle-unavailable": 11,
       "not-tested": 599,
@@ -1917,9 +1917,9 @@
     "language": {
       "total": 42,
       "counts": {
-        "matched-probe": 32,
+        "matched-probe": 33,
         "value-mismatch": 0,
-        "candidate-error": 10,
+        "candidate-error": 9,
         "oracle-error": 0,
         "oracle-unavailable": 0,
         "not-tested": 0,
@@ -1932,9 +1932,9 @@
     "scalar": {
       "total": 60,
       "counts": {
-        "matched-probe": 33,
+        "matched-probe": 37,
         "value-mismatch": 0,
-        "candidate-error": 23,
+        "candidate-error": 19,
         "oracle-error": 0,
         "oracle-unavailable": 2,
         "not-tested": 2,
@@ -1977,9 +1977,9 @@
     "pragma": {
       "total": 74,
       "counts": {
-        "matched-probe": 9,
+        "matched-probe": 12,
         "value-mismatch": 0,
-        "candidate-error": 55,
+        "candidate-error": 52,
         "oracle-error": 0,
         "oracle-unavailable": 8,
         "not-tested": 2,
@@ -2097,9 +2097,9 @@
     "expression": {
       "total": 16,
       "counts": {
-        "matched-probe": 10,
+        "matched-probe": 11,
         "value-mismatch": 0,
-        "candidate-error": 6,
+        "candidate-error": 5,
         "oracle-error": 0,
         "oracle-unavailable": 0,
         "not-tested": 0,
@@ -2112,9 +2112,9 @@
     "select": {
       "total": 30,
       "counts": {
-        "matched-probe": 23,
+        "matched-probe": 26,
         "value-mismatch": 0,
-        "candidate-error": 7,
+        "candidate-error": 4,
         "oracle-error": 0,
         "oracle-unavailable": 0,
         "not-tested": 0,
@@ -2372,14 +2372,8 @@
       "category": "language",
       "title": "CREATE INDEX",
       "source": "https://www.sqlite.org/lang_createindex.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 5,
-        "sql": "PRAGMA index_info(ix_s)",
-        "error": "unsupported PRAGMA: index_info",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "language/CREATE TABLE",
@@ -2830,28 +2824,16 @@
       "category": "scalar",
       "title": "like(X,Y)",
       "source": "https://www.sqlite.org/lang_corefunc.html#like",
-      "status": "candidate-error",
-      "witness": {
-        "step": 4,
-        "sql": "SELECT like('a!_%','a_x')",
-        "error": "unsupported SQL function or arity: like",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "scalar/like(X,Y,Z)",
       "category": "scalar",
       "title": "like(X,Y,Z)",
       "source": "https://www.sqlite.org/lang_corefunc.html#like",
-      "status": "candidate-error",
-      "witness": {
-        "step": 4,
-        "sql": "SELECT like('a!_%','a_x','!')",
-        "error": "unsupported SQL function or arity: like",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "scalar/likelihood(X,Y)",
@@ -2926,28 +2908,16 @@
       "category": "scalar",
       "title": "max(X,Y,...)",
       "source": "https://www.sqlite.org/lang_corefunc.html#max_scalar",
-      "status": "candidate-error",
-      "witness": {
-        "step": 4,
-        "sql": "SELECT max(1,3,2)",
-        "error": "misuse of aggregate function: max",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "scalar/min(X,Y,...)",
       "category": "scalar",
       "title": "min(X,Y,...)",
       "source": "https://www.sqlite.org/lang_corefunc.html#min_scalar",
-      "status": "candidate-error",
-      "witness": {
-        "step": 4,
-        "sql": "SELECT min(1,3,2)",
-        "error": "misuse of aggregate function: min",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "scalar/nullif(X,Y)",
@@ -4250,42 +4220,24 @@
       "category": "pragma",
       "title": "index_info",
       "source": "https://www.sqlite.org/pragma.html#pragma_index_info",
-      "status": "candidate-error",
-      "witness": {
-        "step": 4,
-        "sql": "PRAGMA index_info(idx_t_n)",
-        "error": "unsupported PRAGMA: index_info",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "pragma/index_list",
       "category": "pragma",
       "title": "index_list",
       "source": "https://www.sqlite.org/pragma.html#pragma_index_list",
-      "status": "candidate-error",
-      "witness": {
-        "step": 4,
-        "sql": "PRAGMA index_list(t)",
-        "error": "unsupported PRAGMA: index_list",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "pragma/index_xinfo",
       "category": "pragma",
       "title": "index_xinfo",
       "source": "https://www.sqlite.org/pragma.html#pragma_index_xinfo",
-      "status": "candidate-error",
-      "witness": {
-        "step": 4,
-        "sql": "PRAGMA index_xinfo(idx_t_n)",
-        "error": "unsupported PRAGMA: index_xinfo",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "pragma/integrity_check",
@@ -12236,14 +12188,8 @@
       "category": "expression",
       "title": "like-escape",
       "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 4,
-        "sql": "SELECT 'a_b' LIKE 'a!_b' ESCAPE '!'",
-        "error": "unsupported or trailing SQL: ESCAPE",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "behavior/row-values",
@@ -12304,7 +12250,7 @@
       "witness": {
         "step": 4,
         "sql": "SELECT :x,:x",
-        "error": "SQL syntax: unexpected :",
+        "error": "SQL binding count mismatch",
         "candidateRejected": true,
         "rejectionAtomic": true
       }
@@ -12402,14 +12348,8 @@
       "category": "select",
       "title": "derived-table",
       "source": "https://www.sqlite.org/lang_select.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 4,
-        "sql": "SELECT x.n FROM(SELECT n FROM t) AS x ORDER BY n",
-        "error": "SQL syntax: expected identifier",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "behavior/inner-join",
@@ -12496,14 +12436,8 @@
       "category": "select",
       "title": "aggregate-filter",
       "source": "https://www.sqlite.org/lang_aggfunc.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 4,
-        "sql": "SELECT count(*) FILTER(WHERE n>1) FROM t",
-        "error": "unsupported or trailing SQL: FILTER",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "behavior/aggregate-order",
@@ -12540,14 +12474,8 @@
       "category": "select",
       "title": "nulls-order",
       "source": "https://www.sqlite.org/lang_select.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 4,
-        "sql": "SELECT n FROM t ORDER BY n DESC NULLS FIRST",
-        "error": "unsupported or trailing SQL: NULLS",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "behavior/limit-offset",

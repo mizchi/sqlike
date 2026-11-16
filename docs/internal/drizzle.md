@@ -1,5 +1,7 @@
 # Drizzle・RETURNING・migration
 
+0.1.0以後の未リリース変更で、ビルド時のquery builderをバイナリcatalogへ変換する[事前定義entry](../drizzle-prepared.md)を追加した。以下の同期driverとは別entryで、実行側へDrizzleやSQL parserをリンクしない。
+
 2026-11-16、開発版0.0.1。`drizzle-orm@0.45.4` / `drizzle-kit@0.31.11`を固定し、同期SQLite driverを独立したentryとして追加した。Node SQLite、SQLike JS / Wasm GC、本家SQLite WASM、実workerd DOで検証する。Drizzleやmigration readerは既定のデモ・lite・Workerには含めない。
 
 ## 利用方法

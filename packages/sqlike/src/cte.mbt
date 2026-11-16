@@ -4,6 +4,16 @@ fn cte_names(
   name : String,
   relation : Relation,
 ) -> Relation raise SqlError {
+  if name.has_prefix("\u{0}derived:") {
+    let seen : Map[String, Bool] = Map([])
+    for binding in relation.template {
+      let column = identifier(binding.name)
+      guard !seen.contains(column) else {
+        fail("unsupported derived-table duplicate column names")
+      }
+      seen[column] = true
+    }
+  }
   if owner.cte_names is Some(names) {
     for (n, columns) in names {
       if identifier(n) != identifier(name) {
@@ -121,8 +131,8 @@ fn execute_cte(
   for row in seed.rows {
     enqueue(row)
   }
-  let limit = evaluate(query.limit, ctx)
-  let offset = evaluate(query.offset, ctx)
+  let limit = apply_affinity(evaluate(query.limit, ctx), "integer")
+  let offset = apply_affinity(evaluate(query.offset, ctx), "integer")
   guard limit is Integer(count) && offset is Integer(skip) else {
     fail("datatype mismatch: LIMIT/OFFSET")
   }

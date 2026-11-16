@@ -51,7 +51,9 @@ just feature-profiles
 | `primaryKeyIndex` | rowid/IPK、text・blob・複合PKの等値検索とPK一意制約用のhash索引 |
 | `triggers` | 既存のAFTER行trigger、BEFOREの検証SELECT、OLD/NEW/WHEN/UPDATE OF/RAISE |
 | `foreignKeys` | 外部キー検査、cascade・参照動作・遅延制約 |
-| `sqlJson` | `json()` / `json_*()`によるSQLのJSON解析・構築・編集。0.1.0以後の未リリース変更では`->` / `->>`も含む。bind / 結果のJSON ABIはcoreに残る |
+| `sqlJson` | `json()` / `json_*()`によるSQLのJSON解析・構築・編集。0.1.0以後の未リリース変更では`->` / `->>`、`json_group_array` / `json_group_object`も含む。bind / 結果のJSON ABIはcoreに残る |
+| `schemaMetadata` | 未リリース。`PRAGMA index_list` / `index_info` / `index_xinfo`。通常・部分・式・対応範囲の自動索引とWITHOUT ROWIDのmetadata |
+| `aggregateFilter` | 未リリース。通常 / DISTINCT / window集約の`FILTER(WHERE …)`。JSON集約と併用するときは`sqlJson`も選ぶ |
 | `dateTime` | `date` / `time` / `datetime` / `strftime` / `unixepoch` / `julianday`とCURRENT_DATE / TIME / TIMESTAMP |
 | `windowFunctions` | ROW_NUMBER、順位・参照・集約windowとframe評価。通常の集約はcoreに残る |
 | `binarySync` | SQLモードのSQLite Session互換changeset捕捉。受信側の抑制APIは別entry |

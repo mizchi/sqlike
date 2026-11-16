@@ -36,6 +36,8 @@ function enumFeature(
   target: string,
   first: string,
 ): string {
+  if (type === "DataStatement" && name === "PreparedPragma")
+    return `${target}.require_feature(pragma_features(${first}))`;
   if (type !== "Expr") return "";
   if (name === "Window" || name === "RowNumber")
     return `${target}.require_feature(64U)`;
@@ -117,7 +119,9 @@ for (const [type, variants] of Object.entries(wire.enums).filter(
       .map((v) => {
         const args = v.fields.map((_, i) => `v${i}`);
         const guard =
-          type !== "Expr"
+          type === "DataStatement" && v.name === "PreparedPragma"
+            ? "validate_pragma_features(v0)"
+            : type !== "Expr"
             ? ""
             : v.name === "Window" || v.name === "RowNumber"
               ? 'guard FEATURE_WINDOWS else { fail("feature disabled: windowFunctions") }'

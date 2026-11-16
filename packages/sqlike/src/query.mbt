@@ -146,14 +146,15 @@ fn sort_query_rows(
 ) -> Unit {
   rows.sort_by((a, b) => {
     for i, order in orders {
-      let c = compare_stored(
+      let c = ordering_compare(
         a.context.store,
+        order,
         a.keys[i],
         b.keys[i],
         collations[i],
       )
       if c != 0 {
-        return if order.descending { -c } else { c }
+        return c
       }
     }
     a.context.position.compare(b.context.position)
@@ -314,8 +315,8 @@ fn select_relation_in(
     }
   }
   if existence {
-    let limit = evaluate(select.limit, base)
-    let offset = evaluate(select.offset, base)
+    let limit = apply_affinity(evaluate(select.limit, base), "integer")
+    let offset = apply_affinity(evaluate(select.offset, base), "integer")
     guard limit is Integer(count) && offset is Integer(start) else {
       fail("datatype mismatch: LIMIT/OFFSET")
     }
@@ -335,7 +336,7 @@ fn select_relation_in(
       collect_windows(p.expression, window_expressions)
     }
     for o in select.orders {
-      collect_windows(o.expression, window_expressions)
+      collect_windows(ordering_expression(o.expression), window_expressions)
     }
     compute_windows(window_expressions, contexts, base)
     // row_number has its own ORDER BY, independently of final result ordering.
@@ -344,10 +345,10 @@ fn select_relation_in(
         let ranked = contexts.map(ctx => {
           output: [],
           context: ctx,
-          keys: orders.map(o => evaluate(o.expression, ctx)),
+          keys: orders.map(o => evaluate(ordering_expression(o.expression), ctx)),
         })
         let collations = orders.map(o => {
-          expression_collation(o.expression, base)
+          expression_collation(ordering_expression(o.expression), base)
         })
         sort_query_rows(ranked, orders, collations)
         let positions = Array::make(contexts.length(), 0)
@@ -391,20 +392,20 @@ fn select_relation_in(
       }),
     }
     let keys = select.orders.map(o => {
-      match o.expression {
+      match ordering_expression(o.expression) {
         Literal(Integer(n)) => {
           guard n >= 1L && n <= projected.length().to_int64() else {
             fail("ORDER BY position out of range")
           }
           projected[n.to_int() - 1].value
         }
-        _ => evaluate(o.expression, ordering_ctx)
+        _ => evaluate(ordering_expression(o.expression), ordering_ctx)
       }
     })
     output.push({ output: projected, context: ctx, keys, })
   }
   let collations = select.orders.map(o => {
-    match o.expression {
+    match ordering_expression(o.expression) {
       Literal(Integer(n)) => output_template[n.to_int() - 1].collation
       Column("", name) => {
         let projection = select.projections.filter(p => {
@@ -413,15 +414,15 @@ fn select_relation_in(
         if projection.length() == 1 {
           expression_collation(projection[0].expression, base)
         } else {
-          expression_collation(o.expression, base)
+          expression_collation(ordering_expression(o.expression), base)
         }
       }
-      _ => expression_collation(o.expression, base)
+      _ => expression_collation(ordering_expression(o.expression), base)
     }
   })
   sort_query_rows(output, select.orders, collations)
-  let limit = evaluate(select.limit, base)
-  let offset = evaluate(select.offset, base)
+  let limit = apply_affinity(evaluate(select.limit, base), "integer")
+  let offset = apply_affinity(evaluate(select.offset, base), "integer")
   guard limit is Integer(count) && offset is Integer(start) else {
     fail("datatype mismatch: LIMIT/OFFSET")
   }
@@ -504,13 +505,24 @@ fn selection_template(
   let ordering = { ..base, row: output + row, }
   for order in select.orders {
     if select.compound is Some(_) {
-      ignore(compound_order_index(select, order.expression, output.length()))
-    } else if order.expression is Literal(Integer(n)) {
+      ignore(
+        compound_order_index(
+          select,
+          ordering_expression(order.expression),
+          output.length(),
+        ),
+      )
+    } else if ordering_expression(order.expression) is Literal(Integer(n)) {
       guard n >= 1L && n <= output.length().to_int64() else {
         fail("ORDER BY position out of range")
       }
     } else {
-      prepare_expression(order.expression, ordering, true, true)
+      prepare_expression(
+        ordering_expression(order.expression),
+        ordering,
+        true,
+        true,
+      )
     }
   }
   prepare_expression(select.limit, context, false, false)

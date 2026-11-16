@@ -1,9 +1,9 @@
 {
-  "measuredAt": "2026-11-16T10:11:09.157Z",
+  "measuredAt": "2026-11-16T11:55:47.323Z",
   "sourceHashes": {
-    "_build/js/release/build/mizchi/litestream-example/runtime/runtime.js": "91e21cd5a141db574a3b53d036b7e004652ecafdc58571a4645876573ebc3005",
-    "_build/js/release/build/mizchi/sqlike/defined-sqlite/defined-sqlite.js": "7ca116e1fce0c0a9baf1b5e32fed1beacae7505f3ae9680b4529e9eb16d15a6a",
-    "_build/js/release/build/mizchi/sqlike/defined/defined.js": "4515980a970b9b649eae858e9303ea4e040905e950f3d41849c4b78af26f56f6",
+    "_build/js/release/build/mizchi/litestream-example/runtime/runtime.js": "bb5e7fdaad431f7b93446042b2700476bb52bcea61642a04758c74d3ff4f5f24",
+    "_build/js/release/build/mizchi/sqlike/defined-sqlite/defined-sqlite.js": "535907fa2826f83aa582b33eeab18ae88ef3641343c3bd20f78320807640a590",
+    "_build/js/release/build/mizchi/sqlike/defined/defined.js": "6b21348f02984fa21485f24caa268602984b9321b9a3872c9ddceb6f10e67576",
     "adapters/defined-database-core.ts": "58773d392f540cf07447e4cfeab0c65e2e865dc98869c78984b59db5ce9ce62f",
     "adapters/defined-database.ts": "df53d23b2ccc432840803433d48182fbb624b28c781fd8a9d2ec37c8f8ebdd15",
     "examples/aot/moon.mod": "d76a8b99f698f78f1426a3470aa0c4c50b3d434e663d83412c4832c31276f358",
@@ -27,50 +27,54 @@
     "packages/litestream/src/sql.mbt": "af1388fbf3ffa5629d87ccdfff2b452a270dbfd882fb489444bd1ee9a7896680",
     "packages/sqlike/moon.mod": "2877b172281b0c6aff83a01fa556a45a8ebe8d8e69faabd9cbb12f1861aeee28",
     "packages/sqlike/src/advanced_index_wbtest.mbt": "20048343ad71c6abbcefb545eb304b09aad9f733a78ed2b4ddf52f8e72198239",
+    "packages/sqlike/src/aggregate_filter.mbt": "6f8d39d97d56918a30fbb57a0130e48623f890ffe58503b9ba6128dfc7411830",
     "packages/sqlike/src/aggregate_plan.mbt": "13e8299d0711b0835fd361dedf2b4fa92cd39201cfea484764641f44f2fb00d8",
     "packages/sqlike/src/aggregate_sum.mbt": "e09ec3388045c47098d36cc39efa47abac3ddf73f312cfdd87a75a610e35fcd4",
     "packages/sqlike/src/aot.mbt": "a77b6a74c793f0b09d9ccf48196ac602aefc2514dc1cf2107e6edff87af62db9",
     "packages/sqlike/src/aot_bench_wbtest.mbt": "ea9756d22d1bc37a14b32f7707fa1c018c018d41f76aeddb7e87303950c8125a",
     "packages/sqlike/src/binary_base64.mbt": "3ff209995156c359a77d5488f278337fb4b58be27785e79e53dfb3c43cb0c6f6",
     "packages/sqlike/src/binary_catalog.mbt": "3bb5a151775612e29d8a657d0d809ac1ae107f6084aa149adb2354151d66947b",
-    "packages/sqlike/src/binary_generated.mbt": "4dc501325bb89e596113c0d719e51a7fb2f5135e92491721c1f7c3a0c6b2d7fd",
-    "packages/sqlike/src/binary_io.mbt": "7e0d267b88f6dc1d328700647222bc429d9a68b25bca397e78c8fc01ac4e9e5c",
+    "packages/sqlike/src/binary_generated.mbt": "1d70c23033c5f4e2c58380db3925bf4f1fc8c22bcba61e35c19d94b5a019cd8a",
+    "packages/sqlike/src/binary_io.mbt": "9119822b083dc4e1ea48aabcc7126bd3f2bb8ea8a11a8aa5f5f789661e8d5452",
     "packages/sqlike/src/binary_state.mbt": "6e4701bae0b07809d89d320ac8719820e6f019af96a6734c49763b567ec5ecd3",
-    "packages/sqlike/src/binary_wbtest.mbt": "1f1d468541206e2e43a73c3aac1dbfe0e25c8252424ee4b0a9e3b8bd932078d8",
+    "packages/sqlike/src/binary_wbtest.mbt": "78641640c6f5758944441cf649f55501ea4a4965c32da37812dbd6f59bbbd43d",
     "packages/sqlike/src/cast.mbt": "e2feebc791c8daa6c18435ba8a271140dfe66a107ee4b9e0f5978d162180a2ec",
     "packages/sqlike/src/changeset.mbt": "f66c9a8683db19314ffeabd65bdbea4bfd6ff5b327686dbc7643ac6f49a50814",
     "packages/sqlike/src/column_delta_wbtest.mbt": "58fef01472dfbe883cac3b4345d2fd5e6219d6d27b25c8a7eecfd13d4d31a6fa",
     "packages/sqlike/src/compiler/compiler.mbt": "5fad759b0585c55e59ae89c3768ccf68061f0c057b9d513c90cd3dfd212b795e",
     "packages/sqlike/src/compiler/moon.pkg": "b16edfb165edb0ab81cf4835eac4893aa9771a5b66937d59ff68ac658523811a",
     "packages/sqlike/src/composite_index_wbtest.mbt": "90a25147584bc0cb2030076eebb3497793e6aa870c679d6d5cc1de0976b8abf4",
-    "packages/sqlike/src/compound.mbt": "26a0d281d52ffe9daba79b7256a10d39c6ee71fcc28688a1ffa6258e19b2472b",
-    "packages/sqlike/src/cte.mbt": "04bf7efddcc6d1d5bd415438d3f0312f177b82160f9e291c5d022fc5ca06dd19",
+    "packages/sqlike/src/compound.mbt": "e0aee7e219f129efe2912f1379de90a35dc7ed7a4649c8dfb43bdfb61888ab84",
+    "packages/sqlike/src/cte.mbt": "cbc3a4f5047b3c89b9a132de62434213b1aa2724384ead1333795c4ecb171f22",
     "packages/sqlike/src/data.mbt": "5613f5bd53a0d369c5926f21ab0f44d6a495231a5928a45961f573d77c51a4b1",
     "packages/sqlike/src/datetime.mbt": "bf7c6b6983cfc2fe0e17dc74c26de270c5414203d982a5bec53f2ebf33459d59",
     "packages/sqlike/src/defined-sqlite/defined.mbt": "5a81aa4db62ee9f22610223ffce77cbc95602bc4cc3593241ea299471b1a3f7d",
     "packages/sqlike/src/defined-sqlite/moon.pkg": "6d93d349a02f08b9beafb2f344b35bc858dd5b3b1fc81a59e557d2881c091bb7",
     "packages/sqlike/src/defined/defined.mbt": "caf0ae96fd7a7af9f94b3e831f2f9de2077a64caacdbb3d4029e2780ff4f044f",
     "packages/sqlike/src/defined/moon.pkg": "6c72c36fb88ebfab45a73ad8d209dcb3f593c9d1bc3ade7c5a6c952c1be947a9",
-    "packages/sqlike/src/evaluate.mbt": "abdfc4bdadb0a8a9e244cb81eb9120bc97ef2de109ff45d7da4a935daf87e0b1",
-    "packages/sqlike/src/execute.mbt": "1f77403bcf9b471b0c844295e380fd76eaddb2080dccb142c4d3c6c5ee63f0da",
-    "packages/sqlike/src/feature_config.mbt": "42a8ee73feb9a4ee48d3e8eaae7e1c641429b1cf6bba80b2d6ad665fcde1082f",
-    "packages/sqlike/src/feature_validation.mbt": "fa4bdacae986dbe1a140fcb4fdb34025475989a1462a1cce484c647b8d4e7160",
-    "packages/sqlike/src/feature_validation_generated.mbt": "36618be9aa1df3645715141a12c26ea402c4a4ed2b67370755a553ac51eac16f",
+    "packages/sqlike/src/evaluate.mbt": "dc814765e5032ca085afcd8e101f20934d908583c0b9d4f6770e9290cf6fabf7",
+    "packages/sqlike/src/execute.mbt": "9ae0995d206e78f722e6f199d48f63d33603628aa479dc4e9d9afcfb7f5d8c4b",
+    "packages/sqlike/src/feature_config.mbt": "8ac72b52c318850f7dc69d63c105496ab6ea7216b6db32532470ee17c19b82f2",
+    "packages/sqlike/src/feature_validation.mbt": "16d2626acd486f9ad621c026811668c5a89888758251854283a40e24150e140b",
+    "packages/sqlike/src/feature_validation_generated.mbt": "31fd4321f274732cb4b64a302da2efbc8958539bbadba0357bb0d6a76b614d12",
     "packages/sqlike/src/float_text.mbt": "a188f50c6a4c41e2fc154cdc690514a5b9c945dce8a0cd8ccde2d7745e7f7895",
     "packages/sqlike/src/foreign_key.mbt": "bf9b7d3bbde04dc342efc97f0d5960bdea9c34e7f8a037182b87efac9b88d45f",
     "packages/sqlike/src/fts/fts.mbt": "f6b170921d7df982c53fe7f188aed2183b087ca79b8754b319752ff8b234712f",
     "packages/sqlike/src/fts/moon.pkg": "a7d9d1cc19824ae57fb66d46f446edec75df49d66c58d6c65fdbb42ccb39d3fc",
     "packages/sqlike/src/fts/unicode_fold.mbt": "8bb107d39c9a9fba63fa4e2fd67a7a8d58ff8ddc2a4381e623abaa6a91d8db3e",
+    "packages/sqlike/src/function_collation.mbt": "43974dbcd892a8ed9b508800d9da4ef62fb9e5cd1d146a1b2f8fbb8869253ba3",
     "packages/sqlike/src/image.mbt": "86f91b3333bcabd2c8b1b662d6482fedc02f59c436db8d49bf31e4839128104a",
     "packages/sqlike/src/index_cache.mbt": "525e3c018e80ed4790b04ef63d43539c5ce94f5e1b484cb84afcc8b8b3632587",
     "packages/sqlike/src/index_definition.mbt": "52801862d0eb516e9ac7c5bbd14bfbec86093753bdd92b011564a03d09d7a274",
+    "packages/sqlike/src/index_metadata.mbt": "c1a2abd3b7203ca315dd5c907a87ccd2036b54cf6d00ad8c192732de87c69d8c",
     "packages/sqlike/src/index_plan.mbt": "4ba08bf043161a380b3fa3058ed6edeb5eaed4b17854c509b775ef7182d01774",
     "packages/sqlike/src/index_wbtest.mbt": "50990930b5def01799be1921f334b279fc5fca8bdb7b84111fcdf539a39531b3",
     "packages/sqlike/src/interface.mbt": "6b2d7cd57207105ea3194f6eaed017c25dd2345254c5f9d28d61ca01df9582dc",
     "packages/sqlike/src/interface_compiler.mbt": "652e12aa261f308feab25e8ba983835b7ec8d979cd12c2799eb75d75dd5c131d",
     "packages/sqlike/src/interface_test.mbt": "425c72b3a5d4a7aee0018c10bc95bad3b8ff3f471bbebcff8ee142729d50cbd7",
     "packages/sqlike/src/join.mbt": "b2fd2c5fd92925c42f5aa87963acaecadfef5e07816c84f1ea5435e2ecd7f2a7",
-    "packages/sqlike/src/json_functions.mbt": "4eff92238e5e558088b7c1060555d62803ad830854dfe266b69cb8d99adb8929",
+    "packages/sqlike/src/json_aggregate.mbt": "de57642051098e9cca9a073b44ee45ef9727b4aeb77c689c12b2be886f4cc8e8",
+    "packages/sqlike/src/json_functions.mbt": "61004b62f878210f1e4e371904385fa5afe58c65562a89fb4a52533aa0e456f8",
     "packages/sqlike/src/lsm/lsm.mbt": "9e88824dc0b449e7c15209beb7e0dc8fdf34aab5e77c405bf1ef6d5040aad924",
     "packages/sqlike/src/lsm/lsm_wbtest.mbt": "0bd332033c4a16ba4ba0dd3e0a6cd640a0e6aef777f2b2e8f4cf464cef568a19",
     "packages/sqlike/src/lsm/moon.pkg": "5ede3703157bb09f075866319cd3c29867ccefdc0446e508925a2a9fd0407da9",
@@ -79,21 +83,22 @@
     "packages/sqlike/src/model.mbt": "19082f03d8b9f49d9f8573f88ed5c5f70b7ba51f0f19d78421ce70451fcfe5ec",
     "packages/sqlike/src/moon.pkg": "de151fa439eb1819bea931c53ff75fe4aafbfd2ac63a3d8e85e646ee96fa58d1",
     "packages/sqlike/src/optimization_wbtest.mbt": "612f870958611e4f7c499e8fd0ea445c0e1181f629001afc157cd2970d819201",
-    "packages/sqlike/src/output_policy.mbt": "69d2b4e6ff30e4009eba7e288d6dd40966c4d97832033d2c5404f02551ccd8c9",
-    "packages/sqlike/src/parser.mbt": "15c49ccc100c488690e0798563165289be737fe66eb938f934f1ae6508bee1f5",
+    "packages/sqlike/src/ordering.mbt": "4f70b041ade37d660feec636bafe8fced7265b1eeacc85897073c17e9ec65e47",
+    "packages/sqlike/src/output_policy.mbt": "ce8691f2e7a4efc167611200e184603eff646926e9a24938f372c83bc817d23c",
+    "packages/sqlike/src/parser.mbt": "88d850b59d6fea2cfbc1b29107a60e889815a96f441b9e1046d0b1ffa15519ff",
     "packages/sqlike/src/persistence.mbt": "dccf7b6269e823365316cff2e31867a90d258c1e69b2bfbd9bffd90e08921c2e",
     "packages/sqlike/src/persistence_edits.mbt": "59fb2a7d7dafbd7694e78c6cfbc0ad83fa012ec058f844d84def2620f002f0cd",
     "packages/sqlike/src/persistence_wbtest.mbt": "3d981dac002f117107f4b60a6397807dcaff5b8a15d45ec3b96388ca83be3344",
-    "packages/sqlike/src/prepare.mbt": "f1547960efc95a78b96cbb49166422dfd5307d6125e3785e70ba35388712a532",
-    "packages/sqlike/src/prepared.mbt": "a5bc24736cb3dc6dfdd6de24470b17e3ae59a3f8c1ae758c74efed48aa641769",
+    "packages/sqlike/src/prepare.mbt": "16af47928045ca4df9d212b97410303dcae5983ad2aebb04c6ab9bea698126b7",
+    "packages/sqlike/src/prepared.mbt": "6f6e3a59cefc9d5062b7e8882f262a7328413fc87789644dc92ffae97678dd46",
     "packages/sqlike/src/prepared_selection_wbtest.mbt": "b4624c89bae3b7181f1444cd251556e054453bed98062bd5b6a19d151977c209",
     "packages/sqlike/src/primary_index.mbt": "b81cb16812bc24f0e3807778997c66ca4aab241335026c8542fcf36fe1189599",
     "packages/sqlike/src/program_compiler.mbt": "fcd9da9a6ed5af289566889ae6279ce3aebc04cebdf545790abd9ed1e22a3e18",
-    "packages/sqlike/src/query.mbt": "3f35ef60f31de15a5ca88e45f9a982ca1a001de0120f6afd705ede5d64f41edf",
+    "packages/sqlike/src/query.mbt": "60b7d94cd912cfece80bcf6d03fd78e52f627612d3c58b9fc94808812875fa9a",
     "packages/sqlike/src/query_plan.mbt": "63e846f9bf6c018d9fad30627cbb670667e337ed767366e58a5022246e2d0f74",
     "packages/sqlike/src/row_pages.mbt": "35795aa2cc32e84b58e30b07b0f597908a51f1989d3371f9986c2b21188addb5",
     "packages/sqlike/src/row_pages_wbtest.mbt": "d48a5d1e5454dda34e25829bda13996d5a94e140191818eacf08f5ecc609b744",
-    "packages/sqlike/src/scalar.mbt": "fa09811a2e17dd2a1eb433cab3b63861db625347dd7d5477234621e0bdb4804a",
+    "packages/sqlike/src/scalar.mbt": "a7aa04478ba0f9070c6b20903f96d0cd611efb5547dcf99aab5dc97ed5674119",
     "packages/sqlike/src/sql_render.mbt": "b7264b0685e50dbf0237a58b23970a617bfbaac2c8a588216ea552e110218146",
     "packages/sqlike/src/sqlite_file.mbt": "f1208916e4cb70e91360ca851f7cf81b4889baee9c100bfbbf6d7c0d6aabb7ee",
     "packages/sqlike/src/sqlite_import.mbt": "e1922e7730ab15003c26d685fa9d6992c5d056070b771ffc0f163f3c1ae2c9c9",
@@ -104,8 +109,8 @@
     "packages/sqlike/src/transaction.mbt": "3311a5a7bc15e3f2a14db357d43ae76b18abe11c883fa0c5c12cfc9094283e39",
     "packages/sqlike/src/trigger.mbt": "fd9b83a3cc32c3ff3e773b4fd3af83124e167c4f83880c460c75426a336d66d9",
     "packages/sqlike/src/trigger_wbtest.mbt": "54bd11584824c53d3d94ce5bb5baf36555bbb262850fbd026aea225c9812c49b",
-    "packages/sqlike/src/value.mbt": "62352bd5ccad9fca22cb0f71893ca30717a010f70fd548c548d52578dcee26f3",
-    "packages/sqlike/src/window.mbt": "337d2e5226cad290bee5d4034be2b4bee449deff7b009e5a95dec0ae9415f14b",
+    "packages/sqlike/src/value.mbt": "87e0476243eeef5b52dbe9d92f7e336b48b90a4e6ef3e843d78e66960282552d",
+    "packages/sqlike/src/window.mbt": "25b144661bf5c0ee9e3650d6072fc97b2a13812831af3ae395f95dfca3b82f47",
     "pnpm-lock.yaml": "62a9334c27b9f3876361edc3c9f74a0ed5e11866e28403cc065e1bdba7d70012",
     "scripts/defined-compiler.ts": "a9ef66d1c1af4ae12ab00b63f0f07fcb0e0b83b7a24256e8d55094e43b3f19e6",
     "scripts/measure-defined.ts": "db28d546019d45988e4666ef597a343baa3111d6eacd8e2fd906f0b58a695f32",
@@ -122,16 +127,16 @@
       "entry": "_build/js/release/build/mizchi/litestream-example/runtime/runtime.js",
       "assets": [
         {
-          "file": "assets/runtime-DfRh7arl.js",
-          "raw": 553487,
-          "gzip": 132925,
-          "brotli": 105517
+          "file": "assets/runtime-CpmU8Ng1.js",
+          "raw": 567079,
+          "gzip": 136276,
+          "brotli": 108164
         }
       ],
       "totals": {
-        "raw": 553487,
-        "gzip": 132925,
-        "brotli": 105517
+        "raw": 567079,
+        "gzip": 136276,
+        "brotli": 108164
       }
     },
     {
@@ -139,16 +144,16 @@
       "entry": "_build/js/release/build/mizchi/sqlike/defined/defined.js",
       "assets": [
         {
-          "file": "assets/defined-CdAt8OZU.js",
-          "raw": 474446,
-          "gzip": 116936,
-          "brotli": 93500
+          "file": "assets/defined-CGl8t_c6.js",
+          "raw": 487916,
+          "gzip": 120271,
+          "brotli": 95989
         }
       ],
       "totals": {
-        "raw": 474446,
-        "gzip": 116936,
-        "brotli": 93500
+        "raw": 487916,
+        "gzip": 120271,
+        "brotli": 95989
       }
     },
     {
@@ -156,16 +161,16 @@
       "entry": "_build/js/release/build/mizchi/sqlike/defined-sqlite/defined-sqlite.js",
       "assets": [
         {
-          "file": "assets/defined-sqlite-DaqTDx7u.js",
-          "raw": 428704,
-          "gzip": 106762,
-          "brotli": 85482
+          "file": "assets/defined-sqlite-RtnVi5zu.js",
+          "raw": 442187,
+          "gzip": 110142,
+          "brotli": 88072
         }
       ],
       "totals": {
-        "raw": 428704,
-        "gzip": 106762,
-        "brotli": 85482
+        "raw": 442187,
+        "gzip": 110142,
+        "brotli": 88072
       }
     },
     {
@@ -173,10 +178,10 @@
       "entry": "adapters/defined-database.ts",
       "assets": [
         {
-          "file": "assets/defined-database-ZtY3xEUA.js",
-          "raw": 482758,
-          "gzip": 120164,
-          "brotli": 96169
+          "file": "assets/defined-database-5bzA2xYK.js",
+          "raw": 496225,
+          "gzip": 123551,
+          "brotli": 98812
         },
         {
           "file": "assets/moon-image-store-B4N7x1B5.js",
@@ -186,9 +191,9 @@
         }
       ],
       "totals": {
-        "raw": 486579,
-        "gzip": 121727,
-        "brotli": 97589
+        "raw": 500046,
+        "gzip": 125114,
+        "brotli": 100232
       }
     }
   ],
@@ -223,8 +228,8 @@
     },
     "schemaId": "07838c1ed152a6de2ce16de9c4cc254e2340afe19617498dabd608b948a92cad",
     "programId": "e951aaf1400ee04bd0a598cb0eaaae93c16c59ad81fa1e14316aba394c144e6d",
-    "legacyPublicRuntimeSHA256": "91e21cd5a141db574a3b53d036b7e004652ecafdc58571a4645876573ebc3005",
-    "binaryRuntimeSHA256": "4515980a970b9b649eae858e9303ea4e040905e950f3d41849c4b78af26f56f6"
+    "legacyPublicRuntimeSHA256": "bb5e7fdaad431f7b93446042b2700476bb52bcea61642a04758c74d3ff4f5f24",
+    "binaryRuntimeSHA256": "6b21348f02984fa21485f24caa268602984b9321b9a3872c9ddceb6f10e67576"
   },
   "initialization": {
     "iterations": 200,
@@ -232,92 +237,92 @@
       {
         "engine": "legacy-json",
         "run": 0,
-        "microseconds": 139.66479000000163
+        "microseconds": 163.29541500000005
       },
       {
         "engine": "legacy-json",
         "run": 1,
-        "microseconds": 94.50812499999984
+        "microseconds": 99.55333500000052
       },
       {
         "engine": "legacy-json",
         "run": 2,
-        "microseconds": 83.72896000000082
+        "microseconds": 88.67312500000025
       },
       {
         "engine": "legacy-json",
         "run": 3,
-        "microseconds": 76.03958499999862
+        "microseconds": 77.77020499999935
       },
       {
         "engine": "legacy-json",
         "run": 4,
-        "microseconds": 71.80854499999896
+        "microseconds": 73.39020499999833
       },
       {
         "engine": "legacy-json",
         "run": 5,
-        "microseconds": 72.08416499999885
+        "microseconds": 77.60812499999929
       },
       {
         "engine": "legacy-json",
         "run": 6,
-        "microseconds": 71.62708500000008
+        "microseconds": 77.91395500000135
       },
       {
         "engine": "legacy-json",
         "run": 7,
-        "microseconds": 72.39916499999936
+        "microseconds": 72.24874999999884
       },
       {
         "engine": "legacy-json",
         "run": 8,
-        "microseconds": 69.38645999999835
+        "microseconds": 69.21771000000035
       },
       {
         "engine": "binary",
         "run": 0,
-        "microseconds": 68.38396000000103
+        "microseconds": 68.70499999999993
       },
       {
         "engine": "binary",
         "run": 1,
-        "microseconds": 46.247915000001285
+        "microseconds": 46.63437499999873
       },
       {
         "engine": "binary",
         "run": 2,
-        "microseconds": 40.03332999999884
+        "microseconds": 41.71562499999936
       },
       {
         "engine": "binary",
         "run": 3,
-        "microseconds": 34.43625000000111
+        "microseconds": 46.7443749999984
       },
       {
         "engine": "binary",
         "run": 4,
-        "microseconds": 33.63896000000068
+        "microseconds": 38.22229000000107
       },
       {
         "engine": "binary",
         "run": 5,
-        "microseconds": 31.893749999999272
+        "microseconds": 37.41853999999876
       },
       {
         "engine": "binary",
         "run": 6,
-        "microseconds": 32.35104500000034
+        "microseconds": 33.87707999999975
       },
       {
         "engine": "binary",
         "run": 7,
-        "microseconds": 32.88749999999936
+        "microseconds": 35.77957999999853
       },
       {
         "engine": "binary",
         "run": 8,
-        "microseconds": 30.16208499999948
+        "microseconds": 32.1720849999997
       }
     ]
   },

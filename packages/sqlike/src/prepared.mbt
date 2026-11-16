@@ -101,6 +101,9 @@ fn prepared_names(
     PreparedPragma(name, table) => {
       ignore(execute_pragma(store, name, table, None, params))
       match name {
+        "index_list" => ["seq", "name", "unique", "origin", "partial"]
+        "index_info" => ["seqno", "cid", "name"]
+        "index_xinfo" => ["seqno", "cid", "name", "desc", "coll", "key"]
         "table_info" => ["cid", "name", "type", "notnull", "dflt_value", "pk"]
         "table_xinfo" =>
           ["cid", "name", "type", "notnull", "dflt_value", "pk", "hidden"]

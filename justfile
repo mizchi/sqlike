@@ -24,7 +24,7 @@ moon-check:
 staged-compat-check:
     pnpm build:core
     pnpm build:moon-wasm
-    pnpm exec tsx --test tests/sqlike-basic-compat.test.ts tests/sqlike-json-operators.test.ts tests/sqlike-app-functions.test.ts tests/sqlike-optional-functions.test.ts
+    pnpm exec tsx --test tests/sqlike-basic-compat.test.ts tests/sqlike-json-operators.test.ts tests/sqlike-app-functions.test.ts tests/sqlike-like-extrema.test.ts tests/sqlike-null-order.test.ts tests/sqlike-named-bind.test.ts tests/sqlike-index-metadata.test.ts tests/sqlike-derived-table.test.ts tests/sqlike-aggregate-filter.test.ts tests/sqlike-json-aggregate.test.ts tests/sqlike-optional-functions.test.ts tests/drizzle-defined.test.ts
 
 test-sqlike:
     moon test packages/sqlike/src packages/sqlike/src/compiler --target js
@@ -141,6 +141,7 @@ drizzle-fixtures:
 measure-drizzle:
     pnpm build:core
     pnpm exec tsx scripts/measure-drizzle.ts
+    pnpm exec tsx scripts/measure-drizzle-defined.ts
 
 e2e:
     pnpm test:e2e
@@ -315,6 +316,7 @@ p0-measure:
     pnpm exec tsx scripts/bench-do.ts
     pnpm exec tsx scripts/bench-release-app.ts
     pnpm exec tsx scripts/measure-drizzle.ts
+    pnpm exec tsx scripts/measure-drizzle-defined.ts
     pnpm exec tsx scripts/measure-defined.ts
     pnpm exec tsx scripts/measure-optional-functions.ts
 

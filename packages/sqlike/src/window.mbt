@@ -56,15 +56,20 @@ fn Parser::window_frame(p : Parser) -> WindowFrame raise SqlError {
 }
 
 ///|
-fn aggregate_name(name : String) -> Bool {
-  ["count", "sum", "total", "avg", "min", "max", "group_concat", "string_agg"].contains(
-    name,
-  )
+fn aggregate_name(name : String, arity : Int32) -> Bool {
+  if (name == "min" || name == "max") && arity >= 2 {
+    return false
+  }
+  [
+    "count", "sum", "total", "avg", "min", "max", "group_concat", "string_agg", "json_group_array",
+    "json_group_object",
+  ].contains(name)
 }
 
 ///|
 fn window_arity(name : String, n : Int32) -> Bool {
   match name {
+    "json_group_array" | "json_group_object" => false
     "lag" | "lead" => n >= 1 && n <= 3
     "row_number" | "rank" | "dense_rank" | "percent_rank" | "cume_dist" =>
       n == 0
@@ -72,21 +77,26 @@ fn window_arity(name : String, n : Int32) -> Bool {
     "nth_value" => n == 2
     "group_concat" => n == 1 || n == 2
     "string_agg" => n == 2
-    _ => aggregate_name(name) && n == 1
+    _ => aggregate_name(name, n) && n == 1
   }
 }
 
 ///|
 fn group_concat(args : Array[Expr], ctx : Evaluation) -> Value raise SqlError {
-  let distinct = args[0] is Call("$distinct", _)
-  let arg = match args[0] {
+  let input = filter_input(args[0])
+  let predicate = aggregate_predicate(args[0])
+  let distinct = input is Call("$distinct", _)
+  let arg = match input {
     Call("$distinct", [e]) => e
-    _ => args[0]
+    _ => input
   }
   let seen : Array[Value] = []
   let out = @buffer.Buffer()
   for row in ctx.group.unwrap_or([ctx.row]) {
     let here = { ..ctx, row, group: None, }
+    if predicate is Some(p) && truth(evaluate(p, here)) != 1 {
+      continue
+    }
     let value = evaluate(arg, here)
     if value is Null ||
       (
@@ -210,9 +220,11 @@ fn compute_windows(
       let ranked = group.map(ctx => {
         output: [],
         context: ctx,
-        keys: orders.map(o => evaluate(o.expression, ctx)),
+        keys: orders.map(o => evaluate(ordering_expression(o.expression), ctx)),
       })
-      let collations = orders.map(o => expression_collation(o.expression, base))
+      let collations = orders.map(o => {
+        expression_collation(ordering_expression(o.expression), base)
+      })
       sort_query_rows(ranked, orders, collations)
       fn peer(a : Int32, b : Int32) -> Bool {
         ranked[a].keys
@@ -338,13 +350,13 @@ fn compute_windows(
                   )
                   let mut position = 0
                   while position < n {
-                    let cmp = compare_stored(
-                        base.store,
-                        ranked[position].keys[0],
-                        target,
-                        collations[0],
-                      ) *
-                      (if orders[0].descending { -1 } else { 1 })
+                    let cmp = ordering_compare(
+                      base.store,
+                      orders[0],
+                      ranked[position].keys[0],
+                      target,
+                      collations[0],
+                    )
                     if cmp > 0 || (cmp == 0 && !finish) {
                       break
                     }
@@ -368,6 +380,13 @@ fn compute_windows(
           } else {
             []
           }
+          let members = if aggregate_predicate(args[0]) is Some(predicate) {
+            members.filter(entry => {
+              truth(evaluate(predicate, entry.context)) == 1
+            })
+          } else {
+            members
+          }
           if name == "first_value" ||
             name == "last_value" ||
             name == "nth_value" {
@@ -388,19 +407,22 @@ fn compute_windows(
           } else {
             let values = members.map(entry => {
               args.mapi((i, e) => {
-                ..binding(
-                  "$window" + i.to_string(),
-                  if e is Star(_) {
-                    Integer(1L)
+                let e = filter_input(e)
+                {
+                  ..binding(
+                    "$window" + i.to_string(),
+                    if e is Star(_) {
+                      Integer(1L)
+                    } else {
+                      evaluate(e, entry.context)
+                    },
+                  ),
+                  collation: if e is Star(_) {
+                    "binary"
                   } else {
-                    evaluate(e, entry.context)
+                    expression_collation(e, entry.context)
                   },
-                ),
-                collation: if e is Star(_) {
-                  "binary"
-                } else {
-                  expression_collation(e, entry.context)
-                },
+                }
               })
             })
             evaluate_call(

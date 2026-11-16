@@ -24,6 +24,7 @@ const paths = [
   "drizzle-browser-current",
   "drizzle-do-current",
   "drizzle-size-current",
+  "drizzle-defined-size-current",
   "defined-size-current",
   "defined-browser-current",
   "optional-functions-current",

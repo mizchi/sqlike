@@ -35,7 +35,7 @@ test("packed npm packages work without this workspace and keep optional entries 
   };
   assert.ok(modules("@mizchi/sqlike", "index.js").every((m) => !m.includes("litestream/") && !m.includes("compiler/")));
   assert.ok(modules("@mizchi/sqlike", "defined.js").every((m) => !m.includes("compiler/") && !m.includes("sqlike/sqlike.js")));
-  for (const entry of ["runtime.js", "features.js", "defined-core.js"])
+  for (const entry of ["runtime.js", "features.js", "defined-core.js", "drizzle-prepared.js"])
     assert.ok(modules("@mizchi/sqlike", entry).every((m) => !m.includes("_build/")), entry);
   assert.ok(modules("@mizchi/litestream", "index.js").every((m) => !m.includes("mizchi/sqlike/")));
   const dir = await mkdtemp(join(tmpdir(), "sqlike-npm-consumer-"));
@@ -52,6 +52,9 @@ test("packed npm packages work without this workspace and keep optional entries 
       cwd: dir, stdio: "pipe", timeout: 120000,
       env: { ...process.env, npm_config_userconfig: "/dev/null" },
     });
+    if (!fromRegistry) execFileSync(process.execPath, ["--input-type=module", "-e",
+      "import {openDrizzlePrepared} from '@mizchi/sqlike/drizzle/prepared'; if(typeof openDrizzlePrepared !== 'function') throw Error('missing prepared entry')",
+    ], {cwd:dir,stdio:"pipe",timeout:60000});
     await writeFile(join(dir, "consumer.mjs"), await readFile("tests/fixtures/npm-consumer.mjs", "utf8"));
     const result = execFileSync(process.execPath, [join(dir, "consumer.mjs")], {
       cwd: dir, env: { ...process.env, SQLIKE_NPM_CONSUMER: dir }, encoding: "utf8", timeout: 60000,
@@ -79,6 +82,7 @@ declare const runtime: DefinedRuntime;
 const fixed = await DefinedDatabase.memory(catalog);
 await createDefinedDatabase(runtime).memory(catalog);
 const rows: Value[][] = await fixed.prepare('get').all();
+${!fromRegistry ? "import {openDrizzlePrepared,type CompiledDrizzleCatalog} from '@mizchi/sqlike/drizzle/prepared'; declare const compiled: CompiledDrizzleCatalog; const prepared = await openDrizzlePrepared(DefinedDatabase,compiled); const typed: Value[] | undefined = await prepared.prepare('get').get({id:1n});" : ""}
 // @ts-expect-error handles are private, not part of the published connection
 fixed.handle;
 // @ts-expect-error boolean is not a SQLite bind value
@@ -131,7 +135,19 @@ const db=openDatabase(), orm=drizzle(db);
 const ddl='CREATE TABLE task(id INTEGER PRIMARY KEY,title TEXT)';
 await migrate(orm,[{hash:createHash('sha256').update(ddl).digest('hex'),folderMillis:1,bps:true,sql:[ddl]}]);
 orm.transaction(tx=>{tx.run(sql\x60INSERT INTO task VALUES(1,'ok')\x60);assert.throws(()=>tx.transaction(nested=>{nested.run(sql\x60INSERT INTO task VALUES(2,'rollback')\x60);throw Error('rollback')}),/rollback/)});
-assert.deepEqual(db.values('SELECT id,title FROM task'),[[1n,'ok']]); db.close();
+assert.deepEqual(db.values('SELECT id,title FROM task'),[[1n,'ok']]);
+if (${!fromRegistry}) {
+  const {compileDrizzleCatalog}=await import('@mizchi/sqlike/drizzle/compiler');
+  const {openDrizzlePrepared}=await import('@mizchi/sqlike/drizzle/prepared');
+  const {DefinedDatabase}=await import('@mizchi/sqlike/defined');
+  const {sqliteTable,integer,text}=await import('drizzle-orm/sqlite-core');
+  const task=sqliteTable('task',{id:integer().primaryKey(),title:text()});
+  const compiled=compileDrizzleCatalog({schema:[ddl],queries:[{name:'add',query:orm.insert(task).values({id:sql.placeholder('id'),title:'compiled'}).returning()}]});
+  const prepared=await openDrizzlePrepared(DefinedDatabase,compiled);
+  assert.deepEqual((await prepared.execute('add',{id:1n})).rows,[[1n,'compiled']]);
+  await prepared.close();
+}
+db.close();
 `);
     execFileSync(process.execPath, [join(dir, "orm.mjs")], { cwd: dir, stdio: "pipe", timeout: 60000 });
   } finally {

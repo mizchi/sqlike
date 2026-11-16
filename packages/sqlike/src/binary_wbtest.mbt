@@ -57,7 +57,7 @@ test "binary reader rejects unknown tags required features and excessive nesting
     _ => true
   }
   assert_true(rejected)
-  w.require_feature(128U)
+  w.require_feature(0x80000000U)
   let unknown_feature = try {
     ignore(binary_reader(binary_finish(w, 1), 1, 1048576))
     false

@@ -288,11 +288,7 @@ fn evaluate(expression : Expr, ctx : Evaluation) -> Value raise SqlError {
           Text(checked_text_value(a) + checked_text_value(b))
         }
       } else if op == "like" {
-        if a is Null || b is Null {
-          Null
-        } else {
-          boolean(like(checked_text_value(a), checked_text_value(b)))
-        }
+        like_value([b, a])
       } else {
         compare_expression(op, left, a, right, b, ctx)
       }
@@ -388,6 +384,10 @@ fn evaluate_call(
     }
     raise TriggerAbort(text_value(evaluate(args[1], ctx)))
   }
+  if FEATURE_SQL_JSON &&
+    (name == "json_group_array" || name == "json_group_object") {
+    return json_aggregate(name, args, ctx)
+  }
   if name == "group_concat" || name == "string_agg" {
     return group_concat(args, ctx)
   }
@@ -395,32 +395,32 @@ fn evaluate_call(
     args.length() == 1 {
     let group = ctx.group.unwrap_or([ctx.row])
     let values : Array[Value] = []
+    let input = filter_input(args[0])
+    let distinct = input is Call("$distinct", _)
+    let arg = match input {
+      Call("$distinct", [e]) => e
+      _ => input
+    }
+    let predicate = aggregate_predicate(args[0])
     for row in group {
-      let value : Value = if args[0] is Star(_) {
+      let here = if arg is Star(_) && predicate is None {
+        ctx
+      } else {
+        { ..ctx, row, group: None, }
+      }
+      if predicate is Some(p) && truth(evaluate(p, here)) != 1 {
+        continue
+      }
+      let value : Value = if arg is Star(_) {
         Integer(1L)
       } else {
-        let arg = match args[0] {
-          Call("$distinct", [e]) => e
-          _ => args[0]
-        }
-        evaluate(arg, { ..ctx, row, group: None, })
+        evaluate(arg, here)
       }
       if !(value is Null) &&
         (
-          !(args[0] is Call("$distinct", _)) ||
+          !distinct ||
           !values.any(v => {
-            compare_stored(
-              ctx.store,
-              v,
-              value,
-              expression_collation(
-                match args[0] {
-                  Call("$distinct", [e]) => e
-                  _ => args[0]
-                },
-                ctx,
-              ),
-            ) ==
+            compare_stored(ctx.store, v, value, expression_collation(arg, ctx)) ==
             0
           })
         ) {
@@ -440,7 +440,7 @@ fn evaluate_call(
           ctx.store,
           v,
           result,
-          expression_collation(args[0], ctx),
+          expression_collation(arg, ctx),
         )
         if (name == "max" && c > 0) || (name == "min" && c < 0) {
           result = v
@@ -476,6 +476,21 @@ fn evaluate_call(
   }
   let values = args.map(e => evaluate(e, ctx))
   match name {
+    "like" => like_value(values)
+    "min" | "max" => {
+      if values.any(v => v is Null) {
+        return Null
+      }
+      let collation = function_collation(args, ctx, false).unwrap_or("binary")
+      let mut best = values[0]
+      for v in values[1:] {
+        let order = compare_stored(ctx.store, v, best, collation)
+        if (name == "min" && order <= 0) || (name == "max" && order > 0) {
+          best = v
+        }
+      }
+      best
+    }
     "nullif" => {
       let mut collation = "binary"
       for arg in args {
@@ -715,7 +730,8 @@ fn row_environment_from(layout : Environment, row : StoredRow) -> Environment {
 ///|
 fn aggregate(expression : Expr) -> Bool {
   match expression {
-    Call(name, args) => aggregate_name(name) || args.any(aggregate)
+    Call(name, args) =>
+      aggregate_name(name, args.length()) || args.any(aggregate)
     Binary(_, a, b) => aggregate(a) || aggregate(b)
     InSelect(e, _) => aggregate(e)
     Between(e, a, b) => aggregate(e) || aggregate(a) || aggregate(b)

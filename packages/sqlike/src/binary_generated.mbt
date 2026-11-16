@@ -766,7 +766,7 @@ impl Binary for DataStatement with fn write(value, w) {
     }
     PreparedPragma(v0, v1) => {
       w.uint(2U)
-
+      w.require_feature(pragma_features(v0))
       Binary::write(v0, w)
       Binary::write(v1, w)
     }
@@ -812,7 +812,7 @@ impl Binary for DataStatement with fn read(r) {
     2U => {
       let v0 : String = Binary::read(r)
       let v1 : String = Binary::read(r)
-
+      r.require_feature(pragma_features(v0))
       PreparedPragma(v0, v1)
     }
     3U => {

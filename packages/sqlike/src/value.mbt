@@ -346,21 +346,34 @@ fn arithmetic(op : String, a : Value, b : Value) -> Value {
 
 ///|
 /// Iterative wildcard matching avoids recursive blowups on hostile LIKE input.
-fn like(text : String, pattern : String) -> Bool {
+fn like(text : String, pattern : String, escape : Char?) -> Bool {
   let text = nocase_prefix(text).to_array()
+  let original = pattern.to_array()
   let pattern = nocase_prefix(pattern).to_array()
   let mut previous = Array::make(text.length() + 1, false)
   previous[0] = true
-  for c in pattern {
+  let mut index = 0
+  while index < pattern.length() {
+    let escaped = escape == Some(original[index])
+    if escaped {
+      index += 1
+      if index == pattern.length() {
+        return false
+      }
+    }
+    let c = pattern[index]
+    index += 1
+    let many = !escaped && c == '%'
+    let one = !escaped && c == '_'
     let next = Array::make(text.length() + 1, false)
-    if c == '%' {
+    if many {
       next[0] = previous[0]
     }
     for i = 1; i <= text.length(); i = i + 1 {
-      next[i] = if c == '%' {
+      next[i] = if many {
         previous[i] || next[i - 1]
       } else {
-        previous[i - 1] && (c == '_' || c == text[i - 1])
+        previous[i - 1] && (one || c == text[i - 1])
       }
     }
     previous = next

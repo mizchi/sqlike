@@ -46,7 +46,7 @@ JSONはRFC JSONを基本に、入れ子・配列index・`[#-N]`・`[#]`、SQL NU
 
 日時の計算はホストのDateやローカルtimezoneに依存しないGregorian / UTC計算。現在時刻はhostが文ごとに注入する。TSのMoonDatabase / AotDatabaseは自動で設定し、MoonBit Connectionの利用側は`set_clock(milliseconds)`を呼ぶ。直接JS / Wasm APIでは`database_set_clock(db, millisecondsString)` / `aot_set_clock(db, millisecondsString)`を使う。時刻は保存画像に含めず、挿入した値は通常のデータとして保存する。同期する更新には確定した時刻をbindする方針を維持する。localtime / utcによるホストtimezone変換、timediffと全modifier組合せの互換性は未対応。
 
-windowはROWS / RANGE / GROUPSを扱い、offsetは非負整数の対応範囲に限定する。named WINDOW、EXCLUDE、FILTERなど全構文の互換性は未達。再帰CTEの優先queueを指定する内部ORDER BYも未対応で、黙って異なる探索順にはしない。再帰の結果・queueは100,000行上限。
+windowはROWS / RANGE / GROUPSを扱い、offsetは非負整数の対応範囲に限定する。0.1.0以後の未リリース変更では`aggregateFilter`を選ぶと集約FILTERも利用できる。named WINDOW、EXCLUDEなど全構文の互換性は未達。再帰CTEの優先queueを指定する内部ORDER BYも未対応で、黙って異なる探索順にはしない。再帰の結果・queueは100,000行上限。
 
 ## 任意の全文検索
 

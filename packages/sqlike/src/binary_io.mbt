@@ -186,6 +186,8 @@ fn binary_reader(
   let allowed = (if FEATURE_SQL_JSON { 16U } else { 0U }) |
     (if FEATURE_DATETIME { 32U } else { 0U }) |
     (if FEATURE_WINDOWS { 64U } else { 0U }) |
+    (if FEATURE_SCHEMA_METADATA { 128U } else { 0U }) |
+    (if FEATURE_AGGREGATE_FILTER { 256U } else { 0U }) |
     (if FEATURE_FOREIGN_KEYS { 1U } else { 0U }) |
     (if FEATURE_TRIGGERS { 2U } else { 0U }) |
     (if FEATURE_STRICT { 4U } else { 0U }) |

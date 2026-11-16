@@ -86,3 +86,7 @@ await source.close();
 `@mizchi/sqlike/defined/core`の`createDefinedDatabase(runtime)`は既定engineを読み込みません。機能選択ビルドで生成した独自のruntimeを渡せます。機能選択のビルドツールはリポジトリから利用します。
 
 Wasm GCには`wasm/defined.wasm`と`@mizchi/sqlike/defined/wasm`の`definedWasm()`を使います。instantiate時には`builtins: ['js-string']`と`importedStringConstants: '_'`を指定します。
+
+## Drizzleからcatalogを作る（未リリース）
+
+Drizzleの`toSQL()`で列挙したクエリも事前コンパイルできます。ビルド時の`@mizchi/sqlike/drizzle/compiler`と、ORMを読み込まない`@mizchi/sqlike/drizzle/prepared`を分けています。[手順・placeholder・結果の型](drizzle-prepared.md)を参照してください。

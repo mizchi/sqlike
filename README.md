@@ -43,14 +43,14 @@ The horizontal axis is logarithmic: each tick doubles the size. Labels show KiB.
 <!-- bundle-size:start -->
 | Build | minified, uncompressed | Brotli |
 | --- | ---: | ---: |
-| SQLike 0.1.0 (source) / SQL / JS | 581.21 KiB | 109.92 KiB |
-| SQLike 0.1.0 (source) / SQL / Wasm GC | 515.42 KiB | 162.17 KiB |
-| SQLike 0.1.0 (source) / Predefined, all execution features / JS | 475.18 KiB | 95.26 KiB |
-| SQLike 0.1.0 (source) / Predefined, all execution features / Wasm GC | 423.06 KiB | 136.61 KiB |
-| SQLike 0.1.0 (source) / Predefined, no JSON/date/window / JS | 440.88 KiB | 87.94 KiB |
-| SQLike 0.1.0 (source) / Predefined, no JSON/date/window / Wasm GC | 396.60 KiB | 127.10 KiB |
-| SQLike 0.1.0 (source) / Predefined, primary-key index only / JS | 425.42 KiB | 85.23 KiB |
-| SQLike 0.1.0 (source) / Predefined, primary-key index only / Wasm GC | 383.25 KiB | 123.24 KiB |
+| SQLike 0.1.0 (source) / SQL / JS | 596.71 KiB | 112.61 KiB |
+| SQLike 0.1.0 (source) / SQL / Wasm GC | 527.99 KiB | 166.33 KiB |
+| SQLike 0.1.0 (source) / Predefined, all execution features / JS | 488.33 KiB | 98.07 KiB |
+| SQLike 0.1.0 (source) / Predefined, all execution features / Wasm GC | 434.18 KiB | 140.14 KiB |
+| SQLike 0.1.0 (source) / Predefined, no JSON/date/window / JS | 451.73 KiB | 90.34 KiB |
+| SQLike 0.1.0 (source) / Predefined, no JSON/date/window / Wasm GC | 406.20 KiB | 130.17 KiB |
+| SQLike 0.1.0 (source) / Predefined, primary-key index only / JS | 430.43 KiB | 86.22 KiB |
+| SQLike 0.1.0 (source) / Predefined, primary-key index only / Wasm GC | 387.51 KiB | 124.83 KiB |
 | sqlite-wasm 3.54.1-build1 | 1313.74 KiB | 462.33 KiB |
 | Turso 0.8.3 | 11709.66 KiB | 2675.96 KiB |
 <!-- bundle-size:end -->
@@ -79,13 +79,13 @@ Each panel starts at zero and uses its own scale. Bars show medians; whiskers sh
 <!-- sqlite-benchmark:start -->
 | Workload | SQLike JS, SQL | SQLike Wasm GC, SQL | SQLite WASM, SQL | SQLite WASM, prepared |
 | --- | ---: | ---: | ---: | ---: |
-| Primary-key lookup | 26.88 | 6.29 | 3.77 | 1.45 |
-| Missing primary key | 26.12 | 5.71 | 2.57 | 0.47 |
-| Indexed range · 10 rows | 49.43 | 13.66 | 14.95 | 10.81 |
-| ORDER BY id · LIMIT 10 | 45.03 | 10.86 | 12.46 | 9.50 |
-| SUM + COUNT · 5,000 rows | 92.68 | 50.35 | 105.25 | 103.09 |
-| Fetch all 5,000 rows | 4,525.00 | 2,668.42 | 4,627.27 | 4,581.82 |
-| Indexed UPDATE + range read | 67.82 | 18.79 | 19.25 | 12.37 |
+| Primary-key lookup | 26.29 | 6.25 | 3.69 | 1.41 |
+| Missing primary key | 25.78 | 5.64 | 2.53 | 0.47 |
+| Indexed range · 10 rows | 48.58 | 13.56 | 14.44 | 10.49 |
+| ORDER BY id · LIMIT 10 | 45.17 | 10.89 | 12.35 | 9.14 |
+| SUM + COUNT · 5,000 rows | 93.02 | 50.25 | 106.14 | 103.48 |
+| Fetch all 5,000 rows | 4,772.73 | 2,668.42 | 4,458.33 | 4,375.00 |
+| Indexed UPDATE + range read | 69.21 | 19.03 | 19.34 | 12.24 |
 <!-- sqlite-benchmark:end -->
 
 </details>
@@ -160,6 +160,8 @@ const db = drizzle(client);
 Drizzle is an optional entry point. It is not needed for ordinary SQL or predefined-schema execution.
 
 [Table definitions, migrations, and transactions (Japanese)](docs/drizzle.md)
+
+The unreleased source also supports [compiling Drizzle queries into a predefined catalog (Japanese)](docs/drizzle-prepared.md), keeping the ORM and SQL parser out of the browser runtime.
 
 ## Synchronization and LTX
 

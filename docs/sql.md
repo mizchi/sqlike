@@ -76,4 +76,24 @@ SELECT '{"n":1}' -> 'n', '{"n":1}' ->> 'n'; -- TEXT '1', INTEGER 1
 
 その他の不足機能は[段階別の実装チェックリスト](internal/staged-sqlite-compatibility.md)で管理します。
 
+### 続く互換機能の追加（未リリース）
+
+| 機能 | 選択ビルドでの扱い |
+| --- | --- |
+| `LIKE … ESCAPE` / `like(pattern,text,escape?)`、複数引数のscalar `min/max` | core。NULL・型・collationを保持する |
+| `ORDER BY … NULLS FIRST/LAST` | core。列番号・別名・windowのORDER BYにも対応 |
+| `:name` / `@name` / `$name` | SQL解析時に位置へ解決。同じ名前は同じbind位置、大文字小文字・接頭辞は区別 |
+| FROM内subquery | 既存CTE実行器を再利用。重複列名の自動改名は拒否するため、内側の列に一意な別名を付ける |
+| `index_list` / `index_info` / `index_xinfo` PRAGMA | `schemaMetadata`。旧schemaから自動索引の番号・方向を確定できないケースは明示拒否 |
+| 集約の`FILTER(WHERE …)` | `aggregateFilter`。通常 / DISTINCT / window集約に対応 |
+| `json_group_array/object` | `sqlJson`。空集合・重複キー・subtypeを保持。BLOB値・NULLのobject label・JSON集約windowは未対応 |
+
+```ts
+db.values('SELECT :x,:x,@x', [1n, 2n]); // [[1n,1n,2n]]
+```
+
+SQL APIへ渡すbindは位置順の配列です。Drizzleのnamed placeholderをobjectで渡す用途には[事前コンパイルentry](drizzle-prepared.md)を使います。
+
+必要機能はバイナリcatalogにも記録し、機能を外したruntimeでは初期化時に拒否します。整数へ損失なく変換できるREAL / TEXTのLIMIT / OFFSETも受理します。内部IR用の`$`で始まる関数名をSQLから直接呼ぶことはできません。
+
 クエリ実行時には行データをメモリに保持します。IndexedDBへ保存する用途は[事前定義したSQL](prepared.md)を参照してください。

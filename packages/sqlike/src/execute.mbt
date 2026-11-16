@@ -681,6 +681,11 @@ fn execute_pragma(
   value : Expr?,
   params : Array[Value],
 ) -> Array[Environment] raise SqlError {
+  validate_pragma_features(name)
+  if FEATURE_SCHEMA_METADATA && pragma_features(name) != 0U {
+    guard value is None else { fail("unsupported metadata PRAGMA assignment") }
+    return index_metadata(store, name, table)
+  }
   if name == "recursive_triggers" {
     if value is Some(e) {
       store.triggers.recursive = if e is Column("", n) {

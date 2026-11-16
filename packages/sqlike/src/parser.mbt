@@ -13,6 +13,8 @@ priv struct Parser {
   tokens : Array[Token]
   mut position : Int32
   mut parameter : Int32
+  mut derived : Int32
+  parameter_names : Map[String, Int32]
   mut depth : Int32
 }
 
@@ -76,6 +78,42 @@ fn lex(sql : String) -> Parser raise SqlError {
         } else {
           2
         },
+        start,
+        end: i,
+      })
+    } else if c == 58 || c == 64 || c == 36 {
+      i += 1
+      let mut count = 0
+      while i < bytes.length() {
+        let ch = bytes[i].to_int()
+        if (ch >= 65 && ch <= 90) ||
+          (ch >= 97 && ch <= 122) ||
+          (ch >= 48 && ch <= 57) ||
+          ch == 95 ||
+          ch == 36 ||
+          ch >= 128 {
+          count += 1
+          i += 1
+        } else if ch == 58 && i + 1 < bytes.length() && bytes[i + 1] == b':' {
+          i += 2
+        } else if ch == 40 && count > 0 {
+          i += 1
+          while i < bytes.length() && bytes[i] != b')' && bytes[i].to_int() > 32 {
+            i += 1
+          }
+          guard i < bytes.length() && bytes[i] == b')' else {
+            fail("invalid SQL parameter")
+          }
+          i += 1
+          break
+        } else {
+          break
+        }
+      }
+      guard count > 0 else { fail("invalid SQL parameter") }
+      tokens.push({
+        word: @utf8.decode_lossy(bytes[start:i]),
+        kind: 5,
         start,
         end: i,
       })
@@ -150,7 +188,15 @@ fn lex(sql : String) -> Parser raise SqlError {
     guard tokens.length() <= 10000 else { fail("SQL token resource limit") }
   }
   tokens.push({ word: "", kind: 4, start: i, end: i, })
-  { source: bytes, tokens, position: 0, parameter: 0, depth: 0, }
+  {
+    source: bytes,
+    tokens,
+    position: 0,
+    parameter: 0,
+    derived: 0,
+    parameter_names: Map([]),
+    depth: 0,
+  }
 }
 
 ///|
@@ -265,9 +311,21 @@ fn Parser::expression(p : Parser, minimum : Int32) -> Expr raise SqlError {
         "time"
       },
     )
+  } else if token.kind == 5 {
+    let index = match p.parameter_names.get(token.word) {
+      Some(index) => index
+      None => {
+        guard p.parameter < 32766 else { fail("SQL parameter limit") }
+        let index = p.parameter
+        p.parameter += 1
+        p.parameter_names[token.word] = index
+        index
+      }
+    }
+    Parameter(index)
   } else if word == "?" {
     let mut index = p.parameter
-    if p.tokens[p.position].kind == 3 {
+    if p.tokens[p.position].kind == 3 && p.tokens[p.position].start == token.end {
       index = (@string.parse_int(p.tokens[p.position].word) catch {
           _ => fail("invalid SQL parameter")
         }) -
@@ -340,6 +398,9 @@ fn Parser::expression(p : Parser, minimum : Int32) -> Expr raise SqlError {
     Literal(Blob(b.to_bytes()))
   } else if token.kind == 0 || token.kind == 2 {
     if p.take("(") {
+      guard !token.word.has_prefix("$") else {
+        fail("unsupported SQL reserved function name")
+      }
       let arguments : Array[Expr] = []
       let distinct_argument = p.take("distinct")
       if !p.take(")") {
@@ -354,6 +415,17 @@ fn Parser::expression(p : Parser, minimum : Int32) -> Expr raise SqlError {
           fail("DISTINCT aggregates require one argument")
         }
         arguments[0] = Call("$distinct", [arguments[0]])
+      }
+      if p.take("filter") {
+        guard !arguments.is_empty() &&
+          aggregate_name(identifier(token.word), arguments.length()) else {
+          fail("FILTER may only be used with an aggregate function")
+        }
+        p.expect("(")
+        p.expect("where")
+        let predicate = p.expression(1)
+        p.expect(")")
+        arguments[0] = Call("$filter", [arguments[0], predicate])
       }
       if p.take("over") {
         p.expect("(")
@@ -373,7 +445,7 @@ fn Parser::expression(p : Parser, minimum : Int32) -> Expr raise SqlError {
         }
         let frame = p.window_frame()
         p.expect(")")
-        Window(word, arguments, partitions, orders, frame)
+        Window(identifier(token.word), arguments, partitions, orders, frame)
       } else {
         Call(identifier(token.word), arguments)
       }
@@ -409,7 +481,7 @@ fn Parser::expression(p : Parser, minimum : Int32) -> Expr raise SqlError {
       }
       let op = if negate != distinct { "is not" } else { "is" }
       left = Binary(op, left, p.expression(prec + 1))
-    } else if op == "not" || op == "between" || op == "in" {
+    } else if op == "not" || op == "between" || op == "in" || op == "like" {
       let negate = op == "not"
       let operator = if negate {
         let o = p.peek()
@@ -440,7 +512,12 @@ fn Parser::expression(p : Parser, minimum : Int32) -> Expr raise SqlError {
           Call("in", arguments)
         }
       } else if operator == "like" {
-        Binary("like", left, p.expression(prec + 1))
+        let pattern = p.expression(prec + 1)
+        if p.take("escape") {
+          Call("like", [pattern, left, p.expression(5)])
+        } else {
+          Binary("like", left, pattern)
+        }
       } else {
         fail("unsupported SQL NOT operator: " + operator)
       }
@@ -461,6 +538,21 @@ fn Parser::orderings(p : Parser) -> Array[Ordering] raise SqlError {
     let descending = p.take("desc")
     if !descending {
       ignore(p.take("asc"))
+    }
+    let expression = if p.take("nulls") {
+      let first = if p.take("first") {
+        true
+      } else {
+        p.expect("last")
+        false
+      }
+      if first == !descending {
+        expression
+      } else {
+        Call(if first { "$nulls-first" } else { "$nulls-last" }, [expression])
+      }
+    } else {
+      expression
     }
     orders.push({ expression, descending, })
     if !p.take(",") {
@@ -554,7 +646,18 @@ fn Parser::selection(
     let mut right = false
     let mut natural = false
     while true {
-      let name = p.name()
+      let name = if p.take("(") {
+        // NUL cannot occur in user SQL identifiers. A parse-local ordinal stays
+        // stable when declarations are normalized, renamed, or read back.
+        let name = "\u{0}derived:" + p.derived.to_string()
+        p.derived += 1
+        let query = p.selection()
+        p.expect(")")
+        ctes.push((name, query))
+        name
+      } else {
+        p.name()
+      }
       let qualifier = if p.take("as") {
         p.name()
       } else if p.tokens[p.position].kind == 2 ||

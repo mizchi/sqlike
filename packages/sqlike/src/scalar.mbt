@@ -2,6 +2,8 @@
 /// Function metadata is checked while preparing, including unselected branches.
 fn scalar_arity(name : String, count : Int32) -> Bool {
   match name {
+    "like" => count == 2 || count == 3
+    "min" | "max" => count >= 2
     "substr" | "substring" => count == 2 || count == 3
     "trim" | "ltrim" | "rtrim" => count == 1 || count == 2
     "instr" | "nullif" => count == 2
@@ -23,6 +25,41 @@ fn saturated_add(a : Int64, b : Int64) -> Int64 {
   } else {
     a + b
   }
+}
+
+///|
+/// ESCAPE is validated before NULL pattern/text, as in SQLite's like().
+fn like_value(values : Array[Value]) -> Value raise SqlError {
+  let pattern = if values[0] is Null {
+    ""
+  } else {
+    checked_text_value(values[0])
+  }
+  guard @utf8.encode(pattern).length() <= 50000 else {
+    fail("LIKE or GLOB pattern too complex")
+  }
+  let mut escape : Char? = None
+  if values.length() == 3 {
+    if values[2] is Null {
+      return Null
+    }
+    for c in checked_text_value(values[2]).iter() {
+      if c == '\u{0}' {
+        break
+      }
+      guard escape is None else {
+        fail("ESCAPE expression must be a single character")
+      }
+      escape = Some(c)
+    }
+    guard escape is Some(_) else {
+      fail("ESCAPE expression must be a single character")
+    }
+  }
+  if values[0] is Null || values[1] is Null {
+    return Null
+  }
+  boolean(like(checked_text_value(values[1]), pattern, escape))
 }
 
 ///|

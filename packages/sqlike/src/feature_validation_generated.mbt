@@ -258,6 +258,7 @@ impl FeatureCheck for DataStatement with fn check(value) {
     }
     PreparedSelect(v0) => FeatureCheck::check(v0)
     PreparedPragma(v0, v1) => {
+      validate_pragma_features(v0)
       FeatureCheck::check(v0)
       FeatureCheck::check(v1)
     }

@@ -8,6 +8,8 @@ export type SqlikeFeatureName =
   | "sqlJson"
   | "dateTime"
   | "windowFunctions"
+  | "schemaMetadata"
+  | "aggregateFilter"
   | "binarySync"
   | "sqlitePages"
   | "ltx";
@@ -24,6 +26,8 @@ export const foreignKeys = feature("foreignKeys");
 export const sqlJson = feature("sqlJson");
 export const dateTime = feature("dateTime");
 export const windowFunctions = feature("windowFunctions");
+export const schemaMetadata = feature("schemaMetadata");
+export const aggregateFilter = feature("aggregateFilter");
 export const binarySync = feature("binarySync");
 export const sqlitePages = feature("sqlitePages");
 export const ltx = feature("ltx");
@@ -36,6 +40,8 @@ export const allSqlikeFeatures: readonly SqlikeFeature[] = Object.freeze([
   sqlJson,
   dateTime,
   windowFunctions,
+  schemaMetadata,
+  aggregateFilter,
   binarySync,
   sqlitePages,
   ltx,

@@ -128,22 +128,30 @@ fn compound_relation(
     output: row,
     context: { ..ctx, row, position: i, },
     keys: select.orders.map(o => {
-      row[compound_order_index(select, o.expression, output.length())].value
+      row[compound_order_index(
+        select,
+        ordering_expression(o.expression),
+        output.length(),
+      )].value
     }),
   })
   sort_query_rows(
     ranked,
     select.orders,
     select.orders.map(o => {
-      match o.expression {
+      match ordering_expression(o.expression) {
         Collate(_, name) => name
         _ =>
-          output[compound_order_index(select, o.expression, output.length())].collation
+          output[compound_order_index(
+            select,
+            ordering_expression(o.expression),
+            output.length(),
+          )].collation
       }
     }),
   )
-  let limit = evaluate(select.limit, ctx)
-  let offset = evaluate(select.offset, ctx)
+  let limit = apply_affinity(evaluate(select.limit, ctx), "integer")
+  let offset = apply_affinity(evaluate(select.offset, ctx), "integer")
   guard limit is Integer(count) && offset is Integer(start) else {
     fail("datatype mismatch: LIMIT/OFFSET")
   }

@@ -43,14 +43,14 @@ SQLikeはnpm 0.1.0以後の未リリース変更を含む現行ソースで計�
 <!-- bundle-size:start -->
 | ビルド | minified・未圧縮 | Brotli |
 | --- | ---: | ---: |
-| SQLike 0.1.0 (source) / 通常SQL / JS | 581.21 KiB | 109.92 KiB |
-| SQLike 0.1.0 (source) / 通常SQL / Wasm GC | 515.42 KiB | 162.17 KiB |
-| SQLike 0.1.0 (source) / 事前定義・全実行機能 / JS | 475.18 KiB | 95.26 KiB |
-| SQLike 0.1.0 (source) / 事前定義・全実行機能 / Wasm GC | 423.06 KiB | 136.61 KiB |
-| SQLike 0.1.0 (source) / 事前定義・JSON・日時・windowなし / JS | 440.88 KiB | 87.94 KiB |
-| SQLike 0.1.0 (source) / 事前定義・JSON・日時・windowなし / Wasm GC | 396.60 KiB | 127.10 KiB |
-| SQLike 0.1.0 (source) / 事前定義・主キー索引のみ / JS | 425.42 KiB | 85.23 KiB |
-| SQLike 0.1.0 (source) / 事前定義・主キー索引のみ / Wasm GC | 383.25 KiB | 123.24 KiB |
+| SQLike 0.1.0 (source) / 通常SQL / JS | 596.71 KiB | 112.61 KiB |
+| SQLike 0.1.0 (source) / 通常SQL / Wasm GC | 527.99 KiB | 166.33 KiB |
+| SQLike 0.1.0 (source) / 事前定義・全実行機能 / JS | 488.33 KiB | 98.07 KiB |
+| SQLike 0.1.0 (source) / 事前定義・全実行機能 / Wasm GC | 434.18 KiB | 140.14 KiB |
+| SQLike 0.1.0 (source) / 事前定義・JSON・日時・windowなし / JS | 451.73 KiB | 90.34 KiB |
+| SQLike 0.1.0 (source) / 事前定義・JSON・日時・windowなし / Wasm GC | 406.20 KiB | 130.17 KiB |
+| SQLike 0.1.0 (source) / 事前定義・主キー索引のみ / JS | 430.43 KiB | 86.22 KiB |
+| SQLike 0.1.0 (source) / 事前定義・主キー索引のみ / Wasm GC | 387.51 KiB | 124.83 KiB |
 | sqlite-wasm 3.54.1-build1 | 1313.74 KiB | 462.33 KiB |
 | Turso 0.8.3 | 11709.66 KiB | 2675.96 KiB |
 <!-- bundle-size:end -->
@@ -79,13 +79,13 @@ SQLikeはnpm 0.1.0以後の未リリース変更を含む現行ソースで計�
 <!-- sqlite-benchmark:start -->
 | 処理 | SQLike JS・通常SQL | SQLike Wasm GC・通常SQL | SQLite WASM・通常SQL | SQLite WASM・prepared |
 | --- | ---: | ---: | ---: | ---: |
-| 主キーで1行検索 | 26.88 | 6.29 | 3.77 | 1.45 |
-| 存在しない主キーの検索 | 26.12 | 5.71 | 2.57 | 0.47 |
-| 二次索引の範囲検索・10行 | 49.43 | 13.66 | 14.95 | 10.81 |
-| ORDER BY id LIMIT 10 | 45.03 | 10.86 | 12.46 | 9.50 |
-| sum(n), count(*) | 92.68 | 50.35 | 105.25 | 103.09 |
-| 全5,000行取得 | 4,525.00 | 2,668.42 | 4,627.27 | 4,581.82 |
-| 索引列の更新＋範囲10行取得 | 67.82 | 18.79 | 19.25 | 12.37 |
+| 主キーで1行検索 | 26.29 | 6.25 | 3.69 | 1.41 |
+| 存在しない主キーの検索 | 25.78 | 5.64 | 2.53 | 0.47 |
+| 二次索引の範囲検索・10行 | 48.58 | 13.56 | 14.44 | 10.49 |
+| ORDER BY id LIMIT 10 | 45.17 | 10.89 | 12.35 | 9.14 |
+| sum(n), count(*) | 93.02 | 50.25 | 106.14 | 103.48 |
+| 全5,000行取得 | 4,772.73 | 2,668.42 | 4,458.33 | 4,375.00 |
+| 索引列の更新＋範囲10行取得 | 69.21 | 19.03 | 19.34 | 12.24 |
 <!-- sqlite-benchmark:end -->
 
 </details>
@@ -160,6 +160,8 @@ const db = drizzle(client);
 Drizzleは任意のentryです。通常のSQLや固定schemaの実行だけなら追加は不要です。
 
 [テーブル定義・migration・transaction](docs/drizzle.md)
+
+未リリースの現行ソースでは、[Drizzleクエリを事前定義catalogへ変換](docs/drizzle-prepared.md)し、ブラウザへORMとSQL parserを配信しない構成も使えます。
 
 ## 同期・LTXを使う
 

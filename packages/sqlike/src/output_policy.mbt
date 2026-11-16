@@ -21,7 +21,7 @@ fn validate_collation(name : String) -> Unit raise SqlError {
 ///|
 fn extremum_aggregate(e : Expr) -> Bool {
   match e {
-    Call("min", _) | Call("max", _) => true
+    Call("min", [_]) | Call("max", [_]) => true
     Call(_, args) => args.any(extremum_aggregate)
     Unary(_, e) | Collate(e, _) | Cast(e, _) => extremum_aggregate(e)
     Binary(_, a, b) => extremum_aggregate(a) || extremum_aggregate(b)
@@ -50,7 +50,7 @@ fn validate_group_output(
     Column(_, _) | Star(_) =>
       fail("unsupported SQL: bare column in aggregate output")
     Call(name, args) =>
-      if !aggregate_name(name) {
+      if !aggregate_name(name, args.length()) {
         for arg in args {
           validate_group_output(arg, groups, extremes)
         }
