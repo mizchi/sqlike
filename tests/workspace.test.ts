@@ -1,26 +1,22 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from "node:fs";
+import { mkdtempSync, mkdirSync, writeFileSync, rmSync, readFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
+const version: string = JSON.parse(readFileSync("package.json", "utf8")).version;
+
 const targets = (process.env.RELEASE_PACK_TARGETS ?? "js").split(",");
 const fromRegistry = process.env.RELEASE_PACK_REGISTRY === "1";
 const sqlikeModule = resolve(process.env.SQLIKE_MODULE_DIR ?? "packages/sqlike");
-const litestreamModule = resolve(
-  process.env.LITESTREAM_MODULE_DIR ?? "packages/litestream",
-);
+const litestreamModule = resolve(process.env.LITESTREAM_MODULE_DIR ?? "packages/litestream");
 
 function runConsumer(root: string, consumer: string, target: string) {
   const args = fromRegistry
     ? ["-C", consumer, "test", "--target", target]
     : ["-C", root, "test", "consumer", "--target", target];
-  return execFileSync(
-    "moon",
-    args,
-    { encoding: "utf8", stdio: "pipe", timeout: 60000 },
-  );
+  return execFileSync("moon", args, { encoding: "utf8", stdio: "pipe", timeout: 60000 });
 }
 
 test("an external MoonBit consumer uses sqlike and its compiler without the litestream module", () => {
@@ -36,7 +32,7 @@ test("an external MoonBit consumer uses sqlike and its compiler without the lite
     }
     writeFileSync(
       join(consumer, "moon.mod"),
-      'name = "test/sqlike-consumer"\nversion = "0.0.1"\nimport { "mizchi/sqlike@0.1.0" }\n',
+      `name = "test/sqlike-consumer"\nversion = "0.0.1"\nimport { "mizchi/sqlike@${version}" }\n`,
     );
     writeFileSync(
       join(consumer, "moon.pkg"),
@@ -89,12 +85,9 @@ test("an external Litestream consumer does not need SQLike or any database drive
     }
     writeFileSync(
       join(consumer, "moon.mod"),
-      'name = "test/litestream-consumer"\nversion = "0.0.1"\nimport { "mizchi/litestream@0.1.0" }\n',
+      `name = "test/litestream-consumer"\nversion = "0.0.1"\nimport { "mizchi/litestream@${version}" }\n`,
     );
-    writeFileSync(
-      join(consumer, "moon.pkg"),
-      'import { "mizchi/litestream" }\n',
-    );
+    writeFileSync(join(consumer, "moon.pkg"), 'import { "mizchi/litestream" }\n');
     writeFileSync(
       join(consumer, "consumer_test.mbt"),
       'test "sync and LTX exports are backend independent" { assert_eq(@litestream.revision_decision(0,0,1,false), "apply"); let file = @litestream.encode_ltx(b"", b"bad", "1", "1", "0"); assert_true(@litestream.ltx_info(file).contains("error")) }\n',

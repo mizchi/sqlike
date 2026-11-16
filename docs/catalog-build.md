@@ -1,6 +1,6 @@
 # 登録クエリからランタイムを絞る
 
-0.1.0以後の未リリース機能。固定DDLとnamed queryのcatalogをビルド時に渡すと、必要な任意機能・関数群・文の種類・query処理を推定し、使わない実装をJS / Wasmから除去できます。JSON AOTの`aot`と、バイナリ定義の`defined`に対応します。
+0.1.1で追加した機能。固定DDLとnamed queryのcatalogをビルド時に渡すと、必要な任意機能・関数群・文の種類・query処理を推定し、使わない実装をJS / Wasmから除去できます。JSON AOTの`aot`と、バイナリ定義の`defined`に対応します。
 
 ```mermaid
 flowchart LR
@@ -97,7 +97,7 @@ JSON subtypeは、通常のTEXTとJSON関数の結果を区別するための情
 - `statements`: 必要な文の種類
 - `queryParts`: `join` / `cte` / `recursiveCte` / `compound` / `jsonSubtype`の依存
 
-解析だけなら、Node用の`@mizchi/sqlike/compiler`から実行できます。このentryの`analyzeCatalogRequirements()`も未リリースです。
+解析だけなら、Node用の`@mizchi/sqlike/compiler`から実行できます。`analyzeCatalogRequirements()`は0.1.1から利用できます。
 
 ```ts
 import { analyzeCatalogRequirements } from '@mizchi/sqlike/compiler';
@@ -113,18 +113,18 @@ const requirements = analyzeCatalogRequirements(source);
 <!-- catalog-size:start -->
 | Catalog / mode | JS minified 前→後 | JS Brotli 前→後 | Wasm Brotli 前→後 |
 | --- | ---: | ---: | ---: |
-| readonly / aot | 453.24→386.93 KiB | 86.07→73.10 KiB | 128.00→108.63 KiB |
-| readonly / defined | 422.82→357.70 KiB | 83.29→70.59 KiB | 121.79→102.93 KiB |
-| scalar-read / aot | 453.24→389.70 KiB | 86.07→73.84 KiB | 128.00→109.50 KiB |
-| scalar-read / defined | 422.82→360.47 KiB | 83.29→71.19 KiB | 121.79→103.94 KiB |
-| json-construct / aot | 476.80→393.21 KiB | 89.96→74.14 KiB | 133.94→110.51 KiB |
-| json-construct / defined | 446.37→363.93 KiB | 86.90→71.67 KiB | 127.60→104.53 KiB |
-| json-nested / aot | 476.80→397.94 KiB | 89.96→74.91 KiB | 133.94→111.34 KiB |
-| json-nested / defined | 446.37→368.59 KiB | 86.90→72.43 KiB | 127.60→105.70 KiB |
-| json-cte / aot | 476.80→406.38 KiB | 89.96→76.46 KiB | 133.94→114.17 KiB |
-| json-cte / defined | 446.37→377.04 KiB | 86.90→73.93 KiB | 127.60→108.30 KiB |
-| notes / aot | 453.24→413.74 KiB | 86.07→78.22 KiB | 128.00→116.17 KiB |
-| notes / defined | 422.82→384.24 KiB | 83.29→75.74 KiB | 121.79→110.26 KiB |
+| readonly / aot | 453.24→386.93 KiB | 86.07→73.10 KiB | 127.86→108.70 KiB |
+| readonly / defined | 422.82→357.70 KiB | 83.29→70.59 KiB | 121.79→102.97 KiB |
+| scalar-read / aot | 453.24→389.70 KiB | 86.07→73.84 KiB | 127.86→109.43 KiB |
+| scalar-read / defined | 422.82→360.47 KiB | 83.29→71.19 KiB | 121.79→103.76 KiB |
+| json-construct / aot | 476.80→393.21 KiB | 89.96→74.14 KiB | 133.79→110.41 KiB |
+| json-construct / defined | 446.37→363.93 KiB | 86.90→71.67 KiB | 127.62→104.47 KiB |
+| json-nested / aot | 476.80→397.94 KiB | 89.96→74.91 KiB | 133.79→111.42 KiB |
+| json-nested / defined | 446.37→368.59 KiB | 86.90→72.43 KiB | 127.62→105.69 KiB |
+| json-cte / aot | 476.80→406.38 KiB | 89.96→76.46 KiB | 133.79→114.15 KiB |
+| json-cte / defined | 446.37→377.04 KiB | 86.90→73.93 KiB | 127.62→108.36 KiB |
+| notes / aot | 453.24→413.74 KiB | 86.07→78.22 KiB | 127.86→116.13 KiB |
+| notes / defined | 422.82→384.24 KiB | 83.29→75.74 KiB | 121.79→110.16 KiB |
 <!-- catalog-size:end -->
 
 比較はランタイム単体です。同じ意味上のfeature・主キー索引・公開exportsを使い、通常プロファイルとcatalog指定を比べます。Oxc minify後のJS、release Wasm、ファイルごとのBrotli quality 11を集計します。host・IndexedDB wrapper・定義データ・compilerを含まないため、READMEのアプリ配信量とは範囲が異なります。

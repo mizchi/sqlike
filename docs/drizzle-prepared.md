@@ -1,6 +1,6 @@
 # Drizzleのクエリを事前コンパイルする
 
-0.1.0以後の未リリース機能。Drizzle 0.45.4のquery builderで固定クエリを作り、SQLikeのバイナリcatalogへ変換できる。ブラウザにはDrizzle・SQL parser・compilerを配信せず、登録したクエリ名とplaceholderの値を渡して実行する。
+0.1.1で追加した機能。Drizzle 0.45.4のquery builderで固定クエリを作り、SQLikeのバイナリcatalogへ変換できる。ブラウザにはDrizzle・SQL parser・compilerを配信せず、登録したクエリ名とplaceholderの値を渡して実行する。
 
 ## ビルド時
 

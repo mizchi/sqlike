@@ -3,7 +3,7 @@
 MoonBit製のSQLiteサブセット。実行にMoonBitコンパイラやSQLite WASMは不要。ESM、Node.js 24以上と現行ブラウザ向け。SQLite全機能互換は未達で、対応範囲外は明示的に拒否する。
 
 ```sh
-pnpm add https://github.com/mizchi/sqlike/releases/download/v0.1.0/mizchi-sqlike-0.1.0.tgz
+pnpm add @mizchi/sqlike@0.1.1
 ```
 
 ```js
@@ -47,6 +47,8 @@ await db.close();
 
 `DefinedDatabase.memory(catalog)`は保存なし。`withStore(catalog, store)`で保存先を差し替えられる。定義と保存schemaIdが違う場合は拒否し、自動migrationしない。SQL JSON / 日時 / window等を省いた独自生成ランタイムは`/defined/core`の`createDefinedDatabase(runtime)`へ渡す。機能選択ビルドのツールはリポジトリに含む。
 
+0.1.1では、`@mizchi/sqlike/compiler`の`analyzeCatalogRequirements(source)`で固定catalogの必要機能を解析できる。リポジトリのビルドツールへcatalogを渡すと、未使用の関数群・文・JOIN・CTE・複合SELECT・JSON処理を除去する。[ビルド方法と制限](https://github.com/mizchi/sqlike/blob/v0.1.1/docs/catalog-build.md)を参照。
+
 ## 任意のentry
 
 | import | 用途 |
@@ -58,6 +60,8 @@ await db.close();
 | `@mizchi/sqlike/features` | ビルド時の機能プロファイル。engineを読み込まない |
 | `@mizchi/sqlike/drizzle` | `drizzle`、`sqliteInt64`、`sqliteBytes`、データ形式のmigration reader |
 | `@mizchi/sqlike/drizzle/node` | ディレクトリから読むNode用migration reader |
+| `@mizchi/sqlike/drizzle/compiler` | Drizzle query builderを固定catalogへ変換するNode用compiler |
+| `@mizchi/sqlike/drizzle/prepared` | DrizzleやSQL parserを含めず、named placeholderで登録済みqueryを実行 |
 | `@mizchi/sqlike/engine` | 低水準のMoonBit JS ABI。handleの内部表現は非公開 |
 
 Drizzleを使う場合は`drizzle-orm@0.45.4`を追加し、`drizzle(openDatabase())`へ渡す。`wasm/defined.wasm`・`wasm/sql.wasm`も同梱する。Wasm GCは`js-string` / `_`のstring constantを指定してinstantiateし、固定schemaでは`definedWasm(instance.exports)`を使う。

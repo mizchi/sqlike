@@ -2,7 +2,7 @@
 
 schemaと問い合わせを事前に定義すると、ブラウザへSQLパーサを含めずに配信できます。実行側はcatalogの名前で問い合わせを選びます。
 
-未リリースの現行ソースでは、同じcatalogから[必要な関数群・文の実装を自動選択するビルド](catalog-build.md)も使えます。
+0.1.1では、同じcatalogから[必要な関数群・文の実装を自動選択するビルド](catalog-build.md)も使えます。
 
 ## ビルド時にcatalogを作る
 
@@ -89,6 +89,6 @@ await source.close();
 
 Wasm GCには`wasm/defined.wasm`と`@mizchi/sqlike/defined/wasm`の`definedWasm()`を使います。instantiate時には`builtins: ['js-string']`と`importedStringConstants: '_'`を指定します。
 
-## Drizzleからcatalogを作る（未リリース）
+## Drizzleからcatalogを作る（0.1.1）
 
 Drizzleの`toSQL()`で列挙したクエリも事前コンパイルできます。ビルド時の`@mizchi/sqlike/drizzle/compiler`と、ORMを読み込まない`@mizchi/sqlike/drizzle/prepared`を分けています。[手順・placeholder・結果の型](drizzle-prepared.md)を参照してください。

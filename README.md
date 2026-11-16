@@ -25,13 +25,13 @@ pnpm add @mizchi/sqlike
 pnpm add @mizchi/litestream
 ```
 
-Archives are also available from [GitHub Releases](https://github.com/mizchi/sqlike/releases/tag/v0.1.0).
+Archives are also available from [GitHub Releases](https://github.com/mizchi/sqlike/releases/tag/v0.1.1).
 
 ## Bundle size
 
 Sizes include the browser entry's JS loader, split chunks, emitted workers, and Wasm. JS is minified with Oxc; Wasm uses release output. Brotli quality 11 is applied to each file before summing. 1 KiB = 1,024 bytes.
 
-SQLike measurements use the current source checkout, including unreleased changes after npm 0.1.0. [Staged compatibility work](docs/internal/staged-sqlite-compatibility.md) records the additions and their size cost.
+SQLike measurements use the 0.1.1 source checkout. [Staged compatibility work](docs/internal/staged-sqlite-compatibility.md) records the additions and their size cost.
 
 [![Bundle sizes for ten builds. Blue shows Brotli size; gray shows minified, uncompressed size. Smaller is better.](docs/images/bundle-size.svg)](docs/images/bundle-size.png)
 
@@ -43,14 +43,14 @@ The horizontal axis is logarithmic: each tick doubles the size. Labels show KiB.
 <!-- bundle-size:start -->
 | Build | minified, uncompressed | Brotli |
 | --- | ---: | ---: |
-| SQLike 0.1.0 (source) / SQL / JS | 606.91 KiB | 114.33 KiB |
-| SQLike 0.1.0 (source) / SQL / Wasm GC | 537.01 KiB | 168.45 KiB |
-| SQLike 0.1.0 (source) / Predefined, all execution features / JS | 495.94 KiB | 98.98 KiB |
-| SQLike 0.1.0 (source) / Predefined, all execution features / Wasm GC | 440.56 KiB | 141.71 KiB |
-| SQLike 0.1.0 (source) / Predefined, no JSON/date/window / JS | 456.09 KiB | 91.25 KiB |
-| SQLike 0.1.0 (source) / Predefined, no JSON/date/window / Wasm GC | 409.51 KiB | 131.36 KiB |
-| SQLike 0.1.0 (source) / Predefined, primary-key index only / JS | 434.79 KiB | 87.25 KiB |
-| SQLike 0.1.0 (source) / Predefined, primary-key index only / Wasm GC | 391.88 KiB | 126.08 KiB |
+| SQLike 0.1.1 (source) / SQL / JS | 606.91 KiB | 114.33 KiB |
+| SQLike 0.1.1 (source) / SQL / Wasm GC | 537.01 KiB | 168.49 KiB |
+| SQLike 0.1.1 (source) / Predefined, all execution features / JS | 495.94 KiB | 98.98 KiB |
+| SQLike 0.1.1 (source) / Predefined, all execution features / Wasm GC | 440.56 KiB | 141.78 KiB |
+| SQLike 0.1.1 (source) / Predefined, no JSON/date/window / JS | 456.09 KiB | 91.25 KiB |
+| SQLike 0.1.1 (source) / Predefined, no JSON/date/window / Wasm GC | 409.51 KiB | 131.25 KiB |
+| SQLike 0.1.1 (source) / Predefined, primary-key index only / JS | 434.79 KiB | 87.25 KiB |
+| SQLike 0.1.1 (source) / Predefined, primary-key index only / Wasm GC | 391.88 KiB | 126.08 KiB |
 | sqlite-wasm 3.54.1-build1 | 1313.74 KiB | 462.33 KiB |
 | Turso 0.8.3 | 11709.66 KiB | 2675.96 KiB |
 <!-- bundle-size:end -->
@@ -81,23 +81,23 @@ These are **engine files only**, excluding the host, IndexedDB wrappers, schema/
 <!-- catalog-runtime-size:start -->
 | Catalog / mode | Minified JS | JS Brotli | Release Wasm | Wasm Brotli |
 | --- | ---: | ---: | ---: | ---: |
-| Read only / AOT | 386.93 KiB | 73.10 KiB | 346.83 KiB | 108.63 KiB |
-| Read only / defined | 357.70 KiB | 70.59 KiB | 318.66 KiB | 102.93 KiB |
-| GLOB + char / AOT | 389.70 KiB | 73.84 KiB | 349.88 KiB | 109.50 KiB |
-| GLOB + char / defined | 360.47 KiB | 71.19 KiB | 321.55 KiB | 103.94 KiB |
-| JSON construction / AOT | 393.21 KiB | 74.14 KiB | 352.89 KiB | 110.51 KiB |
-| JSON construction / defined | 363.93 KiB | 71.67 KiB | 324.18 KiB | 104.53 KiB |
-| Nested JSON / AOT | 397.94 KiB | 74.91 KiB | 357.07 KiB | 111.34 KiB |
-| Nested JSON / defined | 368.59 KiB | 72.43 KiB | 328.22 KiB | 105.70 KiB |
-| Recursive CTE + JSON aggregate / AOT | 406.38 KiB | 76.46 KiB | 367.26 KiB | 114.17 KiB |
-| Recursive CTE + JSON aggregate / defined | 377.04 KiB | 73.93 KiB | 338.08 KiB | 108.30 KiB |
-| Notes CRUD / AOT | 413.74 KiB | 78.22 KiB | 371.20 KiB | 116.17 KiB |
-| Notes CRUD / defined | 384.24 KiB | 75.74 KiB | 341.90 KiB | 110.26 KiB |
+| Read only / AOT | 386.93 KiB | 73.10 KiB | 346.83 KiB | 108.70 KiB |
+| Read only / defined | 357.70 KiB | 70.59 KiB | 318.66 KiB | 102.97 KiB |
+| GLOB + char / AOT | 389.70 KiB | 73.84 KiB | 349.88 KiB | 109.43 KiB |
+| GLOB + char / defined | 360.47 KiB | 71.19 KiB | 321.55 KiB | 103.76 KiB |
+| JSON construction / AOT | 393.21 KiB | 74.14 KiB | 352.89 KiB | 110.41 KiB |
+| JSON construction / defined | 363.93 KiB | 71.67 KiB | 324.18 KiB | 104.47 KiB |
+| Nested JSON / AOT | 397.94 KiB | 74.91 KiB | 357.07 KiB | 111.42 KiB |
+| Nested JSON / defined | 368.59 KiB | 72.43 KiB | 328.22 KiB | 105.69 KiB |
+| Recursive CTE + JSON aggregate / AOT | 406.38 KiB | 76.46 KiB | 367.26 KiB | 114.15 KiB |
+| Recursive CTE + JSON aggregate / defined | 377.04 KiB | 73.93 KiB | 338.08 KiB | 108.36 KiB |
+| Notes CRUD / AOT | 413.74 KiB | 78.22 KiB | 371.20 KiB | 116.13 KiB |
+| Notes CRUD / defined | 384.24 KiB | 75.74 KiB | 341.90 KiB | 110.16 KiB |
 <!-- catalog-runtime-size:end -->
 
 </details>
 
-The catalogs cover primary-key reads, GLOB/char, JSON construction, nested JSON, recursive CTE with JSON aggregation, and notes CRUD. Function coverage depends on the catalog. JSON construction alone omits SQL JSON parsing, paths, editing, patching, and aggregation.
+The catalogs cover primary-key reads, GLOB/char, JSON construction, nested JSON, recursive CTE with JSON aggregation, and notes CRUD. Function coverage depends on the catalog. Flat JSON construction omits SQL JSON parsing, paths, editing, patching, and aggregation.
 
 [Catalog measurements](measurements/catalog-profiles-current.json) · [Build instructions and limitations](docs/catalog-build.md). Refresh measurements with `just catalog-profiles`, then update these figures and tables with `just readme-charts`.
 
@@ -115,18 +115,18 @@ Each panel starts at zero and uses its own scale. Bars show medians; whiskers sh
 <!-- sqlite-benchmark:start -->
 | Workload | SQLike JS, SQL | SQLike Wasm GC, SQL | SQLite WASM, SQL | SQLite WASM, prepared |
 | --- | ---: | ---: | ---: | ---: |
-| Primary-key lookup | 30.35 | 6.94 | 3.98 | 1.62 |
-| Missing primary key | 30.46 | 6.34 | 2.75 | 0.52 |
-| Indexed range · 10 rows | 55.76 | 15.05 | 15.67 | 11.75 |
-| ORDER BY id · LIMIT 10 | 53.55 | 11.87 | 13.42 | 10.16 |
-| SUM + COUNT · 5,000 rows | 100.81 | 54.74 | 116.17 | 115.52 |
-| Fetch all 5,000 rows | 5,240.00 | 2,922.22 | 5,170.00 | 5,070.00 |
-| Indexed UPDATE + range read | 79.24 | 22.75 | 22.34 | 13.56 |
+| Primary-key lookup | 30.48 | 7.02 | 4.15 | 1.62 |
+| Missing primary key | 26.54 | 6.07 | 2.66 | 0.50 |
+| Indexed range · 10 rows | 50.80 | 14.77 | 16.12 | 11.46 |
+| ORDER BY id · LIMIT 10 | 49.38 | 11.56 | 13.28 | 9.96 |
+| SUM + COUNT · 5,000 rows | 100.00 | 54.06 | 115.81 | 110.76 |
+| Fetch all 5,000 rows | 4,960.00 | 2,850.00 | 4,963.64 | 4,930.00 |
+| Indexed UPDATE + range read | 72.24 | 19.14 | 20.71 | 13.09 |
 <!-- sqlite-benchmark:end -->
 
 </details>
 
-Measured on November 16, 2026, with an Apple M5, macOS arm64, and Chromium 158.0.8127.18. SQLike source after 0.1.0, built with MoonBit release output (JS before minification), and SQLite WASM 3.54.1 run in memory on the same page.
+Measured on November 16, 2026, with an Apple M5, macOS arm64, and Chromium 158.0.8127.18. SQLike 0.1.1 source, built with MoonBit release output (JS before minification), and SQLite WASM 3.54.1 run in memory on the same page.
 
 Primary-key and secondary indexes are warm. The update workload alternates indexed values and includes the following range read. Timings cover engine API calls, including typed result conversion and decoding. They exclude host wrappers, startup, Wasm compilation, IndexedDB, and networking. Results and update effects are checked against expectations from native SQLite before and after timing.
 
@@ -165,7 +165,7 @@ db.close();
 
 When your schema and queries are known in advance, compile the DDL and named statements during the build. The browser loads binary definitions and executes them without shipping the SQL parser.
 
-The unreleased source can also [infer runtime features from your catalog (Japanese)](docs/catalog-build.md), removing unused function families, statements, JOINs, CTEs, and compound SELECTs. JSON parsing, construction, editing, patching, and aggregation are selected separately.
+SQLike 0.1.1 can also [infer runtime features from your catalog (Japanese)](docs/catalog-build.md), removing unused function families, statements, JOINs, CTEs, and compound SELECTs. JSON parsing, construction, editing, patching, and aggregation are selected separately.
 
 ```ts
 import { DefinedDatabase } from '@mizchi/sqlike/defined';
@@ -199,7 +199,7 @@ Drizzle is an optional entry point. It is not needed for ordinary SQL or predefi
 
 [Table definitions, migrations, and transactions (Japanese)](docs/drizzle.md)
 
-The unreleased source also supports [compiling Drizzle queries into a predefined catalog (Japanese)](docs/drizzle-prepared.md), keeping the ORM and SQL parser out of the browser runtime.
+SQLike 0.1.1 also supports [compiling Drizzle queries into a predefined catalog (Japanese)](docs/drizzle-prepared.md), keeping the ORM and SQL parser out of the browser runtime.
 
 ## Synchronization and LTX
 
@@ -222,8 +222,8 @@ Applications can decide whether to apply, defer, reject, or replace a conflictin
 The two Mooncakes modules can be used independently.
 
 ```sh
-moon add mizchi/sqlike@0.1.0
-moon add mizchi/litestream@0.1.0
+moon add mizchi/sqlike@0.1.1
+moon add mizchi/litestream@0.1.1
 ```
 
 API documentation (Japanese): [SQLike](packages/sqlike/README.md) / [Litestream](packages/litestream/README.md)

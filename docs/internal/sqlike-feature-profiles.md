@@ -8,7 +8,7 @@ RIGHT/FULL JOIN、STRICT、主キー専用索引、trigger、FK付きbinary同�
 
 JSON・日時・windowも選択可能。`features: []`では3機能を含めず、利用する場合に`sqlJson`・`dateTime`・`windowFunctions`を明示する。SQL文字列を解析する`sql`、従来のJSON定義を読む`aot`、バイナリ定義だけを読む`defined`の各モードで選択できる。既存の全機能entryを直接importする経路は従来どおり。
 
-0.1.0以後の未リリース変更として、[catalogからの自動選択](../catalog-build.md)を追加した。`buildSqlikeRuntime(profile, {catalog: source, outDir})`で、必須の既存featureに加え、coreの関数群と文の種類も絞る。`catalog`なしの手動プロファイルは、このページの選択単位を維持する。
+0.1.1で、[catalogからの自動選択](../catalog-build.md)を追加した。`buildSqlikeRuntime(profile, {catalog: source, outDir})`で、必須の既存featureに加え、coreの関数群と文の種類も絞る。`catalog`なしの手動プロファイルは、このページの選択単位を維持する。
 
 ```ts
 // ビルド用コード（Node 24+）
@@ -53,9 +53,9 @@ just feature-profiles
 | `primaryKeyIndex` | rowid/IPK、text・blob・複合PKの等値検索とPK一意制約用のhash索引 |
 | `triggers` | 既存のAFTER行trigger、BEFOREの検証SELECT、OLD/NEW/WHEN/UPDATE OF/RAISE |
 | `foreignKeys` | 外部キー検査、cascade・参照動作・遅延制約 |
-| `sqlJson` | `json()` / `json_*()`によるSQLのJSON解析・構築・編集。0.1.0以後の未リリース変更では`->` / `->>`、`json_group_array` / `json_group_object`も含む。bind / 結果のJSON ABIはcoreに残る |
-| `schemaMetadata` | 未リリース。`PRAGMA index_list` / `index_info` / `index_xinfo`。通常・部分・式・対応範囲の自動索引とWITHOUT ROWIDのmetadata |
-| `aggregateFilter` | 未リリース。通常 / DISTINCT / window集約の`FILTER(WHERE …)`。JSON集約と併用するときは`sqlJson`も選ぶ |
+| `sqlJson` | `json()` / `json_*()`によるSQLのJSON解析・構築・編集。0.1.1では`->` / `->>`、`json_group_array` / `json_group_object`も含む。bind / 結果のJSON ABIはcoreに残る |
+| `schemaMetadata` | 0.1.1から。`PRAGMA index_list` / `index_info` / `index_xinfo`。通常・部分・式・対応範囲の自動索引とWITHOUT ROWIDのmetadata |
+| `aggregateFilter` | 0.1.1から。通常 / DISTINCT / window集約の`FILTER(WHERE …)`。JSON集約と併用するときは`sqlJson`も選ぶ |
 | `dateTime` | `date` / `time` / `datetime` / `strftime` / `unixepoch` / `julianday`とCURRENT_DATE / TIME / TIMESTAMP |
 | `windowFunctions` | ROW_NUMBER、順位・参照・集約windowとframe評価。通常の集約はcoreに残る |
 | `binarySync` | SQLモードのSQLite Session互換changeset捕捉。受信側の抑制APIは別entry |

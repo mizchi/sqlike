@@ -1,6 +1,6 @@
 # SQLite互換機能の段階的な導入
 
-更新日: 2026-11-16。0.1.0以後の未リリース変更。全SQLite互換の宣言ではない。
+更新日: 2026-11-17。0.1.1での追加機能。全SQLite互換の宣言ではない。
 
 小さい基本機能はcoreに加え、大きい機能は必要な利用者だけがビルド時に選ぶ。既存の`defineSqlike({ mode, features })`と`buildSqlikeRuntime()`を使い、SQL文字列・JSON AOT・バイナリ事前定義の3モードで同じ機能境界を保つ。利用例は[機能選択](sqlike-feature-profiles.md)。
 
@@ -65,7 +65,7 @@ LITESTREAM_BIN=/path/to/litestream just p0-check
 
 ### 承認された優先順の実装
 
-次の順番で実装した。0.1.0以後の未リリース変更である。
+次の順番で実装した。0.1.1で追加した機能である。
 
 - [x] **1. LIKE ESCAPE / scalar min・max** — 既存Call / Binary IRとint64比較を再利用。NULL・storage class・同値時の返却型・collation・escapeの優先順位を差分検証。LIKEの50,000 byte上限とNULの扱いも合わせる。
 - [x] **2. NULLS FIRST / LAST・名前付きSQL parameter** — NULL順序の指定はORDER BY専用の内部Callへ記録し、式を1回評価したkeyを比較する。`:name` / `@name` / `$name`は大文字小文字・接頭辞を区別し、同じ名前を同じParameter位置へ解決する。`?NNN`との混在、Tcl形式も検証。既存SQL APIのbindは位置順配列のままで、named objectの受付はDrizzle事前定義entryが担当する。

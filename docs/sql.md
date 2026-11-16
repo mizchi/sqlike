@@ -62,7 +62,7 @@ bindでは`1n`がINTEGER、`1`がREALです。INTEGERを`number`へ丸めずに�
 
 各構文・関数の全入力を受理するものではありません。SQLiteの全PRAGMA、仮想テーブル、任意拡張、独自関数・collation等は対応範囲外です。未対応のSQLはエラーにする方針です。
 
-### 0.1.0以後の追加（未リリース）
+### 0.1.1の追加
 
 基本ランタイムに`IS DISTINCT FROM` / `IS NOT DISTINCT FROM`、64bitの`&` / `|` / `~`、`sign()`を追加しました。NULL・型変換・collationもSQLiteと差分検証します。
 
@@ -76,7 +76,7 @@ SELECT '{"n":1}' -> 'n', '{"n":1}' ->> 'n'; -- TEXT '1', INTEGER 1
 
 その他の不足機能は[段階別の実装チェックリスト](internal/staged-sqlite-compatibility.md)で管理します。
 
-### 続く互換機能の追加（未リリース）
+### 0.1.1のその他の互換機能
 
 | 機能 | 選択ビルドでの扱い |
 | --- | --- |

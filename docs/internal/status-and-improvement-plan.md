@@ -1,8 +1,8 @@
 # 現在の対応範囲・最適化と改善対象
 
-更新日: 2026-11-17。**0.1.0** の実装・検証を整理した台帳。今後の着手順と完了条件はこのページで管理し、各機能の仕様・実装経緯・測定の全量はリンク先に残す。
+更新日: 2026-11-17。**0.1.1** の実装・検証を整理した台帳。今後の着手順と完了条件はこのページで管理し、各機能の仕様・実装経緯・測定の全量はリンク先に残す。
 
-0.1.0以後の未リリース変更として、[段階的な互換機能の導入](staged-sqlite-compatibility.md)を開始。軽量な`IS DISTINCT FROM`、`&` / `|` / `~`、`sign()`はcoreへ、JSONの`->` / `->>`は既存の任意機能`sqlJson`へ追加する。後続の不足機能は同ページのチェックリストで管理し、未実装の機能を選択APIへ先行公開しない。
+0.1.1の変更として、[段階的な互換機能の導入](staged-sqlite-compatibility.md)を開始。軽量な`IS DISTINCT FROM`、`&` / `|` / `~`、`sign()`はcoreへ、JSONの`->` / `->>`は既存の任意機能`sqlJson`へ追加する。後続の不足機能は同ページのチェックリストで管理し、未実装の機能を選択APIへ先行公開しない。
 
 続いて、LIKE ESCAPE・scalar min/max、NULL順序・名前付きSQL bind、索引metadata、FROM subquery・集約FILTER、JSON集約を追加した。大きめの実装は`schemaMetadata` / `aggregateFilter` / `sqlJson`で選択する。[Drizzle事前コンパイルentry](../drizzle-prepared.md)も追加し、query builderとSQL parserを配信せずに固定したクエリを実行できる。
 

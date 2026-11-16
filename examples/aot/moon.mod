@@ -1,6 +1,6 @@
 name = "mizchi/litestream-example"
 
-version = "0.1.0"
+version = "0.1.1"
 
 license = "MIT"
 
@@ -13,6 +13,6 @@ preferred_target = "js"
 description = "Application composition of the independent SQLike and Litestream libraries"
 
 import {
-  "mizchi/sqlike@0.1.0",
-  "mizchi/litestream@0.1.0",
+  "mizchi/sqlike@0.1.1",
+  "mizchi/litestream@0.1.1",
 }

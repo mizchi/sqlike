@@ -41,6 +41,15 @@ jobs:
           pnpm test:core
           pnpm test:npm
           pnpm typecheck
+      - name: Preserve validated npm archives
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: npm-${{ github.ref_name }}-${{ github.run_attempt }}
+          path: |
+            generated/npm/*.tgz
+            generated/npm/audit.json
+          if-no-files-found: error
+          retention-days: 14
       - name: Publish through npm OIDC
         run: |
           unset NODE_AUTH_TOKEN NPM_TOKEN
