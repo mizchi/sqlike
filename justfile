@@ -72,6 +72,12 @@ bundle-size:
     pnpm build:moon-wasm
     pnpm exec tsx --test tests/bundle-size.test.ts
     pnpm exec tsx scripts/measure-bundle-size.ts
+    just readme-charts
+
+# Static README figures from recorded measurements; uv isolates plotting tools.
+readme-charts *args:
+    python3 -m unittest discover -s tests -p test_readme_charts.py
+    uv run scripts/render_readme_charts.py {{args}}
 
 # Strict IndexedDB snapshot vs semantic row journal vs binary SQLite pages.
 indexeddb-bench *args:

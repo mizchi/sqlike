@@ -27,6 +27,7 @@
 | [roadmap-0.1.0.md](roadmap-0.1.0.md) | 0.1.0 の対応範囲と受入条件 |
 | [row-store.md](row-store.md) | P02: 変更表内のコピーをページ単位にする |
 | [runtime-size.md](runtime-size.md) | バンドルサイズの計測記録 |
+| [readme-charts.md](readme-charts.md) | READMEの比較図・数値表の再生成と検証 |
 | [sqlike-app-features.md](sqlike-app-features.md) | 一般的なアプリ向けの追加機能 |
 | [sqlike-development.md](sqlike-development.md) | SQLike の互換性と速度 |
 | [sqlike-feature-profiles.md](sqlike-feature-profiles.md) | 機能を選択するランタイム |
