@@ -5,6 +5,11 @@ pub fn compile_program(request : String) -> String {
 }
 
 ///|
+pub fn program_runtime_requirements(artifact : String) -> String {
+  @sqlike.program_runtime_requirements(artifact)
+}
+
+///|
 pub fn pack_program_binary(artifact : String) -> @sqlike.BinaryCatalog {
   @sqlike.pack_program_binary(artifact)
 }

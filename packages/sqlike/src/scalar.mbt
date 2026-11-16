@@ -126,6 +126,7 @@ fn scalar_call(
 ) -> Value raise SqlError {
   match name {
     "glob" => {
+      guard CAP_FUNCTION_GLOB else { fail("catalog capability disabled: glob") }
       let pattern = if values[0] is Null {
         ""
       } else {
@@ -141,6 +142,9 @@ fn scalar_call(
       }
     }
     "char" => {
+      guard CAP_FUNCTION_CHARACTER else {
+        fail("catalog capability disabled: char")
+      }
       let b = StringBuilder()
       for value in values {
         let n = integer_value(value)
@@ -153,14 +157,19 @@ fn scalar_call(
       }
       Text(b.to_string())
     }
-    "sign" =>
+    "sign" => {
+      guard CAP_FUNCTION_SIGN else { fail("catalog capability disabled: sign") }
       match numeric(values[0], true) {
         Integer(n) =>
           Integer(if n < 0L { -1L } else if n > 0L { 1L } else { 0L })
         Real(n) => Integer(if n < 0 { -1L } else if n > 0 { 1L } else { 0L })
         _ => Null
       }
+    }
     "unicode" => {
+      guard CAP_FUNCTION_UNICODE else {
+        fail("catalog capability disabled: unicode")
+      }
       if values[0] is Null {
         return Null
       }
@@ -173,8 +182,16 @@ fn scalar_call(
       }
       Null
     }
-    "quote" => Text(sql_quote_value(values[0]))
+    "quote" => {
+      guard CAP_FUNCTION_QUOTE else {
+        fail("catalog capability disabled: quote")
+      }
+      Text(sql_quote_value(values[0]))
+    }
     "round" => {
+      guard CAP_FUNCTION_ROUND else {
+        fail("catalog capability disabled: round")
+      }
       if values.any(v => v is Null) {
         return Null
       }
@@ -185,7 +202,10 @@ fn scalar_call(
       }
       Real(sql_round(as_double(values[0]), n))
     }
-    "substr" | "substring" =>
+    "substr" | "substring" => {
+      guard CAP_FUNCTION_SUBSTRING else {
+        fail("catalog capability disabled: substring")
+      }
       substring_value(
         values[0],
         values[1],
@@ -195,7 +215,11 @@ fn scalar_call(
           None
         },
       )
+    }
     "concat" | "concat_ws" => {
+      guard CAP_FUNCTION_CONCAT else {
+        fail("catalog capability disabled: concat")
+      }
       if name == "concat_ws" && values[0] is Null {
         return Null
       }
@@ -213,7 +237,10 @@ fn scalar_call(
       }
       Text(strings.join(separator))
     }
-    "octet_length" =>
+    "octet_length" => {
+      guard CAP_FUNCTION_OCTET_LENGTH else {
+        fail("catalog capability disabled: octet_length")
+      }
       match values[0] {
         Null => Null
         Blob(bytes) => Integer(bytes.length().to_int64())
@@ -228,7 +255,9 @@ fn scalar_call(
           )
         }
       }
+    }
     "trim" | "ltrim" | "rtrim" => {
+      guard CAP_FUNCTION_TRIM else { fail("catalog capability disabled: trim") }
       if values.any(v => v is Null) {
         return Null
       }
@@ -249,6 +278,9 @@ fn scalar_call(
       )
     }
     "instr" => {
+      guard CAP_FUNCTION_INSTR else {
+        fail("catalog capability disabled: instr")
+      }
       if values.any(v => v is Null) {
         return Null
       }
@@ -267,6 +299,9 @@ fn scalar_call(
       }
     }
     "replace" => {
+      guard CAP_FUNCTION_REPLACE else {
+        fail("catalog capability disabled: replace")
+      }
       if values[0] is Null || values[1] is Null {
         return Null
       }

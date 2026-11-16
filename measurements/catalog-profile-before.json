@@ -1,0 +1,333 @@
+{
+  "sourceCommit": "0e5392d5a75488db624cf34edec7cef4bc408a8e",
+  "measuredAt": "2026-11-16T14:08:15.665Z",
+  "versions": {
+    "sqlike": "0.1.0 (source)",
+    "sqlikePackage": "0.1.0",
+    "sqlite": "3.54.1-build1",
+    "turso": "0.8.3"
+  },
+  "method": "Browser ESM public entry exports retained; Vite/Oxc minification, esnext, ES workers, legal/purity comments retained, assetsInlineLimit=0. Every emitted JS chunk, Worker and Wasm asset counted once, including optional emitted workers. Brotli quality 11 applied per asset with decompression round trip. Wasm is compiler/package release output, without additional wasm-opt. Excludes app code/HTML, precompiled schema/statements, build-time compiler, optional SQLite exporter, Litestream and source maps. Not feature-equivalent engines or a minimal startup-download measurement.",
+  "results": [
+    {
+      "id": "sql-js",
+      "name": "SQLike 0.1.0 (source) / 通常SQL / JS",
+      "kind": "sql",
+      "entrySource": "npm/sqlike/index.ts",
+      "entry": "assets/index-B09AiD05.js",
+      "exports": [
+        "openDatabase"
+      ],
+      "assets": [
+        {
+          "file": "assets/index-B09AiD05.js",
+          "raw": 616425,
+          "brotli": 116490,
+          "sha256": "89e8b7b0798a31eda068eaeb0695b0dbe242f6f690dc6996ebb864b2710e43ab"
+        }
+      ],
+      "totals": {
+        "raw": 616425,
+        "brotli": 116490
+      }
+    },
+    {
+      "id": "sql-wasm",
+      "name": "SQLike 0.1.0 (source) / 通常SQL / Wasm GC",
+      "kind": "sql",
+      "entrySource": "generated/bundle-size/sql-wasm/entry.ts",
+      "entry": "assets/entry-Da8J1NCs.js",
+      "exports": [
+        "openDatabase"
+      ],
+      "assets": [
+        {
+          "file": "assets/entry-Da8J1NCs.js",
+          "raw": 3331,
+          "brotli": 1170,
+          "sha256": "fcf873a8792dbf05b4488eceb9b6f29523380980de0413290820179992835307"
+        },
+        {
+          "file": "assets/runtime-BHv_GR35.wasm",
+          "raw": 542478,
+          "brotli": 170209,
+          "sha256": "8a6e96f609ee8530e7f44fdcb7752230d54ac0c2bc356d7c7fbd955a2a6c35d2"
+        }
+      ],
+      "totals": {
+        "raw": 545809,
+        "brotli": 171379
+      }
+    },
+    {
+      "id": "defined-all-js",
+      "name": "SQLike 0.1.0 (source) / 事前定義・全実行機能 / JS",
+      "kind": "defined",
+      "entrySource": "npm/sqlike/defined.ts",
+      "entry": "assets/defined-D7skw5dq.js",
+      "exports": [
+        "DefinedDatabase",
+        "DefinedStatement"
+      ],
+      "assets": [
+        {
+          "file": "assets/defined-D7skw5dq.js",
+          "raw": 498990,
+          "brotli": 99364,
+          "sha256": "7fe42b0e26b5edca87b931c7112f2be6ce243e48045041f7af0e50de3adad21f"
+        },
+        {
+          "file": "assets/moon-image-store-B4N7x1B5.js",
+          "raw": 3821,
+          "brotli": 1420,
+          "sha256": "2875ea6a808c2aee59d80b7e490816e97d85dfd41b0fba28373341edcb76cbf6"
+        }
+      ],
+      "totals": {
+        "raw": 502811,
+        "brotli": 100784
+      }
+    },
+    {
+      "id": "defined-all-wasm",
+      "name": "SQLike 0.1.0 (source) / 事前定義・全実行機能 / Wasm GC",
+      "kind": "defined",
+      "entrySource": "generated/bundle-size/all/wasm-entry.ts",
+      "entry": "assets/wasm-entry-CfAMxN-F.js",
+      "exports": [
+        "DefinedDatabase",
+        "DefinedStatement"
+      ],
+      "assets": [
+        {
+          "file": "assets/moon-image-store-B4N7x1B5.js",
+          "raw": 3821,
+          "brotli": 1420,
+          "sha256": "2875ea6a808c2aee59d80b7e490816e97d85dfd41b0fba28373341edcb76cbf6"
+        },
+        {
+          "file": "assets/runtime-fcFlmEQ1.wasm",
+          "raw": 435054,
+          "brotli": 139879,
+          "sha256": "7c228a07121cf868b8b59efe60189dff2528a35c3b5e2d04a3f181142c206464"
+        },
+        {
+          "file": "assets/wasm-entry-CfAMxN-F.js",
+          "raw": 8537,
+          "brotli": 2978,
+          "sha256": "9a38a5779abd7fea5317541531b1e8ff305198fcc44996d2e7ad8131ffde8605"
+        }
+      ],
+      "totals": {
+        "raw": 447412,
+        "brotli": 144277
+      }
+    },
+    {
+      "id": "defined-without-three-js",
+      "name": "SQLike 0.1.0 (source) / 事前定義・JSON・日時・windowなし / JS",
+      "kind": "defined",
+      "entrySource": "generated/bundle-size/without-three/js-entry.ts",
+      "entry": "assets/js-entry-CKDd8y8M.js",
+      "exports": [
+        "DefinedDatabase",
+        "DefinedStatement"
+      ],
+      "assets": [
+        {
+          "file": "assets/js-entry-CKDd8y8M.js",
+          "raw": 461515,
+          "brotli": 91587,
+          "sha256": "36a6329eb455be25d6c1b9cccd8a0dd2ce63004d6624d62db8739d4faf6cbb00"
+        },
+        {
+          "file": "assets/moon-image-store-B4N7x1B5.js",
+          "raw": 3821,
+          "brotli": 1420,
+          "sha256": "2875ea6a808c2aee59d80b7e490816e97d85dfd41b0fba28373341edcb76cbf6"
+        }
+      ],
+      "totals": {
+        "raw": 465336,
+        "brotli": 93007
+      }
+    },
+    {
+      "id": "defined-without-three-wasm",
+      "name": "SQLike 0.1.0 (source) / 事前定義・JSON・日時・windowなし / Wasm GC",
+      "kind": "defined",
+      "entrySource": "generated/bundle-size/without-three/wasm-entry.ts",
+      "entry": "assets/wasm-entry-CFxZTvpy.js",
+      "exports": [
+        "DefinedDatabase",
+        "DefinedStatement"
+      ],
+      "assets": [
+        {
+          "file": "assets/moon-image-store-B4N7x1B5.js",
+          "raw": 3821,
+          "brotli": 1420,
+          "sha256": "2875ea6a808c2aee59d80b7e490816e97d85dfd41b0fba28373341edcb76cbf6"
+        },
+        {
+          "file": "assets/runtime-CyKw6Is9.wasm",
+          "raw": 406231,
+          "brotli": 129585,
+          "sha256": "d2f2239ddf95537a98632fd20c039714ebfc55a204f7ea7e17ffe6dbd73ce161"
+        },
+        {
+          "file": "assets/wasm-entry-CFxZTvpy.js",
+          "raw": 8537,
+          "brotli": 2975,
+          "sha256": "ef9ff1f9d532c6b8ff706133ee40b003cc52ef847a95d00050250cc08630f6cf"
+        }
+      ],
+      "totals": {
+        "raw": 418589,
+        "brotli": 133980
+      }
+    },
+    {
+      "id": "defined-primary-key-js",
+      "name": "SQLike 0.1.0 (source) / 事前定義・主キー索引のみ / JS",
+      "kind": "defined",
+      "entrySource": "generated/bundle-size/primary-key/js-entry.ts",
+      "entry": "assets/js-entry-eb79lq-p.js",
+      "exports": [
+        "DefinedDatabase",
+        "DefinedStatement"
+      ],
+      "assets": [
+        {
+          "file": "assets/js-entry-eb79lq-p.js",
+          "raw": 439705,
+          "brotli": 87452,
+          "sha256": "f1f8ce7ebc51a2fd986fa2cf9766c88f4bd383a19dd09dea3cf0e48d15677843"
+        },
+        {
+          "file": "assets/moon-image-store-B4N7x1B5.js",
+          "raw": 3821,
+          "brotli": 1420,
+          "sha256": "2875ea6a808c2aee59d80b7e490816e97d85dfd41b0fba28373341edcb76cbf6"
+        }
+      ],
+      "totals": {
+        "raw": 443526,
+        "brotli": 88872
+      }
+    },
+    {
+      "id": "defined-primary-key-wasm",
+      "name": "SQLike 0.1.0 (source) / 事前定義・主キー索引のみ / Wasm GC",
+      "kind": "defined",
+      "entrySource": "generated/bundle-size/primary-key/wasm-entry.ts",
+      "entry": "assets/wasm-entry-BskTdPdK.js",
+      "exports": [
+        "DefinedDatabase",
+        "DefinedStatement"
+      ],
+      "assets": [
+        {
+          "file": "assets/moon-image-store-B4N7x1B5.js",
+          "raw": 3821,
+          "brotli": 1420,
+          "sha256": "2875ea6a808c2aee59d80b7e490816e97d85dfd41b0fba28373341edcb76cbf6"
+        },
+        {
+          "file": "assets/runtime-CUH4Jq9b.wasm",
+          "raw": 387196,
+          "brotli": 124371,
+          "sha256": "f9eb1b1ede4cee13e03f3e601474e5a0e52aaf609dd966d493005a9e9c0fc071"
+        },
+        {
+          "file": "assets/wasm-entry-BskTdPdK.js",
+          "raw": 8537,
+          "brotli": 2978,
+          "sha256": "cd49d8b7df1cbb80f97593c86b6f09edd41bbc7ace0e34c2ef062a8872e2631c"
+        }
+      ],
+      "totals": {
+        "raw": 399554,
+        "brotli": 128769
+      }
+    },
+    {
+      "id": "sqlite",
+      "name": "sqlite-wasm 3.54.1-build1",
+      "kind": "sqlite",
+      "entrySource": "node_modules/@sqlite.org/sqlite-wasm/dist/index.mjs",
+      "entry": "assets/index-C_CcjNhw.js",
+      "exports": [
+        "default",
+        "sqlite3Worker1Promiser"
+      ],
+      "assets": [
+        {
+          "file": "assets/index-C_CcjNhw.js",
+          "raw": 217839,
+          "brotli": 56049,
+          "sha256": "b1e494235872c254c2b8e6b4de65df4637370249125986249778b5fcc0aef7b0"
+        },
+        {
+          "file": "assets/sqlite3-k2cTanUO.wasm",
+          "raw": 879084,
+          "brotli": 352905,
+          "sha256": "b8a92a19f441a90ff2339fe988fbe317c4adf3ed844096f12aee04aa72d58257"
+        },
+        {
+          "file": "assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+          "raw": 32462,
+          "brotli": 8966,
+          "sha256": "02c38ed7f2d41d2b57ee02241d7f8a09059e1ded16749013f2412137614aa459"
+        },
+        {
+          "file": "assets/sqlite3-worker1-BnPkHvZV.js",
+          "raw": 215882,
+          "brotli": 55511,
+          "sha256": "6626268d404be55722d6a09092498e35db067a4993527e7d3dc2d6bc82433787"
+        }
+      ],
+      "totals": {
+        "raw": 1345267,
+        "brotli": 473431
+      }
+    },
+    {
+      "id": "turso",
+      "name": "Turso 0.8.3",
+      "kind": "turso",
+      "entrySource": "node_modules/@tursodatabase/database-wasm/dist/promise-default.js",
+      "entry": "assets/promise-default-8Tu2SGze.js",
+      "exports": [
+        "Database",
+        "SqliteError",
+        "Transaction",
+        "connect"
+      ],
+      "assets": [
+        {
+          "file": "assets/promise-default-8Tu2SGze.js",
+          "raw": 205992,
+          "brotli": 40470,
+          "sha256": "d86a00fca5e1b8699fc38c1227f9fae1852223c6d0e740aab147ff017d98257b"
+        },
+        {
+          "file": "assets/turso.wasm32-wasi-KrOvB4jh.wasm",
+          "raw": 11613778,
+          "brotli": 2667187,
+          "sha256": "2905104bf0d1e9e3b17faf474bd61d541f7b35b02477a3022dc728f7f26499b9"
+        },
+        {
+          "file": "assets/worker-C3Ftajuj.js",
+          "raw": 170918,
+          "brotli": 32521,
+          "sha256": "f05a971994e5bf0fd25ef55f621f171c29f7e9cb2df1ccce0381376552f5bceb"
+        }
+      ],
+      "totals": {
+        "raw": 11990688,
+        "brotli": 2740178
+      }
+    }
+  ]
+}

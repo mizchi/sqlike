@@ -55,6 +55,9 @@ test("packed npm packages work without this workspace and keep optional entries 
     if (!fromRegistry) execFileSync(process.execPath, ["--input-type=module", "-e",
       "import {openDrizzlePrepared} from '@mizchi/sqlike/drizzle/prepared'; if(typeof openDrizzlePrepared !== 'function') throw Error('missing prepared entry')",
     ], {cwd:dir,stdio:"pipe",timeout:60000});
+    if (!fromRegistry) execFileSync(process.execPath, ["--input-type=module", "-e",
+      "import {analyzeCatalogRequirements} from '@mizchi/sqlike/compiler';const r=analyzeCatalogRequirements({schema:[],queries:[{name:'q',sql:'SELECT char(65)'}]});if(r.functionGroups.join(',')!=='character')throw Error('catalog analysis mismatch')",
+    ], {cwd:dir,stdio:"pipe",timeout:60000});
     await writeFile(join(dir, "consumer.mjs"), await readFile("tests/fixtures/npm-consumer.mjs", "utf8"));
     const result = execFileSync(process.execPath, [join(dir, "consumer.mjs")], {
       cwd: dir, env: { ...process.env, SQLIKE_NPM_CONSUMER: dir }, encoding: "utf8", timeout: 60000,

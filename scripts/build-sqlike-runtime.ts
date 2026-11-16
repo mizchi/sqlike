@@ -1,12 +1,4 @@
-import {
-  cp,
-  mkdtemp,
-  readFile,
-  writeFile,
-  mkdir,
-  rm,
-  copyFile,
-} from "node:fs/promises";
+import { cp, mkdtemp, readFile, writeFile, mkdir, rm, copyFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, resolve, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -15,6 +7,12 @@ import { promisify } from "node:util";
 import { defineSqlike, type SqlikeProfile } from "../src/sqlike-features.ts";
 import { runtimeDeclarations } from "./sqlike-runtime-declarations.ts";
 import { minifyRuntime } from "./oxc-runtime.ts";
+import {
+  catalogFunctionConstants,
+  catalogStatementConstants,
+} from "../src/catalog-capabilities.ts";
+import type { CatalogSource } from "../src/aot-contract.ts";
+import type { CatalogRequirements } from "../src/catalog-requirements-contract.ts";
 const exec = promisify(execFile),
   root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const flags = {
@@ -71,15 +69,25 @@ export async function buildSqlikeRuntime(
     outDir,
     targets = ["js", "wasm-gc"],
     minify = true,
+    catalog: catalogInput,
   }: {
     outDir: string;
     targets?: readonly ("js" | "wasm-gc")[];
     minify?: boolean;
+    /** Infer semantic features and trim function/statement implementations from typed IR. */
+    catalog?: CatalogSource;
   },
 ) {
+  if (catalogInput !== undefined && input.mode === "sql")
+    throw Error("catalog specialization requires aot or defined");
+  const catalog = catalogInput === undefined ? undefined : structuredClone(catalogInput);
+  const requirements: CatalogRequirements | undefined =
+    catalog !== undefined
+      ? (await import("./analyze-catalog.ts")).analyzeCatalogRequirements(catalog)
+      : undefined;
   const profile = defineSqlike({
     mode: input.mode,
-    features: input.features.map((name) => ({ name })),
+    features: [...input.features, ...(requirements?.features ?? [])].map((name) => ({ name })),
   });
   const work = await mkdtemp(join(tmpdir(), "sqlike-profile-"));
   const output = resolve(outDir);
@@ -102,41 +110,46 @@ export async function buildSqlikeRuntime(
       join(work, "packages/sqlike/src/feature_config.mbt"),
       Object.entries(flags)
         .map(
-          ([key, value]) =>
-            `const FEATURE_${key} : Bool = ${profile.features.includes(value)}\n`,
+          ([key, value]) => `const FEATURE_${key} : Bool = ${profile.features.includes(value)}\n`,
         )
         .join(""),
     );
+    if (requirements) {
+      const configPath = join(work, "packages/sqlike/src/capability_config_generated.mbt");
+      let code = await readFile(configPath, "utf8");
+      const replace = (name: string, value: boolean) => {
+        const pattern = new RegExp(`const ${name} : Bool = (?:true|false)`);
+        if (!pattern.test(code)) throw Error(`missing catalog capability constant ${name}`);
+        code = code.replace(pattern, `const ${name} : Bool = ${value}`);
+      };
+      replace("CAP_CATALOG_SPECIALIZED", true);
+      for (const [name, constant] of Object.entries(catalogFunctionConstants))
+        replace(
+          constant,
+          requirements.functionGroups.includes(name as keyof typeof catalogFunctionConstants),
+        );
+      for (const [name, constant] of Object.entries(catalogStatementConstants))
+        replace(
+          constant,
+          requirements.statements.includes(name as keyof typeof catalogStatementConstants),
+        );
+      await writeFile(configPath, code);
+    }
     const definedEntry = "packages/sqlike/src/defined";
-    const definedPkg = await readFile(
-      join(work, definedEntry, "moon.pkg"),
-      "utf8",
-    );
+    const definedPkg = await readFile(join(work, definedEntry, "moon.pkg"), "utf8");
     // moon.pkg is MoonBit's DSL: moon fmt adds trailing commas to arrays.
     // Export names are identifiers, so read quoted names rather than JSON.
     const exportBlock = definedPkg.match(/"exports":\s*(\[[^\]]+\])/)?.[1];
     if (!exportBlock) throw Error("missing defined runtime exports");
-    const defined = [...exportBlock.matchAll(/"([a-z_][a-z_0-9]*)"/g)].map(
-      (m) => m[1]!,
-    );
+    const defined = [...exportBlock.matchAll(/"([a-z_][a-z_0-9]*)"/g)].map((m) => m[1]!);
     const exports = [
-      ...(profile.mode === "defined"
-        ? defined
-        : profile.mode === "aot"
-          ? aot
-          : sql),
+      ...(profile.mode === "defined" ? defined : profile.mode === "aot" ? aot : sql),
     ];
-    if (profile.features.includes("binarySync"))
-      exports.push("database_changeset");
+    if (profile.features.includes("binarySync")) exports.push("database_changeset");
     if (profile.features.includes("sqlitePages"))
       exports.push(
         ...(profile.mode === "aot"
-          ? [
-              "aot_export_sqlite",
-              "sqlite_data",
-              "sqlite_info",
-              "sqlite_data_base64",
-            ]
+          ? ["aot_export_sqlite", "sqlite_data", "sqlite_info", "sqlite_data_base64"]
           : ["database_import_sqlite", "database_import_sqlite_base64"]),
       );
     if (profile.features.includes("ltx"))
@@ -162,9 +175,7 @@ export async function buildSqlikeRuntime(
         ? 'import { "mizchi/sqlike", "mizchi/litestream" }\n'
         : profile.mode === "defined"
           ? 'import { "mizchi/sqlike" }\n'
-          : (await readFile(join(work, entry, "moon.pkg"), "utf8")).split(
-              "// Match",
-            )[0];
+          : (await readFile(join(work, entry, "moon.pkg"), "utf8")).split("// Match")[0];
     await writeFile(
       join(work, entry, "moon.pkg"),
       imports +
@@ -193,9 +204,7 @@ export async function buildSqlikeRuntime(
       if (target === "js")
         await writeFile(
           join(output, "runtime.js"),
-          minify
-            ? await minifyRuntime(artifact, exports)
-            : await readFile(artifact, "utf8"),
+          minify ? await minifyRuntime(artifact, exports) : await readFile(artifact, "utf8"),
         );
       else await copyFile(artifact, join(output, "runtime.wasm"));
     }
@@ -216,35 +225,38 @@ export async function buildSqlikeRuntime(
           exports,
           targets,
           minify: targets.includes("js") && minify ? "oxc" : false,
+          ...(requirements ? { requirements } : {}),
         },
         null,
         2,
       ) + "\n",
     );
-    return { directory: output, profile, exports };
+    return { directory: output, profile, exports, ...(requirements ? { requirements } : {}) };
   } finally {
     await rm(work, { recursive: true, force: true });
   }
 }
-if (
-  process.argv[1] &&
-  import.meta.url === pathToFileURL(resolve(process.argv[1])).href
-) {
+if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
   const [config, outDir, ...extra] = process.argv.slice(2);
   if (!config || !outDir || extra.length)
-    throw Error(
-      "usage: tsx scripts/build-sqlike-runtime.ts profile.json output-directory",
-    );
+    throw Error("usage: tsx scripts/build-sqlike-runtime.ts profile.json output-directory");
   const data = JSON.parse(await readFile(config, "utf8")) as {
     mode?: SqlikeProfile["mode"];
     features?: import("../src/sqlike-features.ts").SqlikeFeatureName[];
+    catalog?: string | CatalogSource;
   };
   const built = await buildSqlikeRuntime(
     defineSqlike({
       mode: data.mode,
       features: data.features?.map((name) => ({ name })),
     }),
-    { outDir },
+    {
+      outDir,
+      catalog:
+        typeof data.catalog === "string"
+          ? JSON.parse(await readFile(resolve(dirname(resolve(config)), data.catalog), "utf8"))
+          : data.catalog,
+    },
   );
   console.log(JSON.stringify(built));
 }

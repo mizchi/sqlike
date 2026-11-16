@@ -1,5 +1,6 @@
 declare module "*compiler/compiler.js" {
   export function compile_program(request: string): string;
+  export function program_runtime_requirements(artifact: string): string;
   export interface BinaryCatalog {
     readonly __binaryCatalog: unique symbol;
   }

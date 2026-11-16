@@ -2,6 +2,7 @@
 
 - [SQL・値の型・対応範囲](sql.md)
 - [事前定義したSQL・IndexedDB・SQLite出力](prepared.md)
+- [登録クエリから必要なruntimeを生成（未リリース）](catalog-build.md)
 - [Drizzleとmigration](drizzle.md)
 - [Drizzleクエリの事前コンパイル（未リリース）](drizzle-prepared.md)
 - [同期・競合処理・LTX](sync.md)

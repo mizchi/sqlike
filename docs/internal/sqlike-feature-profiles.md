@@ -8,6 +8,8 @@ RIGHT/FULL JOIN、STRICT、主キー専用索引、trigger、FK付きbinary同�
 
 JSON・日時・windowも選択可能。`features: []`では3機能を含めず、利用する場合に`sqlJson`・`dateTime`・`windowFunctions`を明示する。SQL文字列を解析する`sql`、従来のJSON定義を読む`aot`、バイナリ定義だけを読む`defined`の各モードで選択できる。既存の全機能entryを直接importする経路は従来どおり。
 
+0.1.0以後の未リリース変更として、[catalogからの自動選択](../catalog-build.md)を追加した。`buildSqlikeRuntime(profile, {catalog: source, outDir})`で、必須の既存featureに加え、coreの関数群と文の種類も絞る。`catalog`なしの手動プロファイルは、このページの選択単位を維持する。
+
 ```ts
 // ビルド用コード（Node 24+）
 import {

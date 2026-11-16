@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "measuredAt": "2026-11-16T14:07:43.690Z",
+  "measuredAt": "2026-11-16T15:03:42.860Z",
   "node": "v24.22.2",
   "method": "Working static feature builds, identical binary execution API. Oxc client minification retaining public exports and annotations, with compact whitespace; absence checks use unminified source; gzip9/Brotli11. Individual removals retain every other execution feature; without-all-three removes only those three. notes-minimal also removes the other optional features except primaryKeyIndex. Host totals include every emitted chunk including IndexedDB; do not include schema/statements, SQLite exporter, LTX or networking. Wasm GC is release without wasm-opt and excludes host/glue. No timing claim.",
   "sourceHashes": {
@@ -37,25 +37,26 @@
     "packages/sqlike/src/binary_io.mbt": "9119822b083dc4e1ea48aabcc7126bd3f2bb8ea8a11a8aa5f5f789661e8d5452",
     "packages/sqlike/src/binary_state.mbt": "6e4701bae0b07809d89d320ac8719820e6f019af96a6734c49763b567ec5ecd3",
     "packages/sqlike/src/binary_wbtest.mbt": "78641640c6f5758944441cf649f55501ea4a4965c32da37812dbd6f59bbbd43d",
+    "packages/sqlike/src/capability_config_generated.mbt": "0bd81931f3c8b6315a0b79ba19e825dfe9406a920b80e1c049e7d07599ed1c8a",
     "packages/sqlike/src/cast.mbt": "e2feebc791c8daa6c18435ba8a271140dfe66a107ee4b9e0f5978d162180a2ec",
     "packages/sqlike/src/changeset.mbt": "f66c9a8683db19314ffeabd65bdbea4bfd6ff5b327686dbc7643ac6f49a50814",
     "packages/sqlike/src/column_delta_wbtest.mbt": "58fef01472dfbe883cac3b4345d2fd5e6219d6d27b25c8a7eecfd13d4d31a6fa",
-    "packages/sqlike/src/compiler/compiler.mbt": "5fad759b0585c55e59ae89c3768ccf68061f0c057b9d513c90cd3dfd212b795e",
-    "packages/sqlike/src/compiler/moon.pkg": "b16edfb165edb0ab81cf4835eac4893aa9771a5b66937d59ff68ac658523811a",
+    "packages/sqlike/src/compiler/compiler.mbt": "48d22ce34a131af4f2f03bfd1f423fc29a0bcde5e33f4ad0a8f243c20c4b53f3",
+    "packages/sqlike/src/compiler/moon.pkg": "b72fdefabfdb476990fb924225400d67870076c331a4a217bcb52009293c33bf",
     "packages/sqlike/src/composite_index_wbtest.mbt": "90a25147584bc0cb2030076eebb3497793e6aa870c679d6d5cc1de0976b8abf4",
     "packages/sqlike/src/compound.mbt": "e0aee7e219f129efe2912f1379de90a35dc7ed7a4649c8dfb43bdfb61888ab84",
     "packages/sqlike/src/cte.mbt": "cbc3a4f5047b3c89b9a132de62434213b1aa2724384ead1333795c4ecb171f22",
-    "packages/sqlike/src/data.mbt": "5613f5bd53a0d369c5926f21ab0f44d6a495231a5928a45961f573d77c51a4b1",
+    "packages/sqlike/src/data.mbt": "aa5008a63722d9234c37f4e5c919307cf9b174113f5ba7f09fd6e87b416ca474",
     "packages/sqlike/src/datetime.mbt": "bf7c6b6983cfc2fe0e17dc74c26de270c5414203d982a5bec53f2ebf33459d59",
     "packages/sqlike/src/defined-sqlite/defined.mbt": "5a81aa4db62ee9f22610223ffce77cbc95602bc4cc3593241ea299471b1a3f7d",
     "packages/sqlike/src/defined-sqlite/moon.pkg": "6d93d349a02f08b9beafb2f344b35bc858dd5b3b1fc81a59e557d2881c091bb7",
     "packages/sqlike/src/defined/defined.mbt": "caf0ae96fd7a7af9f94b3e831f2f9de2077a64caacdbb3d4029e2780ff4f044f",
     "packages/sqlike/src/defined/moon.pkg": "6c72c36fb88ebfab45a73ad8d209dcb3f593c9d1bc3ade7c5a6c952c1be947a9",
-    "packages/sqlike/src/evaluate.mbt": "dc814765e5032ca085afcd8e101f20934d908583c0b9d4f6770e9290cf6fabf7",
+    "packages/sqlike/src/evaluate.mbt": "e17f052301b7c9983b114521612a0102ebd762f0b3df4bfff700f9d391dd7279",
     "packages/sqlike/src/execute.mbt": "9ae0995d206e78f722e6f199d48f63d33603628aa479dc4e9d9afcfb7f5d8c4b",
     "packages/sqlike/src/feature_config.mbt": "8ac72b52c318850f7dc69d63c105496ab6ea7216b6db32532470ee17c19b82f2",
-    "packages/sqlike/src/feature_validation.mbt": "16d2626acd486f9ad621c026811668c5a89888758251854283a40e24150e140b",
-    "packages/sqlike/src/feature_validation_generated.mbt": "31fd4321f274732cb4b64a302da2efbc8958539bbadba0357bb0d6a76b614d12",
+    "packages/sqlike/src/feature_validation.mbt": "511fa120a414b92fdbc840174fd0c08c78c50b206264889a8f040b6a0b9eb6fc",
+    "packages/sqlike/src/feature_validation_generated.mbt": "7542c24653e6fc4632d6790a65b53cb00a4c0b777647ce5760a7361d5a53e748",
     "packages/sqlike/src/float_text.mbt": "a188f50c6a4c41e2fc154cdc690514a5b9c945dce8a0cd8ccde2d7745e7f7895",
     "packages/sqlike/src/foreign_key.mbt": "bf9b7d3bbde04dc342efc97f0d5960bdea9c34e7f8a037182b87efac9b88d45f",
     "packages/sqlike/src/fts/fts.mbt": "f6b170921d7df982c53fe7f188aed2183b087ca79b8754b319752ff8b234712f",
@@ -89,16 +90,18 @@
     "packages/sqlike/src/persistence.mbt": "dccf7b6269e823365316cff2e31867a90d258c1e69b2bfbd9bffd90e08921c2e",
     "packages/sqlike/src/persistence_edits.mbt": "59fb2a7d7dafbd7694e78c6cfbc0ad83fa012ec058f844d84def2620f002f0cd",
     "packages/sqlike/src/persistence_wbtest.mbt": "3d981dac002f117107f4b60a6397807dcaff5b8a15d45ec3b96388ca83be3344",
-    "packages/sqlike/src/prepare.mbt": "ead38e907cdee1d7ebe2b18a02c41285ead0f095191c50da869d06ec16d5655f",
-    "packages/sqlike/src/prepared.mbt": "6f6e3a59cefc9d5062b7e8882f262a7328413fc87789644dc92ffae97678dd46",
+    "packages/sqlike/src/prepare.mbt": "10e51042c83737e69e904f64c52d0303eb116a7134df95d8d0ef63ddf45714f4",
+    "packages/sqlike/src/prepared.mbt": "59420803255e91a30ece6a85737b15ff3b8a33c9c84bdeb8f6a9eec75ef16e73",
     "packages/sqlike/src/prepared_selection_wbtest.mbt": "b4624c89bae3b7181f1444cd251556e054453bed98062bd5b6a19d151977c209",
     "packages/sqlike/src/primary_index.mbt": "b81cb16812bc24f0e3807778997c66ca4aab241335026c8542fcf36fe1189599",
     "packages/sqlike/src/program_compiler.mbt": "fcd9da9a6ed5af289566889ae6279ce3aebc04cebdf545790abd9ed1e22a3e18",
-    "packages/sqlike/src/query.mbt": "60b7d94cd912cfece80bcf6d03fd78e52f627612d3c58b9fc94808812875fa9a",
+    "packages/sqlike/src/query.mbt": "baa6051fb485a9b30ff230e5e8b401536ac2ade97d91411733e2cd734cba30f9",
     "packages/sqlike/src/query_plan.mbt": "63e846f9bf6c018d9fad30627cbb670667e337ed767366e58a5022246e2d0f74",
     "packages/sqlike/src/row_pages.mbt": "35795aa2cc32e84b58e30b07b0f597908a51f1989d3371f9986c2b21188addb5",
     "packages/sqlike/src/row_pages_wbtest.mbt": "d48a5d1e5454dda34e25829bda13996d5a94e140191818eacf08f5ecc609b744",
-    "packages/sqlike/src/scalar.mbt": "8b9b7c0ec7e5c2bbb5d40891db4bcac786f56ab6c63535202568312570920453",
+    "packages/sqlike/src/runtime_usage_compiler.mbt": "05ff65f3f6e59032435149bcbc6ef207e3c5111dce840beaff9398510e177081",
+    "packages/sqlike/src/runtime_usage_generated.mbt": "b29857b9f016d6921c18c41306090617dbef4b8e4ee8c4cf4469cc4bbd75a627",
+    "packages/sqlike/src/scalar.mbt": "5412d9c80157175c8ad94ec4f5eebfacf75df522e226a852df9b4d2477cbbe40",
     "packages/sqlike/src/sql_render.mbt": "b7264b0685e50dbf0237a58b23970a617bfbaac2c8a588216ea552e110218146",
     "packages/sqlike/src/sqlite_file.mbt": "f1208916e4cb70e91360ca851f7cf81b4889baee9c100bfbbf6d7c0d6aabb7ee",
     "packages/sqlike/src/sqlite_import.mbt": "e1922e7730ab15003c26d685fa9d6992c5d056070b771ffc0f163f3c1ae2c9c9",
@@ -112,7 +115,7 @@
     "packages/sqlike/src/value.mbt": "e96cb4d18b594a47bf7c00654445a9ed9b770138903bf26c3cea1ead52be4013",
     "packages/sqlike/src/window.mbt": "25b144661bf5c0ee9e3650d6072fc97b2a13812831af3ae395f95dfca3b82f47",
     "pnpm-lock.yaml": "62a9334c27b9f3876361edc3c9f74a0ed5e11866e28403cc065e1bdba7d70012",
-    "scripts/build-sqlike-runtime.ts": "399eff35dc4d62d2d170b473e3b7ba44cc69fd476a9d43e32453dd274b4296c9",
+    "scripts/build-sqlike-runtime.ts": "da40aeadc79a41313cf4588c16d60c2c80b1335a8242c5d860dc30259aaa42b7",
     "scripts/measure-optional-functions.ts": "69744a52fb000ea391f6916742fe768302dea025d3f677fd92b0a0261c65dd57",
     "scripts/measurement-manifest.ts": "615c0ab32c0b2e01c57ea1be690a2a08d2e9401b9b0c5d93574520253c16acdb",
     "scripts/oxc-runtime.ts": "24406b458799bdb150e1a986353c7d965d57964e60067f1a421e1cc010e57fce",
@@ -137,26 +140,26 @@
         "windowFunctions"
       ],
       "js": {
-        "raw": 490678,
-        "gzip": 121007,
-        "brotli": 96597
+        "raw": 490838,
+        "gzip": 121025,
+        "brotli": 96788
       },
       "hostAndPersistence": {
-        "raw": 502757,
-        "gzip": 125855,
-        "brotli": 100752
+        "raw": 502917,
+        "gzip": 125866,
+        "brotli": 100734
       },
       "wasm": {
-        "raw": 435054,
-        "gzip": 176274,
-        "brotli": 139879
+        "raw": 435162,
+        "gzip": 176304,
+        "brotli": 140057
       },
       "absent": {
         "dateTime": false,
         "sqlJson": false,
         "windowFunctions": false
       },
-      "runtimeSHA256": "6082ca503fdb584c9da9eed387853a4d0d95ae8d192ad28f5a098fbc178000bd",
+      "runtimeSHA256": "d7b9e03ed3fbd2bb727f845b11fd6bc13f9b0c76e7d6313244294e6d74b5036c",
       "removedJS": {
         "raw": 0,
         "gzip": 0,
@@ -177,30 +180,30 @@
         "windowFunctions"
       ],
       "js": {
-        "raw": 486972,
-        "gzip": 119277,
-        "brotli": 95037
+        "raw": 487598,
+        "gzip": 119372,
+        "brotli": 95092
       },
       "hostAndPersistence": {
-        "raw": 499036,
-        "gzip": 124083,
-        "brotli": 99229
+        "raw": 499663,
+        "gzip": 124197,
+        "brotli": 99365
       },
       "wasm": {
-        "raw": 436181,
-        "gzip": 175686,
-        "brotli": 139033
+        "raw": 436796,
+        "gzip": 175847,
+        "brotli": 139081
       },
       "absent": {
         "dateTime": true,
         "sqlJson": false,
         "windowFunctions": false
       },
-      "runtimeSHA256": "9fae8641adb4fc260d7c7c03f61fdc020f6896893a38f73079170f69401bf19e",
+      "runtimeSHA256": "b0640ba5aa9198794a1b39abedbc970f3c753e48a067684f566f4e004fbe8722",
       "removedJS": {
-        "raw": 3706,
-        "gzip": 1730,
-        "brotli": 1560
+        "raw": 3240,
+        "gzip": 1653,
+        "brotli": 1696
       }
     },
     {
@@ -217,30 +220,30 @@
         "windowFunctions"
       ],
       "js": {
-        "raw": 481260,
-        "gzip": 117899,
-        "brotli": 94266
+        "raw": 481887,
+        "gzip": 117982,
+        "brotli": 94353
       },
       "hostAndPersistence": {
-        "raw": 493331,
-        "gzip": 122701,
-        "brotli": 98350
+        "raw": 493958,
+        "gzip": 122816,
+        "brotli": 98726
       },
       "wasm": {
-        "raw": 425737,
-        "gzip": 172495,
-        "brotli": 136514
+        "raw": 425658,
+        "gzip": 172769,
+        "brotli": 136510
       },
       "absent": {
         "dateTime": false,
         "sqlJson": true,
         "windowFunctions": false
       },
-      "runtimeSHA256": "777f1999bae9667da0a22ef6ca4108fe02193d5d1941dc1791bd0df5e94f163c",
+      "runtimeSHA256": "70924c0c41c1adf74bd8f5a9e8068c95ea795bc4dfcd723538d90c82d569c2c2",
       "removedJS": {
-        "raw": 9418,
-        "gzip": 3108,
-        "brotli": 2331
+        "raw": 8951,
+        "gzip": 3043,
+        "brotli": 2435
       }
     },
     {
@@ -257,30 +260,30 @@
         "triggers"
       ],
       "js": {
-        "raw": 486307,
-        "gzip": 118697,
-        "brotli": 94982
+        "raw": 486934,
+        "gzip": 118819,
+        "brotli": 94989
       },
       "hostAndPersistence": {
-        "raw": 498376,
-        "gzip": 123519,
-        "brotli": 99118
+        "raw": 499003,
+        "gzip": 123627,
+        "brotli": 99140
       },
       "wasm": {
-        "raw": 429659,
-        "gzip": 173395,
-        "brotli": 137281
+        "raw": 430782,
+        "gzip": 173689,
+        "brotli": 137283
       },
       "absent": {
         "dateTime": false,
         "sqlJson": false,
         "windowFunctions": true
       },
-      "runtimeSHA256": "43d1ba7c457231d8234170fabf7aa3db3a1a5e6c7718237a1f3b1161735e8738",
+      "runtimeSHA256": "c88b0e82cd39669da34486b7c178d18425292b267d4b1d943f2a64326e6f6b54",
       "removedJS": {
-        "raw": 4371,
-        "gzip": 2310,
-        "brotli": 1615
+        "raw": 3904,
+        "gzip": 2206,
+        "brotli": 1799
       }
     },
     {
@@ -295,30 +298,30 @@
         "triggers"
       ],
       "js": {
-        "raw": 453071,
-        "gzip": 110938,
-        "brotli": 88937
+        "raw": 453698,
+        "gzip": 111070,
+        "brotli": 89058
       },
       "hostAndPersistence": {
-        "raw": 465143,
-        "gzip": 115702,
-        "brotli": 92954
+        "raw": 465770,
+        "gzip": 115826,
+        "brotli": 93139
       },
       "wasm": {
-        "raw": 406231,
-        "gzip": 163751,
-        "brotli": 129585
+        "raw": 406106,
+        "gzip": 163831,
+        "brotli": 129565
       },
       "absent": {
         "dateTime": true,
         "sqlJson": true,
         "windowFunctions": true
       },
-      "runtimeSHA256": "d0b8a93403c9a7d518e8b89164dce8a3cfc9ae015580155a07c58b932ced0e7c",
+      "runtimeSHA256": "eef440bbef3ea92e0c5901231d45e11606e7eb19e32bab0083446832ccc77284",
       "removedJS": {
-        "raw": 37607,
-        "gzip": 10069,
-        "brotli": 7660
+        "raw": 37140,
+        "gzip": 9955,
+        "brotli": 7730
       }
     },
     {
@@ -327,30 +330,30 @@
         "primaryKeyIndex"
       ],
       "js": {
-        "raw": 431267,
-        "gzip": 105314,
-        "brotli": 84872
+        "raw": 431890,
+        "gzip": 105453,
+        "brotli": 84926
       },
       "hostAndPersistence": {
-        "raw": 443345,
-        "gzip": 110083,
-        "brotli": 88912
+        "raw": 443968,
+        "gzip": 110236,
+        "brotli": 89001
       },
       "wasm": {
-        "raw": 387196,
-        "gzip": 155774,
-        "brotli": 124371
+        "raw": 387846,
+        "gzip": 156091,
+        "brotli": 124431
       },
       "absent": {
         "dateTime": true,
         "sqlJson": true,
         "windowFunctions": true
       },
-      "runtimeSHA256": "a3582a633e6e80da2cce0a4c413a8651d45c8c2f62c314a9f10fe5ec8e9beb40",
+      "runtimeSHA256": "df3b2dac7f5e5780161eaa98fb650b6131f9361004657687580cd05876c8f960",
       "removedJS": {
-        "raw": 59411,
-        "gzip": 15693,
-        "brotli": 11725
+        "raw": 58948,
+        "gzip": 15572,
+        "brotli": 11862
       }
     }
   ],

@@ -114,7 +114,7 @@ GLOBはpatternを一度解析し、直近の`*`の位置だけを保存して反
 全回帰はMoonBit 53件×JS / Wasm、Node 344件、Chromium E2E 56件と型チェック・本家Litestream復元を通過。566ケース×8経路の差分監査は失敗0。全機能監査は454 probe一致・248 atomic拒否・出力不一致0で、未対応・未検証を一致へ含めない。
 
 <!-- s02-size:start -->
-容量の基準は`ae5df09`の[追加前](../../measurements/basic-expression-before.json)、追加後は[現行レポート](../../measurements/bundle-size-current.json)。公開entry・Oxc設定・集計対象・Brotli quality 11をそろえた。単位はB、未圧縮はminify後。
+容量の基準は`ae5df09`の[追加前](../../measurements/basic-expression-before.json)、追加後は`0e5392d`時点の[次段階の基準](../../measurements/catalog-profile-before.json)。公開entry・Oxc設定・集計対象・Brotli quality 11をそろえた。単位はB、未圧縮はminify後。
 
 | 構成 | 未圧縮・追加後 | 未圧縮の増分 | Brotli・追加後 | Brotliの増分 |
 | --- | ---: | ---: | ---: | ---: |

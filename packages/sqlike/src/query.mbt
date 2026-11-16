@@ -179,7 +179,8 @@ fn select_relation_in(
     Some(plan) => plan.output
     None => selection_template(select, context)
   }
-  if !existence &&
+  if CAP_FUNCTION_AGGREGATES &&
+    !existence &&
     simple_aggregate(select, context, output_template) is Some(result) {
     return result
   }

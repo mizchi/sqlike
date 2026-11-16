@@ -95,10 +95,22 @@ fn prepared_names(
 ) -> Array[String] raise SqlError {
   let params = Array::make(count, Value::Null)
   match statement {
-    PreparedTransaction(_, _) => []
-    PreparedSelect(select) =>
+    PreparedTransaction(_, _) => {
+      guard CAP_STATEMENT_TRANSACTION else {
+        fail("catalog capability disabled: transaction")
+      }
+      []
+    }
+    PreparedSelect(select) => {
+      guard CAP_STATEMENT_SELECT else {
+        fail("catalog capability disabled: select")
+      }
       selection_template(select, evaluation(store, params, [])).map(b => b.name)
+    }
     PreparedPragma(name, table) => {
+      guard CAP_STATEMENT_PRAGMA else {
+        fail("catalog capability disabled: pragma")
+      }
       ignore(execute_pragma(store, name, table, None, params))
       match name {
         "index_list" => ["seq", "name", "unique", "origin", "partial"]
@@ -116,6 +128,9 @@ fn prepared_names(
       }
     }
     PreparedInsert(insertion) => {
+      guard CAP_STATEMENT_INSERT else {
+        fail("catalog capability disabled: insert")
+      }
       let table = get_table(store, insertion.table)
       prepare_foreign_table(store, table)
       let columns = if insertion.columns.is_empty() {
@@ -165,6 +180,9 @@ fn prepared_names(
       )
     }
     PreparedUpdate(name, setters, predicate, returning) => {
+      guard CAP_STATEMENT_UPDATE else {
+        fail("catalog capability disabled: update")
+      }
       let table = get_table(store, name)
       prepare_foreign_table(store, table)
       let row = row_environment(
@@ -182,6 +200,9 @@ fn prepared_names(
       project_template(returning, context).map(b => b.name)
     }
     PreparedDelete(name, predicate, returning) => {
+      guard CAP_STATEMENT_DELETE else {
+        fail("catalog capability disabled: delete")
+      }
       let table = get_table(store, name)
       prepare_foreign_table(store, table)
       let context = evaluation(
@@ -242,6 +263,9 @@ fn prepare_compiled_program(
     }
     let names = match query.statement {
       PreparedSelect(select) => {
+        guard CAP_STATEMENT_SELECT else {
+          fail("catalog capability disabled: select")
+        }
         let prepared = prepare_selection(
           program.schema,
           select,

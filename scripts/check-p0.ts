@@ -29,6 +29,7 @@ const paths = [
   "defined-browser-current",
   "optional-functions-current",
   "optional-functions-browser-current",
+  "catalog-profiles-current",
 ];
 const reports = Object.fromEntries(
   paths.map((name) => {
@@ -40,6 +41,18 @@ const reports = Object.fromEntries(
   }),
 );
 const sql = reports["sqlite-speed-current"];
+const catalogs = reports["catalog-profiles-current"];
+assert.equal(catalogs.format, "sqlike-catalog-profiles@1");
+assert.equal(catalogs.results.length, 6);
+for (const r of catalogs.results) {
+  assert.equal(r.verified, true);
+  assert.ok(r.assets.selected.js.raw < r.assets.baseline.js.raw);
+  for (const kind of ["baseline", "selected"])
+    for (const target of ["js", "wasm"]) {
+      const a = r.assets[kind][target];
+      assertFileHashes({ [a.path]: a.sha256 });
+    }
+}
 assert.equal(sql.smoke, false);
 assert.deepEqual(
   sql.results.map((r: any) => [r.rows, r.coldRows]),
@@ -81,14 +94,11 @@ assert.equal(reports["indexeddb-speed-current"].payloadStorageClass, "text");
 assert.equal(reports["indexeddb-blob-current"].payloadStorageClass, "blob");
 for (const r of reports["wasm-build-size-current"].results)
   assertFileHashes({ [r.js.path]: r.js.sha256, [r.wasm.path]: r.wasm.sha256 });
-for (const a of reports["aot-current"].artifacts)
-  assertFileHashes({ [a.path]: a.sha256 });
+for (const a of reports["aot-current"].artifacts) assertFileHashes({ [a.path]: a.sha256 });
 assert.equal(reports["aot-current"].samples.length, 9);
 const runtime = reports["runtime-current"];
-for (const a of runtime.engineArtifacts)
-  assertFileHashes({ [a.path]: a.sha256 });
-for (const a of runtime.assets)
-  assertFileHashes({ ["dist" + a.path]: a.sha256 });
+for (const a of runtime.engineArtifacts) assertFileHashes({ [a.path]: a.sha256 });
+for (const a of runtime.assets) assertFileHashes({ ["dist" + a.path]: a.sha256 });
 assert.ok(
   runtime.memory && runtime.memory.length === 3,
   "runtime retained memory for all engines required",
@@ -116,18 +126,15 @@ assertFileHashes(doReport.artifacts);
 assert.equal(doReport.samples.length, 70);
 for (const query of ["cte", "returning"])
   assert.equal(
-    doReport.summary.find((s: any) => s.engine === "typed" && s.query === query)
-      .callsPerOperation,
+    doReport.summary.find((s: any) => s.engine === "typed" && s.query === query).callsPerOperation,
     2,
   );
 assert.equal(
-  doReport.summary.find((s: any) => s.engine === "typed" && s.query === "point")
-    .callsPerOperation,
+  doReport.summary.find((s: any) => s.engine === "typed" && s.query === "point").callsPerOperation,
   2,
 );
 assert.equal(
-  doReport.summary.find((s: any) => s.engine === "typed" && s.query === "real")
-    .callsPerOperation,
+  doReport.summary.find((s: any) => s.engine === "typed" && s.query === "real").callsPerOperation,
   4,
 );
 const app = reports["release-app-current"];
@@ -144,14 +151,9 @@ for (const s of app.samples.filter((s: any) => s.run === 0)) {
 }
 const release = reports["release-scenarios-node"];
 assert.equal(release.cases.length, 9);
+assert.equal(release.results.filter((r: any) => r.status === "matched").length, 34);
 assert.equal(
-  release.results.filter((r: any) => r.status === "matched").length,
-  34,
-);
-assert.equal(
-  release.results.filter(
-    (r: any) => r.status === "not-applicable" && r.id === "U07",
-  ).length,
+  release.results.filter((r: any) => r.status === "not-applicable" && r.id === "U07").length,
   2,
 );
 assert.equal(reports["release-scenarios-browser"].checks.length, 7);
@@ -167,9 +169,7 @@ assert.equal(reports["defined-browser-current"].namedStatementsOnly, true);
 const optionalFunctions = reports["optional-functions-current"];
 assert.equal(optionalFunctions.verified, true);
 assert.equal(optionalFunctions.results.length, 6);
-const stripped = optionalFunctions.results.find(
-  (r: any) => r.name === "without-all-three",
-);
+const stripped = optionalFunctions.results.find((r: any) => r.name === "without-all-three");
 assert.ok(Object.values(stripped.absent).every((v) => v === true));
 assert.ok(stripped.removedJS.brotli > 0);
 assert.equal(reports["optional-functions-browser-current"].verified, true);
@@ -190,10 +190,7 @@ assert.ok(ormSize.results[1].drizzleModules > 0);
 if (process.argv.includes("--record")) {
   const ts = ["src", "adapters", "scripts", "tests", "e2e"].flatMap((dir) =>
     readdirSync(dir, { recursive: true, withFileTypes: true })
-      .filter(
-        (e) =>
-          e.isFile() && (e.name.endsWith(".ts") || e.name.endsWith(".jsonc")),
-      )
+      .filter((e) => e.isFile() && (e.name.endsWith(".ts") || e.name.endsWith(".jsonc")))
       .map((e) => `${e.parentPath}/${e.name}`),
   );
   writeFileSync(
@@ -240,6 +237,4 @@ if (process.argv.includes("--record")) {
   assertFileHashes(summary.sourceHashes);
   assertFileHashes(summary.reports);
 }
-console.log(
-  "V01 / C01 / R01: measurement artifacts and release evidence are current",
-);
+console.log("V01 / C01 / R01: measurement artifacts and release evidence are current");

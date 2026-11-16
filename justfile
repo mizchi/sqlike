@@ -24,7 +24,7 @@ moon-check:
 staged-compat-check:
     pnpm build:core
     pnpm build:moon-wasm
-    pnpm exec tsx --test tests/sqlike-basic-compat.test.ts tests/sqlike-basic-expressions.test.ts tests/sqlike-json-operators.test.ts tests/sqlike-app-functions.test.ts tests/sqlike-like-extrema.test.ts tests/sqlike-null-order.test.ts tests/sqlike-named-bind.test.ts tests/sqlike-index-metadata.test.ts tests/sqlike-derived-table.test.ts tests/sqlike-aggregate-filter.test.ts tests/sqlike-json-aggregate.test.ts tests/sqlike-optional-functions.test.ts tests/drizzle-defined.test.ts
+    pnpm exec tsx --test tests/sqlike-basic-compat.test.ts tests/sqlike-basic-expressions.test.ts tests/sqlike-json-operators.test.ts tests/sqlike-app-functions.test.ts tests/sqlike-like-extrema.test.ts tests/sqlike-null-order.test.ts tests/sqlike-named-bind.test.ts tests/sqlike-index-metadata.test.ts tests/sqlike-derived-table.test.ts tests/sqlike-aggregate-filter.test.ts tests/sqlike-json-aggregate.test.ts tests/sqlike-optional-functions.test.ts tests/drizzle-defined.test.ts tests/sqlike-catalog-profile.test.ts
 
 test-sqlike:
     moon test packages/sqlike/src packages/sqlike/src/compiler --target js
@@ -187,6 +187,7 @@ compile-defined source output *args:
 
 defined-codecs:
     pnpm exec tsx scripts/generate-binary-codecs.ts
+    pnpm exec tsx scripts/generate-runtime-capabilities.ts
     moon fmt packages/sqlike/src
 
 defined-check:
@@ -281,6 +282,14 @@ feature-profiles:
     pnpm exec tsx --test tests/sqlike-feature-profiles.test.ts tests/sqlike-outer-strict.test.ts tests/sqlike-primary-index.test.ts tests/materialized-sync.test.ts
     pnpm exec tsx scripts/measure-sqlike-profiles.ts
 
+# Infer semantic features, core function families and statement kinds from a catalog.
+catalog-profiles:
+    pnpm build:core
+    pnpm build:moon-wasm
+    pnpm exec tsx --test tests/sqlike-catalog-profile.test.ts
+    pnpm exec playwright test e2e/catalog-profile.spec.ts
+    pnpm exec tsx scripts/measure-catalog-profiles.ts
+
 # Collect both environments before checking the supported differential corpus.
 differential-audit:
     pnpm build
@@ -319,6 +328,7 @@ p0-measure:
     pnpm exec tsx scripts/measure-drizzle-defined.ts
     pnpm exec tsx scripts/measure-defined.ts
     pnpm exec tsx scripts/measure-optional-functions.ts
+    pnpm exec tsx scripts/measure-catalog-profiles.ts
 
 # Native Litestream checks are mandatory; inherit LITESTREAM_BIN from the caller.
 p0-check:

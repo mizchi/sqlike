@@ -7,7 +7,7 @@
     "scripts/measurement-manifest.ts": "615c0ab32c0b2e01c57ea1be690a2a08d2e9401b9b0c5d93574520253c16acdb",
     "scripts/oxc-runtime.ts": "24406b458799bdb150e1a986353c7d965d57964e60067f1a421e1cc010e57fce"
   },
-  "measuredAt": "2026-11-16T14:04:55.581Z",
+  "measuredAt": "2026-11-16T15:00:40.343Z",
   "node": "v24.22.2",
   "method": "Moon release JS / Wasm GC with exactly matching full export names. JS minified via Oxc client build, configFile=false, target=esnext, annotations and all entry exports retained, whitespace compacted. Wasm release output without additional wasm-opt. gzip level 9 / Brotli quality 11; round-trip verified. Standalone engine artifacts only; excludes HTML, loader/adapters, workers, application catalog and storage. Not an application transfer measurement.",
   "results": [
@@ -40,26 +40,26 @@
       ],
       "js": {
         "path": "_build/js/release/build/mizchi/litestream-example/runtime/runtime.js",
-        "sha256": "ae8c2ebf1e18b738ecc726c5eb149e549f8be70657d89a9e5bbaeae336d754e6",
+        "sha256": "bd55f67b1263b9ecadafeae718f0c2fa28b1d842d7e2e97b0de98dbdc3e44fc4",
         "generated": {
-          "raw": 2290330,
-          "gzip": 274414,
-          "brotli": 186935
+          "raw": 2291003,
+          "gzip": 274352,
+          "brotli": 186923
         },
         "minified": {
-          "raw": 570279,
-          "gzip": 137014,
-          "brotli": 108634
+          "raw": 570439,
+          "gzip": 137042,
+          "brotli": 108670
         },
-        "minifiedSHA256": "9fdb539ab3f9a7f2d39100821e4c11f849c06260682b41030903a81d9acd8197"
+        "minifiedSHA256": "542929edce3056a909598ca0d5c95093d7c125c39106124ce8c9f255f3e35af9"
       },
       "wasm": {
         "path": "_build/wasm-gc/release/build/mizchi/litestream-example/runtime/runtime.wasm",
-        "sha256": "ec22e363290c22519c7ce9f4ed2d0fb6b367b29b4fbc74a2b679321d480160cd",
+        "sha256": "05ce5811f1587f0cdf98c9b5894e61ba6769befecc8ebdcd6908d011fd73a321",
         "bytes": {
-          "raw": 503174,
-          "gzip": 199578,
-          "brotli": 157423
+          "raw": 503287,
+          "gzip": 199606,
+          "brotli": 157505
         },
         "nameSections": 1
       }
@@ -89,26 +89,26 @@
       ],
       "js": {
         "path": "_build/js/release/build/mizchi/sqlike/sqlike.js",
-        "sha256": "311106bed169111738793e17e3d1d2ca05af65a559ac4a8fd48a4832c741101b",
+        "sha256": "d77317edac6bddb8a45693543e2d65ff8492f681ef91c562a8f26b21d9cb1ab6",
         "generated": {
-          "raw": 2494816,
-          "gzip": 299261,
-          "brotli": 201096
+          "raw": 2495489,
+          "gzip": 299339,
+          "brotli": 201026
         },
         "minified": {
-          "raw": 613088,
-          "gzip": 146697,
-          "brotli": 115472
+          "raw": 613248,
+          "gzip": 146737,
+          "brotli": 115560
         },
-        "minifiedSHA256": "4f3c1a5de801417b5b39546865b13e7a6c9a7f75d62aaf67159088611d0a708c"
+        "minifiedSHA256": "4164f1d51de303eb5b3dd01956245080ba57fbdb40049792f1c75edd88cf60e1"
       },
       "wasm": {
         "path": "_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm",
-        "sha256": "8a6e96f609ee8530e7f44fdcb7752230d54ac0c2bc356d7c7fbd955a2a6c35d2",
+        "sha256": "ae75cdd84433cadc46c29356a0521529bb1b69b49227c415bbc3f2678f442e90",
         "bytes": {
-          "raw": 542478,
-          "gzip": 217194,
-          "brotli": 170209
+          "raw": 542476,
+          "gzip": 217255,
+          "brotli": 170494
         },
         "nameSections": 1
       }

@@ -1,0 +1,40 @@
+{
+  "format": "sqlike-runtime-capabilities@1",
+  "functionGroups": {
+    "glob": ["glob"],
+    "like": ["like"],
+    "character": ["char"],
+    "substring": ["substr", "substring"],
+    "trim": ["trim", "ltrim", "rtrim"],
+    "instr": ["instr"],
+    "replace": ["replace"],
+    "concat": ["concat", "concat_ws"],
+    "octetLength": ["octet_length"],
+    "quote": ["quote"],
+    "unicode": ["unicode"],
+    "sign": ["sign"],
+    "round": ["round"],
+    "nullif": ["nullif"],
+    "coalesce": ["coalesce", "ifnull"],
+    "conditional": ["iif", "if"],
+    "connectionCounters": ["changes", "last_insert_rowid"],
+    "typeof": ["typeof"],
+    "hex": ["hex"],
+    "length": ["length"],
+    "caseConversion": ["lower", "upper"],
+    "abs": ["abs"],
+    "inList": ["in"],
+    "extrema": ["min", "max"],
+    "aggregates": ["count", "sum", "total", "avg"],
+    "groupConcat": ["group_concat", "string_agg"],
+    "raise": ["raise"]
+  },
+  "statements": {
+    "select": "PreparedSelect",
+    "insert": "PreparedInsert",
+    "update": "PreparedUpdate",
+    "delete": "PreparedDelete",
+    "transaction": "PreparedTransaction",
+    "pragma": "PreparedPragma"
+  }
+}

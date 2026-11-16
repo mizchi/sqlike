@@ -201,12 +201,16 @@ impl FeatureCheck for Expr with fn check(value) {
       FeatureCheck::check(v1)
     }
     Binary(v0, v1, v2) => {
+      if v0 == "like" {
+        validate_runtime_call("like", 2)
+      }
       FeatureCheck::check(v0)
       FeatureCheck::check(v1)
       FeatureCheck::check(v2)
     }
     Call(v0, v1) => {
       validate_function_features(v0)
+      validate_runtime_call(v0, v1.length())
       FeatureCheck::check(v0)
       FeatureCheck::check(v1)
     }
@@ -253,23 +257,33 @@ impl FeatureCheck for Expr with fn check(value) {
 impl FeatureCheck for DataStatement with fn check(value) {
   match value {
     PreparedTransaction(v0, v1) => {
+      validate_runtime_statement("transaction")
       FeatureCheck::check(v0)
       FeatureCheck::check(v1)
     }
-    PreparedSelect(v0) => FeatureCheck::check(v0)
+    PreparedSelect(v0) => {
+      validate_runtime_statement("select")
+      FeatureCheck::check(v0)
+    }
     PreparedPragma(v0, v1) => {
       validate_pragma_features(v0)
+      validate_runtime_statement("pragma")
       FeatureCheck::check(v0)
       FeatureCheck::check(v1)
     }
-    PreparedInsert(v0) => FeatureCheck::check(v0)
+    PreparedInsert(v0) => {
+      validate_runtime_statement("insert")
+      FeatureCheck::check(v0)
+    }
     PreparedUpdate(v0, v1, v2, v3) => {
+      validate_runtime_statement("update")
       FeatureCheck::check(v0)
       FeatureCheck::check(v1)
       FeatureCheck::check(v2)
       FeatureCheck::check(v3)
     }
     PreparedDelete(v0, v1, v2) => {
+      validate_runtime_statement("delete")
       FeatureCheck::check(v0)
       FeatureCheck::check(v1)
       FeatureCheck::check(v2)

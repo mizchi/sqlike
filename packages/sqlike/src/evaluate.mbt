@@ -288,6 +288,9 @@ fn evaluate(expression : Expr, ctx : Evaluation) -> Value raise SqlError {
           Text(checked_text_value(a) + checked_text_value(b))
         }
       } else if op == "like" {
+        guard CAP_FUNCTION_LIKE else {
+          fail("catalog capability disabled: like")
+        }
         like_value([b, a])
       } else {
         compare_expression(op, left, a, right, b, ctx)
@@ -375,7 +378,7 @@ fn evaluate_call(
   args : Array[Expr],
   ctx : Evaluation,
 ) -> Value raise SqlError {
-  if name == "raise" {
+  if CAP_FUNCTION_RAISE && name == "raise" {
     guard !ctx.store.triggers.active.is_empty() else {
       fail("RAISE() may only be used within a trigger-program")
     }
@@ -388,10 +391,12 @@ fn evaluate_call(
     (name == "json_group_array" || name == "json_group_object") {
     return json_aggregate(name, args, ctx)
   }
-  if name == "group_concat" || name == "string_agg" {
+  if CAP_FUNCTION_GROUP_CONCAT &&
+    (name == "group_concat" || name == "string_agg") {
     return group_concat(args, ctx)
   }
-  if ["count", "sum", "total", "avg", "max", "min"].contains(name) &&
+  if CAP_FUNCTION_AGGREGATES &&
+    ["count", "sum", "total", "avg", "max", "min"].contains(name) &&
     args.length() == 1 {
     let group = ctx.group.unwrap_or([ctx.row])
     let values : Array[Value] = []
@@ -455,7 +460,7 @@ fn evaluate_call(
     return sum.finish(name)
   }
 
-  if name == "coalesce" || name == "ifnull" {
+  if CAP_FUNCTION_COALESCE && (name == "coalesce" || name == "ifnull") {
     for e in args {
       let value = evaluate(e, ctx)
       if !(value is Null) {
@@ -464,7 +469,7 @@ fn evaluate_call(
     }
     return Null
   }
-  if name == "iif" || name == "if" {
+  if CAP_FUNCTION_CONDITIONAL && (name == "iif" || name == "if") {
     let mut index = 0
     while index + 1 < args.length() {
       if truth(evaluate(args[index], ctx)) == 1 {
@@ -476,8 +481,14 @@ fn evaluate_call(
   }
   let values = args.map(e => evaluate(e, ctx))
   match name {
-    "like" => like_value(values)
+    "like" => {
+      guard CAP_FUNCTION_LIKE else { fail("catalog capability disabled: like") }
+      like_value(values)
+    }
     "min" | "max" => {
+      guard CAP_FUNCTION_EXTREMA else {
+        fail("catalog capability disabled: extrema")
+      }
       if values.any(v => v is Null) {
         return Null
       }
@@ -492,6 +503,9 @@ fn evaluate_call(
       best
     }
     "nullif" => {
+      guard CAP_FUNCTION_NULLIF else {
+        fail("catalog capability disabled: nullif")
+      }
       let mut collation = "binary"
       for arg in args {
         if arg is Column(_, _) || arg is Collate(_, _) {
@@ -510,6 +524,9 @@ fn evaluate_call(
       }
     }
     "changes" => {
+      guard CAP_FUNCTION_CONNECTION_COUNTERS else {
+        fail("catalog capability disabled: changes")
+      }
       guard values.is_empty() else {
         fail("wrong number of arguments: changes")
       }
@@ -522,12 +539,18 @@ fn evaluate_call(
       )
     }
     "last_insert_rowid" => {
+      guard CAP_FUNCTION_CONNECTION_COUNTERS else {
+        fail("catalog capability disabled: last_insert_rowid")
+      }
       guard values.is_empty() else {
         fail("wrong number of arguments: last_insert_rowid")
       }
       Integer(ctx.store.last_rowid)
     }
     "coalesce" | "ifnull" => {
+      guard CAP_FUNCTION_COALESCE else {
+        fail("catalog capability disabled: coalesce")
+      }
       guard values.length() >= 2 && (name != "ifnull" || values.length() == 2) else {
         fail("wrong number of arguments: coalesce")
       }
@@ -539,6 +562,9 @@ fn evaluate_call(
       Null
     }
     "typeof" => {
+      guard CAP_FUNCTION_TYPEOF else {
+        fail("catalog capability disabled: typeof")
+      }
       guard values.length() == 1 else {
         fail("wrong number of arguments: typeof")
       }
@@ -553,6 +579,7 @@ fn evaluate_call(
       )
     }
     "hex" => {
+      guard CAP_FUNCTION_HEX else { fail("catalog capability disabled: hex") }
       guard values.length() == 1 else { fail("wrong number of arguments: hex") }
       let bytes = match values[0] {
         Blob(b) => b
@@ -580,6 +607,9 @@ fn evaluate_call(
       Text(@utf8.decode_lossy(hex.to_bytes()))
     }
     "length" => {
+      guard CAP_FUNCTION_LENGTH else {
+        fail("catalog capability disabled: length")
+      }
       guard values.length() == 1 else {
         fail("wrong number of arguments: length")
       }
@@ -599,6 +629,9 @@ fn evaluate_call(
       }
     }
     "lower" | "upper" => {
+      guard CAP_FUNCTION_CASE_CONVERSION else {
+        fail("catalog capability disabled: case conversion")
+      }
       guard values.length() == 1 else {
         fail("wrong number of arguments: case")
       }
@@ -623,6 +656,7 @@ fn evaluate_call(
       }
     }
     "abs" => {
+      guard CAP_FUNCTION_ABS else { fail("catalog capability disabled: abs") }
       guard values.length() == 1 else { fail("wrong number of arguments: abs") }
       match numeric(values[0], false) {
         Null => Null
@@ -635,6 +669,9 @@ fn evaluate_call(
       }
     }
     "in" => {
+      guard CAP_FUNCTION_IN_LIST else {
+        fail("catalog capability disabled: in")
+      }
       guard values.length() > 0 else { fail("invalid IN") }
       if values.length() == 1 {
         return Integer(0L)

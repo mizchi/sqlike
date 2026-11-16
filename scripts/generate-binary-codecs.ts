@@ -14,8 +14,7 @@ const wire = JSON.parse(readFileSync("src/binary-wire.json", "utf8")) as {
   structs: Record<string, Field[]>;
   enums: Record<string, Variant[]>;
 };
-if (wire.format !== "sqlike-binary-wire@1")
-  throw Error("unknown binary wire contract");
+if (wire.format !== "sqlike-binary-wire@1") throw Error("unknown binary wire contract");
 const extra: Record<string, string> = {
   Table: "sequence: 0L, sequence_present: None, rows: row_pages([]),",
   Store:
@@ -24,23 +23,16 @@ const extra: Record<string, string> = {
 function feature(type: string, value: string, target: string): string {
   if (type === "ForeignKey") return `${target}.require_feature(1U)`;
   if (type === "TriggerDefinition") return `${target}.require_feature(2U)`;
-  if (type === "Table")
-    return `if ${value}.strict == Some(true) { ${target}.require_feature(4U) }`;
+  if (type === "Table") return `if ${value}.strict == Some(true) { ${target}.require_feature(4U) }`;
   if (type === "Source")
     return `if ${value}.right == Some(true) || ${value}.natural == Some(true) || ${value}.using_columns.unwrap_or([]).length() > 0 { ${target}.require_feature(8U) }`;
   return "";
 }
-function enumFeature(
-  type: string,
-  name: string,
-  target: string,
-  first: string,
-): string {
+function enumFeature(type: string, name: string, target: string, first: string): string {
   if (type === "DataStatement" && name === "PreparedPragma")
     return `${target}.require_feature(pragma_features(${first}))`;
   if (type !== "Expr") return "";
-  if (name === "Window" || name === "RowNumber")
-    return `${target}.require_feature(64U)`;
+  if (name === "Window" || name === "RowNumber") return `${target}.require_feature(64U)`;
   if (name === "CurrentTime") return `${target}.require_feature(32U)`;
   if (name === "Call") return `binary_function_feature(${target}, ${first})`;
   return "";
@@ -111,32 +103,43 @@ for (const [type, fields] of Object.entries(wire.structs).filter(
   checks.push(
     `///|\nimpl FeatureCheck for ${type} with fn check(value) {\n${fields.map((f) => `FeatureCheck::check(value.${f.name})`).join("\n")}\n}`,
   );
-for (const [type, variants] of Object.entries(wire.enums).filter(
-  ([t]) => t !== "RowEdit",
-)) {
+for (const [type, variants] of Object.entries(wire.enums).filter(([t]) => t !== "RowEdit")) {
   checks.push(
     `///|\nimpl FeatureCheck for ${type} with fn check(value) { match value {\n${variants
       .map((v) => {
         const args = v.fields.map((_, i) => `v${i}`);
-        const guard =
+        let guard =
           type === "DataStatement" && v.name === "PreparedPragma"
             ? "validate_pragma_features(v0)"
             : type !== "Expr"
-            ? ""
-            : v.name === "Window" || v.name === "RowNumber"
-              ? 'guard FEATURE_WINDOWS else { fail("feature disabled: windowFunctions") }'
-              : v.name === "CurrentTime"
-                ? 'guard FEATURE_DATETIME else { fail("feature disabled: dateTime") }'
-                : v.name === "Call"
-                  ? "validate_function_features(v0)"
-                  : "";
+              ? ""
+              : v.name === "Window" || v.name === "RowNumber"
+                ? 'guard FEATURE_WINDOWS else { fail("feature disabled: windowFunctions") }'
+                : v.name === "CurrentTime"
+                  ? 'guard FEATURE_DATETIME else { fail("feature disabled: dateTime") }'
+                  : v.name === "Call"
+                    ? "validate_function_features(v0)"
+                    : "";
+        if (type === "Expr" && v.name === "Call")
+          guard += "\nvalidate_runtime_call(v0, v1.length())";
+        if (type === "Expr" && v.name === "Binary")
+          guard += '\nif v0 == "like" { validate_runtime_call("like", 2) }';
+        if (type === "DataStatement") {
+          const kinds: Record<string, string> = {
+            PreparedSelect: "select",
+            PreparedInsert: "insert",
+            PreparedUpdate: "update",
+            PreparedDelete: "delete",
+            PreparedPragma: "pragma",
+            PreparedTransaction: "transaction",
+          };
+          if (!kinds[v.name]) throw Error(`unclassified statement capability ${v.name}`);
+          guard += `\nvalidate_runtime_statement(${JSON.stringify(kinds[v.name])})`;
+        }
         if (!args.length && !guard) return `${v.name} => ()`;
         return `${v.name}${args.length ? `(${args.join(", ")})` : ""} => {\n${guard}\n${args.map((a) => `FeatureCheck::check(${a})`).join("\n")}\n}`;
       })
       .join("\n")}\n} }`,
   );
 }
-writeFileSync(
-  "packages/sqlike/src/feature_validation_generated.mbt",
-  checks.join("\n\n") + "\n",
-);
+writeFileSync("packages/sqlike/src/feature_validation_generated.mbt", checks.join("\n\n") + "\n");

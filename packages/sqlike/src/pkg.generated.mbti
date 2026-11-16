@@ -116,6 +116,8 @@ pub fn defined_snapshot(DefinedDatabase) -> BinaryResult
 
 pub fn pack_program_binary(String) -> BinaryCatalog
 
+pub fn program_runtime_requirements(String) -> String
+
 pub fn sqlite_data(SqliteResult) -> Bytes
 
 pub fn sqlite_data_base64(SqliteResult) -> String

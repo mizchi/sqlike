@@ -65,7 +65,8 @@ fn validate_pragma_features(name : String) -> Unit raise SqlError {
 fn[T : FeatureCheck] validate_optional_features(
   value : T,
 ) -> Unit raise SqlError {
-  if !FEATURE_SQL_JSON ||
+  if CAP_CATALOG_SPECIALIZED ||
+    !FEATURE_SQL_JSON ||
     !FEATURE_DATETIME ||
     !FEATURE_WINDOWS ||
     !FEATURE_SCHEMA_METADATA ||

@@ -34,6 +34,9 @@ fn prepare_expression(
       prepare_expression(e, ctx, aggregates, windows)
     }
     Binary(op, a, b) => {
+      if op == "like" {
+        validate_runtime_call("like", 2)
+      }
       guard [
         "+", "-", "*", "/", "%", "<<", ">>", "&", "|", "||", "and", "or", "=", "==",
         "!=", "<>", "<", ">", "<=", ">=", "is", "is not", "like",
@@ -118,6 +121,7 @@ fn prepare_expression(
       guard name == "in" || args.length() <= 1000 else {
         fail("SQL function argument limit")
       }
+      validate_runtime_call(name, args.length())
       validate_function_features(name)
       if name == "$distinct" {
         guard aggregates && args.length() == 1 else {
@@ -127,6 +131,9 @@ fn prepare_expression(
         return
       }
       if name == "raise" {
+        guard CAP_FUNCTION_RAISE else {
+          fail("catalog capability disabled: raise")
+        }
         guard !ctx.store.triggers.active.is_empty() else {
           fail("RAISE() may only be used within a trigger-program")
         }

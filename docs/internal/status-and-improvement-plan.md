@@ -1,12 +1,14 @@
 # 現在の対応範囲・最適化と改善対象
 
-更新日: 2026-11-16。**0.1.0** の実装・検証を整理した台帳。今後の着手順と完了条件はこのページで管理し、各機能の仕様・実装経緯・測定の全量はリンク先に残す。
+更新日: 2026-11-17。**0.1.0** の実装・検証を整理した台帳。今後の着手順と完了条件はこのページで管理し、各機能の仕様・実装経緯・測定の全量はリンク先に残す。
 
 0.1.0以後の未リリース変更として、[段階的な互換機能の導入](staged-sqlite-compatibility.md)を開始。軽量な`IS DISTINCT FROM`、`&` / `|` / `~`、`sign()`はcoreへ、JSONの`->` / `->>`は既存の任意機能`sqlJson`へ追加する。後続の不足機能は同ページのチェックリストで管理し、未実装の機能を選択APIへ先行公開しない。
 
 続いて、LIKE ESCAPE・scalar min/max、NULL順序・名前付きSQL bind、索引metadata、FROM subquery・集約FILTER、JSON集約を追加した。大きめの実装は`schemaMetadata` / `aggregateFilter` / `sqlJson`で選択する。[Drizzle事前コンパイルentry](../drizzle-prepared.md)も追加し、query builderとSQL parserを配信せずに固定したクエリを実行できる。
 
 S02ではGLOB・charをcoreへ追加し、16進・桁区切り数値literalをcompiler側で既存の値へ変換する。charのサロゲート値はTEXTで正確に表現できないため拒否する。GLOB・LIKE・unicodeがU+FFFE / U+FFFFを読むときの本家との差も修正した。
+
+[catalogからの自動選択](../catalog-build.md)を追加。schemaと登録queryの型付きIRから必須feature・coreの27関数群・6種類の文を収集し、AOT / definedのJS・Wasmを絞る。主キー索引・SQLite出力・LTXは明示指定を維持する。演算子・JOIN / CTE / compoundの細分化と、JSON / 日時 / window内部の関数分割は次の改善対象。
 
 P0のV01 / C01 / R01と、P1のP01 / S01 / P02 / R02は完了。C02の[DO対応](do-consumer-sql.md)に続き、[Drizzle driver・RETURNING式・migration](drizzle.md)を追加した。[P0の基準](p0-results.md)、[P01](p01-aot-results.md)、[S01の列差分](column-delta.md)、[P02の行ページ](row-store.md)、[R02のLTX送信](aot-ltx-upload.md)、[受入条件](release-acceptance.md)、[現行の回帰・計測証拠](../../measurements/p0-completion.json)を保存した。C02の集約代表行などは未完了として維持する。
 
@@ -116,7 +118,7 @@ Web標準APIによるBase64 / JSON置換、Turso WASMの外部配信は[試作](
 
 ### 現行の正しさの記録
 
-段階的な互換機能の追加後の回帰はMoonBit **53件×JS / Wasm GC**、Node **344件**、Playwright **56件**と型チェック・本家Litestream復元を通過した。件数はこの更新時点の記録で、将来のテスト件数の固定目標ではない。
+段階的な互換機能の追加後の回帰はMoonBit **53件×JS / Wasm GC**、Node **353件**、Playwright **58件**と型チェック・本家Litestream復元を通過した。件数はこの更新時点の記録で、将来のテスト件数の固定目標ではない。
 
 | ゲート | 現在の観測 | 合格が意味すること |
 | --- | --- | --- |
@@ -127,7 +129,8 @@ Web標準APIによるBase64 / JSON置換、Turso WASMの外部配信は[試作](
 | `just drizzle-check` | Kit生成6本＋custom 2本。Node / SQLike JS・Wasm / SQLite WASM、ブラウザIDB、実DOで通過 | 各段階のデータ・FK保持、RETURNING、再適用、履歴・失敗時rollback、オフライン再開。[制限](drizzle.md)を含む固定consumerの検証 |
 | `just defined-check` | 固定バイナリDDL / named statement、JS / Wasm、IDBオフライン再開 | 上流1,000クエリをJSON / binaryのJS / Wasmで本家と照合。型・FK / trigger・wire破損・snapshot / patch・失敗時の非公開を検査 |
 | `just optional-functions-check` | SQL JSON / 日時 / window / 索引metadata / 集約FILTERの個別選択・一括除去 | 必要機能不足の初期化時拒否、3モードのJS / Wasm、上流1,000クエリの6経路照合、選択したcoreだけの配信とIDBオフライン再開 |
-| `just staged-compat-check` | 基本演算・優先6項目・S02の47テスト | 型・NULL・collation・優先順位・JSON表記・GLOB・char・数値literal、機能選択、JS / Wasm・バイナリcatalog・Drizzle事前定義・Chromiumの最小ビルドとIDB再開を確認 |
+| `just staged-compat-check` | 基本演算・優先6項目・S02・catalog自動選択の56テスト | 型・NULL・collation・優先順位・JSON表記・GLOB・char・数値literal、機能選択、JS / Wasm・バイナリcatalog・Drizzle事前定義・Chromiumの最小ビルドとIDB再開を確認 |
+| `just catalog-profiles` | 27関数群の個別選択、6文種、schema / queryの依存、JS / Wasmの差分と2件のChromium保存検証 | 不要な実装の除去、必要な実装の保持、除外した機能を使う別catalogのロード時拒否。[通常 / 自動選択の計測](../../measurements/catalog-profiles-current.json) |
 
 現行の証拠: [全機能監査Node](../../measurements/sqlite-feature-audit-node.json) / [Chromium](../../measurements/sqlite-feature-audit-chromium.json)、[差分Node](../../measurements/sqlike-differential-node.json) / [Chromium](../../measurements/sqlike-differential-chromium.json)。Node SQLite 3.53.4 / Chromium SQLite WASM 3.54.1を使用した。checkerは台帳・入力・ソース・成果物のhashを検査する。未検証の入力までの数学的な互換性証明ではない。
 

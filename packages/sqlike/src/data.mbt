@@ -17,13 +17,34 @@ fn execute_data_statement(
     store.triggers.data_depth -= 1
   }
   let result = match statement {
-    PreparedTransaction(op, name) => return execute_transaction(store, op, name)
-    PreparedSelect(select) =>
+    PreparedTransaction(op, name) => {
+      guard CAP_STATEMENT_TRANSACTION else {
+        fail("catalog capability disabled: transaction")
+      }
+      return execute_transaction(store, op, name)
+    }
+    PreparedSelect(select) => {
+      guard CAP_STATEMENT_SELECT else {
+        fail("catalog capability disabled: select")
+      }
       return select_rows(store, select, params, 0, prepared=prepared_selection)
-    PreparedPragma(name, table) =>
+    }
+    PreparedPragma(name, table) => {
+      guard CAP_STATEMENT_PRAGMA else {
+        fail("catalog capability disabled: pragma")
+      }
       return execute_pragma(store, name, table, None, params)
-    PreparedInsert(insertion) => insert_rows(store, insertion, params)
+    }
+    PreparedInsert(insertion) => {
+      guard CAP_STATEMENT_INSERT else {
+        fail("catalog capability disabled: insert")
+      }
+      insert_rows(store, insertion, params)
+    }
     PreparedUpdate(name, setters, predicate, returning) => {
+      guard CAP_STATEMENT_UPDATE else {
+        fail("catalog capability disabled: update")
+      }
       let table = get_table(store, name)
       prepare_foreign_table(store, table)
       prepare_trigger_event(store, table, "update", setters.map(p => p.0))
@@ -124,6 +145,9 @@ fn execute_data_statement(
       rows
     }
     PreparedDelete(name, predicate, returning) => {
+      guard CAP_STATEMENT_DELETE else {
+        fail("catalog capability disabled: delete")
+      }
       let table = get_table(store, name)
       prepare_foreign_table(store, table)
       prepare_trigger_event(store, table, "delete", [])
