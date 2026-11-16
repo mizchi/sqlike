@@ -62,4 +62,18 @@ bindでは`1n`がINTEGER、`1`がREALです。INTEGERを`number`へ丸めずに�
 
 各構文・関数の全入力を受理するものではありません。SQLiteの全PRAGMA、仮想テーブル、任意拡張、独自関数・collation等は対応範囲外です。未対応のSQLはエラーにする方針です。
 
+### 0.1.0以後の追加（未リリース）
+
+基本ランタイムに`IS DISTINCT FROM` / `IS NOT DISTINCT FROM`、64bitの`&` / `|` / `~`、`sign()`を追加しました。NULL・型変換・collationもSQLiteと差分検証します。
+
+JSONの`->`はJSONテキスト、`->>`はSQLの値を返します。JSON path・フィールド名・整数の配列indexを指定できます。これらは既存の`sqlJson`機能に含まれ、[選択ビルド](prepared.md)で`sqlJson`を省くとJSON実装を配信しません。未選択のランタイムへJSON演算子を含む定義を渡すと、未実行の式でも初期化時に拒否します。
+
+```sql
+SELECT NULL IS NOT DISTINCT FROM NULL; -- 1
+SELECT 4294967296 | 1, ~0, sign(-2);   -- 4294967297, -1, -1
+SELECT '{"n":1}' -> 'n', '{"n":1}' ->> 'n'; -- TEXT '1', INTEGER 1
+```
+
+その他の不足機能は[段階別の実装チェックリスト](internal/staged-sqlite-compatibility.md)で管理します。
+
 クエリ実行時には行データをメモリに保持します。IndexedDBへ保存する用途は[事前定義したSQL](prepared.md)を参照してください。

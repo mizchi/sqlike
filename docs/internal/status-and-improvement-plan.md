@@ -2,6 +2,8 @@
 
 更新日: 2026-11-16。**0.1.0** の実装・検証を整理した台帳。今後の着手順と完了条件はこのページで管理し、各機能の仕様・実装経緯・測定の全量はリンク先に残す。
 
+0.1.0以後の未リリース変更として、[段階的な互換機能の導入](staged-sqlite-compatibility.md)を開始。軽量な`IS DISTINCT FROM`、`&` / `|` / `~`、`sign()`はcoreへ、JSONの`->` / `->>`は既存の任意機能`sqlJson`へ追加する。後続の不足機能は同ページのチェックリストで管理し、未実装の機能を選択APIへ先行公開しない。
+
 P0のV01 / C01 / R01と、P1のP01 / S01 / P02 / R02は完了。C02の[DO対応](do-consumer-sql.md)に続き、[Drizzle driver・RETURNING式・migration](drizzle.md)を追加した。[P0の基準](p0-results.md)、[P01](p01-aot-results.md)、[S01の列差分](column-delta.md)、[P02の行ページ](row-store.md)、[R02のLTX送信](aot-ltx-upload.md)、[受入条件](release-acceptance.md)、[現行の回帰・計測証拠](../../measurements/p0-completion.json)を保存した。C02の集約代表行などは未完了として維持する。
 
 目標は、**SQLite互換の出力を保ち、軽量なブラウザ実行とオフライン同期を実現すること**。未対応は明示拒否できるが、成功した結果を別の値・型へ読み替えない。[出力互換の契約](sqlite-output-compatibility.md)を優先し、速度のためにこの条件を緩めない。0.1.0は[U01〜U09のアプリシナリオ](roadmap-0.1.0.md)の横断検証で判断する。SQLite全機能互換を0.1.0の条件とはしない。
@@ -110,27 +112,30 @@ Web標準APIによるBase64 / JSON置換、Turso WASMの外部配信は[試作](
 
 ### 現行の正しさの記録
 
-任意機能分割後の回帰はMoonBit **53件×JS / Wasm GC**、Node **298件**、Playwright **56件**と型チェック・本家Litestream復元を通過した。件数はこの更新時点の記録で、将来のテスト件数の固定目標ではない。
+段階的な互換機能の追加後の回帰はMoonBit **53件×JS / Wasm GC**、Node **315件**、Playwright **56件**と型チェック・本家Litestream復元を通過した。件数はこの更新時点の記録で、将来のテスト件数の固定目標ではない。
 
 | ゲート | 現在の観測 | 合格が意味すること |
 | --- | --- | --- |
-| `just sqlite-output-check` | JS / Wasm GC / Chromium JSそれぞれ432 probe一致、270 atomic拒否、出力不一致0 | 324生成ケースを追加。観測した成功出力と拒否時の非変更が一致。未対応を一致へ合算せず、誤受理・内部例外・証拠欠落も検出 |
+| `just sqlite-output-check` | JS / Wasm GC / Chromium JSそれぞれ437 probe一致、265 atomic拒否、出力不一致0 | 324生成ケースを追加。観測した成功出力と拒否時の非変更が一致。未対応を一致へ合算せず、誤受理・内部例外・証拠欠落も検出 |
 | `just differential-audit` | 566ケース・8経路。各環境2,256一致、4件の双方AOT prepare拒否、4件のAOT対象外DDL、不一致0 | 対応済みコーパスの新たな拒否も退行として検出。行・型・列位置・失敗後状態・接続カウンターを照合 |
 | `just sqlite-audit` | **不合格を維持**。台帳1,618件中、未公開API 306・未検証599・参照ビルドになし11などが残る | 全機能互換と判定しない。出力互換ゲートの通過とは別の条件 |
 | `just do-consumer-check` | 実workerdの6シナリオ・53ステップ。33一致・19明示拒否・1双方制約エラー | 型付き行と各操作後の表・監査表をnative SQLiteと照合。絶対値の初期total_changesは一致すると仮定しない |
 | `just drizzle-check` | Kit生成6本＋custom 2本。Node / SQLike JS・Wasm / SQLite WASM、ブラウザIDB、実DOで通過 | 各段階のデータ・FK保持、RETURNING、再適用、履歴・失敗時rollback、オフライン再開。[制限](drizzle.md)を含む固定consumerの検証 |
 | `just defined-check` | 固定バイナリDDL / named statement、JS / Wasm、IDBオフライン再開 | 上流1,000クエリをJSON / binaryのJS / Wasmで本家と照合。型・FK / trigger・wire破損・snapshot / patch・失敗時の非公開を検査 |
 | `just optional-functions-check` | SQL JSON / 日時 / windowの個別選択・一括除去 | 必要機能不足の初期化時拒否、3モードのJS / Wasm、上流1,000クエリの6経路照合、選択したcoreだけの配信とIDBオフライン再開 |
+| `just staged-compat-check` | 軽量な基本演算・JSON演算子の18テスト | NULL・int64・affinity・優先順位・JSON表記、機能不足の初期化時拒否、JS / Wasmとバイナリcatalogを確認 |
 
 現行の証拠: [全機能監査Node](../../measurements/sqlite-feature-audit-node.json) / [Chromium](../../measurements/sqlite-feature-audit-chromium.json)、[差分Node](../../measurements/sqlike-differential-node.json) / [Chromium](../../measurements/sqlike-differential-chromium.json)。Node SQLite 3.53.4 / Chromium SQLite WASM 3.54.1を使用した。checkerは台帳・入力・ソース・成果物のhashを検査する。未検証の入力までの数学的な互換性証明ではない。
 
-### 現行の性能・容量基準
+### 任意機能分割時の基準と現行レポート
+
+以下の数値表は任意機能分割時点の記録。0.1.0以後の追加も含む現行ソースは毎回再計測し、最新の容量とSQLite比較は[README](../../README.ja.md)、機能追加前後の容量差は[段階別の記録](staged-sqlite-compatibility.md)に示す。各レポートのmeasuredAtとsourceHashesで対象を区別する。
 
 JS runtime単体の容量はOxcで空白と識別子を圧縮し、公開APIとpurity annotationを保持する。[採用した設定](minification.md)。主キー索引だけのコアは81.09 KiB、host / 保存込み85.14 KiB（Brotli）。空白を保持していた前回の93.28 KiBとは条件が異なる。
 
 任意機能の分割後にSQL / 行ストア / TEXT・BLOBのIDB / 配信 / DO / index・trigger比較を逐次再採取し、任意のDrizzle entry、バイナリ実行コア / host / exporterの容量も別に測る。対応前は[固定した基準](../../measurements/defined-before)、P02のcloneを伴う変更前後の比較は[行ストア計測](../../measurements/p02-row-store-paired.json)へ保存し、現行結果のhashは`pnpm exec tsx scripts/check-p0.ts`で確認する。S01の[小DB ABBA比較](../../measurements/s01-small-paired.json)は当時の結果として維持する。
 
-| 層・条件 | 今回の値 | 範囲 |
+| 層・条件 | 任意機能分割時の値 | 範囲 |
 | --- | --- | --- |
 | 1,000行・AOT主キー検索 | JS 2.43 / Wasm 1.77 / SQLite 1.59 µs | memory DB、中央値。JSON・型取得を含む |
 | 同条件・SUM＋COUNT | JS 18.07 / Wasm 11.55 / SQLite 23.70 µs | 単純な集約の直接走査 |

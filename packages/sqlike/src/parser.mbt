@@ -133,8 +133,11 @@ fn lex(sql : String) -> Parser raise SqlError {
       i += 1
       if i < bytes.length() {
         let pair = @utf8.decode_lossy(bytes[start:i + 1])
-        if ["<=", ">=", "!=", "<>", "==", "||", "<<", ">>"].contains(pair) {
+        if ["<=", ">=", "!=", "<>", "==", "||", "<<", ">>", "->"].contains(pair) {
           i += 1
+          if pair == "->" && i < bytes.length() && bytes[i] == b'>' {
+            i += 1
+          }
         }
       }
       tokens.push({
@@ -226,10 +229,10 @@ fn precedence(word : String) -> Int32 {
     "and" => 2
     "=" | "==" | "!=" | "<>" | "is" | "like" | "not" | "in" | "between" => 3
     "<" | ">" | "<=" | ">=" => 4
-    "<<" | ">>" => 5
+    "<<" | ">>" | "&" | "|" => 5
     "+" | "-" => 6
     "*" | "/" | "%" => 7
-    "||" => 8
+    "||" | "->" | "->>" => 8
     "collate" => 9
     _ => 0
   }
@@ -318,7 +321,7 @@ fn Parser::expression(p : Parser, minimum : Int32) -> Expr raise SqlError {
     p.tokens[p.position].word == "9223372036854775808" {
     p.position += 1
     Literal(Integer(-9223372036854775808L))
-  } else if word == "-" || word == "+" || word == "not" {
+  } else if word == "-" || word == "+" || word == "not" || word == "~" {
     Unary(word, p.expression(if word == "not" { 3 } else { 9 }))
   } else if word == "*" {
     Star("")
@@ -396,8 +399,15 @@ fn Parser::expression(p : Parser, minimum : Int32) -> Expr raise SqlError {
         fail("unsupported SQL collation")
       }
       left = Collate(left, name)
+    } else if op == "->" || op == "->>" {
+      left = Call(op, [left, p.expression(prec + 1)])
     } else if op == "is" {
-      let op = if p.take("not") { "is not" } else { "is" }
+      let negate = p.take("not")
+      let distinct = p.take("distinct")
+      if distinct {
+        p.expect("from")
+      }
+      let op = if negate != distinct { "is not" } else { "is" }
       left = Binary(op, left, p.expression(prec + 1))
     } else if op == "not" || op == "between" || op == "in" {
       let negate = op == "not"

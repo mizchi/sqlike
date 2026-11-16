@@ -38,6 +38,8 @@ pub fn binary_catalog_storage(BinaryCatalog) -> Bytes
 
 pub fn binary_data(BinaryResult) -> Bytes
 
+pub fn binary_data_base64(BinaryResult) -> String
+
 pub fn binary_info(BinaryResult) -> String
 
 pub fn compile_program(String) -> String
@@ -84,6 +86,8 @@ pub fn defined_ack_delta(DefinedDatabase, Int32) -> String
 
 pub fn defined_apply_delta(DefinedDatabase, Bytes) -> String
 
+pub fn defined_apply_delta_base64(DefinedDatabase, String) -> String
+
 pub fn defined_clone(DefinedDatabase) -> DefinedDatabase
 
 pub fn defined_copy_connection_state(DefinedDatabase, DefinedDatabase) -> String
@@ -98,9 +102,13 @@ pub fn defined_info(DefinedDatabase) -> String
 
 pub fn defined_open(Bytes, Bytes, Bytes) -> DefinedDatabase
 
+pub fn defined_open_base64(String, String, String) -> DefinedDatabase
+
 pub fn defined_query_info(DefinedDatabase, String) -> String
 
 pub fn defined_restore(DefinedDatabase, Bytes) -> String
+
+pub fn defined_restore_base64(DefinedDatabase, String) -> String
 
 pub fn defined_set_clock(DefinedDatabase, String) -> String
 
@@ -168,6 +176,7 @@ pub(all) enum ExtendedCode {
 
 type Program
 pub fn Program::load(String) -> Self raise SqliteError
+pub fn Program::load_binary(Bytes, Bytes) -> Self raise SqliteError
 pub fn Program::query(Self, String) -> Query raise SqliteError
 
 type Query

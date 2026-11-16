@@ -31,6 +31,8 @@ Archives are also available from [GitHub Releases](https://github.com/mizchi/sql
 
 Sizes include the browser entry's JS loader, split chunks, emitted workers, and Wasm. JS is minified with Oxc; Wasm uses release output. Brotli quality 11 is applied to each file before summing. 1 KiB = 1,024 bytes.
 
+SQLike measurements use the current source checkout, including unreleased changes after npm 0.1.0. [Staged compatibility work](docs/internal/staged-sqlite-compatibility.md) records the additions and their size cost.
+
 [![Bundle sizes for ten builds. Blue shows Brotli size; gray shows minified, uncompressed size. Smaller is better.](docs/images/bundle-size.svg)](docs/images/bundle-size.png)
 
 The horizontal axis is logarithmic: each tick doubles the size. Labels show KiB.
@@ -41,14 +43,14 @@ The horizontal axis is logarithmic: each tick doubles the size. Labels show KiB.
 <!-- bundle-size:start -->
 | Build | minified, uncompressed | Brotli |
 | --- | ---: | ---: |
-| SQLike 0.1.0 / SQL / JS | 578.54 KiB | 109.38 KiB |
-| SQLike 0.1.0 / SQL / Wasm GC | 512.96 KiB | 161.34 KiB |
-| SQLike 0.1.0 / Predefined, all execution features / JS | 472.90 KiB | 95.07 KiB |
-| SQLike 0.1.0 / Predefined, all execution features / Wasm GC | 420.70 KiB | 135.98 KiB |
-| SQLike 0.1.0 / Predefined, no JSON/date/window / JS | 440.20 KiB | 87.94 KiB |
-| SQLike 0.1.0 / Predefined, no JSON/date/window / Wasm GC | 395.88 KiB | 126.70 KiB |
-| SQLike 0.1.0 / Predefined, primary-key index only / JS | 424.73 KiB | 85.11 KiB |
-| SQLike 0.1.0 / Predefined, primary-key index only / Wasm GC | 382.77 KiB | 123.06 KiB |
+| SQLike 0.1.0 (source) / SQL / JS | 581.21 KiB | 109.92 KiB |
+| SQLike 0.1.0 (source) / SQL / Wasm GC | 515.42 KiB | 162.17 KiB |
+| SQLike 0.1.0 (source) / Predefined, all execution features / JS | 475.18 KiB | 95.26 KiB |
+| SQLike 0.1.0 (source) / Predefined, all execution features / Wasm GC | 423.06 KiB | 136.61 KiB |
+| SQLike 0.1.0 (source) / Predefined, no JSON/date/window / JS | 440.88 KiB | 87.94 KiB |
+| SQLike 0.1.0 (source) / Predefined, no JSON/date/window / Wasm GC | 396.60 KiB | 127.10 KiB |
+| SQLike 0.1.0 (source) / Predefined, primary-key index only / JS | 425.42 KiB | 85.23 KiB |
+| SQLike 0.1.0 (source) / Predefined, primary-key index only / Wasm GC | 383.25 KiB | 123.24 KiB |
 | sqlite-wasm 3.54.1-build1 | 1313.74 KiB | 462.33 KiB |
 | Turso 0.8.3 | 11709.66 KiB | 2675.96 KiB |
 <!-- bundle-size:end -->
@@ -77,18 +79,18 @@ Each panel starts at zero and uses its own scale. Bars show medians; whiskers sh
 <!-- sqlite-benchmark:start -->
 | Workload | SQLike JS, SQL | SQLike Wasm GC, SQL | SQLite WASM, SQL | SQLite WASM, prepared |
 | --- | ---: | ---: | ---: | ---: |
-| Primary-key lookup | 27.98 | 6.26 | 3.78 | 1.44 |
-| Missing primary key | 26.96 | 5.53 | 2.59 | 0.50 |
-| Indexed range · 10 rows | 49.89 | 13.65 | 14.61 | 10.41 |
-| ORDER BY id · LIMIT 10 | 50.77 | 11.07 | 12.60 | 9.13 |
-| SUM + COUNT · 5,000 rows | 93.74 | 50.86 | 106.82 | 104.34 |
-| Fetch all 5,000 rows | 4,609.09 | 2,694.74 | 4,563.64 | 4,500.00 |
-| Indexed UPDATE + range read | 66.25 | 18.71 | 19.14 | 11.97 |
+| Primary-key lookup | 26.88 | 6.29 | 3.77 | 1.45 |
+| Missing primary key | 26.12 | 5.71 | 2.57 | 0.47 |
+| Indexed range · 10 rows | 49.43 | 13.66 | 14.95 | 10.81 |
+| ORDER BY id · LIMIT 10 | 45.03 | 10.86 | 12.46 | 9.50 |
+| SUM + COUNT · 5,000 rows | 92.68 | 50.35 | 105.25 | 103.09 |
+| Fetch all 5,000 rows | 4,525.00 | 2,668.42 | 4,627.27 | 4,581.82 |
+| Indexed UPDATE + range read | 67.82 | 18.79 | 19.25 | 12.37 |
 <!-- sqlite-benchmark:end -->
 
 </details>
 
-Measured on November 16, 2026, with an Apple M5, macOS arm64, and Chromium 158.0.8127.18. SQLike 0.1.0 MoonBit release output (JS before minification) and SQLite WASM 3.54.1 run in memory on the same page.
+Measured on November 16, 2026, with an Apple M5, macOS arm64, and Chromium 158.0.8127.18. SQLike source after 0.1.0, built with MoonBit release output (JS before minification), and SQLite WASM 3.54.1 run in memory on the same page.
 
 Primary-key and secondary indexes are warm. The update workload alternates indexed values and includes the following range read. Timings cover engine API calls, including typed result conversion and decoding. They exclude host wrappers, startup, Wasm compilation, IndexedDB, and networking. Results and update effects are checked against expectations from native SQLite before and after timing.
 

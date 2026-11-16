@@ -18,7 +18,7 @@ fn prepare_expression(
     Column(q, n) => ignore(resolve_context(ctx, q, n))
     Star(_) => fail("unsupported * expression")
     Unary(op, e) => {
-      guard ["+", "-", "not"].contains(op) else {
+      guard ["+", "-", "not", "~"].contains(op) else {
         fail("unsupported SQL unary operator: " + op)
       }
       prepare_expression(e, ctx, aggregates, windows)
@@ -35,8 +35,8 @@ fn prepare_expression(
     }
     Binary(op, a, b) => {
       guard [
-        "+", "-", "*", "/", "%", "<<", ">>", "||", "and", "or", "=", "==", "!=",
-        "<>", "<", ">", "<=", ">=", "is", "is not", "like",
+        "+", "-", "*", "/", "%", "<<", ">>", "&", "|", "||", "and", "or", "=", "==",
+        "!=", "<>", "<", ">", "<=", ">=", "is", "is not", "like",
       ].contains(op) else {
         fail("unsupported SQL binary operator: " + op)
       }

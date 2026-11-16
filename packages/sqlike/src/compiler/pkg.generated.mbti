@@ -1,8 +1,22 @@
 // Generated using `moon info`, DON'T EDIT IT
 package "mizchi/sqlike/compiler"
 
+import {
+  "mizchi/sqlike",
+}
+
 // Values
+pub fn binary_catalog_info(@sqlike.BinaryCatalog) -> String
+
+pub fn binary_catalog_schema(@sqlike.BinaryCatalog) -> Bytes
+
+pub fn binary_catalog_statements(@sqlike.BinaryCatalog) -> Bytes
+
+pub fn binary_catalog_storage(@sqlike.BinaryCatalog) -> Bytes
+
 pub fn compile_program(String) -> String
+
+pub fn pack_program_binary(String) -> @sqlike.BinaryCatalog
 
 // Errors
 

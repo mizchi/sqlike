@@ -7,9 +7,16 @@ priv enum SqlJson {
   True
   False
   Number(Double, String?)
-  String(String)
+  String(String, String?)
   Array(Array[SqlJson])
-  Object(Array[(String, SqlJson)])
+  Object(Array[(SqlJsonKey, SqlJson)])
+}
+
+///|
+#derive(Eq)
+priv struct SqlJsonKey {
+  text : String
+  source : String?
 }
 
 ///|
@@ -19,7 +26,7 @@ fn SqlJson::null() -> SqlJson {
 
 ///|
 fn SqlJson::string(s : String) -> SqlJson {
-  String(s)
+  String(s, None)
 }
 
 ///|
@@ -29,7 +36,15 @@ fn SqlJson::array(a : Array[SqlJson]) -> SqlJson {
 
 ///|
 fn SqlJson::object(a : Array[(String, SqlJson)]) -> SqlJson {
-  Object(a)
+  Object(a.map(p => ({ text: p.0, source: None, }, p.1)))
+}
+
+///|
+fn json_string_source(text : String, source : String?) -> String {
+  match source {
+    Some(raw) => raw
+    None => @json.to_json(text).stringify()
+  }
 }
 
 ///|
@@ -39,21 +54,21 @@ fn SqlJson::stringify(self : SqlJson) -> String {
     True => "true"
     False => "false"
     Number(n, repr) => repr.unwrap_or(n.to_string())
-    String(s) => @json.to_json(s).stringify()
+    String(s, source) => json_string_source(s, source)
     Array(a) => "[" + a.map(v => v.stringify()).join(",") + "]"
     Object(a) =>
       "{" +
       a
-      .map(p => @json.to_json(p.0).stringify() + ":" + p.1.stringify())
+      .map(p => json_string_source(p.0.text, p.0.source) + ":" + p.1.stringify())
       .join(",") +
       "}"
   }
 }
 
 ///|
-fn json_key(a : Array[(String, SqlJson)], key : String) -> Int32 {
+fn json_key(a : Array[(SqlJsonKey, SqlJson)], key : String) -> Int32 {
   for i, pair in a {
-    if pair.0 == key {
+    if pair.0.text == key {
       return i
     }
   }
@@ -61,7 +76,7 @@ fn json_key(a : Array[(String, SqlJson)], key : String) -> Int32 {
 }
 
 ///|
-fn json_get(a : Array[(String, SqlJson)], key : String) -> SqlJson? {
+fn json_get(a : Array[(SqlJsonKey, SqlJson)], key : String) -> SqlJson? {
   let i = json_key(a, key)
   if i < 0 {
     None
@@ -71,12 +86,16 @@ fn json_get(a : Array[(String, SqlJson)], key : String) -> SqlJson? {
 }
 
 ///|
-fn json_put(a : Array[(String, SqlJson)], key : String, v : SqlJson) -> Unit {
-  let i = json_key(a, key)
+fn json_put(
+  a : Array[(SqlJsonKey, SqlJson)],
+  key : SqlJsonKey,
+  v : SqlJson,
+) -> Unit {
+  let i = json_key(a, key.text)
   if i < 0 {
     a.push((key, v))
   } else {
-    a[i] = (key, v)
+    a[i] = (a[i].0, v)
   }
 }
 
@@ -120,9 +139,11 @@ fn SqlJsonParser::value(
         guard p.position < p.bytes.length() && p.bytes[p.position] == b'"' else {
           fail("malformed JSON")
         }
-        guard p.value(depth + 1) is String(key) else { fail("malformed JSON") }
+        guard p.value(depth + 1) is String(key, source) else {
+          fail("malformed JSON")
+        }
         guard p.take(b':') else { fail("malformed JSON") }
-        fields.push((key, p.value(depth + 1)))
+        fields.push(({ text: key, source, }, p.value(depth + 1)))
         if p.take(b'}') {
           break
         }
@@ -180,7 +201,8 @@ fn SqlJsonParser::value(
     True => SqlJson::True
     False => SqlJson::False
     Number(n, repr~) => SqlJson::Number(n, repr)
-    String(s) => SqlJson::String(s)
+    String(s) =>
+      SqlJson::String(s, Some(@utf8.decode_lossy(p.bytes[start:p.position])))
     _ => fail("malformed JSON")
   }
 }
@@ -303,7 +325,7 @@ fn json_sql_value(json : SqlJson) -> Value {
       } else {
         Real(n)
       }
-    String(s) => Text(s)
+    String(s, _) => Text(s)
     other => Text(other.stringify())
   }
 }
@@ -353,7 +375,7 @@ fn json_edit(
         if mode == "remove" {
           ignore(copy.remove(index))
         } else if (mode != "insert" || !exists) && (mode != "replace" || exists) {
-          json_put(copy, key, value)
+          json_put(copy, { text: key, source: None, }, value)
         }
       } else if exists || mode == "set" || mode == "insert" {
         let empty = match path[position + 1] {
@@ -363,10 +385,10 @@ fn json_edit(
         let child = if exists { copy[index].1 } else { empty }
         let next = json_edit(child, path, position + 1, value, mode)
         if exists || next != empty {
-          json_put(copy, key, next)
+          json_put(copy, { text: key, source: None, }, next)
         }
       }
-      SqlJson::object(copy)
+      SqlJson::Object(copy)
     }
     (Array(items), part) => {
       let n = match part {
@@ -427,7 +449,7 @@ fn json_merge(target : SqlJson, patch : SqlJson) -> SqlJson {
     _ => []
   }
   for (key, value) in patch {
-    let index = json_key(copy, key)
+    let index = json_key(copy, key.text)
     if value is Null {
       if index >= 0 {
         ignore(copy.remove(index))
@@ -447,12 +469,13 @@ fn json_merge(target : SqlJson, patch : SqlJson) -> SqlJson {
       )
     }
   }
-  SqlJson::object(copy)
+  SqlJson::Object(copy)
 }
 
 ///|
 fn json_arity(name : String, count : Int32) -> Bool {
   match name {
+    "->" | "->>" => count == 2
     "json_valid" | "json" | "json_quote" => count == 1
     "json_type" | "json_array_length" => count == 1 || count == 2
     "json_extract" => count >= 2
@@ -467,6 +490,56 @@ fn json_arity(name : String, count : Int32) -> Bool {
 
 ///|
 fn json_call(
+  name : String,
+  args : Array[Expr],
+  values : Array[Value],
+  ctx : Evaluation,
+) -> Value raise SqlError {
+  if name == "->" || name == "->>" {
+    if values[0] is Null {
+      return Null
+    }
+    let json = json_input(values[0])
+    if values[1] is Null {
+      return Null
+    }
+    let path : Array[JsonSegment] = match values[1] {
+      Integer(n) => {
+        // A document cannot have an Int32-overflowing array index. Do not wrap.
+        if n > 2147483647L || n < -2147483647L {
+          return Null
+        }
+        [if n < 0L { FromEnd((-n).to_int()) } else { Index(n.to_int()) }]
+      }
+      value => {
+        let text = checked_text_value(value)
+        guard text != "" else { fail("bad JSON path") }
+        guard !text.contains("\u{0}") else {
+          fail("unsupported JSON path with NUL")
+        }
+        if text.has_prefix("$") {
+          json_path(text)
+        } else {
+          json_path("$.\"" + text + "\"")
+        }
+      }
+    }
+    match json_lookup(json, path) {
+      Some(value) =>
+        if name == "->" {
+          Text(value.stringify())
+        } else {
+          json_sql_value(value)
+        }
+      None => Null
+    }
+  } else {
+    json_call_function(name, args, values, ctx)
+  }
+}
+
+///|
+fn json_call_function(
   name : String,
   args : Array[Expr],
   values : Array[Value],
@@ -557,7 +630,7 @@ fn json_call(
         Null => "null"
         True => "true"
         False => "false"
-        String(_) => "text"
+        String(_, _) => "text"
         Array(_) => "array"
         Object(_) => "object"
         Number(_, repr) =>
@@ -633,7 +706,7 @@ fn json_subtype(expr : Expr, ctx : Evaluation) -> Bool raise SqlError {
     Call(name, _) =>
       [
         "json", "json_quote", "json_array", "json_object", "json_set", "json_insert",
-        "json_replace", "json_remove", "json_patch",
+        "json_replace", "json_remove", "json_patch", "->",
       ].contains(name)
     Case(base, arms, other) => {
       let selected = evaluate(

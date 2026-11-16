@@ -31,6 +31,8 @@ pnpm add @mizchi/litestream
 
 ブラウザ向けの公開entryをOxcでminifyした配布物の合計です。JSローダー・分割chunk・生成されるWorker・Wasmを含み、Brotliは各ファイルをquality 11で圧縮して合算しています。1 KiB = 1,024 bytes。Wasmはrelease出力を使用します。
 
+SQLikeはnpm 0.1.0以後の未リリース変更を含む現行ソースで計測しています。[段階的な互換機能の導入](docs/internal/staged-sqlite-compatibility.md)に追加内容とサイズ差を記録します。
+
 [![10構成のバンドルサイズ。青はBrotli、灰色はminify後の未圧縮サイズ。小さいほど軽量。](docs/images/bundle-size.svg)](docs/images/bundle-size.png)
 
 横軸は対数目盛で、1目盛ごとにサイズが2倍になります。点に記載した数値はKiBです。
@@ -41,14 +43,14 @@ pnpm add @mizchi/litestream
 <!-- bundle-size:start -->
 | ビルド | minified・未圧縮 | Brotli |
 | --- | ---: | ---: |
-| SQLike 0.1.0 / 通常SQL / JS | 578.54 KiB | 109.38 KiB |
-| SQLike 0.1.0 / 通常SQL / Wasm GC | 512.96 KiB | 161.34 KiB |
-| SQLike 0.1.0 / 事前定義・全実行機能 / JS | 472.90 KiB | 95.07 KiB |
-| SQLike 0.1.0 / 事前定義・全実行機能 / Wasm GC | 420.70 KiB | 135.98 KiB |
-| SQLike 0.1.0 / 事前定義・JSON・日時・windowなし / JS | 440.20 KiB | 87.94 KiB |
-| SQLike 0.1.0 / 事前定義・JSON・日時・windowなし / Wasm GC | 395.88 KiB | 126.70 KiB |
-| SQLike 0.1.0 / 事前定義・主キー索引のみ / JS | 424.73 KiB | 85.11 KiB |
-| SQLike 0.1.0 / 事前定義・主キー索引のみ / Wasm GC | 382.77 KiB | 123.06 KiB |
+| SQLike 0.1.0 (source) / 通常SQL / JS | 581.21 KiB | 109.92 KiB |
+| SQLike 0.1.0 (source) / 通常SQL / Wasm GC | 515.42 KiB | 162.17 KiB |
+| SQLike 0.1.0 (source) / 事前定義・全実行機能 / JS | 475.18 KiB | 95.26 KiB |
+| SQLike 0.1.0 (source) / 事前定義・全実行機能 / Wasm GC | 423.06 KiB | 136.61 KiB |
+| SQLike 0.1.0 (source) / 事前定義・JSON・日時・windowなし / JS | 440.88 KiB | 87.94 KiB |
+| SQLike 0.1.0 (source) / 事前定義・JSON・日時・windowなし / Wasm GC | 396.60 KiB | 127.10 KiB |
+| SQLike 0.1.0 (source) / 事前定義・主キー索引のみ / JS | 425.42 KiB | 85.23 KiB |
+| SQLike 0.1.0 (source) / 事前定義・主キー索引のみ / Wasm GC | 383.25 KiB | 123.24 KiB |
 | sqlite-wasm 3.54.1-build1 | 1313.74 KiB | 462.33 KiB |
 | Turso 0.8.3 | 11709.66 KiB | 2675.96 KiB |
 <!-- bundle-size:end -->
@@ -77,18 +79,18 @@ pnpm add @mizchi/litestream
 <!-- sqlite-benchmark:start -->
 | 処理 | SQLike JS・通常SQL | SQLike Wasm GC・通常SQL | SQLite WASM・通常SQL | SQLite WASM・prepared |
 | --- | ---: | ---: | ---: | ---: |
-| 主キーで1行検索 | 27.98 | 6.26 | 3.78 | 1.44 |
-| 存在しない主キーの検索 | 26.96 | 5.53 | 2.59 | 0.50 |
-| 二次索引の範囲検索・10行 | 49.89 | 13.65 | 14.61 | 10.41 |
-| ORDER BY id LIMIT 10 | 50.77 | 11.07 | 12.60 | 9.13 |
-| sum(n), count(*) | 93.74 | 50.86 | 106.82 | 104.34 |
-| 全5,000行取得 | 4,609.09 | 2,694.74 | 4,563.64 | 4,500.00 |
-| 索引列の更新＋範囲10行取得 | 66.25 | 18.71 | 19.14 | 11.97 |
+| 主キーで1行検索 | 26.88 | 6.29 | 3.77 | 1.45 |
+| 存在しない主キーの検索 | 26.12 | 5.71 | 2.57 | 0.47 |
+| 二次索引の範囲検索・10行 | 49.43 | 13.66 | 14.95 | 10.81 |
+| ORDER BY id LIMIT 10 | 45.03 | 10.86 | 12.46 | 9.50 |
+| sum(n), count(*) | 92.68 | 50.35 | 105.25 | 103.09 |
+| 全5,000行取得 | 4,525.00 | 2,668.42 | 4,627.27 | 4,581.82 |
+| 索引列の更新＋範囲10行取得 | 67.82 | 18.79 | 19.25 | 12.37 |
 <!-- sqlite-benchmark:end -->
 
 </details>
 
-2026-11-16、Apple M5 / macOS arm64 / Chromium 158.0.8127.18で計測。SQLike 0.1.0のMoonBit release出力（JSはminify前）と、SQLite WASM 3.54.1を同じページ内のインメモリDBで実行しています。
+2026-11-16、Apple M5 / macOS arm64 / Chromium 158.0.8127.18で計測。SQLike 0.1.0以後の現行ソースのMoonBit release出力（JSはminify前）と、SQLite WASM 3.54.1を同じページ内のインメモリDBで実行しています。
 
 主キー・二次索引はウォーム状態です。更新の行は索引列の値を交互に変更し、その後の範囲検索までを含みます。結果の型変換と復号を含むエンジンAPIの比較で、host wrapper、起動・Wasmコンパイル、IndexedDB、通信は含みません。計測前後にnative SQLite由来の期待値と更新結果を照合しています。
 

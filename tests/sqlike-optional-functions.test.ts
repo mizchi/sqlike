@@ -26,6 +26,9 @@ const cases: {
     "json_extract(v,'$.n')",
     "CASE WHEN 0 THEN json_array(1) ELSE 1 END",
     "(SELECT json_quote(v))",
+    "v -> '$.n'",
+    "v ->> '$.n'",
+    "CASE WHEN 0 THEN v -> '$.n' ELSE 1 END",
   ].map((e) => ({
     feature: "sqlJson" as const,
     bit: 16,
@@ -225,6 +228,10 @@ test("optional scalar/window features reject at load, including unused schema ex
           const queries = [
             { name: "add", sql: "INSERT INTO t VALUES(?,?) RETURNING id,v" },
             {
+              name: "core",
+              sql: "SELECT ~id,id & 3,id | 4294967296,sign(-id),id IS DISTINCT FROM NULL,id IS NOT DISTINCT FROM 1 FROM t ORDER BY id",
+            },
+            {
               name: "get",
               sql: "SELECT id,v,CAST('12.5' AS REAL),sum(id) FROM t GROUP BY id,v ORDER BY id",
             },
@@ -233,6 +240,10 @@ test("optional scalar/window features reject at load, including unused schema ex
                   {
                     name: "json",
                     sql: "SELECT json('{\"n\":9007199254740993}'),json_extract(v,'$.n') FROM t ORDER BY id",
+                  },
+                  {
+                    name: "arrows",
+                    sql: "SELECT v -> '$.n',v ->> 'n',json_array(v -> 'n') FROM t ORDER BY id",
                   },
                   {
                     name: "date",

@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "measuredAt": "2026-11-16T02:32:42.292Z",
+  "measuredAt": "2026-11-16T10:11:28.953Z",
   "node": "v24.22.2",
   "method": "Working static feature builds, identical binary execution API. Oxc client minification retaining public exports and annotations, with compact whitespace; absence checks use unminified source; gzip9/Brotli11. Individual removals retain every other execution feature; without-all-three removes only those three. notes-minimal also removes the other optional features except primaryKeyIndex. Host totals include every emitted chunk including IndexedDB; do not include schema/statements, SQLite exporter, LTX or networking. Wasm GC is release without wasm-opt and excludes host/glue. No timing claim.",
   "sourceHashes": {
@@ -50,7 +50,7 @@
     "packages/sqlike/src/defined-sqlite/moon.pkg": "6d93d349a02f08b9beafb2f344b35bc858dd5b3b1fc81a59e557d2881c091bb7",
     "packages/sqlike/src/defined/defined.mbt": "caf0ae96fd7a7af9f94b3e831f2f9de2077a64caacdbb3d4029e2780ff4f044f",
     "packages/sqlike/src/defined/moon.pkg": "6c72c36fb88ebfab45a73ad8d209dcb3f593c9d1bc3ade7c5a6c952c1be947a9",
-    "packages/sqlike/src/evaluate.mbt": "ed87b44814081c3931c8954a080f11cdc8f5b3e510d386d5986f6bafb4e81ef7",
+    "packages/sqlike/src/evaluate.mbt": "abdfc4bdadb0a8a9e244cb81eb9120bc97ef2de109ff45d7da4a935daf87e0b1",
     "packages/sqlike/src/execute.mbt": "1f77403bcf9b471b0c844295e380fd76eaddb2080dccb142c4d3c6c5ee63f0da",
     "packages/sqlike/src/feature_config.mbt": "42a8ee73feb9a4ee48d3e8eaae7e1c641429b1cf6bba80b2d6ad665fcde1082f",
     "packages/sqlike/src/feature_validation.mbt": "fa4bdacae986dbe1a140fcb4fdb34025475989a1462a1cce484c647b8d4e7160",
@@ -69,7 +69,7 @@
     "packages/sqlike/src/interface_compiler.mbt": "652e12aa261f308feab25e8ba983835b7ec8d979cd12c2799eb75d75dd5c131d",
     "packages/sqlike/src/interface_test.mbt": "425c72b3a5d4a7aee0018c10bc95bad3b8ff3f471bbebcff8ee142729d50cbd7",
     "packages/sqlike/src/join.mbt": "b2fd2c5fd92925c42f5aa87963acaecadfef5e07816c84f1ea5435e2ecd7f2a7",
-    "packages/sqlike/src/json_functions.mbt": "90586a3db1e09463a84ab3ac641873ee88de956c0140b0d4598a93666c7097e3",
+    "packages/sqlike/src/json_functions.mbt": "4eff92238e5e558088b7c1060555d62803ad830854dfe266b69cb8d99adb8929",
     "packages/sqlike/src/lsm/lsm.mbt": "9e88824dc0b449e7c15209beb7e0dc8fdf34aab5e77c405bf1ef6d5040aad924",
     "packages/sqlike/src/lsm/lsm_wbtest.mbt": "0bd332033c4a16ba4ba0dd3e0a6cd640a0e6aef777f2b2e8f4cf464cef568a19",
     "packages/sqlike/src/lsm/moon.pkg": "5ede3703157bb09f075866319cd3c29867ccefdc0446e508925a2a9fd0407da9",
@@ -79,11 +79,11 @@
     "packages/sqlike/src/moon.pkg": "de151fa439eb1819bea931c53ff75fe4aafbfd2ac63a3d8e85e646ee96fa58d1",
     "packages/sqlike/src/optimization_wbtest.mbt": "612f870958611e4f7c499e8fd0ea445c0e1181f629001afc157cd2970d819201",
     "packages/sqlike/src/output_policy.mbt": "69d2b4e6ff30e4009eba7e288d6dd40966c4d97832033d2c5404f02551ccd8c9",
-    "packages/sqlike/src/parser.mbt": "fea3cc85d8ef9bff97335ee194945bc48fc82a9c89a7951bc9b61d9a5f7d507a",
+    "packages/sqlike/src/parser.mbt": "15c49ccc100c488690e0798563165289be737fe66eb938f934f1ae6508bee1f5",
     "packages/sqlike/src/persistence.mbt": "dccf7b6269e823365316cff2e31867a90d258c1e69b2bfbd9bffd90e08921c2e",
     "packages/sqlike/src/persistence_edits.mbt": "59fb2a7d7dafbd7694e78c6cfbc0ad83fa012ec058f844d84def2620f002f0cd",
     "packages/sqlike/src/persistence_wbtest.mbt": "3d981dac002f117107f4b60a6397807dcaff5b8a15d45ec3b96388ca83be3344",
-    "packages/sqlike/src/prepare.mbt": "372f776e5e1a9fe5f33cb451d667a3fb8026556a24595f541bbcce2bd0dbb475",
+    "packages/sqlike/src/prepare.mbt": "f1547960efc95a78b96cbb49166422dfd5307d6125e3785e70ba35388712a532",
     "packages/sqlike/src/prepared.mbt": "a5bc24736cb3dc6dfdd6de24470b17e3ae59a3f8c1ae758c74efed48aa641769",
     "packages/sqlike/src/prepared_selection_wbtest.mbt": "b4624c89bae3b7181f1444cd251556e054453bed98062bd5b6a19d151977c209",
     "packages/sqlike/src/primary_index.mbt": "b81cb16812bc24f0e3807778997c66ca4aab241335026c8542fcf36fe1189599",
@@ -92,7 +92,7 @@
     "packages/sqlike/src/query_plan.mbt": "63e846f9bf6c018d9fad30627cbb670667e337ed767366e58a5022246e2d0f74",
     "packages/sqlike/src/row_pages.mbt": "35795aa2cc32e84b58e30b07b0f597908a51f1989d3371f9986c2b21188addb5",
     "packages/sqlike/src/row_pages_wbtest.mbt": "d48a5d1e5454dda34e25829bda13996d5a94e140191818eacf08f5ecc609b744",
-    "packages/sqlike/src/scalar.mbt": "ad8ae215e4a7a470fe0f9b4b7c0425ad2ca9f2eeb0fbca9a2e8d2c0383c31d9a",
+    "packages/sqlike/src/scalar.mbt": "fa09811a2e17dd2a1eb433cab3b63861db625347dd7d5477234621e0bdb4804a",
     "packages/sqlike/src/sql_render.mbt": "b7264b0685e50dbf0237a58b23970a617bfbaac2c8a588216ea552e110218146",
     "packages/sqlike/src/sqlite_file.mbt": "f1208916e4cb70e91360ca851f7cf81b4889baee9c100bfbbf6d7c0d6aabb7ee",
     "packages/sqlike/src/sqlite_import.mbt": "e1922e7730ab15003c26d685fa9d6992c5d056070b771ffc0f163f3c1ae2c9c9",
@@ -129,26 +129,26 @@
         "windowFunctions"
       ],
       "js": {
-        "raw": 472116,
-        "gzip": 116389,
-        "brotli": 93276
+        "raw": 474446,
+        "gzip": 116936,
+        "brotli": 93500
       },
       "hostAndPersistence": {
-        "raw": 484198,
-        "gzip": 121180,
-        "brotli": 97191
+        "raw": 486528,
+        "gzip": 121713,
+        "brotli": 97793
       },
       "wasm": {
-        "raw": 418437,
-        "gzip": 170076,
-        "brotli": 134852
+        "raw": 420856,
+        "gzip": 170908,
+        "brotli": 135493
       },
       "absent": {
         "dateTime": false,
         "sqlJson": false,
         "windowFunctions": false
       },
-      "runtimeSHA256": "b3fb31d193c024f1348831875cc1c1031a6cb28e2bedc16a6af7f8bc96f8a5b7",
+      "runtimeSHA256": "4dd8d1f8702d16361e13844d20c7a5b114145157c22b3c1050f2c3f5c59cc610",
       "removedJS": {
         "raw": 0,
         "gzip": 0,
@@ -167,30 +167,30 @@
         "windowFunctions"
       ],
       "js": {
-        "raw": 468351,
-        "gzip": 114533,
-        "brotli": 91490
+        "raw": 470681,
+        "gzip": 115123,
+        "brotli": 92143
       },
       "hostAndPersistence": {
-        "raw": 480428,
-        "gzip": 119350,
-        "brotli": 95690
+        "raw": 482758,
+        "gzip": 119906,
+        "brotli": 96053
       },
       "wasm": {
-        "raw": 420106,
-        "gzip": 169471,
-        "brotli": 133736
+        "raw": 421109,
+        "gzip": 170206,
+        "brotli": 134107
       },
       "absent": {
         "dateTime": true,
         "sqlJson": false,
         "windowFunctions": false
       },
-      "runtimeSHA256": "955540c0eef3ecaab2d3918994cfafb2fdaa7c145ddc525deb4b4004cb2ab73e",
+      "runtimeSHA256": "a51f7a3edfcffb8a67654281c2d4f87fa6066e863b8c82f58f5dc8d9526ef050",
       "removedJS": {
         "raw": 3765,
-        "gzip": 1856,
-        "brotli": 1786
+        "gzip": 1813,
+        "brotli": 1357
       }
     },
     {
@@ -205,30 +205,30 @@
         "windowFunctions"
       ],
       "js": {
-        "raw": 466202,
-        "gzip": 113974,
-        "brotli": 91335
+        "raw": 466900,
+        "gzip": 114111,
+        "brotli": 91275
       },
       "hostAndPersistence": {
-        "raw": 478273,
-        "gzip": 118802,
-        "brotli": 95323
+        "raw": 478971,
+        "gzip": 118942,
+        "brotli": 95353
       },
       "wasm": {
-        "raw": 412059,
-        "gzip": 167009,
-        "brotli": 132358
+        "raw": 412572,
+        "gzip": 167151,
+        "brotli": 132465
       },
       "absent": {
         "dateTime": false,
         "sqlJson": true,
         "windowFunctions": false
       },
-      "runtimeSHA256": "27a732b67a208854ceb839d55ee2898b7646a68e0d6236435813e93bf533e2d3",
+      "runtimeSHA256": "16b945cacc1af3f0719fe333a3b69f3e4484eb89a4c20a1f123c98bde6993d3d",
       "removedJS": {
-        "raw": 5914,
-        "gzip": 2415,
-        "brotli": 1941
+        "raw": 7546,
+        "gzip": 2825,
+        "brotli": 2225
       }
     },
     {
@@ -243,30 +243,30 @@
         "triggers"
       ],
       "js": {
-        "raw": 468378,
-        "gzip": 114243,
-        "brotli": 91369
+        "raw": 470708,
+        "gzip": 114790,
+        "brotli": 92032
       },
       "hostAndPersistence": {
-        "raw": 480447,
-        "gzip": 119022,
-        "brotli": 95597
+        "raw": 482777,
+        "gzip": 119598,
+        "brotli": 96225
       },
       "wasm": {
-        "raw": 413833,
-        "gzip": 167334,
-        "brotli": 132245
+        "raw": 416774,
+        "gzip": 168290,
+        "brotli": 133074
       },
       "absent": {
         "dateTime": false,
         "sqlJson": false,
         "windowFunctions": true
       },
-      "runtimeSHA256": "fa38d2a4c2d36db25257ab6ea06ebaec909e917c5dd9065b6d99d32f57f80781",
+      "runtimeSHA256": "fed997c03426c2fb65b564cee82bb37af61aae812d17658443090c1377bc2703",
       "removedJS": {
         "raw": 3738,
         "gzip": 2146,
-        "brotli": 1907
+        "brotli": 1468
       }
     },
     {
@@ -279,30 +279,30 @@
         "triggers"
       ],
       "js": {
-        "raw": 438509,
-        "gzip": 107108,
-        "brotli": 86166
+        "raw": 439207,
+        "gzip": 107238,
+        "brotli": 86156
       },
       "hostAndPersistence": {
-        "raw": 450578,
-        "gzip": 111846,
-        "brotli": 90284
+        "raw": 451276,
+        "gzip": 111975,
+        "brotli": 90410
       },
       "wasm": {
-        "raw": 393021,
-        "gzip": 157521,
-        "brotli": 125347
+        "raw": 393760,
+        "gzip": 157917,
+        "brotli": 125750
       },
       "absent": {
         "dateTime": true,
         "sqlJson": true,
         "windowFunctions": true
       },
-      "runtimeSHA256": "6eddb6378cb06f7f575948a37561b6ad95b51b3a1d6a447c06818bb9eed5784e",
+      "runtimeSHA256": "3496ad29006a0688c488cd5309134ec796f6558f3e6f007dca23caaf3ddf340c",
       "removedJS": {
-        "raw": 33607,
-        "gzip": 9281,
-        "brotli": 7110
+        "raw": 35239,
+        "gzip": 9698,
+        "brotli": 7344
       }
     },
     {
@@ -311,30 +311,30 @@
         "primaryKeyIndex"
       ],
       "js": {
-        "raw": 422666,
-        "gzip": 103027,
-        "brotli": 83039
+        "raw": 423368,
+        "gzip": 103167,
+        "brotli": 83138
       },
       "hostAndPersistence": {
-        "raw": 434744,
-        "gzip": 107776,
-        "brotli": 87180
+        "raw": 435446,
+        "gzip": 107926,
+        "brotli": 87433
       },
       "wasm": {
-        "raw": 379595,
-        "gzip": 153112,
-        "brotli": 121602
+        "raw": 380094,
+        "gzip": 153270,
+        "brotli": 121796
       },
       "absent": {
         "dateTime": true,
         "sqlJson": true,
         "windowFunctions": true
       },
-      "runtimeSHA256": "dd2ef299c8189f3a27e1d419d45b5725aeadef30ee73ffc9537a946a0dbef97c",
+      "runtimeSHA256": "44da72414e71191d8625838a83bb20bbfca5a51418d00c06e8e6166efd4d2b21",
       "removedJS": {
-        "raw": 49450,
-        "gzip": 13362,
-        "brotli": 10237
+        "raw": 51078,
+        "gzip": 13769,
+        "brotli": 10362
       }
     }
   ],

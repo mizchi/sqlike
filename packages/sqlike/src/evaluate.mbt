@@ -228,6 +228,12 @@ fn evaluate(expression : Expr, ctx : Evaluation) -> Value raise SqlError {
         }
       } else if op == "+" {
         value
+      } else if op == "~" {
+        if value is Null {
+          Null
+        } else {
+          Integer(integer_value(value) ^ -1L)
+        }
       } else {
         match numeric(value, false) {
           Null => Null
@@ -267,6 +273,14 @@ fn evaluate(expression : Expr, ctx : Evaluation) -> Value raise SqlError {
         arithmetic(op, a, b)
       } else if op == "<<" || op == ">>" {
         shift_value(op, a, b)
+      } else if op == "&" || op == "|" {
+        if a is Null || b is Null {
+          Null
+        } else {
+          let x = integer_value(a)
+          let y = integer_value(b)
+          Integer(if op == "&" { x & y } else { x | y })
+        }
       } else if op == "||" {
         if a is Null || b is Null {
           Null

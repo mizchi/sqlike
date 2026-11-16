@@ -8,7 +8,7 @@ fn scalar_arity(name : String, count : Int32) -> Bool {
     "replace" => count == 3
     "concat" => count >= 1
     "concat_ws" | "iif" | "if" => count >= 2
-    "octet_length" | "quote" | "unicode" => count == 1
+    "octet_length" | "quote" | "unicode" | "sign" => count == 1
     "round" => count == 1 || count == 2
     _ => false
   }
@@ -86,6 +86,13 @@ fn scalar_call(
   encoding : Int32,
 ) -> Value raise SqlError {
   match name {
+    "sign" =>
+      match numeric(values[0], true) {
+        Integer(n) =>
+          Integer(if n < 0L { -1L } else if n > 0L { 1L } else { 0L })
+        Real(n) => Integer(if n < 0 { -1L } else if n > 0 { 1L } else { 0L })
+        _ => Null
+      }
     "unicode" => {
       if values[0] is Null {
         return Null

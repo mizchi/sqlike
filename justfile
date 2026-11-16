@@ -20,6 +20,12 @@ moon-check:
     moon check --target js
     moon check --target wasm-gc
 
+# Lightweight core additions and opt-in JSON operators, including binary profiles.
+staged-compat-check:
+    pnpm build:core
+    pnpm build:moon-wasm
+    pnpm exec tsx --test tests/sqlike-basic-compat.test.ts tests/sqlike-json-operators.test.ts tests/sqlike-app-functions.test.ts tests/sqlike-optional-functions.test.ts
+
 test-sqlike:
     moon test packages/sqlike/src packages/sqlike/src/compiler --target js
     moon test packages/sqlike/src packages/sqlike/src/compiler --target wasm-gc

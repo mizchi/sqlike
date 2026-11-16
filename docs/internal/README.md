@@ -41,5 +41,6 @@
 | [sqlite-output-compatibility.md](sqlite-output-compatibility.md) | 出力互換を優先する契約 |
 | [sqlite-performance.md](sqlite-performance.md) | SQLite WASM と SQLike の速度差・最適化候補 |
 | [status-and-improvement-plan.md](status-and-improvement-plan.md) | 現在の対応範囲・最適化と改善対象 |
+| [staged-sqlite-compatibility.md](staged-sqlite-compatibility.md) | 不足するSQLite互換機能の導入順・任意機能の境界・サイズ差 |
 | [wasm-performance.md](wasm-performance.md) | SQLike の JS / Wasm GC 実行速度 |
 | [web-platform-size.md](web-platform-size.md) | Web 標準による削減候補 |

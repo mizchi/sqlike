@@ -1,0 +1,51 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "mizchi/sqlike/defined"
+
+import {
+  "mizchi/sqlike",
+}
+
+// Values
+pub fn binary_data(@sqlike.BinaryResult) -> Bytes
+
+pub fn binary_data_base64(@sqlike.BinaryResult) -> String
+
+pub fn binary_info(@sqlike.BinaryResult) -> String
+
+pub fn defined_ack_delta(@sqlike.DefinedDatabase, Int32) -> String
+
+pub fn defined_apply_delta(@sqlike.DefinedDatabase, Bytes) -> String
+
+pub fn defined_apply_delta_base64(@sqlike.DefinedDatabase, String) -> String
+
+pub fn defined_clone(@sqlike.DefinedDatabase) -> @sqlike.DefinedDatabase
+
+pub fn defined_copy_connection_state(@sqlike.DefinedDatabase, @sqlike.DefinedDatabase) -> String
+
+pub fn defined_delta(@sqlike.DefinedDatabase, Bool) -> @sqlike.BinaryResult
+
+pub fn defined_execute(@sqlike.DefinedDatabase, String, String) -> String
+
+pub fn defined_info(@sqlike.DefinedDatabase) -> String
+
+pub fn defined_open(Bytes, Bytes, Bytes) -> @sqlike.DefinedDatabase
+
+pub fn defined_open_base64(String, String, String) -> @sqlike.DefinedDatabase
+
+pub fn defined_query_info(@sqlike.DefinedDatabase, String) -> String
+
+pub fn defined_restore(@sqlike.DefinedDatabase, Bytes) -> String
+
+pub fn defined_restore_base64(@sqlike.DefinedDatabase, String) -> String
+
+pub fn defined_set_clock(@sqlike.DefinedDatabase, String) -> String
+
+pub fn defined_snapshot(@sqlike.DefinedDatabase) -> @sqlike.BinaryResult
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits

@@ -27,6 +27,7 @@ if (args.length) {
 const directory = resolve("generated/bundle-size");
 await mkdir(directory, { recursive: true });
 const version = JSON.parse(await readFile("npm/sqlike/package.json", "utf8")).version;
+const displayVersion = `${version} (source)`;
 const sqlite = JSON.parse(await readFile("node_modules/@sqlite.org/sqlite-wasm/package.json", "utf8"));
 const turso = JSON.parse(await readFile("node_modules/@tursodatabase/database-wasm/package.json", "utf8"));
 const entries: { id: string; name: string; entry: string; kind: "sql" | "defined" | "sqlite" | "turso"; wasm: boolean }[] = [];
@@ -40,12 +41,12 @@ const wasmLoad = `const {instance}=await WebAssembly.instantiateStreaming(fetch(
 const definedHost = JSON.stringify(resolve("adapters/defined-database-core.ts"));
 const wasmHost = JSON.stringify(resolve("adapters/defined-wasm.ts"));
 const sqlHost = JSON.stringify(resolve("src/sqlike-runtime.ts"));
-entries.push({ id: "sql-js", name: `SQLike ${version} / 通常SQL / JS`, entry: resolve("npm/sqlike/index.ts"), kind: "sql", wasm: false });
+entries.push({ id: "sql-js", name: `SQLike ${displayVersion} / 通常SQL / JS`, entry: resolve("npm/sqlike/index.ts"), kind: "sql", wasm: false });
 const sqlWasmDir = join(directory, "sql-wasm");
 await mkdir(sqlWasmDir, { recursive: true });
 await copyFile("_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm", join(sqlWasmDir, "runtime.wasm"));
 await writeFile(join(sqlWasmDir, "entry.ts"), `import {openSql,type SqlRuntime} from ${sqlHost};\n${wasmLoad}\nexport const openDatabase=(image?:string)=>openSql(instance.exports as unknown as SqlRuntime,image);\n`);
-entries.push({ id: "sql-wasm", name: `SQLike ${version} / 通常SQL / Wasm GC`, entry: join(sqlWasmDir, "entry.ts"), kind: "sql", wasm: true });
+entries.push({ id: "sql-wasm", name: `SQLike ${displayVersion} / 通常SQL / Wasm GC`, entry: join(sqlWasmDir, "entry.ts"), kind: "sql", wasm: true });
 for (const profile of profiles) {
   const profileDir = join(directory, profile.id);
   await buildSqlikeRuntime(defineSqlike({ mode: "defined", features: profile.features }), { outDir: profileDir });
@@ -53,7 +54,7 @@ for (const profile of profiles) {
     const entry = join(profileDir, wasm ? "wasm-entry.ts" : "js-entry.ts");
     const runtime = wasm ? `import {definedWasm} from ${wasmHost};\n${wasmLoad}\nconst runtime=definedWasm(instance.exports);` : `import * as runtime from './runtime.js';`;
     await writeFile(entry, `import {createDefinedDatabase} from ${definedHost};\nexport {DefinedStatement} from ${definedHost};\n${runtime}\nexport const DefinedDatabase=createDefinedDatabase(runtime);\n`);
-    entries.push({ id: `defined-${profile.id}-${wasm ? "wasm" : "js"}`, name: `SQLike ${version} / 事前定義・${profile.label} / ${wasm ? "Wasm GC" : "JS"}`, entry: profile.id === "all" && !wasm ? resolve("npm/sqlike/defined.ts") : entry, kind: "defined", wasm });
+    entries.push({ id: `defined-${profile.id}-${wasm ? "wasm" : "js"}`, name: `SQLike ${displayVersion} / 事前定義・${profile.label} / ${wasm ? "Wasm GC" : "JS"}`, entry: profile.id === "all" && !wasm ? resolve("npm/sqlike/defined.ts") : entry, kind: "defined", wasm });
   }
 }
 entries.push(
@@ -154,7 +155,7 @@ try {
 const report = {
   format: 1, measuredAt: new Date().toISOString(), node: process.version, browser: browserVersion,
   method: "Browser ESM public entry exports retained; Vite/Oxc minification, esnext, ES workers, legal/purity comments retained, assetsInlineLimit=0. Every emitted JS chunk, Worker and Wasm asset counted once, including optional emitted workers. Brotli quality 11 applied per asset with decompression round trip. Wasm is compiler/package release output, without additional wasm-opt. Excludes app code/HTML, precompiled schema/statements, build-time compiler, optional SQLite exporter, Litestream and source maps. Not feature-equivalent engines or a minimal startup-download measurement.",
-  versions: { sqlike: version, sqlite: sqlite.version, turso: turso.version },
+  versions: { sqlike: displayVersion, sqlikePackage: version, sqlite: sqlite.version, turso: turso.version },
   sourceHashes: sourceHashes([
     ...engineSourcePaths(), "scripts/bundle-size.ts", "scripts/measure-bundle-size.ts", "scripts/build-sqlike-runtime.ts", "scripts/oxc-runtime.ts", "scripts/sqlike-runtime-declarations.ts", "scripts/defined-compiler.ts", "scripts/aot-compiler.ts",
     "src/sqlike-features.ts", "src/sqlike-runtime.ts", "src/aot-values.ts", "src/defined-contract.ts", "src/defined-database-contract.ts", "src/persistence-contract.ts",
