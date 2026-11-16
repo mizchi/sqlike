@@ -10,14 +10,17 @@ import { defineSqlike, allSqlikeFeatures, primaryKeyIndex } from "../src/sqlike-
 import { sourceHashes, engineSourcePaths, assertFileHashes } from "./measurement-manifest.ts";
 
 const reportPath = "measurements/bundle-size-current.json";
+const readmes = [["README.md", "en"], ["README.ja.md", "ja"]] as const;
 const args = process.argv.slice(2);
 if (args.length) {
   assert.deepEqual(args, ["--check"]);
   const report = JSON.parse(await readFile(reportPath, "utf8"));
   assertFileHashes(report.sourceHashes);
-  const readme = await readFile("README.md", "utf8");
-  assert.equal(readme, replaceBundleSizeTable(readme, bundleSizeTable(report.results)), "README sizes are stale");
-  console.log("README bundle sizes match the verified measurement");
+  for (const [path, language] of readmes) {
+    const readme = await readFile(path, "utf8");
+    assert.equal(readme, replaceBundleSizeTable(readme, bundleSizeTable(report.results, language)), `${path} sizes are stale`);
+  }
+  console.log("English/Japanese README bundle sizes match the verified measurement");
   process.exit(0);
 }
 
@@ -164,5 +167,6 @@ const report = {
   results, browserSmoke: "passed", measuredAssetsOnly: true,
 };
 await writeFile(reportPath, JSON.stringify(report, null, 2) + "\n");
-await writeFile("README.md", replaceBundleSizeTable(await readFile("README.md", "utf8"), bundleSizeTable(results)));
+for (const [path, language] of readmes)
+  await writeFile(path, replaceBundleSizeTable(await readFile(path, "utf8"), bundleSizeTable(results, language)));
 console.log(bundleSizeTable(results));

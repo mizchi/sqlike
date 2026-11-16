@@ -1,100 +1,102 @@
 # SQLike
 
-ブラウザやNode.jsでSQLを実行できる、MoonBit製のSQLiteサブセットです。インメモリDBとして使うほか、あらかじめ定義したSQLをIndexedDBへ保存しながら実行できます。同期には独立した `@mizchi/litestream` を組み合わせます。
+**English** | [日本語](README.ja.md)
 
-## できること
+A SQLite subset written in MoonBit for browsers and Node.js. Run SQL in memory, or execute predefined statements with IndexedDB persistence for offline use. Add the separate `@mizchi/litestream` package for synchronization.
 
-| 用途 | 提供する機能 |
+## Features
+
+| Use case | Available features |
 | --- | --- |
-| アプリ内のSQLデータベース | CRUD、JOIN、集約、RETURNING、transaction、index、FK、基本trigger |
-| オフラインでの保存・再開 | 固定schemaとnamed statementを使うIndexedDB保存。接続やページを開き直して再開 |
-| 配信する機能の選択 | SQLパーサを含まない実行、独自生成runtimeの注入、compiler・SQLite出力・Drizzleの別entry |
-| Drizzleとの連携 | 型付きクエリ、RETURNING、migration、入れ子transaction |
-| サーバーとの同期 | SQL / SQLite Session差分、再送、重複排除、利用側で記述する適用・競合policy |
-| SQLite・LTXとの受け渡し | SQLite画像の書き出し、LTX v3の生成・適用 |
+| An embedded SQL database | CRUD, JOINs, aggregates, RETURNING, transactions, indexes, foreign keys, and basic triggers |
+| Offline persistence and reopening | IndexedDB storage for predefined schemas and named statements; reopen connections or reload the page to resume |
+| Smaller browser runtimes | Execution without the SQL parser, custom runtime injection, and separate entries for the compiler, SQLite export, and Drizzle |
+| Drizzle integration | Typed queries, RETURNING, migrations, and nested transactions |
+| Server synchronization | SQL and SQLite Session changesets, retries, deduplication, and application-defined apply and conflict policies |
+| SQLite and LTX interchange | SQLite image export and LTX v3 generation and application |
 
-## インストール
+## Installation
 
-JavaScript / TypeScript向けに、[SQLike](https://www.npmjs.com/package/@mizchi/sqlike)と[Litestream](https://www.npmjs.com/package/@mizchi/litestream)をnpmで公開しています。ESM、Node.js 24以上と現行ブラウザ向けです。実行にMoonBitコンパイラは不要です。
+[SQLike](https://www.npmjs.com/package/@mizchi/sqlike) and [Litestream](https://www.npmjs.com/package/@mizchi/litestream) are available on npm. Both use ESM and target Node.js 24+ and current browsers. A MoonBit compiler is not required at runtime.
 
 ```sh
 pnpm add @mizchi/sqlike
-# 同期・LTXも使う場合
+# For synchronization and LTX support:
 pnpm add @mizchi/litestream
 ```
 
-[GitHub Releases](https://github.com/mizchi/sqlike/releases/tag/v0.1.0)にも配布用アーカイブを用意しています。
+Archives are also available from [GitHub Releases](https://github.com/mizchi/sqlike/releases/tag/v0.1.0).
 
-## バンドルサイズ
+## Bundle size
 
-ブラウザ向けの公開entryをOxcでminifyした配布物の合計です。JSローダー・分割chunk・生成されるWorker・Wasmを含み、Brotliは各ファイルをquality 11で圧縮して合算しています。1 KiB = 1,024 bytes。Wasmはrelease出力を使用します。
+Sizes include the browser entry's JS loader, split chunks, emitted workers, and Wasm. JS is minified with Oxc; Wasm uses release output. Brotli quality 11 is applied to each file before summing. 1 KiB = 1,024 bytes.
 
-[![10構成のバンドルサイズ。青はBrotli、灰色はminify後の未圧縮サイズ。小さいほど軽量。](docs/images/bundle-size.svg)](docs/images/bundle-size.png)
+[![Bundle sizes for ten builds. Blue shows Brotli size; gray shows minified, uncompressed size. Smaller is better.](docs/images/bundle-size.svg)](docs/images/bundle-size.png)
 
-横軸は対数目盛で、1目盛ごとにサイズが2倍になります。点に記載した数値はKiBです。
+The horizontal axis is logarithmic: each tick doubles the size. Labels show KiB.
 
 <details>
-<summary>数値を表で見る（10構成）</summary>
+<summary>View exact sizes (10 builds)</summary>
 
 <!-- bundle-size:start -->
-| ビルド | minified・未圧縮 | Brotli |
+| Build | minified, uncompressed | Brotli |
 | --- | ---: | ---: |
-| SQLike 0.1.0 / 通常SQL / JS | 578.54 KiB | 109.38 KiB |
-| SQLike 0.1.0 / 通常SQL / Wasm GC | 512.96 KiB | 161.34 KiB |
-| SQLike 0.1.0 / 事前定義・全実行機能 / JS | 472.90 KiB | 95.07 KiB |
-| SQLike 0.1.0 / 事前定義・全実行機能 / Wasm GC | 420.70 KiB | 135.98 KiB |
-| SQLike 0.1.0 / 事前定義・JSON・日時・windowなし / JS | 440.20 KiB | 87.94 KiB |
-| SQLike 0.1.0 / 事前定義・JSON・日時・windowなし / Wasm GC | 395.88 KiB | 126.70 KiB |
-| SQLike 0.1.0 / 事前定義・主キー索引のみ / JS | 424.73 KiB | 85.11 KiB |
-| SQLike 0.1.0 / 事前定義・主キー索引のみ / Wasm GC | 382.77 KiB | 123.06 KiB |
+| SQLike 0.1.0 / SQL / JS | 578.54 KiB | 109.38 KiB |
+| SQLike 0.1.0 / SQL / Wasm GC | 512.96 KiB | 161.34 KiB |
+| SQLike 0.1.0 / Predefined, all execution features / JS | 472.90 KiB | 95.07 KiB |
+| SQLike 0.1.0 / Predefined, all execution features / Wasm GC | 420.70 KiB | 135.98 KiB |
+| SQLike 0.1.0 / Predefined, no JSON/date/window / JS | 440.20 KiB | 87.94 KiB |
+| SQLike 0.1.0 / Predefined, no JSON/date/window / Wasm GC | 395.88 KiB | 126.70 KiB |
+| SQLike 0.1.0 / Predefined, primary-key index only / JS | 424.73 KiB | 85.11 KiB |
+| SQLike 0.1.0 / Predefined, primary-key index only / Wasm GC | 382.77 KiB | 123.06 KiB |
 | sqlite-wasm 3.54.1-build1 | 1313.74 KiB | 462.33 KiB |
 | Turso 0.8.3 | 11709.66 KiB | 2675.96 KiB |
 <!-- bundle-size:end -->
 
 </details>
 
-事前定義版はSQLパーサを含みません。機能選択版とWasm GC版は、同じ公開host APIを使うカスタムビルドです。「主キー索引のみ」は任意機能の選択で、CRUD・集約・CTE・secondary indexはコアに残ります。SQLikeはSQLiteサブセットのため、他のエンジンと機能範囲は異なります。
+Predefined builds omit the SQL parser. Feature-selected and Wasm GC variants are custom builds using the same public host API. “Primary-key index only” refers to optional features: CRUD, aggregates, CTEs, and secondary indexes remain in the core. SQLike implements a SQLite subset, so its feature coverage differs from the other engines.
 
-アプリのHTML・コード、事前ビルドしたschema / statement、ビルド時compiler、任意のSQLite exporter、Litestreamは含みません。任意Workerも含む配布assetの合計であり、初回起動時の最小ダウンロード量とは異なります。各行の計測済みminified bundleはChromiumでDBを開いて書込・読取まで確認しています。
+These totals exclude application HTML and code, precompiled schemas and statements, the build-time compiler, the optional SQLite exporter, and Litestream. They include optional emitted workers and do not represent the minimum startup download. Every measured minified bundle was checked in Chromium by opening a database, writing, and reading.
 
-比較対象は[@sqlite.org/sqlite-wasm](https://www.npmjs.com/package/@sqlite.org/sqlite-wasm)と[@tursodatabase/database-wasm](https://www.npmjs.com/package/@tursodatabase/database-wasm)です。
+The comparison uses [@sqlite.org/sqlite-wasm](https://www.npmjs.com/package/@sqlite.org/sqlite-wasm) and [@tursodatabase/database-wasm](https://www.npmjs.com/package/@tursodatabase/database-wasm).
 
-[計測条件・ファイル別サイズ](measurements/bundle-size-current.json)。再計測は`just bundle-size`で行えます。
+[Measurement conditions and per-file sizes](measurements/bundle-size-current.json). Reproduce with `just bundle-size`.
 
-## SQLiteとの速度比較
+## SQLite performance comparison
 
-5,000行のテーブルでの**μs/操作**（小さいほど高速）、ウォームアップ後7サンプルの中央値です。通常SQLは毎回SQLをパース・prepareし、prepared列はSQLiteのstatementを再利用します。
+Results are **μs per operation** on a 5,000-row table, using the median of seven samples after warmup. Ordinary SQL paths parse or prepare on each call; the prepared column reuses SQLite statements.
 
-[![SQLiteとの速度比較。7処理を個別の横棒グラフで比較。各処理内で短い棒ほど高速。](docs/images/sqlite-benchmark.svg)](docs/images/sqlite-benchmark.png)
+[![SQLite performance comparison across seven workloads. Each workload has its own horizontal bar chart; shorter bars are faster.](docs/images/sqlite-benchmark.svg)](docs/images/sqlite-benchmark.png)
 
-各グラフの軸はゼロ始まりですが、処理ごとに目盛幅が異なります。棒は中央値、ひげは7サンプルの最小〜最大です。全件取得のみ単位をmsにしています。画像をクリックするとPNG版を開けます。
+Each panel starts at zero and uses its own scale. Bars show medians; whiskers show the observed minimum and maximum across seven samples. Only the full-table fetch panel uses milliseconds. Click either figure for its PNG version.
 
 <details>
-<summary>数値を表で見る（7処理・4経路、単位はすべてμs）</summary>
+<summary>View exact timings (7 workloads, 4 execution paths; all values in μs)</summary>
 
 <!-- sqlite-benchmark:start -->
-| 処理 | SQLike JS・通常SQL | SQLike Wasm GC・通常SQL | SQLite WASM・通常SQL | SQLite WASM・prepared |
+| Workload | SQLike JS, SQL | SQLike Wasm GC, SQL | SQLite WASM, SQL | SQLite WASM, prepared |
 | --- | ---: | ---: | ---: | ---: |
-| 主キーで1行検索 | 27.98 | 6.26 | 3.78 | 1.44 |
-| 存在しない主キーの検索 | 26.96 | 5.53 | 2.59 | 0.50 |
-| 二次索引の範囲検索・10行 | 49.89 | 13.65 | 14.61 | 10.41 |
-| ORDER BY id LIMIT 10 | 50.77 | 11.07 | 12.60 | 9.13 |
-| sum(n), count(*) | 93.74 | 50.86 | 106.82 | 104.34 |
-| 全5,000行取得 | 4,609.09 | 2,694.74 | 4,563.64 | 4,500.00 |
-| 索引列の更新＋範囲10行取得 | 66.25 | 18.71 | 19.14 | 11.97 |
+| Primary-key lookup | 27.98 | 6.26 | 3.78 | 1.44 |
+| Missing primary key | 26.96 | 5.53 | 2.59 | 0.50 |
+| Indexed range · 10 rows | 49.89 | 13.65 | 14.61 | 10.41 |
+| ORDER BY id · LIMIT 10 | 50.77 | 11.07 | 12.60 | 9.13 |
+| SUM + COUNT · 5,000 rows | 93.74 | 50.86 | 106.82 | 104.34 |
+| Fetch all 5,000 rows | 4,609.09 | 2,694.74 | 4,563.64 | 4,500.00 |
+| Indexed UPDATE + range read | 66.25 | 18.71 | 19.14 | 11.97 |
 <!-- sqlite-benchmark:end -->
 
 </details>
 
-2026-11-16、Apple M5 / macOS arm64 / Chromium 158.0.8127.18で計測。SQLike 0.1.0のMoonBit release出力（JSはminify前）と、SQLite WASM 3.54.1を同じページ内のインメモリDBで実行しています。
+Measured on November 16, 2026, with an Apple M5, macOS arm64, and Chromium 158.0.8127.18. SQLike 0.1.0 MoonBit release output (JS before minification) and SQLite WASM 3.54.1 run in memory on the same page.
 
-主キー・二次索引はウォーム状態です。更新の行は索引列の値を交互に変更し、その後の範囲検索までを含みます。結果の型変換と復号を含むエンジンAPIの比較で、host wrapper、起動・Wasmコンパイル、IndexedDB、通信は含みません。計測前後にnative SQLite由来の期待値と更新結果を照合しています。
+Primary-key and secondary indexes are warm. The update workload alternates indexed values and includes the following range read. Timings cover engine API calls, including typed result conversion and decoding. They exclude host wrappers, startup, Wasm compilation, IndexedDB, and networking. Results and update effects are checked against expectations from native SQLite before and after timing.
 
-通常SQLではパースとホスト境界のコストがあり、特に小さな検索でSQLiteとの差が残っています。実アプリの速度はクエリ・返却行数・永続化方式でも変わります。
+Parsing and the host boundary add overhead to ordinary SQL calls; small lookups still show a gap against SQLite. Application performance also depends on the query, returned row count, and persistence method.
 
-[生データ・クエリ・全サンプル](measurements/sqlite-speed-current.json)。再計測は`just sqlite-bench --profiles=false`で行えます。
+[Raw data, queries, and all samples](measurements/sqlite-speed-current.json). Reproduce with `just sqlite-bench --profiles=false`.
 
-## SQLを実行する
+## Run SQL
 
 ```ts
 import { openDatabase } from '@mizchi/sqlike';
@@ -104,42 +106,42 @@ db.run('CREATE TABLE task(id INTEGER PRIMARY KEY,title TEXT NOT NULL)');
 
 const rows = db.values(
   'INSERT INTO task VALUES(?,?) RETURNING id,title',
-  [1n, '買い物メモ'],
+  [1n, 'Shopping list'],
 );
-// [[1n, '買い物メモ']]
+// [[1n, 'Shopping list']]
 
 const tasks = db.all('SELECT id,title FROM task ORDER BY id');
-// [{ id: 1n, title: '買い物メモ' }]
+// [{ id: 1n, title: 'Shopping list' }]
 
 db.transaction(() => {
-  db.run('UPDATE task SET title=? WHERE id=?', ['更新したメモ', 1n]);
+  db.run('UPDATE task SET title=? WHERE id=?', ['Updated note', 1n]);
 });
 db.close();
 ```
 
-`openDatabase()`はインメモリです。INTEGERは`bigint`、REALは`number`、BLOBは`Uint8Array`で扱います。`values()`は列位置順の配列、`all()`は列名をキーとするオブジェクトを返します。同名の結果列がある場合は`values()`を使います。
+`openDatabase()` creates an in-memory database. INTEGER values use `bigint`, REAL uses `number`, and BLOB uses `Uint8Array`. `values()` returns positional arrays; `all()` returns objects keyed by column name. Use `values()` when result columns share a name.
 
-[SQLの対応範囲と値の扱い](docs/sql.md)
+[SQL coverage and value handling (Japanese)](docs/sql.md)
 
-## IndexedDBへ保存する
+## Persist to IndexedDB
 
-ブラウザで使うschemaと問い合わせが決まっている場合は、ビルド時にDDLとnamed statementをコンパイルできます。実行側はバイナリ定義を読み込み、SQLパーサを配信せずに動きます。
+When your schema and queries are known in advance, compile the DDL and named statements during the build. The browser loads binary definitions and executes them without shipping the SQL parser.
 
 ```ts
 import { DefinedDatabase } from '@mizchi/sqlike/defined';
 import { catalog } from './catalog.generated.js';
 
 const db = await DefinedDatabase.open('tasks', catalog);
-await db.execute('add', [1n, 'オフラインで書いたメモ']);
+await db.execute('add', [1n, 'Written offline']);
 const tasks = await db.prepare('list').all();
 await db.close();
 ```
 
-同じ名前とcatalogで開き直すと、保存したデータを読み込みます。保存先は差し替え可能です。保存データと異なるschemaを自動で読み替えることはありません。
+Reopening with the same database name and catalog restores saved data. The storage implementation is replaceable. A schema that differs from the stored schema is not applied automatically.
 
-[catalogの作成・永続化・SQLite出力](docs/prepared.md)
+[Creating catalogs, persistence, and SQLite export (Japanese)](docs/prepared.md)
 
-## Drizzleを使う
+## Use Drizzle
 
 ```sh
 pnpm add drizzle-orm@0.45.4
@@ -153,35 +155,35 @@ const client = openDatabase();
 const db = drizzle(client);
 ```
 
-Drizzleは任意のentryです。通常のSQLや固定schemaの実行だけなら追加は不要です。
+Drizzle is an optional entry point. It is not needed for ordinary SQL or predefined-schema execution.
 
-[テーブル定義・migration・transaction](docs/drizzle.md)
+[Table definitions, migrations, and transactions (Japanese)](docs/drizzle.md)
 
-## 同期・LTXを使う
+## Synchronization and LTX
 
-`@mizchi/litestream`はDBドライバーの契約を通じて同期します。SQLike・SQLite・Tursoとの構成例があり、Node、Cloudflare Durable Objects、P2Pリレーを正本や中継として使えます。利用できる同期方式は各driverの能力に依存します。
+`@mizchi/litestream` synchronizes through a database driver contract. Examples cover SQLike, SQLite, and Turso, with Node.js, Cloudflare Durable Objects, or a P2P relay serving as the authority or relay. Available synchronization modes depend on the driver's capabilities.
 
-競合時には、利用側で適用・保留・拒否・置換を判断できます。LTXの生成・適用だけを使う場合は、`@mizchi/litestream/ltx`をimportします。
+Applications can decide whether to apply, defer, reject, or replace a conflicting change. Import `@mizchi/litestream/ltx` to use LTX generation and application on their own.
 
-[同期の組み込み・競合処理・LTX](docs/sync.md)
+[Integration, conflict handling, and LTX (Japanese)](docs/sync.md)
 
-## 利用上の制約
+## Limitations
 
-- ブラウザでの確認対象は現在Chromiumです。
-- SQLite全機能互換ではありません。SQL・関数・PRAGMAには対応範囲があります。
-- IndexedDB保存を使う場合も、クエリの実行中は行データをメモリに保持します。
-- 固定schemaの実行では、実行時の任意DDLやschema変更の自動migrationは扱いません。
-- 同期先の認証・認可、driverの選択、競合時の業務判断はアプリ側で用意します。
+- Browser validation currently targets Chromium.
+- SQLike does not implement every SQLite feature. SQL, functions, and PRAGMAs have defined coverage limits.
+- Query execution keeps row data in memory, including when IndexedDB persistence is enabled.
+- Predefined-schema execution does not support arbitrary runtime DDL or automatic schema migrations.
+- Applications provide synchronization authentication, authorization, driver selection, and domain-specific conflict decisions.
 
-## MoonBitから使う
+## Use from MoonBit
 
-Mooncakesの2モジュールを単独で使えます。
+The two Mooncakes modules can be used independently.
 
 ```sh
 moon add mizchi/sqlike@0.1.0
 moon add mizchi/litestream@0.1.0
 ```
 
-[SQLikeのAPI](packages/sqlike/README.md) / [LitestreamのAPI](packages/litestream/README.md)
+API documentation (Japanese): [SQLike](packages/sqlike/README.md) / [Litestream](packages/litestream/README.md)
 
-MIT License。[リリース](https://github.com/mizchi/sqlike/releases) / [ユーザー向けガイド](docs/README.md) / [開発者向けドキュメント](docs/internal/README.md)
+MIT License. [Releases](https://github.com/mizchi/sqlike/releases) / [User guides (Japanese)](docs/README.md) / [Developer documentation (Japanese)](docs/internal/README.md)

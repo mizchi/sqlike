@@ -43,12 +43,25 @@ export async function measureBrowserBundle(entry: string) {
   return { entry: entryChunk.fileName, exports: entryChunk.exports, assets, totals, files };
 }
 
-export function bundleSizeTable(rows: readonly { name: string; totals: BundleBytes }[]): string {
+export type ReadmeLanguage = "en" | "ja";
+const englishBuilds: Record<string, string> = {
+  "sql-js": "SQL / JS",
+  "sql-wasm": "SQL / Wasm GC",
+  "defined-all-js": "Predefined, all execution features / JS",
+  "defined-all-wasm": "Predefined, all execution features / Wasm GC",
+  "defined-without-three-js": "Predefined, no JSON/date/window / JS",
+  "defined-without-three-wasm": "Predefined, no JSON/date/window / Wasm GC",
+  "defined-primary-key-js": "Predefined, primary-key index only / JS",
+  "defined-primary-key-wasm": "Predefined, primary-key index only / Wasm GC",
+};
+export function bundleSizeTable(rows: readonly { id?: string; name: string; totals: BundleBytes }[], language: ReadmeLanguage = "en"): string {
   const kib = (bytes: number) => `${(bytes / 1024).toFixed(2)} KiB`;
+  const name = (row: typeof rows[number]) => language === "en" && row.id && englishBuilds[row.id]
+    ? `${row.name.split(" / ")[0]} / ${englishBuilds[row.id]}` : row.name;
   return [
-    "| ビルド | minified・未圧縮 | Brotli |",
+    language === "en" ? "| Build | minified, uncompressed | Brotli |" : "| ビルド | minified・未圧縮 | Brotli |",
     "| --- | ---: | ---: |",
-    ...rows.map((r) => `| ${r.name} | ${kib(r.totals.raw)} | ${kib(r.totals.brotli)} |`),
+    ...rows.map((r) => `| ${name(r)} | ${kib(r.totals.raw)} | ${kib(r.totals.brotli)} |`),
   ].join("\n");
 }
 

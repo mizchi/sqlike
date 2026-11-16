@@ -1,6 +1,8 @@
 # READMEの比較図
 
-`docs/images/bundle-size.svg`と`sqlite-benchmark.svg`をREADMEに埋め込む。クリック先には同じ図のPNGを置く。数値表は折りたたんで残す。
+`docs/images/bundle-size.svg`と`sqlite-benchmark.svg`を英語の`README.md`と日本語の`README.ja.md`に共通で埋め込む。クリック先には同じ図のPNGを置く。数値表は折りたたんで残す。
+
+バンドルサイズと速度の生成処理は両READMEを更新・照合する。数値は共通の計測データを使い、見出しと項目名を言語ごとに変える。本文の翻訳を表の再生成で上書きしない。
 
 Mermaidの[XY chart](https://mermaid.js.org/syntax/xyChart.html)にも横棒グラフはあるが、この比較では10構成の対数目盛と、7処理別の独立した軸・サンプル範囲を表示するためMatplotlibを使う。[GitHubのMermaidサポート](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/creating-diagrams)のバージョン差にも依存しない。
 

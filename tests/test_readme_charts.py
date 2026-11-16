@@ -11,6 +11,21 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class ReadmeChartTests(unittest.TestCase):
+    def test_both_readme_languages_keep_the_same_timing_values(self):
+        report = json.loads((ROOT / "measurements/sqlite-speed-current.json").read_text())
+        rows = benchmark_data(report)
+        source = "before\n<!-- sqlite-benchmark:start -->\nstale\n<!-- sqlite-benchmark:end -->\nafter\n"
+        english = update_benchmark_table(source, rows, "en")
+        japanese = update_benchmark_table(source, rows, "ja")
+        self.assertIn("Primary-key lookup", english)
+        self.assertNotIn("主キー", english)
+        self.assertIn("主キーで1行検索", japanese)
+        for row in rows:
+            values = " | ".join(f"{s['stats']['median']:,.2f}" for s in row["series"])
+            self.assertIn(values, english)
+            self.assertIn(values, japanese)
+        self.assertEqual(update_benchmark_table(source, rows), english)
+
     def test_table_stays_in_microseconds_when_figure_uses_milliseconds(self):
         report = json.loads((ROOT / "measurements/sqlite-speed-current.json").read_text())
         rows = benchmark_data(report)

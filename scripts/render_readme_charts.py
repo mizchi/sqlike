@@ -100,12 +100,17 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def update_benchmark_table(markdown, rows):
+def update_benchmark_table(markdown, rows, language="en"):
+    if language not in ["en", "ja"]:
+        raise ValueError("unsupported README language")
     start, end = "<!-- sqlite-benchmark:start -->", "<!-- sqlite-benchmark:end -->"
     if markdown.count(start) != 1 or markdown.count(end) != 1 or markdown.index(start) >= markdown.index(end):
         raise ValueError("README benchmark markers must occur exactly once and in order")
-    table = ["| 処理 | SQLike JS・通常SQL | SQLike Wasm GC・通常SQL | SQLite WASM・通常SQL | SQLite WASM・prepared |", "| --- | ---: | ---: | ---: | ---: |"]
-    for label, row in zip(JAPANESE_LABELS, rows):
+    header = ("| Workload | SQLike JS, SQL | SQLike Wasm GC, SQL | SQLite WASM, SQL | SQLite WASM, prepared |" if language == "en" else
+              "| 処理 | SQLike JS・通常SQL | SQLike Wasm GC・通常SQL | SQLite WASM・通常SQL | SQLite WASM・prepared |")
+    labels = [row["label"] for row in rows] if language == "en" else JAPANESE_LABELS
+    table = [header, "| --- | ---: | ---: | ---: | ---: |"]
+    for label, row in zip(labels, rows):
         values = " | ".join(f"{s['stats']['median']:,.2f}" for s in row["series"])
         table.append(f"| {label} | {values} |")
     begin, finish = markdown.index(start) + len(start), markdown.index(end)
@@ -198,8 +203,8 @@ def main():
     bundle, benchmark = [json.loads((ROOT / p).read_text()) for p in INPUTS]
     data = {"bundle": bundle_data(bundle), "benchmark": benchmark_data(benchmark)}
     inputs = {p: sha(ROOT / p) for p in [*INPUTS, "scripts/render_readme_charts.py"]}
-    readme = (ROOT / "README.md").read_text()
-    updated = update_benchmark_table(readme, data["benchmark"])
+    readmes = [(ROOT / "README.md", "en"), (ROOT / "README.ja.md", "ja")]
+    updates = [(path, path.read_text(), update_benchmark_table(path.read_text(), data["benchmark"], language)) for path, language in readmes]
     if args.check:
         saved = json.loads(MANIFEST.read_text())
         if saved["inputs"] != inputs or saved["data"] != data:
@@ -207,9 +212,10 @@ def main():
         for path, digest in saved["outputs"].items():
             if sha(ROOT / path) != digest:
                 raise ValueError(f"image differs: {path}")
-        if readme != updated:
-            raise ValueError("README timing table differs from figure data")
-        print("README figures match both measurement reports and all 28 timing medians")
+        for path, before, after in updates:
+            if before != after:
+                raise ValueError(f"{path.name} timing table differs from figure data")
+        print("English/Japanese README figures match both reports and all 28 timing medians")
         return
     import matplotlib
     matplotlib.use("Agg")
@@ -218,8 +224,9 @@ def main():
     OUTPUT.mkdir(parents=True, exist_ok=True)
     render_bundle(data["bundle"], bundle, plt)
     render_benchmark(data["benchmark"], benchmark, bundle["versions"]["sqlike"], plt)
-    if readme != updated:
-        (ROOT / "README.md").write_text(updated)
+    for path, before, after in updates:
+        if before != after:
+            path.write_text(after)
     outputs = {str(p.relative_to(ROOT)): sha(p) for name in ["bundle-size", "sqlite-benchmark"] for extension in ["svg", "png"] for p in [OUTPUT / f"{name}.{extension}"]}
     MANIFEST.write_text(json.dumps({"renderer": f"Matplotlib {matplotlib.__version__}", "inputs": inputs, "outputs": outputs, "data": data}, indent=2) + "\n")
     print("Rendered bundle-size and sqlite-benchmark as SVG + PNG")

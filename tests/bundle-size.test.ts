@@ -54,3 +54,16 @@ test("README sizes use KiB and updates preserve surrounding user documentation",
   assert.throws(() => replaceBundleSizeTable("missing", table), /markers/);
   assert.throws(() => replaceBundleSizeTable(before + before, table), /markers/);
 });
+
+test("English and Japanese bundle tables share values and use localized build names", () => {
+  const rows = [{id: "defined-without-three-wasm", name: "SQLike 0.1.0 / 事前定義・JSON・日時・windowなし / Wasm GC", totals: {raw: 2048, brotli: 1024}}];
+  const english = bundleSizeTable(rows, "en");
+  const japanese = bundleSizeTable(rows, "ja");
+  assert.match(english, /Build/);
+  assert.match(english, /Predefined, no JSON\/date\/window/);
+  assert.doesNotMatch(english, /[\u3040-\u30ff\u3400-\u9fff]/);
+  assert.match(japanese, /ビルド/);
+  assert.match(japanese, /事前定義/);
+  for (const table of [english, japanese]) assert.match(table, /2\.00 KiB \| 1\.00 KiB/);
+  assert.equal(bundleSizeTable(rows), english);
+});
