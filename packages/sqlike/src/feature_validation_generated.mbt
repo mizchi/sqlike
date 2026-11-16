@@ -74,6 +74,9 @@ impl FeatureCheck for Source with fn check(value) {
 
 ///|
 impl FeatureCheck for Selection with fn check(value) {
+  for part in runtime_selection_parts(value) {
+    validate_runtime_query_part(part)
+  }
   FeatureCheck::check(value.ctes)
   FeatureCheck::check(value.projections)
   FeatureCheck::check(value.sources)
@@ -211,6 +214,7 @@ impl FeatureCheck for Expr with fn check(value) {
     Call(v0, v1) => {
       validate_function_features(v0)
       validate_runtime_call(v0, v1.length())
+      validate_runtime_json_values(v0, v1)
       FeatureCheck::check(v0)
       FeatureCheck::check(v1)
     }

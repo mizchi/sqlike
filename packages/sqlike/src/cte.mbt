@@ -58,7 +58,7 @@ fn prepare_cte(
   query : Selection,
   ctx : Evaluation,
 ) -> Relation raise SqlError {
-  if recursive_cte(owner, name, query) {
+  if CAP_QUERY_RECURSIVE_CTE && recursive_cte(owner, name, query) {
     let seed = {
       ..query,
       compound: None,
@@ -85,13 +85,23 @@ fn execute_cte(
   query : Selection,
   ctx : Evaluation,
 ) -> Relation raise SqlError {
-  if !recursive_cte(owner, name, query) {
+  if !CAP_QUERY_RECURSIVE_CTE || !recursive_cte(owner, name, query) {
     return cte_names(
       owner,
       name,
       select_relation_in(query, { ..ctx, depth: ctx.depth + 1, }, false),
     )
   }
+  execute_recursive_cte(owner, name, query, ctx)
+}
+
+///|
+fn execute_recursive_cte(
+  owner : Selection,
+  name : String,
+  query : Selection,
+  ctx : Evaluation,
+) -> Relation raise SqlError {
   guard query.compound is Some(arms) && query.orders.is_empty() else {
     fail("unsupported recursive CTE ordering")
   }

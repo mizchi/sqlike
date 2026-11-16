@@ -62,6 +62,8 @@ just feature-profiles
 | `sqlitePages` | AOTのSQLite画像書出し、SQLモードのSQLite画像読込 |
 | `ltx` | AOTのLTX生成・適用。`sqlitePages`も指定する |
 
+`catalog`を渡すAOT / definedビルドでは、[自動選択](../catalog-build.md)でJSON内部の7関数群・subtype再解析・JOIN・通常/再帰CTE・複合SELECTも絞る。以下はcatalogを省いた手動プロファイルの説明である。
+
 `features: []`が選択機能なし。CRUD、LEFT/INNER/CROSS JOIN、二次索引、通常の集約、CTE、CAST / affinity用の数値変換などはcoreに残る。`allSqlikeFeatures`は公開トークンの一覧であり、モード固有の`binarySync`/`ltx`はモードに合わせて選ぶ。`defined`はSQLite exporterを別entryとして扱い、`sqlitePages` / `ltx` / `binarySync`を受け付けない。
 
 日時やJSONをアプリで生成してTEXT / INTEGERへbindするだけなら、対応するSQL関数の実装は不要。DDLの`DEFAULT CURRENT_TIMESTAMP`、CHECK、view、trigger等で使用している場合は必要になる。未実行のCASE分岐や空テーブルでも、外した機能を使う定義は初期化時に拒否する。バイナリ定義ではビルド時に記録したrequiredFeaturesと実際のIRを照合する。旧ビルドにあった`json()`単体のbit未記録も修正したため、該当する古い定義は再コンパイルする。query内だけの修正ならschemaIdは維持できるが、スキーマ内の`json()`でschemaIdが変わる保存済みDBには移行が必要となる。旧runtimeからのデータ取出しと新スキーマへの自動移行は今回追加していない。

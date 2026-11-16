@@ -168,7 +168,7 @@ fn select_relation_in(
   existence : Bool,
   prepared~ : PreparedSelection? = None,
 ) -> Relation raise SqlError {
-  if select.compound is Some(_) {
+  if CAP_QUERY_COMPOUND && select.compound is Some(_) {
     return compound_relation(select, context, existence)
   }
   let store = context.store
@@ -197,70 +197,91 @@ fn select_relation_in(
     is Some(result) {
     return result
   }
-  let ctes : Map[String, Relation] = Map(context.ctes.to_array())
-  for (name, selection) in select.ctes {
-    ctes[identifier(name)] = execute_cte(select, name, selection, {
-      ..context,
-      ctes,
-    })
+  let ctes : Map[String, Relation] = if CAP_QUERY_CTE {
+    Map(context.ctes.to_array())
+  } else {
+    context.ctes
+  }
+  if CAP_QUERY_CTE {
+    for (name, selection) in select.ctes {
+      ctes[identifier(name)] = execute_cte(select, name, selection, {
+        ..context,
+        ctes,
+      })
+    }
   }
   let mut input : Array[Environment] = [[]]
   let mut template : Environment = []
-  for source in select.sources {
-    if source.right == Some(true) && !FEATURE_OUTER_JOIN {
-      fail("feature disabled: rightFullJoin")
+  if !CAP_QUERY_JOIN {
+    if select.sources.length() == 1 {
+      let source = select.sources[0]
+      input = source_rows(store, source.name, params, ctes, depth).map(row => {
+        row.map(b => { ..b, qualifier: source.qualifier, })
+      })
+      guard input.length() <= 100000 else { fail("SQL result resource limit") }
+      template = empty_source(store, source, ctes, params, depth)
     }
-    let right = source_rows(store, source.name, params, ctes, depth).map(row => {
-      row.map(b => { ..b, qualifier: source.qualifier, })
-    })
-    let empty = empty_source(store, source, ctes, params, depth)
-    prepare_expression(
-      source.on,
-      { ..context, ctes, row: template + empty, },
-      false,
-      false,
-    )
-    let pairs = using_pairs(source, template, empty)
-    let track_right = FEATURE_OUTER_JOIN && source.right == Some(true)
-    let empty_left = if track_right {
-      template.map(b => { ..b, value: Null, })
-    } else {
-      []
-    }
-    template = using_row(source, template, empty, pairs)
-    let matched_right = if track_right {
-      Array::make(right.length(), false)
-    } else {
-      []
-    }
-    let next : Array[Environment] = []
-    for left in input {
-      let mut matched = false
-      for ri, row in right {
-        let joined = left + row
-        if truth(evaluate(source.on, { ..context, ctes, row: joined, })) == 1 &&
-          using_matches(left, row, pairs, context) {
-          next.push(using_row(source, left, row, pairs))
-          matched = true
-          if track_right {
-            matched_right[ri] = true
+  } else {
+    for source in select.sources {
+      if source.right == Some(true) && !FEATURE_OUTER_JOIN {
+        fail("feature disabled: rightFullJoin")
+      }
+      let right = source_rows(store, source.name, params, ctes, depth).map(row => {
+        row.map(b => { ..b, qualifier: source.qualifier, })
+      })
+      let empty = empty_source(store, source, ctes, params, depth)
+      prepare_expression(
+        source.on,
+        { ..context, ctes, row: template + empty, },
+        false,
+        false,
+      )
+      let pairs = using_pairs(source, template, empty)
+      let track_right = FEATURE_OUTER_JOIN && source.right == Some(true)
+      let empty_left = if track_right {
+        template.map(b => { ..b, value: Null, })
+      } else {
+        []
+      }
+      template = using_row(source, template, empty, pairs)
+      let matched_right = if track_right {
+        Array::make(right.length(), false)
+      } else {
+        []
+      }
+      let next : Array[Environment] = []
+      for left in input {
+        let mut matched = false
+        for ri, row in right {
+          let joined = left + row
+          if truth(evaluate(source.on, { ..context, ctes, row: joined, })) == 1 &&
+            using_matches(left, row, pairs, context) {
+            next.push(using_row(source, left, row, pairs))
+            matched = true
+            if track_right {
+              matched_right[ri] = true
+            }
+          }
+          guard next.length() <= 100000 else {
+            fail("SQL result resource limit")
           }
         }
-        guard next.length() <= 100000 else { fail("SQL result resource limit") }
-      }
-      if source.left && !matched {
-        next.push(using_row(source, left, empty, pairs))
-      }
-    }
-    if FEATURE_OUTER_JOIN && source.right == Some(true) {
-      for ri, row in right {
-        if !matched_right[ri] {
-          next.push(using_row(source, empty_left, row, pairs))
+        if source.left && !matched {
+          next.push(using_row(source, left, empty, pairs))
         }
-        guard next.length() <= 100000 else { fail("SQL result resource limit") }
       }
+      if FEATURE_OUTER_JOIN && source.right == Some(true) {
+        for ri, row in right {
+          if !matched_right[ri] {
+            next.push(using_row(source, empty_left, row, pairs))
+          }
+          guard next.length() <= 100000 else {
+            fail("SQL result resource limit")
+          }
+        }
+      }
+      input = next
     }
-    input = next
   }
   let base : Evaluation = { ..context, ctes, row: template, }
   input = input.filter(row => {
@@ -460,12 +481,18 @@ fn selection_template(
   context : Evaluation,
 ) -> Environment raise SqlError {
   guard context.depth <= 16 else { fail("SQL query recursion limit") }
-  let ctes : Map[String, Relation] = Map(context.ctes.to_array())
-  for (name, selection) in select.ctes {
-    ctes[identifier(name)] = prepare_cte(select, name, selection, {
-      ..context,
-      ctes,
-    })
+  let ctes : Map[String, Relation] = if CAP_QUERY_CTE {
+    Map(context.ctes.to_array())
+  } else {
+    context.ctes
+  }
+  if CAP_QUERY_CTE {
+    for (name, selection) in select.ctes {
+      ctes[identifier(name)] = prepare_cte(select, name, selection, {
+        ..context,
+        ctes,
+      })
+    }
   }
   let mut row : Environment = []
   for source in select.sources {
@@ -485,7 +512,11 @@ fn selection_template(
       false,
       false,
     )
-    row = using_row(source, row, right, using_pairs(source, row, right))
+    row = if CAP_QUERY_JOIN {
+      using_row(source, row, right, using_pairs(source, row, right))
+    } else {
+      right
+    }
   }
   let base = { ..context, ctes, row, }
   validate_aggregate_output(select)
@@ -495,7 +526,7 @@ fn selection_template(
   }
   prepare_expression(select.having, base, true, false)
   let output = project_template(select.projections, base)
-  if select.compound is Some(arms) {
+  if CAP_QUERY_COMPOUND && select.compound is Some(arms) {
     for (_, arm) in arms {
       guard selection_template(arm, { ..context, ctes, }).length() ==
         output.length() else {
@@ -505,7 +536,7 @@ fn selection_template(
   }
   let ordering = { ..base, row: output + row, }
   for order in select.orders {
-    if select.compound is Some(_) {
+    if CAP_QUERY_COMPOUND && select.compound is Some(_) {
       ignore(
         compound_order_index(
           select,

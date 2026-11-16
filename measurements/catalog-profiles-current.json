@@ -1,9 +1,9 @@
 {
   "format": "sqlike-catalog-profiles@1",
-  "measuredAt": "2026-11-16T15:04:08.893Z",
+  "measuredAt": "2026-11-16T15:51:15.441Z",
   "node": "v24.22.2",
   "nativeSQLite": "3.53.4",
-  "method": "Runtime assets only. Identical semantic feature profiles, exports and primary-key-index setting. Baseline retains all core function/statement implementations; selected runtime infers the complete schema/query closure. Oxc minified ESM, release Wasm GC; Brotli quality 11 per asset with round trip. Excludes host, IndexedDB wrappers, catalog data and compiler. Native typed results verified for baseline/selected JS/Wasm on every fixture. Not an additive app-download estimate or a speed measurement.",
+  "method": "Runtime assets only. Identical semantic feature profiles, exports and primary-key-index setting. Baseline retains all core function/statement/query implementations and all functions within enabled semantic features; selected runtime infers the complete schema/query closure, including JSON families, subtype, CTE, recursion, JOIN and compound SELECT. Oxc minified ESM, release Wasm GC; Brotli quality 11 per asset with round trip. Excludes host, IndexedDB wrappers, catalog data and compiler. Native typed results verified for baseline/selected JS/Wasm on every fixture. Not an additive app-download estimate or a speed measurement.",
   "sourceHashes": {
     "adapters/defined-database-core.ts": "58773d392f540cf07447e4cfeab0c65e2e865dc98869c78984b59db5ce9ce62f",
     "adapters/defined-wasm.ts": "6829082c8cf20a23c887569000c41a2932209b7f7fb72e403e9218845e99426d",
@@ -39,26 +39,26 @@
     "packages/sqlike/src/binary_io.mbt": "9119822b083dc4e1ea48aabcc7126bd3f2bb8ea8a11a8aa5f5f789661e8d5452",
     "packages/sqlike/src/binary_state.mbt": "6e4701bae0b07809d89d320ac8719820e6f019af96a6734c49763b567ec5ecd3",
     "packages/sqlike/src/binary_wbtest.mbt": "78641640c6f5758944441cf649f55501ea4a4965c32da37812dbd6f59bbbd43d",
-    "packages/sqlike/src/capability_config_generated.mbt": "0bd81931f3c8b6315a0b79ba19e825dfe9406a920b80e1c049e7d07599ed1c8a",
+    "packages/sqlike/src/capability_config_generated.mbt": "f98a6c9629a1629516353b84299d7357e62835f37740f77f484e1ecb452014c6",
     "packages/sqlike/src/cast.mbt": "e2feebc791c8daa6c18435ba8a271140dfe66a107ee4b9e0f5978d162180a2ec",
     "packages/sqlike/src/changeset.mbt": "f66c9a8683db19314ffeabd65bdbea4bfd6ff5b327686dbc7643ac6f49a50814",
     "packages/sqlike/src/column_delta_wbtest.mbt": "58fef01472dfbe883cac3b4345d2fd5e6219d6d27b25c8a7eecfd13d4d31a6fa",
     "packages/sqlike/src/compiler/compiler.mbt": "48d22ce34a131af4f2f03bfd1f423fc29a0bcde5e33f4ad0a8f243c20c4b53f3",
     "packages/sqlike/src/compiler/moon.pkg": "b72fdefabfdb476990fb924225400d67870076c331a4a217bcb52009293c33bf",
     "packages/sqlike/src/composite_index_wbtest.mbt": "90a25147584bc0cb2030076eebb3497793e6aa870c679d6d5cc1de0976b8abf4",
-    "packages/sqlike/src/compound.mbt": "e0aee7e219f129efe2912f1379de90a35dc7ed7a4649c8dfb43bdfb61888ab84",
-    "packages/sqlike/src/cte.mbt": "cbc3a4f5047b3c89b9a132de62434213b1aa2724384ead1333795c4ecb171f22",
+    "packages/sqlike/src/compound.mbt": "4b133f7e94fd7a1cc1739dcf74f3d81613d5b748de6595040a1d4c330fce8f40",
+    "packages/sqlike/src/cte.mbt": "e595e995cc70bfd9d78a60af7b0eea974d5f72a0c594909eb818824cd4050811",
     "packages/sqlike/src/data.mbt": "aa5008a63722d9234c37f4e5c919307cf9b174113f5ba7f09fd6e87b416ca474",
     "packages/sqlike/src/datetime.mbt": "bf7c6b6983cfc2fe0e17dc74c26de270c5414203d982a5bec53f2ebf33459d59",
     "packages/sqlike/src/defined-sqlite/defined.mbt": "5a81aa4db62ee9f22610223ffce77cbc95602bc4cc3593241ea299471b1a3f7d",
     "packages/sqlike/src/defined-sqlite/moon.pkg": "6d93d349a02f08b9beafb2f344b35bc858dd5b3b1fc81a59e557d2881c091bb7",
     "packages/sqlike/src/defined/defined.mbt": "caf0ae96fd7a7af9f94b3e831f2f9de2077a64caacdbb3d4029e2780ff4f044f",
     "packages/sqlike/src/defined/moon.pkg": "6c72c36fb88ebfab45a73ad8d209dcb3f593c9d1bc3ade7c5a6c952c1be947a9",
-    "packages/sqlike/src/evaluate.mbt": "e17f052301b7c9983b114521612a0102ebd762f0b3df4bfff700f9d391dd7279",
+    "packages/sqlike/src/evaluate.mbt": "9cdb04e95b3a23a7df976e72fe634082f07f8801e82b26e80ddb90cf61907d3a",
     "packages/sqlike/src/execute.mbt": "9ae0995d206e78f722e6f199d48f63d33603628aa479dc4e9d9afcfb7f5d8c4b",
     "packages/sqlike/src/feature_config.mbt": "8ac72b52c318850f7dc69d63c105496ab6ea7216b6db32532470ee17c19b82f2",
     "packages/sqlike/src/feature_validation.mbt": "511fa120a414b92fdbc840174fd0c08c78c50b206264889a8f040b6a0b9eb6fc",
-    "packages/sqlike/src/feature_validation_generated.mbt": "7542c24653e6fc4632d6790a65b53cb00a4c0b777647ce5760a7361d5a53e748",
+    "packages/sqlike/src/feature_validation_generated.mbt": "16256f2c63c5d76e9a91670052af16d9c324157db0c6f783f9d5dc24d267d2f9",
     "packages/sqlike/src/float_text.mbt": "a188f50c6a4c41e2fc154cdc690514a5b9c945dce8a0cd8ccde2d7745e7f7895",
     "packages/sqlike/src/foreign_key.mbt": "bf9b7d3bbde04dc342efc97f0d5960bdea9c34e7f8a037182b87efac9b88d45f",
     "packages/sqlike/src/fts/fts.mbt": "f6b170921d7df982c53fe7f188aed2183b087ca79b8754b319752ff8b234712f",
@@ -77,7 +77,7 @@
     "packages/sqlike/src/interface_test.mbt": "425c72b3a5d4a7aee0018c10bc95bad3b8ff3f471bbebcff8ee142729d50cbd7",
     "packages/sqlike/src/join.mbt": "b2fd2c5fd92925c42f5aa87963acaecadfef5e07816c84f1ea5435e2ecd7f2a7",
     "packages/sqlike/src/json_aggregate.mbt": "de57642051098e9cca9a073b44ee45ef9727b4aeb77c689c12b2be886f4cc8e8",
-    "packages/sqlike/src/json_functions.mbt": "61004b62f878210f1e4e371904385fa5afe58c65562a89fb4a52533aa0e456f8",
+    "packages/sqlike/src/json_functions.mbt": "0d0b469a018aa67f4c921bcde4faa08c91a39c5245333a31a285bf2feedf76fc",
     "packages/sqlike/src/lsm/lsm.mbt": "9e88824dc0b449e7c15209beb7e0dc8fdf34aab5e77c405bf1ef6d5040aad924",
     "packages/sqlike/src/lsm/lsm_wbtest.mbt": "0bd332033c4a16ba4ba0dd3e0a6cd640a0e6aef777f2b2e8f4cf464cef568a19",
     "packages/sqlike/src/lsm/moon.pkg": "5ede3703157bb09f075866319cd3c29867ccefdc0446e508925a2a9fd0407da9",
@@ -92,17 +92,18 @@
     "packages/sqlike/src/persistence.mbt": "dccf7b6269e823365316cff2e31867a90d258c1e69b2bfbd9bffd90e08921c2e",
     "packages/sqlike/src/persistence_edits.mbt": "59fb2a7d7dafbd7694e78c6cfbc0ad83fa012ec058f844d84def2620f002f0cd",
     "packages/sqlike/src/persistence_wbtest.mbt": "3d981dac002f117107f4b60a6397807dcaff5b8a15d45ec3b96388ca83be3344",
-    "packages/sqlike/src/prepare.mbt": "10e51042c83737e69e904f64c52d0303eb116a7134df95d8d0ef63ddf45714f4",
+    "packages/sqlike/src/prepare.mbt": "eed562ef289de803c48c30942bba5857371e45efd605cc4a24a7d4cc526ffe1e",
     "packages/sqlike/src/prepared.mbt": "59420803255e91a30ece6a85737b15ff3b8a33c9c84bdeb8f6a9eec75ef16e73",
     "packages/sqlike/src/prepared_selection_wbtest.mbt": "b4624c89bae3b7181f1444cd251556e054453bed98062bd5b6a19d151977c209",
     "packages/sqlike/src/primary_index.mbt": "b81cb16812bc24f0e3807778997c66ca4aab241335026c8542fcf36fe1189599",
     "packages/sqlike/src/program_compiler.mbt": "fcd9da9a6ed5af289566889ae6279ce3aebc04cebdf545790abd9ed1e22a3e18",
-    "packages/sqlike/src/query.mbt": "baa6051fb485a9b30ff230e5e8b401536ac2ade97d91411733e2cd734cba30f9",
+    "packages/sqlike/src/query.mbt": "c7b8d0525f71bedb98870de3b6b403d0635ccc83480319df4684ee68280e0e8e",
     "packages/sqlike/src/query_plan.mbt": "63e846f9bf6c018d9fad30627cbb670667e337ed767366e58a5022246e2d0f74",
     "packages/sqlike/src/row_pages.mbt": "35795aa2cc32e84b58e30b07b0f597908a51f1989d3371f9986c2b21188addb5",
     "packages/sqlike/src/row_pages_wbtest.mbt": "d48a5d1e5454dda34e25829bda13996d5a94e140191818eacf08f5ecc609b744",
-    "packages/sqlike/src/runtime_usage_compiler.mbt": "05ff65f3f6e59032435149bcbc6ef207e3c5111dce840beaff9398510e177081",
-    "packages/sqlike/src/runtime_usage_generated.mbt": "b29857b9f016d6921c18c41306090617dbef4b8e4ee8c4cf4469cc4bbd75a627",
+    "packages/sqlike/src/runtime_query_requirements.mbt": "7f4354f6eec1bf6332ed8482f8010922b0e257735cb5bfde8e2cabb3011a7285",
+    "packages/sqlike/src/runtime_usage_compiler.mbt": "8767ac9f24365bd1aa110959bfcecb50a0f10c7c5e66f87bd9b2fb9c15f2a202",
+    "packages/sqlike/src/runtime_usage_generated.mbt": "8f72423dcfdbb58b7fc981fa4512525364bd4af974a6be48cb67ff1cdc382041",
     "packages/sqlike/src/scalar.mbt": "5412d9c80157175c8ad94ec4f5eebfacf75df522e226a852df9b4d2477cbbe40",
     "packages/sqlike/src/sql_render.mbt": "b7264b0685e50dbf0237a58b23970a617bfbaac2c8a588216ea552e110218146",
     "packages/sqlike/src/sqlite_file.mbt": "f1208916e4cb70e91360ca851f7cf81b4889baee9c100bfbbf6d7c0d6aabb7ee",
@@ -117,19 +118,19 @@
     "packages/sqlike/src/value.mbt": "e96cb4d18b594a47bf7c00654445a9ed9b770138903bf26c3cea1ead52be4013",
     "packages/sqlike/src/window.mbt": "25b144661bf5c0ee9e3650d6072fc97b2a13812831af3ae395f95dfca3b82f47",
     "pnpm-lock.yaml": "62a9334c27b9f3876361edc3c9f74a0ed5e11866e28403cc065e1bdba7d70012",
-    "scripts/analyze-catalog.ts": "e001fac4b700e5e2736d2f0eac487087207c889c23ebd4999dfaad0b8fc06598",
+    "scripts/analyze-catalog.ts": "014d636af9e50a0eea84aa8db126b3899e9fca33dd181571ef25102127eb5f57",
     "scripts/aot-compiler.ts": "cc1fe47f0b43b6bd4fe24ce509ee9233fc9c5b742a5c1dcb0a5f30c91a3e2149",
-    "scripts/build-sqlike-runtime.ts": "da40aeadc79a41313cf4588c16d60c2c80b1335a8242c5d860dc30259aaa42b7",
+    "scripts/build-sqlike-runtime.ts": "919ce452896f62c08fd8d8df4dc9bbe54decd5c31f9d6b5f22d6aa6540c175a0",
     "scripts/defined-compiler.ts": "a9ef66d1c1af4ae12ab00b63f0f07fcb0e0b83b7a24256e8d55094e43b3f19e6",
-    "scripts/generate-binary-codecs.ts": "4b89e5ef5d47827e70a7007f8827f8e33b18d125a233e3d78308b00a61ec0f5c",
-    "scripts/generate-runtime-capabilities.ts": "b2cd98d2a88f05b988c7650495155453ed837663a674ad241085632ea6b13d36",
-    "scripts/measure-catalog-profiles.ts": "26ec0717f7b2d6a683fd46ed1b7a26897e1ccb5837bbecd43b50103ec41e482e",
+    "scripts/generate-binary-codecs.ts": "81b67ae38623e2976b23b8823ab705dcfdf00bc7877f5c7ab41022ce8b869877",
+    "scripts/generate-runtime-capabilities.ts": "a713a85aca988a4f4f575f4272f27de7f95d48bd8201f44295ca35baff86084b",
+    "scripts/measure-catalog-profiles.ts": "227aa63c4bb36f7baa26d75cc285ed43dea07d3eae49f287bd15b6f1ccaac162",
     "scripts/measurement-manifest.ts": "615c0ab32c0b2e01c57ea1be690a2a08d2e9401b9b0c5d93574520253c16acdb",
     "scripts/oxc-runtime.ts": "24406b458799bdb150e1a986353c7d965d57964e60067f1a421e1cc010e57fce",
     "src/binary-wire.json": "f3e811d415bf6e48620b30d666547b023504647406200f3b8e0f9abbe367dd96",
-    "src/catalog-capabilities.ts": "4768a8f68808a322356a67a4eed646fbedfb527833c0f28d3fffc3d1afe757d1",
-    "src/catalog-requirements-contract.ts": "a03e22aaf9dc30ed1549b9abd33e75369f47b56de0f063340df5ba039def29db",
-    "src/runtime-capabilities.json": "325d55ffba4d82a4e24f392c4a836bca9e684134fd28462eb901446d45bde701",
+    "src/catalog-capabilities.ts": "304fc2292ced21695ab48778b5b49e417b3bb647be1497ad598e1ff77d9eabfb",
+    "src/catalog-requirements-contract.ts": "d2cbdc2070551ef72e20af8bf2b1a4a4c5c77a4aa8fafffaf220b04b2d547b77",
+    "src/runtime-capabilities.json": "951ea3f70c799330f64bab2a32e8ae997c75ad00cb94cbae6c3436402f40c2a3",
     "src/sqlike-features.ts": "e23ccf5fe013d6d472934bcd8ce4418e727b716b14fde1069d35bd3bdcf2f5a6",
     "src/sqlike-runtime.ts": "3ac5b97e07f6fb44b6661c04628806e5479fa62ad101cd313985f7f621570f46",
     "tests/compatibility/native-values.ts": "c22d4b1fc68d87a3771b99fdc4623529f24a5932ef4e1e6d760ff3e32dad90b0"
@@ -164,7 +165,8 @@
         "functionGroups": [],
         "statements": [
           "select"
-        ]
+        ],
+        "queryParts": []
       },
       "exports": [
         "aot_open",
@@ -186,29 +188,29 @@
         "baseline": {
           "js": {
             "path": "generated/catalog-profiles/readonly/aot/baseline/runtime.js",
-            "raw": 463034,
-            "brotli": 87822,
-            "sha256": "1c3763d75692f95ebfb22bf3ba9787406f0bac33ef3d7ed3e94146f0a6471b64"
+            "raw": 464115,
+            "brotli": 88137,
+            "sha256": "79cc10943e52dad07d5d9def6bb78b76ead4cfff12382bb38b2eb4d7770e6071"
           },
           "wasm": {
             "path": "generated/catalog-profiles/readonly/aot/baseline/runtime.wasm",
-            "raw": 418380,
-            "brotli": 130432,
-            "sha256": "63855695e617ab375c7366def27ce4a6429b71717c75d429286bb53a29e672e2"
+            "raw": 419371,
+            "brotli": 131069,
+            "sha256": "6a45c606a02de9cab24118f14c59fad620edb7f412a30a687bae70f24ccc54d7"
           }
         },
         "selected": {
           "js": {
             "path": "generated/catalog-profiles/readonly/aot/selected/runtime.js",
-            "raw": 408004,
-            "brotli": 76953,
-            "sha256": "6190fa06948eb1a4e07513002455a487566e82561304445d29b316c6881798fa"
+            "raw": 396216,
+            "brotli": 74854,
+            "sha256": "7a9146b3512ee312a167f0a66cf1330931c168ed4b466ffded05be2d9e0e38dc"
           },
           "wasm": {
             "path": "generated/catalog-profiles/readonly/aot/selected/runtime.wasm",
-            "raw": 368811,
-            "brotli": 114873,
-            "sha256": "4ebc110e35af1c59c259c828142fca7da1985a5ecf26b2e9b509b3044170370a"
+            "raw": 355157,
+            "brotli": 111235,
+            "sha256": "a34675376ac016f02fdce360ebd2e0dd24c76a7b3bb5864430442e00e72a0964"
           }
         }
       }
@@ -242,7 +244,8 @@
         "functionGroups": [],
         "statements": [
           "select"
-        ]
+        ],
+        "queryParts": []
       },
       "exports": [
         "defined_open",
@@ -270,29 +273,29 @@
         "baseline": {
           "js": {
             "path": "generated/catalog-profiles/readonly/defined/baseline/runtime.js",
-            "raw": 431890,
-            "brotli": 84926,
-            "sha256": "df3b2dac7f5e5780161eaa98fb650b6131f9361004657687580cd05876c8f960"
+            "raw": 432971,
+            "brotli": 85287,
+            "sha256": "a418c245747a3b2befb6cac7784d32a3760b7e6ea2d4dcf332070eb1f52db695"
           },
           "wasm": {
             "path": "generated/catalog-profiles/readonly/defined/baseline/runtime.wasm",
-            "raw": 387846,
-            "brotli": 124431,
-            "sha256": "c02616b7061ec84455c460edfae1cbb530d7bd9b0ff460e7c770ee1876da8b09"
+            "raw": 388927,
+            "brotli": 124710,
+            "sha256": "6fbcac0116c9dca5a71f3c0bf4e92b6cf80a1a78974118e0cfbad1f20751218d"
           }
         },
         "selected": {
           "js": {
             "path": "generated/catalog-profiles/readonly/defined/selected/runtime.js",
-            "raw": 377948,
-            "brotli": 74380,
-            "sha256": "5a455096b0a935ac3d05516ea3d40744d61965652b8edf34fc6ff0aa97409008"
+            "raw": 366280,
+            "brotli": 72280,
+            "sha256": "d22a3df80986b45eeccab929b1d235bfc36556e7eda0728f4e650976e55d2d5c"
           },
           "wasm": {
             "path": "generated/catalog-profiles/readonly/defined/selected/runtime.wasm",
-            "raw": 339620,
-            "brotli": 109014,
-            "sha256": "f975adaafc40889458f9bdc46fce2fa2ac03a92e48550a75305609f21dfc1de7"
+            "raw": 326303,
+            "brotli": 105402,
+            "sha256": "d20728653b406148496a351f03b478695261ba01e800cdc743f73401fb5b3baa"
           }
         }
       }
@@ -330,7 +333,8 @@
         ],
         "statements": [
           "select"
-        ]
+        ],
+        "queryParts": []
       },
       "exports": [
         "aot_open",
@@ -352,29 +356,29 @@
         "baseline": {
           "js": {
             "path": "generated/catalog-profiles/scalar-read/aot/baseline/runtime.js",
-            "raw": 463034,
-            "brotli": 87822,
-            "sha256": "1c3763d75692f95ebfb22bf3ba9787406f0bac33ef3d7ed3e94146f0a6471b64"
+            "raw": 464115,
+            "brotli": 88137,
+            "sha256": "79cc10943e52dad07d5d9def6bb78b76ead4cfff12382bb38b2eb4d7770e6071"
           },
           "wasm": {
             "path": "generated/catalog-profiles/scalar-read/aot/baseline/runtime.wasm",
-            "raw": 418380,
-            "brotli": 130432,
-            "sha256": "63855695e617ab375c7366def27ce4a6429b71717c75d429286bb53a29e672e2"
+            "raw": 419371,
+            "brotli": 131069,
+            "sha256": "6a45c606a02de9cab24118f14c59fad620edb7f412a30a687bae70f24ccc54d7"
           }
         },
         "selected": {
           "js": {
             "path": "generated/catalog-profiles/scalar-read/aot/selected/runtime.js",
-            "raw": 410844,
-            "brotli": 77744,
-            "sha256": "c406633700d99eff7b4c6567b5d55d867146b982623b224a735a419e45fe1295"
+            "raw": 399055,
+            "brotli": 75614,
+            "sha256": "20836b236b5774096415a322109afb73adf1904028a80eb5d7ac04fcb1d01ca9"
           },
           "wasm": {
             "path": "generated/catalog-profiles/scalar-read/aot/selected/runtime.wasm",
-            "raw": 372281,
-            "brotli": 115518,
-            "sha256": "349a328de22018bde713d4bd17d2947aac8a12fecc20627931b1b57be640fff2"
+            "raw": 358280,
+            "brotli": 112130,
+            "sha256": "909bcc4f7cba555f7e7f9cd2937fb86087aa941b68c30f598ac2a6288aa3ba49"
           }
         }
       }
@@ -412,7 +416,8 @@
         ],
         "statements": [
           "select"
-        ]
+        ],
+        "queryParts": []
       },
       "exports": [
         "defined_open",
@@ -440,29 +445,569 @@
         "baseline": {
           "js": {
             "path": "generated/catalog-profiles/scalar-read/defined/baseline/runtime.js",
-            "raw": 431890,
-            "brotli": 84926,
-            "sha256": "df3b2dac7f5e5780161eaa98fb650b6131f9361004657687580cd05876c8f960"
+            "raw": 432971,
+            "brotli": 85287,
+            "sha256": "a418c245747a3b2befb6cac7784d32a3760b7e6ea2d4dcf332070eb1f52db695"
           },
           "wasm": {
             "path": "generated/catalog-profiles/scalar-read/defined/baseline/runtime.wasm",
-            "raw": 387846,
-            "brotli": 124431,
-            "sha256": "c02616b7061ec84455c460edfae1cbb530d7bd9b0ff460e7c770ee1876da8b09"
+            "raw": 388927,
+            "brotli": 124710,
+            "sha256": "6fbcac0116c9dca5a71f3c0bf4e92b6cf80a1a78974118e0cfbad1f20751218d"
           }
         },
         "selected": {
           "js": {
             "path": "generated/catalog-profiles/scalar-read/defined/selected/runtime.js",
-            "raw": 380786,
-            "brotli": 74987,
-            "sha256": "cd8966815e74c0f434a3bbeaf164bce2931b174941e3c236e5ef8456f486ab48"
+            "raw": 369118,
+            "brotli": 72900,
+            "sha256": "4774353ef3c371af8fef2a3bf12521c729dbe98ab0673797c2a99f359f2b6ff4"
           },
           "wasm": {
             "path": "generated/catalog-profiles/scalar-read/defined/selected/runtime.wasm",
-            "raw": 342398,
-            "brotli": 110083,
-            "sha256": "5ac8da4b8dc2e07bcc7f923aadcc92313fa90363729ed203c9949d18e762a6a4"
+            "raw": 329265,
+            "brotli": 106431,
+            "sha256": "f78b362ce9281261a27e8925e4794ec1c02181fbaa52209181998df37ea3a1b9"
+          }
+        }
+      }
+    },
+    {
+      "id": "json-construct",
+      "mode": "aot",
+      "source": {
+        "schema": [],
+        "queries": [
+          {
+            "name": "q",
+            "sql": "SELECT json_array(?,?),json_object('x',?),json_quote(?)"
+          }
+        ]
+      },
+      "profile": {
+        "mode": "aot",
+        "features": [
+          "primaryKeyIndex",
+          "sqlJson"
+        ]
+      },
+      "requirements": {
+        "format": "sqlike-runtime-requirements@1",
+        "artifactSHA256": "daf72c373ee753f77ce873b15306c3d72d597c37c723fdf4a23490ff59216c5c",
+        "sourceSHA256": "f078f762971d7e38560a50285196f6039fcc2d237ea8ede3b8d04ab9cb65a437",
+        "features": [
+          "sqlJson"
+        ],
+        "functions": [
+          "json_array",
+          "json_object",
+          "json_quote"
+        ],
+        "functionGroups": [
+          "jsonConstruct"
+        ],
+        "statements": [
+          "select"
+        ],
+        "queryParts": []
+      },
+      "exports": [
+        "aot_open",
+        "aot_info",
+        "aot_set_clock",
+        "aot_execute",
+        "aot_dump",
+        "aot_restore",
+        "aot_query_info",
+        "aot_clone",
+        "aot_copy_connection_state",
+        "aot_delta",
+        "aot_ack_delta",
+        "aot_apply_delta"
+      ],
+      "verified": true,
+      "operations": 1,
+      "assets": {
+        "baseline": {
+          "js": {
+            "path": "generated/catalog-profiles/json-construct/aot/baseline/runtime.js",
+            "raw": 488247,
+            "brotli": 92123,
+            "sha256": "7363896bd29e4336535ea1a2a9c31b2f724b34f85d605af73df3e4822ec319bf"
+          },
+          "wasm": {
+            "path": "generated/catalog-profiles/json-construct/aot/baseline/runtime.wasm",
+            "raw": 440794,
+            "brotli": 137154,
+            "sha256": "f68a98713b8d057296e96773cc35eea93923f89e960088fa03fbe76dcd829504"
+          }
+        },
+        "selected": {
+          "js": {
+            "path": "generated/catalog-profiles/json-construct/aot/selected/runtime.js",
+            "raw": 402649,
+            "brotli": 75922,
+            "sha256": "8180bb0c2f1e5f4fc2bff8b32ca64595232d74d0e0c06912c45cc14a680f3338"
+          },
+          "wasm": {
+            "path": "generated/catalog-profiles/json-construct/aot/selected/runtime.wasm",
+            "raw": 361356,
+            "brotli": 113164,
+            "sha256": "c32cc74405b9b4fc19922b2f2a36241fb9d8e627f04b43442c7291316f149cc4"
+          }
+        }
+      }
+    },
+    {
+      "id": "json-construct",
+      "mode": "defined",
+      "source": {
+        "schema": [],
+        "queries": [
+          {
+            "name": "q",
+            "sql": "SELECT json_array(?,?),json_object('x',?),json_quote(?)"
+          }
+        ]
+      },
+      "profile": {
+        "mode": "defined",
+        "features": [
+          "primaryKeyIndex",
+          "sqlJson"
+        ]
+      },
+      "requirements": {
+        "format": "sqlike-runtime-requirements@1",
+        "artifactSHA256": "daf72c373ee753f77ce873b15306c3d72d597c37c723fdf4a23490ff59216c5c",
+        "sourceSHA256": "f078f762971d7e38560a50285196f6039fcc2d237ea8ede3b8d04ab9cb65a437",
+        "features": [
+          "sqlJson"
+        ],
+        "functions": [
+          "json_array",
+          "json_object",
+          "json_quote"
+        ],
+        "functionGroups": [
+          "jsonConstruct"
+        ],
+        "statements": [
+          "select"
+        ],
+        "queryParts": []
+      },
+      "exports": [
+        "defined_open",
+        "defined_info",
+        "defined_execute",
+        "defined_query_info",
+        "defined_set_clock",
+        "defined_clone",
+        "defined_copy_connection_state",
+        "defined_snapshot",
+        "defined_restore",
+        "defined_delta",
+        "defined_apply_delta",
+        "defined_ack_delta",
+        "binary_data",
+        "binary_info",
+        "defined_open_base64",
+        "binary_data_base64",
+        "defined_restore_base64",
+        "defined_apply_delta_base64"
+      ],
+      "verified": true,
+      "operations": 1,
+      "assets": {
+        "baseline": {
+          "js": {
+            "path": "generated/catalog-profiles/json-construct/defined/baseline/runtime.js",
+            "raw": 457087,
+            "brotli": 88985,
+            "sha256": "dffbba2618a25dc1ef262728bc6f89d352f4d6901b205997d423a1e11fcbeeaa"
+          },
+          "wasm": {
+            "path": "generated/catalog-profiles/json-construct/defined/baseline/runtime.wasm",
+            "raw": 409879,
+            "brotli": 130660,
+            "sha256": "5179cfa024dd0c53056892cb68c11a0d0eaaf71260f846287063a20962c2fe76"
+          }
+        },
+        "selected": {
+          "js": {
+            "path": "generated/catalog-profiles/json-construct/defined/selected/runtime.js",
+            "raw": 372667,
+            "brotli": 73386,
+            "sha256": "5af9f5e5f71bb0f39a3c073543541fce3efbf6e920dc81f53c139da66501058e"
+          },
+          "wasm": {
+            "path": "generated/catalog-profiles/json-construct/defined/selected/runtime.wasm",
+            "raw": 331965,
+            "brotli": 107036,
+            "sha256": "c14007ce912ebeb00b34502fcb2e61ffad9e6796551c5b2ee2750a900b95fda5"
+          }
+        }
+      }
+    },
+    {
+      "id": "json-nested",
+      "mode": "aot",
+      "source": {
+        "schema": [],
+        "queries": [
+          {
+            "name": "q",
+            "sql": "SELECT json_array(json_object('x',1)),json_object(json_array(1),json_array(2))"
+          }
+        ]
+      },
+      "profile": {
+        "mode": "aot",
+        "features": [
+          "primaryKeyIndex",
+          "sqlJson"
+        ]
+      },
+      "requirements": {
+        "format": "sqlike-runtime-requirements@1",
+        "artifactSHA256": "4a20677c147fd1c917e3b8d3b37e4d2d6af70f8cc88ff029dc973c33a20a4bca",
+        "sourceSHA256": "942c1508db3bffe5c6910ff3ae71e344312d8c2f87a4488c3f625e31e57f8057",
+        "features": [
+          "sqlJson"
+        ],
+        "functions": [
+          "json_array",
+          "json_object"
+        ],
+        "functionGroups": [
+          "jsonConstruct"
+        ],
+        "statements": [
+          "select"
+        ],
+        "queryParts": [
+          "jsonSubtype"
+        ]
+      },
+      "exports": [
+        "aot_open",
+        "aot_info",
+        "aot_set_clock",
+        "aot_execute",
+        "aot_dump",
+        "aot_restore",
+        "aot_query_info",
+        "aot_clone",
+        "aot_copy_connection_state",
+        "aot_delta",
+        "aot_ack_delta",
+        "aot_apply_delta"
+      ],
+      "verified": true,
+      "operations": 1,
+      "assets": {
+        "baseline": {
+          "js": {
+            "path": "generated/catalog-profiles/json-nested/aot/baseline/runtime.js",
+            "raw": 488247,
+            "brotli": 92123,
+            "sha256": "7363896bd29e4336535ea1a2a9c31b2f724b34f85d605af73df3e4822ec319bf"
+          },
+          "wasm": {
+            "path": "generated/catalog-profiles/json-nested/aot/baseline/runtime.wasm",
+            "raw": 440794,
+            "brotli": 137154,
+            "sha256": "f68a98713b8d057296e96773cc35eea93923f89e960088fa03fbe76dcd829504"
+          }
+        },
+        "selected": {
+          "js": {
+            "path": "generated/catalog-profiles/json-nested/aot/selected/runtime.js",
+            "raw": 407493,
+            "brotli": 76709,
+            "sha256": "a7a657f22580f4ae380fb9342807ccdd2695da9298da274798602f6305f91fe0"
+          },
+          "wasm": {
+            "path": "generated/catalog-profiles/json-nested/aot/selected/runtime.wasm",
+            "raw": 365636,
+            "brotli": 114008,
+            "sha256": "ad7f833e7677afdb71490d82b73ad87c4e5993478b341ea65cb5f6fe51b04636"
+          }
+        }
+      }
+    },
+    {
+      "id": "json-nested",
+      "mode": "defined",
+      "source": {
+        "schema": [],
+        "queries": [
+          {
+            "name": "q",
+            "sql": "SELECT json_array(json_object('x',1)),json_object(json_array(1),json_array(2))"
+          }
+        ]
+      },
+      "profile": {
+        "mode": "defined",
+        "features": [
+          "primaryKeyIndex",
+          "sqlJson"
+        ]
+      },
+      "requirements": {
+        "format": "sqlike-runtime-requirements@1",
+        "artifactSHA256": "4a20677c147fd1c917e3b8d3b37e4d2d6af70f8cc88ff029dc973c33a20a4bca",
+        "sourceSHA256": "942c1508db3bffe5c6910ff3ae71e344312d8c2f87a4488c3f625e31e57f8057",
+        "features": [
+          "sqlJson"
+        ],
+        "functions": [
+          "json_array",
+          "json_object"
+        ],
+        "functionGroups": [
+          "jsonConstruct"
+        ],
+        "statements": [
+          "select"
+        ],
+        "queryParts": [
+          "jsonSubtype"
+        ]
+      },
+      "exports": [
+        "defined_open",
+        "defined_info",
+        "defined_execute",
+        "defined_query_info",
+        "defined_set_clock",
+        "defined_clone",
+        "defined_copy_connection_state",
+        "defined_snapshot",
+        "defined_restore",
+        "defined_delta",
+        "defined_apply_delta",
+        "defined_ack_delta",
+        "binary_data",
+        "binary_info",
+        "defined_open_base64",
+        "binary_data_base64",
+        "defined_restore_base64",
+        "defined_apply_delta_base64"
+      ],
+      "verified": true,
+      "operations": 1,
+      "assets": {
+        "baseline": {
+          "js": {
+            "path": "generated/catalog-profiles/json-nested/defined/baseline/runtime.js",
+            "raw": 457087,
+            "brotli": 88985,
+            "sha256": "dffbba2618a25dc1ef262728bc6f89d352f4d6901b205997d423a1e11fcbeeaa"
+          },
+          "wasm": {
+            "path": "generated/catalog-profiles/json-nested/defined/baseline/runtime.wasm",
+            "raw": 409879,
+            "brotli": 130660,
+            "sha256": "5179cfa024dd0c53056892cb68c11a0d0eaaf71260f846287063a20962c2fe76"
+          }
+        },
+        "selected": {
+          "js": {
+            "path": "generated/catalog-profiles/json-nested/defined/selected/runtime.js",
+            "raw": 377439,
+            "brotli": 74166,
+            "sha256": "1de2a3c7d4b802c34f0b4e5425ce6a4e809e0a55954cd7ed21ef0db246317490"
+          },
+          "wasm": {
+            "path": "generated/catalog-profiles/json-nested/defined/selected/runtime.wasm",
+            "raw": 336097,
+            "brotli": 108235,
+            "sha256": "890a3133046a6a0b70da8ea0968544be6bf22506f1925396484c9cc09e260b98"
+          }
+        }
+      }
+    },
+    {
+      "id": "json-cte",
+      "mode": "aot",
+      "source": {
+        "schema": [],
+        "queries": [
+          {
+            "name": "q",
+            "sql": "WITH RECURSIVE a(x) AS(SELECT 1 UNION ALL SELECT x+1 FROM a WHERE x<3) SELECT json_group_array(x) FROM a"
+          }
+        ]
+      },
+      "profile": {
+        "mode": "aot",
+        "features": [
+          "primaryKeyIndex",
+          "sqlJson"
+        ]
+      },
+      "requirements": {
+        "format": "sqlike-runtime-requirements@1",
+        "artifactSHA256": "057dddcb5edd607b2282c7e0a6a20c1c8b5ac129b8f649ba1dde7d32fd63dd1d",
+        "sourceSHA256": "7a589aeb34b4d705cbb397f895717994a92c0246510341aca2a67744125db377",
+        "features": [
+          "sqlJson"
+        ],
+        "functions": [
+          "json_group_array"
+        ],
+        "functionGroups": [
+          "jsonAggregate"
+        ],
+        "statements": [
+          "select"
+        ],
+        "queryParts": [
+          "compound",
+          "cte",
+          "recursiveCte"
+        ]
+      },
+      "exports": [
+        "aot_open",
+        "aot_info",
+        "aot_set_clock",
+        "aot_execute",
+        "aot_dump",
+        "aot_restore",
+        "aot_query_info",
+        "aot_clone",
+        "aot_copy_connection_state",
+        "aot_delta",
+        "aot_ack_delta",
+        "aot_apply_delta"
+      ],
+      "verified": true,
+      "operations": 1,
+      "assets": {
+        "baseline": {
+          "js": {
+            "path": "generated/catalog-profiles/json-cte/aot/baseline/runtime.js",
+            "raw": 488247,
+            "brotli": 92123,
+            "sha256": "7363896bd29e4336535ea1a2a9c31b2f724b34f85d605af73df3e4822ec319bf"
+          },
+          "wasm": {
+            "path": "generated/catalog-profiles/json-cte/aot/baseline/runtime.wasm",
+            "raw": 440794,
+            "brotli": 137154,
+            "sha256": "f68a98713b8d057296e96773cc35eea93923f89e960088fa03fbe76dcd829504"
+          }
+        },
+        "selected": {
+          "js": {
+            "path": "generated/catalog-profiles/json-cte/aot/selected/runtime.js",
+            "raw": 416137,
+            "brotli": 78290,
+            "sha256": "8e58c55d98cdcdad5a20d6c57020f6ded8a3c0e178f8c93eb9b9a7cd4e61db50"
+          },
+          "wasm": {
+            "path": "generated/catalog-profiles/json-cte/aot/selected/runtime.wasm",
+            "raw": 376072,
+            "brotli": 116907,
+            "sha256": "c230047a8519f26cfd608b3c0679ade774c73ae14370fadbcaf7eb0a808790ea"
+          }
+        }
+      }
+    },
+    {
+      "id": "json-cte",
+      "mode": "defined",
+      "source": {
+        "schema": [],
+        "queries": [
+          {
+            "name": "q",
+            "sql": "WITH RECURSIVE a(x) AS(SELECT 1 UNION ALL SELECT x+1 FROM a WHERE x<3) SELECT json_group_array(x) FROM a"
+          }
+        ]
+      },
+      "profile": {
+        "mode": "defined",
+        "features": [
+          "primaryKeyIndex",
+          "sqlJson"
+        ]
+      },
+      "requirements": {
+        "format": "sqlike-runtime-requirements@1",
+        "artifactSHA256": "057dddcb5edd607b2282c7e0a6a20c1c8b5ac129b8f649ba1dde7d32fd63dd1d",
+        "sourceSHA256": "7a589aeb34b4d705cbb397f895717994a92c0246510341aca2a67744125db377",
+        "features": [
+          "sqlJson"
+        ],
+        "functions": [
+          "json_group_array"
+        ],
+        "functionGroups": [
+          "jsonAggregate"
+        ],
+        "statements": [
+          "select"
+        ],
+        "queryParts": [
+          "compound",
+          "cte",
+          "recursiveCte"
+        ]
+      },
+      "exports": [
+        "defined_open",
+        "defined_info",
+        "defined_execute",
+        "defined_query_info",
+        "defined_set_clock",
+        "defined_clone",
+        "defined_copy_connection_state",
+        "defined_snapshot",
+        "defined_restore",
+        "defined_delta",
+        "defined_apply_delta",
+        "defined_ack_delta",
+        "binary_data",
+        "binary_info",
+        "defined_open_base64",
+        "binary_data_base64",
+        "defined_restore_base64",
+        "defined_apply_delta_base64"
+      ],
+      "verified": true,
+      "operations": 1,
+      "assets": {
+        "baseline": {
+          "js": {
+            "path": "generated/catalog-profiles/json-cte/defined/baseline/runtime.js",
+            "raw": 457087,
+            "brotli": 88985,
+            "sha256": "dffbba2618a25dc1ef262728bc6f89d352f4d6901b205997d423a1e11fcbeeaa"
+          },
+          "wasm": {
+            "path": "generated/catalog-profiles/json-cte/defined/baseline/runtime.wasm",
+            "raw": 409879,
+            "brotli": 130660,
+            "sha256": "5179cfa024dd0c53056892cb68c11a0d0eaaf71260f846287063a20962c2fe76"
+          }
+        },
+        "selected": {
+          "js": {
+            "path": "generated/catalog-profiles/json-cte/defined/selected/runtime.js",
+            "raw": 386091,
+            "brotli": 75709,
+            "sha256": "d20f61cf77f14e38e1e6fd2ef8ecddabb21f2817ba57f460cd358f52cf2012c4"
+          },
+          "wasm": {
+            "path": "generated/catalog-profiles/json-cte/defined/selected/runtime.wasm",
+            "raw": 346189,
+            "brotli": 110904,
+            "sha256": "32255142a666df6fa90e739d2910dc610f3469618f07a899f06c3455565ea982"
           }
         }
       }
@@ -524,7 +1069,8 @@
           "insert",
           "select",
           "update"
-        ]
+        ],
+        "queryParts": []
       },
       "exports": [
         "aot_open",
@@ -546,29 +1092,29 @@
         "baseline": {
           "js": {
             "path": "generated/catalog-profiles/notes/aot/baseline/runtime.js",
-            "raw": 463034,
-            "brotli": 87822,
-            "sha256": "1c3763d75692f95ebfb22bf3ba9787406f0bac33ef3d7ed3e94146f0a6471b64"
+            "raw": 464115,
+            "brotli": 88137,
+            "sha256": "79cc10943e52dad07d5d9def6bb78b76ead4cfff12382bb38b2eb4d7770e6071"
           },
           "wasm": {
             "path": "generated/catalog-profiles/notes/aot/baseline/runtime.wasm",
-            "raw": 418380,
-            "brotli": 130432,
-            "sha256": "63855695e617ab375c7366def27ce4a6429b71717c75d429286bb53a29e672e2"
+            "raw": 419371,
+            "brotli": 131069,
+            "sha256": "6a45c606a02de9cab24118f14c59fad620edb7f412a30a687bae70f24ccc54d7"
           }
         },
         "selected": {
           "js": {
             "path": "generated/catalog-profiles/notes/aot/selected/runtime.js",
-            "raw": 435398,
-            "brotli": 82221,
-            "sha256": "9e7ac28f512b713c312430b2ccc46e979af509924fd4ae3677d6c32c10115ac6"
+            "raw": 423666,
+            "brotli": 80093,
+            "sha256": "03ca8dfe1f1281fff53099ef00ddc68fa1ce037385de95e1dcecb0e1548da614"
           },
           "wasm": {
             "path": "generated/catalog-profiles/notes/aot/selected/runtime.wasm",
-            "raw": 392726,
-            "brotli": 122437,
-            "sha256": "a4c7ee4ae4152e4393422263817cdf6647781ba24fcbebabcd34ed2f3b46bbf1"
+            "raw": 380109,
+            "brotli": 118959,
+            "sha256": "d3cc1182a297d5e55ad4ac3648d7d2c9101839b43aa114a475a05d37e380bf82"
           }
         }
       }
@@ -630,7 +1176,8 @@
           "insert",
           "select",
           "update"
-        ]
+        ],
+        "queryParts": []
       },
       "exports": [
         "defined_open",
@@ -658,29 +1205,29 @@
         "baseline": {
           "js": {
             "path": "generated/catalog-profiles/notes/defined/baseline/runtime.js",
-            "raw": 431890,
-            "brotli": 84926,
-            "sha256": "df3b2dac7f5e5780161eaa98fb650b6131f9361004657687580cd05876c8f960"
+            "raw": 432971,
+            "brotli": 85287,
+            "sha256": "a418c245747a3b2befb6cac7784d32a3760b7e6ea2d4dcf332070eb1f52db695"
           },
           "wasm": {
             "path": "generated/catalog-profiles/notes/defined/baseline/runtime.wasm",
-            "raw": 387846,
-            "brotli": 124431,
-            "sha256": "c02616b7061ec84455c460edfae1cbb530d7bd9b0ff460e7c770ee1876da8b09"
+            "raw": 388927,
+            "brotli": 124710,
+            "sha256": "6fbcac0116c9dca5a71f3c0bf4e92b6cf80a1a78974118e0cfbad1f20751218d"
           }
         },
         "selected": {
           "js": {
             "path": "generated/catalog-profiles/notes/defined/selected/runtime.js",
-            "raw": 405093,
-            "brotli": 79667,
-            "sha256": "7b6dcce4055bf42d3564beecb92308639f936100bc773456766b8bb982938558"
+            "raw": 393463,
+            "brotli": 77553,
+            "sha256": "8bed875005d869b0e9885dee6fa26f7057cbc2ca6b0afd4d9996d07a88e4e4b0"
           },
           "wasm": {
             "path": "generated/catalog-profiles/notes/defined/selected/runtime.wasm",
-            "raw": 362976,
-            "brotli": 116452,
-            "sha256": "422cc84ae8851e3adda3e659c7bbcada25a6ee3aeded16d9926d2d0aa25c24d7"
+            "raw": 350108,
+            "brotli": 112902,
+            "sha256": "9684bfdebcca490b6902c2462577fd26280acfb3cbde036b9cf07dfb96a749f7"
           }
         }
       }

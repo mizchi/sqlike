@@ -33,6 +33,40 @@ const fixtures: { id: string; source: CatalogSource; runs: [string, Value[]][] }
     runs: [["q", []]],
   },
   {
+    id: "json-construct",
+    source: {
+      schema: [],
+      queries: [{ name: "q", sql: "SELECT json_array(?,?),json_object('x',?),json_quote(?)" }],
+    },
+    runs: [["q", ["{}", 1n, "[]", null]]],
+  },
+  {
+    id: "json-nested",
+    source: {
+      schema: [],
+      queries: [
+        {
+          name: "q",
+          sql: "SELECT json_array(json_object('x',1)),json_object(json_array(1),json_array(2))",
+        },
+      ],
+    },
+    runs: [["q", []]],
+  },
+  {
+    id: "json-cte",
+    source: {
+      schema: [],
+      queries: [
+        {
+          name: "q",
+          sql: "WITH RECURSIVE a(x) AS(SELECT 1 UNION ALL SELECT x+1 FROM a WHERE x<3) SELECT json_group_array(x) FROM a",
+        },
+      ],
+    },
+    runs: [["q", []]],
+  },
+  {
     id: "notes",
     source: JSON.parse(await readFile("examples/notes/catalog.json", "utf8")),
     runs: [
@@ -165,7 +199,7 @@ await writeFile(
       node: process.version,
       nativeSQLite: process.versions.sqlite,
       method:
-        "Runtime assets only. Identical semantic feature profiles, exports and primary-key-index setting. Baseline retains all core function/statement implementations; selected runtime infers the complete schema/query closure. Oxc minified ESM, release Wasm GC; Brotli quality 11 per asset with round trip. Excludes host, IndexedDB wrappers, catalog data and compiler. Native typed results verified for baseline/selected JS/Wasm on every fixture. Not an additive app-download estimate or a speed measurement.",
+        "Runtime assets only. Identical semantic feature profiles, exports and primary-key-index setting. Baseline retains all core function/statement/query implementations and all functions within enabled semantic features; selected runtime infers the complete schema/query closure, including JSON families, subtype, CTE, recursion, JOIN and compound SELECT. Oxc minified ESM, release Wasm GC; Brotli quality 11 per asset with round trip. Excludes host, IndexedDB wrappers, catalog data and compiler. Native typed results verified for baseline/selected JS/Wasm on every fixture. Not an additive app-download estimate or a speed measurement.",
       sourceHashes: sourceHashes([
         ...engineSourcePaths(),
         "scripts/measure-catalog-profiles.ts",
@@ -194,3 +228,20 @@ await writeFile(
     2,
   ) + "\n",
 );
+
+const guidePath = "docs/catalog-build.md";
+const guide = await readFile(guidePath, "utf8");
+const marker = /<!-- catalog-size:start -->[\s\S]*?<!-- catalog-size:end -->/;
+assert.match(guide, marker);
+const kib = (bytes: number) => (bytes / 1024).toFixed(2);
+const table = [
+  "<!-- catalog-size:start -->",
+  "| Catalog / mode | JS minified 前→後 | JS Brotli 前→後 | Wasm Brotli 前→後 |",
+  "| --- | ---: | ---: | ---: |",
+  ...results.map(
+    ({ id, mode, assets: { baseline, selected } }) =>
+      `| ${id} / ${mode} | ${kib(baseline.js.raw)}→${kib(selected.js.raw)} KiB | ${kib(baseline.js.brotli)}→${kib(selected.js.brotli)} KiB | ${kib(baseline.wasm.brotli)}→${kib(selected.wasm.brotli)} KiB |`,
+  ),
+  "<!-- catalog-size:end -->",
+].join("\n");
+await writeFile(guidePath, guide.replace(marker, table));

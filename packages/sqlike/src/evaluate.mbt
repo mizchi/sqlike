@@ -388,6 +388,7 @@ fn evaluate_call(
     raise TriggerAbort(text_value(evaluate(args[1], ctx)))
   }
   if FEATURE_SQL_JSON &&
+    CAP_FUNCTION_JSON_AGGREGATE &&
     (name == "json_group_array" || name == "json_group_object") {
     return json_aggregate(name, args, ctx)
   }

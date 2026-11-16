@@ -1,6 +1,6 @@
 # 登録クエリからランタイムを絞る
 
-0.1.0以後の未リリース機能。固定DDLとnamed queryのcatalogをビルド時に渡すと、必要な任意機能・coreの関数群・文の種類を推定し、使わない実装をJS / Wasmから除去できます。JSON AOTの`aot`と、バイナリ定義の`defined`に対応します。
+0.1.0以後の未リリース機能。固定DDLとnamed queryのcatalogをビルド時に渡すと、必要な任意機能・関数群・文の種類・query処理を推定し、使わない実装をJS / Wasmから除去できます。JSON AOTの`aot`と、バイナリ定義の`defined`に対応します。
 
 ```mermaid
 flowchart LR
@@ -29,6 +29,7 @@ const built = await buildSqlikeRuntime(
 console.log(built.requirements);
 // functionGroups: ['aggregates']
 // statements: ['delete', 'insert', 'select', 'update']
+// queryParts: []
 ```
 
 事前に`pnpm build:core`でcompilerをビルドします。`definition`は[固定DDLとprepared statement](prepared.md)と同じ定義データで、ランタイムとは別に配信します。ブラウザでは生成したruntimeを`createDefinedDatabase()`へ注入します。`aot`モードの場合は、同じsourceから作った`buildCatalog(source).artifact`を`openCompiled()`へ渡します。
@@ -69,13 +70,22 @@ just sqlike-runtime examples/profiles/notes-catalog-defined.json generated/notes
 | JSON・日時・window・STRICT・FK・trigger・外部結合・索引metadata・FILTER | 必要な既存feature tokenを自動追加 |
 | core関数群 | GLOB、LIKE、char、substring、trim、roundなどを個別に除去。lower/upper、min/maxなどは実装を共有する単位で選択 |
 | 通常の集約・group_concat | 別の関数群として選択。window集約に必要な依存も収集 |
+| SQL JSON | 正規化・生成・読取・矢印演算子・編集・patch・集約の7群で選択 |
+| JOIN・通常CTE・再帰CTE・複合SELECT | それぞれ独立に選択。FROM subqueryは内部でCTEへ変換されるため、CTEも含める |
+| JSON subtypeの再解析 | JSONを入れ子にするVALUE引数に必要なときだけ選択 |
 | SELECT / INSERT / UPDATE / DELETE / transaction / PRAGMA | 登録クエリとtrigger本体に必要な文の実装を選択 |
 | 主キー索引 | 性能とメモリの選択なので、`primaryKeyIndex`で明示指定 |
 | SQLite出力・LTX | `sqlitePages` / `ltx`を明示指定。`defined`は従来どおり別exporterを使用 |
 
-`catalog`を省くと従来の手動プロファイルになります。指定した`features`は、自動推定した必須機能へ追加されます。たとえば不要な`sqlJson`を明示すると、その実装も残ります。
+`catalog`を省くと従来の手動プロファイルになります。指定した`features`は、自動推定した必須機能へ追加されます。catalogを渡した場合、その機能の中の関数群・query処理はcatalogから選びます。`sqlJson`を明示しても、未使用のJSON関数群をすべて残す指定にはなりません。
 
-SQLの型変換・比較、汎用のquery実行器、JOIN・CTE・compoundの細分化は今回の対象外です。SQL JSON・日時・window内部の各関数も、既存の大きな機能単位で残ります。クエリごとの専用機械語へ変換する仕組みではありません。
+SQLの型変換・比較、汎用のquery実行器は共通に残ります。日時・window内部の各関数は、既存の大きな機能単位で残ります。クエリごとの専用機械語へ変換する仕組みではありません。
+
+### JSONの生成だけを使う場合
+
+`SELECT json_array(?),json_object('x',?)`ではSQL JSONパーサ・パス解析・編集・patch・集約を除去します。`json_array(json_object('x',1))`のようにJSON結果を入れ子にする場合は、型付きIRから`jsonSubtype`を検出して再解析処理を残します。`json_object(json_array(1),2)`の第1引数はラベル、`json_extract(json_array(1),'$')`の第1引数はJSON文書なので、VALUE引数の再解析依存には含めません。bind・結果・保存画像のJSON ABIは引き続き利用できます。
+
+JSON subtypeは、通常のTEXTとJSON関数の結果を区別するための情報です。`COLLATE`・単項`+`・TEXTキャスト・CASE・coalesce・iif・nullif経由の引継ぎを本家と照合しています。JSON VALUE引数がJSON結果を返し得るscalar subqueryやmin/maxを経由する場合は、正確な型情報の追跡が未対応のため`unsupported JSON subtype propagation`で拒否します。通常の文字列を返すscalar subqueryや、JSON文書として解析する引数は利用できます。[SQLiteのJSON引数の規則](https://www.sqlite.org/json1.html#value_arguments)も参照してください。
 
 ## 生成結果を調べる
 
@@ -85,6 +95,7 @@ SQLの型変換・比較、汎用のquery実行器、JOIN・CTE・compoundの細
 - `features`: 自動推定した意味上の必須機能
 - `functions` / `functionGroups`: 検出した呼出し名と、実装を選ぶ単位
 - `statements`: 必要な文の種類
+- `queryParts`: `join` / `cte` / `recursiveCte` / `compound` / `jsonSubtype`の依存
 
 解析だけなら、Node用の`@mizchi/sqlike/compiler`から実行できます。このentryの`analyzeCatalogRequirements()`も未リリースです。
 
@@ -102,18 +113,26 @@ const requirements = analyzeCatalogRequirements(source);
 <!-- catalog-size:start -->
 | Catalog / mode | JS minified 前→後 | JS Brotli 前→後 | Wasm Brotli 前→後 |
 | --- | ---: | ---: | ---: |
-| readonly / aot | 452.18→398.44 KiB | 85.76→75.15 KiB | 127.38→112.18 KiB |
-| readonly / defined | 421.77→369.09 KiB | 82.94→72.64 KiB | 121.51→106.46 KiB |
-| scalar-read / aot | 452.18→401.21 KiB | 85.76→75.92 KiB | 127.38→112.81 KiB |
-| scalar-read / defined | 421.77→371.86 KiB | 82.94→73.23 KiB | 121.51→107.50 KiB |
-| notes / aot | 452.18→425.19 KiB | 85.76→80.29 KiB | 127.38→119.57 KiB |
-| notes / defined | 421.77→395.60 KiB | 82.94→77.80 KiB | 121.51→113.72 KiB |
+| readonly / aot | 453.24→386.93 KiB | 86.07→73.10 KiB | 128.00→108.63 KiB |
+| readonly / defined | 422.82→357.70 KiB | 83.29→70.59 KiB | 121.79→102.93 KiB |
+| scalar-read / aot | 453.24→389.70 KiB | 86.07→73.84 KiB | 128.00→109.50 KiB |
+| scalar-read / defined | 422.82→360.47 KiB | 83.29→71.19 KiB | 121.79→103.94 KiB |
+| json-construct / aot | 476.80→393.21 KiB | 89.96→74.14 KiB | 133.94→110.51 KiB |
+| json-construct / defined | 446.37→363.93 KiB | 86.90→71.67 KiB | 127.60→104.53 KiB |
+| json-nested / aot | 476.80→397.94 KiB | 89.96→74.91 KiB | 133.94→111.34 KiB |
+| json-nested / defined | 446.37→368.59 KiB | 86.90→72.43 KiB | 127.60→105.70 KiB |
+| json-cte / aot | 476.80→406.38 KiB | 89.96→76.46 KiB | 133.94→114.17 KiB |
+| json-cte / defined | 446.37→377.04 KiB | 86.90→73.93 KiB | 127.60→108.30 KiB |
+| notes / aot | 453.24→413.74 KiB | 86.07→78.22 KiB | 128.00→116.17 KiB |
+| notes / defined | 422.82→384.24 KiB | 83.29→75.74 KiB | 121.79→110.26 KiB |
 <!-- catalog-size:end -->
 
 比較はランタイム単体です。同じ意味上のfeature・主キー索引・公開exportsを使い、通常プロファイルとcatalog指定を比べます。Oxc minify後のJS、release Wasm、ファイルごとのBrotli quality 11を集計します。host・IndexedDB wrapper・定義データ・compilerを含まないため、READMEのアプリ配信量とは範囲が異なります。
+
+[前回の自動選択版（70b0c88）](../measurements/catalog-parts-before.json)との比較では、readonly / definedのJS minifiedが369.09→357.70 KiB、Brotliが72.64→70.59 KiBとなりました。この差は、表の通常プロファイルからの削減量とは別の比較です。新しいJSON fixtureは、通常プロファイルでJSON全体を有効にした構成と比較しています。
 
 ```sh
 just catalog-profiles
 ```
 
-[計測JSON](../measurements/catalog-profiles-current.json)は全fixtureを通常 / 自動選択のJS・Wasmで本家と照合します。[単体差分](../tests/sqlike-catalog-profile.test.ts)は関数群の個別選択、未実行分岐、trigger、FK cascade、SQL transaction、余分な機能を持つcatalogの拒否を検査します。[Chromium](../e2e/catalog-profile.spec.ts)では、選択したruntimeだけを配信し、オフライン書込とIndexedDB再開を検証します。
+[計測JSON](../measurements/catalog-profiles-current.json)は全fixtureを通常 / 自動選択のJS・Wasmで本家と照合します。[単体差分](../tests/sqlike-catalog-profile.test.ts)は関数群の個別選択、未実行分岐、trigger、FK cascade、SQL transaction、余分な機能を持つcatalogの拒否を検査します。[JSON](../tests/sqlike-json-profile.test.ts)と[JOIN / CTE / 複合SELECT](../tests/sqlike-query-profile.test.ts)はAOT / definedの両方で実装の除去と本家の結果を検査します。[Chromium](../e2e/catalog-profile.spec.ts)では、選択したCTE＋JSON生成のruntimeだけを配信し、オフライン書込とIndexedDB再開を検証します。

@@ -1,6 +1,14 @@
 import type { SqlikeFeatureName } from "./sqlike-features.ts";
-import type { CatalogFunctionGroup, CatalogStatementKind } from "./catalog-capabilities.ts";
-export type { CatalogFunctionGroup, CatalogStatementKind } from "./catalog-capabilities.ts";
+import type {
+  CatalogFunctionGroup,
+  CatalogStatementKind,
+  CatalogQueryPart,
+} from "./catalog-capabilities.ts";
+export type {
+  CatalogFunctionGroup,
+  CatalogStatementKind,
+  CatalogQueryPart,
+} from "./catalog-capabilities.ts";
 /** Build-only, conservative closure over the complete fixed schema and query IR. */
 export interface CatalogRequirements {
   readonly format: "sqlike-runtime-requirements@1";
@@ -10,4 +18,5 @@ export interface CatalogRequirements {
   readonly functions: readonly string[];
   readonly functionGroups: readonly CatalogFunctionGroup[];
   readonly statements: readonly CatalogStatementKind[];
+  readonly queryParts: readonly CatalogQueryPart[];
 }

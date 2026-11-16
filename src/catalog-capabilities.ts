@@ -26,7 +26,14 @@ export const catalogFunctionConstants = {
   "extrema": "CAP_FUNCTION_EXTREMA",
   "aggregates": "CAP_FUNCTION_AGGREGATES",
   "groupConcat": "CAP_FUNCTION_GROUP_CONCAT",
-  "raise": "CAP_FUNCTION_RAISE"
+  "raise": "CAP_FUNCTION_RAISE",
+  "jsonNormalize": "CAP_FUNCTION_JSON_NORMALIZE",
+  "jsonConstruct": "CAP_FUNCTION_JSON_CONSTRUCT",
+  "jsonRead": "CAP_FUNCTION_JSON_READ",
+  "jsonArrow": "CAP_FUNCTION_JSON_ARROW",
+  "jsonEdit": "CAP_FUNCTION_JSON_EDIT",
+  "jsonPatch": "CAP_FUNCTION_JSON_PATCH",
+  "jsonAggregate": "CAP_FUNCTION_JSON_AGGREGATE"
 } as const;
 export const catalogStatementConstants = {
   "select": "CAP_STATEMENT_SELECT",
@@ -36,5 +43,13 @@ export const catalogStatementConstants = {
   "transaction": "CAP_STATEMENT_TRANSACTION",
   "pragma": "CAP_STATEMENT_PRAGMA"
 } as const;
+export const catalogQueryConstants = {
+  "jsonSubtype": "CAP_QUERY_JSON_SUBTYPE",
+  "cte": "CAP_QUERY_CTE",
+  "recursiveCte": "CAP_QUERY_RECURSIVE_CTE",
+  "join": "CAP_QUERY_JOIN",
+  "compound": "CAP_QUERY_COMPOUND"
+} as const;
 export type CatalogFunctionGroup = keyof typeof catalogFunctionConstants;
 export type CatalogStatementKind = keyof typeof catalogStatementConstants;
+export type CatalogQueryPart = keyof typeof catalogQueryConstants;

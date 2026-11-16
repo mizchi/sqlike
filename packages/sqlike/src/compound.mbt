@@ -50,11 +50,13 @@ fn compound_relation(
 ) -> Relation raise SqlError {
   let output = selection_template(select, context)
   let ctes : Map[String, Relation] = Map(context.ctes.to_array())
-  for (name, selection) in select.ctes {
-    ctes[identifier(name)] = execute_cte(select, name, selection, {
-      ..context,
-      ctes,
-    })
+  if CAP_QUERY_CTE {
+    for (name, selection) in select.ctes {
+      ctes[identifier(name)] = execute_cte(select, name, selection, {
+        ..context,
+        ctes,
+      })
+    }
   }
   let ctx = { ..context, ctes, }
   let core = {

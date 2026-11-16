@@ -101,7 +101,7 @@ for (const [type, fields] of Object.entries(wire.structs).filter(
   ([t]) => !["Store", "StorageTree", "StorageField", "StoredRow"].includes(t),
 ))
   checks.push(
-    `///|\nimpl FeatureCheck for ${type} with fn check(value) {\n${fields.map((f) => `FeatureCheck::check(value.${f.name})`).join("\n")}\n}`,
+    `///|\nimpl FeatureCheck for ${type} with fn check(value) {\n${type === "Selection" ? "for part in runtime_selection_parts(value) { validate_runtime_query_part(part) }\n" : ""}${fields.map((f) => `FeatureCheck::check(value.${f.name})`).join("\n")}\n}`,
   );
 for (const [type, variants] of Object.entries(wire.enums).filter(([t]) => t !== "RowEdit")) {
   checks.push(
@@ -121,7 +121,7 @@ for (const [type, variants] of Object.entries(wire.enums).filter(([t]) => t !== 
                     ? "validate_function_features(v0)"
                     : "";
         if (type === "Expr" && v.name === "Call")
-          guard += "\nvalidate_runtime_call(v0, v1.length())";
+          guard += "\nvalidate_runtime_call(v0, v1.length())\nvalidate_runtime_json_values(v0, v1)";
         if (type === "Expr" && v.name === "Binary")
           guard += '\nif v0 == "like" { validate_runtime_call("like", 2) }';
         if (type === "DataStatement") {

@@ -4,6 +4,7 @@ priv struct RuntimeUsageState {
   functions : Map[String, Bool]
   groups : Map[String, Bool]
   statements : Map[String, Bool]
+  parts : Map[String, Bool]
 }
 
 ///|
@@ -36,6 +37,7 @@ pub fn program_runtime_requirements(artifact : String) -> String {
       functions: Map([]),
       groups: Map([]),
       statements: Map([]),
+      parts: Map([]),
     }
     RuntimeUsage::collect(program.schema.tables, state)
     RuntimeUsage::collect(program.schema.objects, state)
@@ -52,6 +54,7 @@ pub fn program_runtime_requirements(artifact : String) -> String {
         "functions": sorted_usage_names(state.functions),
         "functionGroups": sorted_usage_names(state.groups),
         "statements": sorted_usage_names(state.statements),
+        "queryParts": sorted_usage_names(state.parts),
       } : Json).stringify()
   } catch {
     error => public_error_json(error).stringify()

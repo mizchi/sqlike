@@ -10,6 +10,7 @@ import { minifyRuntime } from "./oxc-runtime.ts";
 import {
   catalogFunctionConstants,
   catalogStatementConstants,
+  catalogQueryConstants,
 } from "../src/catalog-capabilities.ts";
 import type { CatalogSource } from "../src/aot-contract.ts";
 import type { CatalogRequirements } from "../src/catalog-requirements-contract.ts";
@@ -132,6 +133,11 @@ export async function buildSqlikeRuntime(
         replace(
           constant,
           requirements.statements.includes(name as keyof typeof catalogStatementConstants),
+        );
+      for (const [name, constant] of Object.entries(catalogQueryConstants))
+        replace(
+          constant,
+          requirements.queryParts.includes(name as keyof typeof catalogQueryConstants),
         );
       await writeFile(configPath, code);
     }

@@ -65,7 +65,12 @@ test("catalog-selected AOT and binary runtimes remove unused scalar and write im
         "insert__rows",
         "simple__aggregate",
       ])
-        assert.doesNotMatch(code, new RegExp(`function [^\\n]*\\$${symbol}\\(`), symbol);
+        assert.ok(
+          !code
+            .split("\n")
+            .some((line) => line.startsWith("function ") && line.includes(symbol + "(")),
+          symbol,
+        );
       assert.doesNotMatch(code, /function [^\n]*parse__statement\(/);
       for (const [index, raw] of (await runtimes(built.directory)).entries()) {
         if (mode === "defined") {
@@ -235,7 +240,9 @@ test("all core function families, trigger writes and transactions retain native 
       });
       assert.deepEqual(
         built.requirements?.functionGroups,
-        Object.keys(catalogFunctionConstants).sort(),
+        Object.keys(catalogFunctionConstants)
+          .filter((n) => !n.startsWith("json"))
+          .sort(),
       );
       assert.deepEqual(built.requirements?.statements, [
         "delete",
@@ -355,7 +362,10 @@ test("FK cascades remain reachable when the catalog has no DELETE or UPDATE stat
 });
 
 test("each core function family is independently selectable from catalog IR", async () => {
-  const witnesses: Record<keyof typeof catalogFunctionConstants, string> = {
+  const witnesses: Record<
+    Exclude<keyof typeof catalogFunctionConstants, `json${string}`>,
+    string
+  > = {
     glob: "SELECT glob('[a-z]','a')",
     like: "SELECT 'a' LIKE '%'",
     character: "SELECT char(65,0)",

@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "measuredAt": "2026-11-16T15:04:37.411Z",
+  "measuredAt": "2026-11-16T15:51:44.255Z",
   "node": "v24.22.2",
   "browser": "158.0.8127.18",
   "method": "Browser ESM public entry exports retained; Vite/Oxc minification, esnext, ES workers, legal/purity comments retained, assetsInlineLimit=0. Every emitted JS chunk, Worker and Wasm asset counted once, including optional emitted workers. Brotli quality 11 applied per asset with decompression round trip. Wasm is compiler/package release output, without additional wasm-opt. Excludes app code/HTML, precompiled schema/statements, build-time compiler, optional SQLite exporter, Litestream and source maps. Not feature-equivalent engines or a minimal startup-download measurement.",
@@ -11,9 +11,9 @@
     "turso": "0.8.3"
   },
   "sourceHashes": {
-    "_build/js/release/build/mizchi/sqlike/defined/defined.js": "d1abef5acd90d89c5c786dfa0d0b408b74d079fc30b41ed3e414fc5947c46b9e",
-    "_build/js/release/build/mizchi/sqlike/sqlike.js": "d77317edac6bddb8a45693543e2d65ff8492f681ef91c562a8f26b21d9cb1ab6",
-    "_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm": "ae75cdd84433cadc46c29356a0521529bb1b69b49227c415bbc3f2678f442e90",
+    "_build/js/release/build/mizchi/sqlike/defined/defined.js": "ebf4168e6068fcb86c9329bbb4c9e8efec535f32f25a09f6dbf738884669b59c",
+    "_build/js/release/build/mizchi/sqlike/sqlike.js": "6842f3dea85f2d112628672aa5c624c0e059ea289adce6d184b349bfb5474428",
+    "_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm": "14b69b1aa75168ad93ab790f11698c480a96009064cb6c5711bd0a5a621776cd",
     "adapters/defined-database-core.ts": "58773d392f540cf07447e4cfeab0c65e2e865dc98869c78984b59db5ce9ce62f",
     "adapters/defined-database.ts": "df53d23b2ccc432840803433d48182fbb624b28c781fd8a9d2ec37c8f8ebdd15",
     "adapters/defined-wasm.ts": "6829082c8cf20a23c887569000c41a2932209b7f7fb72e403e9218845e99426d",
@@ -21,12 +21,12 @@
     "examples/aot/moon.mod": "d76a8b99f698f78f1426a3470aa0c4c50b3d434e663d83412c4832c31276f358",
     "examples/aot/src/runtime/moon.pkg": "c25199d21d0bdf5eadde9fd2d65b70f6b6e517c839be10a215f39c5706be14be",
     "examples/aot/src/runtime/runtime.mbt": "acfdd0b45cf90dedf28f413a5470fa26668f0eced4af673bac0e89f609e403cf",
-    "generated/bundle-size/all/runtime.js": "d7b9e03ed3fbd2bb727f845b11fd6bc13f9b0c76e7d6313244294e6d74b5036c",
-    "generated/bundle-size/all/runtime.wasm": "df3d2516feba692e5088f48dfa98d60c5060103764c2e494b111933be314aa5d",
-    "generated/bundle-size/primary-key/runtime.js": "df3b2dac7f5e5780161eaa98fb650b6131f9361004657687580cd05876c8f960",
-    "generated/bundle-size/primary-key/runtime.wasm": "c02616b7061ec84455c460edfae1cbb530d7bd9b0ff460e7c770ee1876da8b09",
-    "generated/bundle-size/without-three/runtime.js": "eef440bbef3ea92e0c5901231d45e11606e7eb19e32bab0083446832ccc77284",
-    "generated/bundle-size/without-three/runtime.wasm": "595905daa11c1e8fa9ee0e41c6e77b2df7b1382283b18c2d7fdadd00a8f28e28",
+    "generated/bundle-size/all/runtime.js": "0ab2c0a1031d71984d340aded9577c484e122a2607baff43517aebc334e15b3b",
+    "generated/bundle-size/all/runtime.wasm": "1d81f137505eaf5dd0248f5d54eb50e3a30f5fa2152194b275d8769a7d3aae5d",
+    "generated/bundle-size/primary-key/runtime.js": "a418c245747a3b2befb6cac7784d32a3760b7e6ea2d4dcf332070eb1f52db695",
+    "generated/bundle-size/primary-key/runtime.wasm": "6fbcac0116c9dca5a71f3c0bf4e92b6cf80a1a78974118e0cfbad1f20751218d",
+    "generated/bundle-size/without-three/runtime.js": "7069ed4ed6a0c90fa6bef62eb84f6ce8764ae75f1bda80d05f90217d6949f14d",
+    "generated/bundle-size/without-three/runtime.wasm": "9a72c3db794b25fc3bb8900ffbe702d4914557ed65c6c1ba4969f573601e6f6a",
     "node_modules/@sqlite.org/sqlite-wasm/dist/index.mjs": "0dcdd860e6ec672623b13b8b8e41bb6c78be7a5df80ec553fc4f69160161c8af",
     "node_modules/@sqlite.org/sqlite-wasm/dist/sqlite3.wasm": "b8a92a19f441a90ff2339fe988fbe317c4adf3ed844096f12aee04aa72d58257",
     "node_modules/@sqlite.org/sqlite-wasm/package.json": "56a82dcb2a8e8c63827a62ac62fb2d66348ddeb861cca509ba0a5334d5cf4243",
@@ -64,26 +64,26 @@
     "packages/sqlike/src/binary_io.mbt": "9119822b083dc4e1ea48aabcc7126bd3f2bb8ea8a11a8aa5f5f789661e8d5452",
     "packages/sqlike/src/binary_state.mbt": "6e4701bae0b07809d89d320ac8719820e6f019af96a6734c49763b567ec5ecd3",
     "packages/sqlike/src/binary_wbtest.mbt": "78641640c6f5758944441cf649f55501ea4a4965c32da37812dbd6f59bbbd43d",
-    "packages/sqlike/src/capability_config_generated.mbt": "0bd81931f3c8b6315a0b79ba19e825dfe9406a920b80e1c049e7d07599ed1c8a",
+    "packages/sqlike/src/capability_config_generated.mbt": "f98a6c9629a1629516353b84299d7357e62835f37740f77f484e1ecb452014c6",
     "packages/sqlike/src/cast.mbt": "e2feebc791c8daa6c18435ba8a271140dfe66a107ee4b9e0f5978d162180a2ec",
     "packages/sqlike/src/changeset.mbt": "f66c9a8683db19314ffeabd65bdbea4bfd6ff5b327686dbc7643ac6f49a50814",
     "packages/sqlike/src/column_delta_wbtest.mbt": "58fef01472dfbe883cac3b4345d2fd5e6219d6d27b25c8a7eecfd13d4d31a6fa",
     "packages/sqlike/src/compiler/compiler.mbt": "48d22ce34a131af4f2f03bfd1f423fc29a0bcde5e33f4ad0a8f243c20c4b53f3",
     "packages/sqlike/src/compiler/moon.pkg": "b72fdefabfdb476990fb924225400d67870076c331a4a217bcb52009293c33bf",
     "packages/sqlike/src/composite_index_wbtest.mbt": "90a25147584bc0cb2030076eebb3497793e6aa870c679d6d5cc1de0976b8abf4",
-    "packages/sqlike/src/compound.mbt": "e0aee7e219f129efe2912f1379de90a35dc7ed7a4649c8dfb43bdfb61888ab84",
-    "packages/sqlike/src/cte.mbt": "cbc3a4f5047b3c89b9a132de62434213b1aa2724384ead1333795c4ecb171f22",
+    "packages/sqlike/src/compound.mbt": "4b133f7e94fd7a1cc1739dcf74f3d81613d5b748de6595040a1d4c330fce8f40",
+    "packages/sqlike/src/cte.mbt": "e595e995cc70bfd9d78a60af7b0eea974d5f72a0c594909eb818824cd4050811",
     "packages/sqlike/src/data.mbt": "aa5008a63722d9234c37f4e5c919307cf9b174113f5ba7f09fd6e87b416ca474",
     "packages/sqlike/src/datetime.mbt": "bf7c6b6983cfc2fe0e17dc74c26de270c5414203d982a5bec53f2ebf33459d59",
     "packages/sqlike/src/defined-sqlite/defined.mbt": "5a81aa4db62ee9f22610223ffce77cbc95602bc4cc3593241ea299471b1a3f7d",
     "packages/sqlike/src/defined-sqlite/moon.pkg": "6d93d349a02f08b9beafb2f344b35bc858dd5b3b1fc81a59e557d2881c091bb7",
     "packages/sqlike/src/defined/defined.mbt": "caf0ae96fd7a7af9f94b3e831f2f9de2077a64caacdbb3d4029e2780ff4f044f",
     "packages/sqlike/src/defined/moon.pkg": "6c72c36fb88ebfab45a73ad8d209dcb3f593c9d1bc3ade7c5a6c952c1be947a9",
-    "packages/sqlike/src/evaluate.mbt": "e17f052301b7c9983b114521612a0102ebd762f0b3df4bfff700f9d391dd7279",
+    "packages/sqlike/src/evaluate.mbt": "9cdb04e95b3a23a7df976e72fe634082f07f8801e82b26e80ddb90cf61907d3a",
     "packages/sqlike/src/execute.mbt": "9ae0995d206e78f722e6f199d48f63d33603628aa479dc4e9d9afcfb7f5d8c4b",
     "packages/sqlike/src/feature_config.mbt": "8ac72b52c318850f7dc69d63c105496ab6ea7216b6db32532470ee17c19b82f2",
     "packages/sqlike/src/feature_validation.mbt": "511fa120a414b92fdbc840174fd0c08c78c50b206264889a8f040b6a0b9eb6fc",
-    "packages/sqlike/src/feature_validation_generated.mbt": "7542c24653e6fc4632d6790a65b53cb00a4c0b777647ce5760a7361d5a53e748",
+    "packages/sqlike/src/feature_validation_generated.mbt": "16256f2c63c5d76e9a91670052af16d9c324157db0c6f783f9d5dc24d267d2f9",
     "packages/sqlike/src/float_text.mbt": "a188f50c6a4c41e2fc154cdc690514a5b9c945dce8a0cd8ccde2d7745e7f7895",
     "packages/sqlike/src/foreign_key.mbt": "bf9b7d3bbde04dc342efc97f0d5960bdea9c34e7f8a037182b87efac9b88d45f",
     "packages/sqlike/src/fts/fts.mbt": "f6b170921d7df982c53fe7f188aed2183b087ca79b8754b319752ff8b234712f",
@@ -102,7 +102,7 @@
     "packages/sqlike/src/interface_test.mbt": "425c72b3a5d4a7aee0018c10bc95bad3b8ff3f471bbebcff8ee142729d50cbd7",
     "packages/sqlike/src/join.mbt": "b2fd2c5fd92925c42f5aa87963acaecadfef5e07816c84f1ea5435e2ecd7f2a7",
     "packages/sqlike/src/json_aggregate.mbt": "de57642051098e9cca9a073b44ee45ef9727b4aeb77c689c12b2be886f4cc8e8",
-    "packages/sqlike/src/json_functions.mbt": "61004b62f878210f1e4e371904385fa5afe58c65562a89fb4a52533aa0e456f8",
+    "packages/sqlike/src/json_functions.mbt": "0d0b469a018aa67f4c921bcde4faa08c91a39c5245333a31a285bf2feedf76fc",
     "packages/sqlike/src/lsm/lsm.mbt": "9e88824dc0b449e7c15209beb7e0dc8fdf34aab5e77c405bf1ef6d5040aad924",
     "packages/sqlike/src/lsm/lsm_wbtest.mbt": "0bd332033c4a16ba4ba0dd3e0a6cd640a0e6aef777f2b2e8f4cf464cef568a19",
     "packages/sqlike/src/lsm/moon.pkg": "5ede3703157bb09f075866319cd3c29867ccefdc0446e508925a2a9fd0407da9",
@@ -117,17 +117,18 @@
     "packages/sqlike/src/persistence.mbt": "dccf7b6269e823365316cff2e31867a90d258c1e69b2bfbd9bffd90e08921c2e",
     "packages/sqlike/src/persistence_edits.mbt": "59fb2a7d7dafbd7694e78c6cfbc0ad83fa012ec058f844d84def2620f002f0cd",
     "packages/sqlike/src/persistence_wbtest.mbt": "3d981dac002f117107f4b60a6397807dcaff5b8a15d45ec3b96388ca83be3344",
-    "packages/sqlike/src/prepare.mbt": "10e51042c83737e69e904f64c52d0303eb116a7134df95d8d0ef63ddf45714f4",
+    "packages/sqlike/src/prepare.mbt": "eed562ef289de803c48c30942bba5857371e45efd605cc4a24a7d4cc526ffe1e",
     "packages/sqlike/src/prepared.mbt": "59420803255e91a30ece6a85737b15ff3b8a33c9c84bdeb8f6a9eec75ef16e73",
     "packages/sqlike/src/prepared_selection_wbtest.mbt": "b4624c89bae3b7181f1444cd251556e054453bed98062bd5b6a19d151977c209",
     "packages/sqlike/src/primary_index.mbt": "b81cb16812bc24f0e3807778997c66ca4aab241335026c8542fcf36fe1189599",
     "packages/sqlike/src/program_compiler.mbt": "fcd9da9a6ed5af289566889ae6279ce3aebc04cebdf545790abd9ed1e22a3e18",
-    "packages/sqlike/src/query.mbt": "baa6051fb485a9b30ff230e5e8b401536ac2ade97d91411733e2cd734cba30f9",
+    "packages/sqlike/src/query.mbt": "c7b8d0525f71bedb98870de3b6b403d0635ccc83480319df4684ee68280e0e8e",
     "packages/sqlike/src/query_plan.mbt": "63e846f9bf6c018d9fad30627cbb670667e337ed767366e58a5022246e2d0f74",
     "packages/sqlike/src/row_pages.mbt": "35795aa2cc32e84b58e30b07b0f597908a51f1989d3371f9986c2b21188addb5",
     "packages/sqlike/src/row_pages_wbtest.mbt": "d48a5d1e5454dda34e25829bda13996d5a94e140191818eacf08f5ecc609b744",
-    "packages/sqlike/src/runtime_usage_compiler.mbt": "05ff65f3f6e59032435149bcbc6ef207e3c5111dce840beaff9398510e177081",
-    "packages/sqlike/src/runtime_usage_generated.mbt": "b29857b9f016d6921c18c41306090617dbef4b8e4ee8c4cf4469cc4bbd75a627",
+    "packages/sqlike/src/runtime_query_requirements.mbt": "7f4354f6eec1bf6332ed8482f8010922b0e257735cb5bfde8e2cabb3011a7285",
+    "packages/sqlike/src/runtime_usage_compiler.mbt": "8767ac9f24365bd1aa110959bfcecb50a0f10c7c5e66f87bd9b2fb9c15f2a202",
+    "packages/sqlike/src/runtime_usage_generated.mbt": "8f72423dcfdbb58b7fc981fa4512525364bd4af974a6be48cb67ff1cdc382041",
     "packages/sqlike/src/scalar.mbt": "5412d9c80157175c8ad94ec4f5eebfacf75df522e226a852df9b4d2477cbbe40",
     "packages/sqlike/src/sql_render.mbt": "b7264b0685e50dbf0237a58b23970a617bfbaac2c8a588216ea552e110218146",
     "packages/sqlike/src/sqlite_file.mbt": "f1208916e4cb70e91360ca851f7cf81b4889baee9c100bfbbf6d7c0d6aabb7ee",
@@ -143,7 +144,7 @@
     "packages/sqlike/src/window.mbt": "25b144661bf5c0ee9e3650d6072fc97b2a13812831af3ae395f95dfca3b82f47",
     "pnpm-lock.yaml": "62a9334c27b9f3876361edc3c9f74a0ed5e11866e28403cc065e1bdba7d70012",
     "scripts/aot-compiler.ts": "cc1fe47f0b43b6bd4fe24ce509ee9233fc9c5b742a5c1dcb0a5f30c91a3e2149",
-    "scripts/build-sqlike-runtime.ts": "da40aeadc79a41313cf4588c16d60c2c80b1335a8242c5d860dc30259aaa42b7",
+    "scripts/build-sqlike-runtime.ts": "919ce452896f62c08fd8d8df4dc9bbe54decd5c31f9d6b5f22d6aa6540c175a0",
     "scripts/bundle-size.ts": "a004d0010c51a5c2593c6610d10f21d805783e6f57a839138719ecc51c8a6ac8",
     "scripts/defined-compiler.ts": "a9ef66d1c1af4ae12ab00b63f0f07fcb0e0b83b7a24256e8d55094e43b3f19e6",
     "scripts/measure-bundle-size.ts": "cf13813e7e97a361d42c0cd3978290a60c85dcf8ac12509f9043773612663f39",
@@ -163,21 +164,21 @@
       "name": "SQLike 0.1.0 (source) / 通常SQL / JS",
       "kind": "sql",
       "entrySource": "npm/sqlike/index.ts",
-      "entry": "assets/index-BEOf5HrA.js",
+      "entry": "assets/index-Cq2C8GHo.js",
       "exports": [
         "openDatabase"
       ],
       "assets": [
         {
-          "file": "assets/index-BEOf5HrA.js",
-          "raw": 616585,
-          "brotli": 116523,
-          "sha256": "eeefa7a893dd1ff552c17630400c7b5c3320225fe1a7a6100d619ff9bce800cb"
+          "file": "assets/index-Cq2C8GHo.js",
+          "raw": 621480,
+          "brotli": 117074,
+          "sha256": "cbca03d07e14e8e9a483e765289a12184a845b797051db6670948311e71503c8"
         }
       ],
       "totals": {
-        "raw": 616585,
-        "brotli": 116523
+        "raw": 621480,
+        "brotli": 117074
       }
     },
     {
@@ -185,27 +186,27 @@
       "name": "SQLike 0.1.0 (source) / 通常SQL / Wasm GC",
       "kind": "sql",
       "entrySource": "generated/bundle-size/sql-wasm/entry.ts",
-      "entry": "assets/entry-BwTB0wlz.js",
+      "entry": "assets/entry-BG2pWLzp.js",
       "exports": [
         "openDatabase"
       ],
       "assets": [
         {
-          "file": "assets/entry-BwTB0wlz.js",
+          "file": "assets/entry-BG2pWLzp.js",
           "raw": 3331,
-          "brotli": 1175,
-          "sha256": "b3cfafeb11aeae1943cfae4d15e46513454668cf6d06d613e607171dc479f7d3"
+          "brotli": 1169,
+          "sha256": "0dd02254a1c487b7b347f13f00f5cc3a76d6f12d95fc4480c3073840be749a6c"
         },
         {
-          "file": "assets/runtime-DOK7sR_3.wasm",
-          "raw": 542476,
-          "brotli": 170494,
-          "sha256": "ae75cdd84433cadc46c29356a0521529bb1b69b49227c415bbc3f2678f442e90"
+          "file": "assets/runtime-Bm88H6Je.wasm",
+          "raw": 546570,
+          "brotli": 171320,
+          "sha256": "14b69b1aa75168ad93ab790f11698c480a96009064cb6c5711bd0a5a621776cd"
         }
       ],
       "totals": {
-        "raw": 545807,
-        "brotli": 171669
+        "raw": 549901,
+        "brotli": 172489
       }
     },
     {
@@ -213,17 +214,17 @@
       "name": "SQLike 0.1.0 (source) / 事前定義・全実行機能 / JS",
       "kind": "defined",
       "entrySource": "npm/sqlike/defined.ts",
-      "entry": "assets/defined-Bj0vYM7K.js",
+      "entry": "assets/defined-DyKVnEMV.js",
       "exports": [
         "DefinedDatabase",
         "DefinedStatement"
       ],
       "assets": [
         {
-          "file": "assets/defined-Bj0vYM7K.js",
-          "raw": 499150,
-          "brotli": 99481,
-          "sha256": "451adb0e6e0cd5b7dbc9f0d11180d89bf755ef6d63e8dc08ab6ce75a34ccf87a"
+          "file": "assets/defined-DyKVnEMV.js",
+          "raw": 504022,
+          "brotli": 99931,
+          "sha256": "1995821d70b767d4682fe8a52ffcdf68e184c79be7822f471c0a751151098521"
         },
         {
           "file": "assets/moon-image-store-B4N7x1B5.js",
@@ -233,8 +234,8 @@
         }
       ],
       "totals": {
-        "raw": 502971,
-        "brotli": 100901
+        "raw": 507843,
+        "brotli": 101351
       }
     },
     {
@@ -242,7 +243,7 @@
       "name": "SQLike 0.1.0 (source) / 事前定義・全実行機能 / Wasm GC",
       "kind": "defined",
       "entrySource": "generated/bundle-size/all/wasm-entry.ts",
-      "entry": "assets/wasm-entry-Dm6nL6vk.js",
+      "entry": "assets/wasm-entry-DDw_AGi1.js",
       "exports": [
         "DefinedDatabase",
         "DefinedStatement"
@@ -255,21 +256,21 @@
           "sha256": "2875ea6a808c2aee59d80b7e490816e97d85dfd41b0fba28373341edcb76cbf6"
         },
         {
-          "file": "assets/runtime-CxYgPAWb.wasm",
-          "raw": 435162,
-          "brotli": 140057,
-          "sha256": "df3d2516feba692e5088f48dfa98d60c5060103764c2e494b111933be314aa5d"
+          "file": "assets/runtime-BA1WW5bC.wasm",
+          "raw": 438773,
+          "brotli": 140716,
+          "sha256": "1d81f137505eaf5dd0248f5d54eb50e3a30f5fa2152194b275d8769a7d3aae5d"
         },
         {
-          "file": "assets/wasm-entry-Dm6nL6vk.js",
+          "file": "assets/wasm-entry-DDw_AGi1.js",
           "raw": 8537,
-          "brotli": 2979,
-          "sha256": "c80a971378f53be0eec52268d70b5956d02ebcef91614683635b30643c597035"
+          "brotli": 2977,
+          "sha256": "f841a4a00ec21cd755b167d49c6d29deaf3929b132d18670d344f87f321f6e5f"
         }
       ],
       "totals": {
-        "raw": 447520,
-        "brotli": 144456
+        "raw": 451131,
+        "brotli": 145113
       }
     },
     {
@@ -277,17 +278,17 @@
       "name": "SQLike 0.1.0 (source) / 事前定義・JSON・日時・windowなし / JS",
       "kind": "defined",
       "entrySource": "generated/bundle-size/without-three/js-entry.ts",
-      "entry": "assets/js-entry-BW_OEidF.js",
+      "entry": "assets/js-entry-CzRWmFKG.js",
       "exports": [
         "DefinedDatabase",
         "DefinedStatement"
       ],
       "assets": [
         {
-          "file": "assets/js-entry-BW_OEidF.js",
-          "raw": 462142,
-          "brotli": 91608,
-          "sha256": "10f32f0afe908b087b0ca070263e902a7dd6f93ca822c707298e8c4ed1f7dcf6"
+          "file": "assets/js-entry-CzRWmFKG.js",
+          "raw": 463219,
+          "brotli": 92017,
+          "sha256": "143308471c67d890a2d1f5d5f1b41866b325ac8bc27583e288e844013787dded"
         },
         {
           "file": "assets/moon-image-store-B4N7x1B5.js",
@@ -297,8 +298,8 @@
         }
       ],
       "totals": {
-        "raw": 465963,
-        "brotli": 93028
+        "raw": 467040,
+        "brotli": 93437
       }
     },
     {
@@ -306,7 +307,7 @@
       "name": "SQLike 0.1.0 (source) / 事前定義・JSON・日時・windowなし / Wasm GC",
       "kind": "defined",
       "entrySource": "generated/bundle-size/without-three/wasm-entry.ts",
-      "entry": "assets/wasm-entry-BUy3aB-k.js",
+      "entry": "assets/wasm-entry-CACZeHJc.js",
       "exports": [
         "DefinedDatabase",
         "DefinedStatement"
@@ -319,21 +320,21 @@
           "sha256": "2875ea6a808c2aee59d80b7e490816e97d85dfd41b0fba28373341edcb76cbf6"
         },
         {
-          "file": "assets/runtime-CJTeTwrk.wasm",
-          "raw": 406106,
-          "brotli": 129565,
-          "sha256": "595905daa11c1e8fa9ee0e41c6e77b2df7b1382283b18c2d7fdadd00a8f28e28"
+          "file": "assets/runtime-DAOX-5Xu.wasm",
+          "raw": 406984,
+          "brotli": 130111,
+          "sha256": "9a72c3db794b25fc3bb8900ffbe702d4914557ed65c6c1ba4969f573601e6f6a"
         },
         {
-          "file": "assets/wasm-entry-BUy3aB-k.js",
+          "file": "assets/wasm-entry-CACZeHJc.js",
           "raw": 8537,
-          "brotli": 2975,
-          "sha256": "2c2b0057343c01fa537a9baf73c794a6c73641596f856c3a64835f5c8dbf7a14"
+          "brotli": 2978,
+          "sha256": "2f76b575a749457e3635fb37a44a593e7d0a83f4acef0481cd74b87b8e66c06d"
         }
       ],
       "totals": {
-        "raw": 418464,
-        "brotli": 133960
+        "raw": 419342,
+        "brotli": 134509
       }
     },
     {
@@ -341,17 +342,17 @@
       "name": "SQLike 0.1.0 (source) / 事前定義・主キー索引のみ / JS",
       "kind": "defined",
       "entrySource": "generated/bundle-size/primary-key/js-entry.ts",
-      "entry": "assets/js-entry-C3Mv54bO.js",
+      "entry": "assets/js-entry-Cw8dKVls.js",
       "exports": [
         "DefinedDatabase",
         "DefinedStatement"
       ],
       "assets": [
         {
-          "file": "assets/js-entry-C3Mv54bO.js",
-          "raw": 440328,
-          "brotli": 87531,
-          "sha256": "c8fc0614b617d7b43aede55285409d0e444781b245be8ec81c233e07ae719360"
+          "file": "assets/js-entry-Cw8dKVls.js",
+          "raw": 441409,
+          "brotli": 87919,
+          "sha256": "f47f80ef61c1d3d3bf5a1e516ef9be20e5c1b42681511da7df8ac0bc697c1249"
         },
         {
           "file": "assets/moon-image-store-B4N7x1B5.js",
@@ -361,8 +362,8 @@
         }
       ],
       "totals": {
-        "raw": 444149,
-        "brotli": 88951
+        "raw": 445230,
+        "brotli": 89339
       }
     },
     {
@@ -370,7 +371,7 @@
       "name": "SQLike 0.1.0 (source) / 事前定義・主キー索引のみ / Wasm GC",
       "kind": "defined",
       "entrySource": "generated/bundle-size/primary-key/wasm-entry.ts",
-      "entry": "assets/wasm-entry-CnSQAir9.js",
+      "entry": "assets/wasm-entry-D51mWd_n.js",
       "exports": [
         "DefinedDatabase",
         "DefinedStatement"
@@ -383,21 +384,21 @@
           "sha256": "2875ea6a808c2aee59d80b7e490816e97d85dfd41b0fba28373341edcb76cbf6"
         },
         {
-          "file": "assets/runtime-CofLeD9p.wasm",
-          "raw": 387846,
-          "brotli": 124431,
-          "sha256": "c02616b7061ec84455c460edfae1cbb530d7bd9b0ff460e7c770ee1876da8b09"
+          "file": "assets/runtime-D9LbmDMW.wasm",
+          "raw": 388927,
+          "brotli": 124710,
+          "sha256": "6fbcac0116c9dca5a71f3c0bf4e92b6cf80a1a78974118e0cfbad1f20751218d"
         },
         {
-          "file": "assets/wasm-entry-CnSQAir9.js",
+          "file": "assets/wasm-entry-D51mWd_n.js",
           "raw": 8537,
           "brotli": 2977,
-          "sha256": "a22644ca28d15051a0968420c202fb048459d4e91ce7424262352edf0b641981"
+          "sha256": "57cd6bfff3a5333d3c73aa91675ec94ba3b41f7fe2e5411d4057835545f37fd6"
         }
       ],
       "totals": {
-        "raw": 400204,
-        "brotli": 128828
+        "raw": 401285,
+        "brotli": 129107
       }
     },
     {

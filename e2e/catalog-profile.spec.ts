@@ -12,7 +12,10 @@ const source = {
   schema: ["CREATE TABLE t(id INTEGER PRIMARY KEY,v TEXT)"],
   queries: [
     { name: "add", sql: "INSERT INTO t VALUES(?,?)" },
-    { name: "list", sql: "SELECT id,lower(v),v GLOB '*a*' FROM t ORDER BY id" },
+    {
+      name: "list",
+      sql: "WITH a AS(SELECT id,v FROM t) SELECT id,lower(v),v GLOB '*a*',json_object('value',v) FROM a ORDER BY id",
+    },
   ],
 };
 for (const target of ["js", "wasm"] as const) {
@@ -35,9 +38,15 @@ for (const target of ["js", "wasm"] as const) {
       const raw = await readFile(
         join(built.directory, target === "js" ? "runtime.js" : "runtime.wasm"),
       );
+      expect(built.requirements?.queryParts).toEqual(["cte"]);
+      expect(built.requirements?.functionGroups).toEqual([
+        "caseConversion",
+        "glob",
+        "jsonConstruct",
+      ]);
       if (target === "js")
         expect(raw.toString()).not.toMatch(
-          /function [^\n]*(sql__round|substring__value|parse__statement)\(/,
+          /function [^\n]*(sql__round|substring__value|parse__statement|parse__sql__json|execute__recursive__cte|using__row|compound__relation)\(/,
         );
       const host = JSON.stringify(resolve("adapters/defined-database-core.ts"));
       const entry = join(dir, "entry.ts");
@@ -127,11 +136,11 @@ for (const target of ["js", "wasm"] as const) {
           await reopened.close();
           return rows;
         }),
-      ).toEqual([[1n, "alpha", 1n]]);
+      ).toEqual([[1n, "alpha", 1n, '{"value":"Alpha"}']]);
       expect(requests.length).toBe(before);
       await context.setOffline(false);
       await page.reload();
-      expect(await open()).toEqual([[1n, "alpha", 1n]]);
+      expect(await open()).toEqual([[1n, "alpha", 1n, '{"value":"Alpha"}']]);
     } finally {
       await rm(dir, { recursive: true, force: true });
     }

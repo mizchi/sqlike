@@ -43,14 +43,14 @@ SQLikeはnpm 0.1.0以後の未リリース変更を含む現行ソースで計�
 <!-- bundle-size:start -->
 | ビルド | minified・未圧縮 | Brotli |
 | --- | ---: | ---: |
-| SQLike 0.1.0 (source) / 通常SQL / JS | 602.13 KiB | 113.79 KiB |
-| SQLike 0.1.0 (source) / 通常SQL / Wasm GC | 533.01 KiB | 167.65 KiB |
-| SQLike 0.1.0 (source) / 事前定義・全実行機能 / JS | 491.18 KiB | 98.54 KiB |
-| SQLike 0.1.0 (source) / 事前定義・全実行機能 / Wasm GC | 437.03 KiB | 141.07 KiB |
-| SQLike 0.1.0 (source) / 事前定義・JSON・日時・windowなし / JS | 455.04 KiB | 90.85 KiB |
-| SQLike 0.1.0 (source) / 事前定義・JSON・日時・windowなし / Wasm GC | 408.66 KiB | 130.82 KiB |
-| SQLike 0.1.0 (source) / 事前定義・主キー索引のみ / JS | 433.74 KiB | 86.87 KiB |
-| SQLike 0.1.0 (source) / 事前定義・主キー索引のみ / Wasm GC | 390.82 KiB | 125.81 KiB |
+| SQLike 0.1.0 (source) / 通常SQL / JS | 606.91 KiB | 114.33 KiB |
+| SQLike 0.1.0 (source) / 通常SQL / Wasm GC | 537.01 KiB | 168.45 KiB |
+| SQLike 0.1.0 (source) / 事前定義・全実行機能 / JS | 495.94 KiB | 98.98 KiB |
+| SQLike 0.1.0 (source) / 事前定義・全実行機能 / Wasm GC | 440.56 KiB | 141.71 KiB |
+| SQLike 0.1.0 (source) / 事前定義・JSON・日時・windowなし / JS | 456.09 KiB | 91.25 KiB |
+| SQLike 0.1.0 (source) / 事前定義・JSON・日時・windowなし / Wasm GC | 409.51 KiB | 131.36 KiB |
+| SQLike 0.1.0 (source) / 事前定義・主キー索引のみ / JS | 434.79 KiB | 87.25 KiB |
+| SQLike 0.1.0 (source) / 事前定義・主キー索引のみ / Wasm GC | 391.88 KiB | 126.08 KiB |
 | sqlite-wasm 3.54.1-build1 | 1313.74 KiB | 462.33 KiB |
 | Turso 0.8.3 | 11709.66 KiB | 2675.96 KiB |
 <!-- bundle-size:end -->
@@ -59,7 +59,7 @@ SQLikeはnpm 0.1.0以後の未リリース変更を含む現行ソースで計�
 
 事前定義版はSQLパーサを含みません。機能選択版とWasm GC版は、同じ公開host APIを使うカスタムビルドです。「主キー索引のみ」は任意機能の選択で、CRUD・集約・CTE・secondary indexはコアに残ります。SQLikeはSQLiteサブセットのため、他のエンジンと機能範囲は異なります。
 
-表は手動の機能プロファイルです。[catalog別のビルド](docs/catalog-build.md)では、未使用のcore関数群と文の実装も除去できます。そちらの計測はランタイム単体として別に記録しています。
+表は手動の機能プロファイルです。[catalog別のビルド](docs/catalog-build.md)では、未使用の関数群・文・JOIN・CTE・複合SELECTの実装も除去できます。そちらの計測はランタイム単体として別に記録しています。
 
 アプリのHTML・コード、事前ビルドしたschema / statement、ビルド時compiler、任意のSQLite exporter、Litestreamは含みません。任意Workerも含む配布assetの合計であり、初回起動時の最小ダウンロード量とは異なります。各行の計測済みminified bundleはChromiumでDBを開いて書込・読取まで確認しています。
 
@@ -81,13 +81,13 @@ SQLikeはnpm 0.1.0以後の未リリース変更を含む現行ソースで計�
 <!-- sqlite-benchmark:start -->
 | 処理 | SQLike JS・通常SQL | SQLike Wasm GC・通常SQL | SQLite WASM・通常SQL | SQLite WASM・prepared |
 | --- | ---: | ---: | ---: | ---: |
-| 主キーで1行検索 | 31.37 | 7.27 | 4.28 | 1.63 |
-| 存在しない主キーの検索 | 28.03 | 6.24 | 2.80 | 0.52 |
-| 二次索引の範囲検索・10行 | 55.29 | 14.86 | 16.22 | 11.68 |
-| ORDER BY id LIMIT 10 | 50.68 | 12.03 | 13.44 | 10.38 |
-| sum(n), count(*) | 103.16 | 55.10 | 116.46 | 112.79 |
-| 全5,000行取得 | 5,180.00 | 2,994.44 | 5,180.00 | 5,220.00 |
-| 索引列の更新＋範囲10行取得 | 70.35 | 19.74 | 20.27 | 13.40 |
+| 主キーで1行検索 | 30.35 | 6.94 | 3.98 | 1.62 |
+| 存在しない主キーの検索 | 30.46 | 6.34 | 2.75 | 0.52 |
+| 二次索引の範囲検索・10行 | 55.76 | 15.05 | 15.67 | 11.75 |
+| ORDER BY id LIMIT 10 | 53.55 | 11.87 | 13.42 | 10.16 |
+| sum(n), count(*) | 100.81 | 54.74 | 116.17 | 115.52 |
+| 全5,000行取得 | 5,240.00 | 2,922.22 | 5,170.00 | 5,070.00 |
+| 索引列の更新＋範囲10行取得 | 79.24 | 22.75 | 22.34 | 13.56 |
 <!-- sqlite-benchmark:end -->
 
 </details>
@@ -131,7 +131,7 @@ db.close();
 
 ブラウザで使うschemaと問い合わせが決まっている場合は、ビルド時にDDLとnamed statementをコンパイルできます。実行側はバイナリ定義を読み込み、SQLパーサを配信せずに動きます。
 
-未リリースの現行ソースでは、[catalogから必要な機能を自動推定](docs/catalog-build.md)し、未使用のcore関数群・文の実装を除去できます。
+未リリースの現行ソースでは、[catalogから必要な機能を自動推定](docs/catalog-build.md)し、未使用の関数群・文・JOIN・CTE・複合SELECTの実装を除去できます。JSONの解析・生成・編集・patch・集約も別々に選択します。
 
 ```ts
 import { DefinedDatabase } from '@mizchi/sqlike/defined';

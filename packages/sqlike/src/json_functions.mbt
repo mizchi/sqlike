@@ -341,7 +341,7 @@ fn json_argument(
   expr : Expr,
   ctx : Evaluation,
 ) -> SqlJson raise SqlError {
-  if value is Text(_) && json_subtype(expr, ctx) {
+  if CAP_QUERY_JSON_SUBTYPE && value is Text(_) && json_subtype(expr, ctx) {
     return json_input(value)
   }
   match value {
@@ -502,7 +502,7 @@ fn json_call(
   values : Array[Value],
   ctx : Evaluation,
 ) -> Value raise SqlError {
-  if name == "->" || name == "->>" {
+  if CAP_FUNCTION_JSON_ARROW && (name == "->" || name == "->>") {
     if values[0] is Null {
       return Null
     }
@@ -552,7 +552,7 @@ fn json_call_function(
   values : Array[Value],
   ctx : Evaluation,
 ) -> Value raise SqlError {
-  if name == "json_valid" {
+  if CAP_FUNCTION_JSON_NORMALIZE && name == "json_valid" {
     if values[0] is Null {
       return Null
     }
@@ -565,15 +565,15 @@ fn json_call_function(
       },
     )
   }
-  if name == "json_quote" {
+  if CAP_FUNCTION_JSON_CONSTRUCT && name == "json_quote" {
     return Text(json_argument(values[0], args[0], ctx).stringify())
   }
-  if name == "json_array" {
+  if CAP_FUNCTION_JSON_CONSTRUCT && name == "json_array" {
     return Text(
       SqlJson::array(values.mapi((i, v) => json_argument(v, args[i], ctx))).stringify(),
     )
   }
-  if name == "json_object" {
+  if CAP_FUNCTION_JSON_CONSTRUCT && name == "json_object" {
     let fields : Array[(String, SqlJson)] = []
     for i = 0; i < values.length(); i = i + 2 {
       guard values[i] is Text(key) else {
@@ -583,22 +583,33 @@ fn json_call_function(
     }
     return Text(SqlJson::object(fields).stringify())
   }
-  if values[0] is Null {
-    return Null
+  if CAP_FUNCTION_JSON_NORMALIZE && name == "json" {
+    return if values[0] is Null {
+      Null
+    } else {
+      Text(json_input(values[0]).stringify())
+    }
   }
-  let mut json = json_input(values[0])
-  if name == "json" {
-    return Text(json.stringify())
-  }
-  if name == "json_patch" {
+  if CAP_FUNCTION_JSON_PATCH && name == "json_patch" {
+    if values[0] is Null {
+      return Null
+    }
+    let target = json_input(values[0])
     if values[1] is Null {
       return Null
     }
-    return Text(json_merge(json, json_input(values[1])).stringify())
+    return Text(json_merge(target, json_input(values[1])).stringify())
   }
-  if name == "json_extract" ||
-    name == "json_type" ||
-    name == "json_array_length" {
+  if CAP_FUNCTION_JSON_READ &&
+    (
+      name == "json_extract" ||
+      name == "json_type" ||
+      name == "json_array_length"
+    ) {
+    if values[0] is Null {
+      return Null
+    }
+    let json = json_input(values[0])
     let paths : Array[Value] = if values.length() == 1 {
       [Text("$")]
     } else {
@@ -652,6 +663,24 @@ fn json_call_function(
       },
     )
   }
+  if CAP_FUNCTION_JSON_EDIT &&
+    ["json_set", "json_insert", "json_replace", "json_remove"].contains(name) {
+    return json_edit_call(name, args, values, ctx)
+  }
+  fail("catalog capability disabled: JSON function " + name)
+}
+
+///|
+fn json_edit_call(
+  name : String,
+  args : Array[Expr],
+  values : Array[Value],
+  ctx : Evaluation,
+) -> Value raise SqlError {
+  if values[0] is Null {
+    return Null
+  }
+  let mut json = json_input(values[0])
   let mode = match name {
     "json_insert" => "insert"
     "json_replace" => "replace"
@@ -688,6 +717,7 @@ fn json_call_function(
 fn json_subtype(expr : Expr, ctx : Evaluation) -> Bool raise SqlError {
   match expr {
     Call("json_extract", args) => {
+      guard CAP_FUNCTION_JSON_READ else { return false }
       if args.length() > 2 {
         return true
       }
@@ -710,6 +740,21 @@ fn json_subtype(expr : Expr, ctx : Evaluation) -> Bool raise SqlError {
       }
       false
     }
+    Call("nullif", args) => json_subtype(args[0], ctx)
+    Call("iif", args) | Call("if", args) => {
+      let mut index = 0
+      while index + 1 < args.length() {
+        if truth(evaluate(args[index], ctx)) == 1 {
+          return json_subtype(args[index + 1], ctx)
+        }
+        index += 2
+      }
+      if index < args.length() {
+        json_subtype(args[index], ctx)
+      } else {
+        false
+      }
+    }
     Call(name, _) =>
       [
         "json", "json_quote", "json_array", "json_object", "json_set", "json_insert",
@@ -730,6 +775,7 @@ fn json_subtype(expr : Expr, ctx : Evaluation) -> Bool raise SqlError {
         json_subtype(other, ctx)
       }
     }
+    Collate(e, _) | Unary("+", e) | Cast(e, "text") => json_subtype(e, ctx)
     _ => false
   }
 }

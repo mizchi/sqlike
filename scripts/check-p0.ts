@@ -43,7 +43,7 @@ const reports = Object.fromEntries(
 const sql = reports["sqlite-speed-current"];
 const catalogs = reports["catalog-profiles-current"];
 assert.equal(catalogs.format, "sqlike-catalog-profiles@1");
-assert.equal(catalogs.results.length, 6);
+assert.equal(catalogs.results.length, 12);
 for (const r of catalogs.results) {
   assert.equal(r.verified, true);
   assert.ok(r.assets.selected.js.raw < r.assets.baseline.js.raw);

@@ -43,14 +43,14 @@ The horizontal axis is logarithmic: each tick doubles the size. Labels show KiB.
 <!-- bundle-size:start -->
 | Build | minified, uncompressed | Brotli |
 | --- | ---: | ---: |
-| SQLike 0.1.0 (source) / SQL / JS | 602.13 KiB | 113.79 KiB |
-| SQLike 0.1.0 (source) / SQL / Wasm GC | 533.01 KiB | 167.65 KiB |
-| SQLike 0.1.0 (source) / Predefined, all execution features / JS | 491.18 KiB | 98.54 KiB |
-| SQLike 0.1.0 (source) / Predefined, all execution features / Wasm GC | 437.03 KiB | 141.07 KiB |
-| SQLike 0.1.0 (source) / Predefined, no JSON/date/window / JS | 455.04 KiB | 90.85 KiB |
-| SQLike 0.1.0 (source) / Predefined, no JSON/date/window / Wasm GC | 408.66 KiB | 130.82 KiB |
-| SQLike 0.1.0 (source) / Predefined, primary-key index only / JS | 433.74 KiB | 86.87 KiB |
-| SQLike 0.1.0 (source) / Predefined, primary-key index only / Wasm GC | 390.82 KiB | 125.81 KiB |
+| SQLike 0.1.0 (source) / SQL / JS | 606.91 KiB | 114.33 KiB |
+| SQLike 0.1.0 (source) / SQL / Wasm GC | 537.01 KiB | 168.45 KiB |
+| SQLike 0.1.0 (source) / Predefined, all execution features / JS | 495.94 KiB | 98.98 KiB |
+| SQLike 0.1.0 (source) / Predefined, all execution features / Wasm GC | 440.56 KiB | 141.71 KiB |
+| SQLike 0.1.0 (source) / Predefined, no JSON/date/window / JS | 456.09 KiB | 91.25 KiB |
+| SQLike 0.1.0 (source) / Predefined, no JSON/date/window / Wasm GC | 409.51 KiB | 131.36 KiB |
+| SQLike 0.1.0 (source) / Predefined, primary-key index only / JS | 434.79 KiB | 87.25 KiB |
+| SQLike 0.1.0 (source) / Predefined, primary-key index only / Wasm GC | 391.88 KiB | 126.08 KiB |
 | sqlite-wasm 3.54.1-build1 | 1313.74 KiB | 462.33 KiB |
 | Turso 0.8.3 | 11709.66 KiB | 2675.96 KiB |
 <!-- bundle-size:end -->
@@ -59,7 +59,7 @@ The horizontal axis is logarithmic: each tick doubles the size. Labels show KiB.
 
 Predefined builds omit the SQL parser. Feature-selected and Wasm GC variants are custom builds using the same public host API. “Primary-key index only” refers to optional features: CRUD, aggregates, CTEs, and secondary indexes remain in the core. SQLike implements a SQLite subset, so its feature coverage differs from the other engines.
 
-These rows use manual feature profiles. [Catalog-specific builds](docs/catalog-build.md) can also remove unused core function families and statement implementations; their separate measurements cover the runtime only.
+These rows use manual feature profiles. [Catalog-specific builds](docs/catalog-build.md) can also remove unused function families, statement implementations, JOINs, CTEs, and compound SELECTs; their separate measurements cover the runtime only.
 
 These totals exclude application HTML and code, precompiled schemas and statements, the build-time compiler, the optional SQLite exporter, and Litestream. They include optional emitted workers and do not represent the minimum startup download. Every measured minified bundle was checked in Chromium by opening a database, writing, and reading.
 
@@ -81,13 +81,13 @@ Each panel starts at zero and uses its own scale. Bars show medians; whiskers sh
 <!-- sqlite-benchmark:start -->
 | Workload | SQLike JS, SQL | SQLike Wasm GC, SQL | SQLite WASM, SQL | SQLite WASM, prepared |
 | --- | ---: | ---: | ---: | ---: |
-| Primary-key lookup | 31.37 | 7.27 | 4.28 | 1.63 |
-| Missing primary key | 28.03 | 6.24 | 2.80 | 0.52 |
-| Indexed range · 10 rows | 55.29 | 14.86 | 16.22 | 11.68 |
-| ORDER BY id · LIMIT 10 | 50.68 | 12.03 | 13.44 | 10.38 |
-| SUM + COUNT · 5,000 rows | 103.16 | 55.10 | 116.46 | 112.79 |
-| Fetch all 5,000 rows | 5,180.00 | 2,994.44 | 5,180.00 | 5,220.00 |
-| Indexed UPDATE + range read | 70.35 | 19.74 | 20.27 | 13.40 |
+| Primary-key lookup | 30.35 | 6.94 | 3.98 | 1.62 |
+| Missing primary key | 30.46 | 6.34 | 2.75 | 0.52 |
+| Indexed range · 10 rows | 55.76 | 15.05 | 15.67 | 11.75 |
+| ORDER BY id · LIMIT 10 | 53.55 | 11.87 | 13.42 | 10.16 |
+| SUM + COUNT · 5,000 rows | 100.81 | 54.74 | 116.17 | 115.52 |
+| Fetch all 5,000 rows | 5,240.00 | 2,922.22 | 5,170.00 | 5,070.00 |
+| Indexed UPDATE + range read | 79.24 | 22.75 | 22.34 | 13.56 |
 <!-- sqlite-benchmark:end -->
 
 </details>
@@ -131,7 +131,7 @@ db.close();
 
 When your schema and queries are known in advance, compile the DDL and named statements during the build. The browser loads binary definitions and executes them without shipping the SQL parser.
 
-The unreleased source can also [infer runtime features from your catalog (Japanese)](docs/catalog-build.md), removing unused core function families and statement implementations.
+The unreleased source can also [infer runtime features from your catalog (Japanese)](docs/catalog-build.md), removing unused function families, statements, JOINs, CTEs, and compound SELECTs. JSON parsing, construction, editing, patching, and aggregation are selected separately.
 
 ```ts
 import { DefinedDatabase } from '@mizchi/sqlike/defined';

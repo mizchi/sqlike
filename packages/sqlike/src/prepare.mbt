@@ -122,6 +122,7 @@ fn prepare_expression(
         fail("SQL function argument limit")
       }
       validate_runtime_call(name, args.length())
+      validate_runtime_json_values(name, args)
       validate_function_features(name)
       if name == "$distinct" {
         guard aggregates && args.length() == 1 else {

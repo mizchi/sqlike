@@ -4,6 +4,7 @@ import * as compiler from "../_build/js/release/build/mizchi/sqlike/compiler/com
 import {
   catalogFunctionConstants,
   catalogStatementConstants,
+  catalogQueryConstants,
 } from "../src/catalog-capabilities.ts";
 import type { CatalogSource } from "../src/aot-contract.ts";
 import type { CatalogRequirements } from "../src/catalog-requirements-contract.ts";
@@ -31,7 +32,7 @@ export function analyzeCatalogRequirements(source: CatalogSource): CatalogRequir
     Number.isInteger(data.featureBits) && data.featureBits >= 0 && data.featureBits <= 511,
     "unknown catalog feature bits",
   );
-  for (const name of ["functions", "functionGroups", "statements"]) {
+  for (const name of ["functions", "functionGroups", "statements", "queryParts"]) {
     const values = data[name];
     assert.ok(Array.isArray(values) && values.every((v) => typeof v === "string"));
     assert.deepEqual(values, [...new Set(values)].sort(), `non-canonical catalog ${name}`);
@@ -43,6 +44,10 @@ export function analyzeCatalogRequirements(source: CatalogSource): CatalogRequir
   assert.ok(
     data.statements.every((n: string) => Object.hasOwn(catalogStatementConstants, n)),
     "unknown statement kind",
+  );
+  assert.ok(
+    data.queryParts.every((n: string) => Object.hasOwn(catalogQueryConstants, n)),
+    "unknown query part",
   );
   return Object.freeze({
     format: data.format,
@@ -57,5 +62,6 @@ export function analyzeCatalogRequirements(source: CatalogSource): CatalogRequir
     functions: Object.freeze(data.functions),
     functionGroups: Object.freeze(data.functionGroups),
     statements: Object.freeze(data.statements),
+    queryParts: Object.freeze(data.queryParts),
   });
 }
