@@ -5,12 +5,51 @@ import sys
 import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-from render_readme_charts import bundle_data, benchmark_data, sample_stats, update_benchmark_table
+from render_readme_charts import bundle_data, benchmark_data, sample_stats, update_benchmark_table, catalog_data, update_catalog_table
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 class ReadmeChartTests(unittest.TestCase):
+    def test_catalog_sizes_cover_both_modes_and_verified_native_execution(self):
+        report = json.loads((ROOT / "measurements/catalog-profiles-current.json").read_text())
+        rows = catalog_data(report)
+        self.assertEqual(len(rows), 12)
+        for row, source in zip(rows, report["results"]):
+            self.assertEqual((row["id"], row["mode"]), (source["id"], source["mode"]))
+            for kind in ["baseline", "selected"]:
+                for target in ["js", "wasm"]:
+                    for compression in ["raw", "brotli"]:
+                        self.assertEqual(row[kind][target][compression], source["assets"][kind][target][compression] / 1024)
+        for problem in ["missing", "duplicate", "unverified", "empty", "invalid-format"]:
+            invalid = copy.deepcopy(report)
+            if problem == "missing": invalid["results"].pop()
+            elif problem == "duplicate": invalid["results"][-1] = invalid["results"][0]
+            elif problem == "unverified": invalid["results"][0]["verified"] = False
+            elif problem == "empty": invalid["results"][0]["assets"]["selected"]["js"]["raw"] = 0
+            else: invalid["format"] = "unknown"
+            with self.subTest(problem=problem), self.assertRaises(ValueError):
+                catalog_data(invalid)
+
+    def test_catalog_tables_keep_js_and_wasm_separate_in_both_languages(self):
+        rows = catalog_data(json.loads((ROOT / "measurements/catalog-profiles-current.json").read_text()))
+        source = "before\n<!-- catalog-runtime-size:start -->\nstale\n<!-- catalog-runtime-size:end -->\nafter\n"
+        english, japanese = [update_catalog_table(source, rows, language) for language in ["en", "ja"]]
+        self.assertIn("Read only / defined", english)
+        self.assertIn("読取専用 / defined", japanese)
+        self.assertNotIn("stale", english)
+        for table in [english, japanese]:
+            self.assertIn("357.70 KiB | 70.59 KiB", table)
+            self.assertTrue(table.startswith("before\n<!-- catalog-runtime-size:start -->\n"))
+            self.assertTrue(table.endswith("<!-- catalog-runtime-size:end -->\nafter\n"))
+            for row in rows:
+                selected = row["selected"]
+                values = " | ".join(f"{selected[target][compression]:.2f} KiB" for target in ["js", "wasm"] for compression in ["raw", "brotli"])
+                self.assertIn(values, table)
+        self.assertEqual(update_catalog_table(english, rows), english)
+        for invalid in ["missing", source + source]:
+            with self.assertRaises(ValueError): update_catalog_table(invalid, rows)
+
     def test_both_readme_languages_keep_the_same_timing_values(self):
         report = json.loads((ROOT / "measurements/sqlite-speed-current.json").read_text())
         rows = benchmark_data(report)

@@ -3,11 +3,14 @@
   "inputs": {
     "measurements/bundle-size-current.json": "79fc659d63877301ddeb8e629707f338e7d38b0bf9bf0d09c67f1493d356c0d8",
     "measurements/sqlite-speed-current.json": "40e4c06300bb8ee52117eb413f6ea8dc113644dfe5998b1b9fac5ef966a2af1c",
-    "scripts/render_readme_charts.py": "30cc1c37e566ce80ae8a4fdceb48103594d3ac338dc29eb084aca7bf6fdbf3e4"
+    "measurements/catalog-profiles-current.json": "9ab58863b8b082af58e199a8c140d957aa4de4db73f73dfc1a761728788b12c9",
+    "scripts/render_readme_charts.py": "601aa8278c66abf245f0514a12d770f95f0032a5969aefb51570049103133d23"
   },
   "outputs": {
     "docs/images/bundle-size.svg": "507537234c91a5c1157d96638c5e6818c57179660100891becf1b11f2cd3a8b1",
     "docs/images/bundle-size.png": "8f45d84b92b331d68292cb5d02a0a46ffed764084c07c37eeef8ec27ff272457",
+    "docs/images/catalog-runtime-size.svg": "3d2d7a9075063c6a6bf5995fddfc6c78c105ea887f6cf25fad6692d203534896",
+    "docs/images/catalog-runtime-size.png": "d3dea80b52e1b6821fe42a830fe0392588c583dceee9787fb4c459d4831248e6",
     "docs/images/sqlite-benchmark.svg": "3e83c3086a7fd309c4764c3dabc5acbffefa62e423f1c0b9a21ccaf929a6c897",
     "docs/images/sqlite-benchmark.png": "2db1d280709cf1fd5f0232d957d47584726a26bfedaaeada9bd920a035fc0c69"
   },
@@ -340,6 +343,308 @@
             }
           }
         ]
+      }
+    ],
+    "catalog": [
+      {
+        "id": "readonly",
+        "mode": "aot",
+        "label": "Read only",
+        "baseline": {
+          "js": {
+            "raw": 453.2373046875,
+            "brotli": 86.0712890625
+          },
+          "wasm": {
+            "raw": 409.5419921875,
+            "brotli": 127.9970703125
+          }
+        },
+        "selected": {
+          "js": {
+            "raw": 386.9296875,
+            "brotli": 73.099609375
+          },
+          "wasm": {
+            "raw": 346.8330078125,
+            "brotli": 108.6279296875
+          }
+        }
+      },
+      {
+        "id": "readonly",
+        "mode": "defined",
+        "label": "Read only",
+        "baseline": {
+          "js": {
+            "raw": 422.8232421875,
+            "brotli": 83.2880859375
+          },
+          "wasm": {
+            "raw": 379.8115234375,
+            "brotli": 121.787109375
+          }
+        },
+        "selected": {
+          "js": {
+            "raw": 357.6953125,
+            "brotli": 70.5859375
+          },
+          "wasm": {
+            "raw": 318.6552734375,
+            "brotli": 102.931640625
+          }
+        }
+      },
+      {
+        "id": "scalar-read",
+        "mode": "aot",
+        "label": "GLOB + char",
+        "baseline": {
+          "js": {
+            "raw": 453.2373046875,
+            "brotli": 86.0712890625
+          },
+          "wasm": {
+            "raw": 409.5419921875,
+            "brotli": 127.9970703125
+          }
+        },
+        "selected": {
+          "js": {
+            "raw": 389.7021484375,
+            "brotli": 73.841796875
+          },
+          "wasm": {
+            "raw": 349.8828125,
+            "brotli": 109.501953125
+          }
+        }
+      },
+      {
+        "id": "scalar-read",
+        "mode": "defined",
+        "label": "GLOB + char",
+        "baseline": {
+          "js": {
+            "raw": 422.8232421875,
+            "brotli": 83.2880859375
+          },
+          "wasm": {
+            "raw": 379.8115234375,
+            "brotli": 121.787109375
+          }
+        },
+        "selected": {
+          "js": {
+            "raw": 360.466796875,
+            "brotli": 71.19140625
+          },
+          "wasm": {
+            "raw": 321.5478515625,
+            "brotli": 103.9365234375
+          }
+        }
+      },
+      {
+        "id": "json-construct",
+        "mode": "aot",
+        "label": "JSON construction",
+        "baseline": {
+          "js": {
+            "raw": 476.8037109375,
+            "brotli": 89.9638671875
+          },
+          "wasm": {
+            "raw": 430.462890625,
+            "brotli": 133.939453125
+          }
+        },
+        "selected": {
+          "js": {
+            "raw": 393.2119140625,
+            "brotli": 74.142578125
+          },
+          "wasm": {
+            "raw": 352.88671875,
+            "brotli": 110.51171875
+          }
+        }
+      },
+      {
+        "id": "json-construct",
+        "mode": "defined",
+        "label": "JSON construction",
+        "baseline": {
+          "js": {
+            "raw": 446.3740234375,
+            "brotli": 86.8994140625
+          },
+          "wasm": {
+            "raw": 400.2724609375,
+            "brotli": 127.59765625
+          }
+        },
+        "selected": {
+          "js": {
+            "raw": 363.9326171875,
+            "brotli": 71.666015625
+          },
+          "wasm": {
+            "raw": 324.1845703125,
+            "brotli": 104.52734375
+          }
+        }
+      },
+      {
+        "id": "json-nested",
+        "mode": "aot",
+        "label": "Nested JSON",
+        "baseline": {
+          "js": {
+            "raw": 476.8037109375,
+            "brotli": 89.9638671875
+          },
+          "wasm": {
+            "raw": 430.462890625,
+            "brotli": 133.939453125
+          }
+        },
+        "selected": {
+          "js": {
+            "raw": 397.9423828125,
+            "brotli": 74.9111328125
+          },
+          "wasm": {
+            "raw": 357.06640625,
+            "brotli": 111.3359375
+          }
+        }
+      },
+      {
+        "id": "json-nested",
+        "mode": "defined",
+        "label": "Nested JSON",
+        "baseline": {
+          "js": {
+            "raw": 446.3740234375,
+            "brotli": 86.8994140625
+          },
+          "wasm": {
+            "raw": 400.2724609375,
+            "brotli": 127.59765625
+          }
+        },
+        "selected": {
+          "js": {
+            "raw": 368.5927734375,
+            "brotli": 72.427734375
+          },
+          "wasm": {
+            "raw": 328.2197265625,
+            "brotli": 105.6982421875
+          }
+        }
+      },
+      {
+        "id": "json-cte",
+        "mode": "aot",
+        "label": "Recursive CTE + JSON aggregate",
+        "baseline": {
+          "js": {
+            "raw": 476.8037109375,
+            "brotli": 89.9638671875
+          },
+          "wasm": {
+            "raw": 430.462890625,
+            "brotli": 133.939453125
+          }
+        },
+        "selected": {
+          "js": {
+            "raw": 406.3837890625,
+            "brotli": 76.455078125
+          },
+          "wasm": {
+            "raw": 367.2578125,
+            "brotli": 114.1669921875
+          }
+        }
+      },
+      {
+        "id": "json-cte",
+        "mode": "defined",
+        "label": "Recursive CTE + JSON aggregate",
+        "baseline": {
+          "js": {
+            "raw": 446.3740234375,
+            "brotli": 86.8994140625
+          },
+          "wasm": {
+            "raw": 400.2724609375,
+            "brotli": 127.59765625
+          }
+        },
+        "selected": {
+          "js": {
+            "raw": 377.0419921875,
+            "brotli": 73.9345703125
+          },
+          "wasm": {
+            "raw": 338.0751953125,
+            "brotli": 108.3046875
+          }
+        }
+      },
+      {
+        "id": "notes",
+        "mode": "aot",
+        "label": "Notes CRUD",
+        "baseline": {
+          "js": {
+            "raw": 453.2373046875,
+            "brotli": 86.0712890625
+          },
+          "wasm": {
+            "raw": 409.5419921875,
+            "brotli": 127.9970703125
+          }
+        },
+        "selected": {
+          "js": {
+            "raw": 413.736328125,
+            "brotli": 78.2158203125
+          },
+          "wasm": {
+            "raw": 371.2001953125,
+            "brotli": 116.1708984375
+          }
+        }
+      },
+      {
+        "id": "notes",
+        "mode": "defined",
+        "label": "Notes CRUD",
+        "baseline": {
+          "js": {
+            "raw": 422.8232421875,
+            "brotli": 83.2880859375
+          },
+          "wasm": {
+            "raw": 379.8115234375,
+            "brotli": 121.787109375
+          }
+        },
+        "selected": {
+          "js": {
+            "raw": 384.2412109375,
+            "brotli": 75.7353515625
+          },
+          "wasm": {
+            "raw": 341.90234375,
+            "brotli": 110.255859375
+          }
+        }
       }
     ]
   }

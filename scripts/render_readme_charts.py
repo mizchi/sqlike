@@ -15,7 +15,24 @@ import statistics
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "docs/images"
 MANIFEST = OUTPUT / "comparison-data.json"
-INPUTS = ["measurements/bundle-size-current.json", "measurements/sqlite-speed-current.json"]
+INPUTS = ["measurements/bundle-size-current.json", "measurements/sqlite-speed-current.json", "measurements/catalog-profiles-current.json"]
+FIGURES = ["bundle-size", "catalog-runtime-size", "sqlite-benchmark"]
+CATALOG_LABELS = {
+    "readonly": "Read only",
+    "scalar-read": "GLOB + char",
+    "json-construct": "JSON construction",
+    "json-nested": "Nested JSON",
+    "json-cte": "Recursive CTE + JSON aggregate",
+    "notes": "Notes CRUD",
+}
+CATALOG_JAPANESE = {
+    "readonly": "読取専用",
+    "scalar-read": "GLOB + char",
+    "json-construct": "JSON生成",
+    "json-nested": "入れ子JSON",
+    "json-cte": "再帰CTE＋JSON集約",
+    "notes": "Notes CRUD",
+}
 LABELS = {
     "sql-js": "SQLike · SQL · JS",
     "sql-wasm": "SQLike · SQL · Wasm GC",
@@ -62,6 +79,25 @@ def bundle_data(report):
             if row["totals"][key] != sum(a[key] for a in row["assets"]):
                 raise ValueError("bundle assets do not add up")
         rows.append({"id": row["id"], "label": LABELS[row["id"]], "raw_kib": raw / 1024, "brotli_kib": brotli / 1024})
+    return rows
+
+
+def catalog_data(report):
+    if report.get("format") != "sqlike-catalog-profiles@1":
+        raise ValueError("unsupported catalog measurement format")
+    expected = {(fixture, mode) for fixture in CATALOG_LABELS for mode in ["aot", "defined"]}
+    pairs = [(r["id"], r["mode"]) for r in report["results"]]
+    if len(pairs) != len(expected) or set(pairs) != expected:
+        raise ValueError("all twelve distinct catalog/mode builds must appear")
+    rows = []
+    for source in report["results"]:
+        if source.get("verified") is not True or source.get("operations", 0) <= 0:
+            raise ValueError("native catalog execution verification missing")
+        row = {"id": source["id"], "mode": source["mode"], "label": CATALOG_LABELS[source["id"]]}
+        for kind in ["baseline", "selected"]:
+            row[kind] = {target: {compression: positive(source["assets"][kind][target][compression]) / 1024
+                                  for compression in ["raw", "brotli"]} for target in ["js", "wasm"]}
+        rows.append(row)
     return rows
 
 
@@ -117,9 +153,27 @@ def update_benchmark_table(markdown, rows, language="en"):
     return markdown[:begin] + "\n" + "\n".join(table) + "\n" + markdown[finish:]
 
 
-def save_figure(fig, name, title):
+def update_catalog_table(markdown, rows, language="en"):
+    if language not in ["en", "ja"]:
+        raise ValueError("unsupported README language")
+    start, end = "<!-- catalog-runtime-size:start -->", "<!-- catalog-runtime-size:end -->"
+    if markdown.count(start) != 1 or markdown.count(end) != 1 or markdown.index(start) >= markdown.index(end):
+        raise ValueError("README catalog markers must occur exactly once and in order")
+    header = ("| Catalog / mode | Minified JS | JS Brotli | Release Wasm | Wasm Brotli |" if language == "en" else
+              "| Catalog / モード | minified JS | JS Brotli | release Wasm | Wasm Brotli |")
+    table = [header, "| --- | ---: | ---: | ---: | ---: |"]
+    for row in rows:
+        label = row["label"] if language == "en" else CATALOG_JAPANESE[row["id"]]
+        mode = "AOT" if row["mode"] == "aot" else "defined"
+        values = " | ".join(f"{row['selected'][target][compression]:.2f} KiB" for target in ["js", "wasm"] for compression in ["raw", "brotli"])
+        table.append(f"| {label} / {mode} | {values} |")
+    begin, finish = markdown.index(start) + len(start), markdown.index(end)
+    return markdown[:begin] + "\n" + "\n".join(table) + "\n" + markdown[finish:]
+
+
+def save_figure(fig, name, title, description="Generated from repository measurement JSON; exact values are also in the README tables."):
     for extension in ["svg", "png"]:
-        metadata = {"Title": title, "Description": "Generated from repository measurement JSON; exact values are also in the README tables."}
+        metadata = {"Title": title, "Description": description}
         if extension == "svg":
             metadata["Date"] = None
         fig.savefig(OUTPUT / f"{name}.{extension}", dpi=170, facecolor="white", metadata=metadata)
@@ -156,6 +210,41 @@ def render_bundle(rows, report, plt):
     fig.text(0.035, 0.075, "Trimmed = no JSON/date/window. PK only = only the optional primary-key index feature enabled.", fontsize=10, color="#475569")
     fig.text(0.035, 0.045, "All emitted JS, workers and Wasm included. App code, schema/statements, compiler and Litestream excluded.", fontsize=10, color="#475569")
     save_figure(fig, "bundle-size", "Browser bundle size: all ten builds, before/after Brotli")
+    plt.close(fig)
+
+
+def render_catalog(rows, plt):
+    selected = [row for row in rows if row["mode"] == "defined"]
+    fig, axes = plt.subplots(1, 2, figsize=(12.5, 6.7))
+    fig.subplots_adjust(left=0.29, right=0.965, top=0.77, bottom=0.20, wspace=0.12)
+    fig.text(0.035, 0.945, "Catalog-selected runtime size", fontsize=22, weight="bold", color="#0f172a")
+    fig.text(0.035, 0.895, "Defined mode · JavaScript engine only · primary-key index enabled", fontsize=11, color="#475569")
+    for ax, compression, title in zip(axes, ["raw", "brotli"], ["Minified JS (KiB)", "Brotli quality 11 (KiB)"]):
+        for y, row in enumerate(selected):
+            if y % 2 == 0:
+                ax.axhspan(y - 0.46, y + 0.46, color="#f1f5f9", zorder=0)
+            before, after = [row[kind]["js"][compression] for kind in ["baseline", "selected"]]
+            ax.plot([after, before], [y, y], color="#cbd5e1", linewidth=2, zorder=1)
+            for value, color, offset, vertical in [(before, "#64748b", -10, "top"), (after, "#2563eb", 9, "bottom")]:
+                ax.scatter([value], [y], s=48, color=color, zorder=3)
+                ax.annotate(f"{value:.2f}", (value, y), xytext=(0, offset), textcoords="offset points", ha="center", va=vertical, fontsize=9, color=color)
+        ax.set_title(title, loc="left", fontsize=12, weight="bold", pad=15)
+        ax.set_xlim(0, max(row["baseline"]["js"][compression] for row in selected) * 1.14)
+        ax.set_ylim(len(selected) - 0.5, -0.7)
+        ax.set_yticks(range(len(selected)), [row["label"] for row in selected] if ax is axes[0] else [])
+        ax.tick_params(axis="both", length=0, pad=9, labelsize=10)
+        ax.grid(axis="x", color="#e2e8f0", linewidth=0.7)
+        ax.set_axisbelow(True)
+        ax.set_xlabel("KiB · smaller is better", fontsize=10, labelpad=10)
+        for spine in ax.spines.values():
+            spine.set_visible(False)
+    axes[0].scatter([], [], color="#64748b", label="Manual feature profile")
+    axes[0].scatter([], [], color="#2563eb", label="Catalog-selected")
+    fig.legend(*axes[0].get_legend_handles_labels(), loc="upper right", bbox_to_anchor=(0.97, 0.86), ncol=2, frameon=False, fontsize=10)
+    fig.text(0.035, 0.075, "Same semantic features and exports per pair. Baseline and selected JS/Wasm verified against native SQLite.", fontsize=10, color="#475569")
+    fig.text(0.035, 0.035, "Host, IndexedDB wrappers, schema/statements and compiler excluded. Wasm alternatives are in the README table.", fontsize=10, color="#475569")
+    save_figure(fig, "catalog-runtime-size", "Catalog-selected defined JavaScript runtime sizes",
+                "Manual profiles versus catalog-selected runtimes. Bytes from measurements/catalog-profiles-current.json; selected JS and Wasm sizes are in the README table.")
     plt.close(fig)
 
 
@@ -200,22 +289,24 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true", help="verify input data and generated image hashes without redrawing")
     args = parser.parse_args()
-    bundle, benchmark = [json.loads((ROOT / p).read_text()) for p in INPUTS]
-    data = {"bundle": bundle_data(bundle), "benchmark": benchmark_data(benchmark)}
+    bundle, benchmark, catalog = [json.loads((ROOT / p).read_text()) for p in INPUTS]
+    data = {"bundle": bundle_data(bundle), "benchmark": benchmark_data(benchmark), "catalog": catalog_data(catalog)}
     inputs = {p: sha(ROOT / p) for p in [*INPUTS, "scripts/render_readme_charts.py"]}
     readmes = [(ROOT / "README.md", "en"), (ROOT / "README.ja.md", "ja")]
-    updates = [(path, path.read_text(), update_benchmark_table(path.read_text(), data["benchmark"], language)) for path, language in readmes]
+    updates = [(path, path.read_text(), update_catalog_table(update_benchmark_table(path.read_text(), data["benchmark"], language), data["catalog"], language)) for path, language in readmes]
     if args.check:
         saved = json.loads(MANIFEST.read_text())
         if saved["inputs"] != inputs or saved["data"] != data:
             raise ValueError("stale figures: run just readme-charts")
+        if set(saved["outputs"]) != {f"docs/images/{name}.{ext}" for name in FIGURES for ext in ["svg", "png"]}:
+            raise ValueError("missing README figure")
         for path, digest in saved["outputs"].items():
             if sha(ROOT / path) != digest:
                 raise ValueError(f"image differs: {path}")
         for path, before, after in updates:
             if before != after:
-                raise ValueError(f"{path.name} timing table differs from figure data")
-        print("English/Japanese README figures match both reports and all 28 timing medians")
+                raise ValueError(f"{path.name} table differs from figure data")
+        print("English/Japanese README figures match all three reports, 12 catalog builds and 28 timing medians")
         return
     import matplotlib
     matplotlib.use("Agg")
@@ -223,13 +314,14 @@ def main():
     plt.rcParams.update({"font.family": "DejaVu Sans", "svg.hashsalt": "sqlike-readme", "svg.fonttype": "path", "text.color": "#0f172a", "axes.labelcolor": "#475569", "xtick.color": "#475569", "ytick.color": "#334155"})
     OUTPUT.mkdir(parents=True, exist_ok=True)
     render_bundle(data["bundle"], bundle, plt)
+    render_catalog(data["catalog"], plt)
     render_benchmark(data["benchmark"], benchmark, bundle["versions"]["sqlike"], plt)
     for path, before, after in updates:
         if before != after:
             path.write_text(after)
-    outputs = {str(p.relative_to(ROOT)): sha(p) for name in ["bundle-size", "sqlite-benchmark"] for extension in ["svg", "png"] for p in [OUTPUT / f"{name}.{extension}"]}
+    outputs = {str(p.relative_to(ROOT)): sha(p) for name in FIGURES for extension in ["svg", "png"] for p in [OUTPUT / f"{name}.{extension}"]}
     MANIFEST.write_text(json.dumps({"renderer": f"Matplotlib {matplotlib.__version__}", "inputs": inputs, "outputs": outputs, "data": data}, indent=2) + "\n")
-    print("Rendered bundle-size and sqlite-benchmark as SVG + PNG")
+    print("Rendered bundle-size, catalog-runtime-size and sqlite-benchmark as SVG + PNG")
 
 
 if __name__ == "__main__":

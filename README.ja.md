@@ -59,13 +59,47 @@ SQLikeはnpm 0.1.0以後の未リリース変更を含む現行ソースで計�
 
 事前定義版はSQLパーサを含みません。機能選択版とWasm GC版は、同じ公開host APIを使うカスタムビルドです。「主キー索引のみ」は任意機能の選択で、CRUD・集約・CTE・secondary indexはコアに残ります。SQLikeはSQLiteサブセットのため、他のエンジンと機能範囲は異なります。
 
-表は手動の機能プロファイルです。[catalog別のビルド](docs/catalog-build.md)では、未使用の関数群・文・JOIN・CTE・複合SELECTの実装も除去できます。そちらの計測はランタイム単体として別に記録しています。
+表は手動の機能プロファイルです。[catalog別のビルド](docs/catalog-build.md)では、未使用の関数群・文・JOIN・CTE・複合SELECTの実装も除去できます。そのランタイムのサイズを下に示します。
 
 アプリのHTML・コード、事前ビルドしたschema / statement、ビルド時compiler、任意のSQLite exporter、Litestreamは含みません。任意Workerも含む配布assetの合計であり、初回起動時の最小ダウンロード量とは異なります。各行の計測済みminified bundleはChromiumでDBを開いて書込・読取まで確認しています。
 
 比較対象は[@sqlite.org/sqlite-wasm](https://www.npmjs.com/package/@sqlite.org/sqlite-wasm)と[@tursodatabase/database-wasm](https://www.npmjs.com/package/@tursodatabase/database-wasm)です。
 
 [計測条件・ファイル別サイズ](measurements/bundle-size-current.json)。再計測は`just bundle-size`で行えます。
+
+### catalogから絞ったランタイム
+
+schemaとクエリが固定されている場合、AOTと事前定義版ではcatalogに必要な実装だけを残せます。AOTはJSONのプログラム定義、`defined`はバイナリ定義を読み込みます。各比較で、意味上の機能・公開exports・主キー索引の設定を揃えています。
+
+[![6つのcatalogのdefined JSランタイム。灰色は手動プロファイル、青はcatalogから選択した構成。minifiedとBrotliの2図で比較。](docs/images/catalog-runtime-size.svg)](docs/images/catalog-runtime-size.png)
+
+下表は**エンジンのファイル単体**で、host・IndexedDB wrapper・schema / statement・compilerを含みません。JSとWasmは別々の実行対象で、Wasmの値にはJSローダーを含みません。上の配信全体の表ではhostとローダーも含めています。すべてのcatalogをJS / Wasmの両方でnative SQLiteと照合済みです。
+
+<details>
+<summary>ランタイムの数値を見る（6 catalog × 2モード）</summary>
+
+<!-- catalog-runtime-size:start -->
+| Catalog / モード | minified JS | JS Brotli | release Wasm | Wasm Brotli |
+| --- | ---: | ---: | ---: | ---: |
+| 読取専用 / AOT | 386.93 KiB | 73.10 KiB | 346.83 KiB | 108.63 KiB |
+| 読取専用 / defined | 357.70 KiB | 70.59 KiB | 318.66 KiB | 102.93 KiB |
+| GLOB + char / AOT | 389.70 KiB | 73.84 KiB | 349.88 KiB | 109.50 KiB |
+| GLOB + char / defined | 360.47 KiB | 71.19 KiB | 321.55 KiB | 103.94 KiB |
+| JSON生成 / AOT | 393.21 KiB | 74.14 KiB | 352.89 KiB | 110.51 KiB |
+| JSON生成 / defined | 363.93 KiB | 71.67 KiB | 324.18 KiB | 104.53 KiB |
+| 入れ子JSON / AOT | 397.94 KiB | 74.91 KiB | 357.07 KiB | 111.34 KiB |
+| 入れ子JSON / defined | 368.59 KiB | 72.43 KiB | 328.22 KiB | 105.70 KiB |
+| 再帰CTE＋JSON集約 / AOT | 406.38 KiB | 76.46 KiB | 367.26 KiB | 114.17 KiB |
+| 再帰CTE＋JSON集約 / defined | 377.04 KiB | 73.93 KiB | 338.08 KiB | 108.30 KiB |
+| Notes CRUD / AOT | 413.74 KiB | 78.22 KiB | 371.20 KiB | 116.17 KiB |
+| Notes CRUD / defined | 384.24 KiB | 75.74 KiB | 341.90 KiB | 110.26 KiB |
+<!-- catalog-runtime-size:end -->
+
+</details>
+
+catalogは主キー検索、GLOB / char、JSON生成、入れ子JSON、再帰CTE＋JSON集約、メモのCRUDを対象にしています。残る機能はcatalogによって異なります。単純なJSON生成だけなら、SQL JSONパーサ・パス解析・編集・patch・集約も除去します。
+
+[catalogの計測結果](measurements/catalog-profiles-current.json) · [ビルド方法・制限](docs/catalog-build.md)。再計測は`just catalog-profiles`、図表の更新は`just readme-charts`で行えます。
 
 ## SQLiteとの速度比較
 

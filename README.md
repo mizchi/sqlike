@@ -59,13 +59,47 @@ The horizontal axis is logarithmic: each tick doubles the size. Labels show KiB.
 
 Predefined builds omit the SQL parser. Feature-selected and Wasm GC variants are custom builds using the same public host API. “Primary-key index only” refers to optional features: CRUD, aggregates, CTEs, and secondary indexes remain in the core. SQLike implements a SQLite subset, so its feature coverage differs from the other engines.
 
-These rows use manual feature profiles. [Catalog-specific builds](docs/catalog-build.md) can also remove unused function families, statement implementations, JOINs, CTEs, and compound SELECTs; their separate measurements cover the runtime only.
+These rows use manual feature profiles. [Catalog-specific builds](docs/catalog-build.md) can also remove unused function families, statement implementations, JOINs, CTEs, and compound SELECTs. Their runtime sizes appear below.
 
 These totals exclude application HTML and code, precompiled schemas and statements, the build-time compiler, the optional SQLite exporter, and Litestream. They include optional emitted workers and do not represent the minimum startup download. Every measured minified bundle was checked in Chromium by opening a database, writing, and reading.
 
 The comparison uses [@sqlite.org/sqlite-wasm](https://www.npmjs.com/package/@sqlite.org/sqlite-wasm) and [@tursodatabase/database-wasm](https://www.npmjs.com/package/@tursodatabase/database-wasm).
 
 [Measurement conditions and per-file sizes](measurements/bundle-size-current.json). Reproduce with `just bundle-size`.
+
+### Catalog-selected runtimes
+
+When the schema and queries are fixed, AOT and predefined builds retain only the implementations required by the catalog. AOT reads JSON program definitions; `defined` reads binary definitions. Each comparison uses the same semantic features, exports, and primary-key index setting.
+
+[![Defined JavaScript runtime sizes for six catalogs. Gray is the manual feature profile; blue is catalog-selected. The panels show minified and Brotli sizes.](docs/images/catalog-runtime-size.svg)](docs/images/catalog-runtime-size.png)
+
+These are **engine files only**, excluding the host, IndexedDB wrappers, schema/statements, and compiler. The JS and Wasm columns describe separate targets; the Wasm sizes exclude its JS loader. The browser distribution totals above include those host and loader assets. Both targets were checked against native SQLite for every catalog.
+
+<details>
+<summary>View exact runtime sizes (6 catalogs × 2 modes)</summary>
+
+<!-- catalog-runtime-size:start -->
+| Catalog / mode | Minified JS | JS Brotli | Release Wasm | Wasm Brotli |
+| --- | ---: | ---: | ---: | ---: |
+| Read only / AOT | 386.93 KiB | 73.10 KiB | 346.83 KiB | 108.63 KiB |
+| Read only / defined | 357.70 KiB | 70.59 KiB | 318.66 KiB | 102.93 KiB |
+| GLOB + char / AOT | 389.70 KiB | 73.84 KiB | 349.88 KiB | 109.50 KiB |
+| GLOB + char / defined | 360.47 KiB | 71.19 KiB | 321.55 KiB | 103.94 KiB |
+| JSON construction / AOT | 393.21 KiB | 74.14 KiB | 352.89 KiB | 110.51 KiB |
+| JSON construction / defined | 363.93 KiB | 71.67 KiB | 324.18 KiB | 104.53 KiB |
+| Nested JSON / AOT | 397.94 KiB | 74.91 KiB | 357.07 KiB | 111.34 KiB |
+| Nested JSON / defined | 368.59 KiB | 72.43 KiB | 328.22 KiB | 105.70 KiB |
+| Recursive CTE + JSON aggregate / AOT | 406.38 KiB | 76.46 KiB | 367.26 KiB | 114.17 KiB |
+| Recursive CTE + JSON aggregate / defined | 377.04 KiB | 73.93 KiB | 338.08 KiB | 108.30 KiB |
+| Notes CRUD / AOT | 413.74 KiB | 78.22 KiB | 371.20 KiB | 116.17 KiB |
+| Notes CRUD / defined | 384.24 KiB | 75.74 KiB | 341.90 KiB | 110.26 KiB |
+<!-- catalog-runtime-size:end -->
+
+</details>
+
+The catalogs cover primary-key reads, GLOB/char, JSON construction, nested JSON, recursive CTE with JSON aggregation, and notes CRUD. Function coverage depends on the catalog. JSON construction alone omits SQL JSON parsing, paths, editing, patching, and aggregation.
+
+[Catalog measurements](measurements/catalog-profiles-current.json) · [Build instructions and limitations](docs/catalog-build.md). Refresh measurements with `just catalog-profiles`, then update these figures and tables with `just readme-charts`.
 
 ## SQLite performance comparison
 
