@@ -25,6 +25,33 @@ pnpm add @mizchi/litestream
 
 [GitHub Releases](https://github.com/mizchi/sqlike/releases/tag/v0.1.0)にも配布用アーカイブを用意しています。
 
+## バンドルサイズ
+
+ブラウザ向けの公開entryをOxcでminifyした配布物の合計です。JSローダー・分割chunk・生成されるWorker・Wasmを含み、Brotliは各ファイルをquality 11で圧縮して合算しています。1 KiB = 1,024 bytes。Wasmはrelease出力を使用します。
+
+<!-- bundle-size:start -->
+| ビルド | minified・未圧縮 | Brotli |
+| --- | ---: | ---: |
+| SQLike 0.1.0 / 通常SQL / JS | 578.54 KiB | 109.38 KiB |
+| SQLike 0.1.0 / 通常SQL / Wasm GC | 512.96 KiB | 161.34 KiB |
+| SQLike 0.1.0 / 事前定義・全実行機能 / JS | 472.90 KiB | 95.07 KiB |
+| SQLike 0.1.0 / 事前定義・全実行機能 / Wasm GC | 420.70 KiB | 135.98 KiB |
+| SQLike 0.1.0 / 事前定義・JSON・日時・windowなし / JS | 440.20 KiB | 87.94 KiB |
+| SQLike 0.1.0 / 事前定義・JSON・日時・windowなし / Wasm GC | 395.88 KiB | 126.70 KiB |
+| SQLike 0.1.0 / 事前定義・主キー索引のみ / JS | 424.73 KiB | 85.11 KiB |
+| SQLike 0.1.0 / 事前定義・主キー索引のみ / Wasm GC | 382.77 KiB | 123.06 KiB |
+| sqlite-wasm 3.54.1-build1 | 1313.74 KiB | 462.33 KiB |
+| Turso 0.8.3 | 11709.66 KiB | 2675.96 KiB |
+<!-- bundle-size:end -->
+
+事前定義版はSQLパーサを含みません。機能選択版とWasm GC版は、同じ公開host APIを使うカスタムビルドです。「主キー索引のみ」は任意機能の選択で、CRUD・集約・CTE・secondary indexはコアに残ります。SQLikeはSQLiteサブセットのため、他のエンジンと機能範囲は異なります。
+
+アプリのHTML・コード、事前ビルドしたschema / statement、ビルド時compiler、任意のSQLite exporter、Litestreamは含みません。任意Workerも含む配布assetの合計であり、初回起動時の最小ダウンロード量とは異なります。各行の計測済みminified bundleはChromiumでDBを開いて書込・読取まで確認しています。
+
+比較対象は[@sqlite.org/sqlite-wasm](https://www.npmjs.com/package/@sqlite.org/sqlite-wasm)と[@tursodatabase/database-wasm](https://www.npmjs.com/package/@tursodatabase/database-wasm)です。
+
+[計測条件・ファイル別サイズ](measurements/bundle-size-current.json)。再計測は`just bundle-size`で行えます。
+
 ## SQLを実行する
 
 ```ts

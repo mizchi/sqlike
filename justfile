@@ -66,6 +66,13 @@ build-size:
     pnpm build:moon-wasm
     pnpm exec tsx scripts/measure-build-size.ts
 
+# Browser JS/Worker/Wasm totals, Brotli11, exact emitted-bundle smoke, README table.
+bundle-size:
+    pnpm build:core
+    pnpm build:moon-wasm
+    pnpm exec tsx --test tests/bundle-size.test.ts
+    pnpm exec tsx scripts/measure-bundle-size.ts
+
 # Strict IndexedDB snapshot vs semantic row journal vs binary SQLite pages.
 indexeddb-bench *args:
     pnpm build:core
