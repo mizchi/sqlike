@@ -282,13 +282,35 @@ fn simple_relation(
       !(select.predicate is Literal(Integer(1L)))
     )
   let mut skipped = 0L
-  for position in 0..<(candidates.end - candidates.start) {
-    let i = if candidates.reverse {
-      candidates.end - 1 - position
+  let count = candidates.end - candidates.start
+  let first = if candidates.reverse {
+    candidates.end - 1
+  } else {
+    candidates.start
+  }
+  let mut page = if count == 0 { 0 } else { candidates.rows.block_at(first) }
+  let mut slot = first -
+    (if page == 0 { 0 } else { candidates.rows.ends[page - 1] })
+  // Resolve the first leaf once. Sequential scans never binary-search a leaf
+  // for each row, including reverse ranges and OFFSET with a residual filter.
+  for _ in 0..<count {
+    let block = candidates.rows.blocks[page]
+    let row = block[slot]
+    if candidates.reverse {
+      slot -= 1
+      if slot < 0 {
+        page -= 1
+        if page >= 0 {
+          slot = candidates.rows.blocks[page].length() - 1
+        }
+      }
     } else {
-      candidates.start + position
+      slot += 1
+      if slot == block.length() {
+        page += 1
+        slot = 0
+      }
     }
-    let row = candidates.rows[i]
     let ctx = {
       ..context,
       row: if test_predicate || projection is None {

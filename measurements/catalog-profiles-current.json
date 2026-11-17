@@ -1,6 +1,6 @@
 {
   "format": "sqlike-catalog-profiles@1",
-  "measuredAt": "2026-11-17T08:54:16.905Z",
+  "measuredAt": "2026-11-17T12:28:09.788Z",
   "node": "v24.22.2",
   "nativeSQLite": "3.53.4",
   "method": "Runtime assets only. Identical semantic feature profiles, exports and primary-key-index setting. Baseline retains all core function/statement/query implementations and all functions within enabled semantic features; selected runtime infers the complete schema/query closure, including JSON families, subtype, CTE, recursion, JOIN and compound SELECT. Oxc minified ESM, release Wasm GC; Brotli quality 11 per asset with round trip. Excludes host, IndexedDB wrappers, catalog data and compiler. Native typed results verified for baseline/selected JS/Wasm on every fixture. Not an additive app-download estimate or a speed measurement.",
@@ -58,6 +58,7 @@
     "packages/sqlike/src/defined-sqlite/moon.pkg": "6d93d349a02f08b9beafb2f344b35bc858dd5b3b1fc81a59e557d2881c091bb7",
     "packages/sqlike/src/defined/defined.mbt": "caf0ae96fd7a7af9f94b3e831f2f9de2077a64caacdbb3d4029e2780ff4f044f",
     "packages/sqlike/src/defined/moon.pkg": "6c72c36fb88ebfab45a73ad8d209dcb3f593c9d1bc3ade7c5a6c952c1be947a9",
+    "packages/sqlike/src/delete_cache_wbtest.mbt": "e83f1556868e9eef124d00cfa528f60c5a4fd58a74c2fe2f582ec17b2efe304a",
     "packages/sqlike/src/evaluate.mbt": "67dc9ebde358babef258f002aa53977621a3367edf0934f72f4a7d984e2b11cd",
     "packages/sqlike/src/execute.mbt": "f543b2f2ea49d344d48117d4701d0fe7ca16108d93e71c30bd086de0909da8d9",
     "packages/sqlike/src/experimental-typed/moon.pkg": "084d8ea4cb24e8db437722c851ccca28bafb90b4530e16ec30640c1499754ef7",
@@ -74,10 +75,10 @@
     "packages/sqlike/src/function_collation.mbt": "43974dbcd892a8ed9b508800d9da4ef62fb9e5cd1d146a1b2f8fbb8869253ba3",
     "packages/sqlike/src/glob.mbt": "0013b77a567bbc46f292a63ad620b72ef1c0d8414f1a4777913beff3021759f0",
     "packages/sqlike/src/image.mbt": "86f91b3333bcabd2c8b1b662d6482fedc02f59c436db8d49bf31e4839128104a",
-    "packages/sqlike/src/index_cache.mbt": "28333aee7742ea4bcca840a426b901c2f219b063c65be55dda2c48c0057ed880",
+    "packages/sqlike/src/index_cache.mbt": "251a34ec2908c1c41ff159af6746fb04149f193cb31e0771cf54516e0be3d37d",
     "packages/sqlike/src/index_definition.mbt": "52801862d0eb516e9ac7c5bbd14bfbec86093753bdd92b011564a03d09d7a274",
     "packages/sqlike/src/index_metadata.mbt": "c1a2abd3b7203ca315dd5c907a87ccd2036b54cf6d00ad8c192732de87c69d8c",
-    "packages/sqlike/src/index_pages.mbt": "4cc68ee219f941faf50ddd3cb44e3bfa1c8ccb6211689c8345423b2ae804f063",
+    "packages/sqlike/src/index_pages.mbt": "bf0c06eacc6725f2ad4e595963db6af00a44c48c49d6ce2d1b98d154d67fe5bc",
     "packages/sqlike/src/index_pages_wbtest.mbt": "ff12525fbb548c9923272e7541588bd6bef95c6019667d5001b166804e62cdf3",
     "packages/sqlike/src/index_plan.mbt": "065b4f34edbf294dc3f0d9a16df29aba50d6de1af89e262809664f2f654c89f6",
     "packages/sqlike/src/index_wbtest.mbt": "f1df6de725e0344db2ea76d4662d6652b6b43514cb2a691fa8eaeda3465df3a9",
@@ -110,7 +111,7 @@
     "packages/sqlike/src/primary_index.mbt": "44cb6d7e4b22e1d9c0f367054bf9ba8e9e9733d5241f7f7792f0f2a3685b2a38",
     "packages/sqlike/src/program_compiler.mbt": "fcd9da9a6ed5af289566889ae6279ce3aebc04cebdf545790abd9ed1e22a3e18",
     "packages/sqlike/src/query.mbt": "c7b8d0525f71bedb98870de3b6b403d0635ccc83480319df4684ee68280e0e8e",
-    "packages/sqlike/src/query_plan.mbt": "9c932b02b4257646edd9dfdb146f0c230ffce7682193decdd657a9e7c42469ce",
+    "packages/sqlike/src/query_plan.mbt": "46430a3c4cc49438092ea11124541e2425668773609d0303d06346085f7f4c93",
     "packages/sqlike/src/result_writer.mbt": "0367d7ceea2d3a7e27a3ea8ef00178583f2b17ebcabaebd43e4f3e4580afcfd6",
     "packages/sqlike/src/result_writer_wbtest.mbt": "f9d65c105c685607431c959f27e89fc88bf69136bdfc3ab2f2c8274769ccfcbc",
     "packages/sqlike/src/row_pages.mbt": "35795aa2cc32e84b58e30b07b0f597908a51f1989d3371f9986c2b21188addb5",
@@ -206,29 +207,29 @@
         "baseline": {
           "js": {
             "path": "generated/catalog-profiles/readonly/aot/baseline/runtime.js",
-            "raw": 488949,
-            "brotli": 91719,
-            "sha256": "ff5ef9f6997902f91ace14ac66852c1441baa3bbec109607ce579a538782b7ce"
+            "raw": 489226,
+            "brotli": 91754,
+            "sha256": "f9e1901dbb7c1f8cfcc96573f824792800db3a5fcac7ba7117ad0563cf92c63b"
           },
           "wasm": {
             "path": "generated/catalog-profiles/readonly/aot/baseline/runtime.wasm",
-            "raw": 440232,
-            "brotli": 136907,
-            "sha256": "c9245ce679ae998d880a252cbaff02a9dfd677f69b1159f4aed74f16486d05a0"
+            "raw": 440538,
+            "brotli": 136987,
+            "sha256": "6eda611138c8f4fb7a11ea08bf8334eaefd4b6d7b218b2e5db735d6cff4aa295"
           }
         },
         "selected": {
           "js": {
             "path": "generated/catalog-profiles/readonly/aot/selected/runtime.js",
-            "raw": 417538,
-            "brotli": 78125,
-            "sha256": "0f487328dba000376b042e5e1d739a2e11ca05b8cabdd7e358d199fdef7aa241"
+            "raw": 417815,
+            "brotli": 78174,
+            "sha256": "db9ed89ea2f256ca301f14a2edc614f853addd3ca155a4040541f845f7eb4638"
           },
           "wasm": {
             "path": "generated/catalog-profiles/readonly/aot/selected/runtime.wasm",
-            "raw": 375539,
-            "brotli": 116651,
-            "sha256": "4bbcc8a1ab887a2d0ee26c6d6a5421d380da958ad21c508dd5b52e3546c9fd7f"
+            "raw": 376093,
+            "brotli": 116653,
+            "sha256": "367eea1b066809e8556928dad2db592655c50e95c3a5a0c82bf6423d76da5d67"
           }
         }
       }
@@ -291,29 +292,29 @@
         "baseline": {
           "js": {
             "path": "generated/catalog-profiles/readonly/defined/baseline/runtime.js",
-            "raw": 457650,
-            "brotli": 88871,
-            "sha256": "6692f17d83e767e8c9f9f4ab4d35f8edfebac553a58719567514a34f80006120"
+            "raw": 457927,
+            "brotli": 88934,
+            "sha256": "1318fcd2118a2dc1f56a5d3e7cf2ee85886a502aeb5bffca4409c43954fbe769"
           },
           "wasm": {
             "path": "generated/catalog-profiles/readonly/defined/baseline/runtime.wasm",
-            "raw": 410365,
-            "brotli": 130688,
-            "sha256": "9b4074db8d28787a0561336110c65511401faf479155d69be7204401bf29168d"
+            "raw": 411230,
+            "brotli": 130582,
+            "sha256": "0d1cd78d65ce1ab29e98f0f474d746428c0217bd244c58bf0b7d090ee1d89229"
           }
         },
         "selected": {
           "js": {
             "path": "generated/catalog-profiles/readonly/defined/selected/runtime.js",
-            "raw": 387449,
-            "brotli": 75518,
-            "sha256": "46fe2831bcd89013cf2df8ca387c11b8ba5b90682fe56027b35b6f25e2c66e88"
+            "raw": 387718,
+            "brotli": 75609,
+            "sha256": "ff43dd42a0eb1cc0d4b2327aea40a9f3cd2d789d98cab46b61982507d5cc0d3a"
           },
           "wasm": {
             "path": "generated/catalog-profiles/readonly/defined/selected/runtime.wasm",
-            "raw": 346295,
-            "brotli": 110911,
-            "sha256": "f168c393f39a5a1af70b009f40cb734d92d3d7eec13b6ec578d6b8b96189538a"
+            "raw": 346366,
+            "brotli": 110913,
+            "sha256": "0704fd4d9d629e92af56511c281d58650609077c43ba82d78fd5eb4fa2b9c80c"
           }
         }
       }
@@ -374,29 +375,29 @@
         "baseline": {
           "js": {
             "path": "generated/catalog-profiles/scalar-read/aot/baseline/runtime.js",
-            "raw": 488949,
-            "brotli": 91719,
-            "sha256": "ff5ef9f6997902f91ace14ac66852c1441baa3bbec109607ce579a538782b7ce"
+            "raw": 489226,
+            "brotli": 91754,
+            "sha256": "f9e1901dbb7c1f8cfcc96573f824792800db3a5fcac7ba7117ad0563cf92c63b"
           },
           "wasm": {
             "path": "generated/catalog-profiles/scalar-read/aot/baseline/runtime.wasm",
-            "raw": 440232,
-            "brotli": 136907,
-            "sha256": "c9245ce679ae998d880a252cbaff02a9dfd677f69b1159f4aed74f16486d05a0"
+            "raw": 440538,
+            "brotli": 136987,
+            "sha256": "6eda611138c8f4fb7a11ea08bf8334eaefd4b6d7b218b2e5db735d6cff4aa295"
           }
         },
         "selected": {
           "js": {
             "path": "generated/catalog-profiles/scalar-read/aot/selected/runtime.js",
-            "raw": 420377,
-            "brotli": 78722,
-            "sha256": "02d93ef47cffb4469a5003c01cf72143a485b0371670e10b89ce697d360a271a"
+            "raw": 420654,
+            "brotli": 78838,
+            "sha256": "c8f028deb81a01c2f9d2eb695afc0d63c555623c1ab8f33ebfff94706e55d517"
           },
           "wasm": {
             "path": "generated/catalog-profiles/scalar-read/aot/selected/runtime.wasm",
-            "raw": 379150,
-            "brotli": 117354,
-            "sha256": "0ba807f0b4e94becd8db487eec25697cc0d4d0a216a23fe72593c3514a0c6aed"
+            "raw": 379121,
+            "brotli": 117406,
+            "sha256": "2d6f31317023142156b00912ce479976333650cc304f965d47143ae5dee3ae95"
           }
         }
       }
@@ -463,29 +464,29 @@
         "baseline": {
           "js": {
             "path": "generated/catalog-profiles/scalar-read/defined/baseline/runtime.js",
-            "raw": 457650,
-            "brotli": 88871,
-            "sha256": "6692f17d83e767e8c9f9f4ab4d35f8edfebac553a58719567514a34f80006120"
+            "raw": 457927,
+            "brotli": 88934,
+            "sha256": "1318fcd2118a2dc1f56a5d3e7cf2ee85886a502aeb5bffca4409c43954fbe769"
           },
           "wasm": {
             "path": "generated/catalog-profiles/scalar-read/defined/baseline/runtime.wasm",
-            "raw": 410365,
-            "brotli": 130688,
-            "sha256": "9b4074db8d28787a0561336110c65511401faf479155d69be7204401bf29168d"
+            "raw": 411230,
+            "brotli": 130582,
+            "sha256": "0d1cd78d65ce1ab29e98f0f474d746428c0217bd244c58bf0b7d090ee1d89229"
           }
         },
         "selected": {
           "js": {
             "path": "generated/catalog-profiles/scalar-read/defined/selected/runtime.js",
-            "raw": 390287,
-            "brotli": 76018,
-            "sha256": "9ce4e59bf23794961925c93f88be600c39c99fbb2f5777f3da7bb028e76b2bc3"
+            "raw": 390556,
+            "brotli": 76139,
+            "sha256": "6ae9a0b2935f003d108c01c1788922ffe2c714412c3543ffbd155a4863e5bdee"
           },
           "wasm": {
             "path": "generated/catalog-profiles/scalar-read/defined/selected/runtime.wasm",
-            "raw": 348888,
-            "brotli": 111487,
-            "sha256": "6bb521b8fd31bf357a5d6fb243b459bf3e52ef1b121e0bbec8f3f8e38e3a0ecb"
+            "raw": 349447,
+            "brotli": 111629,
+            "sha256": "5edf0455ca83f784f3bea6863b69fdd1c7c2fa9f82ace6469ef546b8fac7072f"
           }
         }
       }
@@ -549,29 +550,29 @@
         "baseline": {
           "js": {
             "path": "generated/catalog-profiles/json-construct/aot/baseline/runtime.js",
-            "raw": 512994,
-            "brotli": 95579,
-            "sha256": "9341879651d9285e6193cf75e3d31922f03c3442082c2652513e38052d7ba571"
+            "raw": 513271,
+            "brotli": 95912,
+            "sha256": "ba54332319e92a9da6bcda3cc9a56aa74ba44c8afa116e7878a8ef754bed0d32"
           },
           "wasm": {
             "path": "generated/catalog-profiles/json-construct/aot/baseline/runtime.wasm",
-            "raw": 461184,
-            "brotli": 142856,
-            "sha256": "857926e4b6ae7d3655f374df49a087fa33411cae716082c1511282bb0cfd1dbf"
+            "raw": 461490,
+            "brotli": 143165,
+            "sha256": "e8b6753944c43e2e7da802d57a73dd8b85d475058080a9756ba65166ee1a7601"
           }
         },
         "selected": {
           "js": {
             "path": "generated/catalog-profiles/json-construct/aot/selected/runtime.js",
-            "raw": 423972,
-            "brotli": 79090,
-            "sha256": "42455f089294b38bf67d9e6fed131169e12bc8f730d212e16e623da9af27ffa5"
+            "raw": 424249,
+            "brotli": 79290,
+            "sha256": "4a513b81e0097034ea325dceae297d3b3dca5776a8334083e308a50d19066eee"
           },
           "wasm": {
             "path": "generated/catalog-profiles/json-construct/aot/selected/runtime.wasm",
-            "raw": 381044,
-            "brotli": 118607,
-            "sha256": "5328625e769b9c5cab29b21dcf9e73f408a9dad4dd38318e05cedd081b38492e"
+            "raw": 380710,
+            "brotli": 118480,
+            "sha256": "287117e66ec5468d726dbe1832599007619172eed2ab8b091c6945e6b4e9a976"
           }
         }
       }
@@ -641,29 +642,29 @@
         "baseline": {
           "js": {
             "path": "generated/catalog-profiles/json-construct/defined/baseline/runtime.js",
-            "raw": 481678,
-            "brotli": 92917,
-            "sha256": "acc9545cb4d02a94c78125c9c88bcad929550fcf788886d60bacd7e868777d27"
+            "raw": 481955,
+            "brotli": 92853,
+            "sha256": "9318c643937042f26ccd9415328468779ed9f856b2bbc7b34478f69b6deae6e1"
           },
           "wasm": {
             "path": "generated/catalog-profiles/json-construct/defined/baseline/runtime.wasm",
-            "raw": 431926,
-            "brotli": 136875,
-            "sha256": "199f38dbb5e62619901ea2cbea282a641df54fdb97d7d262faf1929f29b33788"
+            "raw": 431332,
+            "brotli": 136616,
+            "sha256": "9c36fcb494f7fa83fc312869497ee99c6f779611a31b51640aa4f52f011d4102"
           }
         },
         "selected": {
           "js": {
             "path": "generated/catalog-profiles/json-construct/defined/selected/runtime.js",
-            "raw": 393836,
-            "brotli": 76531,
-            "sha256": "135e06fccbddcb3bd4dbbe184821f24fdc1972b3b32e084f27547e8e90d7d993"
+            "raw": 394105,
+            "brotli": 76628,
+            "sha256": "b109b4c1a8ad81793f4c0c492214b243ccee7ec97d8e5bdb3f1737c36ccd8a59"
           },
           "wasm": {
             "path": "generated/catalog-profiles/json-construct/defined/selected/runtime.wasm",
-            "raw": 351510,
-            "brotli": 112368,
-            "sha256": "b91acb57e3223daf1ad2d49bbab4492466e1917710d77d109d74b403ed9a0e42"
+            "raw": 350879,
+            "brotli": 112061,
+            "sha256": "db2441803d2acb91d472132fc91c7518d97741b51a98e017894772b80b13fa50"
           }
         }
       }
@@ -728,29 +729,29 @@
         "baseline": {
           "js": {
             "path": "generated/catalog-profiles/json-nested/aot/baseline/runtime.js",
-            "raw": 512994,
-            "brotli": 95579,
-            "sha256": "9341879651d9285e6193cf75e3d31922f03c3442082c2652513e38052d7ba571"
+            "raw": 513271,
+            "brotli": 95912,
+            "sha256": "ba54332319e92a9da6bcda3cc9a56aa74ba44c8afa116e7878a8ef754bed0d32"
           },
           "wasm": {
             "path": "generated/catalog-profiles/json-nested/aot/baseline/runtime.wasm",
-            "raw": 461184,
-            "brotli": 142856,
-            "sha256": "857926e4b6ae7d3655f374df49a087fa33411cae716082c1511282bb0cfd1dbf"
+            "raw": 461490,
+            "brotli": 143165,
+            "sha256": "e8b6753944c43e2e7da802d57a73dd8b85d475058080a9756ba65166ee1a7601"
           }
         },
         "selected": {
           "js": {
             "path": "generated/catalog-profiles/json-nested/aot/selected/runtime.js",
-            "raw": 428819,
-            "brotli": 80089,
-            "sha256": "000215af3ddd998808f08dbdf9af9854f5713a1c28cbe6a47b177d480e7c74f9"
+            "raw": 429096,
+            "brotli": 79969,
+            "sha256": "680c5b33bccacf6ed7a2b5c01d57e244ce8b439ce9c9e9c3293522579a2c8f11"
           },
           "wasm": {
             "path": "generated/catalog-profiles/json-nested/aot/selected/runtime.wasm",
-            "raw": 385012,
-            "brotli": 119310,
-            "sha256": "e49bd9d7b9948e89ba0c92ea28f15346218fa2069cc3d7421f435faf6788e9b8"
+            "raw": 385336,
+            "brotli": 119528,
+            "sha256": "47ea1263d9854877ef8bfd269a3d638b9565276e437a073dc2efb00774a95abb"
           }
         }
       }
@@ -821,29 +822,29 @@
         "baseline": {
           "js": {
             "path": "generated/catalog-profiles/json-nested/defined/baseline/runtime.js",
-            "raw": 481678,
-            "brotli": 92917,
-            "sha256": "acc9545cb4d02a94c78125c9c88bcad929550fcf788886d60bacd7e868777d27"
+            "raw": 481955,
+            "brotli": 92853,
+            "sha256": "9318c643937042f26ccd9415328468779ed9f856b2bbc7b34478f69b6deae6e1"
           },
           "wasm": {
             "path": "generated/catalog-profiles/json-nested/defined/baseline/runtime.wasm",
-            "raw": 431926,
-            "brotli": 136875,
-            "sha256": "199f38dbb5e62619901ea2cbea282a641df54fdb97d7d262faf1929f29b33788"
+            "raw": 431332,
+            "brotli": 136616,
+            "sha256": "9c36fcb494f7fa83fc312869497ee99c6f779611a31b51640aa4f52f011d4102"
           }
         },
         "selected": {
           "js": {
             "path": "generated/catalog-profiles/json-nested/defined/selected/runtime.js",
-            "raw": 398608,
-            "brotli": 77326,
-            "sha256": "e068fa7b09750886d6f1a5b8cc3773574dda920f24d11910c4afe0a63f17dcef"
+            "raw": 398879,
+            "brotli": 77382,
+            "sha256": "bf9bb49334b194b30c2a26dff8fab906211d1423a1b73bdcc1cac339f8b18a9f"
           },
           "wasm": {
             "path": "generated/catalog-profiles/json-nested/defined/selected/runtime.wasm",
-            "raw": 355387,
-            "brotli": 113343,
-            "sha256": "0a1741bef6521e6213050dbc3de3b3996d2101132a787d28de254d0653dc6305"
+            "raw": 355704,
+            "brotli": 113268,
+            "sha256": "1582b80a3b5476e5d4aaaccc561ba2393ff107eaa5f066fca9d3557bca1e3a12"
           }
         }
       }
@@ -909,29 +910,29 @@
         "baseline": {
           "js": {
             "path": "generated/catalog-profiles/json-cte/aot/baseline/runtime.js",
-            "raw": 512994,
-            "brotli": 95579,
-            "sha256": "9341879651d9285e6193cf75e3d31922f03c3442082c2652513e38052d7ba571"
+            "raw": 513271,
+            "brotli": 95912,
+            "sha256": "ba54332319e92a9da6bcda3cc9a56aa74ba44c8afa116e7878a8ef754bed0d32"
           },
           "wasm": {
             "path": "generated/catalog-profiles/json-cte/aot/baseline/runtime.wasm",
-            "raw": 461184,
-            "brotli": 142856,
-            "sha256": "857926e4b6ae7d3655f374df49a087fa33411cae716082c1511282bb0cfd1dbf"
+            "raw": 461490,
+            "brotli": 143165,
+            "sha256": "e8b6753944c43e2e7da802d57a73dd8b85d475058080a9756ba65166ee1a7601"
           }
         },
         "selected": {
           "js": {
             "path": "generated/catalog-profiles/json-cte/aot/selected/runtime.js",
-            "raw": 437463,
-            "brotli": 81417,
-            "sha256": "dc1f687e6c20af321087844f129e042bffbfdb84c00e96f5ea5030fbb67ff2f1"
+            "raw": 437740,
+            "brotli": 81543,
+            "sha256": "d195260d9b94609d4b2937a853cf46dfa76b9ac2fc71a58f0e8fc850e0ec1dfb"
           },
           "wasm": {
             "path": "generated/catalog-profiles/json-cte/aot/selected/runtime.wasm",
-            "raw": 395554,
-            "brotli": 122038,
-            "sha256": "94989c83dfb6336b21045b32f5faba7b777abd18bb4d73fa9af6d7a37dd51a64"
+            "raw": 395191,
+            "brotli": 121928,
+            "sha256": "394dd742bfa41436a9324bcdcd6646fd651caeb09c93fda2e1221c8c523f5913"
           }
         }
       }
@@ -1003,29 +1004,29 @@
         "baseline": {
           "js": {
             "path": "generated/catalog-profiles/json-cte/defined/baseline/runtime.js",
-            "raw": 481678,
-            "brotli": 92917,
-            "sha256": "acc9545cb4d02a94c78125c9c88bcad929550fcf788886d60bacd7e868777d27"
+            "raw": 481955,
+            "brotli": 92853,
+            "sha256": "9318c643937042f26ccd9415328468779ed9f856b2bbc7b34478f69b6deae6e1"
           },
           "wasm": {
             "path": "generated/catalog-profiles/json-cte/defined/baseline/runtime.wasm",
-            "raw": 431926,
-            "brotli": 136875,
-            "sha256": "199f38dbb5e62619901ea2cbea282a641df54fdb97d7d262faf1929f29b33788"
+            "raw": 431332,
+            "brotli": 136616,
+            "sha256": "9c36fcb494f7fa83fc312869497ee99c6f779611a31b51640aa4f52f011d4102"
           }
         },
         "selected": {
           "js": {
             "path": "generated/catalog-profiles/json-cte/defined/selected/runtime.js",
-            "raw": 407260,
-            "brotli": 78819,
-            "sha256": "2d530af0721aacb450454c12dad681ada85c4b62236855cfc7ff4ae4cf635372"
+            "raw": 407519,
+            "brotli": 79041,
+            "sha256": "b4d9ea825e8a404648571feba115c681bcf29fb12cc1eebcafe2acb2fbc45e80"
           },
           "wasm": {
             "path": "generated/catalog-profiles/json-cte/defined/selected/runtime.wasm",
-            "raw": 365688,
-            "brotli": 116058,
-            "sha256": "8d9cc9aa56a8844b2651fc7f1bb577127b6becb181218825fcf4c60e3e7ad978"
+            "raw": 365946,
+            "brotli": 116040,
+            "sha256": "f5014987fefd49666e0ed3905550f744b048c968a05c99302d2211d999c6cc82"
           }
         }
       }
@@ -1110,29 +1111,29 @@
         "baseline": {
           "js": {
             "path": "generated/catalog-profiles/notes/aot/baseline/runtime.js",
-            "raw": 488949,
-            "brotli": 91719,
-            "sha256": "ff5ef9f6997902f91ace14ac66852c1441baa3bbec109607ce579a538782b7ce"
+            "raw": 489226,
+            "brotli": 91754,
+            "sha256": "f9e1901dbb7c1f8cfcc96573f824792800db3a5fcac7ba7117ad0563cf92c63b"
           },
           "wasm": {
             "path": "generated/catalog-profiles/notes/aot/baseline/runtime.wasm",
-            "raw": 440232,
-            "brotli": 136907,
-            "sha256": "c9245ce679ae998d880a252cbaff02a9dfd677f69b1159f4aed74f16486d05a0"
+            "raw": 440538,
+            "brotli": 136987,
+            "sha256": "6eda611138c8f4fb7a11ea08bf8334eaefd4b6d7b218b2e5db735d6cff4aa295"
           }
         },
         "selected": {
           "js": {
             "path": "generated/catalog-profiles/notes/aot/selected/runtime.js",
-            "raw": 448595,
-            "brotli": 83797,
-            "sha256": "0e918cdd9818d4933530ff04fa1390dfa3b7cebed85e007328e8786327c1ef48"
+            "raw": 448872,
+            "brotli": 83995,
+            "sha256": "d20a85713d0ad8b35af0fc32f21b7b43f7d9dda39d1ccec02776076f66ba32e9"
           },
           "wasm": {
             "path": "generated/catalog-profiles/notes/aot/selected/runtime.wasm",
-            "raw": 401312,
-            "brotli": 124724,
-            "sha256": "3f496b639fa0739261bd0556f32d5dd5d4b53bed5c5e479fd05834cc5ca1f7a2"
+            "raw": 401669,
+            "brotli": 125356,
+            "sha256": "14d4c5d28f0e9f5484350c4120d3a91c7e2f575ad07dfdb475a9023a62e9c74a"
           }
         }
       }
@@ -1223,29 +1224,29 @@
         "baseline": {
           "js": {
             "path": "generated/catalog-profiles/notes/defined/baseline/runtime.js",
-            "raw": 457650,
-            "brotli": 88871,
-            "sha256": "6692f17d83e767e8c9f9f4ab4d35f8edfebac553a58719567514a34f80006120"
+            "raw": 457927,
+            "brotli": 88934,
+            "sha256": "1318fcd2118a2dc1f56a5d3e7cf2ee85886a502aeb5bffca4409c43954fbe769"
           },
           "wasm": {
             "path": "generated/catalog-profiles/notes/defined/baseline/runtime.wasm",
-            "raw": 410365,
-            "brotli": 130688,
-            "sha256": "9b4074db8d28787a0561336110c65511401faf479155d69be7204401bf29168d"
+            "raw": 411230,
+            "brotli": 130582,
+            "sha256": "0d1cd78d65ce1ab29e98f0f474d746428c0217bd244c58bf0b7d090ee1d89229"
           }
         },
         "selected": {
           "js": {
             "path": "generated/catalog-profiles/notes/defined/selected/runtime.js",
-            "raw": 418228,
-            "brotli": 81167,
-            "sha256": "cfd477d91e5f6812ae25169e108f6cba92c1a6df007b0c2cc90100b337112137"
+            "raw": 418505,
+            "brotli": 81251,
+            "sha256": "3015de58268701888dafc16dff22e75f4c76d15297eeeef6b69f92e35e7474b8"
           },
           "wasm": {
             "path": "generated/catalog-profiles/notes/defined/selected/runtime.wasm",
-            "raw": 371442,
-            "brotli": 119002,
-            "sha256": "c4891891c8b7047260678c21a5442f2e169b28ebd243dd2ce9a2aeb0baff5138"
+            "raw": 372128,
+            "brotli": 118824,
+            "sha256": "d71004fd69c08a52b9ebec6e0a4b40636b08bfbdbf8c9d8d7e879dba3dc7f457"
           }
         }
       }

@@ -1,6 +1,6 @@
 ///|
 /// Mutable derived cache, never serialized or shared across store checkpoints.
-/// Small/rowid indexes keep one flat array; large secondary indexes use leaves.
+/// Small indexes keep one flat array; large ordered caches use bounded leaves.
 priv struct IndexRows {
   blocks : Array[Array[StoredRow]]
   ends : Array[Int32]

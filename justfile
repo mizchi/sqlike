@@ -87,6 +87,13 @@ bulk-write-bench *args:
     pnpm exec tsx --test tests/sqlike-insert-allocation.test.ts
     pnpm exec tsx scripts/bench-bulk-write.ts {{args}}
 
+# Separate cold/warm rowid caches, alternating reads, and optional Node CPU profiles.
+delete-bench *args:
+    pnpm build:core
+    pnpm build:moon-wasm
+    pnpm exec tsx --test tests/sqlike-delete-cache.test.ts
+    pnpm exec tsx scripts/bench-delete.ts {{args}}
+
 # JSON/binary UPDATE: same value, real changes, RETURNING, misses and failures.
 # Optional --before-dir holds runtime.{js,wasm} and defined.{js,wasm} snapshots.
 aot-update-bench *args:

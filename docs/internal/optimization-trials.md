@@ -1,40 +1,40 @@
 # 索引・UPDATE・JS結果ABI・大量書込の試行
 
-2026-11-17。基準は`2f1d702`の未リリースソース。4項目を順に試し、SQLiteとの出力・失敗後状態を確認した。公開パッケージのversionは0.1.2のまま。
+2026-11-17。基準は`2f1d702`の未リリースソース。4項目を順に試し、SQLiteとの出力・失敗後状態を確認した。初回は`fe98120`、以下は後続の[DELETE改善](delete-cache.md)も含めた再計測。公開パッケージのversionは0.1.2のまま。
 
 <!-- optimization-results:start -->
 | 試行 | 基準 → 最終実装 | 判断 |
 | --- | --- | --- |
-| 10万行・索引の両端移動＋範囲読取 | JS 198.02→10.96 µs / Wasm 38.40→8.37 µs | ブロック化を採用 |
-| 10万行・同値UPDATE | JS 3.96→2.57 µs / Wasm 2.26→1.56 µs | 格納時の固定費削減を採用 |
-| JS・10万行のnative結果取得 | JSON経路 75.50→typed 16.60 ms | SELECT専用の実験entry |
-| JS・native結果の主キー検索 | 1.38→0.63 µs | 同上 |
-| Node・1万行INSERT・明示主キー | JS 481.00→26.33 ms / Wasm 286.11→17.77 ms | 最大rowid探索の削減を採用 |
-| Node・1万行INSERT・自動採番 | JS 480.89→23.06 ms / Wasm 270.28→14.31 ms | 最大rowid探索の削減を採用 |
+| 10万行・索引の両端移動＋範囲読取 | JS 198.02→10.65 µs / WASM 38.40→8.73 µs | ブロック化を採用 |
+| 10万行・同値UPDATE | JS 3.96→2.57 µs / WASM 2.26→1.51 µs | 格納時の固定費削減を採用 |
+| JS・10万行のnative結果取得 | JSON経路 84.20→typed 21.10 ms | SELECT専用の実験entry |
+| JS・native結果の主キー検索 | 1.43→0.70 µs | 同上 |
+| Node・1万行INSERT・明示主キー | JS 588.50→57.53 ms / WASM 317.28→21.19 ms | 最大rowid探索の削減を採用 |
+| Node・1万行INSERT・自動採番 | JS 505.61→26.20 ms / WASM 280.58→14.85 ms | 最大rowid探索の削減を採用 |
 
 Brotli、単体engine、同じ公開exportを保持した容量比較:
 
 | engine | 前 | 後 | 増分 |
 | --- | ---: | ---: | ---: |
-| AOT + SQLite writer + LTX | 112,370 B | 113,076 B | +706 B |
-| SQLike dynamic SQL | 119,634 B | 120,694 B | +1,060 B |
+| AOT + SQLite writer + LTX | 112,370 B | 113,321 B | +951 B |
+| SQLike dynamic SQL | 119,634 B | 120,768 B | +1,134 B |
 | Litestream | 38,291 B | 38,291 B | +0 B |
 
-実験typed runtime単体はminified 592,773 B / Brotli 111,831 B。通常engineとはexportが異なるため、差分容量の比較には使わない。通常SQL / AOTからbridgeが除去されることを別に検査した。
+実験typed runtime単体はminified 593,050 B / Brotli 111,992 B。通常engineとはexportが異なるため、差分容量の比較には使わない。通常SQL / AOTからbridgeが除去されることを別に検査した。
 
 10万行INSERT、各3回。基準は3秒の予算内で未完走のため、完走時間の比は計算しない。
 
 | mode | 改善後JS | 改善後Wasm | SQLite prepared | 基準の完走 |
 | --- | ---: | ---: | ---: | --- |
-| explicit | 289.88 ms | 179.80 ms | 10.84 ms | JS / Wasmとも0 / 3 |
-| automatic | 254.33 ms | 146.76 ms | 6.42 ms | JS / Wasmとも0 / 3 |
+| explicit | 295.19 ms | 186.38 ms | 11.87 ms | JS / Wasmとも0 / 3 |
+| automatic | 270.32 ms | 192.59 ms | 7.14 ms | JS / Wasmとも0 / 3 |
 
-warmなrowid順cacheがある1万行DBからのpoint DELETE（µs/削除）:
+warmなrowid順cacheがある1万行DBからのpoint DELETE（µs/削除、前回の採番改善と後続のcache改善を含む）:
 
 | mode | JS 前→後 | Wasm 前→後 | SQLite |
 | --- | ---: | ---: | ---: |
-| explicit | 19.02→22.55 | 4.22→4.31 | 0.53 |
-| automatic | 11.38→20.25 | 3.91→4.28 | 0.54 |
+| explicit | 25.57→12.30 | 10.12→4.40 | 0.57 |
+| automatic | 23.57→7.94 | 5.43→3.22 | 0.53 |
 <!-- optimization-results:end -->
 
 ## 1. 大きい二次索引のブロック化：採用
@@ -45,7 +45,7 @@ warmなrowid順cacheがある1万行DBからのpoint DELETE（µs/削除）:
 
 比較規則・collation・NULL・rowidによるtie break・partial indexの条件は既存処理と共有する。clone / rollbackへ可変の索引配列を共有せず、従来通り派生cacheを破棄する。保存画像・Program・LTXの形式は変えない。空になったleaf・削除したleafの参照もJS / Wasmで解放する。
 
-rowid順の全件走査用cacheはflatを維持する。ブロック化の試行で見えた集約の反復費用は、leaf内配列を直接走査して抑えた。このflatなrowid順cacheは、後述のDELETEに残る改善対象でもある。
+初回はrowid順の全件走査用cacheをflatに維持した。ブロック化の試行で見えた集約の反復費用は、leaf内配列を直接走査して抑えた。後続の[DELETE改善](delete-cache.md)では大きいrowid順cacheもブロック化し、一般queryのrange走査もleaf内を順次進む形へ変更した。
 
 ## 2. UPDATEの固定費：採用
 
@@ -78,7 +78,7 @@ handleはこのruntimeと接続に属し、別runtimeへ渡さない。保持数
 
 対応済み差分コーパス566ケースのSELECTを型付き結果経路でも照合し、DDL / DML等は既存のexec経路で実行した。元の1,000クエリ、int64の両端、REALと負のゼロ、NUL / 日本語、NULL、重複列、BLOBの返却後変更、bind件数・書込の拒否も検査した。日時等のclock更新は`set_clock`で明示する。AOT版・typed bind・streaming / chunk返却は後続の実験とする。
 
-## 4. 大量INSERTとDELETE：採番を改善、DELETEは継続
+## 4. 大量INSERTとDELETE：採番・rowid順cacheを改善
 
 INSERTが各行の最大rowidを毎回全走査していた。明示rowidでは最大値の探索を行わず、自動採番には既存の派生PrimaryIndexへ最大値cacheを追加した。最大rowidを削除・変更したら無効化し、次の採番で一度だけ再計算する。AUTOINCREMENTでは現在の最大rowidとsequenceの両方を考慮する。
 
@@ -86,7 +86,7 @@ cacheは保存しない。clone時はwrapperを複製し、restoreでは再構�
 
 書込benchmarkはNodeのJS / Wasm GCと`node:sqlite`によるmemory DBで、ブラウザやdisk commitの計測ではない。明示rowid / 自動採番を各100行のprepared INSERTで投入する。各caseはbatch間で3秒の予算を検査し、未完走は実際に投入できたprefixを記録する。部分的な投入時間を10万行全体の速度として扱わない。件数・SUM・min/max rowid・変更件数・last_insert_rowidを別に投入したnative SQLiteと照合する。
 
-完走したcaseでは、rowid順の読取cacheをwarmにしてから最大1,000行のpoint DELETEも測る。ここには明確な改善を確認できておらず、SQLiteとの差が残る。rowid順cacheのflat配列の削除、制約・trigger / FK探索、atomic backupを次に分離して測る。
+完走したcaseでは、rowid順の読取cacheをwarmにしてから最大1,000行のpoint DELETEも測る。初回には改善を確認できず、[cacheなし・あり・交互読取の比較](delete-cache.md)でflatなrowid順cacheの更新を切り分けた。後続ではその大きいcacheもブロック化した。cacheなしでも残る制約・trigger / FK探索、prepared DELETEの固定費は後続の候補。
 
 ## 検証と再計測
 
@@ -98,6 +98,7 @@ just typed-result-bench
 just bulk-write-bench
 # before-dirは同じMoonBit版で基準commitをbuildしたsqlike.js / sqlike.wasmを置く
 just bulk-write-bench --before-dir=generated/optimization-trials/before
+just delete-bench --before-dir=generated/delete-before --profile
 just p0-measure
 just bundle-size
 pnpm exec tsx scripts/report-optimization-trials.ts

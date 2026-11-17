@@ -14,6 +14,7 @@
 - Split large secondary-index row arrays into bounded blocks to reduce key-movement costs. Preserve comparison rules, rollback behavior and storage formats.
 - Skip identical row storage writes after evaluating UPDATE semantics, and avoid empty CHECK/trigger setup. Preserve changes, constraints, trigger effects and INTEGER/REAL distinctions.
 - Avoid maximum-rowid scans for explicit INSERT keys and cache the live maximum for automatic allocation. Preserve AUTOINCREMENT sequence rules, negative rowids and rollback behavior.
+- Use bounded leaves for large rowid-order caches to avoid shifting the entire cache on DELETE. Traverse ordered query ranges sequentially within leaves; preserve read order, trigger effects, rollback and replication formats.
 
 ## [0.1.2] - 2026-11-17
 

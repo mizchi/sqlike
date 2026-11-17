@@ -237,10 +237,7 @@ fn index_rows_for_fields(
     table.rows.filter(row => cached_index_member(store, table, predicate, row))
   }
   rows.sort_by((a, b) => compare_index_rows(store, fields, a, b))
-  let rows = index_pages(
-    rows,
-    pages=!(fields.length() == 1 && fields[0].column == -1),
-  )
+  let rows = index_pages(rows)
   // Bound retained row references. Additional indexes can always be rebuilt.
   if store.indexes.length() >= 4 {
     store.indexes.clear()

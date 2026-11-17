@@ -12,6 +12,7 @@ const inputs = [
   "measurements/optimization-index-large.json", "measurements/optimization-update-large.json",
   "measurements/dynamic-prepare-large-current.json", "measurements/wasm-build-size-current.json",
   "measurements/optimization-typed-results.json", "measurements/optimization-bulk-write.json",
+  "measurements/delete-current.json",
 ];
 const reports = inputs.map(path => JSON.parse(readFileSync(path, "utf8")));
 for (const report of reports.slice(4)) {
@@ -22,13 +23,14 @@ for (const report of reports.slice(4)) {
     else for (const [, v] of entries as [string, any][]) if (v.path) assertFileHashes({ [v.path]: v.sha256 });
   }
 }
-const [before, beforeSize, index, update, current, size, typed, bulk] = reports;
+const [before, beforeSize, index, update, current, size, typed, bulk, deletes] = reports;
 const median = (values: number[]) => { assert.ok(values.length); return values.toSorted((a, b) => a - b)[Math.floor(values.length / 2)]!; };
 const data = (r: any) => r.results.find((x: any) => x.rows === 100000 && x.coldRows === 0);
 const query = (r: any, name: string, engine: string) => data(r).medians.find((s: any) => s.name === name && s.engine === engine).microseconds;
 const movement = (r: any, engine: string) => median(data(r).indexMovement.find((s: any) => s.engine === engine).samples.map((s: any) => s.milliseconds * 1000 / s.iterations));
 const typedTime = (r: any, name: string, engine: string) => median(r.samples.filter((s: any) => s.query === name && s.engine === engine).map((s: any) => s.milliseconds * 1000 / s.iterations));
 const metrics = {
+  pointDelete: deletes.medians,
   indexMovement: ["js", "wasm"].map(target => ({ target,
     beforeUs: movement(before, `sqlike-${target}/prepared`),
     indexOnlyUs: movement(index, `sqlike-${target}/prepared`),
@@ -70,7 +72,7 @@ const standalone = { path, sha256: fileHash(path), exports: Object.keys(module),
 writeFileSync("measurements/optimization-trials-current.json", JSON.stringify({
   format: "sqlike-optimization-trials@1", measuredAt: new Date().toISOString(), baselineCommit: "2f1d702",
   decisions: { indexPages: "adopted", updateStorage: "adopted", nativeJsResults: "experimental-separate-entry",
-    rowidAllocation: "adopted", pointDelete: "no demonstrated improvement; warm flat rowid-order cache remains" },
+    rowidAllocation: "adopted", pointDelete: "adopted: bounded rowid-order leaves and sequential block scans; see delete-current.json" },
   sourceHashes: sourceHashes([...engineSourcePaths(), "scripts/report-optimization-trials.ts", "scripts/oxc-runtime.ts"]),
   inputs: Object.fromEntries(inputs.map(path => [path, fileHash(path)])), metrics, experimentalStandalone: standalone,
 }, null, 2) + "\n");
