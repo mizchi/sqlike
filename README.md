@@ -33,7 +33,9 @@ Sizes include the browser entry's JS loader, split chunks, emitted workers, and 
 
 SQLike measurements use the source checkout including unreleased changes after 0.1.2. [Staged compatibility work](docs/internal/staged-sqlite-compatibility.md) records the additions and their size cost.
 
-[![Bundle sizes for ten builds. Blue shows Brotli size; gray shows minified, uncompressed size. Smaller is better.](docs/images/bundle-size.svg)](docs/images/bundle-size.png)
+[![Bundle sizes for ten builds. Blue shows Brotli size; gray shows minified, uncompressed size. Smaller is better.](docs/images/bundle-size.png)](docs/images/bundle-size.png)
+
+[SVG download](docs/images/bundle-size.svg)
 
 The horizontal axis is logarithmic: each tick doubles the size. Labels show KiB.
 
@@ -71,7 +73,9 @@ The comparison uses [@sqlite.org/sqlite-wasm](https://www.npmjs.com/package/@sql
 
 When the schema and queries are fixed, AOT and predefined builds retain only the implementations required by the catalog. AOT reads JSON program definitions; `defined` reads binary definitions. Each comparison uses the same semantic features, exports, and primary-key index setting.
 
-[![Defined JavaScript runtime sizes for six catalogs. Gray is the manual feature profile; blue is catalog-selected. The panels show minified and Brotli sizes.](docs/images/catalog-runtime-size.svg)](docs/images/catalog-runtime-size.png)
+[![Defined JavaScript runtime sizes for six catalogs. Gray is the manual feature profile; blue is catalog-selected. The panels show minified and Brotli sizes.](docs/images/catalog-runtime-size.png)](docs/images/catalog-runtime-size.png)
+
+[SVG download](docs/images/catalog-runtime-size.svg)
 
 These are **engine files only**, excluding the host, IndexedDB wrappers, schema/statements, and compiler. The JS and Wasm columns describe separate targets; the Wasm sizes exclude its JS loader. The browser distribution totals above include those host and loader assets. Both targets were checked against native SQLite for every catalog.
 
@@ -105,9 +109,11 @@ The catalogs cover primary-key reads, GLOB/char, JSON construction, nested JSON,
 
 Results are **μs per operation** on a 5,000-row table, using the median of seven samples after warmup. Ordinary SQL paths parse or prepare on each call; the prepared column reuses SQLite statements.
 
-[![SQLite performance comparison across seven workloads. Each workload has its own horizontal bar chart; shorter bars are faster.](docs/images/sqlite-benchmark.svg)](docs/images/sqlite-benchmark.png)
+[![SQLite performance comparison across seven workloads. Each workload has its own horizontal bar chart; shorter bars are faster.](docs/images/sqlite-benchmark.png)](docs/images/sqlite-benchmark.png)
 
-Each panel starts at zero and uses its own scale. Bars show medians; whiskers show the observed minimum and maximum across seven samples. Only the full-table fetch panel uses milliseconds. Click either figure for its PNG version.
+[SVG download](docs/images/sqlite-benchmark.svg)
+
+Each panel starts at zero and uses its own scale. Bars show medians; whiskers show the observed minimum and maximum across seven samples. Only the full-table fetch panel uses milliseconds. Click a figure for its full-size PNG.
 
 <details>
 <summary>View exact timings (7 workloads, 4 execution paths; all values in μs)</summary>
@@ -139,7 +145,9 @@ Parsing and the host boundary add overhead to ordinary SQL calls; small lookups 
 <details>
 <summary>100,000-row chart · 8 execution paths</summary>
 
-[![100,000-row SQLite comparison across ten workloads and eight execution paths. Shorter bars are faster; whiskers show the observed range of three samples.](docs/images/sqlite-large-benchmark.svg)](docs/images/sqlite-large-benchmark.png)
+[![100,000-row SQLite comparison across ten workloads and eight execution paths. Shorter bars are faster; whiskers show the observed range of three samples.](docs/images/sqlite-large-benchmark.png)](docs/images/sqlite-large-benchmark.png)
+
+[SVG download](docs/images/sqlite-large-benchmark.svg)
 
 Each panel starts at zero and uses its own scale. SUM/COUNT and full-table fetch use milliseconds; other panels use microseconds. Whiskers show observed min–max, not confidence intervals.
 

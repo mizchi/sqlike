@@ -3,6 +3,8 @@ import json
 from pathlib import Path
 import sys
 import unittest
+import re
+import xml.etree.ElementTree as ET
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 from render_readme_charts import bundle_data, benchmark_data, sample_stats, update_benchmark_table, catalog_data, update_catalog_table, large_benchmark_data, LARGE_ENGINES
@@ -11,6 +13,23 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class ReadmeChartTests(unittest.TestCase):
+    def test_documentation_embeds_png_previews(self):
+        for file in ["README.md", "README.ja.md", "docs/internal/sqlite-large-benchmark.md"]:
+            source = (ROOT / file).read_text()
+            images = re.findall(r"!\[[^\]]*\]\(([^)]+)\)", source)
+            charts = [path for path in images if "images/" in path]
+            with self.subTest(file=file):
+                self.assertTrue(charts)
+                self.assertTrue(all(path.endswith(".png") for path in charts), charts)
+
+    def test_svg_labels_are_text_instead_of_transform_dependent_font_paths(self):
+        for name in ["bundle-size", "catalog-runtime-size", "sqlite-benchmark", "sqlite-large-benchmark"]:
+            root = ET.parse(ROOT / f"docs/images/{name}.svg").getroot()
+            with self.subTest(name=name):
+                self.assertGreater(len(root.findall(".//{http://www.w3.org/2000/svg}text")), 0)
+                self.assertFalse(any(node.get("id", "").startswith("DejaVuSans")
+                                     for node in root.iter("{http://www.w3.org/2000/svg}path")))
+
     def test_large_chart_covers_all_eight_paths_and_both_real_index_workloads(self):
         report = json.loads((ROOT / "measurements/dynamic-prepare-large-current.json").read_text())
         rows = large_benchmark_data(report)

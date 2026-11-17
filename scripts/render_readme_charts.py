@@ -391,7 +391,9 @@ def main():
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
-    plt.rcParams.update({"font.family": "DejaVu Sans", "svg.hashsalt": "sqlike-readme", "svg.fonttype": "path", "text.color": "#0f172a", "axes.labelcolor": "#475569", "xtick.color": "#475569", "ytick.color": "#334155"})
+    # Keep labels as text: some SVG previewers lose glyph path transforms and
+    # paint enormous characters. Documentation uses raster PNG previews.
+    plt.rcParams.update({"font.family": "DejaVu Sans", "svg.hashsalt": "sqlike-readme", "svg.fonttype": "none", "text.color": "#0f172a", "axes.labelcolor": "#475569", "xtick.color": "#475569", "ytick.color": "#334155"})
     OUTPUT.mkdir(parents=True, exist_ok=True)
     render_bundle(data["bundle"], bundle, plt)
     render_catalog(data["catalog"], plt)

@@ -33,7 +33,9 @@ pnpm add @mizchi/litestream
 
 SQLikeは0.1.2以降の未リリース変更を含むソースで計測しています。[段階的な互換機能の導入](docs/internal/staged-sqlite-compatibility.md)に追加内容とサイズ差を記録します。
 
-[![10構成のバンドルサイズ。青はBrotli、灰色はminify後の未圧縮サイズ。小さいほど軽量。](docs/images/bundle-size.svg)](docs/images/bundle-size.png)
+[![10構成のバンドルサイズ。青はBrotli、灰色はminify後の未圧縮サイズ。小さいほど軽量。](docs/images/bundle-size.png)](docs/images/bundle-size.png)
+
+[SVG版](docs/images/bundle-size.svg)
 
 横軸は対数目盛で、1目盛ごとにサイズが2倍になります。点に記載した数値はKiBです。
 
@@ -71,7 +73,9 @@ SQLikeは0.1.2以降の未リリース変更を含むソースで計測してい
 
 schemaとクエリが固定されている場合、AOTと事前定義版ではcatalogに必要な実装だけを残せます。AOTはJSONのプログラム定義、`defined`はバイナリ定義を読み込みます。各比較で、意味上の機能・公開exports・主キー索引の設定を揃えています。
 
-[![6つのcatalogのdefined JSランタイム。灰色は手動プロファイル、青はcatalogから選択した構成。minifiedとBrotliの2図で比較。](docs/images/catalog-runtime-size.svg)](docs/images/catalog-runtime-size.png)
+[![6つのcatalogのdefined JSランタイム。灰色は手動プロファイル、青はcatalogから選択した構成。minifiedとBrotliの2図で比較。](docs/images/catalog-runtime-size.png)](docs/images/catalog-runtime-size.png)
+
+[SVG版](docs/images/catalog-runtime-size.svg)
 
 下表は**エンジンのファイル単体**で、host・IndexedDB wrapper・schema / statement・compilerを含みません。JSとWasmは別々の実行対象で、Wasmの値にはJSローダーを含みません。上の配信全体の表ではhostとローダーも含めています。すべてのcatalogをJS / Wasmの両方でnative SQLiteと照合済みです。
 
@@ -105,9 +109,11 @@ catalogは主キー検索、GLOB / char、JSON生成、入れ子JSON、再帰CTE
 
 5,000行のテーブルでの**μs/操作**（小さいほど高速）、ウォームアップ後7サンプルの中央値です。通常SQLは毎回SQLをパース・prepareし、prepared列はSQLiteのstatementを再利用します。
 
-[![SQLiteとの速度比較。7処理を個別の横棒グラフで比較。各処理内で短い棒ほど高速。](docs/images/sqlite-benchmark.svg)](docs/images/sqlite-benchmark.png)
+[![SQLiteとの速度比較。7処理を個別の横棒グラフで比較。各処理内で短い棒ほど高速。](docs/images/sqlite-benchmark.png)](docs/images/sqlite-benchmark.png)
 
-各グラフの軸はゼロ始まりですが、処理ごとに目盛幅が異なります。棒は中央値、ひげは7サンプルの最小〜最大です。全件取得のみ単位をmsにしています。画像をクリックするとPNG版を開けます。
+[SVG版](docs/images/sqlite-benchmark.svg)
+
+各グラフの軸はゼロ始まりですが、処理ごとに目盛幅が異なります。棒は中央値、ひげは7サンプルの最小〜最大です。全件取得のみ単位をmsにしています。画像をクリックすると原寸のPNGを開けます。
 
 <details>
 <summary>数値を表で見る（7処理・4経路、単位はすべてμs）</summary>
@@ -139,7 +145,9 @@ catalogは主キー検索、GLOB / char、JSON生成、入れ子JSON、再帰CTE
 <details>
 <summary>10万行・8経路のグラフを見る</summary>
 
-[![10万行・10処理・8経路のSQLite比較。短い棒ほど高速。ひげは3サンプルの最小〜最大。](docs/images/sqlite-large-benchmark.svg)](docs/images/sqlite-large-benchmark.png)
+[![10万行・10処理・8経路のSQLite比較。短い棒ほど高速。ひげは3サンプルの最小〜最大。](docs/images/sqlite-large-benchmark.png)](docs/images/sqlite-large-benchmark.png)
+
+[SVG版](docs/images/sqlite-large-benchmark.svg)
 
 各パネルの軸はゼロ始まりで、尺度は処理ごとに異なります。集約と全件取得はms、ほかはµs。ひげは観測した最小〜最大で、信頼区間ではありません。
 

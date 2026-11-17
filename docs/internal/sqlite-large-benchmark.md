@@ -39,9 +39,13 @@ just sqlite-bench --smoke --prepared --rows=100000
 
 ## 計測結果
 
-[![10万行・8経路の速度比較。処理ごとに尺度を分け、中央値と3サンプルの最小〜最大を表示。](../images/sqlite-large-benchmark.svg)](../images/sqlite-large-benchmark.png)
+[![10万行・8経路の速度比較。処理ごとに尺度を分け、中央値と3サンプルの最小〜最大を表示。](../images/sqlite-large-benchmark.png)](../images/sqlite-large-benchmark.png)
 
-短い棒ほど高速。各パネルの軸はゼロから始まり、処理ごとに尺度が異なる。集約と全件取得はms、ほかはµs。ひげは観測した最小〜最大で、信頼区間ではない。画像をクリックするとPNG版を開ける。
+[SVG版](../images/sqlite-large-benchmark.svg)
+
+短い棒ほど高速。各パネルの軸はゼロから始まり、処理ごとに尺度が異なる。集約と全件取得はms、ほかはµs。ひげは観測した最小〜最大で、信頼区間ではない。画像をクリックすると原寸のPNGを開ける。
+
+READMEとこのページのプレビューはPNGを使う。SVGは文字をpathへ変換せず、textとして保持する。文字pathの縮尺変換が失われると巨大な文字がグラフを覆う表示を再現できたためで、PNGの明暗テーマ・モバイル幅と、再生成したSVGのブラウザ表示を確認した。SVGの文字は閲覧環境のフォント設定にも依存する。
 
 <!-- sqlite-large-results:start -->
 2026-11-17、Apple M5 / Chromium 158.0.8127.18、10万行、3サンプルの中央値。単位µs。
