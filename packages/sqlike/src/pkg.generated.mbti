@@ -18,9 +18,15 @@ pub fn aot_execute(AotDatabase, String, String) -> String
 
 pub fn aot_export_sqlite(AotDatabase) -> SqliteResult
 
+pub fn aot_finalize_values(AotPreparedValues) -> String
+
 pub fn aot_info(AotDatabase) -> String
 
 pub fn aot_open(String, String) -> AotDatabase
+
+pub fn aot_prepare_values(AotDatabase, String) -> AotPreparedValues
+
+pub fn aot_prepared_values(AotPreparedValues, String) -> Result[Array[Array[Value]], String]
 
 pub fn aot_query_info(AotDatabase, String) -> String
 
@@ -137,6 +143,8 @@ pub suberror SqliteError {
 
 // Types and methods
 type AotDatabase
+
+type AotPreparedValues
 
 type BinaryCatalog
 

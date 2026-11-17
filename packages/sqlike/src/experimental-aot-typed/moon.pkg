@@ -1,0 +1,26 @@
+import {
+  "mizchi/sqlike",
+  "mizchi/sqlike/experimental-typed" @native,
+}
+
+options(
+  targets: { "aot.mbt": [ "js" ] },
+  link: {
+    "js": {
+      "exports": [
+        "open",
+        "info",
+        "query_info",
+        "execute",
+        "prepare",
+        "values",
+        "finalize",
+        "restore",
+        "snapshot",
+        "set_clock",
+        "clone",
+      ],
+      "format": "esm",
+    },
+  },
+)

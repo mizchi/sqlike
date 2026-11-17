@@ -25,6 +25,8 @@
     "packages/sqlike/src/aggregate_sum.mbt": "e09ec3388045c47098d36cc39efa47abac3ddf73f312cfdd87a75a610e35fcd4",
     "packages/sqlike/src/aot.mbt": "fd2a750128171ca24f921cbcd0b82d5456d212caa8acc048423ed3cced7427b9",
     "packages/sqlike/src/aot_bench_wbtest.mbt": "ea9756d22d1bc37a14b32f7707fa1c018c018d41f76aeddb7e87303950c8125a",
+    "packages/sqlike/src/aot_native.mbt": "00d64939866e0198a4fdd194ffde5c932b13a19d3001f838fdcb1aa541bf460a",
+    "packages/sqlike/src/aot_native_wbtest.mbt": "ff7fb63cfac1605c706c278f886b9833a389f923f9840f6d4a9e806abb848e13",
     "packages/sqlike/src/binary_base64.mbt": "3ff209995156c359a77d5488f278337fb4b58be27785e79e53dfb3c43cb0c6f6",
     "packages/sqlike/src/binary_catalog.mbt": "3bb5a151775612e29d8a657d0d809ac1ae107f6084aa149adb2354151d66947b",
     "packages/sqlike/src/binary_generated.mbt": "1d70c23033c5f4e2c58380db3925bf4f1fc8c22bcba61e35c19d94b5a019cd8a",
@@ -53,8 +55,10 @@
     "packages/sqlike/src/delete_cache_wbtest.mbt": "e83f1556868e9eef124d00cfa528f60c5a4fd58a74c2fe2f582ec17b2efe304a",
     "packages/sqlike/src/evaluate.mbt": "67dc9ebde358babef258f002aa53977621a3367edf0934f72f4a7d984e2b11cd",
     "packages/sqlike/src/execute.mbt": "f543b2f2ea49d344d48117d4701d0fe7ca16108d93e71c30bd086de0909da8d9",
+    "packages/sqlike/src/experimental-aot-typed/aot.mbt": "29230a00ae08cc9c9ab779645c6bf6a842299bd9c29f16fd3d510acaf4375594",
+    "packages/sqlike/src/experimental-aot-typed/moon.pkg": "4e600258c705c2b05e9d898f16ae2877e3d27bb014a3d3c6c0ca39014de2f412",
     "packages/sqlike/src/experimental-typed/moon.pkg": "084d8ea4cb24e8db437722c851ccca28bafb90b4530e16ec30640c1499754ef7",
-    "packages/sqlike/src/experimental-typed/typed.mbt": "6a57da383d1884c2afa6d6ec9712e2a5fc3775b377915bb99b87907ad082af2a",
+    "packages/sqlike/src/experimental-typed/typed.mbt": "ff96c7acc13293bb21910933f30d8bb2dcac94fc3f331c4f792684711ec5f112",
     "packages/sqlike/src/experimental_rows.mbt": "248afbc52749bbfde91ad8a59e06e5fb0f2019cb8449ac8070a11aafcc0167fc",
     "packages/sqlike/src/feature_config.mbt": "8ac72b52c318850f7dc69d63c105496ab6ea7216b6db32532470ee17c19b82f2",
     "packages/sqlike/src/feature_validation.mbt": "511fa120a414b92fdbc840174fd0c08c78c50b206264889a8f040b6a0b9eb6fc",
@@ -129,13 +133,13 @@
     "packages/sqlike/src/value.mbt": "e96cb4d18b594a47bf7c00654445a9ed9b770138903bf26c3cea1ead52be4013",
     "packages/sqlike/src/window.mbt": "25b144661bf5c0ee9e3650d6072fc97b2a13812831af3ae395f95dfca3b82f47",
     "pnpm-lock.yaml": "62a9334c27b9f3876361edc3c9f74a0ed5e11866e28403cc065e1bdba7d70012",
-    "scripts/build-sqlike-runtime.ts": "d74afdea8a3a1795a657e5c3b0bed769a6e87523ef175f4ec4d5149455b697fe",
+    "scripts/build-sqlike-runtime.ts": "890cc3b870fad94b2151850c449d25dba6e17a673df3afceb1c456f1d2d2efbd",
     "scripts/measure-sqlike-profiles.ts": "65130b8fb65b4703907366d9d23e5df6cb2573fa662b2464c591ee0b170aa518",
     "scripts/measurement-manifest.ts": "615c0ab32c0b2e01c57ea1be690a2a08d2e9401b9b0c5d93574520253c16acdb",
     "scripts/oxc-runtime.ts": "24406b458799bdb150e1a986353c7d965d57964e60067f1a421e1cc010e57fce",
     "src/sqlike-features.ts": "e23ccf5fe013d6d472934bcd8ce4418e727b716b14fde1069d35bd3bdcf2f5a6"
   },
-  "measuredAt": "2026-11-17T12:26:30.690Z",
+  "measuredAt": "2026-11-17T13:48:51.569Z",
   "node": "v24.22.2",
   "method": "Moon release static feature specialization; isolated builds. JS ESM all entry exports retained, Oxc client minification with compact whitespace and annotations preserved; absence checks use unminified source; gzip9/Brotli11. Wasm GC release without wasm-opt. Engine only: excludes host adapter, catalog and persistence. AOT excludes SQL parser. Minimal excludes optional JSON/date/window implementations; ordinary aggregates, CTE and secondary indexes remain in core.",
   "results": [
@@ -145,13 +149,13 @@
       "features": [],
       "js": {
         "raw": 467562,
-        "gzip": 110332,
-        "brotli": 88344
+        "gzip": 110331,
+        "brotli": 88409
       },
       "wasm": {
-        "raw": 422479,
-        "gzip": 167228,
-        "brotli": 132087
+        "raw": 422481,
+        "gzip": 167203,
+        "brotli": 131948
       },
       "absent": {
         "triggerImplementation": true,
@@ -172,13 +176,13 @@
       ],
       "js": {
         "raw": 471649,
-        "gzip": 111447,
-        "brotli": 89142
+        "gzip": 111455,
+        "brotli": 89246
       },
       "wasm": {
-        "raw": 426471,
-        "gzip": 168886,
-        "brotli": 133382
+        "raw": 426473,
+        "gzip": 168860,
+        "brotli": 133120
       },
       "absent": {
         "triggerImplementation": true,
@@ -199,13 +203,13 @@
       ],
       "js": {
         "raw": 468337,
-        "gzip": 110553,
-        "brotli": 88667
+        "gzip": 110555,
+        "brotli": 88412
       },
       "wasm": {
-        "raw": 423109,
-        "gzip": 167428,
-        "brotli": 132254
+        "raw": 423111,
+        "gzip": 167479,
+        "brotli": 132334
       },
       "absent": {
         "triggerImplementation": true,
@@ -226,13 +230,13 @@
       ],
       "js": {
         "raw": 489226,
-        "gzip": 114926,
-        "brotli": 91754
+        "gzip": 114929,
+        "brotli": 91795
       },
       "wasm": {
-        "raw": 440538,
-        "gzip": 173856,
-        "brotli": 136987
+        "raw": 440540,
+        "gzip": 173878,
+        "brotli": 137104
       },
       "absent": {
         "triggerImplementation": true,
@@ -253,13 +257,13 @@
       ],
       "js": {
         "raw": 471283,
-        "gzip": 111352,
-        "brotli": 88923
+        "gzip": 111353,
+        "brotli": 89149
       },
       "wasm": {
-        "raw": 425724,
-        "gzip": 168471,
-        "brotli": 132939
+        "raw": 425726,
+        "gzip": 168480,
+        "brotli": 132844
       },
       "absent": {
         "triggerImplementation": false,
@@ -280,13 +284,13 @@
       ],
       "js": {
         "raw": 475161,
-        "gzip": 112333,
-        "brotli": 89819
+        "gzip": 112327,
+        "brotli": 89813
       },
       "wasm": {
-        "raw": 427929,
-        "gzip": 169555,
-        "brotli": 133677
+        "raw": 427916,
+        "gzip": 169508,
+        "brotli": 133643
       },
       "absent": {
         "triggerImplementation": true,
@@ -307,13 +311,13 @@
       ],
       "js": {
         "raw": 491607,
-        "gzip": 115917,
-        "brotli": 92544
+        "gzip": 115921,
+        "brotli": 92381
       },
       "wasm": {
-        "raw": 442895,
-        "gzip": 175046,
-        "brotli": 137831
+        "raw": 442897,
+        "gzip": 175053,
+        "brotli": 137792
       },
       "absent": {
         "triggerImplementation": true,
@@ -334,13 +338,13 @@
       ],
       "js": {
         "raw": 481283,
-        "gzip": 113795,
-        "brotli": 90997
+        "gzip": 113793,
+        "brotli": 90961
       },
       "wasm": {
-        "raw": 429098,
-        "gzip": 170529,
-        "brotli": 134208
+        "raw": 429100,
+        "gzip": 170535,
+        "brotli": 134233
       },
       "absent": {
         "triggerImplementation": true,
@@ -361,13 +365,13 @@
       ],
       "js": {
         "raw": 481570,
-        "gzip": 113886,
-        "brotli": 90968
+        "gzip": 113893,
+        "brotli": 90942
       },
       "wasm": {
         "raw": 435418,
-        "gzip": 172582,
-        "brotli": 136193
+        "gzip": 172628,
+        "brotli": 136158
       },
       "absent": {
         "triggerImplementation": true,
@@ -388,13 +392,13 @@
       ],
       "js": {
         "raw": 472557,
-        "gzip": 111606,
-        "brotli": 89349
+        "gzip": 111607,
+        "brotli": 89407
       },
       "wasm": {
-        "raw": 426280,
-        "gzip": 168967,
-        "brotli": 133167
+        "raw": 426282,
+        "gzip": 168995,
+        "brotli": 133101
       },
       "absent": {
         "triggerImplementation": true,
@@ -415,13 +419,13 @@
       ],
       "js": {
         "raw": 468587,
-        "gzip": 110563,
-        "brotli": 88680
+        "gzip": 110570,
+        "brotli": 88437
       },
       "wasm": {
-        "raw": 423691,
-        "gzip": 167427,
-        "brotli": 131925
+        "raw": 423693,
+        "gzip": 167402,
+        "brotli": 132228
       },
       "absent": {
         "triggerImplementation": true,
@@ -451,13 +455,13 @@
       ],
       "js": {
         "raw": 552191,
-        "gzip": 131222,
-        "brotli": 104146
+        "gzip": 131212,
+        "brotli": 104127
       },
       "wasm": {
-        "raw": 490577,
-        "gzip": 195208,
-        "brotli": 153084
+        "raw": 490562,
+        "gzip": 195205,
+        "brotli": 153499
       },
       "absent": {
         "triggerImplementation": false,
@@ -489,13 +493,13 @@
       ],
       "js": {
         "raw": 600530,
-        "gzip": 143427,
-        "brotli": 113321
+        "gzip": 143415,
+        "brotli": 113076
       },
       "wasm": {
-        "raw": 528723,
-        "gzip": 210009,
-        "brotli": 164781
+        "raw": 528708,
+        "gzip": 209971,
+        "brotli": 164526
       },
       "absent": {
         "triggerImplementation": false,
@@ -514,13 +518,13 @@
       "features": [],
       "js": {
         "raw": 521742,
-        "gzip": 123584,
-        "brotli": 98052
+        "gzip": 123579,
+        "brotli": 98140
       },
       "wasm": {
-        "raw": 466720,
-        "gzip": 186744,
-        "brotli": 146491
+        "raw": 466722,
+        "gzip": 186736,
+        "brotli": 146363
       },
       "absent": {
         "triggerImplementation": true,
@@ -541,13 +545,13 @@
       ],
       "js": {
         "raw": 525843,
-        "gzip": 124642,
-        "brotli": 98795
+        "gzip": 124646,
+        "brotli": 98824
       },
       "wasm": {
-        "raw": 470351,
-        "gzip": 188477,
-        "brotli": 147613
+        "raw": 470353,
+        "gzip": 188493,
+        "brotli": 147417
       },
       "absent": {
         "triggerImplementation": true,
@@ -568,13 +572,13 @@
       ],
       "js": {
         "raw": 522777,
-        "gzip": 123837,
-        "brotli": 98313
+        "gzip": 123835,
+        "brotli": 98126
       },
       "wasm": {
-        "raw": 467594,
-        "gzip": 187224,
-        "brotli": 146514
+        "raw": 467596,
+        "gzip": 187231,
+        "brotli": 146799
       },
       "absent": {
         "triggerImplementation": true,
@@ -595,13 +599,13 @@
       ],
       "js": {
         "raw": 542621,
-        "gzip": 127908,
-        "brotli": 101195
+        "gzip": 127903,
+        "brotli": 101386
       },
       "wasm": {
-        "raw": 484576,
-        "gzip": 193287,
-        "brotli": 151454
+        "raw": 484578,
+        "gzip": 193283,
+        "brotli": 151310
       },
       "absent": {
         "triggerImplementation": true,
@@ -622,13 +626,13 @@
       ],
       "js": {
         "raw": 528645,
-        "gzip": 125312,
-        "brotli": 99395
+        "gzip": 125313,
+        "brotli": 99178
       },
       "wasm": {
-        "raw": 471448,
-        "gzip": 189179,
-        "brotli": 148614
+        "raw": 471450,
+        "gzip": 189169,
+        "brotli": 148347
       },
       "absent": {
         "triggerImplementation": false,
@@ -649,13 +653,13 @@
       ],
       "js": {
         "raw": 529317,
-        "gzip": 125414,
-        "brotli": 99434
+        "gzip": 125406,
+        "brotli": 99463
       },
       "wasm": {
-        "raw": 471438,
-        "gzip": 189058,
-        "brotli": 148319
+        "raw": 471425,
+        "gzip": 189059,
+        "brotli": 148211
       },
       "absent": {
         "triggerImplementation": true,
@@ -676,13 +680,13 @@
       ],
       "js": {
         "raw": 545380,
-        "gzip": 129037,
-        "brotli": 101752
+        "gzip": 129034,
+        "brotli": 101931
       },
       "wasm": {
-        "raw": 487464,
-        "gzip": 194931,
-        "brotli": 152519
+        "raw": 487466,
+        "gzip": 194908,
+        "brotli": 152504
       },
       "absent": {
         "triggerImplementation": true,
@@ -703,13 +707,13 @@
       ],
       "js": {
         "raw": 535440,
-        "gzip": 126936,
-        "brotli": 100673
+        "gzip": 126930,
+        "brotli": 100789
       },
       "wasm": {
-        "raw": 472942,
-        "gzip": 190069,
-        "brotli": 148971
+        "raw": 472944,
+        "gzip": 190055,
+        "brotli": 149064
       },
       "absent": {
         "triggerImplementation": true,
@@ -731,12 +735,12 @@
       "js": {
         "raw": 535709,
         "gzip": 127014,
-        "brotli": 100686
+        "brotli": 100694
       },
       "wasm": {
         "raw": 479758,
-        "gzip": 192382,
-        "brotli": 150690
+        "gzip": 192404,
+        "brotli": 150744
       },
       "absent": {
         "triggerImplementation": true,
@@ -757,13 +761,13 @@
       ],
       "js": {
         "raw": 526706,
-        "gzip": 124819,
-        "brotli": 98960
+        "gzip": 124816,
+        "brotli": 98935
       },
       "wasm": {
-        "raw": 470935,
+        "raw": 470937,
         "gzip": 188599,
-        "brotli": 147839
+        "brotli": 148083
       },
       "absent": {
         "triggerImplementation": true,
@@ -784,13 +788,13 @@
       ],
       "js": {
         "raw": 522767,
-        "gzip": 123781,
-        "brotli": 98141
+        "gzip": 123782,
+        "brotli": 98256
       },
       "wasm": {
-        "raw": 467167,
-        "gzip": 187028,
-        "brotli": 146669
+        "raw": 467169,
+        "gzip": 187049,
+        "brotli": 146745
       },
       "absent": {
         "triggerImplementation": true,
@@ -820,13 +824,13 @@
       ],
       "js": {
         "raw": 608665,
-        "gzip": 144916,
-        "brotli": 113872
+        "gzip": 144908,
+        "brotli": 114163
       },
       "wasm": {
-        "raw": 537659,
-        "gzip": 215294,
-        "brotli": 168586
+        "raw": 537644,
+        "gzip": 215257,
+        "brotli": 168688
       },
       "absent": {
         "triggerImplementation": false,
@@ -857,13 +861,13 @@
       ],
       "js": {
         "raw": 613377,
-        "gzip": 146082,
-        "brotli": 114983
+        "gzip": 146075,
+        "brotli": 114925
       },
       "wasm": {
-        "raw": 541237,
-        "gzip": 216920,
-        "brotli": 169776
+        "raw": 541222,
+        "gzip": 216912,
+        "brotli": 169627
       },
       "absent": {
         "triggerImplementation": false,

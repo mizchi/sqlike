@@ -1,40 +1,42 @@
 # 索引・UPDATE・JS結果ABI・大量書込の試行
 
-2026-11-17。基準は`2f1d702`の未リリースソース。4項目を順に試し、SQLiteとの出力・失敗後状態を確認した。初回は`fe98120`、以下は後続の[DELETE改善](delete-cache.md)も含めた再計測。公開パッケージのversionは0.1.2のまま。
+2026-11-17。基準は`2f1d702`の未リリースソース。4項目を順に試し、SQLiteとの出力・失敗後状態を確認した。初回は`fe98120`、以下は後続の[DELETE改善](delete-cache.md)と[AOT native結果](aot-native-results.md)も含めた再計測。公開パッケージのversionは0.1.2のまま。
 
 <!-- optimization-results:start -->
 | 試行 | 基準 → 最終実装 | 判断 |
 | --- | --- | --- |
-| 10万行・索引の両端移動＋範囲読取 | JS 198.02→10.65 µs / WASM 38.40→8.73 µs | ブロック化を採用 |
-| 10万行・同値UPDATE | JS 3.96→2.57 µs / WASM 2.26→1.51 µs | 格納時の固定費削減を採用 |
-| JS・10万行のnative結果取得 | JSON経路 84.20→typed 21.10 ms | SELECT専用の実験entry |
-| JS・native結果の主キー検索 | 1.43→0.70 µs | 同上 |
-| Node・1万行INSERT・明示主キー | JS 588.50→57.53 ms / WASM 317.28→21.19 ms | 最大rowid探索の削減を採用 |
-| Node・1万行INSERT・自動採番 | JS 505.61→26.20 ms / WASM 280.58→14.85 ms | 最大rowid探索の削減を採用 |
+| 10万行・索引の両端移動＋範囲読取 | JS 198.02→11.17 µs / WASM 38.40→9.00 µs | ブロック化を採用 |
+| 10万行・同値UPDATE | JS 3.96→2.53 µs / WASM 2.26→1.56 µs | 格納時の固定費削減を採用 |
+| JS・10万行のnative結果取得 | JSON経路 80.50→typed 20.60 ms | SELECT専用の実験entry |
+| JS・native結果の主キー検索 | 1.25→0.72 µs | 同上 |
+| AOT JS・10万行のnative結果取得 | JSON経路 81.10→typed 18.45 ms | 別entry・Statement再利用 |
+| AOT JS・native結果の主キー検索 | 1.49→0.72 µs | 同上 |
+| Node・1万行INSERT・明示主キー | JS 497.35→29.05 ms / WASM 286.95→17.61 ms | 最大rowid探索の削減を採用 |
+| Node・1万行INSERT・自動採番 | JS 505.40→22.38 ms / WASM 282.84→13.81 ms | 最大rowid探索の削減を採用 |
 
 Brotli、単体engine、同じ公開exportを保持した容量比較:
 
 | engine | 前 | 後 | 増分 |
 | --- | ---: | ---: | ---: |
-| AOT + SQLite writer + LTX | 112,370 B | 113,321 B | +951 B |
-| SQLike dynamic SQL | 119,634 B | 120,768 B | +1,134 B |
+| AOT + SQLite writer + LTX | 112,370 B | 113,076 B | +706 B |
+| SQLike dynamic SQL | 119,634 B | 120,844 B | +1,210 B |
 | Litestream | 38,291 B | 38,291 B | +0 B |
 
-実験typed runtime単体はminified 593,050 B / Brotli 111,992 B。通常engineとはexportが異なるため、差分容量の比較には使わない。通常SQL / AOTからbridgeが除去されることを別に検査した。
+実験SQL typed単体はminified 593,070 B / Brotli 111,957 B。実験AOT typed単体は536,517 / 102,472 B、notes catalog選択は433,221 / 82,245 B。通常engineとはexportが異なるため、差分容量の比較には使わない。通常SQL / AOTからbridgeが除去されることを別に検査した。
 
 10万行INSERT、各3回。基準は3秒の予算内で未完走のため、完走時間の比は計算しない。
 
 | mode | 改善後JS | 改善後Wasm | SQLite prepared | 基準の完走 |
 | --- | ---: | ---: | ---: | --- |
-| explicit | 295.19 ms | 186.38 ms | 11.87 ms | JS / Wasmとも0 / 3 |
-| automatic | 270.32 ms | 192.59 ms | 7.14 ms | JS / Wasmとも0 / 3 |
+| explicit | 303.66 ms | 185.79 ms | 12.29 ms | JS / Wasmとも0 / 3 |
+| automatic | 232.55 ms | 151.44 ms | 6.71 ms | JS / Wasmとも0 / 3 |
 
 warmなrowid順cacheがある1万行DBからのpoint DELETE（µs/削除、前回の採番改善と後続のcache改善を含む）:
 
 | mode | JS 前→後 | Wasm 前→後 | SQLite |
 | --- | ---: | ---: | ---: |
-| explicit | 25.57→12.30 | 10.12→4.40 | 0.57 |
-| automatic | 23.57→7.94 | 5.43→3.22 | 0.53 |
+| explicit | 20.66→8.18 | 4.37→3.29 | 0.57 |
+| automatic | 11.99→8.03 | 6.03→3.21 | 0.56 |
 <!-- optimization-results:end -->
 
 ## 1. 大きい二次索引のブロック化：採用
@@ -76,7 +78,7 @@ handleはこのruntimeと接続に属し、別runtimeへ渡さない。保持数
 
 比較では両経路がnativeの`Value[][]`を返す条件に揃えた。既存経路はJSON.parse後のCell→BigInt等の変換も含む。そのため、Cell配列を返す通常の8経路benchmarkと数値を混ぜない。3サンプル、20ms目標、10万行scanは最大2反復。型付きnative SQLite期待値で前後を照合する。
 
-対応済み差分コーパス566ケースのSELECTを型付き結果経路でも照合し、DDL / DML等は既存のexec経路で実行した。元の1,000クエリ、int64の両端、REALと負のゼロ、NUL / 日本語、NULL、重複列、BLOBの返却後変更、bind件数・書込の拒否も検査した。日時等のclock更新は`set_clock`で明示する。AOT版・typed bind・streaming / chunk返却は後続の実験とする。
+対応済み差分コーパス566ケースのSELECTを型付き結果経路でも照合し、DDL / DML等は既存のexec経路で実行した。元の1,000クエリ、int64の両端、REALと負のゼロ、NUL / 日本語、NULL、重複列、BLOBの返却後変更、bind件数・書込の拒否も検査した。日時等のclock更新は`set_clock`で明示する。[AOT版](aot-native-results.md)にもStatement再利用とcatalog選択を追加した。typed bind・binary defined・streaming / chunk返却は後続の実験とする。
 
 ## 4. 大量INSERTとDELETE：採番・rowid順cacheを改善
 

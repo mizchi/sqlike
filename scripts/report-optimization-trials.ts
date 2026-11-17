@@ -46,6 +46,9 @@ const metrics = {
   nativeResults: typed.results.flatMap((r: any) => ["point", "scan"].map(name => ({ rows: r.rows, name,
     jsonToNativeUs: typedTime(r, name, "json-to-native-values"), nativeUs: typedTime(r, name, "native-values"),
   }))),
+  nativeAotResults: typed.results.flatMap((r: any) => ["point", "scan"].map(name => ({ rows: r.rows, name,
+    jsonToNativeUs: typedTime(r, name, "aot-json-to-native-values"), nativeUs: typedTime(r, name, "aot-native-values"),
+  }))),
   bulkWrites: [1000, 10000, 100000].flatMap(rows => ["explicit", "automatic"].flatMap(mode =>
     ["before/js", "after/js", "before/wasm", "after/wasm", "sqlite/prepared"].map(engine => {
       const samples = bulk.results.filter((s: any) => s.rows === rows && s.mode === mode && s.engine === engine);
@@ -64,16 +67,25 @@ const metrics = {
       brotliDeltaBytes: r.js.minified.brotli - previous.js.minified.brotli };
   }),
 };
-const path = "_build/js/release/build/mizchi/sqlike/experimental-typed/experimental-typed.js";
-const module = await import(pathToFileURL(resolve(path)).href);
-const code = await minifyRuntime(path, Object.keys(module));
-const standalone = { path, sha256: fileHash(path), exports: Object.keys(module), minifiedBytes: Buffer.byteLength(code),
-  brotliBytes: brotliCompressSync(code, { params: { [constants.BROTLI_PARAM_QUALITY]: 11 } }).length };
+async function standaloneSize(path: string) {
+  const module = await import(pathToFileURL(resolve(path)).href);
+  const code = await minifyRuntime(path, Object.keys(module));
+  return { path, sha256: fileHash(path), exports: Object.keys(module), minifiedBytes: Buffer.byteLength(code),
+    brotliBytes: brotliCompressSync(code, { params: { [constants.BROTLI_PARAM_QUALITY]: 11 } }).length };
+}
+const standalone = await standaloneSize("_build/js/release/build/mizchi/sqlike/experimental-typed/experimental-typed.js");
+const aotStandalone = await standaloneSize("_build/js/release/build/mizchi/sqlike/experimental-aot-typed/experimental-aot-typed.js");
+const aotCatalog = await standaloneSize("generated/notes-native/runtime.js");
 writeFileSync("measurements/optimization-trials-current.json", JSON.stringify({
   format: "sqlike-optimization-trials@1", measuredAt: new Date().toISOString(), baselineCommit: "2f1d702",
   decisions: { indexPages: "adopted", updateStorage: "adopted", nativeJsResults: "experimental-separate-entry",
     rowidAllocation: "adopted", pointDelete: "adopted: bounded rowid-order leaves and sequential block scans; see delete-current.json" },
-  sourceHashes: sourceHashes([...engineSourcePaths(), "scripts/report-optimization-trials.ts", "scripts/oxc-runtime.ts"]),
+  sourceHashes: sourceHashes([...engineSourcePaths(), "scripts/report-optimization-trials.ts", "scripts/oxc-runtime.ts",
+    "scripts/build-sqlike-runtime.ts", "scripts/sqlike-runtime-declarations.ts", "scripts/analyze-catalog.ts",
+    "src/catalog-capabilities.ts", "src/runtime-capabilities.json", "src/sqlike-features.ts",
+    "examples/profiles/notes-native-aot.json", "examples/notes/catalog.json"]),
   inputs: Object.fromEntries(inputs.map(path => [path, fileHash(path)])), metrics, experimentalStandalone: standalone,
+  experimentalAotStandalone: aotStandalone,
+  experimentalAotCatalog: { ...aotCatalog, profile: JSON.parse(readFileSync("generated/notes-native/profile.json", "utf8")) },
 }, null, 2) + "\n");
 console.log(JSON.stringify({ metrics, experimentalStandalone: standalone }, null, 2));

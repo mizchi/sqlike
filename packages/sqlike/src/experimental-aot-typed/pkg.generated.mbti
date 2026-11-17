@@ -1,0 +1,38 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "mizchi/sqlike/experimental-aot-typed"
+
+import {
+  "mizchi/sqlike",
+  "mizchi/sqlike/experimental-typed",
+}
+
+// Values
+pub fn clone(@sqlike.AotDatabase) -> @sqlike.AotDatabase
+
+pub fn execute(@sqlike.AotDatabase, String, String) -> String
+
+pub fn finalize(@sqlike.AotPreparedValues) -> String
+
+pub fn info(@sqlike.AotDatabase) -> String
+
+pub fn open(String, String) -> @sqlike.AotDatabase
+
+pub fn prepare(@sqlike.AotDatabase, String) -> @sqlike.AotPreparedValues
+
+pub fn query_info(@sqlike.AotDatabase, String) -> String
+
+pub fn restore(@sqlike.AotDatabase, String) -> String
+
+pub fn set_clock(@sqlike.AotDatabase, String) -> String
+
+pub fn snapshot(@sqlike.AotDatabase) -> String
+
+pub fn values(@sqlike.AotPreparedValues, String) -> @experimental-typed.NativeValue
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits

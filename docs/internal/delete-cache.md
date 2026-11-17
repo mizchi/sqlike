@@ -1,6 +1,6 @@
 # DELETEとrowid順cacheの更新
 
-2026-11-17。基準はmainの`b510904`（実装HEAD `fe98120`）。前回の大量書込試行で残ったDELETEを、cacheなし・cacheあり・削除後に毎回読取の3条件へ分けた。
+2026-11-17。基準はmainの`b510904`（実装HEAD `fe98120`）。以下はDELETE改善を導入した`64eb250`時点の固定記録。前回の大量書込試行で残ったDELETEを、cacheなし・cacheあり・削除後に毎回読取の3条件へ分けた。
 
 ## 原因と変更
 
@@ -68,7 +68,7 @@ just delete-bench --smoke
 just delete-bench --before-dir=generated/delete-before --profile
 ```
 
-[raw report](../../measurements/delete-current.json)へsource / artifact / CPU profileのhash、実行時間・件数・native照合の結果を残す。既存の大量INSERT / DELETEとChromiumの8経路も再計測する。
+[導入時のraw report](https://github.com/mizchi/sqlike/blob/64eb250/measurements/delete-current.json)へsource / artifact / CPU profileのhash、実行時間・件数・native照合の結果を残した。[現行レポート](../../measurements/delete-current.json)は後続のAOT native等も含む再計測で、固定記録と区別する。既存の大量INSERT / DELETEとChromiumの8経路も再計測する。
 
 ## 検証と残課題
 

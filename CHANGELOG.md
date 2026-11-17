@@ -7,6 +7,7 @@
 - Opt-in connection-local SQL statement cache with bounded LRU/text retention, schema-generation invalidation and shared prepared SELECT/UPDATE plans. Preserve the uncached API and parser-free AOT/defined builds.
 - SQLite-compatible `ceil`, `ceiling`, `floor` and `trunc`, with independent `mathRounding` catalog specialization. Preserve INTEGER/REAL storage classes and validate arity before execution.
 - Experimental MoonBit JS package `mizchi/sqlike/experimental-typed` for prepared SELECT results as native positional values. Keep it outside the default runtime and npm exports; bindings retain the existing JSON format.
+- Experimental `experimental-aot-typed` JS entry with reusable SELECT handles, native positional results, explicit finalization and transient binding/result cleanup. Catalog runtime builds accept opt-in `nativeResults: true`, retain SQL-parser removal and emit branded TypeScript handles.
 
 ### Changed
 

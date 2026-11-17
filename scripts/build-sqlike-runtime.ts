@@ -5,7 +5,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { defineSqlike, type SqlikeProfile } from "../src/sqlike-features.ts";
-import { runtimeDeclarations } from "./sqlike-runtime-declarations.ts";
+import { runtimeDeclarations, nativeAotExports, nativeAotDeclarations } from "./sqlike-runtime-declarations.ts";
 import { minifyRuntime } from "./oxc-runtime.ts";
 import {
   catalogFunctionConstants,
@@ -70,17 +70,25 @@ export async function buildSqlikeRuntime(
   input: SqlikeProfile,
   {
     outDir,
-    targets = ["js", "wasm-gc"],
+    nativeResults = false,
+    targets = nativeResults ? ["js"] : ["js", "wasm-gc"],
     minify = true,
     catalog: catalogInput,
   }: {
     outDir: string;
+    /** Experimental AOT-only JS native rows; separate from the default JSON ABI. */
+    nativeResults?: boolean;
     targets?: readonly ("js" | "wasm-gc")[];
     minify?: boolean;
     /** Infer semantic features and trim function/statement implementations from typed IR. */
     catalog?: CatalogSource;
   },
 ) {
+  if (typeof nativeResults !== "boolean") throw Error("nativeResults must be a boolean");
+  if (nativeResults && (input.mode !== "aot" || targets.some(t => t !== "js")))
+    throw Error("nativeResults requires the AOT JS target");
+  if (nativeResults && input.features.some(f => ["ltx", "sqlitePages", "binarySync"].includes(f)))
+    throw Error("experimental native AOT does not expose SQLite/LTX/binary sync exports");
   if (catalogInput !== undefined && input.mode === "sql")
     throw Error("catalog specialization requires aot or defined");
   const catalog = catalogInput === undefined ? undefined : structuredClone(catalogInput);
@@ -151,7 +159,7 @@ export async function buildSqlikeRuntime(
     if (!exportBlock) throw Error("missing defined runtime exports");
     const defined = [...exportBlock.matchAll(/"([a-z_][a-z_0-9]*)"/g)].map((m) => m[1]!);
     const exports = [
-      ...(profile.mode === "defined" ? defined : profile.mode === "aot" ? aot : sql),
+      ...(nativeResults ? nativeAotExports : profile.mode === "defined" ? defined : profile.mode === "aot" ? aot : sql),
     ];
     if (profile.features.includes("binarySync")) exports.push("database_changeset");
     if (profile.features.includes("sqlitePages"))
@@ -173,13 +181,13 @@ export async function buildSqlikeRuntime(
     if (profile.mode === "sql" && profile.features.includes("ltx"))
       throw Error("ltx exports currently require the aot runtime");
     const entry =
-      profile.mode === "aot"
+      nativeResults ? "packages/sqlike/src/experimental-aot-typed" : profile.mode === "aot"
         ? "examples/aot/src/runtime"
         : profile.mode === "defined"
           ? definedEntry
           : "packages/sqlike/src";
     const imports =
-      profile.mode === "aot"
+      nativeResults ? 'import { "mizchi/sqlike", "mizchi/sqlike/experimental-typed" @native }\n' : profile.mode === "aot"
         ? 'import { "mizchi/sqlike", "mizchi/litestream" }\n'
         : profile.mode === "defined"
           ? 'import { "mizchi/sqlike" }\n'
@@ -187,7 +195,9 @@ export async function buildSqlikeRuntime(
     await writeFile(
       join(work, entry, "moon.pkg"),
       imports +
-        `\noptions(link: { "js": { "exports": ${JSON.stringify(exports)}, "format": "esm" }, "wasm-gc": { "exports": ${JSON.stringify(exports)}, "use-js-builtin-string": true, "imported-string-constants": "_" } })\n`,
+        (nativeResults
+          ? `\noptions(targets: { "aot.mbt": ["js"] }, link: { "js": { "exports": ${JSON.stringify(exports)}, "format": "esm" } })\n`
+          : `\noptions(link: { "js": { "exports": ${JSON.stringify(exports)}, "format": "esm" }, "wasm-gc": { "exports": ${JSON.stringify(exports)}, "use-js-builtin-string": true, "imported-string-constants": "_" } })\n`),
     );
     // The profile package is the only link target; imports still compile normally.
     await mkdir(output, { recursive: true });
@@ -197,7 +207,7 @@ export async function buildSqlikeRuntime(
         maxBuffer: 4 * 1024 * 1024,
       });
       const base =
-        profile.mode === "aot"
+        nativeResults ? "mizchi/sqlike/experimental-aot-typed/experimental-aot-typed" : profile.mode === "aot"
           ? "mizchi/litestream-example/runtime/runtime"
           : profile.mode === "defined"
             ? "mizchi/sqlike/defined/defined"
@@ -216,7 +226,7 @@ export async function buildSqlikeRuntime(
         );
       else await copyFile(artifact, join(output, "runtime.wasm"));
     }
-    await writeFile(join(output, "runtime.d.ts"), runtimeDeclarations(exports));
+    await writeFile(join(output, "runtime.d.ts"), nativeResults ? nativeAotDeclarations() : runtimeDeclarations(exports));
     await writeFile(
       join(output, "package.json"),
       JSON.stringify({
@@ -232,6 +242,7 @@ export async function buildSqlikeRuntime(
           ...profile,
           exports,
           targets,
+          ...(nativeResults ? { nativeResults: true } : {}),
           minify: targets.includes("js") && minify ? "oxc" : false,
           ...(requirements ? { requirements } : {}),
         },
@@ -251,6 +262,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1]
   const data = JSON.parse(await readFile(config, "utf8")) as {
     mode?: SqlikeProfile["mode"];
     features?: import("../src/sqlike-features.ts").SqlikeFeatureName[];
+    nativeResults?: boolean;
     catalog?: string | CatalogSource;
   };
   const built = await buildSqlikeRuntime(
@@ -260,6 +272,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1]
     }),
     {
       outDir,
+      nativeResults: data.nativeResults,
       catalog:
         typeof data.catalog === "string"
           ? JSON.parse(await readFile(resolve(dirname(resolve(config)), data.catalog), "utf8"))

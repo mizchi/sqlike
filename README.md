@@ -45,14 +45,14 @@ The horizontal axis is logarithmic: each tick doubles the size. Labels show KiB.
 <!-- bundle-size:start -->
 | Build | minified, uncompressed | Brotli |
 | --- | ---: | ---: |
-| SQLike 0.1.2 (source) / SQL / JS | 635.49 KiB | 119.13 KiB |
-| SQLike 0.1.2 (source) / SQL / Wasm GC | 560.75 KiB | 176.03 KiB |
-| SQLike 0.1.2 (source) / Predefined, all execution features / JS | 520.41 KiB | 102.81 KiB |
-| SQLike 0.1.2 (source) / Predefined, all execution features / Wasm GC | 461.54 KiB | 147.72 KiB |
-| SQLike 0.1.2 (source) / Predefined, no JSON/date/window / JS | 480.59 KiB | 94.84 KiB |
-| SQLike 0.1.2 (source) / Predefined, no JSON/date/window / Wasm GC | 432.07 KiB | 137.30 KiB |
-| SQLike 0.1.2 (source) / Predefined, primary-key index only / JS | 459.16 KiB | 90.63 KiB |
-| SQLike 0.1.2 (source) / Predefined, primary-key index only / Wasm GC | 413.66 KiB | 131.82 KiB |
+| SQLike 0.1.2 (source) / SQL / JS | 635.49 KiB | 119.08 KiB |
+| SQLike 0.1.2 (source) / SQL / Wasm GC | 560.73 KiB | 176.11 KiB |
+| SQLike 0.1.2 (source) / Predefined, all execution features / JS | 520.41 KiB | 102.88 KiB |
+| SQLike 0.1.2 (source) / Predefined, all execution features / Wasm GC | 461.52 KiB | 147.91 KiB |
+| SQLike 0.1.2 (source) / Predefined, no JSON/date/window / JS | 480.59 KiB | 95.08 KiB |
+| SQLike 0.1.2 (source) / Predefined, no JSON/date/window / Wasm GC | 432.06 KiB | 137.18 KiB |
+| SQLike 0.1.2 (source) / Predefined, primary-key index only / JS | 459.16 KiB | 90.74 KiB |
+| SQLike 0.1.2 (source) / Predefined, primary-key index only / Wasm GC | 413.66 KiB | 131.69 KiB |
 | sqlite-wasm 3.54.1-build1 | 1313.74 KiB | 462.33 KiB |
 | Turso 0.8.3 | 11709.66 KiB | 2675.96 KiB |
 <!-- bundle-size:end -->
@@ -85,18 +85,18 @@ These are **engine files only**, excluding the host, IndexedDB wrappers, schema/
 <!-- catalog-runtime-size:start -->
 | Catalog / mode | Minified JS | JS Brotli | Release Wasm | Wasm Brotli |
 | --- | ---: | ---: | ---: | ---: |
-| Read only / AOT | 408.02 KiB | 76.34 KiB | 367.28 KiB | 113.92 KiB |
-| Read only / defined | 378.63 KiB | 73.84 KiB | 338.25 KiB | 108.31 KiB |
-| GLOB + char / AOT | 410.79 KiB | 76.99 KiB | 370.24 KiB | 114.65 KiB |
-| GLOB + char / defined | 381.40 KiB | 74.35 KiB | 341.26 KiB | 109.01 KiB |
-| JSON construction / AOT | 414.31 KiB | 77.43 KiB | 371.79 KiB | 115.70 KiB |
-| JSON construction / defined | 384.87 KiB | 74.83 KiB | 342.66 KiB | 109.43 KiB |
-| Nested JSON / AOT | 419.04 KiB | 78.09 KiB | 376.30 KiB | 116.73 KiB |
-| Nested JSON / defined | 389.53 KiB | 75.57 KiB | 347.37 KiB | 110.61 KiB |
-| Recursive CTE + JSON aggregate / AOT | 427.48 KiB | 79.63 KiB | 385.93 KiB | 119.07 KiB |
-| Recursive CTE + JSON aggregate / defined | 397.97 KiB | 77.19 KiB | 357.37 KiB | 113.32 KiB |
-| Notes CRUD / AOT | 438.35 KiB | 82.03 KiB | 392.25 KiB | 122.42 KiB |
-| Notes CRUD / defined | 408.70 KiB | 79.35 KiB | 363.41 KiB | 116.04 KiB |
+| Read only / AOT | 408.02 KiB | 76.55 KiB | 367.28 KiB | 114.05 KiB |
+| Read only / defined | 378.63 KiB | 73.81 KiB | 338.25 KiB | 108.20 KiB |
+| GLOB + char / AOT | 410.79 KiB | 76.92 KiB | 370.24 KiB | 114.70 KiB |
+| GLOB + char / defined | 381.40 KiB | 74.28 KiB | 341.26 KiB | 108.88 KiB |
+| JSON construction / AOT | 414.31 KiB | 77.40 KiB | 371.79 KiB | 115.74 KiB |
+| JSON construction / defined | 384.87 KiB | 74.79 KiB | 342.66 KiB | 109.49 KiB |
+| Nested JSON / AOT | 419.04 KiB | 78.08 KiB | 376.31 KiB | 116.84 KiB |
+| Nested JSON / defined | 389.53 KiB | 75.57 KiB | 347.37 KiB | 110.91 KiB |
+| Recursive CTE + JSON aggregate / AOT | 427.48 KiB | 79.64 KiB | 385.93 KiB | 119.20 KiB |
+| Recursive CTE + JSON aggregate / defined | 397.97 KiB | 77.02 KiB | 357.37 KiB | 113.26 KiB |
+| Notes CRUD / AOT | 438.35 KiB | 82.17 KiB | 392.26 KiB | 122.33 KiB |
+| Notes CRUD / defined | 408.70 KiB | 79.48 KiB | 363.41 KiB | 116.45 KiB |
 <!-- catalog-runtime-size:end -->
 
 </details>
@@ -121,13 +121,13 @@ Each panel starts at zero and uses its own scale. Bars show medians; whiskers sh
 <!-- sqlite-benchmark:start -->
 | Workload | SQLike JS, SQL | SQLike Wasm GC, SQL | SQLite WASM, SQL | SQLite WASM, prepared |
 | --- | ---: | ---: | ---: | ---: |
-| Primary-key lookup | 30.64 | 7.06 | 4.28 | 1.67 |
-| Missing primary key | 35.85 | 6.59 | 3.26 | 0.58 |
-| Indexed range · 10 rows | 52.40 | 14.33 | 17.82 | 12.65 |
-| ORDER BY id · LIMIT 10 | 45.64 | 10.87 | 14.67 | 11.05 |
-| SUM + COUNT · 5,000 rows | 115.65 | 61.95 | 131.90 | 126.96 |
-| Fetch all 5,000 rows | 2,019.23 | 2,156.52 | 5,400.00 | 5,360.00 |
-| Indexed UPDATE + range read | 67.76 | 19.63 | 22.43 | 14.35 |
+| Primary-key lookup | 25.97 | 6.06 | 3.74 | 1.43 |
+| Missing primary key | 25.85 | 5.43 | 2.58 | 0.45 |
+| Indexed range · 10 rows | 44.02 | 11.85 | 14.49 | 10.76 |
+| ORDER BY id · LIMIT 10 | 38.20 | 9.00 | 12.50 | 9.57 |
+| SUM + COUNT · 5,000 rows | 91.55 | 49.80 | 106.08 | 103.09 |
+| Fetch all 5,000 rows | 1,696.55 | 1,867.86 | 4,516.67 | 4,466.67 |
+| Indexed UPDATE + range read | 63.88 | 17.23 | 19.17 | 12.18 |
 <!-- sqlite-benchmark:end -->
 
 </details>

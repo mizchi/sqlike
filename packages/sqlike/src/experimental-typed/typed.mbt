@@ -62,7 +62,15 @@ pub fn prepare(db : @sqlike.Database, sql : String) -> @sqlike.SqlPrepared {
 
 ///|
 pub fn values(query : @sqlike.SqlPrepared, bindings : String) -> NativeValue {
-  match @sqlike.query_prepared_values(query, bindings) {
+  native_result(@sqlike.query_prepared_values(query, bindings))
+}
+
+///|
+/// Shared by optional JS adapters; not a default runtime or JS export.
+pub fn native_result(
+  result : Result[Array[Array[@sqlike.Value]], String],
+) -> NativeValue {
+  match result {
     Err(message) => failure(message)
     Ok(rows) => {
       let rows = rows.map(row => {

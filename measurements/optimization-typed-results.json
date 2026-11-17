@@ -1,9 +1,9 @@
 {
-  "measuredAt": "2026-11-17T12:30:25.966Z",
+  "measuredAt": "2026-11-17T13:52:49.556Z",
   "smoke": false,
   "cpu": "Apple M5",
   "chromium": "158.0.8127.18",
-  "method": "Both JS paths return native Value[][] including BigInt, finite numeric and text fields. Legacy prepared JSON ABI includes JSON.parse plus per-cell native conversion. Experimental SELECT-only ABI keeps JSON bindings but returns primitives through public FFI; no internal enum layout crosses into JS. Setup excluded; same native SQLite image, pre/post exact typed native oracle, rotated order, three samples targeting 20ms, scan at most two iterations. Separate from Cell[][] legacy benchmark; no claim that the two ABI workloads are identical.",
+  "method": "Four JS paths return native Value[][]: SQL prepared JSON/native and AOT JSON/native. JSON includes JSON.parse plus per-cell conversion; AOT JSON retains its named execution API. Native AOT reuses one Statement, returns native rows and clears transient bindings/results on each call. Both native paths keep JSON bindings and share primitive/FixedArray FFI with copied blobs. Setup excluded: import the native SQLite fixture once, restore row data into each AOT program's own validated schema, check exact typed native results before/after timing. Three samples targeting 20ms, scan at most two iterations, 120s page watchdog. Separate from Cell[][] legacy benchmark; no identical-ABI claim.",
   "sourceHashes": {
     "examples/aot/moon.mod": "86e6cfb0ba281f0f61093966e433abccf9a1ab8a3bb40265e68a52e65258327a",
     "examples/aot/src/runtime/moon.pkg": "c25199d21d0bdf5eadde9fd2d65b70f6b6e517c839be10a215f39c5706be14be",
@@ -29,6 +29,8 @@
     "packages/sqlike/src/aggregate_sum.mbt": "e09ec3388045c47098d36cc39efa47abac3ddf73f312cfdd87a75a610e35fcd4",
     "packages/sqlike/src/aot.mbt": "fd2a750128171ca24f921cbcd0b82d5456d212caa8acc048423ed3cced7427b9",
     "packages/sqlike/src/aot_bench_wbtest.mbt": "ea9756d22d1bc37a14b32f7707fa1c018c018d41f76aeddb7e87303950c8125a",
+    "packages/sqlike/src/aot_native.mbt": "00d64939866e0198a4fdd194ffde5c932b13a19d3001f838fdcb1aa541bf460a",
+    "packages/sqlike/src/aot_native_wbtest.mbt": "ff7fb63cfac1605c706c278f886b9833a389f923f9840f6d4a9e806abb848e13",
     "packages/sqlike/src/binary_base64.mbt": "3ff209995156c359a77d5488f278337fb4b58be27785e79e53dfb3c43cb0c6f6",
     "packages/sqlike/src/binary_catalog.mbt": "3bb5a151775612e29d8a657d0d809ac1ae107f6084aa149adb2354151d66947b",
     "packages/sqlike/src/binary_generated.mbt": "1d70c23033c5f4e2c58380db3925bf4f1fc8c22bcba61e35c19d94b5a019cd8a",
@@ -57,8 +59,10 @@
     "packages/sqlike/src/delete_cache_wbtest.mbt": "e83f1556868e9eef124d00cfa528f60c5a4fd58a74c2fe2f582ec17b2efe304a",
     "packages/sqlike/src/evaluate.mbt": "67dc9ebde358babef258f002aa53977621a3367edf0934f72f4a7d984e2b11cd",
     "packages/sqlike/src/execute.mbt": "f543b2f2ea49d344d48117d4701d0fe7ca16108d93e71c30bd086de0909da8d9",
+    "packages/sqlike/src/experimental-aot-typed/aot.mbt": "29230a00ae08cc9c9ab779645c6bf6a842299bd9c29f16fd3d510acaf4375594",
+    "packages/sqlike/src/experimental-aot-typed/moon.pkg": "4e600258c705c2b05e9d898f16ae2877e3d27bb014a3d3c6c0ca39014de2f412",
     "packages/sqlike/src/experimental-typed/moon.pkg": "084d8ea4cb24e8db437722c851ccca28bafb90b4530e16ec30640c1499754ef7",
-    "packages/sqlike/src/experimental-typed/typed.mbt": "6a57da383d1884c2afa6d6ec9712e2a5fc3775b377915bb99b87907ad082af2a",
+    "packages/sqlike/src/experimental-typed/typed.mbt": "ff96c7acc13293bb21910933f30d8bb2dcac94fc3f331c4f792684711ec5f112",
     "packages/sqlike/src/experimental_rows.mbt": "248afbc52749bbfde91ad8a59e06e5fb0f2019cb8449ac8070a11aafcc0167fc",
     "packages/sqlike/src/feature_config.mbt": "8ac72b52c318850f7dc69d63c105496ab6ea7216b6db32532470ee17c19b82f2",
     "packages/sqlike/src/feature_validation.mbt": "511fa120a414b92fdbc840174fd0c08c78c50b206264889a8f040b6a0b9eb6fc",
@@ -133,99 +137,186 @@
     "packages/sqlike/src/value.mbt": "e96cb4d18b594a47bf7c00654445a9ed9b770138903bf26c3cea1ead52be4013",
     "packages/sqlike/src/window.mbt": "25b144661bf5c0ee9e3650d6072fc97b2a13812831af3ae395f95dfca3b82f47",
     "pnpm-lock.yaml": "62a9334c27b9f3876361edc3c9f74a0ed5e11866e28403cc065e1bdba7d70012",
-    "scripts/bench-typed-results.ts": "f7c69aaa856d908b920ed50961b0c488d8bf15a6b5696acc37316a04c8e694a1",
+    "scripts/bench-typed-results.ts": "24ef37286cedd974630f9ab3578dc9fcaad7c77a4af36737f1620a9616173bdd",
     "scripts/measurement-manifest.ts": "615c0ab32c0b2e01c57ea1be690a2a08d2e9401b9b0c5d93574520253c16acdb",
     "src/aot-values.ts": "6edf9316e1e5cb42b4099c148c9f9b84bf0acf3903c5409975d4ce8b0f5aa438"
   },
   "artifacts": {
-    "_build/js/release/build/mizchi/sqlike/sqlike.js": "b85a04333d41bcbaf7a042d6a97e33361b2b3ad56d595eb28d2c59d7c572dae9",
-    "_build/js/release/build/mizchi/sqlike/experimental-typed/experimental-typed.js": "9bdb59abf8bfda9570693f67b0025b2a93477f97db3935c3e5b34a98c4fcb010"
+    "_build/js/release/build/mizchi/sqlike/sqlike.js": "79f289d5c8a154b6c95083b448a426b7a8e8a9cba02d560d17acee327da36157",
+    "_build/js/release/build/mizchi/sqlike/experimental-typed/experimental-typed.js": "2e187c1cd7eed1683d4a4bb6e34e9969ad411fc2070963e562bdf18c892ab693",
+    "_build/js/release/build/mizchi/litestream-example/runtime/runtime.js": "dc182a6c71b1233b540f726e2b0f0726fc8d5e5804ba28f2988ea9a1653aacd1",
+    "_build/js/release/build/mizchi/sqlike/experimental-aot-typed/experimental-aot-typed.js": "d9702bc5ac496f4330cd96b1e57ecb5c67b4a5d98219e05ea90dcb7ad3524303"
   },
   "results": [
     {
       "rows": 1000,
       "verified": true,
+      "programSHA256": "50d0d362399d833234adf286a7c55fa8864bf9aba59e958b3f11aaa4514284a1",
       "samples": [
         {
           "query": "point",
           "engine": "json-to-native-values",
           "run": 0,
-          "iterations": 5015,
-          "milliseconds": 10.099999904632568
+          "iterations": 7666,
+          "milliseconds": 13
         },
         {
           "query": "point",
           "engine": "native-values",
           "run": 0,
-          "iterations": 10393,
-          "milliseconds": 12
+          "iterations": 12824,
+          "milliseconds": 11.5
+        },
+        {
+          "query": "point",
+          "engine": "aot-json-to-native-values",
+          "run": 0,
+          "iterations": 7353,
+          "milliseconds": 17.5
+        },
+        {
+          "query": "point",
+          "engine": "aot-native-values",
+          "run": 0,
+          "iterations": 12582,
+          "milliseconds": 12.899999856948853
+        },
+        {
+          "query": "point",
+          "engine": "aot-native-values",
+          "run": 1,
+          "iterations": 12582,
+          "milliseconds": 8.600000143051147
+        },
+        {
+          "query": "point",
+          "engine": "aot-json-to-native-values",
+          "run": 1,
+          "iterations": 7353,
+          "milliseconds": 11.599999904632568
         },
         {
           "query": "point",
           "engine": "native-values",
           "run": 1,
-          "iterations": 10393,
-          "milliseconds": 8.299999952316284
+          "iterations": 12824,
+          "milliseconds": 8.599999904632568
         },
         {
           "query": "point",
           "engine": "json-to-native-values",
           "run": 1,
-          "iterations": 5015,
-          "milliseconds": 7.900000095367432
+          "iterations": 7666,
+          "milliseconds": 9.900000095367432
         },
         {
           "query": "point",
           "engine": "json-to-native-values",
           "run": 2,
-          "iterations": 5015,
-          "milliseconds": 8.200000047683716
+          "iterations": 7666,
+          "milliseconds": 8.099999904632568
         },
         {
           "query": "point",
           "engine": "native-values",
           "run": 2,
-          "iterations": 10393,
-          "milliseconds": 6.700000047683716
+          "iterations": 12824,
+          "milliseconds": 7.5
+        },
+        {
+          "query": "point",
+          "engine": "aot-json-to-native-values",
+          "run": 2,
+          "iterations": 7353,
+          "milliseconds": 9.800000190734863
+        },
+        {
+          "query": "point",
+          "engine": "aot-native-values",
+          "run": 2,
+          "iterations": 12582,
+          "milliseconds": 8
         },
         {
           "query": "scan",
           "engine": "json-to-native-values",
           "run": 0,
           "iterations": 2,
-          "milliseconds": 1.0999999046325684
+          "milliseconds": 1
         },
         {
           "query": "scan",
           "engine": "native-values",
           "run": 0,
           "iterations": 2,
-          "milliseconds": 0.39999985694885254
+          "milliseconds": 0.40000009536743164
         },
         {
           "query": "scan",
-          "engine": "native-values",
+          "engine": "aot-json-to-native-values",
+          "run": 0,
+          "iterations": 2,
+          "milliseconds": 1
+        },
+        {
+          "query": "scan",
+          "engine": "aot-native-values",
+          "run": 0,
+          "iterations": 2,
+          "milliseconds": 0.5
+        },
+        {
+          "query": "scan",
+          "engine": "aot-native-values",
           "run": 1,
           "iterations": 2,
           "milliseconds": 0.2999999523162842
         },
         {
           "query": "scan",
+          "engine": "aot-json-to-native-values",
+          "run": 1,
+          "iterations": 2,
+          "milliseconds": 1
+        },
+        {
+          "query": "scan",
+          "engine": "native-values",
+          "run": 1,
+          "iterations": 2,
+          "milliseconds": 0.3000001907348633
+        },
+        {
+          "query": "scan",
           "engine": "json-to-native-values",
           "run": 1,
           "iterations": 2,
-          "milliseconds": 1.1000001430511475
+          "milliseconds": 1
         },
         {
           "query": "scan",
           "engine": "json-to-native-values",
           "run": 2,
           "iterations": 2,
-          "milliseconds": 1.2999999523162842
+          "milliseconds": 1.2000000476837158
         },
         {
           "query": "scan",
           "engine": "native-values",
+          "run": 2,
+          "iterations": 2,
+          "milliseconds": 0.2999999523162842
+        },
+        {
+          "query": "scan",
+          "engine": "aot-json-to-native-values",
+          "run": 2,
+          "iterations": 2,
+          "milliseconds": 1.0999999046325684
+        },
+        {
+          "query": "scan",
+          "engine": "aot-native-values",
           "run": 2,
           "iterations": 2,
           "milliseconds": 0.2999999523162842
@@ -235,90 +326,175 @@
     {
       "rows": 100000,
       "verified": true,
+      "programSHA256": "50d0d362399d833234adf286a7c55fa8864bf9aba59e958b3f11aaa4514284a1",
       "samples": [
         {
           "query": "point",
           "engine": "json-to-native-values",
           "run": 0,
-          "iterations": 4767,
-          "milliseconds": 9.5
+          "iterations": 8000,
+          "milliseconds": 14
         },
         {
           "query": "point",
           "engine": "native-values",
           "run": 0,
-          "iterations": 17098,
-          "milliseconds": 16.40000009536743
+          "iterations": 12821,
+          "milliseconds": 10.599999904632568
+        },
+        {
+          "query": "point",
+          "engine": "aot-json-to-native-values",
+          "run": 0,
+          "iterations": 7800,
+          "milliseconds": 13.200000047683716
+        },
+        {
+          "query": "point",
+          "engine": "aot-native-values",
+          "run": 0,
+          "iterations": 15878,
+          "milliseconds": 13.599999904632568
+        },
+        {
+          "query": "point",
+          "engine": "aot-native-values",
+          "run": 1,
+          "iterations": 15878,
+          "milliseconds": 11.5
+        },
+        {
+          "query": "point",
+          "engine": "aot-json-to-native-values",
+          "run": 1,
+          "iterations": 7800,
+          "milliseconds": 11.600000143051147
         },
         {
           "query": "point",
           "engine": "native-values",
           "run": 1,
-          "iterations": 17098,
-          "milliseconds": 12
+          "iterations": 12821,
+          "milliseconds": 9.199999809265137
         },
         {
           "query": "point",
           "engine": "json-to-native-values",
           "run": 1,
-          "iterations": 4767,
-          "milliseconds": 6.799999952316284
+          "iterations": 8000,
+          "milliseconds": 10
         },
         {
           "query": "point",
           "engine": "json-to-native-values",
           "run": 2,
-          "iterations": 4767,
-          "milliseconds": 6.1000001430511475
+          "iterations": 8000,
+          "milliseconds": 8.700000047683716
         },
         {
           "query": "point",
           "engine": "native-values",
           "run": 2,
-          "iterations": 17098,
-          "milliseconds": 11.799999952316284
+          "iterations": 12821,
+          "milliseconds": 8.600000143051147
+        },
+        {
+          "query": "point",
+          "engine": "aot-json-to-native-values",
+          "run": 2,
+          "iterations": 7800,
+          "milliseconds": 10.099999904632568
+        },
+        {
+          "query": "point",
+          "engine": "aot-native-values",
+          "run": 2,
+          "iterations": 15878,
+          "milliseconds": 10.900000095367432
         },
         {
           "query": "scan",
           "engine": "json-to-native-values",
           "run": 0,
           "iterations": 1,
-          "milliseconds": 82.69999980926514
+          "milliseconds": 70.90000009536743
         },
         {
           "query": "scan",
           "engine": "native-values",
           "run": 0,
           "iterations": 1,
-          "milliseconds": 21.09999990463257
+          "milliseconds": 17.5
+        },
+        {
+          "query": "scan",
+          "engine": "aot-json-to-native-values",
+          "run": 0,
+          "iterations": 1,
+          "milliseconds": 83.40000009536743
+        },
+        {
+          "query": "scan",
+          "engine": "aot-native-values",
+          "run": 0,
+          "iterations": 2,
+          "milliseconds": 37.09999990463257
+        },
+        {
+          "query": "scan",
+          "engine": "aot-native-values",
+          "run": 1,
+          "iterations": 2,
+          "milliseconds": 35.799999952316284
+        },
+        {
+          "query": "scan",
+          "engine": "aot-json-to-native-values",
+          "run": 1,
+          "iterations": 1,
+          "milliseconds": 75.40000009536743
         },
         {
           "query": "scan",
           "engine": "native-values",
           "run": 1,
           "iterations": 1,
-          "milliseconds": 21.800000190734863
+          "milliseconds": 52.90000009536743
         },
         {
           "query": "scan",
           "engine": "json-to-native-values",
           "run": 1,
           "iterations": 1,
-          "milliseconds": 91.40000009536743
+          "milliseconds": 86.79999995231628
         },
         {
           "query": "scan",
           "engine": "json-to-native-values",
           "run": 2,
           "iterations": 1,
-          "milliseconds": 84.20000004768372
+          "milliseconds": 80.5
         },
         {
           "query": "scan",
           "engine": "native-values",
           "run": 2,
           "iterations": 1,
-          "milliseconds": 20.09999990463257
+          "milliseconds": 20.59999990463257
+        },
+        {
+          "query": "scan",
+          "engine": "aot-json-to-native-values",
+          "run": 2,
+          "iterations": 1,
+          "milliseconds": 81.09999990463257
+        },
+        {
+          "query": "scan",
+          "engine": "aot-native-values",
+          "run": 2,
+          "iterations": 2,
+          "milliseconds": 36.90000009536743
         }
       ]
     }
