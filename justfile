@@ -15,6 +15,24 @@ check:
     pnpm check
     just sqlite-output-check
 
+# Match independent PR jobs; generated declarations are needed on a fresh checkout.
+ci-typecheck:
+    pnpm build:core
+    pnpm typecheck
+
+ci-node:
+    test -x "${LITESTREAM_BIN:?set LITESTREAM_BIN to a real Litestream executable}"
+    pnpm test:core
+    pnpm test:unit
+
+ci-browser:
+    test -x "${LITESTREAM_BIN:?set LITESTREAM_BIN to a real Litestream executable}"
+    pnpm build
+    pnpm build:moon-wasm
+    pnpm test:e2e
+    just differential-audit
+    just sqlite-output-check
+
 # Check both workspace modules from the repository root.
 moon-check:
     moon check --target js
