@@ -175,10 +175,10 @@ notes Programは20,049 B、SHA-256 `a6af7a52769d67773842aae483fcb856b46f628e3118
 
 ### P0
 
-- [ ] **Q01 / P0 — PRで回帰ゲートを自動実行**
+- [x] **Q01 / P0 — PRで回帰ゲートを自動実行**
   - 完了条件: Node 24 / MoonBit版を固定し、型・MoonBit JS / Wasm・SQLite差分・主要な保存 / 復旧回帰・任意機能の除去をPRで実行。リリース専用workflowとは分離する
   - 依存・費用: 小〜中。DELETE改善の次に進める。環境依存の速度閾値や全量benchmarkを通常PRの必須条件にはしない
-  - 実装: [PR回帰CI](ci.md)。typecheck / core / browserの独立job、固定toolchain、pnpm cache、Go / Litestream / Chromium、失敗時のログとtraceを用意。fresh checkoutの生成型依存を確認し、実PRのLinux実行で検証する
+  - 結果: [PR回帰CI](ci.md)。typecheck / core / browserの独立job、固定toolchain、pnpm cache、Go / Litestream / Chromium、失敗時のログとtraceを用意。fresh checkoutの生成型依存を確認し、[実PRのLinux run](https://github.com/mizchi/sqlike/actions/runs/44086898693)で3 job成功。MoonBit 68件×JS / Wasm、Node 398件、Chromium 59件、対応済み566ケース×12経路の不一致0
 
 - [x] **V01 / P0 — 現行ソースで性能・容量・メモリの基準を再採取**
   - 完了条件: 同じSQL・seed・行数・payloadでSQL / IDB / アプリ転送 / 機能別サイズを採取しhashを記録。保持 / peak / backing storageを分離し、旧値と比較。DOの型復元による追加問い合わせも別計測

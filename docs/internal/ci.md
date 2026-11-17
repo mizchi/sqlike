@@ -32,3 +32,15 @@ LITESTREAM_BIN=/path/to/litestream just ci-browser
 coreのNodeテストにはChromiumを使う独立consumer検証もあるため、core jobにもChromiumを入れる。browser jobの差分checkerはそのrunで生成したNode / Chromiumの記録を照合する。
 
 性能・容量・heapの全量再計測は`just p0-measure`へ残す。PRでは決定的な互換性と機能の除去を検査し、runnerの速度を基準マシンの閾値と比較しない。npmの公開は既存のtag専用workflowで扱う。
+
+## Linuxでの実行記録
+
+2026-11-17、[PR #5](https://github.com/mizchi/sqlike/pull/5)の実装HEAD `976c50e`で[初回run](https://github.com/mizchi/sqlike/actions/runs/44086898693)が3 jobとも成功した。
+
+| job | setupを含む所要時間 | 結果 |
+| --- | ---: | --- |
+| typecheck | 48秒 | fresh build後の型チェック成功 |
+| core | 172秒 | MoonBit 68件×JS / Wasm、Node 398件、skip 0 |
+| browser | 264秒 | Chromium 59件、差分566ケース×12経路の不一致0、成功出力458 probe一致 |
+
+Linuxでのatomic拒否は各target 243件だった。参照SQLiteの能力を含む実行環境ごとの記録で、ローカルmacOSの244件を固定の期待件数として流用しない。型・行・失敗後状態の不一致は両環境とも0。初回の所要時間は観測値であり、PRの速度閾値にはしない。
