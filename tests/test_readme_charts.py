@@ -32,14 +32,19 @@ class ReadmeChartTests(unittest.TestCase):
                 catalog_data(invalid)
 
     def test_catalog_tables_keep_js_and_wasm_separate_in_both_languages(self):
-        rows = catalog_data(json.loads((ROOT / "measurements/catalog-profiles-current.json").read_text()))
+        report = json.loads((ROOT / "measurements/catalog-profiles-current.json").read_text())
+        # Distinct sentinels verify the column order without pinning live sizes.
+        fixture = next(r for r in report["results"] if r["id"] == "readonly" and r["mode"] == "defined")
+        fixture["assets"]["selected"]["js"].update(raw=123 * 1024, brotli=45 * 1024)
+        fixture["assets"]["selected"]["wasm"].update(raw=678 * 1024, brotli=90 * 1024)
+        rows = catalog_data(report)
         source = "before\n<!-- catalog-runtime-size:start -->\nstale\n<!-- catalog-runtime-size:end -->\nafter\n"
         english, japanese = [update_catalog_table(source, rows, language) for language in ["en", "ja"]]
         self.assertIn("Read only / defined", english)
         self.assertIn("読取専用 / defined", japanese)
         self.assertNotIn("stale", english)
         for table in [english, japanese]:
-            self.assertIn("357.70 KiB | 70.59 KiB", table)
+            self.assertIn("123.00 KiB | 45.00 KiB | 678.00 KiB | 90.00 KiB", table)
             self.assertTrue(table.startswith("before\n<!-- catalog-runtime-size:start -->\n"))
             self.assertTrue(table.endswith("<!-- catalog-runtime-size:end -->\nafter\n"))
             for row in rows:

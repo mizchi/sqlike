@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.2] - 2026-11-17
+
+### Changed
+
+- Execute fixed-schema UPDATEs and simple primary-key SELECTs through a separate prepared IR in JSON AOT and binary defined runtimes. Bind table/column slots, comparison rules, assignment targets, RETURNING projections and primary-key access once; read rows, parameters, indexes and connection state on each execution. Complex expressions retain the validated AST evaluator.
+
 ## [0.1.1] - 2026-11-17
 
 ### Added
@@ -45,4 +51,5 @@ Recompile fixed catalogs with the 0.1.1 compiler. SQLite compatibility remains a
 対応範囲・導入時の制約は[リリースノート](docs/releases/v0.1.0.md)を参照。SQLite全機能互換は未達。全文検索は任意パッケージ、LSMは実験専用で通常バンドルに含めない。
 
 [0.1.0]: https://github.com/mizchi/sqlike/releases/tag/v0.1.0
+[0.1.2]: https://github.com/mizchi/sqlike/releases/tag/v0.1.2
 [0.1.1]: https://github.com/mizchi/sqlike/releases/tag/v0.1.1

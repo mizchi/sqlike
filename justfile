@@ -60,6 +60,13 @@ aot-phase-bench:
     moon bench packages/sqlike/src/aot_bench_wbtest.mbt --target js --release
     moon bench packages/sqlike/src/aot_bench_wbtest.mbt --target wasm-gc --release
 
+# JSON/binary UPDATE: same value, real changes, RETURNING, misses and failures.
+# Optional --before-dir holds runtime.{js,wasm} and defined.{js,wasm} snapshots.
+aot-update-bench *args:
+    pnpm build:core
+    pnpm build:moon-wasm
+    pnpm exec tsx scripts/bench-aot-update.ts {{args}}
+
 # Warm-index fork/UPDATE/DELETE and retained versions; optional previous runtimes.
 row-store-bench *args:
     pnpm build:core
@@ -315,6 +322,7 @@ p0-measure:
     pnpm build:moon-wasm
     pnpm exec tsx --test tests/heap-sampling.test.ts tests/measurement-manifest.test.ts
     pnpm exec tsx scripts/bench-sqlite.ts --profile-queries=aggregate,limit,update
+    pnpm exec tsx scripts/bench-aot-update.ts
     pnpm exec tsx scripts/bench-row-store.ts
     pnpm exec tsx scripts/bench-indexeddb.ts
     pnpm exec tsx scripts/bench-indexeddb.ts --blob --output=measurements/indexeddb-blob-current.json

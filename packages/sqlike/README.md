@@ -3,7 +3,7 @@
 MoonBitから使えるSQLiteサブセットです。動的SQLと事前コンパイルした問い合わせを実行でき、SQLite画像の読取・書き出しも扱います。Litestreamへの依存はありません。JS / Wasm GCに対応します。
 
 ```sh
-moon add mizchi/sqlike@0.1.1
+moon add mizchi/sqlike@0.1.2
 ```
 
 `moon.pkg`から`"mizchi/sqlike"`をimportします。

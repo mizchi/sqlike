@@ -9,6 +9,7 @@ import {
 } from "./measurement-manifest.ts";
 const paths = [
   "sqlite-speed-current",
+  "aot-update-current",
   "row-store-current",
   "indexeddb-speed-current",
   "indexeddb-blob-current",
@@ -41,6 +42,35 @@ const reports = Object.fromEntries(
   }),
 );
 const sql = reports["sqlite-speed-current"];
+const updates = reports["aot-update-current"];
+assert.deepEqual(
+  updates.results.map((r: any) => r.rows),
+  [100, 1000, 5000],
+);
+for (const artifact of updates.artifacts)
+  if (artifact.name.startsWith("after/")) assertFileHashes({ [artifact.path]: artifact.sha256 });
+for (const result of updates.results) {
+  assert.equal(result.verified, true);
+  const engines = updates.artifacts.filter((a: any) => a.name.startsWith("after/"));
+  assert.equal(engines.length, 8);
+  for (const engine of engines)
+    for (const name of [
+      "point",
+      "pointMiss",
+      "steady",
+      "indexed",
+      "plain",
+      "returning",
+      "miss",
+      "reject",
+    ]) {
+      const samples = result.samples.filter(
+        (s: any) => s.engine === engine.name && s.name === name,
+      );
+      assert.equal(samples.length, 7);
+      assert.ok(samples.every((s: any) => s.iterations > 0 && s.milliseconds > 0));
+    }
+}
 const catalogs = reports["catalog-profiles-current"];
 assert.equal(catalogs.format, "sqlike-catalog-profiles@1");
 assert.equal(catalogs.results.length, 12);

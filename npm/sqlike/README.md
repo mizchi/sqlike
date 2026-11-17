@@ -3,7 +3,7 @@
 MoonBit製のSQLiteサブセット。実行にMoonBitコンパイラやSQLite WASMは不要。ESM、Node.js 24以上と現行ブラウザ向け。SQLite全機能互換は未達で、対応範囲外は明示的に拒否する。
 
 ```sh
-pnpm add @mizchi/sqlike@0.1.1
+pnpm add @mizchi/sqlike@0.1.2
 ```
 
 ```js
@@ -47,7 +47,7 @@ await db.close();
 
 `DefinedDatabase.memory(catalog)`は保存なし。`withStore(catalog, store)`で保存先を差し替えられる。定義と保存schemaIdが違う場合は拒否し、自動migrationしない。SQL JSON / 日時 / window等を省いた独自生成ランタイムは`/defined/core`の`createDefinedDatabase(runtime)`へ渡す。機能選択ビルドのツールはリポジトリに含む。
 
-0.1.1では、`@mizchi/sqlike/compiler`の`analyzeCatalogRequirements(source)`で固定catalogの必要機能を解析できる。リポジトリのビルドツールへcatalogを渡すと、未使用の関数群・文・JOIN・CTE・複合SELECT・JSON処理を除去する。[ビルド方法と制限](https://github.com/mizchi/sqlike/blob/v0.1.1/docs/catalog-build.md)を参照。
+0.1.1では、`@mizchi/sqlike/compiler`の`analyzeCatalogRequirements(source)`で固定catalogの必要機能を解析できる。リポジトリのビルドツールへcatalogを渡すと、未使用の関数群・文・JOIN・CTE・複合SELECT・JSON処理を除去する。[ビルド方法と制限](https://github.com/mizchi/sqlike/blob/v0.1.2/docs/catalog-build.md)を参照。
 
 ## 任意のentry
 
