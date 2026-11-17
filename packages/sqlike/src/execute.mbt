@@ -1088,12 +1088,27 @@ fn database_exec_inner(
   bindings : String,
   read_only : Bool,
   positional : Bool,
+  prepared~ : SqlPrepared? = None,
 ) -> String {
   let mut backup : Store? = None
   let mut tracks_changes = false
   try {
-    let parser = lex(sql)
-    let stmt = parse_statement(parser)
+    let (stmt, count) = match prepared {
+      Some(query) => {
+        if query.error is Some(message) {
+          fail(message)
+        }
+        guard query.statement is Some(statement) else {
+          fail("invalid SQL plan")
+        }
+        (statement, query.parameters)
+      }
+      None => {
+        let parser = lex(sql)
+        let statement = parse_statement(parser)
+        (statement, parser.parameter)
+      }
+    }
     tracks_changes = stmt is Insert(_) ||
       stmt is Update(_, _, _, _) ||
       stmt is Delete(_, _, _)
@@ -1101,9 +1116,7 @@ fn database_exec_inner(
     let params = params_json.map(json_value) catch {
       _ => fail("invalid SQL bindings")
     }
-    guard parser.parameter == params.length() else {
-      fail("SQL binding count mismatch")
-    }
+    guard count == params.length() else { fail("SQL binding count mismatch") }
     let read = match stmt {
       Select(_) | Pragma(_, _, None) => true
       _ => false
@@ -1114,9 +1127,16 @@ fn database_exec_inner(
     if !read {
       backup = Some(copy_store(db.store))
     }
-    let rows = execute_statement(db.store, stmt, params)
+    let cookie = db.store.cookie
+    let rows = match prepared {
+      Some(query) => prepared_sql_rows(query, params)
+      None => execute_statement(db.store, stmt, params)
+    }
     if !read {
       db.serial += 1
+      if db.store.cookie != cookie {
+        db.schema_epoch += 1L
+      }
     }
     if positional {
       positional_result_json(rows, read)

@@ -7,6 +7,7 @@ import type {
 } from "@sqlite.org/sqlite-wasm";
 import type { Cell } from "../src/contract.ts";
 import { aotValue } from "../src/aot-values.ts";
+import { createSqlStatementCache } from "../src/sql-statement-cache.ts";
 
 export interface ComparisonQuery {
   name: string;
@@ -24,6 +25,8 @@ export interface ComparisonInput {
   rows: number;
   coldRows: number;
   runs: number;
+  prepared?: boolean;
+  retentionQuery?: { sql: string; bindings: string; expected: Cell[][] };
   batches: { name: string; sql: string; bindings: string }[];
   queries: ComparisonQuery[];
 }
@@ -137,6 +140,7 @@ export async function createComparison(input: ComparisonInput) {
   db.exec("PRAGMA foreign_keys=ON");
   for (const sql of input.schema) db.exec(sql);
   const drivers: Driver[] = [];
+  const cacheMemory: { engine: string; clear(): void; fill(): { entries: number; sqlBytes: number } }[] = [];
   for (const [name, aot, sql] of [
     ["js", jsAot, jsSql],
     ["wasm", wasmAot, wasmSql],
@@ -175,6 +179,34 @@ export async function createComparison(input: ComparisonInput) {
         close() {},
       },
     );
+    if (input.prepared) {
+      const cached = sql.database_open();
+      for (const statement of input.schema)
+        response(sql.database_exec(cached, statement, "[]", false));
+      for (const batch of input.batches)
+        response(sql.database_exec(cached, batch.sql, batch.bindings, false));
+      const cache = createSqlStatementCache({ capacity: 32 }, (text) => sql.database_prepare(cached, text))!;
+      const raw = (q: { sql: string; bindings: string; write?: boolean }) => {
+        const entry = cache.get(q.sql);
+        return entry
+          ? sql.database_prepared_exec(entry.handle, q.bindings, !q.write, !q.write)
+          : q.write ? sql.database_exec(cached, q.sql, q.bindings, false)
+          : sql.database_query_values(cached, q.sql, q.bindings);
+      };
+      drivers.push({ name: `sqlike-${name}/prepared`, call: q => response(raw(q)).rows, raw,
+        close() { cache.clear(); } });
+      cacheMemory.push({ engine: `sqlike-${name}/prepared`, clear: () => cache.clear(), fill() {
+        cache.clear();
+        const query = input.retentionQuery!;
+        let sqlBytes = 0;
+        for (let i = 0; i < 32; i++) {
+          const item = { ...query, sql: query.sql + ` /*retained ${i}*/` };
+          equal(response(raw(item)).rows, query.expected, "retained cache result");
+          sqlBytes += item.sql.length * 2;
+        }
+        return { entries: 32, sqlBytes };
+      } });
+    }
   }
   const seed = sqliteDriver(sqlite, db, true);
   for (const batch of input.batches) seed.call(batch);
@@ -367,6 +399,10 @@ export async function createComparison(input: ComparisonInput) {
         calls++;
       }
       return { calls, returnedRows, elapsedMs: performance.now() - start };
+    },
+    cacheMemory(engine: string, fill: boolean) {
+      if (!fill) { cacheMemory.forEach(cache => cache.clear()); return undefined; }
+      return cacheMemory.find(cache => cache.engine === engine)!.fill();
     },
     close() {
       for (const driver of drivers) driver.close();

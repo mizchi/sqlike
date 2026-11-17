@@ -4,6 +4,7 @@
 
 ### Added
 
+- Opt-in connection-local SQL statement cache with bounded LRU/text retention, schema-generation invalidation and shared prepared SELECT/UPDATE plans. Preserve the uncached API and parser-free AOT/defined builds.
 - SQLite-compatible `ceil`, `ceiling`, `floor` and `trunc`, with independent `mathRounding` catalog specialization. Preserve INTEGER/REAL storage classes and validate arity before execution.
 
 ### Changed

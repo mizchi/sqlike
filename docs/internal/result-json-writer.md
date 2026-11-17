@@ -27,7 +27,7 @@ INTEGERは十進文字列、REALは数値または既存のInfinity token、負�
 このfixtureのPK hitはJSで約45〜47%、Wasmで約21〜25%短縮した。式＋RETURNINGはJSで約22〜23%、Wasmで約8%短縮した。全SQL / 全入力への改善率ではなく、通常SQLのparser費用の削減としても扱わない。
 <!-- result-writer-speed:end -->
 
-全サンプル・source / artifact hashは[`result-writer-paired.json`](../../measurements/result-writer-paired.json)。PK検索の返り値、RETURNINGと失敗後を含む全行の値・型はnative SQLiteと照合する。更新のbindは測定区間をまたいで継続し、同値書込と実変更を分ける。起動・永続化・ネットワーク・強制GCは計時に含めない。SQLite自体との比較は別の[`sqlite-speed-current.json`](../../measurements/sqlite-speed-current.json)に記録する。
+全サンプル・source / artifact hashは[`result-writer-paired.json`](../../measurements/result-writer-paired.json)。PK検索の返り値、RETURNINGと失敗後を含む全行の値・型はnative SQLiteと照合する。更新のbindは測定区間をまたいで継続し、同値書込と実変更を分ける。起動・永続化・ネットワーク・強制GCは計時に含めない。SQLite自体との比較は別の[`P06時点のsqlite-speed-current.json`](../../measurements/dynamic-prepare-before/sqlite-speed-current.json)に記録する。
 
 <!-- result-writer-size:start -->
 engine単体のJS、minified未圧縮 / Brotli quality 11、単位B。丸め4関数の追加も含む合計差。
@@ -38,7 +38,7 @@ engine単体のJS、minified未圧縮 / Brotli quality 11、単位B。丸め4関
 | SQLike dynamic SQL | 623,870 → 625,026 | 117,132 → 117,508 | +376 |
 | Litestream | 157,720 → 157,720 | 38,291 → 38,291 | +0 |
 
-[追加前の記録](../../measurements/result-writer-before/wasm-build-size-current.json) / [追加後](../../measurements/wasm-build-size-current.json)。アプリの配信総量・catalog / host込みの値は別にREADMEへ記録する。
+[追加前の記録](../../measurements/result-writer-before/wasm-build-size-current.json) / [P06追加後](../../measurements/dynamic-prepare-before/wasm-build-size-current.json)。アプリの配信総量・catalog / host込みの値は別にREADMEへ記録する。
 <!-- result-writer-size:end -->
 
 中間Json / Mapを省いたことはコード上の変更範囲であり、メモリ削減率の保証ではない。保持heapとピークは既存のDB / 行ストア計測を更新するが、writer単独のallocation量は分離測定していない。

@@ -3,6 +3,9 @@ declare module "*sqlike/sqlike.js" {
   export interface MoonConnection {
     readonly __moonConnection: unique symbol;
   }
+  export interface SqlPrepared { readonly __sqlPrepared: unique symbol; }
+  export function database_prepare(db: MoonConnection, sql: string): SqlPrepared;
+  export function database_prepared_exec(query: SqlPrepared, bindings: string, readOnly: boolean, positional: boolean): string;
   export function database_is_readonly(sql: string): boolean;
   export function database_autocommit(db: MoonConnection): boolean;
   export function database_set_clock(db: MoonConnection, milliseconds: string): string;
@@ -11,6 +14,7 @@ declare module "*sqlike/sqlike.js" {
     before: MoonConnection,
   ): string;
   export function database_clone(db: MoonConnection): MoonConnection;
+  export function database_copy_connection_state(target: MoonConnection, source: MoonConnection): void;
   export function database_serial(db: MoonConnection): number;
   export function database_import_sqlite_base64(
     db: MoonConnection,

@@ -159,7 +159,7 @@ test("selected SQL driver enables native capture only with binarySync and retain
         ).instance.exports,
       ];
       for (const r of runtimes) {
-        const db = openSql(r as any);
+        const db = openSql(r as any, undefined, { statementCache: { capacity: 8 } });
         assert.equal(typeof db.capture, enabled ? "function" : "undefined");
         db.run("CREATE TABLE t(id INTEGER PRIMARY KEY,v TEXT)");
         assert.throws(

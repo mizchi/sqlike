@@ -22,18 +22,19 @@ import { sourceHashes } from "./measurement-manifest.ts";
 const args = process.argv.slice(2);
 for (const arg of args)
   if (
-    !/^(--smoke|--output=.+|--rows=\d+(,\d+)*|--profiles=false|--profile-queries=[a-z,]+)$/.test(
+    !/^(--smoke|--prepared|--output=.+|--rows=\d+(,\d+)*|--profiles=false|--profile-queries=[a-z,]+|--profile-engines=[a-z,]+)$/.test(
       arg,
     )
   )
     throw Error(`unknown option ${arg}`);
 const smoke = args.includes("--smoke"),
+  prepared = args.includes("--prepared"),
   profiles = !smoke && !args.includes("--profiles=false");
 const output =
   args.find((a) => a.startsWith("--output="))?.slice(9) ??
   (smoke
     ? "/tmp/browser-litestream-sqlite-smoke.json"
-    : "measurements/sqlite-speed-current.json");
+    : prepared ? "measurements/dynamic-prepare-current.json" : "measurements/sqlite-speed-current.json");
 const rowCounts = smoke
   ? [100]
   : (args.find((a) => a.startsWith("--rows="))?.slice(7) ?? "100,1000,5000")
@@ -72,6 +73,9 @@ const profileQueries = args
 for (const name of profileQueries)
   if (!queries.some((q) => q.name === name))
     throw Error(`unknown profile query: ${name}`);
+const profileEngines = args.find(a => a.startsWith("--profile-engines="))?.slice(18).split(",") ?? ["aot"];
+if (profileEngines.some(e => !["aot", "dynamic", ...(prepared ? ["prepared"] : [])].includes(e)))
+  throw Error("invalid profile engine");
 const source = {
   schema,
   queries: [
@@ -211,6 +215,11 @@ function inputFor(rows: number, coldRows: number): ComparisonInput {
       coldRows,
       queries: workload,
       runs: smoke ? 1 : 7,
+      ...(prepared ? { prepared: true, retentionQuery: {
+        sql: queries.find(q => q.name === "point")!.sql,
+        bindings: aotBindings([1n]),
+        expected: expected(queries.find(q => q.name === "point")!.sql, [1n]),
+      } } : {}),
     };
   } finally {
     native.close();
@@ -303,15 +312,15 @@ try {
           await session.send("Profiler.setSamplingInterval", {
             interval: 1000,
           });
-          for (const name of coldRows ? ["update"] : profileQueries) {
+          for (const mode of profileEngines) for (const name of coldRows ? ["update"] : profileQueries) {
             await session.send("Profiler.start");
             const calls = await page.evaluate(
-              ({ name }) =>
-                window.sqliteBench.profile(name, "sqlike-js/aot", 1000),
-              { name },
+              ({ name, mode }) =>
+                window.sqliteBench.profile(name, `sqlike-js/${mode}`, 1000),
+              { name, mode },
             );
             const { profile } = await session.send("Profiler.stop");
-            const path = `measurements/profiles/${profileRun}/sqlite-${rows}-cold${coldRows}-${name}-js-aot.cpuprofile`;
+            const path = `measurements/profiles/${profileRun}/sqlite-${rows}-cold${coldRows}-${name}-js-${mode}.cpuprofile`;
             mkdirSync(`measurements/profiles/${profileRun}`, {
               recursive: true,
             });
@@ -320,12 +329,31 @@ try {
               rows,
               coldRows,
               name,
-              engine: "sqlike-js/aot",
+              engine: `sqlike-js/${mode}`,
               path,
               ...calls,
               ...summarizeProfile(profile),
             });
           }
+          await session.detach();
+        }
+        if (prepared) {
+          const session = await page.context().newCDPSession(page);
+          const heap = async () => {
+            await session.send("HeapProfiler.collectGarbage");
+            return await session.send("Runtime.getHeapUsage");
+          };
+          const retention = [];
+          await page.evaluate(() => window.sqliteBench.cacheMemory("", false));
+          for (const engine of ["sqlike-js/prepared", "sqlike-wasm/prepared"]) {
+            const before = await heap();
+            const retained = await page.evaluate(engine => window.sqliteBench.cacheMemory(engine, true), engine);
+            const held = await heap();
+            await page.evaluate(() => window.sqliteBench.cacheMemory("", false));
+            const cleared = await heap();
+            retention.push({ engine, ...retained, before, held, cleared });
+          }
+          Object.assign(item, { retention });
           await session.detach();
         }
         await page.evaluate(() => window.sqliteBench.close());
@@ -346,8 +374,11 @@ const report = {
     "scripts/bench-sqlite.ts",
     "scripts/sqlite-bench-workload.ts",
     "scripts/profile-summary.ts",
+    "src/sql-statement-cache.ts",
   ]),
   profileQueries,
+  profileEngines,
+  prepared,
   format: 1,
   measuredAt: new Date().toISOString(),
   smoke,
@@ -363,8 +394,8 @@ const report = {
     )[0],
     nativeOracle: process.versions.sqlite,
   },
-  method:
-    "Same Chromium page per dataset, memory only, no storage/network/compilation in timed regions. Six paths: SQLike JS/Wasm GC AOT and dynamic; SQLite WASM cached prepared and prepare/finalize each call. Pre-encoded SQLike bindings and pre-decoded SQLite bindings; all results normalized to typed positional Cell arrays. SQLite type queries/BigInt and SQLike response JSON.parse included, not identical ABI. Native SQLite oracle and UPDATE side effects checked before/after timing. Rotated order, 7 samples, adaptive warmups by dataset and two calibration rounds targeting 50ms per engine/sample (actual iterations recorded). UPDATE repeatedly sets the same value after its first verified change. Main range timings are warm. firstRangeRead is one un-warmed API call, including first preparation/index build, not a median. Separate indexLifecycle probes run after main timings: each cycle changes an indexed n value between -7/-8 outside the requested positive range, then performs a range read; timings include both operations and any index maintenance. indexMovement repeats with -7/(rows*3+7), moving between both ends of the index while preserving the range result. Profiles collected separately after measurements, 1ms sampling, 1 second each; profile durations are not benchmark timings. No forced GC.",
+  method: (prepared ? "Additional paths: SQLike JS/Wasm prepared data statements using the production 32-entry / 64 KiB UTF-16 SQL LRU. Same pre-encoded bindings; host value encoding and clock update excluded on all SQLike paths. DDL/transactions/PRAGMA use the uncached executor. Cache preparation is warmed before steady samples. Retention probes run after timing/profiles: force GC, retain 32 distinct PK plans, force GC, clear all cache entries and force GC again; report CDP heap/backing storage, not RSS or a heap bound. " : "") +
+    "Same Chromium page per dataset, memory only, no storage/network/compilation in timed regions. Six paths: SQLike JS/Wasm GC AOT and dynamic; SQLite WASM cached prepared and prepare/finalize each call. Pre-encoded SQLike bindings and pre-decoded SQLite bindings; all results normalized to typed positional Cell arrays. SQLite type queries/BigInt and SQLike response JSON.parse included, not identical ABI. Native SQLite oracle and UPDATE side effects checked before/after timing. Rotated order, 7 samples, adaptive warmups by dataset and two calibration rounds targeting 50ms per engine/sample (actual iterations recorded). UPDATE repeatedly sets the same value after its first verified change. Main range timings are warm. firstRangeRead is one un-warmed API call, including first preparation/index build, not a median. Separate indexLifecycle probes run after main timings: each cycle changes an indexed n value between -7/-8 outside the requested positive range, then performs a range read; timings include both operations and any index maintenance. indexMovement repeats with -7/(rows*3+7), moving between both ends of the index while preserving the range result. Profiles collected separately after measurements, 1ms sampling, 1 second each; profile durations are not benchmark timings. No forced GC during timed samples.",
   artifacts: Object.fromEntries(
     Object.entries(files).map(([name, file]) => [
       name,

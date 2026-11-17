@@ -124,12 +124,12 @@ Web標準APIによるBase64 / JSON置換、Turso WASMの外部配信は[試作](
 
 ### 現行の正しさの記録
 
-未リリースの丸め関数・結果writer追加後の回帰はMoonBit **59件×JS / Wasm GC**、Node **378件の全回帰と追加のprofile集計テスト**、Playwright **59件**と型チェック・本家Litestream復元を通過した。件数はこの更新時点の記録で、将来のテスト件数の固定目標ではない。
+未リリースの丸め関数・結果writer・通常SQLのprepare再利用を追加した後の回帰はMoonBit **60件×JS / Wasm GC**、Node **387件**、Playwright **59件**と型チェック・本家Litestream復元を通過した。追加の公開型検査、cache / feature選択の11件、独立npm consumerの6件も通過した。件数はこの更新時点の記録で、将来のテスト件数の固定目標ではない。
 
 | ゲート | 現在の観測 | 合格が意味すること |
 | --- | --- | --- |
 | `just sqlite-output-check` | JS / Wasm GC / Chromium JSそれぞれ458 probe一致、244 atomic拒否、出力不一致0 | 324生成ケースを追加。観測した成功出力と拒否時の非変更が一致。未対応を一致へ合算せず、誤受理・内部例外・証拠欠落も検出 |
-| `just differential-audit` | 566ケース・8経路。各環境2,256一致、4件の双方AOT prepare拒否、4件のAOT対象外DDL、不一致0 | 対応済みコーパスの新たな拒否も退行として検出。行・型・列位置・失敗後状態・接続カウンターを照合 |
+| `just differential-audit` | 566ケース・12経路。各環境3,388一致、4件の双方AOT prepare拒否、4件のAOT対象外DDL、不一致0。通常SQLのJS / Wasm cache経路を含む | 対応済みコーパスの新たな拒否も退行として検出。行・型・列位置・失敗後状態・接続カウンターを照合 |
 | `just sqlite-audit` | **不合格を維持**。台帳1,618件中、未公開API 306・未検証599・参照ビルドになし11などが残る | 全機能互換と判定しない。出力互換ゲートの通過とは別の条件 |
 | `just do-consumer-check` | 実workerdの6シナリオ・53ステップ。33一致・19明示拒否・1双方制約エラー | 型付き行と各操作後の表・監査表をnative SQLiteと照合。絶対値の初期total_changesは一致すると仮定しない |
 | `just drizzle-check` | Kit生成6本＋custom 2本。Node / SQLike JS・Wasm / SQLite WASM、ブラウザIDB、実DOで通過 | 各段階のデータ・FK保持、RETURNING、再適用、履歴・失敗時rollback、オフライン再開。[制限](drizzle.md)を含む固定consumerの検証 |
@@ -209,10 +209,11 @@ notes Programは20,049 B、SHA-256 `a6af7a52769d67773842aae483fcb856b46f628e3118
   - 実装: AOT / binary definedと通常SQLのpositional結果をStringBuilderへ書く。TEXT / 有限REALのformatter、bind decoder、object形式の結果、保存・wire形式は従来の契約を維持する
   - 結果: [結果JSON writer](result-json-writer.md)。5,000行のPK hitはJS約45〜47% / Wasm約21〜25%短縮。丸め4関数と合わせた全公開AOT単体のBrotli増分は419 B。writer単独のallocation量・heap削減率は未測定。直接typed ABIを導入したものではなくB05は未完了
 
-- [ ] **P07 / P1 — 通常SQLのparse / prepare固定費を分離し、接続内で再利用**
-  - 根拠: 現行5,000行のPK hitは通常SQL JS 26.85µs / Wasm 6.05µs、AOT JS 1.19µs / Wasm 1.32µs。[同条件の記録](../../measurements/sqlite-speed-current.json)。差の全量をparser単体へ帰属させない
-  - 完了条件: dynamic profileを追加し、parse・prepare・実行・marshalを分ける。cacheする場合は接続ごとの上限と破棄、schema変更・restore・接続世代・feature構成の有効性を定義する。可変Statement / Store / bindをグローバル共有しない
-  - 比較: uncached SQL同士を残し、再利用経路を別名で計測。AOT / definedへparserやcacheを追加せず、DDL・transaction・clock / counter・失敗後状態を差分検証する。[Issue #1](https://github.com/mizchi/sqlike/issues/1)の継続
+- [x] **P07 / P1 — 通常SQLのparse / prepare固定費を分離し、接続内で再利用**
+  - 完了条件: dynamic profileを追加し、parse・prepare・実行・marshalを分ける。接続ごとの上限と破棄、schema変更・restore・接続世代・feature構成の有効性を定義する。可変Statement / Store / bindをグローバル共有しない
+  - 実装: opt-inのLRU（最大256件・既定64 KiB SQL text）。DML / SELECTのASTと準備済みmetadataを再利用し、DDL / transaction / PRAGMAは既存経路。保存対象外のschema epochでrollback時のcookie ABAも再準備し、host側の接続差替えではclearする
+  - 結果: [通常SQL prepare再利用](dynamic-sql-prepare.md)。5,000行の主キーhitはJS 26.10→1.03µs、Wasm 5.80→0.86µs。通常SQL単体のBrotli増分2,126 B、AOT +65 B。保持heapを別測定し、SQL text budgetがheap上限ではないことを明記。既存uncached経路も残して8経路を比較、566ケース×12経路の差分不一致0
+  - 後続: [Issue #1](https://github.com/mizchi/sqlike/issues/1)のJSON境界と索引移動。準備済みでもJSの両端移動＋範囲読取は16.51µs（SQLite 12.67µs）、同値UPDATEはJS 2.75 / Wasm 1.74µs（SQLite 1.34µs）。一般plan拡張と直接typed ABIは別項目
 
 - [x] **S01 / P1 — 変更列だけの永続差分。大きい未変更TEXT / BLOBまで行after-imageに含まれる**
   - 完了条件: version付き差分と旧形式replayを定義。4 KiB列を持つ1 / 16行更新で提出量を減らし、strict ACK・checkpoint込み時間・reopen・trigger・rollbackを比較。通常の小さい行を退行させない

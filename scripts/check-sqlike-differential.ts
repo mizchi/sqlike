@@ -47,8 +47,10 @@ for (const path of files) {
         "chromium-wasm/sql",
         "chromium-js/aot",
         "chromium-wasm/aot",
+        "chromium-js/prepared-sql",
+        "chromium-wasm/prepared-sql",
       ]
-    : ["js/sql", "wasm/sql", "js/aot", "wasm/aot"];
+    : ["js/sql", "wasm/sql", "js/aot", "wasm/aot", "js/prepared-sql", "wasm/prepared-sql"];
   const problems = differentialGate(report, targets);
   failed ||= problems.length > 0;
   console.log(

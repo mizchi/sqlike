@@ -455,7 +455,11 @@ pub fn Program::query(self : Program, name : String) -> Query raise SqliteError 
 ///|
 pub fn Connection::from_program(program : Program) -> Connection {
   {
-    database: { store: copy_store(program.schema), serial: 0, },
+    database: {
+      store: copy_store(program.schema),
+      serial: 0,
+      schema_epoch: 0L,
+    },
     program: Some(program),
     closed: false,
     statements: 0,

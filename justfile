@@ -60,6 +60,13 @@ aot-phase-bench:
     moon bench packages/sqlike/src/aot_bench_wbtest.mbt --target js --release
     moon bench packages/sqlike/src/aot_bench_wbtest.mbt --target wasm-gc --release
 
+# Opt-in SQL prepared execution: isolated phases, plus the unchanged SQL baselines.
+sql-prepare-bench *args:
+    pnpm build:core
+    pnpm build:moon-wasm
+    pnpm exec tsx scripts/bench-sqlite.ts --prepared --profile-engines=dynamic,prepared --profile-queries=point,update {{args}}
+    pnpm exec tsx scripts/bench-sql-prepare-phases.ts
+
 # JSON/binary UPDATE: same value, real changes, RETURNING, misses and failures.
 # Optional --before-dir holds runtime.{js,wasm} and defined.{js,wasm} snapshots.
 aot-update-bench *args:

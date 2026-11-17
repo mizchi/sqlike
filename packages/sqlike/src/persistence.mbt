@@ -264,6 +264,7 @@ fn publish_flush(db : Database, store : Store, serial : Int32) -> Unit {
   store.dirty = { full: false, base: serial, edits: [], }
   db.store = store
   db.serial = serial
+  db.schema_epoch += 1L
 }
 
 ///|

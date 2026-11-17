@@ -43,14 +43,14 @@ SQLikeは0.1.2以降の未リリース変更を含むソースで計測してい
 <!-- bundle-size:start -->
 | ビルド | minified・未圧縮 | Brotli |
 | --- | ---: | ---: |
-| SQLike 0.1.2 (source) / 通常SQL / JS | 613.66 KiB | 115.60 KiB |
-| SQLike 0.1.2 (source) / 通常SQL / Wasm GC | 543.44 KiB | 170.23 KiB |
-| SQLike 0.1.2 (source) / 事前定義・全実行機能 / JS | 516.31 KiB | 102.05 KiB |
-| SQLike 0.1.2 (source) / 事前定義・全実行機能 / Wasm GC | 457.59 KiB | 146.71 KiB |
-| SQLike 0.1.2 (source) / 事前定義・JSON・日時・windowなし / JS | 476.46 KiB | 94.02 KiB |
-| SQLike 0.1.2 (source) / 事前定義・JSON・日時・windowなし / Wasm GC | 427.04 KiB | 136.32 KiB |
-| SQLike 0.1.2 (source) / 事前定義・主キー索引のみ / JS | 455.03 KiB | 89.98 KiB |
-| SQLike 0.1.2 (source) / 事前定義・主キー索引のみ / Wasm GC | 408.98 KiB | 130.78 KiB |
+| SQLike 0.1.2 (source) / 通常SQL / JS | 630.25 KiB | 118.17 KiB |
+| SQLike 0.1.2 (source) / 通常SQL / Wasm GC | 555.06 KiB | 174.23 KiB |
+| SQLike 0.1.2 (source) / 事前定義・全実行機能 / JS | 516.56 KiB | 102.25 KiB |
+| SQLike 0.1.2 (source) / 事前定義・全実行機能 / Wasm GC | 458.04 KiB | 146.80 KiB |
+| SQLike 0.1.2 (source) / 事前定義・JSON・日時・windowなし / JS | 476.71 KiB | 94.07 KiB |
+| SQLike 0.1.2 (source) / 事前定義・JSON・日時・windowなし / Wasm GC | 427.70 KiB | 136.42 KiB |
+| SQLike 0.1.2 (source) / 事前定義・主キー索引のみ / JS | 455.28 KiB | 90.03 KiB |
+| SQLike 0.1.2 (source) / 事前定義・主キー索引のみ / Wasm GC | 409.60 KiB | 131.02 KiB |
 | sqlite-wasm 3.54.1-build1 | 1313.74 KiB | 462.33 KiB |
 | Turso 0.8.3 | 11709.66 KiB | 2675.96 KiB |
 <!-- bundle-size:end -->
@@ -81,18 +81,18 @@ schemaとクエリが固定されている場合、AOTと事前定義版ではca
 <!-- catalog-runtime-size:start -->
 | Catalog / モード | minified JS | JS Brotli | release Wasm | Wasm Brotli |
 | --- | ---: | ---: | ---: | ---: |
-| 読取専用 / AOT | 402.62 KiB | 75.25 KiB | 361.21 KiB | 112.17 KiB |
-| 読取専用 / defined | 373.24 KiB | 72.71 KiB | 332.64 KiB | 106.35 KiB |
-| GLOB + char / AOT | 405.39 KiB | 75.81 KiB | 364.29 KiB | 113.28 KiB |
-| GLOB + char / defined | 376.01 KiB | 73.30 KiB | 335.19 KiB | 107.53 KiB |
-| JSON生成 / AOT | 408.91 KiB | 76.48 KiB | 365.70 KiB | 113.95 KiB |
-| JSON生成 / defined | 379.48 KiB | 73.67 KiB | 336.69 KiB | 108.04 KiB |
-| 入れ子JSON / AOT | 413.64 KiB | 77.08 KiB | 370.38 KiB | 115.28 KiB |
-| 入れ子JSON / defined | 384.14 KiB | 74.52 KiB | 341.87 KiB | 108.92 KiB |
-| 再帰CTE＋JSON集約 / AOT | 422.08 KiB | 78.64 KiB | 380.41 KiB | 117.80 KiB |
-| 再帰CTE＋JSON集約 / defined | 392.58 KiB | 76.00 KiB | 351.20 KiB | 111.58 KiB |
-| Notes CRUD / AOT | 434.04 KiB | 81.19 KiB | 388.26 KiB | 120.96 KiB |
-| Notes CRUD / defined | 404.38 KiB | 78.60 KiB | 358.85 KiB | 115.14 KiB |
+| 読取専用 / AOT | 402.87 KiB | 75.34 KiB | 360.55 KiB | 112.25 KiB |
+| 読取専用 / defined | 373.49 KiB | 72.70 KiB | 332.85 KiB | 106.39 KiB |
+| GLOB + char / AOT | 405.64 KiB | 75.88 KiB | 364.94 KiB | 113.54 KiB |
+| GLOB + char / defined | 376.26 KiB | 73.43 KiB | 335.33 KiB | 107.46 KiB |
+| JSON生成 / AOT | 409.15 KiB | 76.35 KiB | 366.41 KiB | 114.15 KiB |
+| JSON生成 / defined | 379.72 KiB | 73.71 KiB | 337.67 KiB | 107.78 KiB |
+| 入れ子JSON / AOT | 413.89 KiB | 77.04 KiB | 370.75 KiB | 114.82 KiB |
+| 入れ子JSON / defined | 384.38 KiB | 74.47 KiB | 341.92 KiB | 109.05 KiB |
+| 再帰CTE＋JSON集約 / AOT | 422.33 KiB | 78.68 KiB | 380.62 KiB | 117.75 KiB |
+| 再帰CTE＋JSON集約 / defined | 392.82 KiB | 76.08 KiB | 352.01 KiB | 111.69 KiB |
+| Notes CRUD / AOT | 434.29 KiB | 81.18 KiB | 388.69 KiB | 120.77 KiB |
+| Notes CRUD / defined | 404.63 KiB | 78.57 KiB | 358.96 KiB | 114.97 KiB |
 <!-- catalog-runtime-size:end -->
 
 </details>
@@ -115,13 +115,13 @@ catalogは主キー検索、GLOB / char、JSON生成、入れ子JSON、再帰CTE
 <!-- sqlite-benchmark:start -->
 | 処理 | SQLike JS・通常SQL | SQLike Wasm GC・通常SQL | SQLite WASM・通常SQL | SQLite WASM・prepared |
 | --- | ---: | ---: | ---: | ---: |
-| 主キーで1行検索 | 26.85 | 6.05 | 3.73 | 1.45 |
-| 存在しない主キーの検索 | 27.92 | 5.53 | 2.64 | 0.47 |
-| 二次索引の範囲検索・10行 | 45.00 | 11.73 | 14.47 | 10.47 |
-| ORDER BY id LIMIT 10 | 41.89 | 8.96 | 12.12 | 9.13 |
-| sum(n), count(*) | 94.31 | 50.35 | 105.77 | 103.11 |
-| 全5,000行取得 | 1,710.34 | 1,885.19 | 4,483.33 | 4,425.00 |
-| 索引列の更新＋範囲10行取得 | 65.37 | 16.96 | 19.11 | 12.07 |
+| 主キーで1行検索 | 27.75 | 6.16 | 3.78 | 1.50 |
+| 存在しない主キーの検索 | 25.75 | 5.48 | 2.57 | 0.47 |
+| 二次索引の範囲検索・10行 | 40.70 | 11.87 | 14.87 | 10.91 |
+| ORDER BY id LIMIT 10 | 39.33 | 9.20 | 12.83 | 9.55 |
+| sum(n), count(*) | 99.79 | 51.05 | 108.37 | 105.23 |
+| 全5,000行取得 | 1,760.00 | 1,959.26 | 4,783.33 | 4,718.18 |
+| 索引列の更新＋範囲10行取得 | 60.18 | 17.01 | 19.46 | 12.23 |
 <!-- sqlite-benchmark:end -->
 
 </details>
@@ -160,6 +160,8 @@ db.close();
 `openDatabase()`はインメモリです。INTEGERは`bigint`、REALは`number`、BLOBは`Uint8Array`で扱います。`values()`は列位置順の配列、`all()`は列名をキーとするオブジェクトを返します。同名の結果列がある場合は`values()`を使います。
 
 [SQLの対応範囲と値の扱い](docs/sql.md)
+
+未リリースのソースでは、同じSQLを反復する接続に`openDatabase(undefined, { statementCache: { capacity: 32 } })`でcacheを有効にできます。接続ごとに保持する文とSQL本文の量を制限し、schema変更後は再準備します。[利用範囲と計測](docs/internal/dynamic-sql-prepare.md)。
 
 ## IndexedDBへ保存する
 

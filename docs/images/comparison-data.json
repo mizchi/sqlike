@@ -1,68 +1,68 @@
 {
   "renderer": "Matplotlib 3.10.7",
   "inputs": {
-    "measurements/bundle-size-current.json": "c90e7bb389786a192a3768ad12edb0fa6f52836a518051f9bc32aca1d73ad2c2",
-    "measurements/sqlite-speed-current.json": "853fb8fe7b5b6170c62f25deb9ed21ffe25f5a8b550159e10ab8fefcaeddbe38",
-    "measurements/catalog-profiles-current.json": "1e7544872f189716bf1c3aa560ff4d9f0fe07798e5f44c228bb9fe128a0d8e67",
+    "measurements/bundle-size-current.json": "de2c048f18e10ab15dccea2b867c05d99491e6f4c59d4b1d38ae8792a2f10f90",
+    "measurements/sqlite-speed-current.json": "93d530b31677a57d95d8abad02d7b9f41b40712a9e3c76fd951ac4738286e919",
+    "measurements/catalog-profiles-current.json": "6daab40ef05fe6414cf305435269da9a336a6686b81649fa2882b7710abd6890",
     "scripts/render_readme_charts.py": "601aa8278c66abf245f0514a12d770f95f0032a5969aefb51570049103133d23"
   },
   "outputs": {
-    "docs/images/bundle-size.svg": "c5d0a05dfa86e928e909739b8543947a50ac8879ce0d6304de6194bdc113e495",
-    "docs/images/bundle-size.png": "840bacfa40dbf282a6724701d3ca96b3b80e2df50221c5d5c84e22288dd03720",
-    "docs/images/catalog-runtime-size.svg": "ff81611654d8c53a8a32c44e0342dde6b9783bd25f24d9444d8ef5349bee2edc",
-    "docs/images/catalog-runtime-size.png": "417aae037b92149591f3f63e3e8dcef7dd55b7d4f7762330967d8a042b6fec8d",
-    "docs/images/sqlite-benchmark.svg": "69f0b073521848b3d89f58f007da2c862678e95b679a05fae68e314fe6525d74",
-    "docs/images/sqlite-benchmark.png": "56e05098a7f7fbc00223e42967f3239b1548cd4968b57dfc3fc3daacb13b7fd6"
+    "docs/images/bundle-size.svg": "8f621b26177c36ea8478a8e28d82fb212f888318001dc79082dea4bbba84f9e3",
+    "docs/images/bundle-size.png": "458e7b69034c3a2567468fe3a1299d97071f84f78800c50f2cd400210bff4980",
+    "docs/images/catalog-runtime-size.svg": "8e2666c6a673eb57916ba9c1a70296f086866c5069a11a4f1c768aa833fee011",
+    "docs/images/catalog-runtime-size.png": "f71ff7b2acb2b765ed50123eca9951af9fcd7b4a77bfc7ab4a426366787b4418",
+    "docs/images/sqlite-benchmark.svg": "f2a8091214cf5993250fe12863108c15c94fa5b0ee85784d2cd23b2563f3eee8",
+    "docs/images/sqlite-benchmark.png": "bfdc8504f755e645642ebb4f9f9acc73b08ce187123a5d87a5e2dcbb86f233fc"
   },
   "data": {
     "bundle": [
       {
         "id": "sql-js",
         "label": "SQLike \u00b7 SQL \u00b7 JS",
-        "raw_kib": 613.658203125,
-        "brotli_kib": 115.6005859375
+        "raw_kib": 630.2470703125,
+        "brotli_kib": 118.1748046875
       },
       {
         "id": "sql-wasm",
         "label": "SQLike \u00b7 SQL \u00b7 Wasm GC",
-        "raw_kib": 543.435546875,
-        "brotli_kib": 170.2275390625
+        "raw_kib": 555.0556640625,
+        "brotli_kib": 174.232421875
       },
       {
         "id": "defined-all-js",
         "label": "SQLike \u00b7 predefined \u00b7 full \u00b7 JS",
-        "raw_kib": 516.314453125,
-        "brotli_kib": 102.046875
+        "raw_kib": 516.5576171875,
+        "brotli_kib": 102.251953125
       },
       {
         "id": "defined-all-wasm",
         "label": "SQLike \u00b7 predefined \u00b7 full \u00b7 Wasm GC",
-        "raw_kib": 457.587890625,
-        "brotli_kib": 146.705078125
+        "raw_kib": 458.0419921875,
+        "brotli_kib": 146.7978515625
       },
       {
         "id": "defined-without-three-js",
         "label": "SQLike \u00b7 predefined \u00b7 trimmed \u00b7 JS",
-        "raw_kib": 476.4638671875,
-        "brotli_kib": 94.021484375
+        "raw_kib": 476.70703125,
+        "brotli_kib": 94.0673828125
       },
       {
         "id": "defined-without-three-wasm",
         "label": "SQLike \u00b7 predefined \u00b7 trimmed \u00b7 Wasm GC",
-        "raw_kib": 427.0400390625,
-        "brotli_kib": 136.3154296875
+        "raw_kib": 427.6953125,
+        "brotli_kib": 136.419921875
       },
       {
         "id": "defined-primary-key-js",
         "label": "SQLike \u00b7 predefined \u00b7 PK only \u00b7 JS",
-        "raw_kib": 455.03125,
-        "brotli_kib": 89.98046875
+        "raw_kib": 455.2783203125,
+        "brotli_kib": 90.029296875
       },
       {
         "id": "defined-primary-key-wasm",
         "label": "SQLike \u00b7 predefined \u00b7 PK only \u00b7 Wasm GC",
-        "raw_kib": 408.978515625,
-        "brotli_kib": 130.7822265625
+        "raw_kib": 409.59765625,
+        "brotli_kib": 131.021484375
       },
       {
         "id": "sqlite",
@@ -85,33 +85,33 @@
           {
             "engine": "sqlike-js/dynamic",
             "stats": {
-              "median": 26.849775838210444,
-              "min": 23.878923847001765,
-              "max": 31.390134529147982
+              "median": 27.745664739884393,
+              "min": 26.473988411743516,
+              "max": 30.17341043218712
             }
           },
           {
             "engine": "sqlike-wasm/dynamic",
             "stats": {
-              "median": 6.05246320567067,
-              "min": 6.026871419456321,
-              "max": 7.012156103943223
+              "median": 6.164383561643835,
+              "min": 6.0684931441529155,
+              "max": 6.452054781456516
             }
           },
           {
             "engine": "sqlite/dynamic",
             "stats": {
-              "median": 3.7348132557609333,
-              "min": 3.697315130667188,
-              "max": 3.8398079952951205
+              "median": 3.7770382774848112,
+              "min": 3.710482521184074,
+              "max": 3.9267886894911577
             }
           },
           {
             "engine": "sqlite/prepared",
             "stats": {
-              "median": 1.4469119752938258,
-              "min": 1.4172621327813408,
-              "max": 1.5062116391115807
+              "median": 1.5017814892821608,
+              "min": 1.4251939646470742,
+              "max": 1.7715027820480076
             }
           }
         ]
@@ -123,33 +123,33 @@
           {
             "engine": "sqlike-js/dynamic",
             "stats": {
-              "median": 27.923387144842454,
-              "min": 22.278225710315088,
-              "max": 29.788306523715296
+              "median": 25.75,
+              "min": 25.350000023841858,
+              "max": 28.450000047683716
             }
           },
           {
             "engine": "sqlike-wasm/dynamic",
             "stats": {
-              "median": 5.532587548638133,
-              "min": 5.483949404746178,
-              "max": 5.836575875486381
+              "median": 5.479300420633163,
+              "min": 5.435023261351688,
+              "max": 5.501439013469528
             }
           },
           {
             "engine": "sqlite/dynamic",
             "stats": {
-              "median": 2.6420363037097903,
-              "min": 2.507786491659527,
-              "max": 3.1844055520746894
+              "median": 2.565017845605114,
+              "min": 2.5344212160980986,
+              "max": 2.6721060731956876
             }
           },
           {
             "engine": "sqlite/prepared",
             "stats": {
-              "median": 0.4723890061329589,
-              "min": 0.456869041962608,
-              "max": 0.5073089365013616
+              "median": 0.4658950284603963,
+              "min": 0.4613452723273251,
+              "max": 0.5123025401499262
             }
           }
         ]
@@ -161,33 +161,33 @@
           {
             "engine": "sqlike-js/dynamic",
             "stats": {
-              "median": 45.00466835598986,
-              "min": 39.02894486677524,
-              "max": 67.04014934856797
+              "median": 40.702656383890314,
+              "min": 37.017994695171495,
+              "max": 64.78149112515094
             }
           },
           {
             "engine": "sqlike-wasm/dynamic",
             "stats": {
-              "median": 11.732263713290621,
-              "min": 11.657056906492855,
-              "max": 11.957884193452925
+              "median": 11.868686868686869,
+              "min": 11.742424242424242,
+              "max": 12.070707058665729
             }
           },
           {
             "engine": "sqlite/dynamic",
             "stats": {
-              "median": 14.471737158019785,
-              "min": 14.205386208937556,
-              "max": 14.85646642429231
+              "median": 14.86854035892527,
+              "min": 14.445451855767562,
+              "max": 15.321849443718687
             }
           },
           {
             "engine": "sqlite/prepared",
             "stats": {
-              "median": 10.473973762166738,
-              "min": 10.283537905850856,
-              "max": 10.579771476936099
+              "median": 10.913430234826706,
+              "min": 10.696463430747729,
+              "max": 11.17379041006726
             }
           }
         ]
@@ -199,33 +199,33 @@
           {
             "engine": "sqlike-js/dynamic",
             "stats": {
-              "median": 41.889313068098694,
-              "min": 32.15648859511805,
-              "max": 45.80152671755725
+              "median": 39.326922939373894,
+              "min": 34.42307710647583,
+              "max": 41.250000091699455
             }
           },
           {
             "engine": "sqlike-wasm/dynamic",
             "stats": {
-              "median": 8.958967926894822,
-              "min": 8.941050008128908,
-              "max": 9.066475524929684
+              "median": 9.195193008011653,
+              "min": 9.067734921838102,
+              "max": 9.522942496492146
             }
           },
           {
             "engine": "sqlite/dynamic",
             "stats": {
-              "median": 12.124248520883626,
-              "min": 12.049098172503149,
-              "max": 12.575150312546022
+              "median": 12.831974744232523,
+              "min": 12.2797790715922,
+              "max": 13.463055495052252
             }
           },
           {
             "engine": "sqlite/prepared",
             "stats": {
-              "median": 9.13224702714383,
-              "min": 9.056460771564282,
-              "max": 9.511178440558002
+              "median": 9.545819935691318,
+              "min": 9.284565925981454,
+              "max": 11.414790987201826
             }
           }
         ]
@@ -237,33 +237,33 @@
           {
             "engine": "sqlike-js/dynamic",
             "stats": {
-              "median": 94.3074000175809,
-              "min": 92.78937399500461,
-              "max": 95.63567380525129
+              "median": 99.79123163322815,
+              "min": 96.65970762487741,
+              "max": 102.71398757345243
             }
           },
           {
             "engine": "sqlike-wasm/dynamic",
             "stats": {
-              "median": 50.353892772817275,
-              "min": 49.848331599915355,
-              "max": 51.6683517741482
+              "median": 51.04602505472415,
+              "min": 51.04602505472415,
+              "max": 52.09205040871848
             }
           },
           {
             "engine": "sqlite/dynamic",
             "stats": {
-              "median": 105.76923076923077,
-              "min": 105.12820523009341,
-              "max": 117.94871805060623
+              "median": 108.36909871244636,
+              "min": 105.15021459227468,
+              "max": 111.3733902509632
             }
           },
           {
             "engine": "sqlite/prepared",
             "stats": {
-              "median": 103.11203329394962,
-              "min": 102.28215757741968,
-              "max": 109.12863100218081
+              "median": 105.23012592203946,
+              "min": 103.34728053424149,
+              "max": 109.41422584166587
             }
           }
         ]
@@ -275,33 +275,33 @@
           {
             "engine": "sqlike-js/dynamic",
             "stats": {
-              "median": 1710.3448325190052,
-              "min": 1696.551725782197,
-              "max": 1744.8275829183644
+              "median": 1760.0,
+              "min": 1671.9999980926514,
+              "max": 2076.0000038146973
             }
           },
           {
             "engine": "sqlike-wasm/dynamic",
             "stats": {
-              "median": 1885.1851798869945,
-              "min": 1874.0740705419469,
-              "max": 1896.29629806236
+              "median": 1959.2592627913864,
+              "min": 1881.481479715418,
+              "max": 2114.8148112826875
             }
           },
           {
             "engine": "sqlite/dynamic",
             "stats": {
-              "median": 4483.333349227905,
-              "min": 4450.000007947286,
-              "max": 4549.999992052714
+              "median": 4783.33334128062,
+              "min": 4516.666650772095,
+              "max": 5233.333329359691
             }
           },
           {
             "engine": "sqlite/prepared",
             "stats": {
-              "median": 4425.000011920929,
-              "min": 4399.999996026357,
-              "max": 4508.333345254262
+              "median": 4718.181826851584,
+              "min": 4500.0,
+              "max": 4981.818177483298
             }
           }
         ]
@@ -313,33 +313,33 @@
           {
             "engine": "sqlike-js/dynamic",
             "stats": {
-              "median": 65.37216843910588,
-              "min": 54.908306210300815,
-              "max": 70.33441213342364
+              "median": 60.1809952593497,
+              "min": 56.67420803691467,
+              "max": 64.70588240688203
             }
           },
           {
             "engine": "sqlike-wasm/dynamic",
             "stats": {
-              "median": 16.957264924660706,
-              "min": 16.888888839982513,
-              "max": 17.0256410093389
+              "median": 17.005163544016327,
+              "min": 16.867469879518072,
+              "max": 17.10843366928232
             }
           },
           {
             "engine": "sqlite/dynamic",
             "stats": {
-              "median": 19.11378139577501,
-              "min": 18.77581674802854,
-              "max": 19.339091250469394
+              "median": 19.464353128272784,
+              "min": 19.275744965911947,
+              "max": 19.841569183188444
             }
           },
           {
             "engine": "sqlite/prepared",
             "stats": {
-              "median": 12.06558980722376,
-              "min": 11.992168379833577,
-              "max": 12.359275575134607
+              "median": 12.233107271460366,
+              "min": 12.107510687687444,
+              "max": 12.333584502545232
             }
           }
         ]
@@ -352,22 +352,22 @@
         "label": "Read only",
         "baseline": {
           "js": {
-            "raw": 473.6396484375,
-            "brotli": 88.755859375
+            "raw": 473.88671875,
+            "brotli": 88.9541015625
           },
           "wasm": {
-            "raw": 426.392578125,
-            "brotli": 132.58203125
+            "raw": 426.8037109375,
+            "brotli": 132.490234375
           }
         },
         "selected": {
           "js": {
-            "raw": 402.6220703125,
-            "brotli": 75.2548828125
+            "raw": 402.869140625,
+            "brotli": 75.337890625
           },
           "wasm": {
-            "raw": 361.20703125,
-            "brotli": 112.16796875
+            "raw": 360.5537109375,
+            "brotli": 112.2470703125
           }
         }
       },
@@ -377,22 +377,22 @@
         "label": "Read only",
         "baseline": {
           "js": {
-            "raw": 443.0615234375,
-            "brotli": 85.951171875
+            "raw": 443.30859375,
+            "brotli": 86.021484375
           },
           "wasm": {
-            "raw": 396.91015625,
-            "brotli": 126.48828125
+            "raw": 397.529296875,
+            "brotli": 126.7255859375
           }
         },
         "selected": {
           "js": {
-            "raw": 373.240234375,
-            "brotli": 72.7080078125
+            "raw": 373.4873046875,
+            "brotli": 72.6962890625
           },
           "wasm": {
-            "raw": 332.6435546875,
-            "brotli": 106.3525390625
+            "raw": 332.845703125,
+            "brotli": 106.3935546875
           }
         }
       },
@@ -402,22 +402,22 @@
         "label": "GLOB + char",
         "baseline": {
           "js": {
-            "raw": 473.6396484375,
-            "brotli": 88.755859375
+            "raw": 473.88671875,
+            "brotli": 88.9541015625
           },
           "wasm": {
-            "raw": 426.392578125,
-            "brotli": 132.58203125
+            "raw": 426.8037109375,
+            "brotli": 132.490234375
           }
         },
         "selected": {
           "js": {
-            "raw": 405.39453125,
-            "brotli": 75.8125
+            "raw": 405.6416015625,
+            "brotli": 75.876953125
           },
           "wasm": {
-            "raw": 364.2900390625,
-            "brotli": 113.275390625
+            "raw": 364.935546875,
+            "brotli": 113.541015625
           }
         }
       },
@@ -427,22 +427,22 @@
         "label": "GLOB + char",
         "baseline": {
           "js": {
-            "raw": 443.0615234375,
-            "brotli": 85.951171875
+            "raw": 443.30859375,
+            "brotli": 86.021484375
           },
           "wasm": {
-            "raw": 396.91015625,
-            "brotli": 126.48828125
+            "raw": 397.529296875,
+            "brotli": 126.7255859375
           }
         },
         "selected": {
           "js": {
-            "raw": 376.01171875,
-            "brotli": 73.3046875
+            "raw": 376.2587890625,
+            "brotli": 73.43359375
           },
           "wasm": {
-            "raw": 335.1865234375,
-            "brotli": 107.5341796875
+            "raw": 335.3251953125,
+            "brotli": 107.4580078125
           }
         }
       },
@@ -452,22 +452,22 @@
         "label": "JSON construction",
         "baseline": {
           "js": {
-            "raw": 497.2060546875,
-            "brotli": 92.85546875
+            "raw": 497.453125,
+            "brotli": 92.921875
           },
           "wasm": {
-            "raw": 446.5908203125,
-            "brotli": 138.2548828125
+            "raw": 446.9521484375,
+            "brotli": 138.5419921875
           }
         },
         "selected": {
           "js": {
-            "raw": 408.9052734375,
-            "brotli": 76.4833984375
+            "raw": 409.15234375,
+            "brotli": 76.3486328125
           },
           "wasm": {
-            "raw": 365.6962890625,
-            "brotli": 113.9521484375
+            "raw": 366.41015625,
+            "brotli": 114.1513671875
           }
         }
       },
@@ -477,22 +477,22 @@
         "label": "JSON construction",
         "baseline": {
           "js": {
-            "raw": 466.623046875,
-            "brotli": 89.91015625
+            "raw": 466.8701171875,
+            "brotli": 89.9189453125
           },
           "wasm": {
-            "raw": 418.5810546875,
-            "brotli": 132.4716796875
+            "raw": 417.4580078125,
+            "brotli": 132.564453125
           }
         },
         "selected": {
           "js": {
-            "raw": 379.4775390625,
-            "brotli": 73.671875
+            "raw": 379.724609375,
+            "brotli": 73.71484375
           },
           "wasm": {
-            "raw": 336.6884765625,
-            "brotli": 108.041015625
+            "raw": 337.66796875,
+            "brotli": 107.77734375
           }
         }
       },
@@ -502,22 +502,22 @@
         "label": "Nested JSON",
         "baseline": {
           "js": {
-            "raw": 497.2060546875,
-            "brotli": 92.85546875
+            "raw": 497.453125,
+            "brotli": 92.921875
           },
           "wasm": {
-            "raw": 446.5908203125,
-            "brotli": 138.2548828125
+            "raw": 446.9521484375,
+            "brotli": 138.5419921875
           }
         },
         "selected": {
           "js": {
-            "raw": 413.638671875,
-            "brotli": 77.0849609375
+            "raw": 413.8857421875,
+            "brotli": 77.0400390625
           },
           "wasm": {
-            "raw": 370.3798828125,
-            "brotli": 115.2841796875
+            "raw": 370.7451171875,
+            "brotli": 114.822265625
           }
         }
       },
@@ -527,22 +527,22 @@
         "label": "Nested JSON",
         "baseline": {
           "js": {
-            "raw": 466.623046875,
-            "brotli": 89.91015625
+            "raw": 466.8701171875,
+            "brotli": 89.9189453125
           },
           "wasm": {
-            "raw": 418.5810546875,
-            "brotli": 132.4716796875
+            "raw": 417.4580078125,
+            "brotli": 132.564453125
           }
         },
         "selected": {
           "js": {
-            "raw": 384.1376953125,
-            "brotli": 74.5205078125
+            "raw": 384.384765625,
+            "brotli": 74.4677734375
           },
           "wasm": {
-            "raw": 341.8671875,
-            "brotli": 108.9150390625
+            "raw": 341.9228515625,
+            "brotli": 109.052734375
           }
         }
       },
@@ -552,22 +552,22 @@
         "label": "Recursive CTE + JSON aggregate",
         "baseline": {
           "js": {
-            "raw": 497.2060546875,
-            "brotli": 92.85546875
+            "raw": 497.453125,
+            "brotli": 92.921875
           },
           "wasm": {
-            "raw": 446.5908203125,
-            "brotli": 138.2548828125
+            "raw": 446.9521484375,
+            "brotli": 138.5419921875
           }
         },
         "selected": {
           "js": {
-            "raw": 422.080078125,
-            "brotli": 78.63671875
+            "raw": 422.3271484375,
+            "brotli": 78.6845703125
           },
           "wasm": {
-            "raw": 380.40625,
-            "brotli": 117.80078125
+            "raw": 380.6171875,
+            "brotli": 117.7529296875
           }
         }
       },
@@ -577,22 +577,22 @@
         "label": "Recursive CTE + JSON aggregate",
         "baseline": {
           "js": {
-            "raw": 466.623046875,
-            "brotli": 89.91015625
+            "raw": 466.8701171875,
+            "brotli": 89.9189453125
           },
           "wasm": {
-            "raw": 418.5810546875,
-            "brotli": 132.4716796875
+            "raw": 417.4580078125,
+            "brotli": 132.564453125
           }
         },
         "selected": {
           "js": {
-            "raw": 392.5751953125,
-            "brotli": 76.0048828125
+            "raw": 392.822265625,
+            "brotli": 76.08203125
           },
           "wasm": {
-            "raw": 351.1953125,
-            "brotli": 111.5849609375
+            "raw": 352.009765625,
+            "brotli": 111.689453125
           }
         }
       },
@@ -602,22 +602,22 @@
         "label": "Notes CRUD",
         "baseline": {
           "js": {
-            "raw": 473.6396484375,
-            "brotli": 88.755859375
+            "raw": 473.88671875,
+            "brotli": 88.9541015625
           },
           "wasm": {
-            "raw": 426.392578125,
-            "brotli": 132.58203125
+            "raw": 426.8037109375,
+            "brotli": 132.490234375
           }
         },
         "selected": {
           "js": {
-            "raw": 434.0400390625,
-            "brotli": 81.193359375
+            "raw": 434.287109375,
+            "brotli": 81.177734375
           },
           "wasm": {
-            "raw": 388.259765625,
-            "brotli": 120.95703125
+            "raw": 388.6875,
+            "brotli": 120.767578125
           }
         }
       },
@@ -627,22 +627,22 @@
         "label": "Notes CRUD",
         "baseline": {
           "js": {
-            "raw": 443.0615234375,
-            "brotli": 85.951171875
+            "raw": 443.30859375,
+            "brotli": 86.021484375
           },
           "wasm": {
-            "raw": 396.91015625,
-            "brotli": 126.48828125
+            "raw": 397.529296875,
+            "brotli": 126.7255859375
           }
         },
         "selected": {
           "js": {
-            "raw": 404.384765625,
-            "brotli": 78.6025390625
+            "raw": 404.6318359375,
+            "brotli": 78.568359375
           },
           "wasm": {
-            "raw": 358.8505859375,
-            "brotli": 115.1376953125
+            "raw": 358.958984375,
+            "brotli": 114.966796875
           }
         }
       }

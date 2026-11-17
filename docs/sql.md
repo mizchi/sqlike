@@ -34,6 +34,23 @@ const reopened = openDatabase(image);
 reopened.close();
 ```
 
+## 通常SQLのキャッシュ（未リリース）
+
+同じSQLを繰り返す接続では、parseした構文と準備済みmetadataを再利用できます。
+
+```ts
+const cached = openDatabase(undefined, {
+  statementCache: { capacity: 32, maxSqlBytes: 65536 },
+});
+cached.run('CREATE TABLE task(id INTEGER PRIMARY KEY,title TEXT)');
+cached.run('INSERT INTO task VALUES(?,?)', [1n, 'hello']);
+cached.values('SELECT id,title FROM task WHERE id=?', [1n]);
+cached.values('SELECT id,title FROM task WHERE id=?', [1n]);
+cached.close();
+```
+
+既定は無効です。`capacity`は最大256件、`maxSqlBytes`は保持するSQLのUTF-16長×2の合計で、AST等の追加メモリは含みません。budgetを超えるSQLは通常実行へ戻ります。schema変更・restore・rollback後は再準備し、closeでcacheを解放します。DDL / PRAGMA / transactionは従来の実行経路を通します。[適用範囲・比較](internal/dynamic-sql-prepare.md)。
+
 ## 値の型
 
 | SQL | JavaScript / TypeScript |

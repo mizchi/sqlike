@@ -332,6 +332,7 @@ pub fn database_import_sqlite(db : Database, image : Bytes) -> String {
     let candidate = sqlite_import(image)
     db.store = candidate
     db.serial += 1
+    db.schema_epoch += 1L
     "{}"
   } catch {
     error => ({ "error": public_error(error) } : Json).stringify()

@@ -123,7 +123,7 @@ test("packed npm packages work without this workspace and keep optional entries 
     const packed = await import(
       pathToFileURL(join(dir, "node_modules/@mizchi/sqlike/dist/index.js")).href
     );
-    const candidate = packed.openDatabase(),
+    const candidate = packed.openDatabase(undefined, { statementCache: { capacity: 32 } }),
       oracle = new NodeDatabase(":memory:");
     try {
       assert.deepEqual(
@@ -146,7 +146,10 @@ import {DefinedDatabase, type DefinedCatalog} from '@mizchi/sqlike/defined';
 import {createDefinedDatabase, type DefinedRuntime} from '@mizchi/sqlike/defined/core';
 import {encodeFrame, type Database, type ApplyPolicy} from '@mizchi/litestream';
 import * as engine from '@mizchi/sqlike/engine';
-const db: Database = openDatabase();
+import {openSql} from '@mizchi/sqlike/runtime';
+const custom = openSql<ReturnType<typeof engine.database_open>>(engine);
+custom.close();
+const db: Database = openDatabase(undefined, {statementCache: {capacity: 16, maxSqlBytes: 65536}});
 const values: Value[][] = openDatabase().values('SELECT 1');
 declare const catalog: DefinedCatalog;
 declare const runtime: DefinedRuntime;
@@ -239,7 +242,7 @@ import {openDatabase} from '@mizchi/sqlike';
 import {drizzle,migrate} from '@mizchi/sqlike/drizzle';
 import {sql} from 'drizzle-orm';
 import {createHash} from 'node:crypto';
-const db=openDatabase(), orm=drizzle(db);
+const db=openDatabase(undefined,{statementCache:{capacity:16}}), orm=drizzle(db);
 const ddl='CREATE TABLE task(id INTEGER PRIMARY KEY,title TEXT)';
 await migrate(orm,[{hash:createHash('sha256').update(ddl).digest('hex'),folderMillis:1,bps:true,sql:[ddl]}]);
 orm.transaction(tx=>{tx.run(sql\x60INSERT INTO task VALUES(1,'ok')\x60);assert.throws(()=>tx.transaction(nested=>{nested.run(sql\x60INSERT INTO task VALUES(2,'rollback')\x60);throw Error('rollback')}),/rollback/)});
