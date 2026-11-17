@@ -16,7 +16,7 @@ export function summarizeProfile(profile: CPUProfile) {
     inclusive = new Map<number, number>();
   const buckets = new Map<string, number>();
   const category = (name: string) => {
-    if (/json|JSON\.parse|JSON\.stringify/i.test(name)) return "JSON";
+    if (/json|write__result__(cell|row)/i.test(name)) return "JSON";
     if (/find__binding|find__context|resolve__context|identifier/.test(name))
       return "column resolution";
     if (

@@ -268,9 +268,13 @@ pub fn Statement::step(self : Statement) -> Bool raise SqliteError {
       Some(copy_store(self.connection.database.store))
     }
     try {
+      let cookie = self.connection.database.store.cookie
       self.rows = (self.action)(self.parameters)
       if !self.read_only {
         self.connection.database.serial += 1
+        if self.connection.database.store.cookie != cookie {
+          self.connection.database.schema_epoch += 1L
+        }
       }
     } catch {
       cause => {

@@ -72,6 +72,10 @@ pub fn database_is_readonly(String) -> Bool
 
 pub fn database_open() -> Database
 
+pub fn database_prepare(Database, String) -> SqlPrepared
+
+pub fn database_prepared_exec(SqlPrepared, String, Bool, Bool) -> String
+
 pub fn database_query_values(Database, String, String) -> String
 
 pub fn database_restore(Database, String) -> String
@@ -117,6 +121,8 @@ pub fn defined_snapshot(DefinedDatabase) -> BinaryResult
 pub fn pack_program_binary(String) -> BinaryCatalog
 
 pub fn program_runtime_requirements(String) -> String
+
+pub fn query_prepared_values(SqlPrepared, String) -> Result[Array[Array[Value]], String]
 
 pub fn sqlite_data(SqliteResult) -> Bytes
 
@@ -182,6 +188,8 @@ pub fn Program::load_binary(Bytes, Bytes) -> Self raise SqliteError
 pub fn Program::query(Self, String) -> Query raise SqliteError
 
 type Query
+
+type SqlPrepared
 
 type SqliteResult
 

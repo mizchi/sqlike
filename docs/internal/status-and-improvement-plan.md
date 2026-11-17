@@ -1,6 +1,8 @@
 # 現在の対応範囲・最適化と改善対象
 
-更新日: 2026-11-17。**0.1.2** の実装・検証を整理した台帳。今後の着手順と完了条件はこのページで管理し、各機能の仕様・実装経緯・測定の全量はリンク先に残す。
+更新日: 2026-11-17。**0.1.2と未リリースの追加**の実装・検証を整理した台帳。今後の着手順と完了条件はこのページで管理し、各機能の仕様・実装経緯・測定の全量はリンク先に残す。
+
+未リリースの追加として、丸め4関数を独立した`mathRounding`関数群で選択可能にした。JSON境界では[AOT / positional結果の直接writer](result-json-writer.md)を導入し、既存のCell JSON形式のまま中間Json / Map生成を減らす。bind decoderやobject形式の結果は既存経路を維持する。
 
 0.1.2の改善として、[AOT UPDATEのメタデータ再利用](aot-update-metadata.md)を追加した。固定schema由来の行layout・代入先の列番号とaffinityをProgramで共有し、値・接続状態は実行ごとに評価する。[次期最適化Issue](https://github.com/mizchi/sqlike/issues/1)の通常SQL・JSON境界・索引移動は引き続き改善候補。
 
@@ -12,7 +14,7 @@
 
 S02ではGLOB・charをcoreへ追加し、16進・桁区切り数値literalをcompiler側で既存の値へ変換する。charのサロゲート値はTEXTで正確に表現できないため拒否する。GLOB・LIKE・unicodeがU+FFFE / U+FFFFを読むときの本家との差も修正した。
 
-[catalogからの自動選択](../catalog-build.md)を追加。schemaと登録queryの型付きIRから必須feature・coreの27関数群・6種類の文を収集し、AOT / definedのJS・Wasmを絞る。主キー索引・SQLite出力・LTXは明示指定を維持する。続いてJOIN・通常CTE・再帰CTE・compound、JSON内部の7関数群とsubtype再解析を分割した。未使用の処理は削除し、別catalogによる追加利用はロード時に拒否する。演算子・日時・window内部の細分化と、JSONのscalar subquery / min-maxを経由するsubtype追跡は次の改善対象。
+[catalogからの自動選択](../catalog-build.md)を追加。schemaと登録queryの型付きIRから必須feature・coreの28関数群・6種類の文を収集し、AOT / definedのJS・Wasmを絞る。主キー索引・SQLite出力・LTXは明示指定を維持する。続いてJOIN・通常CTE・再帰CTE・compound、JSON内部の7関数群とsubtype再解析を分割した。未使用の処理は削除し、別catalogによる追加利用はロード時に拒否する。演算子・日時・window内部の細分化と、JSONのscalar subquery / min-maxを経由するsubtype追跡は次の改善対象。
 
 P0のV01 / C01 / R01と、P1のP01 / S01 / P02 / R02は完了。C02の[DO対応](do-consumer-sql.md)に続き、[Drizzle driver・RETURNING式・migration](drizzle.md)を追加した。[P0の基準](p0-results.md)、[P01](p01-aot-results.md)、[S01の列差分](column-delta.md)、[P02の行ページ](row-store.md)、[R02のLTX送信](aot-ltx-upload.md)、[受入条件](release-acceptance.md)、[現行の回帰・計測証拠](../../measurements/p0-completion.json)を保存した。C02の集約代表行などは未完了として維持する。
 
@@ -122,19 +124,19 @@ Web標準APIによるBase64 / JSON置換、Turso WASMの外部配信は[試作](
 
 ### 現行の正しさの記録
 
-段階的な互換機能の追加後の回帰はMoonBit **53件×JS / Wasm GC**、Node **362件**、Playwright **58件**と型チェック・本家Litestream復元を通過した。件数はこの更新時点の記録で、将来のテスト件数の固定目標ではない。
+未リリースの丸め関数・結果writer・通常SQLのprepare再利用に続き、索引ブロック化・UPDATE格納・rowid採番と実験typed結果を追加した後の回帰はMoonBit **67件×JS / Wasm GC**、Node **397件**、Playwright **59件**と型チェック・本家Litestream復元を通過した。10万行benchmarkの64組、cache / feature選択、独立npm consumerも通過した。実験typed経路でも対応済み566ケースと上流1,000クエリを照合した。件数はこの更新時点の記録で、将来のテスト件数の固定目標ではない。
 
 | ゲート | 現在の観測 | 合格が意味すること |
 | --- | --- | --- |
-| `just sqlite-output-check` | JS / Wasm GC / Chromium JSそれぞれ454 probe一致、248 atomic拒否、出力不一致0 | 324生成ケースを追加。観測した成功出力と拒否時の非変更が一致。未対応を一致へ合算せず、誤受理・内部例外・証拠欠落も検出 |
-| `just differential-audit` | 566ケース・8経路。各環境2,256一致、4件の双方AOT prepare拒否、4件のAOT対象外DDL、不一致0 | 対応済みコーパスの新たな拒否も退行として検出。行・型・列位置・失敗後状態・接続カウンターを照合 |
+| `just sqlite-output-check` | JS / Wasm GC / Chromium JSそれぞれ458 probe一致、244 atomic拒否、出力不一致0 | 324生成ケースを追加。観測した成功出力と拒否時の非変更が一致。未対応を一致へ合算せず、誤受理・内部例外・証拠欠落も検出 |
+| `just differential-audit` | 566ケース・12経路。各環境3,388一致、4件の双方AOT prepare拒否、4件のAOT対象外DDL、不一致0。通常SQLのJS / Wasm cache経路を含む | 対応済みコーパスの新たな拒否も退行として検出。行・型・列位置・失敗後状態・接続カウンターを照合 |
 | `just sqlite-audit` | **不合格を維持**。台帳1,618件中、未公開API 306・未検証599・参照ビルドになし11などが残る | 全機能互換と判定しない。出力互換ゲートの通過とは別の条件 |
 | `just do-consumer-check` | 実workerdの6シナリオ・53ステップ。33一致・19明示拒否・1双方制約エラー | 型付き行と各操作後の表・監査表をnative SQLiteと照合。絶対値の初期total_changesは一致すると仮定しない |
 | `just drizzle-check` | Kit生成6本＋custom 2本。Node / SQLike JS・Wasm / SQLite WASM、ブラウザIDB、実DOで通過 | 各段階のデータ・FK保持、RETURNING、再適用、履歴・失敗時rollback、オフライン再開。[制限](drizzle.md)を含む固定consumerの検証 |
 | `just defined-check` | 固定バイナリDDL / named statement、JS / Wasm、IDBオフライン再開 | 上流1,000クエリをJSON / binaryのJS / Wasmで本家と照合。型・FK / trigger・wire破損・snapshot / patch・失敗時の非公開を検査 |
 | `just optional-functions-check` | SQL JSON / 日時 / window / 索引metadata / 集約FILTERの個別選択・一括除去 | 必要機能不足の初期化時拒否、3モードのJS / Wasm、上流1,000クエリの6経路照合、選択したcoreだけの配信とIDBオフライン再開 |
-| `just staged-compat-check` | 基本演算・優先6項目・S02・catalog自動選択の65テスト | 型・NULL・collation・優先順位・JSON表記・GLOB・char・数値literal、機能選択、JS / Wasm・バイナリcatalog・Drizzle事前定義・Chromiumの最小ビルドとIDB再開を確認 |
-| `just catalog-profiles` | core 27群＋JSON 7群、6文種、JOIN / CTE / compound、schema / queryの依存、JS / Wasmの差分と2件のChromium保存検証 | 不要な実装の除去、必要な実装の保持、除外した機能を使う別catalogのロード時拒否。[通常 / 自動選択の計測](../../measurements/catalog-profiles-current.json) |
+| `just staged-compat-check` | 基本演算・優先6項目・S02・丸め関数・catalog自動選択の固定テスト | 型・NULL・collation・優先順位・JSON表記・GLOB・char・数値literal、機能選択、JS / Wasm・バイナリcatalog・Drizzle事前定義・Chromiumの最小ビルドとIDB再開を確認 |
+| `just catalog-profiles` | core 28群＋JSON 7群、6文種、JOIN / CTE / compound、schema / queryの依存、JS / Wasmの差分と2件のChromium保存検証 | 不要な実装の除去、必要な実装の保持、除外した機能を使う別catalogのロード時拒否。[通常 / 自動選択の計測](../../measurements/catalog-profiles-current.json) |
 
 現行の証拠: [全機能監査Node](../../measurements/sqlite-feature-audit-node.json) / [Chromium](../../measurements/sqlite-feature-audit-chromium.json)、[差分Node](../../measurements/sqlike-differential-node.json) / [Chromium](../../measurements/sqlike-differential-chromium.json)。Node SQLite 3.53.4 / Chromium SQLite WASM 3.54.1を使用した。checkerは台帳・入力・ソース・成果物のhashを検査する。未検証の入力までの数学的な互換性証明ではない。
 
@@ -202,6 +204,31 @@ notes Programは20,049 B、SHA-256 `a6af7a52769d67773842aae483fcb856b46f628e3118
   - 実装: `BoundExpression` / `BoundAccess` / `PreparedPoint`を追加。基本式の評価用Environmentは遅延生成。値演算とキー正規化は汎用経路と共有する
   - 結果: [準備済み実行計画](prepared-execution-plan.md)。SQL断片・HTMLのbindと、通常要素のtextContentによるオフライン表示を別の境界として検査
 
+- [x] **P06 / P1 — 既存JSON ABIのpositional結果を直接出力**
+  - 完了条件: int64 / REAL / 負のゼロ / BLOB / NULL / TEXT、重複列位置・hidden binding・空結果・変更件数を維持し、中間Json / Mapを省く。JS / Wasmのpaired比較と全回帰、無効ビルドの除去、配信・保持 / peakを再採取する
+  - 実装: AOT / binary definedと通常SQLのpositional結果をStringBuilderへ書く。TEXT / 有限REALのformatter、bind decoder、object形式の結果、保存・wire形式は従来の契約を維持する
+  - 結果: [結果JSON writer](result-json-writer.md)。5,000行のPK hitはJS約45〜47% / Wasm約21〜25%短縮。丸め4関数と合わせた全公開AOT単体のBrotli増分は419 B。writer単独のallocation量・heap削減率は未測定。直接typed ABIを導入したものではなくB05は未完了
+
+- [x] **P07 / P1 — 通常SQLのparse / prepare固定費を分離し、接続内で再利用**
+  - 完了条件: dynamic profileを追加し、parse・prepare・実行・marshalを分ける。接続ごとの上限と破棄、schema変更・restore・接続世代・feature構成の有効性を定義する。可変Statement / Store / bindをグローバル共有しない
+  - 実装: opt-inのLRU（最大256件・既定64 KiB SQL text）。DML / SELECTのASTと準備済みmetadataを再利用し、DDL / transaction / PRAGMAは既存経路。保存対象外のschema epochでrollback時のcookie ABAも再準備し、host側の接続差替えではclearする
+  - 結果: [通常SQL prepare再利用](dynamic-sql-prepare.md)。5,000行の主キーhitはJS 27.41→1.02µs、Wasm 6.36→0.93µs。通常SQL単体のBrotli増分2,126 B、AOT +65 B。保持heapを別測定し、SQL text budgetがheap上限ではないことを明記。既存uncached経路も残して8経路を比較、566ケース×12経路の差分不一致0
+  - 大規模検証: [10万行・8経路](sqlite-large-benchmark.md)を任意タスクへ追加。3サンプル・20ms目標・返却20万行予算・画像からの初期化。通常のP0データセットを維持し、全件読取・集約・UPDATE・索引の実変更もnative照合。P07単体の数値は[固定した記録](dynamic-sql-prepare.md)で、現行の最適化後とは分ける
+  - 後続: [Issue #1](https://github.com/mizchi/sqlike/issues/1)の索引移動・JSON境界はP08 / B05で試行。一般plan拡張はP03、typed結果の公開API化・bindはB05に残る
+
+- [x] **P08 / P1 — 大きい二次索引の更新をブロック化**
+  - 実装: 8,192行超を128行leafへ分割し、256行超でsplit、小さいleafは隣接merge。leaf末尾と内部の二段階探索を共有する。rowid順の走査cacheはflatを維持
+  - 結果: [4項目の試行](optimization-trials.md)。10万行の索引両端移動＋範囲読取はcached SQLでJS 198.02→10.96µs / Wasm 38.40→8.37µs。collation・partial index・rollback・制約失敗後のnative差分を追加。prefix位置更新はleaf数に比例する
+
+- [x] **P09 / P1 — UPDATEの実格納と空の評価処理を削減**
+  - 実装: BEFORE trigger後の現在値と格納値がstorage class / REAL bitを含めて同一なら、行ページ・索引・差分の実書込を省く。制約・trigger・FK・RETURNING・counterは維持。CHECK / triggerがない表の準備も省く
+  - 結果: 10万行の同値UPDATEはcached SQLでJS 3.96→2.57µs / Wasm 2.26→1.56µs。実変更・trigger・型変更・rollbackも検査。同値UPDATEの値を全UPDATEの改善率として扱わない
+
+- [x] **P10 / P1 — INSERTの最大rowid全走査を削減**
+  - 実装: 明示rowidでは最大値を探索せず、自動採番では派生PrimaryIndexのlive maximumを再利用。最大値の削除・主キー変更後は再計算し、AUTOINCREMENTのsequenceも考慮する
+  - 結果: Nodeの1万行・明示主キーINSERTはJS 481.00→26.33ms / Wasm 286.11→17.77ms。10万行も3秒予算内で3回完走。主キー変更・負のrowid・trigger・rollbackをnative照合。P08〜P10のBrotli増分は通常SQL +1,060 B / 全公開AOT +706 B
+  - 残課題: warmなrowid順cacheがあるpoint DELETEには改善を確認できなかった。flat配列の削除、制約・trigger / FK探索、atomic backupを分離して次の最適化対象を決める
+
 - [x] **S01 / P1 — 変更列だけの永続差分。大きい未変更TEXT / BLOBまで行after-imageに含まれる**
   - 完了条件: version付き差分と旧形式replayを定義。4 KiB列を持つ1 / 16行更新で提出量を減らし、strict ACK・checkpoint込み時間・reopen・trigger・rollbackを比較。通常の小さい行を退行させない
   - 依存・費用: V01。中。単に全量dumpをdiffする実装にはしない
@@ -253,6 +280,7 @@ notes Programは20,049 B、SHA-256 `a6af7a52769d67773842aae483fcb856b46f628e3118
 - [ ] **B05 — Jsonの再構築を省くJS向けbind / 結果ABI**
   - 完了条件: 型・int64 / REAL / BLOB / TEXT・失敗後状態の契約を固定し、既存ABIとの互換性を差分検証。SQLのJSON関数・旧形式codec・Wasm経路から分離し、配信量と速度を実測する
   - 現状: [mizchi/x/jsonの試験](json-abi.md)。bind parseだけの置換は容量が減る一方、小さい問い合わせで遅くなり、不正なサロゲートの拒否が成功へ変わったため未採用
+  - 試行: [JS native結果](optimization-trials.md)をSELECT専用の実験MoonBit packageへ分離。両経路がnative配列を返す比較で10万行取得75.50→16.60ms、主キー検索1.38→0.63µs。対応済み566ケース・上流1,000クエリとBLOB所有権等を検査し、通常SQL / AOTからbridgeが除去されることを確認。npm公開API・AOT・typed bind・streamingは未完了のためチェックを維持する
 
 - [ ] **V02 / P2 — Firefox / WebKit・モバイルと外部consumer**
   - 完了条件: 対象ブラウザ版・COOP / COEP・Worker / IDB / OPFS・耐障害シナリオを固定しPlaywrightで実行。ORMは版と生成SQL / migrationを固定して追加

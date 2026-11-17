@@ -1,5 +1,20 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+
+- Opt-in connection-local SQL statement cache with bounded LRU/text retention, schema-generation invalidation and shared prepared SELECT/UPDATE plans. Preserve the uncached API and parser-free AOT/defined builds.
+- SQLite-compatible `ceil`, `ceiling`, `floor` and `trunc`, with independent `mathRounding` catalog specialization. Preserve INTEGER/REAL storage classes and validate arity before execution.
+- Experimental MoonBit JS package `mizchi/sqlike/experimental-typed` for prepared SELECT results as native positional values. Keep it outside the default runtime and npm exports; bindings retain the existing JSON format.
+
+### Changed
+
+- Write AOT, binary defined and positional SQL result cells directly to the existing JSON wire format, avoiding intermediate Json objects and Maps per cell. Retain the existing string/number formatter and object-row semantics.
+- Split large secondary-index row arrays into bounded blocks to reduce key-movement costs. Preserve comparison rules, rollback behavior and storage formats.
+- Skip identical row storage writes after evaluating UPDATE semantics, and avoid empty CHECK/trigger setup. Preserve changes, constraints, trigger effects and INTEGER/REAL distinctions.
+- Avoid maximum-rowid scans for explicit INSERT keys and cache the live maximum for automatic allocation. Preserve AUTOINCREMENT sequence rules, negative rowids and rollback behavior.
+
 ## [0.1.2] - 2026-11-17
 
 ### Changed
@@ -53,3 +68,4 @@ Recompile fixed catalogs with the 0.1.1 compiler. SQLite compatibility remains a
 [0.1.0]: https://github.com/mizchi/sqlike/releases/tag/v0.1.0
 [0.1.2]: https://github.com/mizchi/sqlike/releases/tag/v0.1.2
 [0.1.1]: https://github.com/mizchi/sqlike/releases/tag/v0.1.1
+[Unreleased]: https://github.com/mizchi/sqlike/compare/v0.1.2...HEAD

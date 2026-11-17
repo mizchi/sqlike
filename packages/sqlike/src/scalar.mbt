@@ -14,6 +14,7 @@ fn scalar_arity(name : String, count : Int32) -> Bool {
     "concat_ws" | "iif" | "if" => count >= 2
     "octet_length" | "quote" | "unicode" | "sign" => count == 1
     "round" => count == 1 || count == 2
+    "ceil" | "ceiling" | "floor" | "trunc" => count == 1
     _ => false
   }
 }
@@ -125,6 +126,12 @@ fn scalar_call(
   encoding : Int32,
 ) -> Value raise SqlError {
   match name {
+    "ceil" | "ceiling" | "floor" | "trunc" => {
+      guard CAP_FUNCTION_MATH_ROUNDING else {
+        fail("catalog capability disabled: mathRounding")
+      }
+      math_rounding_value(name, values[0])
+    }
     "glob" => {
       guard CAP_FUNCTION_GLOB else { fail("catalog capability disabled: glob") }
       let pattern = if values[0] is Null {

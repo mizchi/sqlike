@@ -170,6 +170,8 @@ priv struct Store {
 struct Database {
   mut store : Store
   mut serial : Int32
+  // Connection-local schema generation; never serialized or restored from cookie.
+  mut schema_epoch : Int64
 }
 
 ///|
@@ -338,6 +340,7 @@ fn json_value(value : Json) -> Value raise {
 pub fn database_open() -> Database {
   {
     serial: 0,
+    schema_epoch: 0L,
     store: {
       encoding: None,
       tables: [],
@@ -374,6 +377,7 @@ pub fn database_restore(db : Database, image : String) -> String {
     let restored : Store = @json.from_json(state)
     validate_image(restored)
     db.store = restored
+    db.schema_epoch += 1L
     "{}"
   } catch {
     e =>
@@ -424,7 +428,11 @@ fn copy_store(store : Store) -> Store {
 
 ///|
 pub fn database_clone(db : Database) -> Database {
-  { store: copy_store(db.store), serial: db.serial, }
+  {
+    store: copy_store(db.store),
+    serial: db.serial,
+    schema_epoch: db.schema_epoch,
+  }
 }
 
 ///|

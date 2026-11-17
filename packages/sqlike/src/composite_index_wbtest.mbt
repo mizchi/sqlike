@@ -37,7 +37,7 @@ test "mixed direction composite index narrows equality prefixes and scans both w
     "SELECT id,n FROM t WHERE tenant=? AND n>=? AND n<? ORDER BY n DESC,id ASC",
   )
   assert_false(forward.reverse)
-  assert_eq(forward.rows[forward.start:forward.end].to_owned().map(r => r.id), [
+  assert_eq(forward.rows.slice(forward.start, forward.end).map(r => r.id), [
     1L, 3L, 2L,
   ])
   let reverse = read(
@@ -53,9 +53,7 @@ test "mixed direction composite index narrows equality prefixes and scans both w
     "SELECT id,n FROM t WHERE tenant=? AND n>=? AND n<? ORDER BY n DESC,id ASC",
   )
   assert_true(physical_equal(cached, next.rows))
-  assert_eq(next.rows[next.start:next.end].to_owned().map(r => r.id), [
-    2L, 1L, 3L,
-  ])
+  assert_eq(next.rows.slice(next.start, next.end).map(r => r.id), [2L, 1L, 3L])
 }
 
 ///|

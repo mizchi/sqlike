@@ -249,9 +249,9 @@ fn simple_relation(
     Some(range) => range
     None => {
       let rows = if point is Some(rows) {
-        rows
+        index_pages(rows, pages=false)
       } else if target is Some(_) {
-        candidate_rows(context.store, table, target)
+        index_pages(candidate_rows(context.store, table, target), pages=false)
       } else {
         ordered_rowid_rows(context.store, table)
       }

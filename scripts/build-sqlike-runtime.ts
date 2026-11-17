@@ -48,6 +48,8 @@ const sql = [
   "database_autocommit",
   "database_set_clock",
   "database_exec",
+  "database_prepare",
+  "database_prepared_exec",
   "database_query_values",
   "database_exec_values",
   "database_dump",

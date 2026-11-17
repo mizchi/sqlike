@@ -152,20 +152,22 @@ fn check_row(
       fail("NOT NULL constraint failed: " + table.name + "." + col.name)
     }
   }
-  let ctx = evaluation(
-    store,
-    params,
-    row_environment(table, { id: 0L, values, }, table.name),
-  )
   for obj in store.objects {
     if obj.kind == "index" &&
       matches_identifier(obj.table, identifier(table.name)) {
       ignore(index_values(store, table, object_index(obj, table), values))
     }
   }
-  for check in table.checks {
-    if truth(evaluate(check, ctx)) == 0 {
-      fail("CHECK constraint failed: " + table.name)
+  if !table.checks.is_empty() {
+    let ctx = evaluation(
+      store,
+      params,
+      row_environment(table, { id: 0L, values, }, table.name),
+    )
+    for check in table.checks {
+      if truth(evaluate(check, ctx)) == 0 {
+        fail("CHECK constraint failed: " + table.name)
+      }
     }
   }
 }
@@ -478,16 +480,6 @@ fn insert_rows(
         column_affinity(table, table.columns[columns[i]]),
       )
     }
-    let mut maximum = if table.autoincrement {
-      table.sequence
-    } else if table.rows.is_empty() {
-      0L
-    } else {
-      table.rows[0].id
-    }
-    for row in table.rows {
-      maximum = maximum.max(row.id)
-    }
     if ipk >= 0 {
       explicit_id = values[ipk]
     }
@@ -501,6 +493,7 @@ fn insert_rows(
       }
       n
     } else {
+      let maximum = maximum_rowid(store, table)
       guard maximum < 9223372036854775807L else {
         fail("rowid allocation limit")
       }
@@ -1088,12 +1081,27 @@ fn database_exec_inner(
   bindings : String,
   read_only : Bool,
   positional : Bool,
+  prepared~ : SqlPrepared? = None,
 ) -> String {
   let mut backup : Store? = None
   let mut tracks_changes = false
   try {
-    let parser = lex(sql)
-    let stmt = parse_statement(parser)
+    let (stmt, count) = match prepared {
+      Some(query) => {
+        if query.error is Some(message) {
+          fail(message)
+        }
+        guard query.statement is Some(statement) else {
+          fail("invalid SQL plan")
+        }
+        (statement, query.parameters)
+      }
+      None => {
+        let parser = lex(sql)
+        let statement = parse_statement(parser)
+        (statement, parser.parameter)
+      }
+    }
     tracks_changes = stmt is Insert(_) ||
       stmt is Update(_, _, _, _) ||
       stmt is Delete(_, _, _)
@@ -1101,9 +1109,7 @@ fn database_exec_inner(
     let params = params_json.map(json_value) catch {
       _ => fail("invalid SQL bindings")
     }
-    guard parser.parameter == params.length() else {
-      fail("SQL binding count mismatch")
-    }
+    guard count == params.length() else { fail("SQL binding count mismatch") }
     let read = match stmt {
       Select(_) | Pragma(_, _, None) => true
       _ => false
@@ -1114,25 +1120,22 @@ fn database_exec_inner(
     if !read {
       backup = Some(copy_store(db.store))
     }
-    let rows = execute_statement(db.store, stmt, params)
+    let cookie = db.store.cookie
+    let rows = match prepared {
+      Some(query) => prepared_sql_rows(query, params)
+      None => execute_statement(db.store, stmt, params)
+    }
     if !read {
       db.serial += 1
+      if db.store.cookie != cookie {
+        db.schema_epoch += 1L
+      }
     }
-    (
-      {
-        "rows": if positional {
-          Json::array(
-            rows.map(row => {
-              Json::array(
-                row.filter(b => !b.hidden).map(b => value_json(b.value)),
-              )
-            }),
-          )
-        } else {
-          result_json(rows)
-        },
-        "readonly": read,
-      } : Json).stringify()
+    if positional {
+      positional_result_json(rows, read)
+    } else {
+      ({ "rows": result_json(rows), "readonly": read } : Json).stringify()
+    }
   } catch {
     e => {
       if backup is Some(previous) {

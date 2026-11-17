@@ -4,6 +4,7 @@
 priv struct PrimaryIndex {
   mut slots : @rowmap.HashMap[Int64, Int32]
   mut keys : @rowmap.HashMap[String, Int64]
+  mut maximum : Int64?
 }
 
 ///|
@@ -67,7 +68,9 @@ fn primary_index(store : Store, table : Table) -> PrimaryIndex {
   let slots : Array[(Int64, Int32)] = []
   let keys : Array[(String, Int64)] = []
   let composite = integer_primary(table) < 0
+  let mut maximum : Int64? = None
   for (slot, row) in table.rows.slot_entries() {
+    maximum = Some(maximum.map(n => n.max(row.id)).unwrap_or(row.id))
     slots.push((row.id, slot))
     if composite && primary_value_key(table, row.values) is Some(key) {
       keys.push((key, row.id))
@@ -76,6 +79,7 @@ fn primary_index(store : Store, table : Table) -> PrimaryIndex {
   let index : PrimaryIndex = {
     slots: @rowmap.HashMap(slots[:]),
     keys: @rowmap.HashMap(keys[:]),
+    maximum: Some(maximum.unwrap_or(0L)),
   }
   if store.primary_indexes.length() >= 4 {
     store.primary_indexes.clear()
@@ -95,6 +99,18 @@ fn update_primary_index(
     return
   }
   if store.primary_indexes.get(table.name) is Some(index) {
+    if previous is Some(row) &&
+      next.map(r => r.id) != Some(row.id) &&
+      index.maximum == Some(row.id) {
+      index.maximum = None
+    }
+    if next is Some(row) {
+      if previous is None && table.rows.is_empty() {
+        index.maximum = Some(row.id)
+      } else if index.maximum is Some(maximum) {
+        index.maximum = Some(maximum.max(row.id))
+      }
+    }
     let slot = match previous {
       Some(row) => index.slots.get(row.id).unwrap_or(table.rows.used)
       None => table.rows.used
@@ -118,6 +134,37 @@ fn update_primary_index(
         index.keys = index.keys.add(key, row.id)
       }
     }
+  }
+}
+
+///|
+/// Derived allocation metadata. Removing the maximum invalidates just this
+/// value; the next automatic allocation scans once. Restore/clone remain safe.
+fn maximum_rowid(store : Store, table : Table) -> Int64 {
+  let index = if FEATURE_PRIMARY_INDEX {
+    Some(primary_index(store, table))
+  } else {
+    None
+  }
+  if index is Some(index) && index.maximum is Some(maximum) {
+    return if table.autoincrement {
+      maximum.max(table.sequence)
+    } else {
+      maximum
+    }
+  }
+  let mut maximum : Int64? = None
+  for row in table.rows {
+    maximum = Some(maximum.map(n => n.max(row.id)).unwrap_or(row.id))
+  }
+  let result = maximum.unwrap_or(0L)
+  if index is Some(index) {
+    index.maximum = Some(result)
+  }
+  if table.autoincrement {
+    result.max(table.sequence)
+  } else {
+    result
   }
 }
 

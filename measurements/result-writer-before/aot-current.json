@@ -1,0 +1,1253 @@
+{
+  "sourceHashes": {
+    "package.json": "c9ff8e1c01bf5b7c0dd82b69fd0876035b30f67819b829a1c841a8bfb9dfa764",
+    "pnpm-lock.yaml": "62a9334c27b9f3876361edc3c9f74a0ed5e11866e28403cc065e1bdba7d70012",
+    "scripts/measure-aot.ts": "cabede7fdd300160c612c6d542cf4396a8b103506b9df979b87e9bfc2058aaac",
+    "scripts/measurement-manifest.ts": "615c0ab32c0b2e01c57ea1be690a2a08d2e9401b9b0c5d93574520253c16acdb"
+  },
+  "format": 1,
+  "measuredAt": "2026-11-17T02:09:56.054Z",
+  "environment": {
+    "node": "v24.22.2",
+    "chromium": "158.0.8127.18",
+    "cpu": "Apple M5",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "method": {
+    "runs": 3,
+    "compression": "HTTP Brotli quality 11; gzip 9 for artifact sizes",
+    "browser": "Fresh Chromium process/profile per cold sample. Localhost, no throttling. Includes page, Service Worker precache, generated catalog/template, database Worker and DB initialization. Offline reload keeps IDB/cache. AOT includes SQLite writer and LTX reader/writer. Full engine demos also include synchronization UI/protocol; feature sets differ.",
+    "cpu": "Node JS backend; 100 rows, 1000 warm-up iterations, 5 measured runs in alternating order. Same bound SELECT SQL; AOT executes named AST and decodes result JSON, dynamic MoonDatabase reparses SQL and decodes positional result JSON. No IDB, Worker RPC or server sync in CPU comparison. Absolute engine times are not durable browser write latency.",
+    "durable": "AOT browser only: 100 sequential strict IDB write commits, 100 Worker point reads, one SQLite+LTX checkpoint; measured separately after cold startup."
+  },
+  "artifacts": [
+    {
+      "name": "aot-runtime-js",
+      "path": "_build/js/release/build/mizchi/litestream-example/runtime/runtime.js",
+      "bytes": {
+        "raw": 2396191,
+        "gzip": 286550,
+        "brotli": 193043
+      },
+      "sha256": "7e5178ff34e4cd38bf48061f2e1c111fb8d583e37803543098165ab210c2d055"
+    },
+    {
+      "name": "dynamic-sql-js",
+      "path": "_build/js/release/build/mizchi/sqlike/sqlike.js",
+      "bytes": {
+        "raw": 2540476,
+        "gzip": 305297,
+        "brotli": 204528
+      },
+      "sha256": "d6fe7c726cb323219cf79821b73e3d4490551ba6b670379d8ebf7159897a66fe"
+    },
+    {
+      "name": "aot-runtime-wasm-gc",
+      "path": "_build/wasm-gc/release/build/mizchi/litestream-example/runtime/runtime.wasm",
+      "bytes": {
+        "raw": 523192,
+        "gzip": 207545,
+        "brotli": 163119
+      },
+      "sha256": "905be5dfbb0bf6d68159fdf1535f195a1ea896452c224020a6da6ff6d5e0ca88"
+    },
+    {
+      "name": "compiled-program",
+      "path": "examples/notes/program.generated.json",
+      "bytes": {
+        "raw": 20049,
+        "gzip": 1289,
+        "brotli": 1040
+      },
+      "sha256": "a6af7a52769d67773842aae483fcb856b46f628e31180d44afa14d2201bc2de2"
+    }
+  ],
+  "samples": [
+    {
+      "engine": "aot",
+      "run": 0,
+      "coldReadyMs": 127.63999998569489,
+      "wireBytes": 123377,
+      "decodedBytes": 639246,
+      "requests": [
+        {
+          "path": "/lite/",
+          "raw": 2521,
+          "wire": 1030,
+          "status": 200
+        },
+        {
+          "path": "/assets/lite-BhAUlBmi.js",
+          "raw": 3935,
+          "wire": 1333,
+          "status": 200
+        },
+        {
+          "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+          "raw": 670,
+          "wire": 325,
+          "status": 200
+        },
+        {
+          "path": "/lite/sw.js",
+          "raw": 1070,
+          "wire": 495,
+          "status": 200
+        },
+        {
+          "path": "/lite/",
+          "raw": 2521,
+          "wire": 1030,
+          "status": 200
+        },
+        {
+          "path": "/lite/index.html",
+          "raw": 2521,
+          "wire": 1030,
+          "status": 200
+        },
+        {
+          "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+          "raw": 670,
+          "wire": 325,
+          "status": 200
+        },
+        {
+          "path": "/lite/assets/aot-worker-BiKn0I4j.js",
+          "raw": 617580,
+          "wire": 115051,
+          "status": 200
+        },
+        {
+          "path": "/assets/lite-BhAUlBmi.js",
+          "raw": 3935,
+          "wire": 1333,
+          "status": 200
+        },
+        {
+          "path": "/assets/moon-image-store-fwONbKst.js",
+          "raw": 3823,
+          "wire": 1425,
+          "status": 200
+        }
+      ],
+      "cache": [
+        {
+          "path": "/lite/",
+          "bytes": 2521
+        },
+        {
+          "path": "/lite/index.html",
+          "bytes": 2521
+        },
+        {
+          "path": "/assets/lite-BhAUlBmi.js",
+          "bytes": 3935
+        },
+        {
+          "path": "/lite/assets/aot-worker-BiKn0I4j.js",
+          "bytes": 617580
+        },
+        {
+          "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+          "bytes": 670
+        },
+        {
+          "path": "/assets/moon-image-store-fwONbKst.js",
+          "bytes": 3823
+        }
+      ],
+      "offlineReadyMs": 39.28999996185303,
+      "durable100Ms": 25.240000009536743,
+      "read100Ms": 2.774999976158142,
+      "checkpointMs": 8.179999947547913
+    },
+    {
+      "engine": "aot",
+      "run": 1,
+      "coldReadyMs": 108.01999998092651,
+      "wireBytes": 123377,
+      "decodedBytes": 639246,
+      "requests": [
+        {
+          "path": "/lite/",
+          "raw": 2521,
+          "wire": 1030,
+          "status": 200
+        },
+        {
+          "path": "/assets/lite-BhAUlBmi.js",
+          "raw": 3935,
+          "wire": 1333,
+          "status": 200
+        },
+        {
+          "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+          "raw": 670,
+          "wire": 325,
+          "status": 200
+        },
+        {
+          "path": "/lite/sw.js",
+          "raw": 1070,
+          "wire": 495,
+          "status": 200
+        },
+        {
+          "path": "/lite/",
+          "raw": 2521,
+          "wire": 1030,
+          "status": 200
+        },
+        {
+          "path": "/lite/index.html",
+          "raw": 2521,
+          "wire": 1030,
+          "status": 200
+        },
+        {
+          "path": "/lite/assets/aot-worker-BiKn0I4j.js",
+          "raw": 617580,
+          "wire": 115051,
+          "status": 200
+        },
+        {
+          "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+          "raw": 670,
+          "wire": 325,
+          "status": 200
+        },
+        {
+          "path": "/assets/lite-BhAUlBmi.js",
+          "raw": 3935,
+          "wire": 1333,
+          "status": 200
+        },
+        {
+          "path": "/assets/moon-image-store-fwONbKst.js",
+          "raw": 3823,
+          "wire": 1425,
+          "status": 200
+        }
+      ],
+      "cache": [
+        {
+          "path": "/lite/",
+          "bytes": 2521
+        },
+        {
+          "path": "/lite/index.html",
+          "bytes": 2521
+        },
+        {
+          "path": "/assets/lite-BhAUlBmi.js",
+          "bytes": 3935
+        },
+        {
+          "path": "/lite/assets/aot-worker-BiKn0I4j.js",
+          "bytes": 617580
+        },
+        {
+          "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+          "bytes": 670
+        },
+        {
+          "path": "/assets/moon-image-store-fwONbKst.js",
+          "bytes": 3823
+        }
+      ],
+      "offlineReadyMs": 40.799999952316284,
+      "durable100Ms": 24.299999952316284,
+      "read100Ms": 2.7300000190734863,
+      "checkpointMs": 7.879999995231628
+    },
+    {
+      "engine": "aot",
+      "run": 2,
+      "coldReadyMs": 106.74000000953674,
+      "wireBytes": 123377,
+      "decodedBytes": 639246,
+      "requests": [
+        {
+          "path": "/lite/",
+          "raw": 2521,
+          "wire": 1030,
+          "status": 200
+        },
+        {
+          "path": "/assets/lite-BhAUlBmi.js",
+          "raw": 3935,
+          "wire": 1333,
+          "status": 200
+        },
+        {
+          "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+          "raw": 670,
+          "wire": 325,
+          "status": 200
+        },
+        {
+          "path": "/lite/sw.js",
+          "raw": 1070,
+          "wire": 495,
+          "status": 200
+        },
+        {
+          "path": "/lite/",
+          "raw": 2521,
+          "wire": 1030,
+          "status": 200
+        },
+        {
+          "path": "/lite/index.html",
+          "raw": 2521,
+          "wire": 1030,
+          "status": 200
+        },
+        {
+          "path": "/assets/lite-BhAUlBmi.js",
+          "raw": 3935,
+          "wire": 1333,
+          "status": 200
+        },
+        {
+          "path": "/lite/assets/aot-worker-BiKn0I4j.js",
+          "raw": 617580,
+          "wire": 115051,
+          "status": 200
+        },
+        {
+          "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+          "raw": 670,
+          "wire": 325,
+          "status": 200
+        },
+        {
+          "path": "/assets/moon-image-store-fwONbKst.js",
+          "raw": 3823,
+          "wire": 1425,
+          "status": 200
+        }
+      ],
+      "cache": [
+        {
+          "path": "/lite/",
+          "bytes": 2521
+        },
+        {
+          "path": "/lite/index.html",
+          "bytes": 2521
+        },
+        {
+          "path": "/assets/lite-BhAUlBmi.js",
+          "bytes": 3935
+        },
+        {
+          "path": "/lite/assets/aot-worker-BiKn0I4j.js",
+          "bytes": 617580
+        },
+        {
+          "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+          "bytes": 670
+        },
+        {
+          "path": "/assets/moon-image-store-fwONbKst.js",
+          "bytes": 3823
+        }
+      ],
+      "offlineReadyMs": 39.24000000953674,
+      "durable100Ms": 24.0900000333786,
+      "read100Ms": 2.774999976158142,
+      "checkpointMs": 8.025000095367432
+    },
+    {
+      "engine": "sqlike",
+      "run": 0,
+      "coldReadyMs": 92.25,
+      "wireBytes": 178819,
+      "decodedBytes": 855023,
+      "requests": [
+        {
+          "path": "/",
+          "raw": 1768,
+          "wire": 777,
+          "status": 200
+        },
+        {
+          "path": "/assets/main-VJ6Tdyr2.js",
+          "raw": 12677,
+          "wire": 3165,
+          "status": 200
+        },
+        {
+          "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+          "raw": 670,
+          "wire": 325,
+          "status": 200
+        },
+        {
+          "path": "/sw.js",
+          "raw": 1051,
+          "wire": 487,
+          "status": 200
+        },
+        {
+          "path": "/",
+          "raw": 1768,
+          "wire": 777,
+          "status": 200
+        },
+        {
+          "path": "/index.html",
+          "raw": 1768,
+          "wire": 777,
+          "status": 200
+        },
+        {
+          "path": "/assets/main-VJ6Tdyr2.js",
+          "raw": 12677,
+          "wire": 3165,
+          "status": 200
+        },
+        {
+          "path": "/assets/worker-CIalkUAQ.js",
+          "raw": 186329,
+          "wire": 48407,
+          "status": 200
+        },
+        {
+          "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+          "raw": 670,
+          "wire": 325,
+          "status": 200
+        },
+        {
+          "path": "/assets/moon-database-CGycLYtu.js",
+          "raw": 629297,
+          "wire": 118217,
+          "status": 200
+        },
+        {
+          "path": "/assets/moon-persistence-BNBpX_cN.js",
+          "raw": 1846,
+          "wire": 748,
+          "status": 200
+        },
+        {
+          "path": "/assets/moon-persistence-worker-DLrHYK94.js",
+          "raw": 4502,
+          "wire": 1649,
+          "status": 200
+        }
+      ],
+      "cache": [
+        {
+          "path": "/",
+          "bytes": 1768
+        },
+        {
+          "path": "/index.html",
+          "bytes": 1768
+        },
+        {
+          "path": "/assets/main-VJ6Tdyr2.js",
+          "bytes": 12677
+        },
+        {
+          "path": "/assets/worker-CIalkUAQ.js",
+          "bytes": 186329
+        },
+        {
+          "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+          "bytes": 670
+        },
+        {
+          "path": "/assets/moon-database-CGycLYtu.js",
+          "bytes": 629297
+        },
+        {
+          "path": "/assets/moon-persistence-BNBpX_cN.js",
+          "bytes": 1846
+        },
+        {
+          "path": "/assets/moon-persistence-worker-DLrHYK94.js",
+          "bytes": 4502
+        }
+      ],
+      "offlineReadyMs": 54.50499999523163
+    },
+    {
+      "engine": "sqlike",
+      "run": 1,
+      "coldReadyMs": 90.51999998092651,
+      "wireBytes": 178819,
+      "decodedBytes": 855023,
+      "requests": [
+        {
+          "path": "/",
+          "raw": 1768,
+          "wire": 777,
+          "status": 200
+        },
+        {
+          "path": "/assets/main-VJ6Tdyr2.js",
+          "raw": 12677,
+          "wire": 3165,
+          "status": 200
+        },
+        {
+          "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+          "raw": 670,
+          "wire": 325,
+          "status": 200
+        },
+        {
+          "path": "/sw.js",
+          "raw": 1051,
+          "wire": 487,
+          "status": 200
+        },
+        {
+          "path": "/",
+          "raw": 1768,
+          "wire": 777,
+          "status": 200
+        },
+        {
+          "path": "/index.html",
+          "raw": 1768,
+          "wire": 777,
+          "status": 200
+        },
+        {
+          "path": "/assets/worker-CIalkUAQ.js",
+          "raw": 186329,
+          "wire": 48407,
+          "status": 200
+        },
+        {
+          "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+          "raw": 670,
+          "wire": 325,
+          "status": 200
+        },
+        {
+          "path": "/assets/main-VJ6Tdyr2.js",
+          "raw": 12677,
+          "wire": 3165,
+          "status": 200
+        },
+        {
+          "path": "/assets/moon-database-CGycLYtu.js",
+          "raw": 629297,
+          "wire": 118217,
+          "status": 200
+        },
+        {
+          "path": "/assets/moon-persistence-BNBpX_cN.js",
+          "raw": 1846,
+          "wire": 748,
+          "status": 200
+        },
+        {
+          "path": "/assets/moon-persistence-worker-DLrHYK94.js",
+          "raw": 4502,
+          "wire": 1649,
+          "status": 200
+        }
+      ],
+      "cache": [
+        {
+          "path": "/",
+          "bytes": 1768
+        },
+        {
+          "path": "/index.html",
+          "bytes": 1768
+        },
+        {
+          "path": "/assets/main-VJ6Tdyr2.js",
+          "bytes": 12677
+        },
+        {
+          "path": "/assets/worker-CIalkUAQ.js",
+          "bytes": 186329
+        },
+        {
+          "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+          "bytes": 670
+        },
+        {
+          "path": "/assets/moon-database-CGycLYtu.js",
+          "bytes": 629297
+        },
+        {
+          "path": "/assets/moon-persistence-BNBpX_cN.js",
+          "bytes": 1846
+        },
+        {
+          "path": "/assets/moon-persistence-worker-DLrHYK94.js",
+          "bytes": 4502
+        }
+      ],
+      "offlineReadyMs": 37.63499999046326
+    },
+    {
+      "engine": "sqlike",
+      "run": 2,
+      "coldReadyMs": 90.0349999666214,
+      "wireBytes": 178819,
+      "decodedBytes": 855023,
+      "requests": [
+        {
+          "path": "/",
+          "raw": 1768,
+          "wire": 777,
+          "status": 200
+        },
+        {
+          "path": "/assets/main-VJ6Tdyr2.js",
+          "raw": 12677,
+          "wire": 3165,
+          "status": 200
+        },
+        {
+          "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+          "raw": 670,
+          "wire": 325,
+          "status": 200
+        },
+        {
+          "path": "/sw.js",
+          "raw": 1051,
+          "wire": 487,
+          "status": 200
+        },
+        {
+          "path": "/",
+          "raw": 1768,
+          "wire": 777,
+          "status": 200
+        },
+        {
+          "path": "/index.html",
+          "raw": 1768,
+          "wire": 777,
+          "status": 200
+        },
+        {
+          "path": "/assets/worker-CIalkUAQ.js",
+          "raw": 186329,
+          "wire": 48407,
+          "status": 200
+        },
+        {
+          "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+          "raw": 670,
+          "wire": 325,
+          "status": 200
+        },
+        {
+          "path": "/assets/main-VJ6Tdyr2.js",
+          "raw": 12677,
+          "wire": 3165,
+          "status": 200
+        },
+        {
+          "path": "/assets/moon-database-CGycLYtu.js",
+          "raw": 629297,
+          "wire": 118217,
+          "status": 200
+        },
+        {
+          "path": "/assets/moon-persistence-BNBpX_cN.js",
+          "raw": 1846,
+          "wire": 748,
+          "status": 200
+        },
+        {
+          "path": "/assets/moon-persistence-worker-DLrHYK94.js",
+          "raw": 4502,
+          "wire": 1649,
+          "status": 200
+        }
+      ],
+      "cache": [
+        {
+          "path": "/",
+          "bytes": 1768
+        },
+        {
+          "path": "/index.html",
+          "bytes": 1768
+        },
+        {
+          "path": "/assets/main-VJ6Tdyr2.js",
+          "bytes": 12677
+        },
+        {
+          "path": "/assets/worker-CIalkUAQ.js",
+          "bytes": 186329
+        },
+        {
+          "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+          "bytes": 670
+        },
+        {
+          "path": "/assets/moon-database-CGycLYtu.js",
+          "bytes": 629297
+        },
+        {
+          "path": "/assets/moon-persistence-BNBpX_cN.js",
+          "bytes": 1846
+        },
+        {
+          "path": "/assets/moon-persistence-worker-DLrHYK94.js",
+          "bytes": 4502
+        }
+      ],
+      "offlineReadyMs": 37.53000009059906
+    },
+    {
+      "engine": "sqlite",
+      "run": 0,
+      "coldReadyMs": 106.70000004768372,
+      "wireBytes": 486523,
+      "decodedBytes": 1385545,
+      "requests": [
+        {
+          "path": "/",
+          "raw": 1768,
+          "wire": 777,
+          "status": 200
+        },
+        {
+          "path": "/assets/main-VJ6Tdyr2.js",
+          "raw": 12677,
+          "wire": 3165,
+          "status": 200
+        },
+        {
+          "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+          "raw": 670,
+          "wire": 325,
+          "status": 200
+        },
+        {
+          "path": "/sw.js",
+          "raw": 1051,
+          "wire": 487,
+          "status": 200
+        },
+        {
+          "path": "/",
+          "raw": 1768,
+          "wire": 777,
+          "status": 200
+        },
+        {
+          "path": "/index.html",
+          "raw": 1768,
+          "wire": 777,
+          "status": 200
+        },
+        {
+          "path": "/assets/main-VJ6Tdyr2.js",
+          "raw": 12677,
+          "wire": 3165,
+          "status": 200
+        },
+        {
+          "path": "/assets/worker-CIalkUAQ.js",
+          "raw": 186329,
+          "wire": 48407,
+          "status": 200
+        },
+        {
+          "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+          "raw": 670,
+          "wire": 325,
+          "status": 200
+        },
+        {
+          "path": "/assets/wasm-database-DRJUYv3s.js",
+          "raw": 222159,
+          "wire": 57481,
+          "status": 200
+        },
+        {
+          "path": "/assets/sqlite3-k2cTanUO.wasm",
+          "raw": 879084,
+          "wire": 352905,
+          "status": 200
+        },
+        {
+          "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+          "raw": 32462,
+          "wire": 8966,
+          "status": 200
+        },
+        {
+          "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+          "raw": 32462,
+          "wire": 8966,
+          "status": 200
+        }
+      ],
+      "cache": [
+        {
+          "path": "/",
+          "bytes": 1768
+        },
+        {
+          "path": "/index.html",
+          "bytes": 1768
+        },
+        {
+          "path": "/assets/main-VJ6Tdyr2.js",
+          "bytes": 12677
+        },
+        {
+          "path": "/assets/worker-CIalkUAQ.js",
+          "bytes": 186329
+        },
+        {
+          "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+          "bytes": 670
+        },
+        {
+          "path": "/assets/wasm-database-DRJUYv3s.js",
+          "bytes": 222159
+        },
+        {
+          "path": "/assets/sqlite3-k2cTanUO.wasm",
+          "bytes": 879084
+        },
+        {
+          "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+          "bytes": 32462
+        },
+        {
+          "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+          "bytes": 32462
+        }
+      ],
+      "offlineReadyMs": 53.69000005722046
+    },
+    {
+      "engine": "sqlite",
+      "run": 1,
+      "coldReadyMs": 107.92500007152557,
+      "wireBytes": 486523,
+      "decodedBytes": 1385545,
+      "requests": [
+        {
+          "path": "/",
+          "raw": 1768,
+          "wire": 777,
+          "status": 200
+        },
+        {
+          "path": "/assets/main-VJ6Tdyr2.js",
+          "raw": 12677,
+          "wire": 3165,
+          "status": 200
+        },
+        {
+          "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+          "raw": 670,
+          "wire": 325,
+          "status": 200
+        },
+        {
+          "path": "/sw.js",
+          "raw": 1051,
+          "wire": 487,
+          "status": 200
+        },
+        {
+          "path": "/",
+          "raw": 1768,
+          "wire": 777,
+          "status": 200
+        },
+        {
+          "path": "/index.html",
+          "raw": 1768,
+          "wire": 777,
+          "status": 200
+        },
+        {
+          "path": "/assets/main-VJ6Tdyr2.js",
+          "raw": 12677,
+          "wire": 3165,
+          "status": 200
+        },
+        {
+          "path": "/assets/worker-CIalkUAQ.js",
+          "raw": 186329,
+          "wire": 48407,
+          "status": 200
+        },
+        {
+          "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+          "raw": 670,
+          "wire": 325,
+          "status": 200
+        },
+        {
+          "path": "/assets/wasm-database-DRJUYv3s.js",
+          "raw": 222159,
+          "wire": 57481,
+          "status": 200
+        },
+        {
+          "path": "/assets/sqlite3-k2cTanUO.wasm",
+          "raw": 879084,
+          "wire": 352905,
+          "status": 200
+        },
+        {
+          "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+          "raw": 32462,
+          "wire": 8966,
+          "status": 200
+        },
+        {
+          "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+          "raw": 32462,
+          "wire": 8966,
+          "status": 200
+        }
+      ],
+      "cache": [
+        {
+          "path": "/",
+          "bytes": 1768
+        },
+        {
+          "path": "/index.html",
+          "bytes": 1768
+        },
+        {
+          "path": "/assets/main-VJ6Tdyr2.js",
+          "bytes": 12677
+        },
+        {
+          "path": "/assets/worker-CIalkUAQ.js",
+          "bytes": 186329
+        },
+        {
+          "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+          "bytes": 670
+        },
+        {
+          "path": "/assets/wasm-database-DRJUYv3s.js",
+          "bytes": 222159
+        },
+        {
+          "path": "/assets/sqlite3-k2cTanUO.wasm",
+          "bytes": 879084
+        },
+        {
+          "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+          "bytes": 32462
+        },
+        {
+          "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+          "bytes": 32462
+        }
+      ],
+      "offlineReadyMs": 53.89999997615814
+    },
+    {
+      "engine": "sqlite",
+      "run": 2,
+      "coldReadyMs": 125.19500005245209,
+      "wireBytes": 486523,
+      "decodedBytes": 1385545,
+      "requests": [
+        {
+          "path": "/",
+          "raw": 1768,
+          "wire": 777,
+          "status": 200
+        },
+        {
+          "path": "/assets/main-VJ6Tdyr2.js",
+          "raw": 12677,
+          "wire": 3165,
+          "status": 200
+        },
+        {
+          "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+          "raw": 670,
+          "wire": 325,
+          "status": 200
+        },
+        {
+          "path": "/sw.js",
+          "raw": 1051,
+          "wire": 487,
+          "status": 200
+        },
+        {
+          "path": "/",
+          "raw": 1768,
+          "wire": 777,
+          "status": 200
+        },
+        {
+          "path": "/index.html",
+          "raw": 1768,
+          "wire": 777,
+          "status": 200
+        },
+        {
+          "path": "/assets/worker-CIalkUAQ.js",
+          "raw": 186329,
+          "wire": 48407,
+          "status": 200
+        },
+        {
+          "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+          "raw": 670,
+          "wire": 325,
+          "status": 200
+        },
+        {
+          "path": "/assets/main-VJ6Tdyr2.js",
+          "raw": 12677,
+          "wire": 3165,
+          "status": 200
+        },
+        {
+          "path": "/assets/wasm-database-DRJUYv3s.js",
+          "raw": 222159,
+          "wire": 57481,
+          "status": 200
+        },
+        {
+          "path": "/assets/sqlite3-k2cTanUO.wasm",
+          "raw": 879084,
+          "wire": 352905,
+          "status": 200
+        },
+        {
+          "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+          "raw": 32462,
+          "wire": 8966,
+          "status": 200
+        },
+        {
+          "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+          "raw": 32462,
+          "wire": 8966,
+          "status": 200
+        }
+      ],
+      "cache": [
+        {
+          "path": "/",
+          "bytes": 1768
+        },
+        {
+          "path": "/index.html",
+          "bytes": 1768
+        },
+        {
+          "path": "/assets/main-VJ6Tdyr2.js",
+          "bytes": 12677
+        },
+        {
+          "path": "/assets/worker-CIalkUAQ.js",
+          "bytes": 186329
+        },
+        {
+          "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+          "bytes": 670
+        },
+        {
+          "path": "/assets/wasm-database-DRJUYv3s.js",
+          "bytes": 222159
+        },
+        {
+          "path": "/assets/sqlite3-k2cTanUO.wasm",
+          "bytes": 879084
+        },
+        {
+          "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+          "bytes": 32462
+        },
+        {
+          "path": "/assets/sqlite3-opfs-async-proxy-DeAec6oc.js",
+          "bytes": 32462
+        }
+      ],
+      "offlineReadyMs": 54.6800000667572
+    }
+  ],
+  "summary": [
+    {
+      "engine": "aot",
+      "wireBytes": 123377,
+      "coldReadyMs": 108.01999998092651,
+      "offlineReadyMs": 39.28999996185303
+    },
+    {
+      "engine": "sqlike",
+      "wireBytes": 178819,
+      "coldReadyMs": 90.51999998092651,
+      "offlineReadyMs": 37.63499999046326
+    },
+    {
+      "engine": "sqlite",
+      "wireBytes": 486523,
+      "coldReadyMs": 107.92500007152557,
+      "offlineReadyMs": 53.89999997615814
+    }
+  ],
+  "cpu": [
+    {
+      "name": "constant",
+      "engine": "aot",
+      "run": 0,
+      "iterations": 10000,
+      "milliseconds": 42.51566599999933
+    },
+    {
+      "name": "constant",
+      "engine": "dynamic",
+      "run": 0,
+      "iterations": 10000,
+      "milliseconds": 126.16362499999923
+    },
+    {
+      "name": "constant",
+      "engine": "dynamic",
+      "run": 1,
+      "iterations": 10000,
+      "milliseconds": 113.15341700000135
+    },
+    {
+      "name": "constant",
+      "engine": "aot",
+      "run": 1,
+      "iterations": 10000,
+      "milliseconds": 32.84541700000045
+    },
+    {
+      "name": "constant",
+      "engine": "aot",
+      "run": 2,
+      "iterations": 10000,
+      "milliseconds": 32.32483300000058
+    },
+    {
+      "name": "constant",
+      "engine": "dynamic",
+      "run": 2,
+      "iterations": 10000,
+      "milliseconds": 112.34662500000013
+    },
+    {
+      "name": "constant",
+      "engine": "dynamic",
+      "run": 3,
+      "iterations": 10000,
+      "milliseconds": 111.54441699999916
+    },
+    {
+      "name": "constant",
+      "engine": "aot",
+      "run": 3,
+      "iterations": 10000,
+      "milliseconds": 31.70391699999891
+    },
+    {
+      "name": "constant",
+      "engine": "aot",
+      "run": 4,
+      "iterations": 10000,
+      "milliseconds": 31.29724999999962
+    },
+    {
+      "name": "constant",
+      "engine": "dynamic",
+      "run": 4,
+      "iterations": 10000,
+      "milliseconds": 111.55041700000038
+    },
+    {
+      "name": "point",
+      "engine": "aot",
+      "run": 0,
+      "iterations": 2000,
+      "milliseconds": 5.541666000000987
+    },
+    {
+      "name": "point",
+      "engine": "dynamic",
+      "run": 0,
+      "iterations": 2000,
+      "milliseconds": 34.581749999999374
+    },
+    {
+      "name": "point",
+      "engine": "dynamic",
+      "run": 1,
+      "iterations": 2000,
+      "milliseconds": 34.43120799999997
+    },
+    {
+      "name": "point",
+      "engine": "aot",
+      "run": 1,
+      "iterations": 2000,
+      "milliseconds": 5.406917000000249
+    },
+    {
+      "name": "point",
+      "engine": "aot",
+      "run": 2,
+      "iterations": 2000,
+      "milliseconds": 5.281209000000672
+    },
+    {
+      "name": "point",
+      "engine": "dynamic",
+      "run": 2,
+      "iterations": 2000,
+      "milliseconds": 34.39770899999894
+    },
+    {
+      "name": "point",
+      "engine": "dynamic",
+      "run": 3,
+      "iterations": 2000,
+      "milliseconds": 34.714750000001004
+    },
+    {
+      "name": "point",
+      "engine": "aot",
+      "run": 3,
+      "iterations": 2000,
+      "milliseconds": 5.560916999998881
+    },
+    {
+      "name": "point",
+      "engine": "aot",
+      "run": 4,
+      "iterations": 2000,
+      "milliseconds": 5.239500000001499
+    },
+    {
+      "name": "point",
+      "engine": "dynamic",
+      "run": 4,
+      "iterations": 2000,
+      "milliseconds": 34.42045800000051
+    }
+  ]
+}

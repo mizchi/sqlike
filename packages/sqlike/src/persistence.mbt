@@ -264,6 +264,7 @@ fn publish_flush(db : Database, store : Store, serial : Int32) -> Unit {
   store.dirty = { full: false, base: serial, edits: [], }
   db.store = store
   db.serial = serial
+  db.schema_epoch += 1L
 }
 
 ///|
@@ -278,4 +279,17 @@ pub fn database_apply_delta(db : Database, text : String) -> String {
   } catch {
     error => ({ "error": public_error(error) } : Json).stringify()
   }
+}
+
+///|
+fn same_stored_values(before : Array[Value], after : Array[Value]) -> Bool {
+  if before.length() != after.length() {
+    return false
+  }
+  for i in 0..<before.length() {
+    if !same_stored_value(before[i], after[i]) {
+      return false
+    }
+  }
+  true
 }

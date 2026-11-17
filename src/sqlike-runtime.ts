@@ -1,6 +1,7 @@
 import type { ResultCell, Value } from "./contract.ts";
 import type { BrowserDatabase } from "./backend-contract.ts";
 import { aotBindings, aotValue } from "./aot-values.ts";
+import { createSqlStatementCache } from "./sql-statement-cache.ts";
 /** Opaque handles belong to the injected generated runtime, including Wasm GC. */
 export interface CompiledRuntime<Handle = unknown> {
   aot_open(artifact: string, image: string): Handle;
@@ -67,7 +68,7 @@ export function openCompiled<Handle>(
   };
 }
 
-export interface SqlRuntime<Handle = unknown> {
+export interface SqlRuntime<Handle = unknown, PreparedHandle = unknown> {
   database_open(): Handle;
   database_exec(
     db: Handle,
@@ -83,6 +84,13 @@ export interface SqlRuntime<Handle = unknown> {
   database_changeset?(db: Handle, before: Handle): string;
   database_exec_values?(db: Handle, sql: string, bindings: string): string;
   database_set_clock(db: Handle, milliseconds: string): string;
+  database_prepare?(db: Handle, sql: string): PreparedHandle;
+  database_prepared_exec?(query: PreparedHandle, bindings: string, readonly: boolean, positional: boolean): string;
+}
+export interface SqlConnectionOptions {
+  /** Opt-in connection-local LRU. Budget counts SQL text UTF-16 bytes;
+   * AST/plan allocations are additional. Defaults: disabled, 64 KiB text. */
+  statementCache?: { capacity: number; maxSqlBytes?: number };
 }
 export interface SqlConnection extends BrowserDatabase {
   values(sql: string, params?: Value[]): Value[][];
@@ -93,14 +101,35 @@ export interface SqlConnection extends BrowserDatabase {
 }
 /** Synchronous SQL driver with an injected feature-selected runtime. No default
  * engine, sync protocol, persistence worker, FTS or LSM import is reachable here. */
-export function openSql<Handle>(
-  runtime: SqlRuntime<Handle>,
+export function openSql<Handle, PreparedHandle = unknown>(
+  runtime: SqlRuntime<Handle, PreparedHandle>,
   image?: string,
+  options: SqlConnectionOptions = {},
 ): SqlConnection {
+  const statements = createSqlStatementCache(options.statementCache, sql => runtime.database_prepare!(db, sql));
+  if (statements && (!runtime.database_prepare || !runtime.database_prepared_exec))
+    throw Error("runtime does not support SQL statement cache");
   let db = runtime.database_open(),
     active = false,
     closed = false;
   if (image !== undefined) checked(runtime.database_restore(db, image));
+  const clearStatements = () => { statements?.clear(); };
+  const restoreConnection = (before: Handle) => {
+    runtime.database_copy_connection_state(before, db);
+    clearStatements();
+    db = before;
+  };
+  const executeText = (sql: string, bindings: string, readonly: boolean, positional: boolean): string => {
+    const entry = statements?.get(sql);
+    if (!entry) {
+      if (positional) {
+        if (!runtime.database_exec_values) throw Error("runtime does not support positional results");
+        return runtime.database_exec_values(db, sql, bindings);
+      }
+      return runtime.database_exec(db, sql, bindings, readonly);
+    }
+    return runtime.database_prepared_exec!(entry.handle, bindings, readonly, positional);
+  };
   const execute = (
     sql: string,
     params: Value[] = [],
@@ -109,7 +138,7 @@ export function openSql<Handle>(
     if (closed) throw Error("Sqlike connection is closed");
     checked(runtime.database_set_clock(db, String(Date.now())));
     const result = checked<{ rows: Record<string, ResultCell>[] }>(
-      runtime.database_exec(db, sql, aotBindings(params), readonly),
+      executeText(sql, aotBindings(params), readonly, false),
     );
     return result.rows.map((row) =>
       Object.fromEntries(Object.entries(row).map(([k, v]) => [k, aotValue(v)])),
@@ -128,7 +157,7 @@ export function openSql<Handle>(
         throw Error("runtime does not support positional results");
       checked(runtime.database_set_clock(db, String(Date.now())));
       const result = checked<{ rows: ResultCell[][] }>(
-        runtime.database_exec_values(db, sql, aotBindings(params)),
+        executeText(sql, aotBindings(params), false, true),
       );
       return result.rows.map((row) => row.map(aotValue));
     },
@@ -139,6 +168,7 @@ export function openSql<Handle>(
     },
     close: () => {
       if (active) throw Error("cannot close an active transaction");
+      clearStatements();
       closed = true;
     },
     transaction<T>(body: () => T): T {
@@ -156,8 +186,7 @@ export function openSql<Handle>(
           throw Error("FOREIGN KEY constraint failed");
         return result;
       } catch (e) {
-        runtime.database_copy_connection_state(before, db);
-        db = before;
+        restoreConnection(before);
         throw e;
       } finally {
         active = false;
@@ -185,8 +214,7 @@ export function openSql<Handle>(
           throw Error("savepoint must be synchronous");
         return result;
       } catch (error) {
-        runtime.database_copy_connection_state(before, db);
-        db = before;
+        restoreConnection(before);
         throw error;
       }
     },
@@ -208,8 +236,7 @@ export function openSql<Handle>(
             try {
               return active ? capture() : connection.transaction(capture);
             } catch (e) {
-              runtime.database_copy_connection_state(before, db);
-              db = before;
+              restoreConnection(before);
               throw e;
             }
           },

@@ -13,6 +13,7 @@ export const catalogFunctionConstants = {
   "unicode": "CAP_FUNCTION_UNICODE",
   "sign": "CAP_FUNCTION_SIGN",
   "round": "CAP_FUNCTION_ROUND",
+  "mathRounding": "CAP_FUNCTION_MATH_ROUNDING",
   "nullif": "CAP_FUNCTION_NULLIF",
   "coalesce": "CAP_FUNCTION_COALESCE",
   "conditional": "CAP_FUNCTION_CONDITIONAL",

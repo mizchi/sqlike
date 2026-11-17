@@ -2,12 +2,12 @@
   "format": 1,
   "catalogSHA256": "f2c74c7141ad2dcec40a9c1275aadf3b6864b2ad356d3ed36aa3ad445910adfb",
   "planSHA256": "6c935a1bcef2c6ae9219ac41a1879366f673b0876ab546ffa7e142036d93e378",
-  "sourceSHA256": "8eab12f500946d6cd50b1933a9b0ae63b157a9abc36120c9e5c318dfa29e1a89",
+  "sourceSHA256": "8e623bf4e8e8cc0838741f959ddf97ebdc50187d88d8551190bc70bc76d86fa9",
   "harnessSHA256": "53f05faa08f2ff889afddd6fdf499465c4baa522ef5351709432ef2385a9a104",
   "oracleSHA256": "52601ee35951c46becd53a00cf88129ff42c7544b91c2a9dc98fd7906bc96c61",
   "artifacts": {
-    "js": "d6fe7c726cb323219cf79821b73e3d4490551ba6b670379d8ebf7159897a66fe",
-    "wasmGC": "b69d39623e727dcd8ed475762dd283f4f37262a6536b3ae44689b8d62a8ce552"
+    "js": "ff6b8f9364d788e36288f158e68f228222693a359a2bc362800c22a56f4b6e64",
+    "wasmGC": "3c9f585b09d8e80309d9fdaa1419d41078c7ffc17b1b66f55448935f7140ea8b"
   },
   "oracle": {
     "engine": "native node:sqlite",
@@ -28340,16 +28340,16 @@
       "reason": "Native build advertises this module; no complete module fixture/API verification is available"
     }
   ],
-  "measuredAt": "2026-11-17T02:04:45.880Z",
+  "measuredAt": "2026-11-17T08:42:58.152Z",
   "scope": "Official entry-point inventory plus explicit behavior/system requirements; matched-probe does not prove every input or combination",
   "targets": {
     "js": {
       "summary": {
         "total": 1618,
         "counts": {
-          "matched-probe": 454,
+          "matched-probe": 458,
           "value-mismatch": 0,
-          "candidate-error": 248,
+          "candidate-error": 244,
           "oracle-error": 0,
           "oracle-unavailable": 11,
           "not-tested": 599,
@@ -29585,28 +29585,16 @@
           "category": "math",
           "title": "ceil(X)",
           "source": "https://www.sqlite.org/lang_mathfunc.html#ceil",
-          "status": "candidate-error",
-          "witness": {
-            "step": 4,
-            "sql": "SELECT ceil(1.2)",
-            "error": "unsupported SQL function or arity: ceil",
-            "candidateRejected": true,
-            "rejectionAtomic": true
-          }
+          "status": "matched-probe",
+          "rejectionsVerified": true
         },
         {
           "id": "math/ceiling(X)",
           "category": "math",
           "title": "ceiling(X)",
           "source": "https://www.sqlite.org/lang_mathfunc.html#ceil",
-          "status": "candidate-error",
-          "witness": {
-            "step": 4,
-            "sql": "SELECT ceiling(1.2)",
-            "error": "unsupported SQL function or arity: ceiling",
-            "candidateRejected": true,
-            "rejectionAtomic": true
-          }
+          "status": "matched-probe",
+          "rejectionsVerified": true
         },
         {
           "id": "math/cos(X)",
@@ -29669,14 +29657,8 @@
           "category": "math",
           "title": "floor(X)",
           "source": "https://www.sqlite.org/lang_mathfunc.html#floor",
-          "status": "candidate-error",
-          "witness": {
-            "step": 4,
-            "sql": "SELECT floor(1.8)",
-            "error": "unsupported SQL function or arity: floor",
-            "candidateRejected": true,
-            "rejectionAtomic": true
-          }
+          "status": "matched-probe",
+          "rejectionsVerified": true
         },
         {
           "id": "math/ln(X)",
@@ -29879,14 +29861,8 @@
           "category": "math",
           "title": "trunc(X)",
           "source": "https://www.sqlite.org/lang_mathfunc.html#trunc",
-          "status": "candidate-error",
-          "witness": {
-            "step": 4,
-            "sql": "SELECT trunc(-1.8)",
-            "error": "unsupported SQL function or arity: trunc",
-            "candidateRejected": true,
-            "rejectionAtomic": true
-          }
+          "status": "matched-probe",
+          "rejectionsVerified": true
         },
         {
           "id": "pragma/analysis_limit",
@@ -42801,9 +42777,9 @@
       "summary": {
         "total": 1618,
         "counts": {
-          "matched-probe": 454,
+          "matched-probe": 458,
           "value-mismatch": 0,
-          "candidate-error": 248,
+          "candidate-error": 244,
           "oracle-error": 0,
           "oracle-unavailable": 11,
           "not-tested": 599,
@@ -44039,28 +44015,16 @@
           "category": "math",
           "title": "ceil(X)",
           "source": "https://www.sqlite.org/lang_mathfunc.html#ceil",
-          "status": "candidate-error",
-          "witness": {
-            "step": 4,
-            "sql": "SELECT ceil(1.2)",
-            "error": "unsupported SQL function or arity: ceil",
-            "candidateRejected": true,
-            "rejectionAtomic": true
-          }
+          "status": "matched-probe",
+          "rejectionsVerified": true
         },
         {
           "id": "math/ceiling(X)",
           "category": "math",
           "title": "ceiling(X)",
           "source": "https://www.sqlite.org/lang_mathfunc.html#ceil",
-          "status": "candidate-error",
-          "witness": {
-            "step": 4,
-            "sql": "SELECT ceiling(1.2)",
-            "error": "unsupported SQL function or arity: ceiling",
-            "candidateRejected": true,
-            "rejectionAtomic": true
-          }
+          "status": "matched-probe",
+          "rejectionsVerified": true
         },
         {
           "id": "math/cos(X)",
@@ -44123,14 +44087,8 @@
           "category": "math",
           "title": "floor(X)",
           "source": "https://www.sqlite.org/lang_mathfunc.html#floor",
-          "status": "candidate-error",
-          "witness": {
-            "step": 4,
-            "sql": "SELECT floor(1.8)",
-            "error": "unsupported SQL function or arity: floor",
-            "candidateRejected": true,
-            "rejectionAtomic": true
-          }
+          "status": "matched-probe",
+          "rejectionsVerified": true
         },
         {
           "id": "math/ln(X)",
@@ -44333,14 +44291,8 @@
           "category": "math",
           "title": "trunc(X)",
           "source": "https://www.sqlite.org/lang_mathfunc.html#trunc",
-          "status": "candidate-error",
-          "witness": {
-            "step": 4,
-            "sql": "SELECT trunc(-1.8)",
-            "error": "unsupported SQL function or arity: trunc",
-            "candidateRejected": true,
-            "rejectionAtomic": true
-          }
+          "status": "matched-probe",
+          "rejectionsVerified": true
         },
         {
           "id": "pragma/analysis_limit",

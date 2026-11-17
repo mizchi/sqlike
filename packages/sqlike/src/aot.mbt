@@ -102,25 +102,37 @@ pub fn aot_execute(
     for i, value in values {
       statement.parameters[i] = json_value(value)
     }
-    let rows : Array[Json] = []
-    while statement.step() {
-      let row : Array[Json] = []
-      // Serialize each visible binding once. Reading through column() would
-      // recheck state, filter the entire row and copy BLOBs for every cell.
-      for binding in statement.rows[statement.cursor] {
-        if !binding.hidden {
-          row.push(value_json(binding.value))
-        }
+    let output = StringBuilder()
+    output.write_string("{\"names\":[")
+    for i, name in query.plan.names {
+      if i > 0 {
+        output.write_char(',')
       }
-      rows.push(Json::array(row))
+      output.write_string(Json::string(name).stringify())
     }
-    (
-      {
-        "names": query.plan.names,
-        "rows": rows,
-        "readonly": data_readonly(query.plan.statement),
-        "changes": connection_changes(connection.database.store),
-      } : Json).stringify()
+    output.write_string("],\"rows\":[")
+    let mut first = true
+    while statement.step() {
+      if !first {
+        output.write_char(',')
+      }
+      first = false
+      write_result_row(output, statement.rows[statement.cursor])
+    }
+    output.write_string("],\"readonly\":")
+    output.write_string(
+      if data_readonly(query.plan.statement) {
+        "true"
+      } else {
+        "false"
+      },
+    )
+    output.write_string(",\"changes\":")
+    output.write_string(
+      connection_changes(connection.database.store).to_string(),
+    )
+    output.write_char('}')
+    output.to_string()
   } catch {
     error => public_error_json(error).stringify()
   }

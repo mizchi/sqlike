@@ -47,6 +47,8 @@ const wr = {
   compile: compile_program,
 };
 const results = [
+  ...auditTarget(cases, oracle.traces, runtime, "js/prepared-sql", false, oracle.compileErrors, true),
+  ...auditTarget(cases, oracle.traces, wr, "wasm/prepared-sql", false, oracle.compileErrors, true),
   ...auditTarget(
     cases,
     oracle.traces,
@@ -88,6 +90,8 @@ const counts = Object.fromEntries(
 );
 const artifacts = Object.fromEntries(
   [
+    "tests/compatibility/differential-runtime.ts",
+    "src/sql-statement-cache.ts",
     "_build/js/release/build/mizchi/sqlike/sqlike.js",
     "_build/js/release/build/mizchi/sqlike/compiler/compiler.js",
     "_build/js/release/build/mizchi/litestream-example/runtime/runtime.js",
@@ -137,7 +141,7 @@ console.table(
 );
 if (
   !args.includes("--report-only") &&
-  differentialGate(report, ["js/sql", "wasm/sql", "js/aot", "wasm/aot"]).length
+  differentialGate(report, ["js/sql", "wasm/sql", "js/aot", "wasm/aot", "js/prepared-sql", "wasm/prepared-sql"]).length
 )
   process.exitCode = 1;
 

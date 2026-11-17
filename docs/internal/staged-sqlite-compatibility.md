@@ -142,6 +142,14 @@ SQLite側も約6〜11%変動しており、絶対時間の増分を機能追加�
 
 仕様参照: [SQLiteの数値literal・GLOB](https://www.sqlite.org/lang_expr.html)、[char / glob](https://www.sqlite.org/lang_corefunc.html)、[UTF-8 reader](https://github.com/sqlite/sqlite/blob/master/src/utf.c)。検証入力は[基本式の差分テスト](../../tests/sqlike-basic-expressions.test.ts)に固定する。
 
+### S03a 丸め関数（未リリース）
+
+- [x] `ceil` / `ceiling` / `floor` / `trunc`を追加。INTEGERをREALへ変えず、REAL / decimal TEXTの格納クラス、負のゼロ、int64境界、無限大、NULを含む数値TEXTを本家と照合する。BLOB・非数値TEXTはNULLを返す。
+- [x] `mathRounding`を独立したcore関数群としてcatalogから自動収集し、不使用のAOT / definedから実装を除去する。未実行CASE・空tableでも必要な群を除外したcatalogをロード時に拒否する。
+- [x] 通常SQL / AOT / binaryのJS・Wasm計6経路でbind型切替を比較し、誤arityは空結果・書込の前に拒否する。
+
+小さい3演算・4関数名の追加であり、数学関数群全体の実装ではない。format / printf、random / randomblob、三角・対数等の残りはS03として維持する。大きな書式処理や乱数源をこのcore群へ含めない。[回帰テスト](../../tests/sqlike-math-rounding.test.ts)、[catalog別の除去検査](../../tests/sqlike-catalog-profile.test.ts)。仕様は[SQLite math functions](https://www.sqlite.org/lang_mathfunc.html)と[ceilingFunc](https://github.com/sqlite/sqlite/blob/master/src/func.c)を参照する。
+
 ### 残る導入単位
 
 以下の導入単位は計画。未実装のfeature tokenや空のAPIは公開しない。各段階をさらに小さい変更に分け、差分テストと有効 / 無効ビルドの容量を示してから完了にする。
@@ -149,7 +157,7 @@ SQLite側も約6〜11%変動しており、絶対時間の増分を機能追加�
 | 段階 | 機能 | 導入先と条件 |
 | --- | --- | --- |
 | [x] S02 基本式 | GLOB、char、16進・桁区切り数値literal | 上記の範囲でcore / compilerへ導入。サロゲート値は明示拒否し、数値parserを事前定義runtimeへ含めない |
-| [ ] S03 scalar拡張 | format / printf、random / randomblob、数学関数 | 書式処理・乱数源・数学関数群を別の任意実装にする。丸め・型・overflow、乱数源の注入と同期時の扱いを固定する |
+| [ ] S03 scalar拡張 | format / printf、random / randomblob、残る数学関数 | 書式処理・乱数源・数学関数群を別の任意実装にする。丸め・型・overflow、乱数源の注入と同期時の扱いを固定する |
 | [ ] S04 問い合わせの残り | UPDATE FROM、row value、CTE MATERIALIZED指定 | 必要なIRだけcompilerから記録。大きい実行器変更は任意のquery拡張へ分ける。名前解決、複数一致、順序、実体化と非決定関数の評価回数を検証する |
 | [ ] S05 集約・windowの残り | 引数内ORDER BY、named WINDOW、EXCLUDE、集約bare column | window拡張は既存windowFunctions内。集約拡張は容量に応じて分離し、既存の小さい集約を維持する。tie・NULL・frame・代表行の規則を本家と比較する |
 | [ ] S06 schema | VIRTUAL / STORED生成列、expression DEFAULT、CREATE TABLE AS SELECT、TEMP、ATTACH / DETACH | schema compilerとruntime評価を分離。生成列は保存形式・再開時の再計算・table_xinfo・制約を含めて設計する。複数DB名前空間は独立した拡張にする |

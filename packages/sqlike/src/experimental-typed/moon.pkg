@@ -1,0 +1,22 @@
+import {
+  "mizchi/sqlike",
+  "moonbitlang/core/bigint",
+}
+
+options(
+  targets: { "typed.mbt": [ "js" ] },
+  link: {
+    "js": {
+      "exports": [
+        "open",
+        "exec",
+        "prepare",
+        "values",
+        "restore",
+        "snapshot",
+        "set_clock",
+      ],
+      "format": "esm",
+    },
+  },
+)

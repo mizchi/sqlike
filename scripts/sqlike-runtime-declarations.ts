@@ -23,6 +23,9 @@ const signatures: Record<string, string> = {
   defined_restore_base64: "(db: DefinedHandle, image: string): string",
   defined_apply_delta_base64: "(db: DefinedHandle, image: string): string",
   database_open: "(): Connection",
+  database_prepare: "(db: Connection, sql: string): SqlPrepared",
+  database_prepared_exec:
+    "(query: SqlPrepared, bindings: string, readonly: boolean, positional: boolean): string",
   database_autocommit: "(db: Connection): boolean",
   database_set_clock: "(db: Connection, milliseconds: string): string",
   database_exec:
@@ -79,6 +82,7 @@ export function runtimeDeclarations(exports: readonly string[]): string {
     "// Generated selected runtime ABI.\n" +
     [
       "Connection",
+      "SqlPrepared",
       "AotDatabase",
       "SqliteResult",
       "LtxResult",

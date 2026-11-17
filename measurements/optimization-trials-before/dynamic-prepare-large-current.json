@@ -1,0 +1,2604 @@
+{
+  "sourceHashes": {
+    "package.json": "c9ff8e1c01bf5b7c0dd82b69fd0876035b30f67819b829a1c841a8bfb9dfa764",
+    "pnpm-lock.yaml": "62a9334c27b9f3876361edc3c9f74a0ed5e11866e28403cc065e1bdba7d70012",
+    "scripts/bench-sqlite.ts": "4acf3d00e6ce6f97bea7b26a458fc8a613109b0a33929d41473a2ba17674cb33",
+    "scripts/measurement-manifest.ts": "615c0ab32c0b2e01c57ea1be690a2a08d2e9401b9b0c5d93574520253c16acdb",
+    "scripts/profile-summary.ts": "ead6313eeddefcdfba817c0ede273e7812f0805ef43316348747c6c31af9d104",
+    "scripts/sqlite-bench-policy.ts": "093ff0098754c0418ab21c7b49bb76d629c265393ca5cddf3290475c2dd83c3a",
+    "scripts/sqlite-bench-workload.ts": "4bcfb5a4f7fb10df020c2d6952df77c45b8421926a9b5f9af431a7a804cfb81d",
+    "src/aot-values.ts": "6edf9316e1e5cb42b4099c148c9f9b84bf0acf3903c5409975d4ce8b0f5aa438",
+    "src/sql-statement-cache.ts": "5bdc6f2c6ecc7cc7edbc0accb6f540695a49f7f591b715670b5fc099eef9bc21"
+  },
+  "profileQueries": [
+    "point",
+    "range",
+    "limit",
+    "scan",
+    "update"
+  ],
+  "profileEngines": [
+    "aot"
+  ],
+  "prepared": true,
+  "format": 1,
+  "measuredAt": "2026-11-17T06:43:30.374Z",
+  "elapsedMilliseconds": 22898.756250000002,
+  "smoke": false,
+  "environment": {
+    "node": "v24.22.2",
+    "cpu": "Apple M5",
+    "arch": "arm64",
+    "platform": "darwin",
+    "osRelease": "25.6.0",
+    "chromium": "158.0.8127.18",
+    "moon": "moon 0.1.20261104 (940aa18 2026-11-04)",
+    "nativeOracle": "3.53.4"
+  },
+  "method": "Additional paths: SQLike JS/Wasm prepared data statements using the production 32-entry / 64 KiB UTF-16 SQL LRU. Same pre-encoded bindings; host value encoding and clock update excluded on all SQLike paths. DDL/transactions/PRAGMA use the uncached executor. Cache preparation is warmed before steady samples. Retention probes run after timing/profiles: force GC, retain 32 distinct PK plans, force GC, clear all cache entries and force GC again; report CDP heap/backing storage, not RSS or a heap bound. Same Chromium page per dataset, memory only, no storage/network/compilation in timed regions. Large datasets serialize the pre-UPDATE native SQLite fixture, import once through the public SQLike SQLite reader, and restore checked logical images into the remaining SQLike/AOT connections. SQLite WASM is seeded by the same SQL batches. Setup is recorded separately; this measures query performance, not INSERT throughput or application startup. Six base paths: SQLike JS/Wasm GC AOT and dynamic; SQLite WASM cached prepared and prepare/finalize each call. Pre-encoded SQLike bindings and pre-decoded SQLite bindings; all results normalized to typed positional Cell arrays. SQLite type queries/BigInt and SQLike response JSON.parse included, not identical ABI. Native SQLite oracle and UPDATE side effects checked before/after timing. Rotated order; standard datasets use 7 samples and a 50ms target, datasets over 10000 rows use 3 samples and a 20ms target. Two calibration rounds; minimum 5 standard / 1 large iteration, at most 200000 returned rows per large sample and at most two large warmup calls. Large JSON decode diagnostics use at most 200000 returned rows and one warmup. Budgets are targets, not hard per-call deadlines; actual iterations, setup/measurement/total times and sampling configuration are recorded. Per-dataset watchdog closes the browser page after 180s standard / 120s large, including setup. Smoke uses one sample without calibration. UPDATE repeatedly sets the same value after its first verified change. Main range timings are warm. firstRangeRead is one un-warmed API call, including first preparation/index build, not a median. Separate indexLifecycle probes run after main timings: each cycle changes an indexed n value between -7/-8 outside the requested positive range, then performs a range read; timings include both operations and any index maintenance. indexMovement repeats with -7/(rows*3+7), moving between both ends of the index while preserving the range result. Profiles collected separately after measurements only at 1000 rows or unrelated-table diagnostics, 1ms sampling, 1 second each; profile durations are not benchmark timings. No forced GC during timed samples.",
+  "artifacts": {
+    "aotJS": {
+      "path": "_build/js/release/build/mizchi/litestream-example/runtime/runtime.js",
+      "bytes": 2402952,
+      "sha256": "409b7b498666b2c198a75e2858470fbe2f9c76d59278f75ccdb31166f19f40c5"
+    },
+    "sqlJS": {
+      "path": "_build/js/release/build/mizchi/sqlike/sqlike.js",
+      "bytes": 2613531,
+      "sha256": "5c9969f19eaeb420aaf23d3905e71e1b2a27c6ee44d841df7a1185c181d3a1fd"
+    },
+    "aotWasm": {
+      "path": "_build/wasm-gc/release/build/mizchi/litestream-example/runtime/runtime.wasm",
+      "bytes": 524508,
+      "sha256": "c274fee4dad16e9ebcb5b7d6e0acc100a8a9ce75d8b5c4e97a38f19368ce9fde"
+    },
+    "sqlWasm": {
+      "path": "_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm",
+      "bytes": 564056,
+      "sha256": "c7545ee519cc1d4b84b09fb6ada11dc3d79496808f406e3e072709f49eec23a6"
+    },
+    "sqliteSDK": {
+      "path": "node_modules/@sqlite.org/sqlite-wasm/dist/index.mjs",
+      "bytes": 656872,
+      "sha256": "0dcdd860e6ec672623b13b8b8e41bb6c78be7a5df80ec553fc4f69160161c8af"
+    },
+    "sqlite3.wasm": {
+      "path": "node_modules/@sqlite.org/sqlite-wasm/dist/sqlite3.wasm",
+      "bytes": 879084,
+      "sha256": "b8a92a19f441a90ff2339fe988fbe317c4adf3ed844096f12aee04aa72d58257"
+    },
+    "runner.js": {
+      "bytes": 14543,
+      "sha256": "c34ffe475d53637deb21bc1479c8139cad102754e84ccbea389fec46bd6159e2"
+    }
+  },
+  "sourceSHA256": "7168f5aed2093d30a6cd2aadd193935cb113af15ef884ec025a0d9dc1073b6ec",
+  "results": [
+    {
+      "rows": 100000,
+      "coldRows": 0,
+      "sampling": {
+        "runs": 3,
+        "targetMilliseconds": 20,
+        "calibrationRounds": 2,
+        "minIterations": 1,
+        "maxIterations": 1000000,
+        "maxResultRowsPerSample": 200000,
+        "warmupLimit": 2,
+        "datasetTimeoutMilliseconds": 120000
+      },
+      "initialization": {
+        "method": "native-sqlite-image-import+logical-restore",
+        "bytes": 3698688,
+        "sha256": "03f99c25a3326a3e6942cebcd07d727c11d1c98f8ca9fb835a7905cecf793c78"
+      },
+      "timing": {
+        "setupMilliseconds": 8536.755416,
+        "measurementMilliseconds": 13456.822333,
+        "totalMilliseconds": 22708.661833000002
+      },
+      "sqliteVersion": "3.54.1",
+      "plans": [
+        {
+          "name": "constant",
+          "rows": [
+            [
+              1,
+              0,
+              0,
+              "SCAN CONSTANT ROW"
+            ]
+          ]
+        },
+        {
+          "name": "point",
+          "rows": [
+            [
+              2,
+              0,
+              33,
+              "SEARCH t USING INTEGER PRIMARY KEY (rowid=?)"
+            ]
+          ]
+        },
+        {
+          "name": "miss",
+          "rows": [
+            [
+              2,
+              0,
+              33,
+              "SEARCH t USING INTEGER PRIMARY KEY (rowid=?)"
+            ]
+          ]
+        },
+        {
+          "name": "range",
+          "rows": [
+            [
+              4,
+              0,
+              163,
+              "SEARCH t USING INDEX ix_t_n (n>? AND n<?)"
+            ]
+          ]
+        },
+        {
+          "name": "limit",
+          "rows": [
+            [
+              4,
+              0,
+              216,
+              "SCAN t"
+            ]
+          ]
+        },
+        {
+          "name": "aggregate",
+          "rows": [
+            [
+              3,
+              0,
+              210,
+              "SCAN t USING COVERING INDEX ix_t_n"
+            ]
+          ]
+        },
+        {
+          "name": "scan",
+          "rows": [
+            [
+              3,
+              0,
+              216,
+              "SCAN t"
+            ]
+          ]
+        },
+        {
+          "name": "update",
+          "rows": [
+            [
+              4,
+              0,
+              33,
+              "SEARCH t USING INTEGER PRIMARY KEY (rowid=?)"
+            ]
+          ]
+        }
+      ],
+      "workloadSHA256": "f52d8a93bc46d5677af6736d3f4df216d8d2a30c50e4a9f086733beee7e7c968",
+      "queries": [
+        {
+          "name": "constant",
+          "sql": "SELECT ?+1 AS n,upper(?) AS t",
+          "bindings": "[{\"t\":\"integer\",\"v\":\"2\"},{\"t\":\"text\",\"v\":\"hello\"}]",
+          "iterations": 10000,
+          "warmup": 2,
+          "expectedRows": 1,
+          "expectedSHA256": "3d927f747b949418604afbb1b7f7be567f8296ae5ab94bea9ffca57ff116a020"
+        },
+        {
+          "name": "point",
+          "sql": "SELECT id,n,title FROM t WHERE id=?",
+          "bindings": "[{\"t\":\"integer\",\"v\":\"50000\"}]",
+          "iterations": 20,
+          "warmup": 2,
+          "expectedRows": 1,
+          "expectedSHA256": "b393fbf43d1faeb88c4cc1613e418a0abb151f53a912c267e932a6450882c552"
+        },
+        {
+          "name": "miss",
+          "sql": "SELECT id,n,title FROM t WHERE id=?",
+          "bindings": "[{\"t\":\"integer\",\"v\":\"100001\"}]",
+          "iterations": 20,
+          "warmup": 2,
+          "expectedRows": 0,
+          "expectedSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        {
+          "name": "range",
+          "sql": "SELECT id,n,title FROM t WHERE n>=? AND n<? ORDER BY n",
+          "bindings": "[{\"t\":\"integer\",\"v\":\"150000\"},{\"t\":\"integer\",\"v\":\"150030\"}]",
+          "iterations": 20,
+          "warmup": 2,
+          "expectedRows": 10,
+          "expectedSHA256": "3a55919303db21db4561203d0282d4e347034827a4524a28d4c5e36f462aff0b"
+        },
+        {
+          "name": "limit",
+          "sql": "SELECT id,n,title FROM t ORDER BY id LIMIT 10",
+          "bindings": "[]",
+          "iterations": 20,
+          "warmup": 2,
+          "expectedRows": 10,
+          "expectedSHA256": "18b2ef2fa28b05c46613070073fe229d1c623446e8708b24be4313f7e651b592"
+        },
+        {
+          "name": "aggregate",
+          "sql": "SELECT sum(n),count(*) FROM t",
+          "bindings": "[]",
+          "iterations": 10,
+          "warmup": 2,
+          "expectedRows": 1,
+          "expectedSHA256": "6d700587700971379b570b04d0268bdea15b699845b92ec40f5942e5da4b3723"
+        },
+        {
+          "name": "scan",
+          "sql": "SELECT id,n,title FROM t ORDER BY id",
+          "bindings": "[]",
+          "iterations": 3,
+          "warmup": 2,
+          "expectedRows": 100000,
+          "expectedSHA256": "757051ac1d63ff26fd039da4b383575c7472ef3038c4f318481b6227fa9928e2"
+        },
+        {
+          "name": "update",
+          "sql": "UPDATE t SET n=? WHERE id=?",
+          "bindings": "[{\"t\":\"integer\",\"v\":\"-7\"},{\"t\":\"integer\",\"v\":\"50000\"}]",
+          "iterations": 10,
+          "warmup": 2,
+          "write": true,
+          "expectedRows": 0,
+          "expectedSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "check": {
+            "name": "point",
+            "sql": "SELECT id,n,title FROM t WHERE id=?",
+            "bindings": "[{\"t\":\"integer\",\"v\":\"50000\"}]",
+            "expected": [
+              [
+                {
+                  "t": "integer",
+                  "v": "50000"
+                },
+                {
+                  "t": "integer",
+                  "v": "-7"
+                },
+                {
+                  "t": "text",
+                  "v": "note49999"
+                }
+              ]
+            ]
+          }
+        }
+      ],
+      "samples": [
+        {
+          "name": "constant",
+          "engine": "sqlike-js/aot",
+          "run": 0,
+          "iterations": 5502,
+          "milliseconds": 22.899999856948853
+        },
+        {
+          "name": "constant",
+          "engine": "sqlike-js/dynamic",
+          "run": 0,
+          "iterations": 932,
+          "milliseconds": 16.40000009536743
+        },
+        {
+          "name": "constant",
+          "engine": "sqlike-js/prepared",
+          "run": 0,
+          "iterations": 7764,
+          "milliseconds": 21.799999952316284
+        },
+        {
+          "name": "constant",
+          "engine": "sqlike-wasm/aot",
+          "run": 0,
+          "iterations": 10665,
+          "milliseconds": 22.100000143051147
+        },
+        {
+          "name": "constant",
+          "engine": "sqlike-wasm/dynamic",
+          "run": 0,
+          "iterations": 5632,
+          "milliseconds": 19.699999809265137
+        },
+        {
+          "name": "constant",
+          "engine": "sqlike-wasm/prepared",
+          "run": 0,
+          "iterations": 14870,
+          "milliseconds": 19.40000009536743
+        },
+        {
+          "name": "constant",
+          "engine": "sqlite/prepared",
+          "run": 0,
+          "iterations": 10989,
+          "milliseconds": 18.700000047683716
+        },
+        {
+          "name": "constant",
+          "engine": "sqlite/dynamic",
+          "run": 0,
+          "iterations": 3695,
+          "milliseconds": 15.5
+        },
+        {
+          "name": "constant",
+          "engine": "sqlike-js/aot",
+          "run": 1,
+          "iterations": 5502,
+          "milliseconds": 18.799999952316284
+        },
+        {
+          "name": "constant",
+          "engine": "sqlite/dynamic",
+          "run": 1,
+          "iterations": 3695,
+          "milliseconds": 13.900000095367432
+        },
+        {
+          "name": "constant",
+          "engine": "sqlite/prepared",
+          "run": 1,
+          "iterations": 10989,
+          "milliseconds": 21.799999952316284
+        },
+        {
+          "name": "constant",
+          "engine": "sqlike-wasm/prepared",
+          "run": 1,
+          "iterations": 14870,
+          "milliseconds": 25.799999952316284
+        },
+        {
+          "name": "constant",
+          "engine": "sqlike-wasm/dynamic",
+          "run": 1,
+          "iterations": 5632,
+          "milliseconds": 19.5
+        },
+        {
+          "name": "constant",
+          "engine": "sqlike-wasm/aot",
+          "run": 1,
+          "iterations": 10665,
+          "milliseconds": 18.5
+        },
+        {
+          "name": "constant",
+          "engine": "sqlike-js/prepared",
+          "run": 1,
+          "iterations": 7764,
+          "milliseconds": 16.600000143051147
+        },
+        {
+          "name": "constant",
+          "engine": "sqlike-js/dynamic",
+          "run": 1,
+          "iterations": 932,
+          "milliseconds": 14.099999904632568
+        },
+        {
+          "name": "constant",
+          "engine": "sqlike-js/prepared",
+          "run": 2,
+          "iterations": 7764,
+          "milliseconds": 23.40000009536743
+        },
+        {
+          "name": "constant",
+          "engine": "sqlike-wasm/aot",
+          "run": 2,
+          "iterations": 10665,
+          "milliseconds": 19.59999990463257
+        },
+        {
+          "name": "constant",
+          "engine": "sqlike-wasm/dynamic",
+          "run": 2,
+          "iterations": 5632,
+          "milliseconds": 18
+        },
+        {
+          "name": "constant",
+          "engine": "sqlike-wasm/prepared",
+          "run": 2,
+          "iterations": 14870,
+          "milliseconds": 18.200000047683716
+        },
+        {
+          "name": "constant",
+          "engine": "sqlite/prepared",
+          "run": 2,
+          "iterations": 10989,
+          "milliseconds": 18.90000009536743
+        },
+        {
+          "name": "constant",
+          "engine": "sqlite/dynamic",
+          "run": 2,
+          "iterations": 3695,
+          "milliseconds": 13.200000047683716
+        },
+        {
+          "name": "constant",
+          "engine": "sqlike-js/aot",
+          "run": 2,
+          "iterations": 5502,
+          "milliseconds": 17
+        },
+        {
+          "name": "constant",
+          "engine": "sqlike-js/dynamic",
+          "run": 2,
+          "iterations": 932,
+          "milliseconds": 15.5
+        },
+        {
+          "name": "point",
+          "engine": "sqlike-js/aot",
+          "run": 0,
+          "iterations": 10005,
+          "milliseconds": 18
+        },
+        {
+          "name": "point",
+          "engine": "sqlike-js/dynamic",
+          "run": 0,
+          "iterations": 813,
+          "milliseconds": 19.09999990463257
+        },
+        {
+          "name": "point",
+          "engine": "sqlike-js/prepared",
+          "run": 0,
+          "iterations": 7767,
+          "milliseconds": 8.5
+        },
+        {
+          "name": "point",
+          "engine": "sqlike-wasm/aot",
+          "run": 0,
+          "iterations": 11944,
+          "milliseconds": 22.799999952316284
+        },
+        {
+          "name": "point",
+          "engine": "sqlike-wasm/dynamic",
+          "run": 0,
+          "iterations": 2248,
+          "milliseconds": 14
+        },
+        {
+          "name": "point",
+          "engine": "sqlike-wasm/prepared",
+          "run": 0,
+          "iterations": 17783,
+          "milliseconds": 17.299999952316284
+        },
+        {
+          "name": "point",
+          "engine": "sqlite/prepared",
+          "run": 0,
+          "iterations": 12122,
+          "milliseconds": 18.09999990463257
+        },
+        {
+          "name": "point",
+          "engine": "sqlite/dynamic",
+          "run": 0,
+          "iterations": 5000,
+          "milliseconds": 19.100000143051147
+        },
+        {
+          "name": "point",
+          "engine": "sqlike-js/aot",
+          "run": 1,
+          "iterations": 10005,
+          "milliseconds": 18.299999952316284
+        },
+        {
+          "name": "point",
+          "engine": "sqlite/dynamic",
+          "run": 1,
+          "iterations": 5000,
+          "milliseconds": 19.5
+        },
+        {
+          "name": "point",
+          "engine": "sqlite/prepared",
+          "run": 1,
+          "iterations": 12122,
+          "milliseconds": 18
+        },
+        {
+          "name": "point",
+          "engine": "sqlike-wasm/prepared",
+          "run": 1,
+          "iterations": 17783,
+          "milliseconds": 18.59999990463257
+        },
+        {
+          "name": "point",
+          "engine": "sqlike-wasm/dynamic",
+          "run": 1,
+          "iterations": 2248,
+          "milliseconds": 14.799999952316284
+        },
+        {
+          "name": "point",
+          "engine": "sqlike-wasm/aot",
+          "run": 1,
+          "iterations": 11944,
+          "milliseconds": 18.800000190734863
+        },
+        {
+          "name": "point",
+          "engine": "sqlike-js/prepared",
+          "run": 1,
+          "iterations": 7767,
+          "milliseconds": 8.299999952316284
+        },
+        {
+          "name": "point",
+          "engine": "sqlike-js/dynamic",
+          "run": 1,
+          "iterations": 813,
+          "milliseconds": 18.200000047683716
+        },
+        {
+          "name": "point",
+          "engine": "sqlike-js/prepared",
+          "run": 2,
+          "iterations": 7767,
+          "milliseconds": 10.299999952316284
+        },
+        {
+          "name": "point",
+          "engine": "sqlike-wasm/aot",
+          "run": 2,
+          "iterations": 11944,
+          "milliseconds": 23.600000143051147
+        },
+        {
+          "name": "point",
+          "engine": "sqlike-wasm/dynamic",
+          "run": 2,
+          "iterations": 2248,
+          "milliseconds": 14.699999809265137
+        },
+        {
+          "name": "point",
+          "engine": "sqlike-wasm/prepared",
+          "run": 2,
+          "iterations": 17783,
+          "milliseconds": 17.5
+        },
+        {
+          "name": "point",
+          "engine": "sqlite/prepared",
+          "run": 2,
+          "iterations": 12122,
+          "milliseconds": 18.200000047683716
+        },
+        {
+          "name": "point",
+          "engine": "sqlite/dynamic",
+          "run": 2,
+          "iterations": 5000,
+          "milliseconds": 19.5
+        },
+        {
+          "name": "point",
+          "engine": "sqlike-js/aot",
+          "run": 2,
+          "iterations": 10005,
+          "milliseconds": 15.799999952316284
+        },
+        {
+          "name": "point",
+          "engine": "sqlike-js/dynamic",
+          "run": 2,
+          "iterations": 813,
+          "milliseconds": 20.100000143051147
+        },
+        {
+          "name": "miss",
+          "engine": "sqlike-js/aot",
+          "run": 0,
+          "iterations": 10257,
+          "milliseconds": 11.899999856948853
+        },
+        {
+          "name": "miss",
+          "engine": "sqlike-js/dynamic",
+          "run": 0,
+          "iterations": 681,
+          "milliseconds": 17.40000009536743
+        },
+        {
+          "name": "miss",
+          "engine": "sqlike-js/prepared",
+          "run": 0,
+          "iterations": 32000,
+          "milliseconds": 24.299999952316284
+        },
+        {
+          "name": "miss",
+          "engine": "sqlike-wasm/aot",
+          "run": 0,
+          "iterations": 12122,
+          "milliseconds": 12.799999952316284
+        },
+        {
+          "name": "miss",
+          "engine": "sqlike-wasm/dynamic",
+          "run": 0,
+          "iterations": 3226,
+          "milliseconds": 19.200000047683716
+        },
+        {
+          "name": "miss",
+          "engine": "sqlike-wasm/prepared",
+          "run": 0,
+          "iterations": 37210,
+          "milliseconds": 19
+        },
+        {
+          "name": "miss",
+          "engine": "sqlite/prepared",
+          "run": 0,
+          "iterations": 42116,
+          "milliseconds": 21.09999990463257
+        },
+        {
+          "name": "miss",
+          "engine": "sqlite/dynamic",
+          "run": 0,
+          "iterations": 7410,
+          "milliseconds": 19.40000009536743
+        },
+        {
+          "name": "miss",
+          "engine": "sqlike-js/aot",
+          "run": 1,
+          "iterations": 10257,
+          "milliseconds": 11.700000047683716
+        },
+        {
+          "name": "miss",
+          "engine": "sqlite/dynamic",
+          "run": 1,
+          "iterations": 7410,
+          "milliseconds": 18.200000047683716
+        },
+        {
+          "name": "miss",
+          "engine": "sqlite/prepared",
+          "run": 1,
+          "iterations": 42116,
+          "milliseconds": 24.09999990463257
+        },
+        {
+          "name": "miss",
+          "engine": "sqlike-wasm/prepared",
+          "run": 1,
+          "iterations": 37210,
+          "milliseconds": 18.40000009536743
+        },
+        {
+          "name": "miss",
+          "engine": "sqlike-wasm/dynamic",
+          "run": 1,
+          "iterations": 3226,
+          "milliseconds": 18
+        },
+        {
+          "name": "miss",
+          "engine": "sqlike-wasm/aot",
+          "run": 1,
+          "iterations": 12122,
+          "milliseconds": 12.5
+        },
+        {
+          "name": "miss",
+          "engine": "sqlike-js/prepared",
+          "run": 1,
+          "iterations": 32000,
+          "milliseconds": 18.799999952316284
+        },
+        {
+          "name": "miss",
+          "engine": "sqlike-js/dynamic",
+          "run": 1,
+          "iterations": 681,
+          "milliseconds": 13.299999952316284
+        },
+        {
+          "name": "miss",
+          "engine": "sqlike-js/prepared",
+          "run": 2,
+          "iterations": 32000,
+          "milliseconds": 23.90000009536743
+        },
+        {
+          "name": "miss",
+          "engine": "sqlike-wasm/aot",
+          "run": 2,
+          "iterations": 12122,
+          "milliseconds": 12.799999952316284
+        },
+        {
+          "name": "miss",
+          "engine": "sqlike-wasm/dynamic",
+          "run": 2,
+          "iterations": 3226,
+          "milliseconds": 18
+        },
+        {
+          "name": "miss",
+          "engine": "sqlike-wasm/prepared",
+          "run": 2,
+          "iterations": 37210,
+          "milliseconds": 18
+        },
+        {
+          "name": "miss",
+          "engine": "sqlite/prepared",
+          "run": 2,
+          "iterations": 42116,
+          "milliseconds": 20.09999990463257
+        },
+        {
+          "name": "miss",
+          "engine": "sqlite/dynamic",
+          "run": 2,
+          "iterations": 7410,
+          "milliseconds": 18.700000047683716
+        },
+        {
+          "name": "miss",
+          "engine": "sqlike-js/aot",
+          "run": 2,
+          "iterations": 10257,
+          "milliseconds": 11.700000047683716
+        },
+        {
+          "name": "miss",
+          "engine": "sqlike-js/dynamic",
+          "run": 2,
+          "iterations": 681,
+          "milliseconds": 12.5
+        },
+        {
+          "name": "range",
+          "engine": "sqlike-js/aot",
+          "run": 0,
+          "iterations": 1835,
+          "milliseconds": 14.099999904632568
+        },
+        {
+          "name": "range",
+          "engine": "sqlike-js/dynamic",
+          "run": 0,
+          "iterations": 418,
+          "milliseconds": 15.299999952316284
+        },
+        {
+          "name": "range",
+          "engine": "sqlike-js/prepared",
+          "run": 0,
+          "iterations": 2632,
+          "milliseconds": 20.800000190734863
+        },
+        {
+          "name": "range",
+          "engine": "sqlike-wasm/aot",
+          "run": 0,
+          "iterations": 2478,
+          "milliseconds": 16.59999990463257
+        },
+        {
+          "name": "range",
+          "engine": "sqlike-wasm/dynamic",
+          "run": 0,
+          "iterations": 1355,
+          "milliseconds": 17.200000047683716
+        },
+        {
+          "name": "range",
+          "engine": "sqlike-wasm/prepared",
+          "run": 0,
+          "iterations": 3335,
+          "milliseconds": 17.799999952316284
+        },
+        {
+          "name": "range",
+          "engine": "sqlite/prepared",
+          "run": 0,
+          "iterations": 1905,
+          "milliseconds": 19.799999952316284
+        },
+        {
+          "name": "range",
+          "engine": "sqlite/dynamic",
+          "run": 0,
+          "iterations": 1343,
+          "milliseconds": 19.5
+        },
+        {
+          "name": "range",
+          "engine": "sqlike-js/aot",
+          "run": 1,
+          "iterations": 1835,
+          "milliseconds": 13.600000143051147
+        },
+        {
+          "name": "range",
+          "engine": "sqlite/dynamic",
+          "run": 1,
+          "iterations": 1343,
+          "milliseconds": 19.699999809265137
+        },
+        {
+          "name": "range",
+          "engine": "sqlite/prepared",
+          "run": 1,
+          "iterations": 1905,
+          "milliseconds": 19.700000047683716
+        },
+        {
+          "name": "range",
+          "engine": "sqlike-wasm/prepared",
+          "run": 1,
+          "iterations": 3335,
+          "milliseconds": 18.100000143051147
+        },
+        {
+          "name": "range",
+          "engine": "sqlike-wasm/dynamic",
+          "run": 1,
+          "iterations": 1355,
+          "milliseconds": 17.399999856948853
+        },
+        {
+          "name": "range",
+          "engine": "sqlike-wasm/aot",
+          "run": 1,
+          "iterations": 2478,
+          "milliseconds": 17.40000009536743
+        },
+        {
+          "name": "range",
+          "engine": "sqlike-js/prepared",
+          "run": 1,
+          "iterations": 2632,
+          "milliseconds": 15.200000047683716
+        },
+        {
+          "name": "range",
+          "engine": "sqlike-js/dynamic",
+          "run": 1,
+          "iterations": 418,
+          "milliseconds": 17.09999990463257
+        },
+        {
+          "name": "range",
+          "engine": "sqlike-js/prepared",
+          "run": 2,
+          "iterations": 2632,
+          "milliseconds": 19.40000009536743
+        },
+        {
+          "name": "range",
+          "engine": "sqlike-wasm/aot",
+          "run": 2,
+          "iterations": 2478,
+          "milliseconds": 17.899999856948853
+        },
+        {
+          "name": "range",
+          "engine": "sqlike-wasm/dynamic",
+          "run": 2,
+          "iterations": 1355,
+          "milliseconds": 17.5
+        },
+        {
+          "name": "range",
+          "engine": "sqlike-wasm/prepared",
+          "run": 2,
+          "iterations": 3335,
+          "milliseconds": 18.5
+        },
+        {
+          "name": "range",
+          "engine": "sqlite/prepared",
+          "run": 2,
+          "iterations": 1905,
+          "milliseconds": 20.5
+        },
+        {
+          "name": "range",
+          "engine": "sqlite/dynamic",
+          "run": 2,
+          "iterations": 1343,
+          "milliseconds": 23.90000009536743
+        },
+        {
+          "name": "range",
+          "engine": "sqlike-js/aot",
+          "run": 2,
+          "iterations": 1835,
+          "milliseconds": 14.599999904632568
+        },
+        {
+          "name": "range",
+          "engine": "sqlike-js/dynamic",
+          "run": 2,
+          "iterations": 418,
+          "milliseconds": 14.400000095367432
+        },
+        {
+          "name": "limit",
+          "engine": "sqlike-js/aot",
+          "run": 0,
+          "iterations": 2581,
+          "milliseconds": 14.900000095367432
+        },
+        {
+          "name": "limit",
+          "engine": "sqlike-js/dynamic",
+          "run": 0,
+          "iterations": 517,
+          "milliseconds": 18.899999856948853
+        },
+        {
+          "name": "limit",
+          "engine": "sqlike-js/prepared",
+          "run": 0,
+          "iterations": 3509,
+          "milliseconds": 16.100000143051147
+        },
+        {
+          "name": "limit",
+          "engine": "sqlike-wasm/aot",
+          "run": 0,
+          "iterations": 4062,
+          "milliseconds": 22.59999990463257
+        },
+        {
+          "name": "limit",
+          "engine": "sqlike-wasm/dynamic",
+          "run": 0,
+          "iterations": 2062,
+          "milliseconds": 20.40000009536743
+        },
+        {
+          "name": "limit",
+          "engine": "sqlike-wasm/prepared",
+          "run": 0,
+          "iterations": 5300,
+          "milliseconds": 19.899999856948853
+        },
+        {
+          "name": "limit",
+          "engine": "sqlite/prepared",
+          "run": 0,
+          "iterations": 2000,
+          "milliseconds": 18.799999952316284
+        },
+        {
+          "name": "limit",
+          "engine": "sqlite/dynamic",
+          "run": 0,
+          "iterations": 1471,
+          "milliseconds": 18.300000190734863
+        },
+        {
+          "name": "limit",
+          "engine": "sqlike-js/aot",
+          "run": 1,
+          "iterations": 2581,
+          "milliseconds": 12.799999952316284
+        },
+        {
+          "name": "limit",
+          "engine": "sqlite/dynamic",
+          "run": 1,
+          "iterations": 1471,
+          "milliseconds": 18.799999952316284
+        },
+        {
+          "name": "limit",
+          "engine": "sqlite/prepared",
+          "run": 1,
+          "iterations": 2000,
+          "milliseconds": 18.59999990463257
+        },
+        {
+          "name": "limit",
+          "engine": "sqlike-wasm/prepared",
+          "run": 1,
+          "iterations": 5300,
+          "milliseconds": 19.100000143051147
+        },
+        {
+          "name": "limit",
+          "engine": "sqlike-wasm/dynamic",
+          "run": 1,
+          "iterations": 2062,
+          "milliseconds": 19.399999856948853
+        },
+        {
+          "name": "limit",
+          "engine": "sqlike-wasm/aot",
+          "run": 1,
+          "iterations": 4062,
+          "milliseconds": 17.800000190734863
+        },
+        {
+          "name": "limit",
+          "engine": "sqlike-js/prepared",
+          "run": 1,
+          "iterations": 3509,
+          "milliseconds": 12.599999904632568
+        },
+        {
+          "name": "limit",
+          "engine": "sqlike-js/dynamic",
+          "run": 1,
+          "iterations": 517,
+          "milliseconds": 18.600000143051147
+        },
+        {
+          "name": "limit",
+          "engine": "sqlike-js/prepared",
+          "run": 2,
+          "iterations": 3509,
+          "milliseconds": 16.59999990463257
+        },
+        {
+          "name": "limit",
+          "engine": "sqlike-wasm/aot",
+          "run": 2,
+          "iterations": 4062,
+          "milliseconds": 19.5
+        },
+        {
+          "name": "limit",
+          "engine": "sqlike-wasm/dynamic",
+          "run": 2,
+          "iterations": 2062,
+          "milliseconds": 19.100000143051147
+        },
+        {
+          "name": "limit",
+          "engine": "sqlike-wasm/prepared",
+          "run": 2,
+          "iterations": 5300,
+          "milliseconds": 19.199999809265137
+        },
+        {
+          "name": "limit",
+          "engine": "sqlite/prepared",
+          "run": 2,
+          "iterations": 2000,
+          "milliseconds": 18.5
+        },
+        {
+          "name": "limit",
+          "engine": "sqlite/dynamic",
+          "run": 2,
+          "iterations": 1471,
+          "milliseconds": 18.200000047683716
+        },
+        {
+          "name": "limit",
+          "engine": "sqlike-js/aot",
+          "run": 2,
+          "iterations": 2581,
+          "milliseconds": 10.900000095367432
+        },
+        {
+          "name": "limit",
+          "engine": "sqlike-js/dynamic",
+          "run": 2,
+          "iterations": 517,
+          "milliseconds": 16.5
+        },
+        {
+          "name": "aggregate",
+          "engine": "sqlike-js/aot",
+          "run": 0,
+          "iterations": 13,
+          "milliseconds": 20.700000047683716
+        },
+        {
+          "name": "aggregate",
+          "engine": "sqlike-js/dynamic",
+          "run": 0,
+          "iterations": 12,
+          "milliseconds": 21.40000009536743
+        },
+        {
+          "name": "aggregate",
+          "engine": "sqlike-js/prepared",
+          "run": 0,
+          "iterations": 12,
+          "milliseconds": 19.899999856948853
+        },
+        {
+          "name": "aggregate",
+          "engine": "sqlike-wasm/aot",
+          "run": 0,
+          "iterations": 22,
+          "milliseconds": 21.300000190734863
+        },
+        {
+          "name": "aggregate",
+          "engine": "sqlike-wasm/dynamic",
+          "run": 0,
+          "iterations": 22,
+          "milliseconds": 22
+        },
+        {
+          "name": "aggregate",
+          "engine": "sqlike-wasm/prepared",
+          "run": 0,
+          "iterations": 22,
+          "milliseconds": 20.799999952316284
+        },
+        {
+          "name": "aggregate",
+          "engine": "sqlite/prepared",
+          "run": 0,
+          "iterations": 10,
+          "milliseconds": 21
+        },
+        {
+          "name": "aggregate",
+          "engine": "sqlite/dynamic",
+          "run": 0,
+          "iterations": 10,
+          "milliseconds": 21.09999990463257
+        },
+        {
+          "name": "aggregate",
+          "engine": "sqlike-js/aot",
+          "run": 1,
+          "iterations": 13,
+          "milliseconds": 20.700000047683716
+        },
+        {
+          "name": "aggregate",
+          "engine": "sqlite/dynamic",
+          "run": 1,
+          "iterations": 10,
+          "milliseconds": 20.799999952316284
+        },
+        {
+          "name": "aggregate",
+          "engine": "sqlite/prepared",
+          "run": 1,
+          "iterations": 10,
+          "milliseconds": 20.700000047683716
+        },
+        {
+          "name": "aggregate",
+          "engine": "sqlike-wasm/prepared",
+          "run": 1,
+          "iterations": 22,
+          "milliseconds": 20.799999952316284
+        },
+        {
+          "name": "aggregate",
+          "engine": "sqlike-wasm/dynamic",
+          "run": 1,
+          "iterations": 22,
+          "milliseconds": 20.90000009536743
+        },
+        {
+          "name": "aggregate",
+          "engine": "sqlike-wasm/aot",
+          "run": 1,
+          "iterations": 22,
+          "milliseconds": 21.59999990463257
+        },
+        {
+          "name": "aggregate",
+          "engine": "sqlike-js/prepared",
+          "run": 1,
+          "iterations": 12,
+          "milliseconds": 21.5
+        },
+        {
+          "name": "aggregate",
+          "engine": "sqlike-js/dynamic",
+          "run": 1,
+          "iterations": 12,
+          "milliseconds": 20.90000009536743
+        },
+        {
+          "name": "aggregate",
+          "engine": "sqlike-js/prepared",
+          "run": 2,
+          "iterations": 12,
+          "milliseconds": 20.299999952316284
+        },
+        {
+          "name": "aggregate",
+          "engine": "sqlike-wasm/aot",
+          "run": 2,
+          "iterations": 22,
+          "milliseconds": 20.799999952316284
+        },
+        {
+          "name": "aggregate",
+          "engine": "sqlike-wasm/dynamic",
+          "run": 2,
+          "iterations": 22,
+          "milliseconds": 20.90000009536743
+        },
+        {
+          "name": "aggregate",
+          "engine": "sqlike-wasm/prepared",
+          "run": 2,
+          "iterations": 22,
+          "milliseconds": 20.399999856948853
+        },
+        {
+          "name": "aggregate",
+          "engine": "sqlite/prepared",
+          "run": 2,
+          "iterations": 10,
+          "milliseconds": 20.90000009536743
+        },
+        {
+          "name": "aggregate",
+          "engine": "sqlite/dynamic",
+          "run": 2,
+          "iterations": 10,
+          "milliseconds": 21.09999990463257
+        },
+        {
+          "name": "aggregate",
+          "engine": "sqlike-js/aot",
+          "run": 2,
+          "iterations": 13,
+          "milliseconds": 20.90000009536743
+        },
+        {
+          "name": "aggregate",
+          "engine": "sqlike-js/dynamic",
+          "run": 2,
+          "iterations": 12,
+          "milliseconds": 20.5
+        },
+        {
+          "name": "scan",
+          "engine": "sqlike-js/aot",
+          "run": 0,
+          "iterations": 1,
+          "milliseconds": 78
+        },
+        {
+          "name": "scan",
+          "engine": "sqlike-js/dynamic",
+          "run": 0,
+          "iterations": 1,
+          "milliseconds": 86
+        },
+        {
+          "name": "scan",
+          "engine": "sqlike-js/prepared",
+          "run": 0,
+          "iterations": 1,
+          "milliseconds": 77.59999990463257
+        },
+        {
+          "name": "scan",
+          "engine": "sqlike-wasm/aot",
+          "run": 0,
+          "iterations": 1,
+          "milliseconds": 74.09999990463257
+        },
+        {
+          "name": "scan",
+          "engine": "sqlike-wasm/dynamic",
+          "run": 0,
+          "iterations": 1,
+          "milliseconds": 72.5
+        },
+        {
+          "name": "scan",
+          "engine": "sqlike-wasm/prepared",
+          "run": 0,
+          "iterations": 1,
+          "milliseconds": 77.20000004768372
+        },
+        {
+          "name": "scan",
+          "engine": "sqlite/prepared",
+          "run": 0,
+          "iterations": 1,
+          "milliseconds": 102.60000014305115
+        },
+        {
+          "name": "scan",
+          "engine": "sqlite/dynamic",
+          "run": 0,
+          "iterations": 1,
+          "milliseconds": 103.5
+        },
+        {
+          "name": "scan",
+          "engine": "sqlike-js/aot",
+          "run": 1,
+          "iterations": 1,
+          "milliseconds": 78.89999985694885
+        },
+        {
+          "name": "scan",
+          "engine": "sqlite/dynamic",
+          "run": 1,
+          "iterations": 1,
+          "milliseconds": 101.5
+        },
+        {
+          "name": "scan",
+          "engine": "sqlite/prepared",
+          "run": 1,
+          "iterations": 1,
+          "milliseconds": 102.70000004768372
+        },
+        {
+          "name": "scan",
+          "engine": "sqlike-wasm/prepared",
+          "run": 1,
+          "iterations": 1,
+          "milliseconds": 82.79999995231628
+        },
+        {
+          "name": "scan",
+          "engine": "sqlike-wasm/dynamic",
+          "run": 1,
+          "iterations": 1,
+          "milliseconds": 84.79999995231628
+        },
+        {
+          "name": "scan",
+          "engine": "sqlike-wasm/aot",
+          "run": 1,
+          "iterations": 1,
+          "milliseconds": 77.10000014305115
+        },
+        {
+          "name": "scan",
+          "engine": "sqlike-js/prepared",
+          "run": 1,
+          "iterations": 1,
+          "milliseconds": 84
+        },
+        {
+          "name": "scan",
+          "engine": "sqlike-js/dynamic",
+          "run": 1,
+          "iterations": 1,
+          "milliseconds": 85
+        },
+        {
+          "name": "scan",
+          "engine": "sqlike-js/prepared",
+          "run": 2,
+          "iterations": 1,
+          "milliseconds": 80.20000004768372
+        },
+        {
+          "name": "scan",
+          "engine": "sqlike-wasm/aot",
+          "run": 2,
+          "iterations": 1,
+          "milliseconds": 73.90000009536743
+        },
+        {
+          "name": "scan",
+          "engine": "sqlike-wasm/dynamic",
+          "run": 2,
+          "iterations": 1,
+          "milliseconds": 73.29999995231628
+        },
+        {
+          "name": "scan",
+          "engine": "sqlike-wasm/prepared",
+          "run": 2,
+          "iterations": 1,
+          "milliseconds": 72.70000004768372
+        },
+        {
+          "name": "scan",
+          "engine": "sqlite/prepared",
+          "run": 2,
+          "iterations": 1,
+          "milliseconds": 102.5
+        },
+        {
+          "name": "scan",
+          "engine": "sqlite/dynamic",
+          "run": 2,
+          "iterations": 1,
+          "milliseconds": 102
+        },
+        {
+          "name": "scan",
+          "engine": "sqlike-js/aot",
+          "run": 2,
+          "iterations": 1,
+          "milliseconds": 88.19999980926514
+        },
+        {
+          "name": "scan",
+          "engine": "sqlike-js/dynamic",
+          "run": 2,
+          "iterations": 1,
+          "milliseconds": 88.70000004768372
+        },
+        {
+          "name": "update",
+          "engine": "sqlike-js/aot",
+          "run": 0,
+          "iterations": 1689,
+          "milliseconds": 8.799999952316284
+        },
+        {
+          "name": "update",
+          "engine": "sqlike-js/dynamic",
+          "run": 0,
+          "iterations": 879,
+          "milliseconds": 16.200000047683716
+        },
+        {
+          "name": "update",
+          "engine": "sqlike-js/prepared",
+          "run": 0,
+          "iterations": 3279,
+          "milliseconds": 16.5
+        },
+        {
+          "name": "update",
+          "engine": "sqlike-wasm/aot",
+          "run": 0,
+          "iterations": 6353,
+          "milliseconds": 16.90000009536743
+        },
+        {
+          "name": "update",
+          "engine": "sqlike-wasm/dynamic",
+          "run": 0,
+          "iterations": 2858,
+          "milliseconds": 15.799999952316284
+        },
+        {
+          "name": "update",
+          "engine": "sqlike-wasm/prepared",
+          "run": 0,
+          "iterations": 7620,
+          "milliseconds": 17.200000047683716
+        },
+        {
+          "name": "update",
+          "engine": "sqlite/prepared",
+          "run": 0,
+          "iterations": 12507,
+          "milliseconds": 17.59999990463257
+        },
+        {
+          "name": "update",
+          "engine": "sqlite/dynamic",
+          "run": 0,
+          "iterations": 5883,
+          "milliseconds": 19.700000047683716
+        },
+        {
+          "name": "update",
+          "engine": "sqlike-js/aot",
+          "run": 1,
+          "iterations": 1689,
+          "milliseconds": 7.700000047683716
+        },
+        {
+          "name": "update",
+          "engine": "sqlite/dynamic",
+          "run": 1,
+          "iterations": 5883,
+          "milliseconds": 20.399999856948853
+        },
+        {
+          "name": "update",
+          "engine": "sqlite/prepared",
+          "run": 1,
+          "iterations": 12507,
+          "milliseconds": 16.800000190734863
+        },
+        {
+          "name": "update",
+          "engine": "sqlike-wasm/prepared",
+          "run": 1,
+          "iterations": 7620,
+          "milliseconds": 18.59999990463257
+        },
+        {
+          "name": "update",
+          "engine": "sqlike-wasm/dynamic",
+          "run": 1,
+          "iterations": 2858,
+          "milliseconds": 15.200000047683716
+        },
+        {
+          "name": "update",
+          "engine": "sqlike-wasm/aot",
+          "run": 1,
+          "iterations": 6353,
+          "milliseconds": 16.200000047683716
+        },
+        {
+          "name": "update",
+          "engine": "sqlike-js/prepared",
+          "run": 1,
+          "iterations": 3279,
+          "milliseconds": 12.299999952316284
+        },
+        {
+          "name": "update",
+          "engine": "sqlike-js/dynamic",
+          "run": 1,
+          "iterations": 879,
+          "milliseconds": 12.799999952316284
+        },
+        {
+          "name": "update",
+          "engine": "sqlike-js/prepared",
+          "run": 2,
+          "iterations": 3279,
+          "milliseconds": 13
+        },
+        {
+          "name": "update",
+          "engine": "sqlike-wasm/aot",
+          "run": 2,
+          "iterations": 6353,
+          "milliseconds": 16.59999990463257
+        },
+        {
+          "name": "update",
+          "engine": "sqlike-wasm/dynamic",
+          "run": 2,
+          "iterations": 2858,
+          "milliseconds": 14.300000190734863
+        },
+        {
+          "name": "update",
+          "engine": "sqlike-wasm/prepared",
+          "run": 2,
+          "iterations": 7620,
+          "milliseconds": 15.599999904632568
+        },
+        {
+          "name": "update",
+          "engine": "sqlite/prepared",
+          "run": 2,
+          "iterations": 12507,
+          "milliseconds": 17.200000047683716
+        },
+        {
+          "name": "update",
+          "engine": "sqlite/dynamic",
+          "run": 2,
+          "iterations": 5883,
+          "milliseconds": 18.299999952316284
+        },
+        {
+          "name": "update",
+          "engine": "sqlike-js/aot",
+          "run": 2,
+          "iterations": 1689,
+          "milliseconds": 7.400000095367432
+        },
+        {
+          "name": "update",
+          "engine": "sqlike-js/dynamic",
+          "run": 2,
+          "iterations": 879,
+          "milliseconds": 18.199999809265137
+        }
+      ],
+      "decode": [
+        {
+          "name": "constant",
+          "characters": 107,
+          "warmup": 1,
+          "samples": [
+            {
+              "run": 0,
+              "milliseconds": 5.299999952316284,
+              "iterations": 10000
+            },
+            {
+              "run": 1,
+              "milliseconds": 5.200000047683716,
+              "iterations": 10000
+            },
+            {
+              "run": 2,
+              "milliseconds": 5.200000047683716,
+              "iterations": 10000
+            }
+          ]
+        },
+        {
+          "name": "scan",
+          "characters": 8740806,
+          "warmup": 1,
+          "samples": [
+            {
+              "run": 0,
+              "milliseconds": 95.5,
+              "iterations": 2
+            },
+            {
+              "run": 1,
+              "milliseconds": 95.60000014305115,
+              "iterations": 2
+            },
+            {
+              "run": 2,
+              "milliseconds": 95.09999990463257,
+              "iterations": 2
+            }
+          ]
+        }
+      ],
+      "firstRangeRead": [
+        {
+          "engine": "sqlike-js/aot",
+          "milliseconds": 7.5
+        },
+        {
+          "engine": "sqlike-js/dynamic",
+          "milliseconds": 7.3999998569488525
+        },
+        {
+          "engine": "sqlike-js/prepared",
+          "milliseconds": 5.700000047683716
+        },
+        {
+          "engine": "sqlike-wasm/aot",
+          "milliseconds": 5.299999952316284
+        },
+        {
+          "engine": "sqlike-wasm/dynamic",
+          "milliseconds": 5.400000095367432
+        },
+        {
+          "engine": "sqlike-wasm/prepared",
+          "milliseconds": 2
+        },
+        {
+          "engine": "sqlite/prepared",
+          "milliseconds": 0.39999985694885254
+        },
+        {
+          "engine": "sqlite/dynamic",
+          "milliseconds": 0.10000014305114746
+        }
+      ],
+      "indexLifecycle": [
+        {
+          "engine": "sqlike-js/aot",
+          "samples": [
+            {
+              "run": 0,
+              "iterations": 1336,
+              "milliseconds": 15.5
+            },
+            {
+              "run": 1,
+              "iterations": 1336,
+              "milliseconds": 15.600000143051147
+            },
+            {
+              "run": 2,
+              "iterations": 1336,
+              "milliseconds": 15
+            }
+          ]
+        },
+        {
+          "engine": "sqlike-js/dynamic",
+          "samples": [
+            {
+              "run": 0,
+              "iterations": 366,
+              "milliseconds": 25.700000047683716
+            },
+            {
+              "run": 1,
+              "iterations": 366,
+              "milliseconds": 24.90000009536743
+            },
+            {
+              "run": 2,
+              "iterations": 366,
+              "milliseconds": 25
+            }
+          ]
+        },
+        {
+          "engine": "sqlike-js/prepared",
+          "samples": [
+            {
+              "run": 0,
+              "iterations": 1381,
+              "milliseconds": 15.399999856948853
+            },
+            {
+              "run": 1,
+              "iterations": 1381,
+              "milliseconds": 14.100000143051147
+            },
+            {
+              "run": 2,
+              "iterations": 1381,
+              "milliseconds": 13.599999904632568
+            }
+          ]
+        },
+        {
+          "engine": "sqlike-wasm/aot",
+          "samples": [
+            {
+              "run": 0,
+              "iterations": 2085,
+              "milliseconds": 19.200000047683716
+            },
+            {
+              "run": 1,
+              "iterations": 2085,
+              "milliseconds": 19.5
+            },
+            {
+              "run": 2,
+              "iterations": 2085,
+              "milliseconds": 18.899999856948853
+            }
+          ]
+        },
+        {
+          "engine": "sqlike-wasm/dynamic",
+          "samples": [
+            {
+              "run": 0,
+              "iterations": 1076,
+              "milliseconds": 19.299999952316284
+            },
+            {
+              "run": 1,
+              "iterations": 1076,
+              "milliseconds": 19.200000047683716
+            },
+            {
+              "run": 2,
+              "iterations": 1076,
+              "milliseconds": 19.299999952316284
+            }
+          ]
+        },
+        {
+          "engine": "sqlike-wasm/prepared",
+          "samples": [
+            {
+              "run": 0,
+              "iterations": 2471,
+              "milliseconds": 19.799999952316284
+            },
+            {
+              "run": 1,
+              "iterations": 2471,
+              "milliseconds": 19.600000143051147
+            },
+            {
+              "run": 2,
+              "iterations": 2471,
+              "milliseconds": 19.699999809265137
+            }
+          ]
+        },
+        {
+          "engine": "sqlite/prepared",
+          "samples": [
+            {
+              "run": 0,
+              "iterations": 1552,
+              "milliseconds": 19.299999952316284
+            },
+            {
+              "run": 1,
+              "iterations": 1552,
+              "milliseconds": 19.40000009536743
+            },
+            {
+              "run": 2,
+              "iterations": 1552,
+              "milliseconds": 19.5
+            }
+          ]
+        },
+        {
+          "engine": "sqlite/dynamic",
+          "samples": [
+            {
+              "run": 0,
+              "iterations": 1043,
+              "milliseconds": 21.100000143051147
+            },
+            {
+              "run": 1,
+              "iterations": 1043,
+              "milliseconds": 20.699999809265137
+            },
+            {
+              "run": 2,
+              "iterations": 1043,
+              "milliseconds": 20.200000047683716
+            }
+          ]
+        }
+      ],
+      "indexMovement": [
+        {
+          "engine": "sqlike-js/aot",
+          "samples": [
+            {
+              "run": 0,
+              "iterations": 106,
+              "milliseconds": 21.5
+            },
+            {
+              "run": 1,
+              "iterations": 106,
+              "milliseconds": 20
+            },
+            {
+              "run": 2,
+              "iterations": 106,
+              "milliseconds": 20
+            }
+          ]
+        },
+        {
+          "engine": "sqlike-js/dynamic",
+          "samples": [
+            {
+              "run": 0,
+              "iterations": 83,
+              "milliseconds": 20
+            },
+            {
+              "run": 1,
+              "iterations": 83,
+              "milliseconds": 19.700000047683716
+            },
+            {
+              "run": 2,
+              "iterations": 83,
+              "milliseconds": 22.299999952316284
+            }
+          ]
+        },
+        {
+          "engine": "sqlike-js/prepared",
+          "samples": [
+            {
+              "run": 0,
+              "iterations": 101,
+              "milliseconds": 20.200000047683716
+            },
+            {
+              "run": 1,
+              "iterations": 101,
+              "milliseconds": 19.90000009536743
+            },
+            {
+              "run": 2,
+              "iterations": 101,
+              "milliseconds": 20
+            }
+          ]
+        },
+        {
+          "engine": "sqlike-wasm/aot",
+          "samples": [
+            {
+              "run": 0,
+              "iterations": 447,
+              "milliseconds": 18.199999809265137
+            },
+            {
+              "run": 1,
+              "iterations": 447,
+              "milliseconds": 19.300000190734863
+            },
+            {
+              "run": 2,
+              "iterations": 447,
+              "milliseconds": 17.59999990463257
+            }
+          ]
+        },
+        {
+          "engine": "sqlike-wasm/dynamic",
+          "samples": [
+            {
+              "run": 0,
+              "iterations": 399,
+              "milliseconds": 19.59999990463257
+            },
+            {
+              "run": 1,
+              "iterations": 399,
+              "milliseconds": 19.40000009536743
+            },
+            {
+              "run": 2,
+              "iterations": 399,
+              "milliseconds": 19.399999856948853
+            }
+          ]
+        },
+        {
+          "engine": "sqlike-wasm/prepared",
+          "samples": [
+            {
+              "run": 0,
+              "iterations": 526,
+              "milliseconds": 20.5
+            },
+            {
+              "run": 1,
+              "iterations": 526,
+              "milliseconds": 20.200000047683716
+            },
+            {
+              "run": 2,
+              "iterations": 526,
+              "milliseconds": 20.200000047683716
+            }
+          ]
+        },
+        {
+          "engine": "sqlite/prepared",
+          "samples": [
+            {
+              "run": 0,
+              "iterations": 1506,
+              "milliseconds": 20
+            },
+            {
+              "run": 1,
+              "iterations": 1506,
+              "milliseconds": 20
+            },
+            {
+              "run": 2,
+              "iterations": 1506,
+              "milliseconds": 20
+            }
+          ]
+        },
+        {
+          "engine": "sqlite/dynamic",
+          "samples": [
+            {
+              "run": 0,
+              "iterations": 976,
+              "milliseconds": 19.200000047683716
+            },
+            {
+              "run": 1,
+              "iterations": 976,
+              "milliseconds": 19.799999952316284
+            },
+            {
+              "run": 2,
+              "iterations": 976,
+              "milliseconds": 20.299999952316284
+            }
+          ]
+        }
+      ],
+      "verified": 64,
+      "medians": [
+        {
+          "name": "constant",
+          "engine": "sqlike-js/aot",
+          "iterations": 5502,
+          "microseconds": 3.416939286135275,
+          "minMs": 17,
+          "maxMs": 22.899999856948853
+        },
+        {
+          "name": "constant",
+          "engine": "sqlike-js/dynamic",
+          "iterations": 932,
+          "microseconds": 16.630901287553648,
+          "minMs": 14.099999904632568,
+          "maxMs": 16.40000009536743
+        },
+        {
+          "name": "constant",
+          "engine": "sqlike-js/prepared",
+          "iterations": 7764,
+          "microseconds": 2.807831008799109,
+          "minMs": 16.600000143051147,
+          "maxMs": 23.40000009536743
+        },
+        {
+          "name": "constant",
+          "engine": "sqlike-wasm/aot",
+          "iterations": 10665,
+          "microseconds": 1.8377871453007566,
+          "minMs": 18.5,
+          "maxMs": 22.100000143051147
+        },
+        {
+          "name": "constant",
+          "engine": "sqlike-wasm/dynamic",
+          "iterations": 5632,
+          "microseconds": 3.4623579545454546,
+          "minMs": 18,
+          "maxMs": 19.699999809265137
+        },
+        {
+          "name": "constant",
+          "engine": "sqlike-wasm/prepared",
+          "iterations": 14870,
+          "microseconds": 1.3046402216117976,
+          "minMs": 18.200000047683716,
+          "maxMs": 25.799999952316284
+        },
+        {
+          "name": "constant",
+          "engine": "sqlite/prepared",
+          "iterations": 10989,
+          "microseconds": 1.7199017285801648,
+          "minMs": 18.700000047683716,
+          "maxMs": 21.799999952316284
+        },
+        {
+          "name": "constant",
+          "engine": "sqlite/dynamic",
+          "iterations": 3695,
+          "microseconds": 3.761840350573053,
+          "minMs": 13.200000047683716,
+          "maxMs": 15.5
+        },
+        {
+          "name": "point",
+          "engine": "sqlike-js/aot",
+          "iterations": 10005,
+          "microseconds": 1.7991004497751124,
+          "minMs": 15.799999952316284,
+          "maxMs": 18.299999952316284
+        },
+        {
+          "name": "point",
+          "engine": "sqlike-js/dynamic",
+          "iterations": 813,
+          "microseconds": 23.49323481504621,
+          "minMs": 18.200000047683716,
+          "maxMs": 20.100000143051147
+        },
+        {
+          "name": "point",
+          "engine": "sqlike-js/prepared",
+          "iterations": 7767,
+          "microseconds": 1.09437363203296,
+          "minMs": 8.299999952316284,
+          "maxMs": 10.299999952316284
+        },
+        {
+          "name": "point",
+          "engine": "sqlike-wasm/aot",
+          "iterations": 11944,
+          "microseconds": 1.9089082344538082,
+          "minMs": 18.800000190734863,
+          "maxMs": 23.600000143051147
+        },
+        {
+          "name": "point",
+          "engine": "sqlike-wasm/dynamic",
+          "iterations": 2248,
+          "microseconds": 6.53914582262684,
+          "minMs": 14,
+          "maxMs": 14.799999952316284
+        },
+        {
+          "name": "point",
+          "engine": "sqlike-wasm/prepared",
+          "iterations": 17783,
+          "microseconds": 0.9840859247596019,
+          "minMs": 17.299999952316284,
+          "maxMs": 18.59999990463257
+        },
+        {
+          "name": "point",
+          "engine": "sqlite/prepared",
+          "iterations": 12122,
+          "microseconds": 1.4931529371912695,
+          "minMs": 18,
+          "maxMs": 18.200000047683716
+        },
+        {
+          "name": "point",
+          "engine": "sqlite/dynamic",
+          "iterations": 5000,
+          "microseconds": 3.9,
+          "minMs": 19.100000143051147,
+          "maxMs": 19.5
+        },
+        {
+          "name": "miss",
+          "engine": "sqlike-js/aot",
+          "iterations": 10257,
+          "microseconds": 1.1406844152952829,
+          "minMs": 11.700000047683716,
+          "maxMs": 11.899999856948853
+        },
+        {
+          "name": "miss",
+          "engine": "sqlike-js/dynamic",
+          "iterations": 681,
+          "microseconds": 19.530102719994545,
+          "minMs": 12.5,
+          "maxMs": 17.40000009536743
+        },
+        {
+          "name": "miss",
+          "engine": "sqlike-js/prepared",
+          "iterations": 32000,
+          "microseconds": 0.7468750029802322,
+          "minMs": 18.799999952316284,
+          "maxMs": 24.299999952316284
+        },
+        {
+          "name": "miss",
+          "engine": "sqlike-wasm/aot",
+          "iterations": 12122,
+          "microseconds": 1.0559313605276592,
+          "minMs": 12.5,
+          "maxMs": 12.799999952316284
+        },
+        {
+          "name": "miss",
+          "engine": "sqlike-wasm/dynamic",
+          "iterations": 3226,
+          "microseconds": 5.579665220086794,
+          "minMs": 18,
+          "maxMs": 19.200000047683716
+        },
+        {
+          "name": "miss",
+          "engine": "sqlike-wasm/prepared",
+          "iterations": 37210,
+          "microseconds": 0.49449073086179607,
+          "minMs": 18,
+          "maxMs": 19
+        },
+        {
+          "name": "miss",
+          "engine": "sqlite/prepared",
+          "iterations": 42116,
+          "microseconds": 0.5009972434379468,
+          "minMs": 20.09999990463257,
+          "maxMs": 24.09999990463257
+        },
+        {
+          "name": "miss",
+          "engine": "sqlite/dynamic",
+          "iterations": 7410,
+          "microseconds": 2.5236167405780994,
+          "minMs": 18.200000047683716,
+          "maxMs": 19.40000009536743
+        },
+        {
+          "name": "range",
+          "engine": "sqlike-js/aot",
+          "iterations": 1835,
+          "microseconds": 7.6839236537507185,
+          "minMs": 13.600000143051147,
+          "maxMs": 14.599999904632568
+        },
+        {
+          "name": "range",
+          "engine": "sqlike-js/dynamic",
+          "iterations": 418,
+          "microseconds": 36.60287069932125,
+          "minMs": 14.400000095367432,
+          "maxMs": 17.09999990463257
+        },
+        {
+          "name": "range",
+          "engine": "sqlike-js/prepared",
+          "iterations": 2632,
+          "microseconds": 7.370820704926836,
+          "minMs": 15.200000047683716,
+          "maxMs": 20.800000190734863
+        },
+        {
+          "name": "range",
+          "engine": "sqlike-wasm/aot",
+          "iterations": 2478,
+          "microseconds": 7.021791806040126,
+          "minMs": 16.59999990463257,
+          "maxMs": 17.899999856948853
+        },
+        {
+          "name": "range",
+          "engine": "sqlike-wasm/dynamic",
+          "iterations": 1355,
+          "microseconds": 12.841328307711331,
+          "minMs": 17.200000047683716,
+          "maxMs": 17.5
+        },
+        {
+          "name": "range",
+          "engine": "sqlike-wasm/prepared",
+          "iterations": 3335,
+          "microseconds": 5.427286399715486,
+          "minMs": 17.799999952316284,
+          "maxMs": 18.5
+        },
+        {
+          "name": "range",
+          "engine": "sqlite/prepared",
+          "iterations": 1905,
+          "microseconds": 10.393700762370752,
+          "minMs": 19.700000047683716,
+          "maxMs": 20.5
+        },
+        {
+          "name": "range",
+          "engine": "sqlite/dynamic",
+          "iterations": 1343,
+          "microseconds": 14.668652129013505,
+          "minMs": 19.5,
+          "maxMs": 23.90000009536743
+        },
+        {
+          "name": "limit",
+          "engine": "sqlike-js/aot",
+          "iterations": 2581,
+          "microseconds": 4.959318075287208,
+          "minMs": 10.900000095367432,
+          "maxMs": 14.900000095367432
+        },
+        {
+          "name": "limit",
+          "engine": "sqlike-js/dynamic",
+          "iterations": 517,
+          "microseconds": 35.97678944497321,
+          "minMs": 16.5,
+          "maxMs": 18.899999856948853
+        },
+        {
+          "name": "limit",
+          "engine": "sqlike-js/prepared",
+          "iterations": 3509,
+          "microseconds": 4.58820180765208,
+          "minMs": 12.599999904632568,
+          "maxMs": 16.59999990463257
+        },
+        {
+          "name": "limit",
+          "engine": "sqlike-wasm/aot",
+          "iterations": 4062,
+          "microseconds": 4.800590841949778,
+          "minMs": 17.800000190734863,
+          "maxMs": 22.59999990463257
+        },
+        {
+          "name": "limit",
+          "engine": "sqlike-wasm/dynamic",
+          "iterations": 2062,
+          "microseconds": 9.408341346725923,
+          "minMs": 19.100000143051147,
+          "maxMs": 20.40000009536743
+        },
+        {
+          "name": "limit",
+          "engine": "sqlike-wasm/prepared",
+          "iterations": 5300,
+          "microseconds": 3.622641473446252,
+          "minMs": 19.100000143051147,
+          "maxMs": 19.899999856948853
+        },
+        {
+          "name": "limit",
+          "engine": "sqlite/prepared",
+          "iterations": 2000,
+          "microseconds": 9.299999952316284,
+          "minMs": 18.5,
+          "maxMs": 18.799999952316284
+        },
+        {
+          "name": "limit",
+          "engine": "sqlite/dynamic",
+          "iterations": 1471,
+          "microseconds": 12.440516784999907,
+          "minMs": 18.200000047683716,
+          "maxMs": 18.799999952316284
+        },
+        {
+          "name": "aggregate",
+          "engine": "sqlike-js/aot",
+          "iterations": 13,
+          "microseconds": 1592.3076959756704,
+          "minMs": 20.700000047683716,
+          "maxMs": 20.90000009536743
+        },
+        {
+          "name": "aggregate",
+          "engine": "sqlike-js/dynamic",
+          "iterations": 12,
+          "microseconds": 1741.6666746139526,
+          "minMs": 20.5,
+          "maxMs": 21.40000009536743
+        },
+        {
+          "name": "aggregate",
+          "engine": "sqlike-js/prepared",
+          "iterations": 12,
+          "microseconds": 1691.6666626930237,
+          "minMs": 19.899999856948853,
+          "maxMs": 21.5
+        },
+        {
+          "name": "aggregate",
+          "engine": "sqlike-wasm/aot",
+          "iterations": 22,
+          "microseconds": 968.1818268515847,
+          "minMs": 20.799999952316284,
+          "maxMs": 21.59999990463257
+        },
+        {
+          "name": "aggregate",
+          "engine": "sqlike-wasm/dynamic",
+          "iterations": 22,
+          "microseconds": 950.0000043348832,
+          "minMs": 20.90000009536743,
+          "maxMs": 22
+        },
+        {
+          "name": "aggregate",
+          "engine": "sqlike-wasm/prepared",
+          "iterations": 22,
+          "microseconds": 945.4545432871038,
+          "minMs": 20.399999856948853,
+          "maxMs": 20.799999952316284
+        },
+        {
+          "name": "aggregate",
+          "engine": "sqlite/prepared",
+          "iterations": 10,
+          "microseconds": 2090.000009536743,
+          "minMs": 20.700000047683716,
+          "maxMs": 21
+        },
+        {
+          "name": "aggregate",
+          "engine": "sqlite/dynamic",
+          "iterations": 10,
+          "microseconds": 2109.999990463257,
+          "minMs": 20.799999952316284,
+          "maxMs": 21.09999990463257
+        },
+        {
+          "name": "scan",
+          "engine": "sqlike-js/aot",
+          "iterations": 1,
+          "microseconds": 78899.99985694885,
+          "minMs": 78,
+          "maxMs": 88.19999980926514
+        },
+        {
+          "name": "scan",
+          "engine": "sqlike-js/dynamic",
+          "iterations": 1,
+          "microseconds": 86000,
+          "minMs": 85,
+          "maxMs": 88.70000004768372
+        },
+        {
+          "name": "scan",
+          "engine": "sqlike-js/prepared",
+          "iterations": 1,
+          "microseconds": 80200.00004768372,
+          "minMs": 77.59999990463257,
+          "maxMs": 84
+        },
+        {
+          "name": "scan",
+          "engine": "sqlike-wasm/aot",
+          "iterations": 1,
+          "microseconds": 74099.99990463257,
+          "minMs": 73.90000009536743,
+          "maxMs": 77.10000014305115
+        },
+        {
+          "name": "scan",
+          "engine": "sqlike-wasm/dynamic",
+          "iterations": 1,
+          "microseconds": 73299.99995231628,
+          "minMs": 72.5,
+          "maxMs": 84.79999995231628
+        },
+        {
+          "name": "scan",
+          "engine": "sqlike-wasm/prepared",
+          "iterations": 1,
+          "microseconds": 77200.00004768372,
+          "minMs": 72.70000004768372,
+          "maxMs": 82.79999995231628
+        },
+        {
+          "name": "scan",
+          "engine": "sqlite/prepared",
+          "iterations": 1,
+          "microseconds": 102600.00014305115,
+          "minMs": 102.5,
+          "maxMs": 102.70000004768372
+        },
+        {
+          "name": "scan",
+          "engine": "sqlite/dynamic",
+          "iterations": 1,
+          "microseconds": 102000,
+          "minMs": 101.5,
+          "maxMs": 103.5
+        },
+        {
+          "name": "update",
+          "engine": "sqlike-js/aot",
+          "iterations": 1689,
+          "microseconds": 4.558910626218896,
+          "minMs": 7.400000095367432,
+          "maxMs": 8.799999952316284
+        },
+        {
+          "name": "update",
+          "engine": "sqlike-js/dynamic",
+          "iterations": 879,
+          "microseconds": 18.430034183940517,
+          "minMs": 12.799999952316284,
+          "maxMs": 18.199999809265137
+        },
+        {
+          "name": "update",
+          "engine": "sqlike-js/prepared",
+          "iterations": 3279,
+          "microseconds": 3.9646233607807257,
+          "minMs": 12.299999952316284,
+          "maxMs": 16.5
+        },
+        {
+          "name": "update",
+          "engine": "sqlike-wasm/aot",
+          "iterations": 6353,
+          "microseconds": 2.61293875407407,
+          "minMs": 16.200000047683716,
+          "maxMs": 16.90000009536743
+        },
+        {
+          "name": "update",
+          "engine": "sqlike-wasm/dynamic",
+          "iterations": 2858,
+          "microseconds": 5.318404495340698,
+          "minMs": 14.300000190734863,
+          "maxMs": 15.799999952316284
+        },
+        {
+          "name": "update",
+          "engine": "sqlike-wasm/prepared",
+          "iterations": 7620,
+          "microseconds": 2.2572178540267345,
+          "minMs": 15.599999904632568,
+          "maxMs": 18.59999990463257
+        },
+        {
+          "name": "update",
+          "engine": "sqlite/prepared",
+          "iterations": 12507,
+          "microseconds": 1.3752298750846499,
+          "minMs": 16.800000190734863,
+          "maxMs": 17.59999990463257
+        },
+        {
+          "name": "update",
+          "engine": "sqlite/dynamic",
+          "iterations": 5883,
+          "microseconds": 3.348631658623783,
+          "minMs": 18.299999952316284,
+          "maxMs": 20.399999856948853
+        }
+      ],
+      "retention": [
+        {
+          "engine": "sqlike-js/prepared",
+          "entries": 32,
+          "sqlBytes": 3244,
+          "before": {
+            "usedSize": 208711692,
+            "totalSize": 212860928,
+            "embedderHeapUsedSize": 314592,
+            "backingStorageSize": 12400543
+          },
+          "held": {
+            "usedSize": 208791308,
+            "totalSize": 211812352,
+            "embedderHeapUsedSize": 314592,
+            "backingStorageSize": 12402166
+          },
+          "cleared": {
+            "usedSize": 208696848,
+            "totalSize": 211550208,
+            "embedderHeapUsedSize": 314592,
+            "backingStorageSize": 12400543
+          }
+        },
+        {
+          "engine": "sqlike-wasm/prepared",
+          "entries": 32,
+          "sqlBytes": 3244,
+          "before": {
+            "usedSize": 208696848,
+            "totalSize": 211550208,
+            "embedderHeapUsedSize": 314592,
+            "backingStorageSize": 12400543
+          },
+          "held": {
+            "usedSize": 208747524,
+            "totalSize": 211550208,
+            "embedderHeapUsedSize": 314592,
+            "backingStorageSize": 12400543
+          },
+          "cleared": {
+            "usedSize": 208703796,
+            "totalSize": 211550208,
+            "embedderHeapUsedSize": 314592,
+            "backingStorageSize": 12400543
+          }
+        }
+      ]
+    }
+  ],
+  "cpuProfiles": []
+}

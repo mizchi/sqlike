@@ -4,7 +4,7 @@ priv struct CachedIndex {
   cookie : Int32
   fields : Array[IndexField]
   predicate : Expr?
-  rows : Array[StoredRow]
+  rows : IndexRows
 }
 
 ///|
@@ -32,28 +32,18 @@ fn compare_index_rows(
 /// Locate a full index key, including rowid to distinguish equal column values.
 fn index_row_bound(
   store : Store,
-  rows : Array[StoredRow],
+  rows : IndexRows,
   fields : Array[IndexField],
   row : StoredRow,
 ) -> Int32 {
-  let mut low = 0
-  let mut high = rows.length()
-  while low < high {
-    let middle = low + (high - low) / 2
-    if compare_index_rows(store, fields, rows[middle], row) < 0 {
-      low = middle + 1
-    } else {
-      high = middle
-    }
-  }
-  low
+  rows.bound(candidate => compare_index_rows(store, fields, candidate, row) < 0)
 }
 
 ///|
 /// Changed keys may still fit between the same neighbors, avoiding row shifts.
 fn index_slot_accepts(
   store : Store,
-  rows : Array[StoredRow],
+  rows : IndexRows,
   fields : Array[IndexField],
   position : Int32,
   row : StoredRow,
@@ -130,10 +120,6 @@ fn update_table_indexes(
     if after is Some(row) {
       let position = index_row_bound(store, index.rows, fields, row)
       index.rows.insert(position, row)
-    } else if index.rows.length() * 4 < index.rows.capacity() {
-      // Array removal retains backing slots. Release deleted row references
-      // after substantial shrinkage, including the final row, amortizing copies.
-      index.rows.shrink_to_fit()
     }
   }
 }
@@ -193,6 +179,13 @@ fn replace_table_row(
   if position < 0 {
     return
   }
+  // BEFORE triggers may have changed this row: compare current storage, not
+  // the caller's old row. Constraints/events/counters still run in the caller.
+  if table.rows.get_slot(position) is Some(current) &&
+    current.id == next.id &&
+    same_stored_values(current.values, next.values) {
+    return
+  }
   update_table_indexes(store, table, Some(previous), Some(next))
   table.rows.set_slot(position, next)
   dirty_replace(store, table.name, previous, next)
@@ -232,7 +225,7 @@ fn index_rows_for_fields(
   name : String,
   fields : Array[IndexField],
   predicate : Expr?,
-) -> Array[StoredRow] raise SqlError {
+) -> IndexRows raise SqlError {
   if store.indexes.get(name) is Some(index) &&
     index.cookie == store.cookie &&
     index.fields == fields {
@@ -244,6 +237,10 @@ fn index_rows_for_fields(
     table.rows.filter(row => cached_index_member(store, table, predicate, row))
   }
   rows.sort_by((a, b) => compare_index_rows(store, fields, a, b))
+  let rows = index_pages(
+    rows,
+    pages=!(fields.length() == 1 && fields[0].column == -1),
+  )
   // Bound retained row references. Additional indexes can always be rebuilt.
   if store.indexes.length() >= 4 {
     store.indexes.clear()
@@ -281,21 +278,18 @@ fn cached_index_member(
 ///|
 fn index_prefix_bound(
   store : Store,
-  rows : Array[StoredRow],
+  rows : IndexRows,
   fields : Array[IndexField],
   values : Array[Value],
   after_equal : Bool,
 ) -> Int32 {
-  let mut low = 0
-  let mut high = rows.length()
-  while low < high {
-    let middle = low + (high - low) / 2
+  rows.bound(candidate => {
     let mut order = 0
     for i, value in values {
       let field = fields[i]
       order = compare_stored(
         store,
-        index_field_value(rows[middle], field),
+        index_field_value(candidate, field),
         value,
         field.collation,
       )
@@ -306,11 +300,6 @@ fn index_prefix_bound(
         break
       }
     }
-    if order < 0 || (after_equal && order == 0) {
-      low = middle + 1
-    } else {
-      high = middle
-    }
-  }
-  low
+    order < 0 || (after_equal && order == 0)
+  })
 }

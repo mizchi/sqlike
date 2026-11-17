@@ -34,6 +34,23 @@ const reopened = openDatabase(image);
 reopened.close();
 ```
 
+## 通常SQLのキャッシュ（未リリース）
+
+同じSQLを繰り返す接続では、parseした構文と準備済みmetadataを再利用できます。
+
+```ts
+const cached = openDatabase(undefined, {
+  statementCache: { capacity: 32, maxSqlBytes: 65536 },
+});
+cached.run('CREATE TABLE task(id INTEGER PRIMARY KEY,title TEXT)');
+cached.run('INSERT INTO task VALUES(?,?)', [1n, 'hello']);
+cached.values('SELECT id,title FROM task WHERE id=?', [1n]);
+cached.values('SELECT id,title FROM task WHERE id=?', [1n]);
+cached.close();
+```
+
+既定は無効です。`capacity`は最大256件、`maxSqlBytes`は保持するSQLのUTF-16長×2の合計で、AST等の追加メモリは含みません。budgetを超えるSQLは通常実行へ戻ります。schema変更・restore・rollback後は再準備し、closeでcacheを解放します。DDL / PRAGMA / transactionは従来の実行経路を通します。[適用範囲・比較](internal/dynamic-sql-prepare.md)。
+
 ## 値の型
 
 | SQL | JavaScript / TypeScript |
@@ -61,6 +78,10 @@ bindでは`1n`がINTEGER、`1`がREALです。INTEGERを`number`へ丸めずに�
 | 関数 | 基本scalar関数、対応範囲のJSON・日時・window関数 |
 
 各構文・関数の全入力を受理するものではありません。SQLiteの全PRAGMA、仮想テーブル、任意拡張、独自関数・collation等は対応範囲外です。未対応のSQLはエラーにする方針です。
+
+### 未リリースの追加
+
+`ceil` / `ceiling` / `floor` / `trunc`を追加しました。INTEGER入力はINTEGER、REALや小数・指数表記のTEXTはREALを返します。NULL・BLOB・数値に変換できないTEXTはNULLです。catalog選択ビルドでは`mathRounding`関数群として収集し、使わないcatalogから実装を除去します。数学関数全体への対応ではありません。
 
 ### 0.1.1の追加
 

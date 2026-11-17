@@ -1,6 +1,7 @@
 import type * as SQL from "../../_build/js/release/build/mizchi/sqlike/sqlike.js";
 import type * as AOT from "../../_build/js/release/build/mizchi/litestream-example/runtime/runtime.js";
 import { aotBindings, aotValue } from "../../src/aot-values.ts";
+import { createSqlStatementCache } from "../../src/sql-statement-cache.ts";
 import {
   datum,
   value,
@@ -26,15 +27,18 @@ const check = (s: string) => {
   if (r.error) throw Object.assign(Error(r.error), { code: r.code });
   return r;
 };
-export function dynamicDriver(runtime: typeof SQL): DifferentialDriver {
+export function dynamicDriver(runtime: typeof SQL, prepared = false): DifferentialDriver {
   const db = runtime.database_open();
+  const cache = createSqlStatementCache(prepared ? { capacity: 32 } : undefined, sql => runtime.database_prepare(db, sql));
   return {
-    close() {},
+    close() { cache?.clear(); },
     execute(op) {
       try {
         const bindings = aotBindings((op.params ?? []).map(value));
+        const entry = cache?.get(op.sql);
+        const readonly = runtime.database_is_readonly(op.sql);
         const r = check(
-          runtime.database_is_readonly(op.sql)
+          entry ? runtime.database_prepared_exec(entry.handle, bindings, readonly, readonly) : readonly
             ? runtime.database_query_values(db, op.sql, bindings)
             : runtime.database_exec(db, op.sql, bindings, false),
         );
@@ -96,6 +100,7 @@ export function auditTarget(
   target: string,
   compiled: boolean,
   oracleCompileErrors: Record<string, SqlOutcome | undefined> = {},
+  prepared = false,
 ): DifferentialResult[] {
   return cases.map((c) => {
     const base = {
@@ -110,7 +115,7 @@ export function auditTarget(
     try {
       driver = compiled
         ? compiledDriver(runtime.aot, c, runtime.compile)
-        : dynamicDriver(runtime.sql);
+        : dynamicDriver(runtime.sql, prepared);
     } catch (e) {
       return {
         ...base,

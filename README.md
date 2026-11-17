@@ -31,9 +31,11 @@ Archives are also available from [GitHub Releases](https://github.com/mizchi/sql
 
 Sizes include the browser entry's JS loader, split chunks, emitted workers, and Wasm. JS is minified with Oxc; Wasm uses release output. Brotli quality 11 is applied to each file before summing. 1 KiB = 1,024 bytes.
 
-SQLike measurements use the 0.1.2 source checkout. [Staged compatibility work](docs/internal/staged-sqlite-compatibility.md) records the additions and their size cost.
+SQLike measurements use the source checkout including unreleased changes after 0.1.2. [Staged compatibility work](docs/internal/staged-sqlite-compatibility.md) records the additions and their size cost.
 
-[![Bundle sizes for ten builds. Blue shows Brotli size; gray shows minified, uncompressed size. Smaller is better.](docs/images/bundle-size.svg)](docs/images/bundle-size.png)
+[![Bundle sizes for ten builds. Blue shows Brotli size; gray shows minified, uncompressed size. Smaller is better.](docs/images/bundle-size.png)](docs/images/bundle-size.png)
+
+[SVG download](docs/images/bundle-size.svg)
 
 The horizontal axis is logarithmic: each tick doubles the size. Labels show KiB.
 
@@ -43,14 +45,14 @@ The horizontal axis is logarithmic: each tick doubles the size. Labels show KiB.
 <!-- bundle-size:start -->
 | Build | minified, uncompressed | Brotli |
 | --- | ---: | ---: |
-| SQLike 0.1.2 (source) / SQL / JS | 612.53 KiB | 115.29 KiB |
-| SQLike 0.1.2 (source) / SQL / Wasm GC | 541.05 KiB | 169.97 KiB |
-| SQLike 0.1.2 (source) / Predefined, all execution features / JS | 515.18 KiB | 101.73 KiB |
-| SQLike 0.1.2 (source) / Predefined, all execution features / Wasm GC | 456.48 KiB | 146.43 KiB |
-| SQLike 0.1.2 (source) / Predefined, no JSON/date/window / JS | 475.34 KiB | 93.68 KiB |
-| SQLike 0.1.2 (source) / Predefined, no JSON/date/window / Wasm GC | 426.83 KiB | 135.71 KiB |
-| SQLike 0.1.2 (source) / Predefined, primary-key index only / JS | 453.89 KiB | 89.87 KiB |
-| SQLike 0.1.2 (source) / Predefined, primary-key index only / Wasm GC | 407.90 KiB | 130.55 KiB |
+| SQLike 0.1.2 (source) / SQL / JS | 635.22 KiB | 119.09 KiB |
+| SQLike 0.1.2 (source) / SQL / Wasm GC | 560.45 KiB | 175.82 KiB |
+| SQLike 0.1.2 (source) / Predefined, all execution features / JS | 520.14 KiB | 102.80 KiB |
+| SQLike 0.1.2 (source) / Predefined, all execution features / Wasm GC | 461.37 KiB | 147.86 KiB |
+| SQLike 0.1.2 (source) / Predefined, no JSON/date/window / JS | 480.32 KiB | 94.93 KiB |
+| SQLike 0.1.2 (source) / Predefined, no JSON/date/window / Wasm GC | 430.69 KiB | 137.22 KiB |
+| SQLike 0.1.2 (source) / Predefined, primary-key index only / JS | 458.89 KiB | 90.83 KiB |
+| SQLike 0.1.2 (source) / Predefined, primary-key index only / Wasm GC | 412.82 KiB | 131.92 KiB |
 | sqlite-wasm 3.54.1-build1 | 1313.74 KiB | 462.33 KiB |
 | Turso 0.8.3 | 11709.66 KiB | 2675.96 KiB |
 <!-- bundle-size:end -->
@@ -71,7 +73,9 @@ The comparison uses [@sqlite.org/sqlite-wasm](https://www.npmjs.com/package/@sql
 
 When the schema and queries are fixed, AOT and predefined builds retain only the implementations required by the catalog. AOT reads JSON program definitions; `defined` reads binary definitions. Each comparison uses the same semantic features, exports, and primary-key index setting.
 
-[![Defined JavaScript runtime sizes for six catalogs. Gray is the manual feature profile; blue is catalog-selected. The panels show minified and Brotli sizes.](docs/images/catalog-runtime-size.svg)](docs/images/catalog-runtime-size.png)
+[![Defined JavaScript runtime sizes for six catalogs. Gray is the manual feature profile; blue is catalog-selected. The panels show minified and Brotli sizes.](docs/images/catalog-runtime-size.png)](docs/images/catalog-runtime-size.png)
+
+[SVG download](docs/images/catalog-runtime-size.svg)
 
 These are **engine files only**, excluding the host, IndexedDB wrappers, schema/statements, and compiler. The JS and Wasm columns describe separate targets; the Wasm sizes exclude its JS loader. The browser distribution totals above include those host and loader assets. Both targets were checked against native SQLite for every catalog.
 
@@ -81,18 +85,18 @@ These are **engine files only**, excluding the host, IndexedDB wrappers, schema/
 <!-- catalog-runtime-size:start -->
 | Catalog / mode | Minified JS | JS Brotli | Release Wasm | Wasm Brotli |
 | --- | ---: | ---: | ---: | ---: |
-| Read only / AOT | 401.45 KiB | 74.99 KiB | 360.11 KiB | 111.92 KiB |
-| Read only / defined | 372.20 KiB | 72.63 KiB | 331.75 KiB | 106.06 KiB |
-| GLOB + char / AOT | 404.22 KiB | 75.61 KiB | 363.36 KiB | 112.66 KiB |
-| GLOB + char / defined | 374.97 KiB | 73.13 KiB | 334.63 KiB | 106.98 KiB |
-| JSON construction / AOT | 407.73 KiB | 76.00 KiB | 365.45 KiB | 113.34 KiB |
-| JSON construction / defined | 378.43 KiB | 73.31 KiB | 336.79 KiB | 107.47 KiB |
-| Nested JSON / AOT | 412.46 KiB | 76.71 KiB | 369.27 KiB | 114.52 KiB |
-| Nested JSON / defined | 383.09 KiB | 74.18 KiB | 340.88 KiB | 108.74 KiB |
-| Recursive CTE + JSON aggregate / AOT | 420.91 KiB | 78.24 KiB | 378.90 KiB | 116.84 KiB |
-| Recursive CTE + JSON aggregate / defined | 391.53 KiB | 75.68 KiB | 350.39 KiB | 111.34 KiB |
-| Notes CRUD / AOT | 432.86 KiB | 80.80 KiB | 387.15 KiB | 120.36 KiB |
-| Notes CRUD / defined | 403.34 KiB | 78.22 KiB | 357.83 KiB | 114.55 KiB |
+| Read only / AOT | 407.75 KiB | 76.29 KiB | 366.74 KiB | 113.92 KiB |
+| Read only / defined | 378.37 KiB | 73.75 KiB | 338.18 KiB | 108.31 KiB |
+| GLOB + char / AOT | 410.52 KiB | 76.88 KiB | 370.26 KiB | 114.60 KiB |
+| GLOB + char / defined | 381.14 KiB | 74.24 KiB | 340.71 KiB | 108.87 KiB |
+| JSON construction / AOT | 414.04 KiB | 77.24 KiB | 372.11 KiB | 115.83 KiB |
+| JSON construction / defined | 384.61 KiB | 74.74 KiB | 343.27 KiB | 109.73 KiB |
+| Nested JSON / AOT | 418.77 KiB | 78.21 KiB | 375.99 KiB | 116.51 KiB |
+| Nested JSON / defined | 389.27 KiB | 75.51 KiB | 347.06 KiB | 110.69 KiB |
+| Recursive CTE + JSON aggregate / AOT | 427.21 KiB | 79.51 KiB | 386.28 KiB | 119.18 KiB |
+| Recursive CTE + JSON aggregate / defined | 397.71 KiB | 76.97 KiB | 357.12 KiB | 113.34 KiB |
+| Notes CRUD / AOT | 438.08 KiB | 81.83 KiB | 391.91 KiB | 121.80 KiB |
+| Notes CRUD / defined | 408.43 KiB | 79.26 KiB | 362.74 KiB | 116.21 KiB |
 <!-- catalog-runtime-size:end -->
 
 </details>
@@ -105,9 +109,11 @@ The catalogs cover primary-key reads, GLOB/char, JSON construction, nested JSON,
 
 Results are **μs per operation** on a 5,000-row table, using the median of seven samples after warmup. Ordinary SQL paths parse or prepare on each call; the prepared column reuses SQLite statements.
 
-[![SQLite performance comparison across seven workloads. Each workload has its own horizontal bar chart; shorter bars are faster.](docs/images/sqlite-benchmark.svg)](docs/images/sqlite-benchmark.png)
+[![SQLite performance comparison across seven workloads. Each workload has its own horizontal bar chart; shorter bars are faster.](docs/images/sqlite-benchmark.png)](docs/images/sqlite-benchmark.png)
 
-Each panel starts at zero and uses its own scale. Bars show medians; whiskers show the observed minimum and maximum across seven samples. Only the full-table fetch panel uses milliseconds. Click either figure for its PNG version.
+[SVG download](docs/images/sqlite-benchmark.svg)
+
+Each panel starts at zero and uses its own scale. Bars show medians; whiskers show the observed minimum and maximum across seven samples. Only the full-table fetch panel uses milliseconds. Click a figure for its full-size PNG.
 
 <details>
 <summary>View exact timings (7 workloads, 4 execution paths; all values in μs)</summary>
@@ -115,24 +121,37 @@ Each panel starts at zero and uses its own scale. Bars show medians; whiskers sh
 <!-- sqlite-benchmark:start -->
 | Workload | SQLike JS, SQL | SQLike Wasm GC, SQL | SQLite WASM, SQL | SQLite WASM, prepared |
 | --- | ---: | ---: | ---: | ---: |
-| Primary-key lookup | 29.47 | 6.78 | 3.75 | 1.44 |
-| Missing primary key | 27.19 | 5.74 | 2.59 | 0.47 |
-| Indexed range · 10 rows | 49.95 | 13.73 | 14.68 | 10.71 |
-| ORDER BY id · LIMIT 10 | 45.86 | 11.00 | 12.20 | 9.21 |
-| SUM + COUNT · 5,000 rows | 94.22 | 50.87 | 109.63 | 104.93 |
-| Fetch all 5,000 rows | 4,663.64 | 2,705.26 | 4,608.33 | 4,581.82 |
-| Indexed UPDATE + range read | 73.53 | 19.16 | 19.07 | 12.12 |
+| Primary-key lookup | 26.64 | 6.00 | 3.72 | 1.48 |
+| Missing primary key | 26.70 | 5.46 | 2.58 | 0.48 |
+| Indexed range · 10 rows | 43.72 | 12.03 | 14.78 | 10.90 |
+| ORDER BY id · LIMIT 10 | 40.74 | 9.00 | 12.55 | 9.51 |
+| SUM + COUNT · 5,000 rows | 93.43 | 50.50 | 106.68 | 103.94 |
+| Fetch all 5,000 rows | 1,724.14 | 1,914.81 | 4,590.91 | 4,533.33 |
+| Indexed UPDATE + range read | 64.07 | 17.13 | 19.57 | 12.70 |
 <!-- sqlite-benchmark:end -->
 
 </details>
 
-Measured on November 16, 2026, with an Apple M5, macOS arm64, and Chromium 158.0.8127.18. SQLike 0.1.2 source, built with MoonBit release output (JS before minification), and SQLite WASM 3.54.1 run in memory on the same page.
+Measured on November 17, 2026, with an Apple M5, macOS arm64, and Chromium 158.0.8127.18. SQLike source including unreleased changes after 0.1.2, built with MoonBit release output (JS before minification), and SQLite WASM 3.54.1 run in memory on the same page.
 
 Primary-key and secondary indexes are warm. The update workload alternates indexed values and includes the following range read. Timings cover engine API calls, including typed result conversion and decoding. They exclude host wrappers, startup, Wasm compilation, IndexedDB, and networking. Results and update effects are checked against expectations from native SQLite before and after timing.
 
 Parsing and the host boundary add overhead to ordinary SQL calls; small lookups still show a gap against SQLite. Application performance also depends on the query, returned row count, and persistence method.
 
 [Raw data, queries, and all samples](measurements/sqlite-speed-current.json). Reproduce with `just sqlite-bench --profiles=false`.
+
+[100,000-row results](docs/internal/sqlite-large-benchmark.md) compare eight execution paths with a shorter sampling budget, including SQLike's optional statement cache.
+
+<details>
+<summary>100,000-row chart · 8 execution paths</summary>
+
+[![100,000-row SQLite comparison across ten workloads and eight execution paths. Shorter bars are faster; whiskers show the observed range of three samples.](docs/images/sqlite-large-benchmark.png)](docs/images/sqlite-large-benchmark.png)
+
+[SVG download](docs/images/sqlite-large-benchmark.svg)
+
+Each panel starts at zero and uses its own scale. SUM/COUNT and full-table fetch use milliseconds; other panels use microseconds. Whiskers show observed min–max, not confidence intervals.
+
+</details>
 
 ## Run SQL
 
@@ -160,6 +179,8 @@ db.close();
 `openDatabase()` creates an in-memory database. INTEGER values use `bigint`, REAL uses `number`, and BLOB uses `Uint8Array`. `values()` returns positional arrays; `all()` returns objects keyed by column name. Use `values()` when result columns share a name.
 
 [SQL coverage and value handling (Japanese)](docs/sql.md)
+
+The unreleased source also offers an opt-in cache for repeated SQL: `openDatabase(undefined, { statementCache: { capacity: 32 } })`. Each connection bounds retained statements and SQL text, and re-prepares after schema changes. [Usage and measurements](docs/internal/dynamic-sql-prepare.md).
 
 ## Persist to IndexedDB
 

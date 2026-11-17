@@ -87,6 +87,8 @@ test("audits typed behavior and failed-write state against real SQLite WASM in C
         compile: m.compile,
       };
       const results = [
+        ...m.auditTarget(cases, traces, m, "chromium-js/prepared-sql", false, nodeCompileErrors, true),
+        ...m.auditTarget(cases, traces, wr, "chromium-wasm/prepared-sql", false, nodeCompileErrors, true),
         ...m.auditTarget(
           cases,
           traces,
@@ -140,6 +142,8 @@ test("audits typed behavior and failed-write state against real SQLite WASM in C
   );
   const artifacts = Object.fromEntries(
     [
+      "tests/compatibility/differential-runtime.ts",
+      "src/sql-statement-cache.ts",
       "_build/js/release/build/mizchi/sqlike/sqlike.js",
       "_build/js/release/build/mizchi/sqlike/compiler/compiler.js",
       "_build/js/release/build/mizchi/litestream-example/runtime/runtime.js",
@@ -172,11 +176,11 @@ test("audits typed behavior and failed-write state against real SQLite WASM in C
     "measurements/sqlike-differential-chromium.json",
     JSON.stringify(report, null, 2) + "\n",
   );
-  expect(result.results.length).toBe(cases.length * 4);
+  expect(result.results.length).toBe(cases.length * 6);
   expect(
     result.results.filter((r) => r.status === "matched").length,
   ).toBeGreaterThan(0);
-  expect(new Set(result.results.map((r) => r.target)).size).toBe(4);
+  expect(new Set(result.results.map((r) => r.target)).size).toBe(6);
   console.log(
     JSON.stringify({
       cases: cases.length,

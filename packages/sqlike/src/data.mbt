@@ -124,7 +124,8 @@ fn execute_data_statement(
           Some(plan) => updated_row_from_plan(plan, row, input)
           None => updated_row(store, table, row, setters, [], params)
         }
-        if !run_triggers(
+        if with_triggers &&
+          !run_triggers(
             store,
             table,
             "before",
@@ -172,17 +173,19 @@ fn execute_data_statement(
             },
           )
         }
-        ignore(
-          run_triggers(
-            store,
-            table,
-            "after",
-            "update",
-            columns,
-            Some(row),
-            Some(next),
-          ),
-        )
+        if with_triggers {
+          ignore(
+            run_triggers(
+              store,
+              table,
+              "after",
+              "update",
+              columns,
+              Some(row),
+              Some(next),
+            ),
+          )
+        }
       }
       rows
     }

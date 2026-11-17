@@ -24,7 +24,7 @@ moon-check:
 staged-compat-check:
     pnpm build:core
     pnpm build:moon-wasm
-    pnpm exec tsx --test tests/sqlike-basic-compat.test.ts tests/sqlike-basic-expressions.test.ts tests/sqlike-json-operators.test.ts tests/sqlike-app-functions.test.ts tests/sqlike-like-extrema.test.ts tests/sqlike-null-order.test.ts tests/sqlike-named-bind.test.ts tests/sqlike-index-metadata.test.ts tests/sqlike-derived-table.test.ts tests/sqlike-aggregate-filter.test.ts tests/sqlike-json-aggregate.test.ts tests/sqlike-optional-functions.test.ts tests/drizzle-defined.test.ts tests/sqlike-catalog-profile.test.ts tests/sqlike-json-profile.test.ts tests/sqlike-query-profile.test.ts
+    pnpm exec tsx --test tests/sqlike-basic-compat.test.ts tests/sqlike-basic-expressions.test.ts tests/sqlike-math-rounding.test.ts tests/sqlike-json-operators.test.ts tests/sqlike-app-functions.test.ts tests/sqlike-like-extrema.test.ts tests/sqlike-null-order.test.ts tests/sqlike-named-bind.test.ts tests/sqlike-index-metadata.test.ts tests/sqlike-derived-table.test.ts tests/sqlike-aggregate-filter.test.ts tests/sqlike-json-aggregate.test.ts tests/sqlike-optional-functions.test.ts tests/drizzle-defined.test.ts tests/sqlike-catalog-profile.test.ts tests/sqlike-json-profile.test.ts tests/sqlike-query-profile.test.ts
 
 test-sqlike:
     moon test packages/sqlike/src packages/sqlike/src/compiler --target js
@@ -52,13 +52,40 @@ wasm-bench *args:
 sqlite-bench *args:
     pnpm build:core
     pnpm build:moon-wasm
-    pnpm exec tsx --test tests/profile-summary.test.ts
+    pnpm exec tsx --test tests/profile-summary.test.ts tests/sqlite-bench-policy.test.ts
     pnpm exec tsx scripts/bench-sqlite.ts {{args}}
+
+# Optional 100k rows, all eight paths. Short samples; keep daily/P0 datasets intact.
+sqlite-large-bench *args:
+    pnpm build:core
+    pnpm build:moon-wasm
+    pnpm exec tsx --test tests/sqlite-bench-policy.test.ts
+    pnpm exec tsx scripts/bench-sqlite.ts --prepared --rows=100000 --profiles=false {{args}}
 
 # Separate existing AOT/Statement ABI costs; setup is excluded from timing.
 aot-phase-bench:
     moon bench packages/sqlike/src/aot_bench_wbtest.mbt --target js --release
     moon bench packages/sqlike/src/aot_bench_wbtest.mbt --target wasm-gc --release
+
+# Opt-in SQL prepared execution: isolated phases, plus the unchanged SQL baselines.
+sql-prepare-bench *args:
+    pnpm build:core
+    pnpm build:moon-wasm
+    pnpm exec tsx scripts/bench-sqlite.ts --prepared --profile-engines=dynamic,prepared --profile-queries=point,update {{args}}
+    pnpm exec tsx scripts/bench-sql-prepare-phases.ts
+
+# Experimental JS-native SELECT results, independent from default npm/runtime entries.
+typed-result-bench *args:
+    pnpm build:core
+    pnpm exec tsx --test tests/sqlike-typed-experiment.test.ts
+    pnpm exec tsx scripts/bench-typed-results.ts {{args}}
+
+# Optional --before-dir contains sqlike.js and sqlike.wasm; cases have a time budget.
+bulk-write-bench *args:
+    pnpm build:core
+    pnpm build:moon-wasm
+    pnpm exec tsx --test tests/sqlike-insert-allocation.test.ts
+    pnpm exec tsx scripts/bench-bulk-write.ts {{args}}
 
 # JSON/binary UPDATE: same value, real changes, RETURNING, misses and failures.
 # Optional --before-dir holds runtime.{js,wasm} and defined.{js,wasm} snapshots.
