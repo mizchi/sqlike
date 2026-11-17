@@ -19,7 +19,7 @@
 - integration jobはGo 1.26.2、Litestream 0.5.18、lockfileに対応するPlaywright Chromiumを用意する。LitestreamのLinux x86_64 archiveは固定SHA-256を検証してから展開する。
 - Actionsはcommit SHAへ固定する。Node actionはNode 24、justのcomposite action内の固定依存もNode 24であることを確認した。
 
-workflowは`contents: read`で実行し、各jobは新しいcheckoutからbuildする。PRの更新では同じPRの古いrunを中止する。ログと失敗時のPlaywright traceは、失敗したstepの後にも7日間のartifactとして保存する。
+workflowは`contents: read`で実行し、各jobは新しいcheckoutからbuildする。PRの更新では同じPRの古いrunを中止する。ログ・失敗時のPlaywright trace・差分と全機能監査のJSONは、失敗したstepの後にも7日間のartifactとして保存する。監査JSONは検査前にrunner上の既存記録を除去し、そのrunが生成した記録だけを保存する。
 
 ```sh
 moon update
