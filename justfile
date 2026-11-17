@@ -74,6 +74,19 @@ sql-prepare-bench *args:
     pnpm exec tsx scripts/bench-sqlite.ts --prepared --profile-engines=dynamic,prepared --profile-queries=point,update {{args}}
     pnpm exec tsx scripts/bench-sql-prepare-phases.ts
 
+# Experimental JS-native SELECT results, independent from default npm/runtime entries.
+typed-result-bench *args:
+    pnpm build:core
+    pnpm exec tsx --test tests/sqlike-typed-experiment.test.ts
+    pnpm exec tsx scripts/bench-typed-results.ts {{args}}
+
+# Optional --before-dir contains sqlike.js and sqlike.wasm; cases have a time budget.
+bulk-write-bench *args:
+    pnpm build:core
+    pnpm build:moon-wasm
+    pnpm exec tsx --test tests/sqlike-insert-allocation.test.ts
+    pnpm exec tsx scripts/bench-bulk-write.ts {{args}}
+
 # JSON/binary UPDATE: same value, real changes, RETURNING, misses and failures.
 # Optional --before-dir holds runtime.{js,wasm} and defined.{js,wasm} snapshots.
 aot-update-bench *args:

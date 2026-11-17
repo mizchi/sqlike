@@ -124,7 +124,7 @@ Web標準APIによるBase64 / JSON置換、Turso WASMの外部配信は[試作](
 
 ### 現行の正しさの記録
 
-未リリースの丸め関数・結果writer・通常SQLのprepare再利用を追加した後の回帰はMoonBit **60件×JS / Wasm GC**、Node **391件**、Playwright **59件**と型チェック・本家Litestream復元を通過した。10万行benchmarkの64組、追加の公開型検査、cache / feature選択の11件、独立npm consumerの6件も通過した。件数はこの更新時点の記録で、将来のテスト件数の固定目標ではない。
+未リリースの丸め関数・結果writer・通常SQLのprepare再利用に続き、索引ブロック化・UPDATE格納・rowid採番と実験typed結果を追加した後の回帰はMoonBit **67件×JS / Wasm GC**、Node **397件**、Playwright **59件**と型チェック・本家Litestream復元を通過した。10万行benchmarkの64組、cache / feature選択、独立npm consumerも通過した。実験typed経路でも対応済み566ケースと上流1,000クエリを照合した。件数はこの更新時点の記録で、将来のテスト件数の固定目標ではない。
 
 | ゲート | 現在の観測 | 合格が意味すること |
 | --- | --- | --- |
@@ -213,8 +213,21 @@ notes Programは20,049 B、SHA-256 `a6af7a52769d67773842aae483fcb856b46f628e3118
   - 完了条件: dynamic profileを追加し、parse・prepare・実行・marshalを分ける。接続ごとの上限と破棄、schema変更・restore・接続世代・feature構成の有効性を定義する。可変Statement / Store / bindをグローバル共有しない
   - 実装: opt-inのLRU（最大256件・既定64 KiB SQL text）。DML / SELECTのASTと準備済みmetadataを再利用し、DDL / transaction / PRAGMAは既存経路。保存対象外のschema epochでrollback時のcookie ABAも再準備し、host側の接続差替えではclearする
   - 結果: [通常SQL prepare再利用](dynamic-sql-prepare.md)。5,000行の主キーhitはJS 27.41→1.02µs、Wasm 6.36→0.93µs。通常SQL単体のBrotli増分2,126 B、AOT +65 B。保持heapを別測定し、SQL text budgetがheap上限ではないことを明記。既存uncached経路も残して8経路を比較、566ケース×12経路の差分不一致0
-  - 大規模検証: [10万行・8経路](sqlite-large-benchmark.md)を任意タスクへ追加。3サンプル・20ms目標・返却20万行予算・画像からの初期化で全体22.90秒（準備8.54秒）。通常のP0データセットを維持し、全件読取・集約・UPDATE・索引の実変更もnative照合
-  - 後続: [Issue #1](https://github.com/mizchi/sqlike/issues/1)のJSON境界と索引移動。今回の10万行では両端移動＋範囲読取がcached SQL JS 198.02 / Wasm 38.40µs（SQLite 13.28µs）。一般plan拡張と直接typed ABIは別項目
+  - 大規模検証: [10万行・8経路](sqlite-large-benchmark.md)を任意タスクへ追加。3サンプル・20ms目標・返却20万行予算・画像からの初期化。通常のP0データセットを維持し、全件読取・集約・UPDATE・索引の実変更もnative照合。P07単体の数値は[固定した記録](dynamic-sql-prepare.md)で、現行の最適化後とは分ける
+  - 後続: [Issue #1](https://github.com/mizchi/sqlike/issues/1)の索引移動・JSON境界はP08 / B05で試行。一般plan拡張はP03、typed結果の公開API化・bindはB05に残る
+
+- [x] **P08 / P1 — 大きい二次索引の更新をブロック化**
+  - 実装: 8,192行超を128行leafへ分割し、256行超でsplit、小さいleafは隣接merge。leaf末尾と内部の二段階探索を共有する。rowid順の走査cacheはflatを維持
+  - 結果: [4項目の試行](optimization-trials.md)。10万行の索引両端移動＋範囲読取はcached SQLでJS 198.02→10.96µs / Wasm 38.40→8.37µs。collation・partial index・rollback・制約失敗後のnative差分を追加。prefix位置更新はleaf数に比例する
+
+- [x] **P09 / P1 — UPDATEの実格納と空の評価処理を削減**
+  - 実装: BEFORE trigger後の現在値と格納値がstorage class / REAL bitを含めて同一なら、行ページ・索引・差分の実書込を省く。制約・trigger・FK・RETURNING・counterは維持。CHECK / triggerがない表の準備も省く
+  - 結果: 10万行の同値UPDATEはcached SQLでJS 3.96→2.57µs / Wasm 2.26→1.56µs。実変更・trigger・型変更・rollbackも検査。同値UPDATEの値を全UPDATEの改善率として扱わない
+
+- [x] **P10 / P1 — INSERTの最大rowid全走査を削減**
+  - 実装: 明示rowidでは最大値を探索せず、自動採番では派生PrimaryIndexのlive maximumを再利用。最大値の削除・主キー変更後は再計算し、AUTOINCREMENTのsequenceも考慮する
+  - 結果: Nodeの1万行・明示主キーINSERTはJS 481.00→26.33ms / Wasm 286.11→17.77ms。10万行も3秒予算内で3回完走。主キー変更・負のrowid・trigger・rollbackをnative照合。P08〜P10のBrotli増分は通常SQL +1,060 B / 全公開AOT +706 B
+  - 残課題: warmなrowid順cacheがあるpoint DELETEには改善を確認できなかった。flat配列の削除、制約・trigger / FK探索、atomic backupを分離して次の最適化対象を決める
 
 - [x] **S01 / P1 — 変更列だけの永続差分。大きい未変更TEXT / BLOBまで行after-imageに含まれる**
   - 完了条件: version付き差分と旧形式replayを定義。4 KiB列を持つ1 / 16行更新で提出量を減らし、strict ACK・checkpoint込み時間・reopen・trigger・rollbackを比較。通常の小さい行を退行させない
@@ -267,6 +280,7 @@ notes Programは20,049 B、SHA-256 `a6af7a52769d67773842aae483fcb856b46f628e3118
 - [ ] **B05 — Jsonの再構築を省くJS向けbind / 結果ABI**
   - 完了条件: 型・int64 / REAL / BLOB / TEXT・失敗後状態の契約を固定し、既存ABIとの互換性を差分検証。SQLのJSON関数・旧形式codec・Wasm経路から分離し、配信量と速度を実測する
   - 現状: [mizchi/x/jsonの試験](json-abi.md)。bind parseだけの置換は容量が減る一方、小さい問い合わせで遅くなり、不正なサロゲートの拒否が成功へ変わったため未採用
+  - 試行: [JS native結果](optimization-trials.md)をSELECT専用の実験MoonBit packageへ分離。両経路がnative配列を返す比較で10万行取得75.50→16.60ms、主キー検索1.38→0.63µs。対応済み566ケース・上流1,000クエリとBLOB所有権等を検査し、通常SQL / AOTからbridgeが除去されることを確認。npm公開API・AOT・typed bind・streamingは未完了のためチェックを維持する
 
 - [ ] **V02 / P2 — Firefox / WebKit・モバイルと外部consumer**
   - 完了条件: 対象ブラウザ版・COOP / COEP・Worker / IDB / OPFS・耐障害シナリオを固定しPlaywrightで実行。ORMは版と生成SQL / migrationを固定して追加

@@ -152,20 +152,22 @@ fn check_row(
       fail("NOT NULL constraint failed: " + table.name + "." + col.name)
     }
   }
-  let ctx = evaluation(
-    store,
-    params,
-    row_environment(table, { id: 0L, values, }, table.name),
-  )
   for obj in store.objects {
     if obj.kind == "index" &&
       matches_identifier(obj.table, identifier(table.name)) {
       ignore(index_values(store, table, object_index(obj, table), values))
     }
   }
-  for check in table.checks {
-    if truth(evaluate(check, ctx)) == 0 {
-      fail("CHECK constraint failed: " + table.name)
+  if !table.checks.is_empty() {
+    let ctx = evaluation(
+      store,
+      params,
+      row_environment(table, { id: 0L, values, }, table.name),
+    )
+    for check in table.checks {
+      if truth(evaluate(check, ctx)) == 0 {
+        fail("CHECK constraint failed: " + table.name)
+      }
     }
   }
 }
@@ -478,16 +480,6 @@ fn insert_rows(
         column_affinity(table, table.columns[columns[i]]),
       )
     }
-    let mut maximum = if table.autoincrement {
-      table.sequence
-    } else if table.rows.is_empty() {
-      0L
-    } else {
-      table.rows[0].id
-    }
-    for row in table.rows {
-      maximum = maximum.max(row.id)
-    }
     if ipk >= 0 {
       explicit_id = values[ipk]
     }
@@ -501,6 +493,7 @@ fn insert_rows(
       }
       n
     } else {
+      let maximum = maximum_rowid(store, table)
       guard maximum < 9223372036854775807L else {
         fail("rowid allocation limit")
       }

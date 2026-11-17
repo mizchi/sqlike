@@ -1,6 +1,6 @@
 # 通常SQLのparse・prepare再利用
 
-2026-11-17、未リリースのP07。通常SQLに接続内LRUを追加し、既存のuncached SQL APIを残して別経路として比較する。公開入口は`openDatabase(image?, { statementCache: { capacity, maxSqlBytes? } })`。既定は無効。
+2026-11-17、未リリースのP07。以下の数値はP07単体追加後の固定記録で、その後の[4項目の最適化](optimization-trials.md)とは分ける。通常SQLに接続内LRUを追加し、既存のuncached SQL APIを残して別経路として比較する。公開入口は`openDatabase(image?, { statementCache: { capacity, maxSqlBytes? } })`。既定は無効。
 
 ## 契約と所有権
 
@@ -58,14 +58,14 @@ Program、Cell JSON、論理画像、バイナリschema / statement / 行snapsho
 | Wasm GC | 49.50 KiB | 0.25 KiB | 0 B |
 <!-- dynamic-prepare-speed:end -->
 
-[`dynamic-prepare-current.json`](../../measurements/dynamic-prepare-current.json)は同じChromiumページの8経路を比較する。既存6経路を残し、SQLike JS / Wasmのprepared経路は本番と共通の32件・64 KiB LRUを使う。全経路でsetup・load・compileを除外し、SQLikeは事前encode済みbindと返り値のJSON.parseを計時する。ホストの値encodeとclock設定は含めない。native SQLiteで型付き結果と更新後を確認し、7回・順序入替の中央値を使う。SQLite SDKとはABI費用が同一ではない。
+[`dynamic-prepare-current.json`](../../measurements/optimization-trials-before/dynamic-prepare-current.json)は同じChromiumページの8経路を比較する。既存6経路を残し、SQLike JS / Wasmのprepared経路は本番と共通の32件・64 KiB LRUを使う。全経路でsetup・load・compileを除外し、SQLikeは事前encode済みbindと返り値のJSON.parseを計時する。ホストの値encodeとclock設定は含めない。native SQLiteで型付き結果と更新後を確認し、7回・順序入替の中央値を使う。SQLite SDKとはABI費用が同一ではない。
 
 主表のUPDATEは最初の変更後に同じ値を書き続ける。`indexLifecycle` / `indexMovement`は値を交互に変え、索引値の局所更新 / 両端移動と範囲読取を別に測る。`firstRangeRead`は一回のcold呼出しで、中央値や一般的な初期化費用には使わない。
 
 retention probeは計時・profileの後にGCを実行し、未変更の行を読む32個の異なるSQL / planを保持して再GC、clearして再GCする。SQL textは3,244 B。CDPのheap / backing storageをraw値で保存する。JIT・engineの派生cacheを含み、RSS・厳密なallocation量・peak・byte上限ではない。
 
 <!-- dynamic-prepare-size:start -->
-[追加前](../../measurements/dynamic-prepare-before/wasm-build-size-current.json) / [追加後](../../measurements/wasm-build-size-current.json)の単体engine。JSはOxc minify済み・未圧縮とBrotli。host・loader・アプリを含まない。
+[追加前](../../measurements/dynamic-prepare-before/wasm-build-size-current.json) / [追加後](../../measurements/optimization-trials-before/wasm-build-size-current.json)の単体engine。JSはOxc minify済み・未圧縮とBrotli。host・loader・アプリを含まない。
 
 | engine | JS minified 前→後 | JS Brotli 前→後（増分） | Wasm raw 前→後 |
 | --- | ---: | ---: | ---: |

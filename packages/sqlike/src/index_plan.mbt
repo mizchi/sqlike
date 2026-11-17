@@ -8,7 +8,7 @@ priv struct IndexConstraint {
 
 ///|
 priv struct IndexRange {
-  rows : Array[StoredRow]
+  rows : IndexRows
   start : Int32
   end : Int32
   reverse : Bool
@@ -286,7 +286,13 @@ fn secondary_range(
       continue
     }
     if constraints.any(c => c.value is Null) {
-      return Some({ rows: [], start: 0, end: 0, reverse, residual: false, })
+      return Some({
+        rows: index_pages([]),
+        start: 0,
+        end: 0,
+        reverse,
+        residual: false,
+      })
     }
     let rows = index_rows_for_fields(
       context.store,

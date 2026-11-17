@@ -280,3 +280,16 @@ pub fn database_apply_delta(db : Database, text : String) -> String {
     error => ({ "error": public_error(error) } : Json).stringify()
   }
 }
+
+///|
+fn same_stored_values(before : Array[Value], after : Array[Value]) -> Bool {
+  if before.length() != after.length() {
+    return false
+  }
+  for i in 0..<before.length() {
+    if !same_stored_value(before[i], after[i]) {
+      return false
+    }
+  }
+  true
+}

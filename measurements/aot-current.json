@@ -6,7 +6,7 @@
     "scripts/measurement-manifest.ts": "615c0ab32c0b2e01c57ea1be690a2a08d2e9401b9b0c5d93574520253c16acdb"
   },
   "format": 1,
-  "measuredAt": "2026-11-17T04:50:51.030Z",
+  "measuredAt": "2026-11-17T08:50:31.346Z",
   "environment": {
     "node": "v24.22.2",
     "chromium": "158.0.8127.18",
@@ -26,31 +26,31 @@
       "name": "aot-runtime-js",
       "path": "_build/js/release/build/mizchi/litestream-example/runtime/runtime.js",
       "bytes": {
-        "raw": 2402952,
-        "gzip": 287809,
-        "brotli": 194084
+        "raw": 2415178,
+        "gzip": 289658,
+        "brotli": 194699
       },
-      "sha256": "409b7b498666b2c198a75e2858470fbe2f9c76d59278f75ccdb31166f19f40c5"
+      "sha256": "75de943fa4dc5092550a651362367653d97993cef220c4f03473b0609210921c"
     },
     {
       "name": "dynamic-sql-js",
       "path": "_build/js/release/build/mizchi/sqlike/sqlike.js",
       "bytes": {
-        "raw": 2613531,
-        "gzip": 313815,
-        "brotli": 209365
+        "raw": 2632156,
+        "gzip": 316520,
+        "brotli": 211015
       },
-      "sha256": "5c9969f19eaeb420aaf23d3905e71e1b2a27c6ee44d841df7a1185c181d3a1fd"
+      "sha256": "ff6b8f9364d788e36288f158e68f228222693a359a2bc362800c22a56f4b6e64"
     },
     {
       "name": "aot-runtime-wasm-gc",
       "path": "_build/wasm-gc/release/build/mizchi/litestream-example/runtime/runtime.wasm",
       "bytes": {
-        "raw": 524508,
-        "gzip": 208281,
-        "brotli": 163595
+        "raw": 528259,
+        "gzip": 209817,
+        "brotli": 164700
       },
-      "sha256": "c274fee4dad16e9ebcb5b7d6e0acc100a8a9ce75d8b5c4e97a38f19368ce9fde"
+      "sha256": "dd76ebe97be676c2461bf9f4ab441c638cf95d98ae9ac0ad2ae2490c38b35a21"
     },
     {
       "name": "compiled-program",
@@ -67,20 +67,20 @@
     {
       "engine": "aot",
       "run": 0,
-      "coldReadyMs": 124.79500007629395,
-      "wireBytes": 123902,
-      "decodedBytes": 640799,
+      "coldReadyMs": 129.24000000953674,
+      "wireBytes": 124438,
+      "decodedBytes": 644442,
       "requests": [
         {
           "path": "/lite/",
           "raw": 2521,
-          "wire": 1036,
+          "wire": 1032,
           "status": 200
         },
         {
-          "path": "/assets/lite-XrgGZJHK.js",
+          "path": "/assets/lite-fbfHjPJs.js",
           "raw": 3935,
-          "wire": 1328,
+          "wire": 1331,
           "status": 200
         },
         {
@@ -92,31 +92,31 @@
         {
           "path": "/lite/sw.js",
           "raw": 1070,
-          "wire": 490,
+          "wire": 487,
           "status": 200
         },
         {
           "path": "/lite/",
           "raw": 2521,
-          "wire": 1036,
+          "wire": 1032,
           "status": 200
         },
         {
           "path": "/lite/index.html",
           "raw": 2521,
-          "wire": 1036,
+          "wire": 1032,
           "status": 200
         },
         {
-          "path": "/assets/lite-XrgGZJHK.js",
+          "path": "/assets/lite-fbfHjPJs.js",
           "raw": 3935,
-          "wire": 1328,
+          "wire": 1331,
           "status": 200
         },
         {
-          "path": "/lite/assets/aot-worker-DmRW03d7.js",
-          "raw": 619133,
-          "wire": 115573,
+          "path": "/lite/assets/aot-worker-Dib3swAA.js",
+          "raw": 622776,
+          "wire": 116118,
           "status": 200
         },
         {
@@ -142,12 +142,12 @@
           "bytes": 2521
         },
         {
-          "path": "/assets/lite-XrgGZJHK.js",
+          "path": "/assets/lite-fbfHjPJs.js",
           "bytes": 3935
         },
         {
-          "path": "/lite/assets/aot-worker-DmRW03d7.js",
-          "bytes": 619133
+          "path": "/lite/assets/aot-worker-Dib3swAA.js",
+          "bytes": 622776
         },
         {
           "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
@@ -158,28 +158,28 @@
           "bytes": 3823
         }
       ],
-      "offlineReadyMs": 41.25,
-      "durable100Ms": 24.109999895095825,
-      "read100Ms": 2.4100000858306885,
-      "checkpointMs": 7.799999952316284
+      "offlineReadyMs": 74.52500009536743,
+      "durable100Ms": 25.84500002861023,
+      "read100Ms": 3,
+      "checkpointMs": 8.884999990463257
     },
     {
       "engine": "aot",
       "run": 1,
-      "coldReadyMs": 109.01500010490417,
-      "wireBytes": 123902,
-      "decodedBytes": 640799,
+      "coldReadyMs": 110.6399998664856,
+      "wireBytes": 124438,
+      "decodedBytes": 644442,
       "requests": [
         {
           "path": "/lite/",
           "raw": 2521,
-          "wire": 1036,
+          "wire": 1032,
           "status": 200
         },
         {
-          "path": "/assets/lite-XrgGZJHK.js",
+          "path": "/assets/lite-fbfHjPJs.js",
           "raw": 3935,
-          "wire": 1328,
+          "wire": 1331,
           "status": 200
         },
         {
@@ -191,37 +191,37 @@
         {
           "path": "/lite/sw.js",
           "raw": 1070,
-          "wire": 490,
+          "wire": 487,
           "status": 200
         },
         {
           "path": "/lite/",
           "raw": 2521,
-          "wire": 1036,
+          "wire": 1032,
           "status": 200
         },
         {
           "path": "/lite/index.html",
           "raw": 2521,
-          "wire": 1036,
+          "wire": 1032,
           "status": 200
         },
         {
-          "path": "/lite/assets/aot-worker-DmRW03d7.js",
-          "raw": 619133,
-          "wire": 115573,
+          "path": "/lite/assets/aot-worker-Dib3swAA.js",
+          "raw": 622776,
+          "wire": 116118,
+          "status": 200
+        },
+        {
+          "path": "/assets/lite-fbfHjPJs.js",
+          "raw": 3935,
+          "wire": 1331,
           "status": 200
         },
         {
           "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
           "raw": 670,
           "wire": 325,
-          "status": 200
-        },
-        {
-          "path": "/assets/lite-XrgGZJHK.js",
-          "raw": 3935,
-          "wire": 1328,
           "status": 200
         },
         {
@@ -241,12 +241,12 @@
           "bytes": 2521
         },
         {
-          "path": "/assets/lite-XrgGZJHK.js",
+          "path": "/assets/lite-fbfHjPJs.js",
           "bytes": 3935
         },
         {
-          "path": "/lite/assets/aot-worker-DmRW03d7.js",
-          "bytes": 619133
+          "path": "/lite/assets/aot-worker-Dib3swAA.js",
+          "bytes": 622776
         },
         {
           "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
@@ -257,28 +257,28 @@
           "bytes": 3823
         }
       ],
-      "offlineReadyMs": 40.355000019073486,
-      "durable100Ms": 25.62000012397766,
-      "read100Ms": 2.5299999713897705,
-      "checkpointMs": 7.894999980926514
+      "offlineReadyMs": 65.94000005722046,
+      "durable100Ms": 27.62000012397766,
+      "read100Ms": 2.934999942779541,
+      "checkpointMs": 9.15499997138977
     },
     {
       "engine": "aot",
       "run": 2,
-      "coldReadyMs": 106.24500012397766,
-      "wireBytes": 123902,
-      "decodedBytes": 640799,
+      "coldReadyMs": 110.78999996185303,
+      "wireBytes": 124438,
+      "decodedBytes": 644442,
       "requests": [
         {
           "path": "/lite/",
           "raw": 2521,
-          "wire": 1036,
+          "wire": 1032,
           "status": 200
         },
         {
-          "path": "/assets/lite-XrgGZJHK.js",
+          "path": "/assets/lite-fbfHjPJs.js",
           "raw": 3935,
-          "wire": 1328,
+          "wire": 1331,
           "status": 200
         },
         {
@@ -290,37 +290,37 @@
         {
           "path": "/lite/sw.js",
           "raw": 1070,
-          "wire": 490,
+          "wire": 487,
           "status": 200
         },
         {
           "path": "/lite/",
           "raw": 2521,
-          "wire": 1036,
+          "wire": 1032,
           "status": 200
         },
         {
           "path": "/lite/index.html",
           "raw": 2521,
-          "wire": 1036,
+          "wire": 1032,
           "status": 200
         },
         {
-          "path": "/assets/lite-XrgGZJHK.js",
+          "path": "/assets/lite-fbfHjPJs.js",
           "raw": 3935,
-          "wire": 1328,
-          "status": 200
-        },
-        {
-          "path": "/lite/assets/aot-worker-DmRW03d7.js",
-          "raw": 619133,
-          "wire": 115573,
+          "wire": 1331,
           "status": 200
         },
         {
           "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
           "raw": 670,
           "wire": 325,
+          "status": 200
+        },
+        {
+          "path": "/lite/assets/aot-worker-Dib3swAA.js",
+          "raw": 622776,
+          "wire": 116118,
           "status": 200
         },
         {
@@ -340,12 +340,12 @@
           "bytes": 2521
         },
         {
-          "path": "/assets/lite-XrgGZJHK.js",
+          "path": "/assets/lite-fbfHjPJs.js",
           "bytes": 3935
         },
         {
-          "path": "/lite/assets/aot-worker-DmRW03d7.js",
-          "bytes": 619133
+          "path": "/lite/assets/aot-worker-Dib3swAA.js",
+          "bytes": 622776
         },
         {
           "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
@@ -356,17 +356,17 @@
           "bytes": 3823
         }
       ],
-      "offlineReadyMs": 38.860000133514404,
-      "durable100Ms": 24.505000114440918,
-      "read100Ms": 2.3999998569488525,
-      "checkpointMs": 7.710000038146973
+      "offlineReadyMs": 55.49000000953674,
+      "durable100Ms": 25.350000143051147,
+      "read100Ms": 2.75,
+      "checkpointMs": 8.365000009536743
     },
     {
       "engine": "sqlike",
       "run": 0,
-      "coldReadyMs": 89.58000016212463,
-      "wireBytes": 181534,
-      "decodedBytes": 872140,
+      "coldReadyMs": 94.08999991416931,
+      "wireBytes": 182673,
+      "decodedBytes": 877261,
       "requests": [
         {
           "path": "/",
@@ -375,9 +375,9 @@
           "status": 200
         },
         {
-          "path": "/assets/main-D7q9enJL.js",
+          "path": "/assets/main-iAXkIYCP.js",
           "raw": 12677,
-          "wire": 3167,
+          "wire": 3164,
           "status": 200
         },
         {
@@ -389,7 +389,7 @@
         {
           "path": "/sw.js",
           "raw": 1051,
-          "wire": 485,
+          "wire": 486,
           "status": 200
         },
         {
@@ -405,15 +405,15 @@
           "status": 200
         },
         {
-          "path": "/assets/main-D7q9enJL.js",
+          "path": "/assets/main-iAXkIYCP.js",
           "raw": 12677,
-          "wire": 3167,
+          "wire": 3164,
           "status": 200
         },
         {
-          "path": "/assets/worker-cmzzNGJ7.js",
+          "path": "/assets/worker-DSI3YkTU.js",
           "raw": 186329,
-          "wire": 48451,
+          "wire": 48425,
           "status": 200
         },
         {
@@ -423,9 +423,9 @@
           "status": 200
         },
         {
-          "path": "/assets/moon-database-6lHMcoN5.js",
-          "raw": 646414,
-          "wire": 120889,
+          "path": "/assets/moon-database-BmiMDBV9.js",
+          "raw": 651535,
+          "wire": 122059,
           "status": 200
         },
         {
@@ -451,11 +451,11 @@
           "bytes": 1768
         },
         {
-          "path": "/assets/main-D7q9enJL.js",
+          "path": "/assets/main-iAXkIYCP.js",
           "bytes": 12677
         },
         {
-          "path": "/assets/worker-cmzzNGJ7.js",
+          "path": "/assets/worker-DSI3YkTU.js",
           "bytes": 186329
         },
         {
@@ -463,8 +463,8 @@
           "bytes": 670
         },
         {
-          "path": "/assets/moon-database-6lHMcoN5.js",
-          "bytes": 646414
+          "path": "/assets/moon-database-BmiMDBV9.js",
+          "bytes": 651535
         },
         {
           "path": "/assets/moon-persistence-BNBpX_cN.js",
@@ -475,14 +475,14 @@
           "bytes": 4502
         }
       ],
-      "offlineReadyMs": 38.829999923706055
+      "offlineReadyMs": 54.61500000953674
     },
     {
       "engine": "sqlike",
       "run": 1,
-      "coldReadyMs": 106.25999999046326,
-      "wireBytes": 181534,
-      "decodedBytes": 872140,
+      "coldReadyMs": 94.10499978065491,
+      "wireBytes": 182673,
+      "decodedBytes": 877261,
       "requests": [
         {
           "path": "/",
@@ -491,9 +491,9 @@
           "status": 200
         },
         {
-          "path": "/assets/main-D7q9enJL.js",
+          "path": "/assets/main-iAXkIYCP.js",
           "raw": 12677,
-          "wire": 3167,
+          "wire": 3164,
           "status": 200
         },
         {
@@ -505,7 +505,7 @@
         {
           "path": "/sw.js",
           "raw": 1051,
-          "wire": 485,
+          "wire": 486,
           "status": 200
         },
         {
@@ -521,15 +521,15 @@
           "status": 200
         },
         {
-          "path": "/assets/main-D7q9enJL.js",
+          "path": "/assets/main-iAXkIYCP.js",
           "raw": 12677,
-          "wire": 3167,
+          "wire": 3164,
           "status": 200
         },
         {
-          "path": "/assets/worker-cmzzNGJ7.js",
+          "path": "/assets/worker-DSI3YkTU.js",
           "raw": 186329,
-          "wire": 48451,
+          "wire": 48425,
           "status": 200
         },
         {
@@ -539,9 +539,9 @@
           "status": 200
         },
         {
-          "path": "/assets/moon-database-6lHMcoN5.js",
-          "raw": 646414,
-          "wire": 120889,
+          "path": "/assets/moon-database-BmiMDBV9.js",
+          "raw": 651535,
+          "wire": 122059,
           "status": 200
         },
         {
@@ -567,11 +567,11 @@
           "bytes": 1768
         },
         {
-          "path": "/assets/main-D7q9enJL.js",
+          "path": "/assets/main-iAXkIYCP.js",
           "bytes": 12677
         },
         {
-          "path": "/assets/worker-cmzzNGJ7.js",
+          "path": "/assets/worker-DSI3YkTU.js",
           "bytes": 186329
         },
         {
@@ -579,8 +579,8 @@
           "bytes": 670
         },
         {
-          "path": "/assets/moon-database-6lHMcoN5.js",
-          "bytes": 646414
+          "path": "/assets/moon-database-BmiMDBV9.js",
+          "bytes": 651535
         },
         {
           "path": "/assets/moon-persistence-BNBpX_cN.js",
@@ -591,14 +591,14 @@
           "bytes": 4502
         }
       ],
-      "offlineReadyMs": 38.200000047683716
+      "offlineReadyMs": 56.07000017166138
     },
     {
       "engine": "sqlike",
       "run": 2,
-      "coldReadyMs": 89.45500016212463,
-      "wireBytes": 181534,
-      "decodedBytes": 872140,
+      "coldReadyMs": 93.49500012397766,
+      "wireBytes": 182673,
+      "decodedBytes": 877261,
       "requests": [
         {
           "path": "/",
@@ -607,9 +607,9 @@
           "status": 200
         },
         {
-          "path": "/assets/main-D7q9enJL.js",
+          "path": "/assets/main-iAXkIYCP.js",
           "raw": 12677,
-          "wire": 3167,
+          "wire": 3164,
           "status": 200
         },
         {
@@ -621,7 +621,7 @@
         {
           "path": "/sw.js",
           "raw": 1051,
-          "wire": 485,
+          "wire": 486,
           "status": 200
         },
         {
@@ -637,15 +637,15 @@
           "status": 200
         },
         {
-          "path": "/assets/worker-cmzzNGJ7.js",
-          "raw": 186329,
-          "wire": 48451,
+          "path": "/assets/main-iAXkIYCP.js",
+          "raw": 12677,
+          "wire": 3164,
           "status": 200
         },
         {
-          "path": "/assets/main-D7q9enJL.js",
-          "raw": 12677,
-          "wire": 3167,
+          "path": "/assets/worker-DSI3YkTU.js",
+          "raw": 186329,
+          "wire": 48425,
           "status": 200
         },
         {
@@ -655,9 +655,9 @@
           "status": 200
         },
         {
-          "path": "/assets/moon-database-6lHMcoN5.js",
-          "raw": 646414,
-          "wire": 120889,
+          "path": "/assets/moon-database-BmiMDBV9.js",
+          "raw": 651535,
+          "wire": 122059,
           "status": 200
         },
         {
@@ -683,11 +683,11 @@
           "bytes": 1768
         },
         {
-          "path": "/assets/main-D7q9enJL.js",
+          "path": "/assets/main-iAXkIYCP.js",
           "bytes": 12677
         },
         {
-          "path": "/assets/worker-cmzzNGJ7.js",
+          "path": "/assets/worker-DSI3YkTU.js",
           "bytes": 186329
         },
         {
@@ -695,8 +695,8 @@
           "bytes": 670
         },
         {
-          "path": "/assets/moon-database-6lHMcoN5.js",
-          "bytes": 646414
+          "path": "/assets/moon-database-BmiMDBV9.js",
+          "bytes": 651535
         },
         {
           "path": "/assets/moon-persistence-BNBpX_cN.js",
@@ -707,13 +707,13 @@
           "bytes": 4502
         }
       ],
-      "offlineReadyMs": 39.49000000953674
+      "offlineReadyMs": 57.21999979019165
     },
     {
       "engine": "sqlite",
       "run": 0,
-      "coldReadyMs": 122.85500001907349,
-      "wireBytes": 486489,
+      "coldReadyMs": 125.57000017166138,
+      "wireBytes": 486386,
       "decodedBytes": 1385545,
       "requests": [
         {
@@ -723,9 +723,9 @@
           "status": 200
         },
         {
-          "path": "/assets/main-D7q9enJL.js",
+          "path": "/assets/main-iAXkIYCP.js",
           "raw": 12677,
-          "wire": 3167,
+          "wire": 3164,
           "status": 200
         },
         {
@@ -737,7 +737,7 @@
         {
           "path": "/sw.js",
           "raw": 1051,
-          "wire": 485,
+          "wire": 486,
           "status": 200
         },
         {
@@ -753,9 +753,9 @@
           "status": 200
         },
         {
-          "path": "/assets/main-D7q9enJL.js",
-          "raw": 12677,
-          "wire": 3167,
+          "path": "/assets/worker-DSI3YkTU.js",
+          "raw": 186329,
+          "wire": 48425,
           "status": 200
         },
         {
@@ -765,15 +765,15 @@
           "status": 200
         },
         {
-          "path": "/assets/worker-cmzzNGJ7.js",
-          "raw": 186329,
-          "wire": 48451,
+          "path": "/assets/main-iAXkIYCP.js",
+          "raw": 12677,
+          "wire": 3164,
           "status": 200
         },
         {
-          "path": "/assets/wasm-database-Dri52utD.js",
+          "path": "/assets/wasm-database-LzC62Do5.js",
           "raw": 222159,
-          "wire": 57404,
+          "wire": 57332,
           "status": 200
         },
         {
@@ -805,11 +805,11 @@
           "bytes": 1768
         },
         {
-          "path": "/assets/main-D7q9enJL.js",
+          "path": "/assets/main-iAXkIYCP.js",
           "bytes": 12677
         },
         {
-          "path": "/assets/worker-cmzzNGJ7.js",
+          "path": "/assets/worker-DSI3YkTU.js",
           "bytes": 186329
         },
         {
@@ -817,7 +817,7 @@
           "bytes": 670
         },
         {
-          "path": "/assets/wasm-database-Dri52utD.js",
+          "path": "/assets/wasm-database-LzC62Do5.js",
           "bytes": 222159
         },
         {
@@ -833,13 +833,13 @@
           "bytes": 32462
         }
       ],
-      "offlineReadyMs": 56.47000002861023
+      "offlineReadyMs": 55.25999999046326
     },
     {
       "engine": "sqlite",
       "run": 1,
-      "coldReadyMs": 105.75,
-      "wireBytes": 486489,
+      "coldReadyMs": 127.73000001907349,
+      "wireBytes": 486386,
       "decodedBytes": 1385545,
       "requests": [
         {
@@ -849,9 +849,9 @@
           "status": 200
         },
         {
-          "path": "/assets/main-D7q9enJL.js",
+          "path": "/assets/main-iAXkIYCP.js",
           "raw": 12677,
-          "wire": 3167,
+          "wire": 3164,
           "status": 200
         },
         {
@@ -863,7 +863,7 @@
         {
           "path": "/sw.js",
           "raw": 1051,
-          "wire": 485,
+          "wire": 486,
           "status": 200
         },
         {
@@ -879,15 +879,15 @@
           "status": 200
         },
         {
-          "path": "/assets/main-D7q9enJL.js",
+          "path": "/assets/main-iAXkIYCP.js",
           "raw": 12677,
-          "wire": 3167,
+          "wire": 3164,
           "status": 200
         },
         {
-          "path": "/assets/worker-cmzzNGJ7.js",
+          "path": "/assets/worker-DSI3YkTU.js",
           "raw": 186329,
-          "wire": 48451,
+          "wire": 48425,
           "status": 200
         },
         {
@@ -897,9 +897,9 @@
           "status": 200
         },
         {
-          "path": "/assets/wasm-database-Dri52utD.js",
+          "path": "/assets/wasm-database-LzC62Do5.js",
           "raw": 222159,
-          "wire": 57404,
+          "wire": 57332,
           "status": 200
         },
         {
@@ -931,11 +931,11 @@
           "bytes": 1768
         },
         {
-          "path": "/assets/main-D7q9enJL.js",
+          "path": "/assets/main-iAXkIYCP.js",
           "bytes": 12677
         },
         {
-          "path": "/assets/worker-cmzzNGJ7.js",
+          "path": "/assets/worker-DSI3YkTU.js",
           "bytes": 186329
         },
         {
@@ -943,7 +943,7 @@
           "bytes": 670
         },
         {
-          "path": "/assets/wasm-database-Dri52utD.js",
+          "path": "/assets/wasm-database-LzC62Do5.js",
           "bytes": 222159
         },
         {
@@ -959,13 +959,13 @@
           "bytes": 32462
         }
       ],
-      "offlineReadyMs": 55.49500012397766
+      "offlineReadyMs": 56.65000009536743
     },
     {
       "engine": "sqlite",
       "run": 2,
-      "coldReadyMs": 105.99000000953674,
-      "wireBytes": 486489,
+      "coldReadyMs": 126.95000004768372,
+      "wireBytes": 486386,
       "decodedBytes": 1385545,
       "requests": [
         {
@@ -975,9 +975,9 @@
           "status": 200
         },
         {
-          "path": "/assets/main-D7q9enJL.js",
+          "path": "/assets/main-iAXkIYCP.js",
           "raw": 12677,
-          "wire": 3167,
+          "wire": 3164,
           "status": 200
         },
         {
@@ -989,7 +989,7 @@
         {
           "path": "/sw.js",
           "raw": 1051,
-          "wire": 485,
+          "wire": 486,
           "status": 200
         },
         {
@@ -1005,9 +1005,15 @@
           "status": 200
         },
         {
-          "path": "/assets/main-D7q9enJL.js",
+          "path": "/assets/main-iAXkIYCP.js",
           "raw": 12677,
-          "wire": 3167,
+          "wire": 3164,
+          "status": 200
+        },
+        {
+          "path": "/assets/worker-DSI3YkTU.js",
+          "raw": 186329,
+          "wire": 48425,
           "status": 200
         },
         {
@@ -1017,15 +1023,9 @@
           "status": 200
         },
         {
-          "path": "/assets/worker-cmzzNGJ7.js",
-          "raw": 186329,
-          "wire": 48451,
-          "status": 200
-        },
-        {
-          "path": "/assets/wasm-database-Dri52utD.js",
+          "path": "/assets/wasm-database-LzC62Do5.js",
           "raw": 222159,
-          "wire": 57404,
+          "wire": 57332,
           "status": 200
         },
         {
@@ -1057,11 +1057,11 @@
           "bytes": 1768
         },
         {
-          "path": "/assets/main-D7q9enJL.js",
+          "path": "/assets/main-iAXkIYCP.js",
           "bytes": 12677
         },
         {
-          "path": "/assets/worker-cmzzNGJ7.js",
+          "path": "/assets/worker-DSI3YkTU.js",
           "bytes": 186329
         },
         {
@@ -1069,7 +1069,7 @@
           "bytes": 670
         },
         {
-          "path": "/assets/wasm-database-Dri52utD.js",
+          "path": "/assets/wasm-database-LzC62Do5.js",
           "bytes": 222159
         },
         {
@@ -1085,27 +1085,27 @@
           "bytes": 32462
         }
       ],
-      "offlineReadyMs": 56.86999988555908
+      "offlineReadyMs": 55.454999923706055
     }
   ],
   "summary": [
     {
       "engine": "aot",
-      "wireBytes": 123902,
-      "coldReadyMs": 109.01500010490417,
-      "offlineReadyMs": 40.355000019073486
+      "wireBytes": 124438,
+      "coldReadyMs": 110.78999996185303,
+      "offlineReadyMs": 65.94000005722046
     },
     {
       "engine": "sqlike",
-      "wireBytes": 181534,
-      "coldReadyMs": 89.58000016212463,
-      "offlineReadyMs": 38.829999923706055
+      "wireBytes": 182673,
+      "coldReadyMs": 94.08999991416931,
+      "offlineReadyMs": 56.07000017166138
     },
     {
       "engine": "sqlite",
-      "wireBytes": 486489,
-      "coldReadyMs": 105.99000000953674,
-      "offlineReadyMs": 56.47000002861023
+      "wireBytes": 486386,
+      "coldReadyMs": 126.95000004768372,
+      "offlineReadyMs": 55.454999923706055
     }
   ],
   "cpu": [
@@ -1114,140 +1114,140 @@
       "engine": "aot",
       "run": 0,
       "iterations": 10000,
-      "milliseconds": 34.77479200000016
+      "milliseconds": 47.02599999999984
     },
     {
       "name": "constant",
       "engine": "dynamic",
       "run": 0,
       "iterations": 10000,
-      "milliseconds": 124.84295800000109
+      "milliseconds": 141.597667
     },
     {
       "name": "constant",
       "engine": "dynamic",
       "run": 1,
       "iterations": 10000,
-      "milliseconds": 113.39833299999918
+      "milliseconds": 126.19895799999904
     },
     {
       "name": "constant",
       "engine": "aot",
       "run": 1,
       "iterations": 10000,
-      "milliseconds": 24.66949999999997
+      "milliseconds": 26.28716699999859
     },
     {
       "name": "constant",
       "engine": "aot",
       "run": 2,
       "iterations": 10000,
-      "milliseconds": 23.512541000000056
+      "milliseconds": 27.995833000000857
     },
     {
       "name": "constant",
       "engine": "dynamic",
       "run": 2,
       "iterations": 10000,
-      "milliseconds": 132.64591699999983
+      "milliseconds": 119.62312500000007
     },
     {
       "name": "constant",
       "engine": "dynamic",
       "run": 3,
       "iterations": 10000,
-      "milliseconds": 135.35841599999912
+      "milliseconds": 124.7376660000009
     },
     {
       "name": "constant",
       "engine": "aot",
       "run": 3,
       "iterations": 10000,
-      "milliseconds": 22.570292000000336
+      "milliseconds": 26.095792000000074
     },
     {
       "name": "constant",
       "engine": "aot",
       "run": 4,
       "iterations": 10000,
-      "milliseconds": 21.997667000001456
+      "milliseconds": 25.855083000000377
     },
     {
       "name": "constant",
       "engine": "dynamic",
       "run": 4,
       "iterations": 10000,
-      "milliseconds": 103.09433300000092
+      "milliseconds": 116.73412499999904
     },
     {
       "name": "point",
       "engine": "aot",
       "run": 0,
       "iterations": 2000,
-      "milliseconds": 3.8754169999992882
+      "milliseconds": 4.252957999999126
     },
     {
       "name": "point",
       "engine": "dynamic",
       "run": 0,
       "iterations": 2000,
-      "milliseconds": 32.82266600000003
+      "milliseconds": 36.85895899999923
     },
     {
       "name": "point",
       "engine": "dynamic",
       "run": 1,
       "iterations": 2000,
-      "milliseconds": 32.445166000001336
+      "milliseconds": 39.05333299999984
     },
     {
       "name": "point",
       "engine": "aot",
       "run": 1,
       "iterations": 2000,
-      "milliseconds": 3.5802499999990687
+      "milliseconds": 3.9940419999984442
     },
     {
       "name": "point",
       "engine": "aot",
       "run": 2,
       "iterations": 2000,
-      "milliseconds": 3.1318329999994603
+      "milliseconds": 3.55633300000045
     },
     {
       "name": "point",
       "engine": "dynamic",
       "run": 2,
       "iterations": 2000,
-      "milliseconds": 32.29500000000007
+      "milliseconds": 36.11554199999955
     },
     {
       "name": "point",
       "engine": "dynamic",
       "run": 3,
       "iterations": 2000,
-      "milliseconds": 31.668541000000914
+      "milliseconds": 36.84441599999991
     },
     {
       "name": "point",
       "engine": "aot",
       "run": 3,
       "iterations": 2000,
-      "milliseconds": 3.3180409999986296
+      "milliseconds": 3.6760829999984708
     },
     {
       "name": "point",
       "engine": "aot",
       "run": 4,
       "iterations": 2000,
-      "milliseconds": 3.1311249999998836
+      "milliseconds": 3.34887499999968
     },
     {
       "name": "point",
       "engine": "dynamic",
       "run": 4,
       "iterations": 2000,
-      "milliseconds": 31.762249999999767
+      "milliseconds": 36.3999160000003
     }
   ]
 }

@@ -1,0 +1,31 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "mizchi/sqlike/experimental-typed"
+
+import {
+  "mizchi/sqlike",
+}
+
+// Values
+pub fn exec(@sqlike.Database, String, String) -> String
+
+pub fn open() -> @sqlike.Database
+
+pub fn prepare(@sqlike.Database, String) -> @sqlike.SqlPrepared
+
+pub fn restore(@sqlike.Database, String) -> String
+
+pub fn set_clock(@sqlike.Database, String) -> String
+
+pub fn snapshot(@sqlike.Database) -> String
+
+pub fn values(@sqlike.SqlPrepared, String) -> NativeValue
+
+// Errors
+
+// Types and methods
+#external
+pub type NativeValue
+
+// Type aliases
+
+// Traits

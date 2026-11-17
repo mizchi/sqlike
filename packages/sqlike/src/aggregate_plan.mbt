@@ -61,19 +61,21 @@ fn simple_aggregate(
   }
   let states = names.map(_ => sum_state())
   let rows = ordered_rowid_rows(context.store, table)
-  for row in rows {
-    for i, field in plan {
-      let value = match field {
-        Stored(n) => row.values[n]
-        RowidValue => Value::Integer(row.id)
-        Constant(v) => v
-      }
-      if names[i] == "count" {
-        if !(value is Null) {
-          states[i].count += 1L
+  for block in rows.blocks {
+    for row in block {
+      for i, field in plan {
+        let value = match field {
+          Stored(n) => row.values[n]
+          RowidValue => Value::Integer(row.id)
+          Constant(v) => v
         }
-      } else {
-        states[i].add(value)
+        if names[i] == "count" {
+          if !(value is Null) {
+            states[i].count += 1L
+          }
+        } else {
+          states[i].add(value)
+        }
       }
     }
   }
@@ -95,10 +97,7 @@ fn simple_aggregate(
 }
 
 ///|
-fn ordered_rowid_rows(
-  store : Store,
-  table : Table,
-) -> Array[StoredRow] raise SqlError {
+fn ordered_rowid_rows(store : Store, table : Table) -> IndexRows raise SqlError {
   index_rows_for_fields(
     store,
     table,

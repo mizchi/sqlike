@@ -4,7 +4,7 @@ fn index_rows(
   table : Table,
   name : String,
   column : Int32,
-) -> Array[StoredRow] raise SqlError {
+) -> IndexRows raise SqlError {
   index_rows_for_fields(
     store,
     table,
@@ -17,7 +17,7 @@ fn index_rows(
 ///|
 fn index_bound(
   store : Store,
-  rows : Array[StoredRow],
+  rows : IndexRows,
   column : Int32,
   collation : String,
   value : Value,
@@ -118,9 +118,7 @@ test "declared secondary range plans binary-search bounds and preserve null comp
     is Some(range) else {
     fail("expected index plan")
   }
-  assert_eq(range.rows[range.start:range.end].to_owned().map(r => r.id), [
-    3L, 4L,
-  ])
+  assert_eq(range.rows.slice(range.start, range.end).map(r => r.id), [3L, 4L])
   guard secondary_range(
       select,
       evaluation(db.store, [Null, Integer(30L)], []),
