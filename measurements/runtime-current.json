@@ -1,6 +1,6 @@
 {
   "sourceHashes": {
-    "package.json": "3a4a316aea3bb3b9da64e32ebdf066b83dd381e4d065722971d8360da8a22978",
+    "package.json": "c9ff8e1c01bf5b7c0dd82b69fd0876035b30f67819b829a1c841a8bfb9dfa764",
     "pnpm-lock.yaml": "62a9334c27b9f3876361edc3c9f74a0ed5e11866e28403cc065e1bdba7d70012",
     "scripts/measure-runtime.ts": "36b0a03f11e355368d44b8b96e79d35117982ed5ddb13ac9e9c34c76e2c6b7b8",
     "scripts/measurement-manifest.ts": "615c0ab32c0b2e01c57ea1be690a2a08d2e9401b9b0c5d93574520253c16acdb",
@@ -8,7 +8,7 @@
     "scripts/runtime-metrics.ts": "1c65e8f456c287dc16f19112c5861eb7879e0180be20f7aed6ea2fe3d5075fb4"
   },
   "format": 1,
-  "measuredAt": "2026-11-16T18:42:22.462Z",
+  "measuredAt": "2026-11-17T02:10:45.638Z",
   "environment": {
     "node": "v24.22.2",
     "chromium": "158.0.8127.18",
@@ -413,11 +413,11 @@
     {
       "name": "moonbit-wasm-gc-sql",
       "path": "_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm",
-      "sha256": "4bb4a80198afee665ee8fafffb2b2eea76d53c912d295d3ca8038ee64fedef00",
+      "sha256": "b69d39623e727dcd8ed475762dd283f4f37262a6536b3ae44689b8d62a8ce552",
       "bytes": {
         "raw": 550703,
         "gzip": 220792,
-        "brotli": 172855
+        "brotli": 172876
       },
       "sections": [
         {
@@ -511,11 +511,11 @@
     {
       "name": "moonbit-wasm-gc-core",
       "path": "_build/wasm-gc/release/build/mizchi/litestream/litestream.wasm",
-      "sha256": "564843688acb21e0211bcfa2328da7102b15dd52c0429cbea2707b5da7bd4981",
+      "sha256": "b19c7684037f0bf35860dc64e9229ca056657ee2138475bf6f41816abf0212e8",
       "bytes": {
         "raw": 132760,
         "gzip": 60476,
-        "brotli": 49865
+        "brotli": 49871
       },
       "sections": [
         {
@@ -672,8 +672,8 @@
     {
       "engine": "sqlite",
       "run": 0,
-      "coldReadyMs": 118.12000000476837,
-      "offlineCapableMs": 121.89000010490417,
+      "coldReadyMs": 174.41499996185303,
+      "offlineCapableMs": 179.23500001430511,
       "readyNetwork": {
         "requests": [
           {
@@ -719,6 +719,13 @@
             "status": 200
           },
           {
+            "path": "/assets/main-VJ6Tdyr2.js",
+            "rawBytes": 12677,
+            "wireBytes": 3165,
+            "encoding": "br",
+            "status": 200
+          },
+          {
             "path": "/assets/worker-CIalkUAQ.js",
             "rawBytes": 186329,
             "wireBytes": 48407,
@@ -729,13 +736,6 @@
             "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
             "rawBytes": 670,
             "wireBytes": 325,
-            "encoding": "br",
-            "status": 200
-          },
-          {
-            "path": "/assets/main-VJ6Tdyr2.js",
-            "rawBytes": 12677,
-            "wireBytes": 3165,
             "encoding": "br",
             "status": 200
           },
@@ -816,6 +816,13 @@
             "status": 200
           },
           {
+            "path": "/assets/main-VJ6Tdyr2.js",
+            "rawBytes": 12677,
+            "wireBytes": 3165,
+            "encoding": "br",
+            "status": 200
+          },
+          {
             "path": "/assets/worker-CIalkUAQ.js",
             "rawBytes": 186329,
             "wireBytes": 48407,
@@ -826,13 +833,6 @@
             "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
             "rawBytes": 670,
             "wireBytes": 325,
-            "encoding": "br",
-            "status": 200
-          },
-          {
-            "path": "/assets/main-VJ6Tdyr2.js",
-            "rawBytes": 12677,
-            "wireBytes": 3165,
             "encoding": "br",
             "status": 200
           },
@@ -869,7 +869,7 @@
         "decodedBytes": 1385545
       },
       "cache": {
-        "milliseconds": 121.89000010490417,
+        "milliseconds": 179.23500001430511,
         "bytes": 1369379,
         "files": [
           {
@@ -910,19 +910,19 @@
           }
         ]
       },
-      "warmReadyMs": 60.46000003814697,
+      "warmReadyMs": 78.6599999666214,
       "warmNetwork": {
         "requests": [],
         "wireBytes": 0,
         "decodedBytes": 0
       },
-      "offlineReadyMs": 62
+      "offlineReadyMs": 63.25499999523163
     },
     {
       "engine": "sqlite",
       "run": 1,
-      "coldReadyMs": 113.94999992847443,
-      "offlineCapableMs": 117.62000000476837,
+      "coldReadyMs": 131.01499998569489,
+      "offlineCapableMs": 135.12000000476837,
       "readyNetwork": {
         "requests": [
           {
@@ -968,13 +968,6 @@
             "status": 200
           },
           {
-            "path": "/assets/main-VJ6Tdyr2.js",
-            "rawBytes": 12677,
-            "wireBytes": 3165,
-            "encoding": "br",
-            "status": 200
-          },
-          {
             "path": "/assets/worker-CIalkUAQ.js",
             "rawBytes": 186329,
             "wireBytes": 48407,
@@ -985,6 +978,13 @@
             "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
             "rawBytes": 670,
             "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-VJ6Tdyr2.js",
+            "rawBytes": 12677,
+            "wireBytes": 3165,
             "encoding": "br",
             "status": 200
           },
@@ -1065,13 +1065,6 @@
             "status": 200
           },
           {
-            "path": "/assets/main-VJ6Tdyr2.js",
-            "rawBytes": 12677,
-            "wireBytes": 3165,
-            "encoding": "br",
-            "status": 200
-          },
-          {
             "path": "/assets/worker-CIalkUAQ.js",
             "rawBytes": 186329,
             "wireBytes": 48407,
@@ -1082,6 +1075,13 @@
             "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
             "rawBytes": 670,
             "wireBytes": 325,
+            "encoding": "br",
+            "status": 200
+          },
+          {
+            "path": "/assets/main-VJ6Tdyr2.js",
+            "rawBytes": 12677,
+            "wireBytes": 3165,
             "encoding": "br",
             "status": 200
           },
@@ -1118,7 +1118,7 @@
         "decodedBytes": 1385545
       },
       "cache": {
-        "milliseconds": 117.62000000476837,
+        "milliseconds": 135.12000000476837,
         "bytes": 1369379,
         "files": [
           {
@@ -1159,19 +1159,19 @@
           }
         ]
       },
-      "warmReadyMs": 61.17999994754791,
+      "warmReadyMs": 79.75999999046326,
       "warmNetwork": {
         "requests": [],
         "wireBytes": 0,
         "decodedBytes": 0
       },
-      "offlineReadyMs": 61.63499999046326
+      "offlineReadyMs": 65.06500005722046
     },
     {
       "engine": "sqlite",
       "run": 2,
-      "coldReadyMs": 113.29000008106232,
-      "offlineCapableMs": 116.68500006198883,
+      "coldReadyMs": 113.90499997138977,
+      "offlineCapableMs": 117.4300000667572,
       "readyNetwork": {
         "requests": [
           {
@@ -1217,9 +1217,9 @@
             "status": 200
           },
           {
-            "path": "/assets/main-VJ6Tdyr2.js",
-            "rawBytes": 12677,
-            "wireBytes": 3165,
+            "path": "/assets/worker-CIalkUAQ.js",
+            "rawBytes": 186329,
+            "wireBytes": 48407,
             "encoding": "br",
             "status": 200
           },
@@ -1231,9 +1231,9 @@
             "status": 200
           },
           {
-            "path": "/assets/worker-CIalkUAQ.js",
-            "rawBytes": 186329,
-            "wireBytes": 48407,
+            "path": "/assets/main-VJ6Tdyr2.js",
+            "rawBytes": 12677,
+            "wireBytes": 3165,
             "encoding": "br",
             "status": 200
           },
@@ -1314,9 +1314,9 @@
             "status": 200
           },
           {
-            "path": "/assets/main-VJ6Tdyr2.js",
-            "rawBytes": 12677,
-            "wireBytes": 3165,
+            "path": "/assets/worker-CIalkUAQ.js",
+            "rawBytes": 186329,
+            "wireBytes": 48407,
             "encoding": "br",
             "status": 200
           },
@@ -1328,9 +1328,9 @@
             "status": 200
           },
           {
-            "path": "/assets/worker-CIalkUAQ.js",
-            "rawBytes": 186329,
-            "wireBytes": 48407,
+            "path": "/assets/main-VJ6Tdyr2.js",
+            "rawBytes": 12677,
+            "wireBytes": 3165,
             "encoding": "br",
             "status": 200
           },
@@ -1367,7 +1367,7 @@
         "decodedBytes": 1385545
       },
       "cache": {
-        "milliseconds": 116.68500006198883,
+        "milliseconds": 117.4300000667572,
         "bytes": 1369379,
         "files": [
           {
@@ -1408,19 +1408,19 @@
           }
         ]
       },
-      "warmReadyMs": 62.12000000476837,
+      "warmReadyMs": 76.84500002861023,
       "warmNetwork": {
         "requests": [],
         "wireBytes": 0,
         "decodedBytes": 0
       },
-      "offlineReadyMs": 61.580000042915344
+      "offlineReadyMs": 64.82999992370605
     },
     {
       "engine": "turso",
       "run": 0,
-      "coldReadyMs": 496.2649999856949,
-      "offlineCapableMs": 502.06499993801117,
+      "coldReadyMs": 515.045000076294,
+      "offlineCapableMs": 521.5900000333786,
       "readyNetwork": {
         "requests": [
           {
@@ -1602,7 +1602,7 @@
         "decodedBytes": 16323326
       },
       "cache": {
-        "milliseconds": 502.06499993801117,
+        "milliseconds": 521.5900000333786,
         "bytes": 16307160,
         "files": [
           {
@@ -1639,19 +1639,19 @@
           }
         ]
       },
-      "warmReadyMs": 393.22499990463257,
+      "warmReadyMs": 421.6750000715256,
       "warmNetwork": {
         "requests": [],
         "wireBytes": 0,
         "decodedBytes": 0
       },
-      "offlineReadyMs": 260.4950000047684
+      "offlineReadyMs": 260.70499992370605
     },
     {
       "engine": "turso",
       "run": 1,
-      "coldReadyMs": 479.58000004291534,
-      "offlineCapableMs": 485.625,
+      "coldReadyMs": 497.875,
+      "offlineCapableMs": 504.0199999809265,
       "readyNetwork": {
         "requests": [
           {
@@ -1833,7 +1833,7 @@
         "decodedBytes": 16323326
       },
       "cache": {
-        "milliseconds": 485.625,
+        "milliseconds": 504.0199999809265,
         "bytes": 16307160,
         "files": [
           {
@@ -1870,19 +1870,19 @@
           }
         ]
       },
-      "warmReadyMs": 394.7450000047684,
+      "warmReadyMs": 431.0750000476837,
       "warmNetwork": {
         "requests": [],
         "wireBytes": 0,
         "decodedBytes": 0
       },
-      "offlineReadyMs": 259.9450000524521
+      "offlineReadyMs": 332.6650000810623
     },
     {
       "engine": "turso",
       "run": 2,
-      "coldReadyMs": 479.47499990463257,
-      "offlineCapableMs": 485.25999999046326,
+      "coldReadyMs": 516.039999961853,
+      "offlineCapableMs": 522.5599999427795,
       "readyNetwork": {
         "requests": [
           {
@@ -2064,7 +2064,7 @@
         "decodedBytes": 16323326
       },
       "cache": {
-        "milliseconds": 485.25999999046326,
+        "milliseconds": 522.5599999427795,
         "bytes": 16307160,
         "files": [
           {
@@ -2101,19 +2101,19 @@
           }
         ]
       },
-      "warmReadyMs": 393.835000038147,
+      "warmReadyMs": 431.63499999046326,
       "warmNetwork": {
         "requests": [],
         "wireBytes": 0,
         "decodedBytes": 0
       },
-      "offlineReadyMs": 261.4449999332428
+      "offlineReadyMs": 295.27499997615814
     },
     {
       "engine": "sqlike",
       "run": 0,
-      "coldReadyMs": 97.25499999523163,
-      "offlineCapableMs": 100.4099999666214,
+      "coldReadyMs": 96.8400000333786,
+      "offlineCapableMs": 100.12000000476837,
       "readyNetwork": {
         "requests": [
           {
@@ -2295,7 +2295,7 @@
         "decodedBytes": 855023
       },
       "cache": {
-        "milliseconds": 100.4099999666214,
+        "milliseconds": 100.12000000476837,
         "bytes": 838857,
         "files": [
           {
@@ -2332,19 +2332,19 @@
           }
         ]
       },
-      "warmReadyMs": 43.75,
+      "warmReadyMs": 60.45999991893768,
       "warmNetwork": {
         "requests": [],
         "wireBytes": 0,
         "decodedBytes": 0
       },
-      "offlineReadyMs": 43.75999999046326
+      "offlineReadyMs": 43.22499990463257
     },
     {
       "engine": "sqlike",
       "run": 1,
-      "coldReadyMs": 96.9099999666214,
-      "offlineCapableMs": 99.89499998092651,
+      "coldReadyMs": 97.70000004768372,
+      "offlineCapableMs": 100.77499997615814,
       "readyNetwork": {
         "requests": [
           {
@@ -2526,7 +2526,7 @@
         "decodedBytes": 855023
       },
       "cache": {
-        "milliseconds": 99.89499998092651,
+        "milliseconds": 100.77499997615814,
         "bytes": 838857,
         "files": [
           {
@@ -2563,19 +2563,19 @@
           }
         ]
       },
-      "warmReadyMs": 43.84500002861023,
+      "warmReadyMs": 44.019999980926514,
       "warmNetwork": {
         "requests": [],
         "wireBytes": 0,
         "decodedBytes": 0
       },
-      "offlineReadyMs": 44.605000019073486
+      "offlineReadyMs": 51.330000042915344
     },
     {
       "engine": "sqlike",
       "run": 2,
-      "coldReadyMs": 97.08500003814697,
-      "offlineCapableMs": 100.39499998092651,
+      "coldReadyMs": 99.38499999046326,
+      "offlineCapableMs": 102.69999992847443,
       "readyNetwork": {
         "requests": [
           {
@@ -2628,16 +2628,16 @@
             "status": 200
           },
           {
-            "path": "/assets/worker-CIalkUAQ.js",
-            "rawBytes": 186329,
-            "wireBytes": 48407,
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
             "encoding": "br",
             "status": 200
           },
           {
-            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
-            "rawBytes": 670,
-            "wireBytes": 325,
+            "path": "/assets/worker-CIalkUAQ.js",
+            "rawBytes": 186329,
+            "wireBytes": 48407,
             "encoding": "br",
             "status": 200
           },
@@ -2718,16 +2718,16 @@
             "status": 200
           },
           {
-            "path": "/assets/worker-CIalkUAQ.js",
-            "rawBytes": 186329,
-            "wireBytes": 48407,
+            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
+            "rawBytes": 670,
+            "wireBytes": 325,
             "encoding": "br",
             "status": 200
           },
           {
-            "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
-            "rawBytes": 670,
-            "wireBytes": 325,
+            "path": "/assets/worker-CIalkUAQ.js",
+            "rawBytes": 186329,
+            "wireBytes": 48407,
             "encoding": "br",
             "status": 200
           },
@@ -2757,7 +2757,7 @@
         "decodedBytes": 855023
       },
       "cache": {
-        "milliseconds": 100.39499998092651,
+        "milliseconds": 102.69999992847443,
         "bytes": 838857,
         "files": [
           {
@@ -2794,13 +2794,13 @@
           }
         ]
       },
-      "warmReadyMs": 44.480000019073486,
+      "warmReadyMs": 62.03999996185303,
       "warmNetwork": {
         "requests": [],
         "wireBytes": 0,
         "decodedBytes": 0
       },
-      "offlineReadyMs": 44.550000071525574
+      "offlineReadyMs": 46.32000005245209
     }
   ],
   "memory": [
@@ -2821,9 +2821,9 @@
         },
         {
           "type": "worker",
-          "url": "http://127.0.0.1:57048/assets/worker-CIalkUAQ.js",
+          "url": "http://127.0.0.1:63587/assets/worker-CIalkUAQ.js",
           "heap": {
-            "usedSize": 1735892,
+            "usedSize": 1740128,
             "totalSize": 2097152,
             "embedderHeapUsedSize": 35656,
             "backingStorageSize": 411929
@@ -2838,7 +2838,7 @@
         },
         {
           "type": "worker",
-          "url": "http://127.0.0.1:57048/assets/sqlite3-opfs-async-proxy-DeAec6oc.js?vfs=opfs",
+          "url": "http://127.0.0.1:63587/assets/sqlite3-opfs-async-proxy-DeAec6oc.js?vfs=opfs",
           "heap": {
             "usedSize": 318816,
             "totalSize": 786432,
@@ -2850,7 +2850,7 @@
         },
         {
           "type": "worker",
-          "url": "http://127.0.0.1:57048/assets/sqlite3-opfs-async-proxy-DeAec6oc.js?vfs=opfs-wl",
+          "url": "http://127.0.0.1:63587/assets/sqlite3-opfs-async-proxy-DeAec6oc.js?vfs=opfs-wl",
           "heap": {
             "usedSize": 319144,
             "totalSize": 786432,
@@ -2862,67 +2862,67 @@
         }
       ],
       "linearBytes": 8388608,
-      "jsHeapUsedBytes": 4320660,
+      "jsHeapUsedBytes": 4324896,
       "configuredBridgeBytes": 0,
       "resident": {
-        "bytes": 397131776,
+        "bytes": 397803520,
         "processes": [
           {
-            "pid": 9079,
+            "pid": 66451,
             "type": "browser",
-            "rssBytes": 101957632,
-            "virtualBytes": 497826103296
+            "rssBytes": 102416384,
+            "virtualBytes": 497852284928
           },
           {
-            "pid": 9080,
+            "pid": 66455,
             "type": "GPU",
-            "rssBytes": 65847296,
-            "virtualBytes": 497704484864
+            "rssBytes": 65830912,
+            "virtualBytes": 497704763392
           },
           {
-            "pid": 9081,
+            "pid": 66456,
             "type": "network.mojom.NetworkService",
-            "rssBytes": 46956544,
-            "virtualBytes": 497609539584
+            "rssBytes": 47153152,
+            "virtualBytes": 497609605120
           },
           {
-            "pid": 9094,
+            "pid": 66474,
             "type": "renderer",
-            "rssBytes": 182370304,
-            "virtualBytes": 2003948044288
+            "rssBytes": 182403072,
+            "virtualBytes": 2003947601920
           }
         ]
       },
       "baseline": {
-        "bytes": 254574592,
+        "bytes": 255180800,
         "processes": [
           {
-            "pid": 9079,
+            "pid": 66451,
             "type": "browser",
-            "rssBytes": 82100224,
-            "virtualBytes": 497826103296
+            "rssBytes": 82444288,
+            "virtualBytes": 497852284928
           },
           {
-            "pid": 9080,
+            "pid": 66455,
             "type": "GPU",
-            "rssBytes": 57311232,
-            "virtualBytes": 497696620544
+            "rssBytes": 57458688,
+            "virtualBytes": 497696899072
           },
           {
-            "pid": 9081,
+            "pid": 66456,
             "type": "network.mojom.NetworkService",
-            "rssBytes": 39780352,
-            "virtualBytes": 497609523200
+            "rssBytes": 39845888,
+            "virtualBytes": 497609588736
           },
           {
-            "pid": 9082,
+            "pid": 66461,
             "type": "renderer",
-            "rssBytes": 75382784,
-            "virtualBytes": 1995776884736
+            "rssBytes": 75431936,
+            "virtualBytes": 1995775983616
           }
         ]
       },
-      "rssDeltaBytes": 142557184
+      "rssDeltaBytes": 142622720
     },
     {
       "engine": "turso",
@@ -2941,9 +2941,9 @@
         },
         {
           "type": "worker",
-          "url": "http://127.0.0.1:57048/assets/worker-CIalkUAQ.js",
+          "url": "http://127.0.0.1:63587/assets/worker-CIalkUAQ.js",
           "heap": {
-            "usedSize": 528788,
+            "usedSize": 528776,
             "totalSize": 1310720,
             "embedderHeapUsedSize": 27648,
             "backingStorageSize": 190440
@@ -2953,7 +2953,7 @@
         },
         {
           "type": "worker",
-          "url": "http://127.0.0.1:57048/assets/turso-executor-BlxPGhXM.js",
+          "url": "http://127.0.0.1:63587/assets/turso-executor-BlxPGhXM.js",
           "heap": {
             "usedSize": 1606488,
             "totalSize": 2359296,
@@ -2970,7 +2970,7 @@
         },
         {
           "type": "worker",
-          "url": "blob:http://127.0.0.1:57048/0d639d7f-7ec6-4f3a-b9ab-c141be65f862",
+          "url": "blob:http://127.0.0.1:63587/332778e8-532f-4b7b-866d-6dcfe03b24bd",
           "heap": {
             "usedSize": 852664,
             "totalSize": 1572864,
@@ -2982,67 +2982,67 @@
         }
       ],
       "linearBytes": 277020672,
-      "jsHeapUsedBytes": 4936516,
+      "jsHeapUsedBytes": 4936504,
       "configuredBridgeBytes": 67108872,
       "resident": {
-        "bytes": 569655296,
+        "bytes": 568426496,
         "processes": [
           {
-            "pid": 9141,
+            "pid": 66512,
             "type": "browser",
-            "rssBytes": 133120000,
-            "virtualBytes": 497844502528
+            "rssBytes": 133234688,
+            "virtualBytes": 497843322880
           },
           {
-            "pid": 9142,
+            "pid": 66513,
             "type": "GPU",
-            "rssBytes": 65929216,
-            "virtualBytes": 497703878656
+            "rssBytes": 65814528,
+            "virtualBytes": 497703862272
           },
           {
-            "pid": 9143,
+            "pid": 66514,
             "type": "network.mojom.NetworkService",
-            "rssBytes": 47251456,
-            "virtualBytes": 497601658880
+            "rssBytes": 47235072,
+            "virtualBytes": 497601052672
           },
           {
-            "pid": 9156,
+            "pid": 66527,
             "type": "renderer",
-            "rssBytes": 323354624,
-            "virtualBytes": 2003973128192
+            "rssBytes": 322142208,
+            "virtualBytes": 2003972374528
           }
         ]
       },
       "baseline": {
-        "bytes": 254885888,
+        "bytes": 255049728,
         "processes": [
           {
-            "pid": 9141,
+            "pid": 66512,
             "type": "browser",
-            "rssBytes": 82214912,
-            "virtualBytes": 497844502528
+            "rssBytes": 82362368,
+            "virtualBytes": 497843322880
           },
           {
-            "pid": 9142,
+            "pid": 66513,
             "type": "GPU",
-            "rssBytes": 57507840,
-            "virtualBytes": 497696014336
+            "rssBytes": 57442304,
+            "virtualBytes": 497695997952
           },
           {
-            "pid": 9143,
+            "pid": 66514,
             "type": "network.mojom.NetworkService",
-            "rssBytes": 39763968,
-            "virtualBytes": 497601642496
+            "rssBytes": 39813120,
+            "virtualBytes": 497601036288
           },
           {
-            "pid": 9144,
+            "pid": 66515,
             "type": "renderer",
-            "rssBytes": 75399168,
-            "virtualBytes": 1995776950272
+            "rssBytes": 75431936,
+            "virtualBytes": 1995776163840
           }
         ]
       },
-      "rssDeltaBytes": 314769408
+      "rssDeltaBytes": 313376768
     },
     {
       "engine": "sqlike",
@@ -3061,9 +3061,9 @@
         },
         {
           "type": "worker",
-          "url": "http://127.0.0.1:57048/assets/worker-CIalkUAQ.js",
+          "url": "http://127.0.0.1:63587/assets/worker-CIalkUAQ.js",
           "heap": {
-            "usedSize": 2048740,
+            "usedSize": 2049956,
             "totalSize": 2621440,
             "embedderHeapUsedSize": 29184,
             "backingStorageSize": 819403
@@ -3073,7 +3073,7 @@
         },
         {
           "type": "worker",
-          "url": "http://127.0.0.1:57048/assets/moon-persistence-worker-DLrHYK94.js",
+          "url": "http://127.0.0.1:63587/assets/moon-persistence-worker-DLrHYK94.js",
           "heap": {
             "usedSize": 319788,
             "totalSize": 1310720,
@@ -3085,67 +3085,67 @@
         }
       ],
       "linearBytes": 0,
-      "jsHeapUsedBytes": 4315336,
+      "jsHeapUsedBytes": 4316552,
       "configuredBridgeBytes": 4096,
       "resident": {
-        "bytes": 363446272,
+        "bytes": 363888640,
         "processes": [
           {
-            "pid": 9192,
+            "pid": 66580,
             "type": "browser",
             "rssBytes": 100007936,
-            "virtualBytes": 497826267136
+            "virtualBytes": 497834442752
           },
           {
-            "pid": 9193,
+            "pid": 66582,
             "type": "GPU",
-            "rssBytes": 65978368,
-            "virtualBytes": 497703993344
+            "rssBytes": 65880064,
+            "virtualBytes": 497704894464
           },
           {
-            "pid": 9194,
+            "pid": 66583,
             "type": "network.mojom.NetworkService",
-            "rssBytes": 46858240,
-            "virtualBytes": 497609916416
+            "rssBytes": 46874624,
+            "virtualBytes": 497601822720
           },
           {
-            "pid": 9207,
+            "pid": 66596,
             "type": "renderer",
-            "rssBytes": 150601728,
-            "virtualBytes": 2001923850240
+            "rssBytes": 151126016,
+            "virtualBytes": 2001924079616
           }
         ]
       },
       "baseline": {
-        "bytes": 254672896,
+        "bytes": 254623744,
         "processes": [
           {
-            "pid": 9192,
+            "pid": 66580,
             "type": "browser",
             "rssBytes": 82100224,
-            "virtualBytes": 497826267136
+            "virtualBytes": 497834442752
           },
           {
-            "pid": 9193,
+            "pid": 66582,
             "type": "GPU",
-            "rssBytes": 57442304,
-            "virtualBytes": 497696129024
+            "rssBytes": 57360384,
+            "virtualBytes": 497697030144
           },
           {
-            "pid": 9194,
+            "pid": 66583,
             "type": "network.mojom.NetworkService",
-            "rssBytes": 39747584,
-            "virtualBytes": 497609900032
+            "rssBytes": 39813120,
+            "virtualBytes": 497601806336
           },
           {
-            "pid": 9195,
+            "pid": 66584,
             "type": "renderer",
-            "rssBytes": 75382784,
-            "virtualBytes": 1995775950848
+            "rssBytes": 75350016,
+            "virtualBytes": 1995776049152
           }
         ]
       },
-      "rssDeltaBytes": 108773376
+      "rssDeltaBytes": 109264896
     }
   ]
 }

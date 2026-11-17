@@ -1,11 +1,11 @@
 {
   "format": 1,
   "sourceHashes": {
-    "examples/aot/moon.mod": "6eba4ad86e062f9a03a36d2e6075b7cd7faddda4b04cb6db0ab40cb776d1f415",
+    "examples/aot/moon.mod": "86e6cfb0ba281f0f61093966e433abccf9a1ab8a3bb40265e68a52e65258327a",
     "examples/aot/src/runtime/moon.pkg": "c25199d21d0bdf5eadde9fd2d65b70f6b6e517c839be10a215f39c5706be14be",
     "examples/aot/src/runtime/runtime.mbt": "acfdd0b45cf90dedf28f413a5470fa26668f0eced4af673bac0e89f609e403cf",
-    "package.json": "3a4a316aea3bb3b9da64e32ebdf066b83dd381e4d065722971d8360da8a22978",
-    "packages/litestream/moon.mod": "f44f43bfc0240ff518e5e19c563135c65ae42a6467ccd56e47932ee1840d3c55",
+    "package.json": "c9ff8e1c01bf5b7c0dd82b69fd0876035b30f67819b829a1c841a8bfb9dfa764",
+    "packages/litestream/moon.mod": "68f56730f8a3901562929fd3f792fe95f463bae05140178e41aea718a5d4c81a",
     "packages/litestream/src/example_policy.mbt": "ca5c4c3e0588ae48745e1111ea36391cef1fc3757fde44b0733079913d1fff02",
     "packages/litestream/src/ltx.mbt": "7fc614a5336b431695cfa16dfb30f4de644592f9b09c63eb2f969c980076edd6",
     "packages/litestream/src/ltx_plan.mbt": "ca26cd90cbd66e0e49c6176d18d7b7c035d54910733bd46b2aa3141e737df0b4",
@@ -18,7 +18,7 @@
     "packages/litestream/src/safety.mbt": "f8f50aea1c224457916c080ff6cd324eb96ed86134fb3243affcaaf24f20d958",
     "packages/litestream/src/safety_test.mbt": "6f3f4eeba64ca1fb089c70d6f6a0f1c601197cc1bfd188700c42dba07967f97f",
     "packages/litestream/src/sql.mbt": "af1388fbf3ffa5629d87ccdfff2b452a270dbfd882fb489444bd1ee9a7896680",
-    "packages/sqlike/moon.mod": "a062d0209d223df39159b1cdcd5d18a30e18c4cd18295b581c9686052cb47367",
+    "packages/sqlike/moon.mod": "5ddc7527a088b0dac7ccd0bdd32ba867132bd645d7b26571a1e9aeb0ddf71d21",
     "packages/sqlike/src/advanced_index_wbtest.mbt": "20048343ad71c6abbcefb545eb304b09aad9f733a78ed2b4ddf52f8e72198239",
     "packages/sqlike/src/aggregate_filter.mbt": "6f8d39d97d56918a30fbb57a0130e48623f890ffe58503b9ba6128dfc7411830",
     "packages/sqlike/src/aggregate_plan.mbt": "13e8299d0711b0835fd361dedf2b4fa92cd39201cfea484764641f44f2fb00d8",
@@ -121,7 +121,7 @@
     "scripts/oxc-runtime.ts": "24406b458799bdb150e1a986353c7d965d57964e60067f1a421e1cc010e57fce",
     "src/sqlike-features.ts": "e23ccf5fe013d6d472934bcd8ce4418e727b716b14fde1069d35bd3bdcf2f5a6"
   },
-  "measuredAt": "2026-11-16T18:43:16.674Z",
+  "measuredAt": "2026-11-17T02:11:43.044Z",
   "node": "v24.22.2",
   "method": "Moon release static feature specialization; isolated builds. JS ESM all entry exports retained, Oxc client minification with compact whitespace and annotations preserved; absence checks use unminified source; gzip9/Brotli11. Wasm GC release without wasm-opt. Engine only: excludes host adapter, catalog and persistence. AOT excludes SQL parser. Minimal excludes optional JSON/date/window implementations; ordinary aggregates, CTE and secondary indexes remain in core.",
   "results": [
@@ -137,7 +137,7 @@
       "wasm": {
         "raw": 418175,
         "gzip": 165505,
-        "brotli": 130756
+        "brotli": 130871
       },
       "absent": {
         "triggerImplementation": true,
@@ -163,8 +163,8 @@
       },
       "wasm": {
         "raw": 422015,
-        "gzip": 167121,
-        "brotli": 131700
+        "gzip": 167119,
+        "brotli": 131739
       },
       "absent": {
         "triggerImplementation": true,
@@ -191,7 +191,7 @@
       "wasm": {
         "raw": 419141,
         "gzip": 165822,
-        "brotli": 130922
+        "brotli": 130772
       },
       "absent": {
         "triggerImplementation": true,
@@ -218,7 +218,7 @@
       "wasm": {
         "raw": 435341,
         "gzip": 171977,
-        "brotli": 135539
+        "brotli": 135266
       },
       "absent": {
         "triggerImplementation": true,
@@ -244,8 +244,8 @@
       },
       "wasm": {
         "raw": 421801,
-        "gzip": 166904,
-        "brotli": 131720
+        "gzip": 166905,
+        "brotli": 131642
       },
       "absent": {
         "triggerImplementation": false,
@@ -271,8 +271,8 @@
       },
       "wasm": {
         "raw": 423985,
-        "gzip": 167904,
-        "brotli": 132455
+        "gzip": 167905,
+        "brotli": 132407
       },
       "absent": {
         "triggerImplementation": true,
@@ -299,7 +299,7 @@
       "wasm": {
         "raw": 438941,
         "gzip": 173623,
-        "brotli": 136620
+        "brotli": 136496
       },
       "absent": {
         "triggerImplementation": true,
@@ -326,7 +326,7 @@
       "wasm": {
         "raw": 424961,
         "gzip": 168960,
-        "brotli": 132932
+        "brotli": 133192
       },
       "absent": {
         "triggerImplementation": true,
@@ -352,8 +352,8 @@
       },
       "wasm": {
         "raw": 431112,
-        "gzip": 171109,
-        "brotli": 134994
+        "gzip": 171110,
+        "brotli": 134866
       },
       "absent": {
         "triggerImplementation": true,
@@ -379,8 +379,8 @@
       },
       "wasm": {
         "raw": 423152,
-        "gzip": 167438,
-        "brotli": 132228
+        "gzip": 167437,
+        "brotli": 132318
       },
       "absent": {
         "triggerImplementation": true,
@@ -406,8 +406,8 @@
       },
       "wasm": {
         "raw": 419317,
-        "gzip": 165750,
-        "brotli": 130907
+        "gzip": 165751,
+        "brotli": 130722
       },
       "absent": {
         "triggerImplementation": true,
@@ -442,8 +442,8 @@
       },
       "wasm": {
         "raw": 485319,
-        "gzip": 193002,
-        "brotli": 151740
+        "gzip": 193001,
+        "brotli": 151462
       },
       "absent": {
         "triggerImplementation": false,
@@ -481,7 +481,7 @@
       "wasm": {
         "raw": 523192,
         "gzip": 207545,
-        "brotli": 163372
+        "brotli": 163119
       },
       "absent": {
         "triggerImplementation": false,
@@ -505,8 +505,8 @@
       },
       "wasm": {
         "raw": 449731,
-        "gzip": 179321,
-        "brotli": 142006
+        "gzip": 179322,
+        "brotli": 141936
       },
       "absent": {
         "triggerImplementation": true,
@@ -532,8 +532,8 @@
       },
       "wasm": {
         "raw": 454001,
-        "gzip": 181153,
-        "brotli": 142854
+        "gzip": 181154,
+        "brotli": 142980
       },
       "absent": {
         "triggerImplementation": true,
@@ -560,7 +560,7 @@
       "wasm": {
         "raw": 450270,
         "gzip": 179634,
-        "brotli": 142251
+        "brotli": 142111
       },
       "absent": {
         "triggerImplementation": true,
@@ -586,8 +586,8 @@
       },
       "wasm": {
         "raw": 467083,
-        "gzip": 186252,
-        "brotli": 146395
+        "gzip": 186251,
+        "brotli": 146435
       },
       "absent": {
         "triggerImplementation": true,
@@ -613,8 +613,8 @@
       },
       "wasm": {
         "raw": 456013,
-        "gzip": 182187,
-        "brotli": 143671
+        "gzip": 182188,
+        "brotli": 143577
       },
       "absent": {
         "triggerImplementation": false,
@@ -641,7 +641,7 @@
       "wasm": {
         "raw": 455239,
         "gzip": 181867,
-        "brotli": 143579
+        "brotli": 143355
       },
       "absent": {
         "triggerImplementation": true,
@@ -668,7 +668,7 @@
       "wasm": {
         "raw": 470348,
         "gzip": 188202,
-        "brotli": 147586
+        "brotli": 147849
       },
       "absent": {
         "triggerImplementation": true,
@@ -694,8 +694,8 @@
       },
       "wasm": {
         "raw": 455887,
-        "gzip": 182875,
-        "brotli": 144101
+        "gzip": 182873,
+        "brotli": 144056
       },
       "absent": {
         "triggerImplementation": true,
@@ -722,7 +722,7 @@
       "wasm": {
         "raw": 462481,
         "gzip": 185503,
-        "brotli": 145862
+        "brotli": 145648
       },
       "absent": {
         "triggerImplementation": true,
@@ -748,8 +748,8 @@
       },
       "wasm": {
         "raw": 454246,
-        "gzip": 181365,
-        "brotli": 143232
+        "gzip": 181366,
+        "brotli": 143320
       },
       "absent": {
         "triggerImplementation": true,
@@ -776,7 +776,7 @@
       "wasm": {
         "raw": 449805,
         "gzip": 179437,
-        "brotli": 142055
+        "brotli": 142057
       },
       "absent": {
         "triggerImplementation": true,
@@ -812,7 +812,7 @@
       "wasm": {
         "raw": 519531,
         "gzip": 208381,
-        "brotli": 163666
+        "brotli": 163627
       },
       "absent": {
         "triggerImplementation": false,
@@ -848,8 +848,8 @@
       },
       "wasm": {
         "raw": 524303,
-        "gzip": 210127,
-        "brotli": 164818
+        "gzip": 210126,
+        "brotli": 164868
       },
       "absent": {
         "triggerImplementation": false,

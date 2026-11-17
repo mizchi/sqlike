@@ -3,7 +3,7 @@
 DBエンジンに依存しないオフライン同期とLTXの実装。MoonBitのJSコアとTypeScriptのhostを同梱する。SQLike・SQLite・Tursoの本体は依存に含めない。ESM、Node.js 24以上と現行ブラウザ向け。
 
 ```sh
-pnpm add @mizchi/litestream@0.1.1
+pnpm add @mizchi/litestream@0.1.2
 ```
 
 ```js

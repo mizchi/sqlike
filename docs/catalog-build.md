@@ -113,18 +113,18 @@ const requirements = analyzeCatalogRequirements(source);
 <!-- catalog-size:start -->
 | Catalog / mode | JS minified 前→後 | JS Brotli 前→後 | Wasm Brotli 前→後 |
 | --- | ---: | ---: | ---: |
-| readonly / aot | 472.36→401.45 KiB | 88.40→74.99 KiB | 132.36→111.74 KiB |
-| readonly / defined | 441.92→372.20 KiB | 85.59→72.63 KiB | 125.97→105.97 KiB |
-| scalar-read / aot | 472.36→404.22 KiB | 88.40→75.61 KiB | 132.36→112.63 KiB |
-| scalar-read / defined | 441.92→374.97 KiB | 85.59→73.13 KiB | 125.97→106.98 KiB |
-| json-construct / aot | 495.93→407.73 KiB | 92.31→76.00 KiB | 138.20→113.54 KiB |
-| json-construct / defined | 465.49→378.43 KiB | 89.60→73.31 KiB | 132.26→107.49 KiB |
-| json-nested / aot | 495.93→412.46 KiB | 92.31→76.71 KiB | 138.20→114.73 KiB |
-| json-nested / defined | 465.49→383.09 KiB | 89.60→74.18 KiB | 132.26→108.58 KiB |
-| json-cte / aot | 495.93→420.91 KiB | 92.31→78.24 KiB | 138.20→117.02 KiB |
-| json-cte / defined | 465.49→391.53 KiB | 89.60→75.68 KiB | 132.26→111.28 KiB |
-| notes / aot | 472.36→432.86 KiB | 88.40→80.80 KiB | 132.36→120.39 KiB |
-| notes / defined | 441.92→403.34 KiB | 85.59→78.22 KiB | 125.97→114.53 KiB |
+| readonly / aot | 472.36→401.45 KiB | 88.40→74.99 KiB | 132.10→111.92 KiB |
+| readonly / defined | 441.92→372.20 KiB | 85.59→72.63 KiB | 126.26→106.06 KiB |
+| scalar-read / aot | 472.36→404.22 KiB | 88.40→75.61 KiB | 132.10→112.66 KiB |
+| scalar-read / defined | 441.92→374.97 KiB | 85.59→73.13 KiB | 126.26→106.98 KiB |
+| json-construct / aot | 495.93→407.73 KiB | 92.31→76.00 KiB | 137.94→113.34 KiB |
+| json-construct / defined | 465.49→378.43 KiB | 89.60→73.31 KiB | 132.18→107.47 KiB |
+| json-nested / aot | 495.93→412.46 KiB | 92.31→76.71 KiB | 137.94→114.52 KiB |
+| json-nested / defined | 465.49→383.09 KiB | 89.60→74.18 KiB | 132.18→108.74 KiB |
+| json-cte / aot | 495.93→420.91 KiB | 92.31→78.24 KiB | 137.94→116.84 KiB |
+| json-cte / defined | 465.49→391.53 KiB | 89.60→75.68 KiB | 132.18→111.34 KiB |
+| notes / aot | 472.36→432.86 KiB | 88.40→80.80 KiB | 132.10→120.36 KiB |
+| notes / defined | 441.92→403.34 KiB | 85.59→78.22 KiB | 126.26→114.55 KiB |
 <!-- catalog-size:end -->
 
 比較はランタイム単体です。同じ意味上のfeature・主キー索引・公開exportsを使い、通常プロファイルとcatalog指定を比べます。Oxc minify後のJS、release Wasm、ファイルごとのBrotli quality 11を集計します。host・IndexedDB wrapper・定義データ・compilerを含まないため、READMEのアプリ配信量とは範囲が異なります。

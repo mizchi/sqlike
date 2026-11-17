@@ -1,8 +1,8 @@
 # 現在の対応範囲・最適化と改善対象
 
-更新日: 2026-11-17。**0.1.1** の実装・検証を整理した台帳。今後の着手順と完了条件はこのページで管理し、各機能の仕様・実装経緯・測定の全量はリンク先に残す。
+更新日: 2026-11-17。**0.1.2** の実装・検証を整理した台帳。今後の着手順と完了条件はこのページで管理し、各機能の仕様・実装経緯・測定の全量はリンク先に残す。
 
-0.1.1以降の改善として、[AOT UPDATEのメタデータ再利用](aot-update-metadata.md)を追加した。固定schema由来の行layout・代入先の列番号とaffinityをProgramで共有し、値・接続状態は実行ごとに評価する。[次期最適化Issue](https://github.com/mizchi/sqlike/issues/1)の通常SQL・JSON境界・索引移動は引き続き改善候補。
+0.1.2の改善として、[AOT UPDATEのメタデータ再利用](aot-update-metadata.md)を追加した。固定schema由来の行layout・代入先の列番号とaffinityをProgramで共有し、値・接続状態は実行ごとに評価する。[次期最適化Issue](https://github.com/mizchi/sqlike/issues/1)の通常SQL・JSON境界・索引移動は引き続き改善候補。
 
 続いて[準備済み実行計画](prepared-execution-plan.md)を追加。UPDATEの基本式・RETURNINGと、単純なSELECTの主キーアクセスを解析用ASTから分離し、列slot・比較規則・アクセス方式を準備する。一般式や範囲索引等への拡張は同ページで管理する。
 

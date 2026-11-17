@@ -3,7 +3,7 @@
 DBエンジンに依存しないSQLite同期・LTXのMoonBitモジュールです。JS / Wasm GCに対応し、SQLike・SQLite・Tursoの本体を依存に含めません。
 
 ```sh
-moon add mizchi/litestream@0.1.1
+moon add mizchi/litestream@0.1.2
 ```
 
 `moon.pkg`から`"mizchi/litestream"`をimportし、`@litestream`のAPIを使います。

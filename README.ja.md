@@ -25,13 +25,13 @@ pnpm add @mizchi/sqlike
 pnpm add @mizchi/litestream
 ```
 
-[GitHub Releases](https://github.com/mizchi/sqlike/releases/tag/v0.1.1)にも配布用アーカイブを用意しています。
+[GitHub Releases](https://github.com/mizchi/sqlike/releases/tag/v0.1.2)にも配布用アーカイブを用意しています。
 
 ## バンドルサイズ
 
 ブラウザ向けの公開entryをOxcでminifyした配布物の合計です。JSローダー・分割chunk・生成されるWorker・Wasmを含み、Brotliは各ファイルをquality 11で圧縮して合算しています。1 KiB = 1,024 bytes。Wasmはrelease出力を使用します。
 
-SQLikeは0.1.1のソースで計測しています。[段階的な互換機能の導入](docs/internal/staged-sqlite-compatibility.md)に追加内容とサイズ差を記録します。
+SQLikeは0.1.2のソースで計測しています。[段階的な互換機能の導入](docs/internal/staged-sqlite-compatibility.md)に追加内容とサイズ差を記録します。
 
 [![10構成のバンドルサイズ。青はBrotli、灰色はminify後の未圧縮サイズ。小さいほど軽量。](docs/images/bundle-size.svg)](docs/images/bundle-size.png)
 
@@ -43,14 +43,14 @@ SQLikeは0.1.1のソースで計測しています。[段階的な互換機能�
 <!-- bundle-size:start -->
 | ビルド | minified・未圧縮 | Brotli |
 | --- | ---: | ---: |
-| SQLike 0.1.1 (source) / 通常SQL / JS | 612.53 KiB | 115.29 KiB |
-| SQLike 0.1.1 (source) / 通常SQL / Wasm GC | 541.05 KiB | 169.95 KiB |
-| SQLike 0.1.1 (source) / 事前定義・全実行機能 / JS | 515.18 KiB | 101.73 KiB |
-| SQLike 0.1.1 (source) / 事前定義・全実行機能 / Wasm GC | 456.48 KiB | 146.30 KiB |
-| SQLike 0.1.1 (source) / 事前定義・JSON・日時・windowなし / JS | 475.34 KiB | 93.68 KiB |
-| SQLike 0.1.1 (source) / 事前定義・JSON・日時・windowなし / Wasm GC | 426.83 KiB | 135.90 KiB |
-| SQLike 0.1.1 (source) / 事前定義・主キー索引のみ / JS | 453.89 KiB | 89.87 KiB |
-| SQLike 0.1.1 (source) / 事前定義・主キー索引のみ / Wasm GC | 407.90 KiB | 130.26 KiB |
+| SQLike 0.1.2 (source) / 通常SQL / JS | 612.53 KiB | 115.29 KiB |
+| SQLike 0.1.2 (source) / 通常SQL / Wasm GC | 541.05 KiB | 169.97 KiB |
+| SQLike 0.1.2 (source) / 事前定義・全実行機能 / JS | 515.18 KiB | 101.73 KiB |
+| SQLike 0.1.2 (source) / 事前定義・全実行機能 / Wasm GC | 456.48 KiB | 146.43 KiB |
+| SQLike 0.1.2 (source) / 事前定義・JSON・日時・windowなし / JS | 475.34 KiB | 93.68 KiB |
+| SQLike 0.1.2 (source) / 事前定義・JSON・日時・windowなし / Wasm GC | 426.83 KiB | 135.71 KiB |
+| SQLike 0.1.2 (source) / 事前定義・主キー索引のみ / JS | 453.89 KiB | 89.87 KiB |
+| SQLike 0.1.2 (source) / 事前定義・主キー索引のみ / Wasm GC | 407.90 KiB | 130.55 KiB |
 | sqlite-wasm 3.54.1-build1 | 1313.74 KiB | 462.33 KiB |
 | Turso 0.8.3 | 11709.66 KiB | 2675.96 KiB |
 <!-- bundle-size:end -->
@@ -81,18 +81,18 @@ schemaとクエリが固定されている場合、AOTと事前定義版ではca
 <!-- catalog-runtime-size:start -->
 | Catalog / モード | minified JS | JS Brotli | release Wasm | Wasm Brotli |
 | --- | ---: | ---: | ---: | ---: |
-| 読取専用 / AOT | 401.45 KiB | 74.99 KiB | 360.11 KiB | 111.74 KiB |
-| 読取専用 / defined | 372.20 KiB | 72.63 KiB | 331.75 KiB | 105.97 KiB |
-| GLOB + char / AOT | 404.22 KiB | 75.61 KiB | 363.36 KiB | 112.63 KiB |
+| 読取専用 / AOT | 401.45 KiB | 74.99 KiB | 360.11 KiB | 111.92 KiB |
+| 読取専用 / defined | 372.20 KiB | 72.63 KiB | 331.75 KiB | 106.06 KiB |
+| GLOB + char / AOT | 404.22 KiB | 75.61 KiB | 363.36 KiB | 112.66 KiB |
 | GLOB + char / defined | 374.97 KiB | 73.13 KiB | 334.63 KiB | 106.98 KiB |
-| JSON生成 / AOT | 407.73 KiB | 76.00 KiB | 365.45 KiB | 113.54 KiB |
-| JSON生成 / defined | 378.43 KiB | 73.31 KiB | 336.79 KiB | 107.49 KiB |
-| 入れ子JSON / AOT | 412.46 KiB | 76.71 KiB | 369.27 KiB | 114.73 KiB |
-| 入れ子JSON / defined | 383.09 KiB | 74.18 KiB | 340.88 KiB | 108.58 KiB |
-| 再帰CTE＋JSON集約 / AOT | 420.91 KiB | 78.24 KiB | 378.90 KiB | 117.02 KiB |
-| 再帰CTE＋JSON集約 / defined | 391.53 KiB | 75.68 KiB | 350.39 KiB | 111.28 KiB |
-| Notes CRUD / AOT | 432.86 KiB | 80.80 KiB | 387.15 KiB | 120.39 KiB |
-| Notes CRUD / defined | 403.34 KiB | 78.22 KiB | 357.83 KiB | 114.53 KiB |
+| JSON生成 / AOT | 407.73 KiB | 76.00 KiB | 365.45 KiB | 113.34 KiB |
+| JSON生成 / defined | 378.43 KiB | 73.31 KiB | 336.79 KiB | 107.47 KiB |
+| 入れ子JSON / AOT | 412.46 KiB | 76.71 KiB | 369.27 KiB | 114.52 KiB |
+| 入れ子JSON / defined | 383.09 KiB | 74.18 KiB | 340.88 KiB | 108.74 KiB |
+| 再帰CTE＋JSON集約 / AOT | 420.91 KiB | 78.24 KiB | 378.90 KiB | 116.84 KiB |
+| 再帰CTE＋JSON集約 / defined | 391.53 KiB | 75.68 KiB | 350.39 KiB | 111.34 KiB |
+| Notes CRUD / AOT | 432.86 KiB | 80.80 KiB | 387.15 KiB | 120.36 KiB |
+| Notes CRUD / defined | 403.34 KiB | 78.22 KiB | 357.83 KiB | 114.55 KiB |
 <!-- catalog-runtime-size:end -->
 
 </details>
@@ -115,18 +115,18 @@ catalogは主キー検索、GLOB / char、JSON生成、入れ子JSON、再帰CTE
 <!-- sqlite-benchmark:start -->
 | 処理 | SQLike JS・通常SQL | SQLike Wasm GC・通常SQL | SQLite WASM・通常SQL | SQLite WASM・prepared |
 | --- | ---: | ---: | ---: | ---: |
-| 主キーで1行検索 | 28.06 | 6.37 | 3.66 | 1.42 |
-| 存在しない主キーの検索 | 26.07 | 5.63 | 2.52 | 0.46 |
-| 二次索引の範囲検索・10行 | 49.95 | 13.65 | 14.36 | 10.46 |
-| ORDER BY id LIMIT 10 | 46.52 | 10.98 | 12.37 | 9.31 |
-| sum(n), count(*) | 94.29 | 50.45 | 106.57 | 103.05 |
-| 全5,000行取得 | 4,754.55 | 2,694.74 | 4,563.64 | 4,572.73 |
-| 索引列の更新＋範囲10行取得 | 69.04 | 18.78 | 18.96 | 11.91 |
+| 主キーで1行検索 | 29.47 | 6.78 | 3.75 | 1.44 |
+| 存在しない主キーの検索 | 27.19 | 5.74 | 2.59 | 0.47 |
+| 二次索引の範囲検索・10行 | 49.95 | 13.73 | 14.68 | 10.71 |
+| ORDER BY id LIMIT 10 | 45.86 | 11.00 | 12.20 | 9.21 |
+| sum(n), count(*) | 94.22 | 50.87 | 109.63 | 104.93 |
+| 全5,000行取得 | 4,663.64 | 2,705.26 | 4,608.33 | 4,581.82 |
+| 索引列の更新＋範囲10行取得 | 73.53 | 19.16 | 19.07 | 12.12 |
 <!-- sqlite-benchmark:end -->
 
 </details>
 
-2026-11-16、Apple M5 / macOS arm64 / Chromium 158.0.8127.18で計測。SQLike 0.1.1のソースのMoonBit release出力（JSはminify前）と、SQLite WASM 3.54.1を同じページ内のインメモリDBで実行しています。
+2026-11-16、Apple M5 / macOS arm64 / Chromium 158.0.8127.18で計測。SQLike 0.1.2のソースのMoonBit release出力（JSはminify前）と、SQLite WASM 3.54.1を同じページ内のインメモリDBで実行しています。
 
 主キー・二次索引はウォーム状態です。更新の行は索引列の値を交互に変更し、その後の範囲検索までを含みます。結果の型変換と復号を含むエンジンAPIの比較で、host wrapper、起動・Wasmコンパイル、IndexedDB、通信は含みません。計測前後にnative SQLite由来の期待値と更新結果を照合しています。
 
@@ -164,6 +164,8 @@ db.close();
 ## IndexedDBへ保存する
 
 ブラウザで使うschemaと問い合わせが決まっている場合は、ビルド時にDDLとnamed statementをコンパイルできます。実行側はバイナリ定義を読み込み、SQLパーサを配信せずに動きます。
+
+0.1.2では、固定schemaのUPDATEと単純な主キーSELECTで準備済み実行計画を再利用します。bind値はクエリ構造と分離し、既存catalog・保存データの形式を維持します。
 
 0.1.1では、[catalogから必要な機能を自動推定](docs/catalog-build.md)し、未使用の関数群・文・JOIN・CTE・複合SELECTの実装を除去できます。JSONの解析・生成・編集・patch・集約も別々に選択します。
 
@@ -222,8 +224,8 @@ Drizzleは任意のentryです。通常のSQLや固定schemaの実行だけな�
 Mooncakesの2モジュールを単独で使えます。
 
 ```sh
-moon add mizchi/sqlike@0.1.1
-moon add mizchi/litestream@0.1.1
+moon add mizchi/sqlike@0.1.2
+moon add mizchi/litestream@0.1.2
 ```
 
 [SQLikeのAPI](packages/sqlike/README.md) / [LitestreamのAPI](packages/litestream/README.md)

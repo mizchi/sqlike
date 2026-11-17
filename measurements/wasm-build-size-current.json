@@ -1,13 +1,13 @@
 {
   "format": 1,
   "sourceHashes": {
-    "package.json": "3a4a316aea3bb3b9da64e32ebdf066b83dd381e4d065722971d8360da8a22978",
+    "package.json": "c9ff8e1c01bf5b7c0dd82b69fd0876035b30f67819b829a1c841a8bfb9dfa764",
     "pnpm-lock.yaml": "62a9334c27b9f3876361edc3c9f74a0ed5e11866e28403cc065e1bdba7d70012",
     "scripts/measure-build-size.ts": "cc808a9a8bba3f2440e80d38fd62fc67517b2277d8353636cfb5f3587965792c",
     "scripts/measurement-manifest.ts": "615c0ab32c0b2e01c57ea1be690a2a08d2e9401b9b0c5d93574520253c16acdb",
     "scripts/oxc-runtime.ts": "24406b458799bdb150e1a986353c7d965d57964e60067f1a421e1cc010e57fce"
   },
-  "measuredAt": "2026-11-16T18:41:24.800Z",
+  "measuredAt": "2026-11-17T02:09:44.018Z",
   "node": "v24.22.2",
   "method": "Moon release JS / Wasm GC with exactly matching full export names. JS minified via Oxc client build, configFile=false, target=esnext, annotations and all entry exports retained, whitespace compacted. Wasm release output without additional wasm-opt. gzip level 9 / Brotli quality 11; round-trip verified. Standalone engine artifacts only; excludes HTML, loader/adapters, workers, application catalog and storage. Not an application transfer measurement.",
   "results": [
@@ -55,11 +55,11 @@
       },
       "wasm": {
         "path": "_build/wasm-gc/release/build/mizchi/litestream-example/runtime/runtime.wasm",
-        "sha256": "3530b590a90a473f9db6ed6fc40b9f55d9cece4e0e1e27fca67e670dfdf73ceb",
+        "sha256": "905be5dfbb0bf6d68159fdf1535f195a1ea896452c224020a6da6ff6d5e0ca88",
         "bytes": {
           "raw": 523192,
           "gzip": 207545,
-          "brotli": 163372
+          "brotli": 163119
         },
         "nameSections": 1
       }
@@ -104,11 +104,11 @@
       },
       "wasm": {
         "path": "_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm",
-        "sha256": "4bb4a80198afee665ee8fafffb2b2eea76d53c912d295d3ca8038ee64fedef00",
+        "sha256": "b69d39623e727dcd8ed475762dd283f4f37262a6536b3ae44689b8d62a8ce552",
         "bytes": {
           "raw": 550703,
           "gzip": 220792,
-          "brotli": 172855
+          "brotli": 172876
         },
         "nameSections": 1
       }
@@ -150,11 +150,11 @@
       },
       "wasm": {
         "path": "_build/wasm-gc/release/build/mizchi/litestream/litestream.wasm",
-        "sha256": "564843688acb21e0211bcfa2328da7102b15dd52c0429cbea2707b5da7bd4981",
+        "sha256": "b19c7684037f0bf35860dc64e9229ca056657ee2138475bf6f41816abf0212e8",
         "bytes": {
           "raw": 132760,
           "gzip": 60476,
-          "brotli": 49865
+          "brotli": 49871
         },
         "nameSections": 1
       }

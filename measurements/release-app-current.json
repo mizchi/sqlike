@@ -1,9 +1,9 @@
 {
-  "measuredAt": "2026-11-16T18:43:33.216Z",
+  "measuredAt": "2026-11-17T02:12:00.299Z",
   "sourceHashes": {
     "adapters/aot-database.ts": "7cfd05b5bcfbdf1890abe0953d723c9ac4751f243c48601b50d9cbc78a54442c",
     "adapters/moon-image-store.ts": "303f1e4c134233a5e7013f9947c8636ad78b0ce5533f359a431c363f59e5dbe2",
-    "package.json": "3a4a316aea3bb3b9da64e32ebdf066b83dd381e4d065722971d8360da8a22978",
+    "package.json": "c9ff8e1c01bf5b7c0dd82b69fd0876035b30f67819b829a1c841a8bfb9dfa764",
     "pnpm-lock.yaml": "62a9334c27b9f3876361edc3c9f74a0ed5e11866e28403cc065e1bdba7d70012",
     "scripts/bench-release-app.ts": "8411975f40a618383455fa24532cd4205a395fcb297b242adbd89b2b1e806031",
     "scripts/heap-sampling.ts": "346335a5eeb5a4740882323b8da795f2f2a7ba06994ea9826932f8dc217e70b0",
@@ -62,26 +62,26 @@
     {
       "profile": "plain",
       "run": 0,
-      "setupMs": 48.10291600000005,
+      "setupMs": 56.54362500000002,
       "wireBytes": 135045,
       "timing": {
         "read": [
-          0.13650000035762788,
-          0.115,
-          0.1080000001192093,
-          0.10549999952316284,
-          0.1105000001192093,
-          0.10199999988079071,
-          0.10150000035762786
+          0.13599999964237214,
+          0.11650000035762786,
+          0.10849999964237213,
+          0.105,
+          0.12800000011920928,
+          0.10100000023841858,
+          0.10300000011920929
         ],
         "write": [
-          0.26,
+          0.27599999904632566,
+          0.25,
           0.2540000009536743,
-          0.2559999990463257,
-          0.2240000009536743,
-          0.2659999990463257,
-          0.22600000143051147,
-          0.3019999980926514
+          0.28400000095367434,
+          0.2159999990463257,
+          0.3040000009536743,
+          0.21
         ]
       },
       "memory": {
@@ -92,8 +92,8 @@
           "backingStorageSize": 900023
         },
         "retained": {
-          "usedSize": 3406584,
-          "totalSize": 5144576,
+          "usedSize": 3400172,
+          "totalSize": 5406720,
           "embedderHeapUsedSize": 401272,
           "backingStorageSize": 900079
         },
@@ -101,77 +101,84 @@
           "samples": [
             {
               "milliseconds": 0,
-              "usedSize": 3406584,
-              "totalSize": 5144576,
+              "usedSize": 3400172,
+              "totalSize": 5406720,
               "embedderHeapUsedSize": 401272,
               "backingStorageSize": 900079
             },
             {
-              "milliseconds": 2.8357919999998558,
-              "usedSize": 4956252,
-              "totalSize": 6193152,
+              "milliseconds": 2.6650419999998576,
+              "usedSize": 4480532,
+              "totalSize": 6455296,
               "embedderHeapUsedSize": 917128,
               "backingStorageSize": 908983
             },
             {
-              "milliseconds": 6.189957999999933,
-              "usedSize": 5224328,
+              "milliseconds": 5.761209000000008,
+              "usedSize": 4932152,
               "totalSize": 7766016,
-              "embedderHeapUsedSize": 1169976,
-              "backingStorageSize": 921703
+              "embedderHeapUsedSize": 1043936,
+              "backingStorageSize": 919159
             },
             {
-              "milliseconds": 9.249624999999924,
-              "usedSize": 5477556,
+              "milliseconds": 8.415749999999889,
+              "usedSize": 5078912,
               "totalSize": 8552448,
-              "embedderHeapUsedSize": 1422160,
-              "backingStorageSize": 934423
+              "embedderHeapUsedSize": 1294744,
+              "backingStorageSize": 930607
             },
             {
-              "milliseconds": 12.11541699999998,
-              "usedSize": 5656684,
-              "totalSize": 9601024,
-              "embedderHeapUsedSize": 1675568,
-              "backingStorageSize": 947143
+              "milliseconds": 11.101374999999962,
+              "usedSize": 5381564,
+              "totalSize": 9338880,
+              "embedderHeapUsedSize": 1548328,
+              "backingStorageSize": 942055
             },
             {
-              "milliseconds": 14.961416999999983,
-              "usedSize": 5914124,
+              "milliseconds": 13.780124999999998,
+              "usedSize": 5265332,
               "totalSize": 9863168,
-              "embedderHeapUsedSize": 1923520,
-              "backingStorageSize": 961135
+              "embedderHeapUsedSize": 1802000,
+              "backingStorageSize": 954775
             },
             {
-              "milliseconds": 17.87537499999985,
-              "usedSize": 6232372,
+              "milliseconds": 15.611749999999802,
+              "usedSize": 6205028,
               "totalSize": 9863168,
-              "embedderHeapUsedSize": 2184592,
-              "backingStorageSize": 975127
+              "embedderHeapUsedSize": 1923296,
+              "backingStorageSize": 963679
             },
             {
-              "milliseconds": 20.746832999999924,
-              "usedSize": 6753644,
-              "totalSize": 10387456,
-              "embedderHeapUsedSize": 2184592,
+              "milliseconds": 18.318667000000005,
+              "usedSize": 6358336,
+              "totalSize": 10125312,
+              "embedderHeapUsedSize": 2184368,
+              "backingStorageSize": 976399
+            },
+            {
+              "milliseconds": 21.102416999999832,
+              "usedSize": 7112136,
+              "totalSize": 10125312,
+              "embedderHeapUsedSize": 2184368,
               "backingStorageSize": 1023312
             },
             {
-              "milliseconds": 23.946707999999944,
-              "usedSize": 6791700,
-              "totalSize": 10387456,
-              "embedderHeapUsedSize": 2184592,
+              "milliseconds": 24.40379199999984,
+              "usedSize": 6813288,
+              "totalSize": 10125312,
+              "embedderHeapUsedSize": 2184368,
               "backingStorageSize": 1023312
             }
           ],
           "peak": {
-            "usedSize": 6791700,
+            "usedSize": 7112136,
             "backingStorageSize": 1023312,
-            "combinedBytes": 7815012
+            "combinedBytes": 8135448
           }
         },
         "after": {
-          "usedSize": 3436376,
-          "totalSize": 4358144,
+          "usedSize": 3428368,
+          "totalSize": 4620288,
           "embedderHeapUsedSize": 319512,
           "backingStorageSize": 900079
         }
@@ -181,40 +188,40 @@
     {
       "profile": "plain",
       "run": 1,
-      "setupMs": 47.58741699999996,
+      "setupMs": 51.79591699999992,
       "wireBytes": 135045,
       "writes": 0
     },
     {
       "profile": "plain",
       "run": 2,
-      "setupMs": 46.048541000000114,
+      "setupMs": 48.978791999999885,
       "wireBytes": 135045,
       "writes": 0
     },
     {
       "profile": "indexed-trigger",
       "run": 0,
-      "setupMs": 77.5087910000002,
+      "setupMs": 80.02733399999988,
       "wireBytes": 136371,
       "timing": {
         "read": [
-          0.1344999998807907,
-          0.11650000035762786,
-          0.11199999988079071,
-          0.1094999998807907,
-          0.11600000023841858,
+          0.1330000001192093,
+          0.11699999988079071,
+          0.11350000023841858,
+          0.11149999976158143,
+          0.11550000011920929,
           0.10899999976158142,
-          0.10100000023841858
+          0.1025
         ],
         "write": [
-          0.6940000009536743,
-          0.6939999985694886,
-          0.6560000014305115,
-          0.6920000004768372,
-          0.9339999985694886,
-          0.6840000009536743,
-          0.6379999995231629
+          0.6839999985694886,
+          0.6980000019073487,
+          0.6439999985694885,
+          0.74,
+          0.9260000014305114,
+          0.68,
+          0.6479999995231629
         ]
       },
       "memory": {
@@ -225,169 +232,183 @@
           "backingStorageSize": 900023
         },
         "retained": {
-          "usedSize": 3855116,
-          "totalSize": 5931008,
-          "embedderHeapUsedSize": 331448,
+          "usedSize": 3857036,
+          "totalSize": 6455296,
+          "embedderHeapUsedSize": 331544,
           "backingStorageSize": 900617
         },
         "observedPeak": {
           "samples": [
             {
               "milliseconds": 0,
-              "usedSize": 3855116,
-              "totalSize": 5931008,
-              "embedderHeapUsedSize": 331448,
+              "usedSize": 3857036,
+              "totalSize": 6455296,
+              "embedderHeapUsedSize": 331544,
               "backingStorageSize": 900617
             },
             {
-              "milliseconds": 1.4920000000001892,
-              "usedSize": 5223724,
-              "totalSize": 7766016,
-              "embedderHeapUsedSize": 829488,
+              "milliseconds": 1.4785409999999501,
+              "usedSize": 5394956,
+              "totalSize": 8290304,
+              "embedderHeapUsedSize": 828528,
               "backingStorageSize": 903813
             },
             {
-              "milliseconds": 5.071667000000161,
-              "usedSize": 6841624,
-              "totalSize": 10125312,
-              "embedderHeapUsedSize": 1097208,
-              "backingStorageSize": 913364
+              "milliseconds": 5.077457999999751,
+              "usedSize": 5810408,
+              "totalSize": 10649600,
+              "embedderHeapUsedSize": 1096248,
+              "backingStorageSize": 913359
             },
             {
-              "milliseconds": 8.706709000000046,
-              "usedSize": 6581828,
-              "totalSize": 10387456,
-              "embedderHeapUsedSize": 1225480,
+              "milliseconds": 8.76754099999971,
+              "usedSize": 6173132,
+              "totalSize": 10649600,
+              "embedderHeapUsedSize": 1224520,
               "backingStorageSize": 922919
             },
             {
-              "milliseconds": 11.766000000000076,
-              "usedSize": 5020392,
-              "totalSize": 10387456,
-              "embedderHeapUsedSize": 1482080,
+              "milliseconds": 12.027082999999948,
+              "usedSize": 6169100,
+              "totalSize": 10649600,
+              "embedderHeapUsedSize": 1481120,
               "backingStorageSize": 932465
             },
             {
-              "milliseconds": 14.76358399999981,
-              "usedSize": 6506332,
+              "milliseconds": 14.808040999999776,
+              "usedSize": 6426544,
               "totalSize": 10649600,
-              "embedderHeapUsedSize": 1738128,
-              "backingStorageSize": 945193
+              "embedderHeapUsedSize": 1737168,
+              "backingStorageSize": 942011
             },
             {
-              "milliseconds": 18.19374999999991,
-              "usedSize": 8001368,
-              "totalSize": 11698176,
-              "embedderHeapUsedSize": 1994296,
-              "backingStorageSize": 957926
+              "milliseconds": 17.425790999999663,
+              "usedSize": 6712540,
+              "totalSize": 10911744,
+              "embedderHeapUsedSize": 1865272,
+              "backingStorageSize": 951557
             },
             {
-              "milliseconds": 21.690208999999868,
-              "usedSize": 8292004,
+              "milliseconds": 20.136708,
+              "usedSize": 8614016,
+              "totalSize": 12222464,
+              "embedderHeapUsedSize": 2119824,
+              "backingStorageSize": 961108
+            },
+            {
+              "milliseconds": 22.68137499999966,
+              "usedSize": 8616156,
               "totalSize": 14319616,
-              "embedderHeapUsedSize": 2248176,
-              "backingStorageSize": 967472
+              "embedderHeapUsedSize": 2247216,
+              "backingStorageSize": 970654
             },
             {
-              "milliseconds": 24.526584000000184,
-              "usedSize": 9783292,
+              "milliseconds": 25.446665999999823,
+              "usedSize": 8721764,
+              "totalSize": 15368192,
+              "embedderHeapUsedSize": 2503688,
+              "backingStorageSize": 980200
+            },
+            {
+              "milliseconds": 28.09854099999984,
+              "usedSize": 8794712,
               "totalSize": 15892480,
-              "embedderHeapUsedSize": 2504648,
-              "backingStorageSize": 980205
+              "embedderHeapUsedSize": 2760304,
+              "backingStorageSize": 989746
             },
             {
-              "milliseconds": 28.280041999999867,
-              "usedSize": 7638204,
-              "totalSize": 15892480,
-              "embedderHeapUsedSize": 2761264,
-              "backingStorageSize": 992923
-            },
-            {
-              "milliseconds": 31.860834000000068,
-              "usedSize": 9223484,
+              "milliseconds": 30.68270799999982,
+              "usedSize": 9036060,
               "totalSize": 16154624,
-              "embedderHeapUsedSize": 3017408,
-              "backingStorageSize": 1005656
+              "embedderHeapUsedSize": 2887904,
+              "backingStorageSize": 999292
             },
             {
-              "milliseconds": 35.35845900000004,
-              "usedSize": 10661240,
+              "milliseconds": 33.51087499999994,
+              "usedSize": 9261168,
+              "totalSize": 16154624,
+              "embedderHeapUsedSize": 3144992,
+              "backingStorageSize": 1008838
+            },
+            {
+              "milliseconds": 36.04920799999991,
+              "usedSize": 9505472,
               "totalSize": 16678912,
-              "embedderHeapUsedSize": 3274496,
-              "backingStorageSize": 1018389
+              "embedderHeapUsedSize": 3273536,
+              "backingStorageSize": 1018384
             },
             {
-              "milliseconds": 38.68904199999997,
-              "usedSize": 7354996,
+              "milliseconds": 38.70637499999975,
+              "usedSize": 9684324,
               "totalSize": 16678912,
-              "embedderHeapUsedSize": 3529528,
-              "backingStorageSize": 1027935
+              "embedderHeapUsedSize": 3528568,
+              "backingStorageSize": 1027930
             },
             {
-              "milliseconds": 41.85179199999993,
-              "usedSize": 8777356,
-              "totalSize": 16678912,
-              "embedderHeapUsedSize": 3786840,
-              "backingStorageSize": 1040653
+              "milliseconds": 41.40716599999996,
+              "usedSize": 9915332,
+              "totalSize": 17203200,
+              "embedderHeapUsedSize": 3785880,
+              "backingStorageSize": 1037476
             },
             {
-              "milliseconds": 45.16783399999986,
-              "usedSize": 10263200,
-              "totalSize": 16941056,
-              "embedderHeapUsedSize": 4038480,
-              "backingStorageSize": 1053386
+              "milliseconds": 44.01424999999972,
+              "usedSize": 10128748,
+              "totalSize": 17203200,
+              "embedderHeapUsedSize": 3910456,
+              "backingStorageSize": 1047022
             },
             {
-              "milliseconds": 48.37745899999982,
-              "usedSize": 11727964,
-              "totalSize": 16941056,
-              "embedderHeapUsedSize": 4294472,
-              "backingStorageSize": 1066119
+              "milliseconds": 46.51125000000002,
+              "usedSize": 10336444,
+              "totalSize": 17465344,
+              "embedderHeapUsedSize": 4164968,
+              "backingStorageSize": 1056568
             },
             {
-              "milliseconds": 51.68220900000006,
-              "usedSize": 8383848,
+              "milliseconds": 49.02662499999997,
+              "usedSize": 15342460,
               "totalSize": 21135360,
-              "embedderHeapUsedSize": 4551560,
-              "backingStorageSize": 1075680
+              "embedderHeapUsedSize": 4422056,
+              "backingStorageSize": 1069316
             },
             {
-              "milliseconds": 54.56091699999979,
-              "usedSize": 13414216,
-              "totalSize": 22708224,
-              "embedderHeapUsedSize": 4815992,
-              "backingStorageSize": 1088398
+              "milliseconds": 52.09916599999997,
+              "usedSize": 12050856,
+              "totalSize": 21397504,
+              "embedderHeapUsedSize": 4550600,
+              "backingStorageSize": 1078847
             },
             {
-              "milliseconds": 56.40370900000016,
-              "usedSize": 8792980,
-              "totalSize": 24543232,
-              "embedderHeapUsedSize": 4942816,
-              "backingStorageSize": 1091585
+              "milliseconds": 54.69983299999967,
+              "usedSize": 9885744,
+              "totalSize": 25067520,
+              "embedderHeapUsedSize": 4815032,
+              "backingStorageSize": 1088383
             },
             {
-              "milliseconds": 59.278499999999894,
-              "usedSize": 15146296,
-              "totalSize": 24543232,
-              "embedderHeapUsedSize": 5069984,
-              "backingStorageSize": 1209061
+              "milliseconds": 57.97337500000003,
+              "usedSize": 11119140,
+              "totalSize": 25853952,
+              "embedderHeapUsedSize": 5069024,
+              "backingStorageSize": 1209046
             },
             {
-              "milliseconds": 63.16150000000016,
-              "usedSize": 9358044,
-              "totalSize": 25329664,
-              "embedderHeapUsedSize": 5198504,
-              "backingStorageSize": 1212248
+              "milliseconds": 64.48000000000002,
+              "usedSize": 12403800,
+              "totalSize": 25853952,
+              "embedderHeapUsedSize": 5197544,
+              "backingStorageSize": 1212233
             }
           ],
           "peak": {
-            "usedSize": 15146296,
-            "backingStorageSize": 1212248,
-            "combinedBytes": 16355357
+            "usedSize": 15342460,
+            "backingStorageSize": 1212233,
+            "combinedBytes": 16411776
           }
         },
         "after": {
-          "usedSize": 3978296,
+          "usedSize": 3976484,
           "totalSize": 5406720,
           "embedderHeapUsedSize": 319512,
           "backingStorageSize": 900635
@@ -398,14 +419,14 @@
     {
       "profile": "indexed-trigger",
       "run": 1,
-      "setupMs": 80.90750000000025,
+      "setupMs": 77.69162499999993,
       "wireBytes": 136371,
       "writes": 0
     },
     {
       "profile": "indexed-trigger",
       "run": 2,
-      "setupMs": 81.49391699999978,
+      "setupMs": 76.9074999999998,
       "wireBytes": 136371,
       "writes": 0
     }

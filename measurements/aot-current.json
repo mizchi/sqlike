@@ -1,12 +1,12 @@
 {
   "sourceHashes": {
-    "package.json": "3a4a316aea3bb3b9da64e32ebdf066b83dd381e4d065722971d8360da8a22978",
+    "package.json": "c9ff8e1c01bf5b7c0dd82b69fd0876035b30f67819b829a1c841a8bfb9dfa764",
     "pnpm-lock.yaml": "62a9334c27b9f3876361edc3c9f74a0ed5e11866e28403cc065e1bdba7d70012",
     "scripts/measure-aot.ts": "cabede7fdd300160c612c6d542cf4396a8b103506b9df979b87e9bfc2058aaac",
     "scripts/measurement-manifest.ts": "615c0ab32c0b2e01c57ea1be690a2a08d2e9401b9b0c5d93574520253c16acdb"
   },
   "format": 1,
-  "measuredAt": "2026-11-16T18:41:36.490Z",
+  "measuredAt": "2026-11-17T02:09:56.054Z",
   "environment": {
     "node": "v24.22.2",
     "chromium": "158.0.8127.18",
@@ -48,9 +48,9 @@
       "bytes": {
         "raw": 523192,
         "gzip": 207545,
-        "brotli": 163372
+        "brotli": 163119
       },
-      "sha256": "3530b590a90a473f9db6ed6fc40b9f55d9cece4e0e1e27fca67e670dfdf73ceb"
+      "sha256": "905be5dfbb0bf6d68159fdf1535f195a1ea896452c224020a6da6ff6d5e0ca88"
     },
     {
       "name": "compiled-program",
@@ -67,7 +67,7 @@
     {
       "engine": "aot",
       "run": 0,
-      "coldReadyMs": 128.17000007629395,
+      "coldReadyMs": 127.63999998569489,
       "wireBytes": 123377,
       "decodedBytes": 639246,
       "requests": [
@@ -158,15 +158,15 @@
           "bytes": 3823
         }
       ],
-      "offlineReadyMs": 40.47000002861023,
-      "durable100Ms": 24.674999952316284,
-      "read100Ms": 2.884999990463257,
-      "checkpointMs": 8.129999995231628
+      "offlineReadyMs": 39.28999996185303,
+      "durable100Ms": 25.240000009536743,
+      "read100Ms": 2.774999976158142,
+      "checkpointMs": 8.179999947547913
     },
     {
       "engine": "aot",
       "run": 1,
-      "coldReadyMs": 105.93500006198883,
+      "coldReadyMs": 108.01999998092651,
       "wireBytes": 123377,
       "decodedBytes": 639246,
       "requests": [
@@ -257,15 +257,15 @@
           "bytes": 3823
         }
       ],
-      "offlineReadyMs": 38.37999999523163,
-      "durable100Ms": 23.855000019073486,
-      "read100Ms": 2.6799999475479126,
-      "checkpointMs": 7.830000042915344
+      "offlineReadyMs": 40.799999952316284,
+      "durable100Ms": 24.299999952316284,
+      "read100Ms": 2.7300000190734863,
+      "checkpointMs": 7.879999995231628
     },
     {
       "engine": "aot",
       "run": 2,
-      "coldReadyMs": 107.89499998092651,
+      "coldReadyMs": 106.74000000953674,
       "wireBytes": 123377,
       "decodedBytes": 639246,
       "requests": [
@@ -356,15 +356,15 @@
           "bytes": 3823
         }
       ],
-      "offlineReadyMs": 39.610000014305115,
-      "durable100Ms": 24.174999952316284,
-      "read100Ms": 2.840000033378601,
-      "checkpointMs": 7.865000009536743
+      "offlineReadyMs": 39.24000000953674,
+      "durable100Ms": 24.0900000333786,
+      "read100Ms": 2.774999976158142,
+      "checkpointMs": 8.025000095367432
     },
     {
       "engine": "sqlike",
       "run": 0,
-      "coldReadyMs": 90.90499997138977,
+      "coldReadyMs": 92.25,
       "wireBytes": 178819,
       "decodedBytes": 855023,
       "requests": [
@@ -475,12 +475,12 @@
           "bytes": 4502
         }
       ],
-      "offlineReadyMs": 37.639999985694885
+      "offlineReadyMs": 54.50499999523163
     },
     {
       "engine": "sqlike",
       "run": 1,
-      "coldReadyMs": 91.27999997138977,
+      "coldReadyMs": 90.51999998092651,
       "wireBytes": 178819,
       "decodedBytes": 855023,
       "requests": [
@@ -521,12 +521,6 @@
           "status": 200
         },
         {
-          "path": "/assets/main-VJ6Tdyr2.js",
-          "raw": 12677,
-          "wire": 3165,
-          "status": 200
-        },
-        {
           "path": "/assets/worker-CIalkUAQ.js",
           "raw": 186329,
           "wire": 48407,
@@ -536,6 +530,12 @@
           "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
           "raw": 670,
           "wire": 325,
+          "status": 200
+        },
+        {
+          "path": "/assets/main-VJ6Tdyr2.js",
+          "raw": 12677,
+          "wire": 3165,
           "status": 200
         },
         {
@@ -591,12 +591,12 @@
           "bytes": 4502
         }
       ],
-      "offlineReadyMs": 36.66500008106232
+      "offlineReadyMs": 37.63499999046326
     },
     {
       "engine": "sqlike",
       "run": 2,
-      "coldReadyMs": 90.89499998092651,
+      "coldReadyMs": 90.0349999666214,
       "wireBytes": 178819,
       "decodedBytes": 855023,
       "requests": [
@@ -637,12 +637,6 @@
           "status": 200
         },
         {
-          "path": "/assets/main-VJ6Tdyr2.js",
-          "raw": 12677,
-          "wire": 3165,
-          "status": 200
-        },
-        {
           "path": "/assets/worker-CIalkUAQ.js",
           "raw": 186329,
           "wire": 48407,
@@ -652,6 +646,12 @@
           "path": "/assets/modulepreload-polyfill-P2Xu9kJm.js",
           "raw": 670,
           "wire": 325,
+          "status": 200
+        },
+        {
+          "path": "/assets/main-VJ6Tdyr2.js",
+          "raw": 12677,
+          "wire": 3165,
           "status": 200
         },
         {
@@ -707,12 +707,12 @@
           "bytes": 4502
         }
       ],
-      "offlineReadyMs": 37.480000019073486
+      "offlineReadyMs": 37.53000009059906
     },
     {
       "engine": "sqlite",
       "run": 0,
-      "coldReadyMs": 124.32500004768372,
+      "coldReadyMs": 106.70000004768372,
       "wireBytes": 486523,
       "decodedBytes": 1385545,
       "requests": [
@@ -833,12 +833,12 @@
           "bytes": 32462
         }
       ],
-      "offlineReadyMs": 55.18500006198883
+      "offlineReadyMs": 53.69000005722046
     },
     {
       "engine": "sqlite",
       "run": 1,
-      "coldReadyMs": 107.75,
+      "coldReadyMs": 107.92500007152557,
       "wireBytes": 486523,
       "decodedBytes": 1385545,
       "requests": [
@@ -959,12 +959,12 @@
           "bytes": 32462
         }
       ],
-      "offlineReadyMs": 55.514999985694885
+      "offlineReadyMs": 53.89999997615814
     },
     {
       "engine": "sqlite",
       "run": 2,
-      "coldReadyMs": 107.50999999046326,
+      "coldReadyMs": 125.19500005245209,
       "wireBytes": 486523,
       "decodedBytes": 1385545,
       "requests": [
@@ -1005,9 +1005,9 @@
           "status": 200
         },
         {
-          "path": "/assets/main-VJ6Tdyr2.js",
-          "raw": 12677,
-          "wire": 3165,
+          "path": "/assets/worker-CIalkUAQ.js",
+          "raw": 186329,
+          "wire": 48407,
           "status": 200
         },
         {
@@ -1017,9 +1017,9 @@
           "status": 200
         },
         {
-          "path": "/assets/worker-CIalkUAQ.js",
-          "raw": 186329,
-          "wire": 48407,
+          "path": "/assets/main-VJ6Tdyr2.js",
+          "raw": 12677,
+          "wire": 3165,
           "status": 200
         },
         {
@@ -1085,27 +1085,27 @@
           "bytes": 32462
         }
       ],
-      "offlineReadyMs": 54.514999985694885
+      "offlineReadyMs": 54.6800000667572
     }
   ],
   "summary": [
     {
       "engine": "aot",
       "wireBytes": 123377,
-      "coldReadyMs": 107.89499998092651,
-      "offlineReadyMs": 39.610000014305115
+      "coldReadyMs": 108.01999998092651,
+      "offlineReadyMs": 39.28999996185303
     },
     {
       "engine": "sqlike",
       "wireBytes": 178819,
-      "coldReadyMs": 90.90499997138977,
-      "offlineReadyMs": 37.480000019073486
+      "coldReadyMs": 90.51999998092651,
+      "offlineReadyMs": 37.63499999046326
     },
     {
       "engine": "sqlite",
       "wireBytes": 486523,
-      "coldReadyMs": 107.75,
-      "offlineReadyMs": 55.18500006198883
+      "coldReadyMs": 107.92500007152557,
+      "offlineReadyMs": 53.89999997615814
     }
   ],
   "cpu": [
@@ -1114,140 +1114,140 @@
       "engine": "aot",
       "run": 0,
       "iterations": 10000,
-      "milliseconds": 40.88166599999931
+      "milliseconds": 42.51566599999933
     },
     {
       "name": "constant",
       "engine": "dynamic",
       "run": 0,
       "iterations": 10000,
-      "milliseconds": 124.76399999999921
+      "milliseconds": 126.16362499999923
     },
     {
       "name": "constant",
       "engine": "dynamic",
       "run": 1,
       "iterations": 10000,
-      "milliseconds": 112.34229199999936
+      "milliseconds": 113.15341700000135
     },
     {
       "name": "constant",
       "engine": "aot",
       "run": 1,
       "iterations": 10000,
-      "milliseconds": 31.89191700000083
+      "milliseconds": 32.84541700000045
     },
     {
       "name": "constant",
       "engine": "aot",
       "run": 2,
       "iterations": 10000,
-      "milliseconds": 31.833666999998968
+      "milliseconds": 32.32483300000058
     },
     {
       "name": "constant",
       "engine": "dynamic",
       "run": 2,
       "iterations": 10000,
-      "milliseconds": 111.09366699999919
+      "milliseconds": 112.34662500000013
     },
     {
       "name": "constant",
       "engine": "dynamic",
       "run": 3,
       "iterations": 10000,
-      "milliseconds": 110.8839169999992
+      "milliseconds": 111.54441699999916
     },
     {
       "name": "constant",
       "engine": "aot",
       "run": 3,
       "iterations": 10000,
-      "milliseconds": 31.056166000000303
+      "milliseconds": 31.70391699999891
     },
     {
       "name": "constant",
       "engine": "aot",
       "run": 4,
       "iterations": 10000,
-      "milliseconds": 30.747290999999677
+      "milliseconds": 31.29724999999962
     },
     {
       "name": "constant",
       "engine": "dynamic",
       "run": 4,
       "iterations": 10000,
-      "milliseconds": 110.35279099999934
+      "milliseconds": 111.55041700000038
     },
     {
       "name": "point",
       "engine": "aot",
       "run": 0,
       "iterations": 2000,
-      "milliseconds": 5.518667000000278
+      "milliseconds": 5.541666000000987
     },
     {
       "name": "point",
       "engine": "dynamic",
       "run": 0,
       "iterations": 2000,
-      "milliseconds": 34.64758299999994
+      "milliseconds": 34.581749999999374
     },
     {
       "name": "point",
       "engine": "dynamic",
       "run": 1,
       "iterations": 2000,
-      "milliseconds": 34.23349999999846
+      "milliseconds": 34.43120799999997
     },
     {
       "name": "point",
       "engine": "aot",
       "run": 1,
       "iterations": 2000,
-      "milliseconds": 5.319625000000087
+      "milliseconds": 5.406917000000249
     },
     {
       "name": "point",
       "engine": "aot",
       "run": 2,
       "iterations": 2000,
-      "milliseconds": 5.1444159999991825
+      "milliseconds": 5.281209000000672
     },
     {
       "name": "point",
       "engine": "dynamic",
       "run": 2,
       "iterations": 2000,
-      "milliseconds": 33.758332999999766
+      "milliseconds": 34.39770899999894
     },
     {
       "name": "point",
       "engine": "dynamic",
       "run": 3,
       "iterations": 2000,
-      "milliseconds": 34.11254200000076
+      "milliseconds": 34.714750000001004
     },
     {
       "name": "point",
       "engine": "aot",
       "run": 3,
       "iterations": 2000,
-      "milliseconds": 5.15270799999962
+      "milliseconds": 5.560916999998881
     },
     {
       "name": "point",
       "engine": "aot",
       "run": 4,
       "iterations": 2000,
-      "milliseconds": 5.101875000000291
+      "milliseconds": 5.239500000001499
     },
     {
       "name": "point",
       "engine": "dynamic",
       "run": 4,
       "iterations": 2000,
-      "milliseconds": 33.63745800000106
+      "milliseconds": 34.42045800000051
     }
   ]
 }
