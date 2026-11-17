@@ -23,7 +23,7 @@
     "packages/sqlike/src/aggregate_filter.mbt": "6f8d39d97d56918a30fbb57a0130e48623f890ffe58503b9ba6128dfc7411830",
     "packages/sqlike/src/aggregate_plan.mbt": "13e8299d0711b0835fd361dedf2b4fa92cd39201cfea484764641f44f2fb00d8",
     "packages/sqlike/src/aggregate_sum.mbt": "e09ec3388045c47098d36cc39efa47abac3ddf73f312cfdd87a75a610e35fcd4",
-    "packages/sqlike/src/aot.mbt": "a77b6a74c793f0b09d9ccf48196ac602aefc2514dc1cf2107e6edff87af62db9",
+    "packages/sqlike/src/aot.mbt": "fd2a750128171ca24f921cbcd0b82d5456d212caa8acc048423ed3cced7427b9",
     "packages/sqlike/src/aot_bench_wbtest.mbt": "ea9756d22d1bc37a14b32f7707fa1c018c018d41f76aeddb7e87303950c8125a",
     "packages/sqlike/src/binary_base64.mbt": "3ff209995156c359a77d5488f278337fb4b58be27785e79e53dfb3c43cb0c6f6",
     "packages/sqlike/src/binary_catalog.mbt": "3bb5a151775612e29d8a657d0d809ac1ae107f6084aa149adb2354151d66947b",
@@ -35,7 +35,7 @@
     "packages/sqlike/src/bound_expression.mbt": "2fa1cf28a0c906574375a802f027d1d59b0cd25a9b7cb0c075d1e2c1b4762e9c",
     "packages/sqlike/src/bound_plan_wbtest.mbt": "3f4f3e5fa1b09b71fc4329b238cce6a17e6f7378876b597d2664c88a9fccd1c6",
     "packages/sqlike/src/bound_point.mbt": "f25a0003ebcf731b5014ba2226d5b06cc42acd3acdd274951121b90fd2bc441f",
-    "packages/sqlike/src/capability_config_generated.mbt": "f98a6c9629a1629516353b84299d7357e62835f37740f77f484e1ecb452014c6",
+    "packages/sqlike/src/capability_config_generated.mbt": "0fd67aa4747473c7daa5d52a0bbfc13c893b4c31d9078eee02db57ea48d12544",
     "packages/sqlike/src/cast.mbt": "e2feebc791c8daa6c18435ba8a271140dfe66a107ee4b9e0f5978d162180a2ec",
     "packages/sqlike/src/changeset.mbt": "f66c9a8683db19314ffeabd65bdbea4bfd6ff5b327686dbc7643ac6f49a50814",
     "packages/sqlike/src/column_delta_wbtest.mbt": "58fef01472dfbe883cac3b4345d2fd5e6219d6d27b25c8a7eecfd13d4d31a6fa",
@@ -51,7 +51,7 @@
     "packages/sqlike/src/defined/defined.mbt": "caf0ae96fd7a7af9f94b3e831f2f9de2077a64caacdbb3d4029e2780ff4f044f",
     "packages/sqlike/src/defined/moon.pkg": "6c72c36fb88ebfab45a73ad8d209dcb3f593c9d1bc3ade7c5a6c952c1be947a9",
     "packages/sqlike/src/evaluate.mbt": "67dc9ebde358babef258f002aa53977621a3367edf0934f72f4a7d984e2b11cd",
-    "packages/sqlike/src/execute.mbt": "3ae4ecfcff44480ada6673660e107a213b5566024f87dc5279067abc7805272a",
+    "packages/sqlike/src/execute.mbt": "d956bb257b6e0f06600c797bcf06d8be42ee3985d1598ca2d6e9522591ad4897",
     "packages/sqlike/src/feature_config.mbt": "8ac72b52c318850f7dc69d63c105496ab6ea7216b6db32532470ee17c19b82f2",
     "packages/sqlike/src/feature_validation.mbt": "511fa120a414b92fdbc840174fd0c08c78c50b206264889a8f040b6a0b9eb6fc",
     "packages/sqlike/src/feature_validation_generated.mbt": "16256f2c63c5d76e9a91670052af16d9c324157db0c6f783f9d5dc24d267d2f9",
@@ -77,6 +77,7 @@
     "packages/sqlike/src/lsm/lsm.mbt": "9e88824dc0b449e7c15209beb7e0dc8fdf34aab5e77c405bf1ef6d5040aad924",
     "packages/sqlike/src/lsm/lsm_wbtest.mbt": "0bd332033c4a16ba4ba0dd3e0a6cd640a0e6aef777f2b2e8f4cf464cef568a19",
     "packages/sqlike/src/lsm/moon.pkg": "5ede3703157bb09f075866319cd3c29867ccefdc0446e508925a2a9fd0407da9",
+    "packages/sqlike/src/math_rounding.mbt": "51eeeed48fdc28f2e8db9900dafdf26bf411296c1be8ba9a42a0c4ee2267ed8a",
     "packages/sqlike/src/migration.mbt": "7112ae1abf9245e29d629aebbb35b848dd2cc3f0a26c06a0af3cde2c609c4e0a",
     "packages/sqlike/src/migration_sql.mbt": "94dc3651b6b17f2c946daf7adea040a2d404c714a6a51aa338767d7ae8172b37",
     "packages/sqlike/src/model.mbt": "19082f03d8b9f49d9f8573f88ed5c5f70b7ba51f0f19d78421ce70451fcfe5ec",
@@ -96,12 +97,14 @@
     "packages/sqlike/src/program_compiler.mbt": "fcd9da9a6ed5af289566889ae6279ce3aebc04cebdf545790abd9ed1e22a3e18",
     "packages/sqlike/src/query.mbt": "c7b8d0525f71bedb98870de3b6b403d0635ccc83480319df4684ee68280e0e8e",
     "packages/sqlike/src/query_plan.mbt": "63e846f9bf6c018d9fad30627cbb670667e337ed767366e58a5022246e2d0f74",
+    "packages/sqlike/src/result_writer.mbt": "0367d7ceea2d3a7e27a3ea8ef00178583f2b17ebcabaebd43e4f3e4580afcfd6",
+    "packages/sqlike/src/result_writer_wbtest.mbt": "f9d65c105c685607431c959f27e89fc88bf69136bdfc3ab2f2c8274769ccfcbc",
     "packages/sqlike/src/row_pages.mbt": "35795aa2cc32e84b58e30b07b0f597908a51f1989d3371f9986c2b21188addb5",
     "packages/sqlike/src/row_pages_wbtest.mbt": "d48a5d1e5454dda34e25829bda13996d5a94e140191818eacf08f5ecc609b744",
     "packages/sqlike/src/runtime_query_requirements.mbt": "7f4354f6eec1bf6332ed8482f8010922b0e257735cb5bfde8e2cabb3011a7285",
     "packages/sqlike/src/runtime_usage_compiler.mbt": "8767ac9f24365bd1aa110959bfcecb50a0f10c7c5e66f87bd9b2fb9c15f2a202",
-    "packages/sqlike/src/runtime_usage_generated.mbt": "8f72423dcfdbb58b7fc981fa4512525364bd4af974a6be48cb67ff1cdc382041",
-    "packages/sqlike/src/scalar.mbt": "5412d9c80157175c8ad94ec4f5eebfacf75df522e226a852df9b4d2477cbbe40",
+    "packages/sqlike/src/runtime_usage_generated.mbt": "42b2e50d37d3f54cdf06605601d87e13dd55ac11ba3cd5103157a3f73d6f14bc",
+    "packages/sqlike/src/scalar.mbt": "971dc21f27e29e010c9d8add4cb40d7c4be60d762ee998e36fc67b60b9bca3c0",
     "packages/sqlike/src/sql_render.mbt": "b7264b0685e50dbf0237a58b23970a617bfbaac2c8a588216ea552e110218146",
     "packages/sqlike/src/sqlite_file.mbt": "f1208916e4cb70e91360ca851f7cf81b4889baee9c100bfbbf6d7c0d6aabb7ee",
     "packages/sqlike/src/sqlite_import.mbt": "e1922e7730ab15003c26d685fa9d6992c5d056070b771ffc0f163f3c1ae2c9c9",
@@ -121,7 +124,7 @@
     "scripts/oxc-runtime.ts": "24406b458799bdb150e1a986353c7d965d57964e60067f1a421e1cc010e57fce",
     "src/sqlike-features.ts": "e23ccf5fe013d6d472934bcd8ce4418e727b716b14fde1069d35bd3bdcf2f5a6"
   },
-  "measuredAt": "2026-11-17T02:11:43.044Z",
+  "measuredAt": "2026-11-17T03:28:42.694Z",
   "node": "v24.22.2",
   "method": "Moon release static feature specialization; isolated builds. JS ESM all entry exports retained, Oxc client minification with compact whitespace and annotations preserved; absence checks use unminified source; gzip9/Brotli11. Wasm GC release without wasm-opt. Engine only: excludes host adapter, catalog and persistence. AOT excludes SQL parser. Minimal excludes optional JSON/date/window implementations; ordinary aggregates, CTE and secondary indexes remain in core.",
   "results": [
@@ -130,14 +133,14 @@
       "name": "minimal",
       "features": [],
       "js": {
-        "raw": 463408,
-        "gzip": 109215,
-        "brotli": 87436
+        "raw": 463930,
+        "gzip": 109435,
+        "brotli": 87610
       },
       "wasm": {
-        "raw": 418175,
-        "gzip": 165505,
-        "brotli": 130871
+        "raw": 418794,
+        "gzip": 165757,
+        "brotli": 131102
       },
       "absent": {
         "triggerImplementation": true,
@@ -157,14 +160,14 @@
         "rightFullJoin"
       ],
       "js": {
-        "raw": 467489,
-        "gzip": 110249,
-        "brotli": 88214
+        "raw": 468009,
+        "gzip": 110494,
+        "brotli": 88476
       },
       "wasm": {
-        "raw": 422015,
-        "gzip": 167119,
-        "brotli": 131739
+        "raw": 422995,
+        "gzip": 167332,
+        "brotli": 131941
       },
       "absent": {
         "triggerImplementation": true,
@@ -184,14 +187,14 @@
         "strictTables"
       ],
       "js": {
-        "raw": 464183,
-        "gzip": 109395,
-        "brotli": 87592
+        "raw": 464705,
+        "gzip": 109637,
+        "brotli": 87745
       },
       "wasm": {
-        "raw": 419141,
-        "gzip": 165822,
-        "brotli": 130772
+        "raw": 420105,
+        "gzip": 165988,
+        "brotli": 130942
       },
       "absent": {
         "triggerImplementation": true,
@@ -211,14 +214,14 @@
         "primaryKeyIndex"
       ],
       "js": {
-        "raw": 483701,
-        "gzip": 113473,
-        "brotli": 90518
+        "raw": 485007,
+        "gzip": 113905,
+        "brotli": 90886
       },
       "wasm": {
-        "raw": 435341,
-        "gzip": 171977,
-        "brotli": 135266
+        "raw": 436626,
+        "gzip": 172416,
+        "brotli": 135764
       },
       "absent": {
         "triggerImplementation": true,
@@ -238,14 +241,14 @@
         "triggers"
       ],
       "js": {
-        "raw": 467129,
-        "gzip": 110188,
-        "brotli": 88296
+        "raw": 467651,
+        "gzip": 110406,
+        "brotli": 88440
       },
       "wasm": {
-        "raw": 421801,
-        "gzip": 166905,
-        "brotli": 131642
+        "raw": 422019,
+        "gzip": 167048,
+        "brotli": 132016
       },
       "absent": {
         "triggerImplementation": false,
@@ -265,14 +268,14 @@
         "foreignKeys"
       ],
       "js": {
-        "raw": 471015,
-        "gzip": 111065,
-        "brotli": 88776
+        "raw": 471536,
+        "gzip": 111299,
+        "brotli": 89227
       },
       "wasm": {
-        "raw": 423985,
-        "gzip": 167905,
-        "brotli": 132407
+        "raw": 424720,
+        "gzip": 168215,
+        "brotli": 132836
       },
       "absent": {
         "triggerImplementation": true,
@@ -292,14 +295,14 @@
         "sqlJson"
       ],
       "js": {
-        "raw": 487540,
-        "gzip": 114824,
-        "brotli": 91586
+        "raw": 488062,
+        "gzip": 115079,
+        "brotli": 91608
       },
       "wasm": {
-        "raw": 438941,
-        "gzip": 173623,
-        "brotli": 136496
+        "raw": 438320,
+        "gzip": 173862,
+        "brotli": 136629
       },
       "absent": {
         "triggerImplementation": true,
@@ -319,14 +322,14 @@
         "dateTime"
       ],
       "js": {
-        "raw": 477218,
-        "gzip": 112665,
-        "brotli": 89998
+        "raw": 477740,
+        "gzip": 112893,
+        "brotli": 90328
       },
       "wasm": {
-        "raw": 424961,
-        "gzip": 168960,
-        "brotli": 133192
+        "raw": 425477,
+        "gzip": 169160,
+        "brotli": 133393
       },
       "absent": {
         "triggerImplementation": true,
@@ -346,14 +349,14 @@
         "windowFunctions"
       ],
       "js": {
-        "raw": 477456,
-        "gzip": 112714,
-        "brotli": 90172
+        "raw": 477975,
+        "gzip": 112931,
+        "brotli": 90265
       },
       "wasm": {
-        "raw": 431112,
-        "gzip": 171110,
-        "brotli": 134866
+        "raw": 431756,
+        "gzip": 171415,
+        "brotli": 135090
       },
       "absent": {
         "triggerImplementation": true,
@@ -373,14 +376,14 @@
         "schemaMetadata"
       ],
       "js": {
-        "raw": 468404,
-        "gzip": 110453,
-        "brotli": 88485
+        "raw": 468925,
+        "gzip": 110669,
+        "brotli": 88634
       },
       "wasm": {
-        "raw": 423152,
-        "gzip": 167437,
-        "brotli": 132318
+        "raw": 422875,
+        "gzip": 167692,
+        "brotli": 132129
       },
       "absent": {
         "triggerImplementation": true,
@@ -400,14 +403,14 @@
         "aggregateFilter"
       ],
       "js": {
-        "raw": 464433,
-        "gzip": 109419,
-        "brotli": 87650
+        "raw": 464955,
+        "gzip": 109642,
+        "brotli": 87744
       },
       "wasm": {
-        "raw": 419317,
-        "gzip": 165751,
-        "brotli": 130722
+        "raw": 419842,
+        "gzip": 166040,
+        "brotli": 131192
       },
       "absent": {
         "triggerImplementation": true,
@@ -436,14 +439,14 @@
         "windowFunctions"
       ],
       "js": {
-        "raw": 546690,
-        "gzip": 129806,
-        "brotli": 103047
+        "raw": 547994,
+        "gzip": 130203,
+        "brotli": 103275
       },
       "wasm": {
-        "raw": 485319,
-        "gzip": 193001,
-        "brotli": 151462
+        "raw": 486562,
+        "gzip": 193568,
+        "brotli": 152246
       },
       "absent": {
         "triggerImplementation": false,
@@ -474,14 +477,14 @@
         "windowFunctions"
       ],
       "js": {
-        "raw": 595044,
-        "gzip": 142035,
-        "brotli": 111886
+        "raw": 596369,
+        "gzip": 142440,
+        "brotli": 112305
       },
       "wasm": {
-        "raw": 523192,
-        "gzip": 207545,
-        "brotli": 163119
+        "raw": 524609,
+        "gzip": 208281,
+        "brotli": 163454
       },
       "absent": {
         "triggerImplementation": false,
@@ -499,14 +502,14 @@
       "name": "minimal",
       "features": [],
       "js": {
-        "raw": 500533,
-        "gzip": 118909,
-        "brotli": 94709
+        "raw": 501688,
+        "gzip": 119397,
+        "brotli": 95146
       },
       "wasm": {
-        "raw": 449731,
-        "gzip": 179322,
-        "brotli": 141936
+        "raw": 450458,
+        "gzip": 179701,
+        "brotli": 141986
       },
       "absent": {
         "triggerImplementation": true,
@@ -526,14 +529,14 @@
         "rightFullJoin"
       ],
       "js": {
-        "raw": 504634,
-        "gzip": 120001,
-        "brotli": 95542
+        "raw": 505790,
+        "gzip": 120505,
+        "brotli": 95655
       },
       "wasm": {
-        "raw": 454001,
-        "gzip": 181154,
-        "brotli": 142980
+        "raw": 454647,
+        "gzip": 181666,
+        "brotli": 143494
       },
       "absent": {
         "triggerImplementation": true,
@@ -553,14 +556,14 @@
         "strictTables"
       ],
       "js": {
-        "raw": 501568,
-        "gzip": 119195,
-        "brotli": 94979
+        "raw": 502723,
+        "gzip": 119668,
+        "brotli": 95374
       },
       "wasm": {
-        "raw": 450270,
-        "gzip": 179634,
-        "brotli": 142111
+        "raw": 451074,
+        "gzip": 179945,
+        "brotli": 142387
       },
       "absent": {
         "triggerImplementation": true,
@@ -580,14 +583,14 @@
         "primaryKeyIndex"
       ],
       "js": {
-        "raw": 520826,
-        "gzip": 123051,
-        "brotli": 97761
+        "raw": 521981,
+        "gzip": 123508,
+        "brotli": 98123
       },
       "wasm": {
-        "raw": 467083,
-        "gzip": 186251,
-        "brotli": 146435
+        "raw": 468169,
+        "gzip": 186786,
+        "brotli": 147046
       },
       "absent": {
         "triggerImplementation": true,
@@ -607,14 +610,14 @@
         "triggers"
       ],
       "js": {
-        "raw": 508195,
-        "gzip": 120790,
-        "brotli": 96108
+        "raw": 509351,
+        "gzip": 121271,
+        "brotli": 96606
       },
       "wasm": {
-        "raw": 456013,
-        "gzip": 182188,
-        "brotli": 143577
+        "raw": 457077,
+        "gzip": 182757,
+        "brotli": 144262
       },
       "absent": {
         "triggerImplementation": false,
@@ -634,14 +637,14 @@
         "foreignKeys"
       ],
       "js": {
-        "raw": 508112,
-        "gzip": 120725,
-        "brotli": 96031
+        "raw": 509267,
+        "gzip": 121211,
+        "brotli": 96553
       },
       "wasm": {
-        "raw": 455239,
-        "gzip": 181867,
-        "brotli": 143355
+        "raw": 456324,
+        "gzip": 182383,
+        "brotli": 143731
       },
       "absent": {
         "triggerImplementation": true,
@@ -661,14 +664,14 @@
         "sqlJson"
       ],
       "js": {
-        "raw": 524258,
-        "gzip": 124378,
-        "brotli": 98452
+        "raw": 525413,
+        "gzip": 124878,
+        "brotli": 98823
       },
       "wasm": {
-        "raw": 470348,
-        "gzip": 188202,
-        "brotli": 147849
+        "raw": 471422,
+        "gzip": 188626,
+        "brotli": 147985
       },
       "absent": {
         "triggerImplementation": true,
@@ -688,14 +691,14 @@
         "dateTime"
       ],
       "js": {
-        "raw": 514320,
-        "gzip": 122329,
-        "brotli": 97236
+        "raw": 515475,
+        "gzip": 122801,
+        "brotli": 97467
       },
       "wasm": {
-        "raw": 455887,
-        "gzip": 182873,
-        "brotli": 144056
+        "raw": 456931,
+        "gzip": 183577,
+        "brotli": 144692
       },
       "absent": {
         "triggerImplementation": true,
@@ -715,14 +718,14 @@
         "windowFunctions"
       ],
       "js": {
-        "raw": 514587,
-        "gzip": 122422,
-        "brotli": 97352
+        "raw": 515743,
+        "gzip": 122900,
+        "brotli": 97624
       },
       "wasm": {
-        "raw": 462481,
-        "gzip": 185503,
-        "brotli": 145648
+        "raw": 463556,
+        "gzip": 186079,
+        "brotli": 146316
       },
       "absent": {
         "triggerImplementation": true,
@@ -742,14 +745,14 @@
         "schemaMetadata"
       ],
       "js": {
-        "raw": 505497,
-        "gzip": 120127,
-        "brotli": 95603
+        "raw": 506652,
+        "gzip": 120583,
+        "brotli": 96075
       },
       "wasm": {
-        "raw": 454246,
-        "gzip": 181366,
-        "brotli": 143320
+        "raw": 455011,
+        "gzip": 181712,
+        "brotli": 143455
       },
       "absent": {
         "triggerImplementation": true,
@@ -769,14 +772,14 @@
         "aggregateFilter"
       ],
       "js": {
-        "raw": 501558,
-        "gzip": 119123,
-        "brotli": 95048
+        "raw": 502713,
+        "gzip": 119624,
+        "brotli": 95158
       },
       "wasm": {
-        "raw": 449805,
-        "gzip": 179437,
-        "brotli": 142057
+        "raw": 451163,
+        "gzip": 179900,
+        "brotli": 142436
       },
       "absent": {
         "triggerImplementation": true,
@@ -805,14 +808,14 @@
         "windowFunctions"
       ],
       "js": {
-        "raw": 587722,
-        "gzip": 140310,
-        "brotli": 110571
+        "raw": 588878,
+        "gzip": 140730,
+        "brotli": 111052
       },
       "wasm": {
-        "raw": 519531,
-        "gzip": 208381,
-        "brotli": 163627
+        "raw": 521870,
+        "gzip": 209059,
+        "brotli": 164131
       },
       "absent": {
         "triggerImplementation": false,
@@ -842,14 +845,14 @@
         "windowFunctions"
       ],
       "js": {
-        "raw": 592434,
-        "gzip": 141467,
-        "brotli": 111478
+        "raw": 593590,
+        "gzip": 141931,
+        "brotli": 111674
       },
       "wasm": {
-        "raw": 524303,
-        "gzip": 210126,
-        "brotli": 164868
+        "raw": 525126,
+        "gzip": 210662,
+        "brotli": 165329
       },
       "absent": {
         "triggerImplementation": false,

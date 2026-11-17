@@ -1,5 +1,15 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+
+- SQLite-compatible `ceil`, `ceiling`, `floor` and `trunc`, with independent `mathRounding` catalog specialization. Preserve INTEGER/REAL storage classes and validate arity before execution.
+
+### Changed
+
+- Write AOT, binary defined and positional SQL result cells directly to the existing JSON wire format, avoiding intermediate Json objects and Maps per cell. Retain the existing string/number formatter and object-row semantics.
+
 ## [0.1.2] - 2026-11-17
 
 ### Changed
@@ -53,3 +63,4 @@ Recompile fixed catalogs with the 0.1.1 compiler. SQLite compatibility remains a
 [0.1.0]: https://github.com/mizchi/sqlike/releases/tag/v0.1.0
 [0.1.2]: https://github.com/mizchi/sqlike/releases/tag/v0.1.2
 [0.1.1]: https://github.com/mizchi/sqlike/releases/tag/v0.1.1
+[Unreleased]: https://github.com/mizchi/sqlike/compare/v0.1.2...HEAD

@@ -62,6 +62,10 @@ bindでは`1n`がINTEGER、`1`がREALです。INTEGERを`number`へ丸めずに�
 
 各構文・関数の全入力を受理するものではありません。SQLiteの全PRAGMA、仮想テーブル、任意拡張、独自関数・collation等は対応範囲外です。未対応のSQLはエラーにする方針です。
 
+### 未リリースの追加
+
+`ceil` / `ceiling` / `floor` / `trunc`を追加しました。INTEGER入力はINTEGER、REALや小数・指数表記のTEXTはREALを返します。NULL・BLOB・数値に変換できないTEXTはNULLです。catalog選択ビルドでは`mathRounding`関数群として収集し、使わないcatalogから実装を除去します。数学関数全体への対応ではありません。
+
 ### 0.1.1の追加
 
 基本ランタイムに`IS DISTINCT FROM` / `IS NOT DISTINCT FROM`、64bitの`&` / `|` / `~`、`sign()`を追加しました。NULL・型変換・collationもSQLiteと差分検証します。

@@ -62,6 +62,7 @@ test("catalog-selected AOT and binary runtimes remove unused scalar and write im
         "like",
         "substring__value",
         "sql__round",
+        "math__rounding__value",
         "insert__rows",
         "prepare__update",
         "updated__row__from__plan",
@@ -86,6 +87,7 @@ test("catalog-selected AOT and binary runtimes remove unused scalar and write im
           await reopened.close();
           for (const sql of [
             "SELECT CASE WHEN 0 THEN glob('*',v) ELSE 1 END FROM t WHERE 0",
+            "SELECT CASE WHEN 0 THEN ceil(1.5) ELSE 1 END FROM t WHERE 0",
             "INSERT INTO t VALUES(2,'x')",
           ])
             await assert.rejects(
@@ -97,6 +99,7 @@ test("catalog-selected AOT and binary runtimes remove unused scalar and write im
           assert.deepEqual(openCompiled(raw, artifact).execute("get").rows, []);
           for (const sql of [
             "SELECT CASE WHEN 0 THEN glob('*',v) ELSE 1 END FROM t WHERE 0",
+            "SELECT CASE WHEN 0 THEN ceil(1.5) ELSE 1 END FROM t WHERE 0",
             "INSERT INTO t VALUES(2,'x')",
           ])
             assert.throws(
@@ -226,7 +229,7 @@ test("all core function families, trigger writes and transactions retain native 
       },
       {
         name: "scalar",
-        sql: "SELECT octet_length('😀'),quote('a'),unicode('é'),sign(-5),round(1.25,1),nullif(1,1),coalesce(NULL,2),ifnull(NULL,3),iif(1,4,5),if(0,4,5),changes(),last_insert_rowid(),typeof(1),hex('a'),length('😀'),lower('A'),upper('a'),abs(-5),1 IN(1,2),min(1,2),max(1,2)",
+        sql: "SELECT octet_length('😀'),quote('a'),unicode('é'),sign(-5),round(1.25,1),ceil(1.25),floor(-1.25),trunc(1.25),nullif(1,1),coalesce(NULL,2),ifnull(NULL,3),iif(1,4,5),if(0,4,5),changes(),last_insert_rowid(),typeof(1),hex('a'),length('😀'),lower('A'),upper('a'),abs(-5),1 IN(1,2),min(1,2),max(1,2)",
       },
       {
         name: "aggregate",
@@ -381,6 +384,7 @@ test("each core function family is independently selectable from catalog IR", as
     unicode: "SELECT unicode('é')",
     sign: "SELECT sign(-1)",
     round: "SELECT round(1.25,1)",
+    mathRounding: "SELECT ceil(1.25),ceiling(-1.25),floor(-1.25),trunc(1.25)",
     nullif: "SELECT nullif(1,1)",
     coalesce: "SELECT coalesce(NULL,1)",
     conditional: "SELECT iif(1,2,3)",

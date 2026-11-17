@@ -46,7 +46,7 @@ XSSは画面への出力境界で扱う。DB層でHTMLエスケープすると�
 
 比較対象は前段のmetadata共有を入れたローカルビルドの保存済み成果物。0.1.1 tagそのものとの比較ではない。[変更前の測定記録](../../measurements/bound-plan-before/aot-update-current.json)と成果物hashを照合し、同じページでJSON / binaryのJS / Wasmを比較する。catalog選択後の4経路は新baselineとして別に記録する。
 
-計測区間をまたいでもbindの順序を継続し、値を交互に変えるUPDATEへ同値書込が混ざらないことを回帰テストで確認する。ベンチにはUPDATEだけでなく、主キーSELECTのhit / missも追加した。返り値を計時中の最後の実行から保持し、native SQLiteで全行とSELECT / RETURNINGの型付き結果を検査する。全サンプル・hashは[`aot-update-current.json`](../../measurements/aot-update-current.json)、SQLiteとの比較は[`sqlite-speed-current.json`](../../measurements/sqlite-speed-current.json)。保存・通信・起動はengine内の時間と分ける。
+計測区間をまたいでもbindの順序を継続し、値を交互に変えるUPDATEへ同値書込が混ざらないことを回帰テストで確認する。ベンチにはUPDATEだけでなく、主キーSELECTのhit / missも追加した。返り値を計時中の最後の実行から保持し、native SQLiteで全行とSELECT / RETURNINGの型付き結果を検査する。全サンプル・hashは[`0.1.2時点のaot-update-current.json`](../../measurements/result-writer-before/aot-update-current.json)、SQLiteとの比較は[`sqlite-speed-current.json`](../../measurements/sqlite-speed-current.json)。保存・通信・起動はengine内の時間と分ける。
 
 <!-- bound-plan-results:start -->
 5,000行、µs/操作、7サンプル中央値。同じ経路の前段metadata共有版 → 実行用IR版。

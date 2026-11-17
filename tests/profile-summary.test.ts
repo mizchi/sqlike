@@ -36,3 +36,18 @@ test("CPU profile uses sample durations and attributes inclusive time without do
     10,
   );
 });
+
+test("direct result writers attribute child conversion and buffer time to JSON", () => {
+  const summary = summarizeProfile({
+    nodes: [
+      { id: 1, callFrame: { functionName: "(root)" }, children: [2] },
+      { id: 2, callFrame: { functionName: "_M0FP26mizchi6sqlike18write__result__row" }, children: [3, 5] },
+      { id: 3, callFrame: { functionName: "_M0FP26mizchi6sqlike19write__result__cell" }, children: [4] },
+      { id: 4, callFrame: { functionName: "int64_to_string" } },
+      { id: 5, callFrame: { functionName: "StringBuilder.write_char" } },
+    ],
+    samples: [2, 3, 4, 5],
+    timeDeltas: [1000, 2000, 3000, 4000],
+  });
+  assert.deepEqual(summary.categories, [{ name: "JSON", milliseconds: 10, percent: 100 }]);
+});

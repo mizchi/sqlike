@@ -46,6 +46,10 @@ Nodeでの中央値:
 
 とくにbind parseだけの差し替えでも、TEXTに`\ud800`を持つ同じ入力が「拒否」から「問い合わせ成功」へ変わった。この差は、機能不足を拒否して成功結果の互換性を守る方針に合わない。`valid` / serializeの単体で速い場合があることも、全経路の置き換えが安全という根拠にはしない。
 
+## 既存JSON出力の改善（未リリース）
+
+0.1.2以降、[AOT / binary / positional結果の直接writer](result-json-writer.md)を追加した。CellごとのJson object / Mapと結果の中間配列を省く。coreの文字列escape / REAL表記、bind decoder、object形式の結果は既存経路を使う。この変更は下記の直接ABIとは別である。
+
 ## 改善対象
 
 一括置換は採用しない。JS境界で`Json`を再構築せず、型付きbind / 結果を直接受け渡す経路を次の対象にする。

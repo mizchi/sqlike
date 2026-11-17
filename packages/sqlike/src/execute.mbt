@@ -1118,21 +1118,11 @@ fn database_exec_inner(
     if !read {
       db.serial += 1
     }
-    (
-      {
-        "rows": if positional {
-          Json::array(
-            rows.map(row => {
-              Json::array(
-                row.filter(b => !b.hidden).map(b => value_json(b.value)),
-              )
-            }),
-          )
-        } else {
-          result_json(rows)
-        },
-        "readonly": read,
-      } : Json).stringify()
+    if positional {
+      positional_result_json(rows, read)
+    } else {
+      ({ "rows": result_json(rows), "readonly": read } : Json).stringify()
+    }
   } catch {
     e => {
       if backup is Some(previous) {
