@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-11-17T08:56:30.645Z",
+  "measuredAt": "2026-11-17T12:30:25.966Z",
   "smoke": false,
   "cpu": "Apple M5",
   "chromium": "158.0.8127.18",
@@ -54,6 +54,7 @@
     "packages/sqlike/src/defined-sqlite/moon.pkg": "6d93d349a02f08b9beafb2f344b35bc858dd5b3b1fc81a59e557d2881c091bb7",
     "packages/sqlike/src/defined/defined.mbt": "caf0ae96fd7a7af9f94b3e831f2f9de2077a64caacdbb3d4029e2780ff4f044f",
     "packages/sqlike/src/defined/moon.pkg": "6c72c36fb88ebfab45a73ad8d209dcb3f593c9d1bc3ade7c5a6c952c1be947a9",
+    "packages/sqlike/src/delete_cache_wbtest.mbt": "e83f1556868e9eef124d00cfa528f60c5a4fd58a74c2fe2f582ec17b2efe304a",
     "packages/sqlike/src/evaluate.mbt": "67dc9ebde358babef258f002aa53977621a3367edf0934f72f4a7d984e2b11cd",
     "packages/sqlike/src/execute.mbt": "f543b2f2ea49d344d48117d4701d0fe7ca16108d93e71c30bd086de0909da8d9",
     "packages/sqlike/src/experimental-typed/moon.pkg": "084d8ea4cb24e8db437722c851ccca28bafb90b4530e16ec30640c1499754ef7",
@@ -70,10 +71,10 @@
     "packages/sqlike/src/function_collation.mbt": "43974dbcd892a8ed9b508800d9da4ef62fb9e5cd1d146a1b2f8fbb8869253ba3",
     "packages/sqlike/src/glob.mbt": "0013b77a567bbc46f292a63ad620b72ef1c0d8414f1a4777913beff3021759f0",
     "packages/sqlike/src/image.mbt": "86f91b3333bcabd2c8b1b662d6482fedc02f59c436db8d49bf31e4839128104a",
-    "packages/sqlike/src/index_cache.mbt": "28333aee7742ea4bcca840a426b901c2f219b063c65be55dda2c48c0057ed880",
+    "packages/sqlike/src/index_cache.mbt": "251a34ec2908c1c41ff159af6746fb04149f193cb31e0771cf54516e0be3d37d",
     "packages/sqlike/src/index_definition.mbt": "52801862d0eb516e9ac7c5bbd14bfbec86093753bdd92b011564a03d09d7a274",
     "packages/sqlike/src/index_metadata.mbt": "c1a2abd3b7203ca315dd5c907a87ccd2036b54cf6d00ad8c192732de87c69d8c",
-    "packages/sqlike/src/index_pages.mbt": "4cc68ee219f941faf50ddd3cb44e3bfa1c8ccb6211689c8345423b2ae804f063",
+    "packages/sqlike/src/index_pages.mbt": "bf0c06eacc6725f2ad4e595963db6af00a44c48c49d6ce2d1b98d154d67fe5bc",
     "packages/sqlike/src/index_pages_wbtest.mbt": "ff12525fbb548c9923272e7541588bd6bef95c6019667d5001b166804e62cdf3",
     "packages/sqlike/src/index_plan.mbt": "065b4f34edbf294dc3f0d9a16df29aba50d6de1af89e262809664f2f654c89f6",
     "packages/sqlike/src/index_wbtest.mbt": "f1df6de725e0344db2ea76d4662d6652b6b43514cb2a691fa8eaeda3465df3a9",
@@ -106,7 +107,7 @@
     "packages/sqlike/src/primary_index.mbt": "44cb6d7e4b22e1d9c0f367054bf9ba8e9e9733d5241f7f7792f0f2a3685b2a38",
     "packages/sqlike/src/program_compiler.mbt": "fcd9da9a6ed5af289566889ae6279ce3aebc04cebdf545790abd9ed1e22a3e18",
     "packages/sqlike/src/query.mbt": "c7b8d0525f71bedb98870de3b6b403d0635ccc83480319df4684ee68280e0e8e",
-    "packages/sqlike/src/query_plan.mbt": "9c932b02b4257646edd9dfdb146f0c230ffce7682193decdd657a9e7c42469ce",
+    "packages/sqlike/src/query_plan.mbt": "46430a3c4cc49438092ea11124541e2425668773609d0303d06346085f7f4c93",
     "packages/sqlike/src/result_writer.mbt": "0367d7ceea2d3a7e27a3ea8ef00178583f2b17ebcabaebd43e4f3e4580afcfd6",
     "packages/sqlike/src/result_writer_wbtest.mbt": "f9d65c105c685607431c959f27e89fc88bf69136bdfc3ab2f2c8274769ccfcbc",
     "packages/sqlike/src/row_pages.mbt": "35795aa2cc32e84b58e30b07b0f597908a51f1989d3371f9986c2b21188addb5",
@@ -137,8 +138,8 @@
     "src/aot-values.ts": "6edf9316e1e5cb42b4099c148c9f9b84bf0acf3903c5409975d4ce8b0f5aa438"
   },
   "artifacts": {
-    "_build/js/release/build/mizchi/sqlike/sqlike.js": "ff6b8f9364d788e36288f158e68f228222693a359a2bc362800c22a56f4b6e64",
-    "_build/js/release/build/mizchi/sqlike/experimental-typed/experimental-typed.js": "b651857e4fd6d5a1ea6eb93448c30a789327a7301dc519b4100e46b05bd0287e"
+    "_build/js/release/build/mizchi/sqlike/sqlike.js": "b85a04333d41bcbaf7a042d6a97e33361b2b3ad56d595eb28d2c59d7c572dae9",
+    "_build/js/release/build/mizchi/sqlike/experimental-typed/experimental-typed.js": "9bdb59abf8bfda9570693f67b0025b2a93477f97db3935c3e5b34a98c4fcb010"
   },
   "results": [
     {
@@ -149,85 +150,85 @@
           "query": "point",
           "engine": "json-to-native-values",
           "run": 0,
-          "iterations": 7578,
-          "milliseconds": 12.400000095367432
+          "iterations": 5015,
+          "milliseconds": 10.099999904632568
         },
         {
           "query": "point",
           "engine": "native-values",
           "run": 0,
-          "iterations": 13336,
-          "milliseconds": 11.699999809265137
+          "iterations": 10393,
+          "milliseconds": 12
         },
         {
           "query": "point",
           "engine": "native-values",
           "run": 1,
-          "iterations": 13336,
+          "iterations": 10393,
+          "milliseconds": 8.299999952316284
+        },
+        {
+          "query": "point",
+          "engine": "json-to-native-values",
+          "run": 1,
+          "iterations": 5015,
+          "milliseconds": 7.900000095367432
+        },
+        {
+          "query": "point",
+          "engine": "json-to-native-values",
+          "run": 2,
+          "iterations": 5015,
           "milliseconds": 8.200000047683716
         },
         {
           "query": "point",
-          "engine": "json-to-native-values",
-          "run": 1,
-          "iterations": 7578,
-          "milliseconds": 9.700000047683716
-        },
-        {
-          "query": "point",
-          "engine": "json-to-native-values",
-          "run": 2,
-          "iterations": 7578,
-          "milliseconds": 7.700000047683716
-        },
-        {
-          "query": "point",
           "engine": "native-values",
           "run": 2,
-          "iterations": 13336,
-          "milliseconds": 7.3999998569488525
+          "iterations": 10393,
+          "milliseconds": 6.700000047683716
         },
         {
           "query": "scan",
           "engine": "json-to-native-values",
           "run": 0,
           "iterations": 2,
-          "milliseconds": 1
+          "milliseconds": 1.0999999046325684
         },
         {
           "query": "scan",
           "engine": "native-values",
           "run": 0,
-          "iterations": 2,
-          "milliseconds": 0.2999999523162842
-        },
-        {
-          "query": "scan",
-          "engine": "native-values",
-          "run": 1,
           "iterations": 2,
           "milliseconds": 0.39999985694885254
         },
         {
           "query": "scan",
+          "engine": "native-values",
+          "run": 1,
+          "iterations": 2,
+          "milliseconds": 0.2999999523162842
+        },
+        {
+          "query": "scan",
           "engine": "json-to-native-values",
           "run": 1,
           "iterations": 2,
-          "milliseconds": 0.8999998569488525
+          "milliseconds": 1.1000001430511475
         },
         {
           "query": "scan",
           "engine": "json-to-native-values",
           "run": 2,
           "iterations": 2,
-          "milliseconds": 1
+          "milliseconds": 1.2999999523162842
         },
         {
           "query": "scan",
           "engine": "native-values",
           "run": 2,
           "iterations": 2,
-          "milliseconds": 0.40000009536743164
+          "milliseconds": 0.2999999523162842
         }
       ]
     },
@@ -239,85 +240,85 @@
           "query": "point",
           "engine": "json-to-native-values",
           "run": 0,
-          "iterations": 6175,
-          "milliseconds": 10.599999904632568
+          "iterations": 4767,
+          "milliseconds": 9.5
         },
         {
           "query": "point",
           "engine": "native-values",
           "run": 0,
-          "iterations": 17548,
-          "milliseconds": 13.700000047683716
+          "iterations": 17098,
+          "milliseconds": 16.40000009536743
         },
         {
           "query": "point",
           "engine": "native-values",
           "run": 1,
-          "iterations": 17548,
-          "milliseconds": 11
+          "iterations": 17098,
+          "milliseconds": 12
         },
         {
           "query": "point",
           "engine": "json-to-native-values",
           "run": 1,
-          "iterations": 6175,
-          "milliseconds": 8.5
+          "iterations": 4767,
+          "milliseconds": 6.799999952316284
         },
         {
           "query": "point",
           "engine": "json-to-native-values",
           "run": 2,
-          "iterations": 6175,
-          "milliseconds": 7.6000001430511475
+          "iterations": 4767,
+          "milliseconds": 6.1000001430511475
         },
         {
           "query": "point",
           "engine": "native-values",
           "run": 2,
-          "iterations": 17548,
-          "milliseconds": 10.699999809265137
+          "iterations": 17098,
+          "milliseconds": 11.799999952316284
         },
         {
           "query": "scan",
           "engine": "json-to-native-values",
           "run": 0,
           "iterations": 1,
-          "milliseconds": 77.70000004768372
+          "milliseconds": 82.69999980926514
         },
         {
           "query": "scan",
           "engine": "native-values",
           "run": 0,
-          "iterations": 2,
-          "milliseconds": 33.19999980926514
+          "iterations": 1,
+          "milliseconds": 21.09999990463257
         },
         {
           "query": "scan",
           "engine": "native-values",
           "run": 1,
-          "iterations": 2,
-          "milliseconds": 35
+          "iterations": 1,
+          "milliseconds": 21.800000190734863
         },
         {
           "query": "scan",
           "engine": "json-to-native-values",
           "run": 1,
           "iterations": 1,
-          "milliseconds": 75.5
+          "milliseconds": 91.40000009536743
         },
         {
           "query": "scan",
           "engine": "json-to-native-values",
           "run": 2,
           "iterations": 1,
-          "milliseconds": 75.39999985694885
+          "milliseconds": 84.20000004768372
         },
         {
           "query": "scan",
           "engine": "native-values",
           "run": 2,
-          "iterations": 2,
-          "milliseconds": 33.200000047683716
+          "iterations": 1,
+          "milliseconds": 20.09999990463257
         }
       ]
     }

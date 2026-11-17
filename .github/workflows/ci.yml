@@ -1,0 +1,92 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  CI: 'true'
+  WRANGLER_SEND_METRICS: 'false'
+
+jobs:
+  typecheck:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-ci
+      - name: Check types from a fresh build
+        run: |
+          mkdir -p generated/ci
+          just ci-typecheck 2>&1 | tee generated/ci/typecheck.log
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: ${{ !cancelled() }}
+        with:
+          name: ci-typecheck-${{ github.run_attempt }}
+          path: generated/ci/typecheck.log
+          if-no-files-found: warn
+          retention-days: 7
+
+  core:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-ci
+        with:
+          integration: 'true'
+      - name: Check core and Node consumers
+        run: |
+          mkdir -p generated/ci
+          just ci-node 2>&1 | tee generated/ci/core.log
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: ${{ !cancelled() }}
+        with:
+          name: ci-core-${{ github.run_attempt }}
+          path: |
+            generated/ci/core.log
+            test-results/
+          if-no-files-found: warn
+          retention-days: 7
+
+  browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-ci
+        with:
+          integration: 'true'
+      - name: Check browser persistence and SQLite compatibility
+        run: |
+          mkdir -p generated/ci
+          # Artifacts must contain reports from this run, never checked-in records.
+          rm -f measurements/sqlike-differential-node.json measurements/sqlike-differential-chromium.json
+          rm -f measurements/sqlite-feature-audit-node.json measurements/sqlite-feature-audit-chromium.json
+          just ci-browser 2>&1 | tee generated/ci/browser.log
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: ${{ !cancelled() }}
+        with:
+          name: ci-browser-${{ github.run_attempt }}
+          path: |
+            generated/ci/browser.log
+            test-results/
+            measurements/sqlike-differential-*.json
+            measurements/sqlite-feature-audit-*.json
+          if-no-files-found: warn
+          retention-days: 7

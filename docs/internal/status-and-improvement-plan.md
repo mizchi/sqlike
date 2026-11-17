@@ -124,7 +124,7 @@ Web標準APIによるBase64 / JSON置換、Turso WASMの外部配信は[試作](
 
 ### 現行の正しさの記録
 
-未リリースの丸め関数・結果writer・通常SQLのprepare再利用に続き、索引ブロック化・UPDATE格納・rowid採番と実験typed結果を追加した後の回帰はMoonBit **67件×JS / Wasm GC**、Node **397件**、Playwright **59件**と型チェック・本家Litestream復元を通過した。10万行benchmarkの64組、cache / feature選択、独立npm consumerも通過した。実験typed経路でも対応済み566ケースと上流1,000クエリを照合した。件数はこの更新時点の記録で、将来のテスト件数の固定目標ではない。
+未リリースの丸め関数・結果writer・通常SQLのprepare再利用に続き、索引ブロック化・UPDATE格納・rowid採番と実験typed結果を追加した後の回帰はMoonBit **68件×JS / Wasm GC**、Node **398件**、Playwright **59件**と型チェック・本家Litestream復元を通過した。10万行benchmarkの64組、cache / feature選択、独立npm consumerも通過した。実験typed経路でも対応済み566ケースと上流1,000クエリを照合した。件数はこの更新時点の記録で、将来のテスト件数の固定目標ではない。
 
 | ゲート | 現在の観測 | 合格が意味すること |
 | --- | --- | --- |
@@ -174,6 +174,11 @@ notes Programは20,049 B、SHA-256 `a6af7a52769d67773842aae483fcb856b46f628e3118
 チェックは完了条件を満たした時点で更新する。P0は受入に必要な検証、P1は一般アプリでの費用削減、P2は拡張 / 大規模化。実測後に費用対効果で並び替える。
 
 ### P0
+
+- [x] **Q01 / P0 — PRで回帰ゲートを自動実行**
+  - 完了条件: Node 24 / MoonBit版を固定し、型・MoonBit JS / Wasm・SQLite差分・主要な保存 / 復旧回帰・任意機能の除去をPRで実行。リリース専用workflowとは分離する
+  - 依存・費用: 小〜中。DELETE改善の次に進める。環境依存の速度閾値や全量benchmarkを通常PRの必須条件にはしない
+  - 結果: [PR回帰CI](ci.md)。typecheck / core / browserの独立job、固定toolchain、pnpm cache、Go / Litestream / Chromium、失敗時のログとtraceを用意。fresh checkoutの生成型依存を確認し、[実PRのLinux run](https://github.com/mizchi/sqlike/actions/runs/44086898693)で3 job成功。MoonBit 68件×JS / Wasm、Node 398件、Chromium 59件、対応済み566ケース×12経路の不一致0
 
 - [x] **V01 / P0 — 現行ソースで性能・容量・メモリの基準を再採取**
   - 完了条件: 同じSQL・seed・行数・payloadでSQL / IDB / アプリ転送 / 機能別サイズを採取しhashを記録。保持 / peak / backing storageを分離し、旧値と比較。DOの型復元による追加問い合わせも別計測
@@ -227,7 +232,12 @@ notes Programは20,049 B、SHA-256 `a6af7a52769d67773842aae483fcb856b46f628e3118
 - [x] **P10 / P1 — INSERTの最大rowid全走査を削減**
   - 実装: 明示rowidでは最大値を探索せず、自動採番では派生PrimaryIndexのlive maximumを再利用。最大値の削除・主キー変更後は再計算し、AUTOINCREMENTのsequenceも考慮する
   - 結果: Nodeの1万行・明示主キーINSERTはJS 481.00→26.33ms / Wasm 286.11→17.77ms。10万行も3秒予算内で3回完走。主キー変更・負のrowid・trigger・rollbackをnative照合。P08〜P10のBrotli増分は通常SQL +1,060 B / 全公開AOT +706 B
-  - 残課題: warmなrowid順cacheがあるpoint DELETEには改善を確認できなかった。flat配列の削除、制約・trigger / FK探索、atomic backupを分離して次の最適化対象を決める
+  - 後続: 初回に残ったwarmなrowid順cacheのDELETEはP11で改善。P08〜P10の数値は導入時の記録で、最新の再計測は[試行結果](optimization-trials.md)に示す
+
+- [x] **P11 / P1 — 大きいrowid順cacheのDELETEを改善**
+  - 実装: cold / warm / DELETE＋readとCPU profileで配列移動を切り分け、大きいrowid順cacheも共通leafへ分割。queryの範囲走査は最初のleafだけを探索し、以降は順次読む
+  - 検証: native差分で行順・逆順secondary range・OFFSET / residual、主キー移動、trigger・失敗文・SAVEPOINT / rollback、同期deltaを確認。制約・FK・counter・statement backupと公開 / 保存形式は維持
+  - 結果: [DELETEの計測と残課題](delete-cache.md)。Nodeの10万行・warm DELETEはJS 188.36→5.22µs / Wasm 50.30→3.24µs。全件readはJS 54.39→54.39ms。通常SQLのBrotli増分74 B / 全公開AOT 245 B。小DB・他の8経路・保存処理も再計測し、cacheなしに残るprepared metadata・行Environment等の固定費を次の候補とする
 
 - [x] **S01 / P1 — 変更列だけの永続差分。大きい未変更TEXT / BLOBまで行after-imageに含まれる**
   - 完了条件: version付き差分と旧形式replayを定義。4 KiB列を持つ1 / 16行更新で提出量を減らし、strict ACK・checkpoint込み時間・reopen・trigger・rollbackを比較。通常の小さい行を退行させない

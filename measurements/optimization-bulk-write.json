@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-11-17T08:57:20.631Z",
+  "measuredAt": "2026-11-17T12:31:16.413Z",
   "node": "v24.22.2",
   "sqlite": "3.53.4",
   "cpu": "Apple M5",
@@ -58,6 +58,7 @@
     "packages/sqlike/src/defined-sqlite/moon.pkg": "6d93d349a02f08b9beafb2f344b35bc858dd5b3b1fc81a59e557d2881c091bb7",
     "packages/sqlike/src/defined/defined.mbt": "caf0ae96fd7a7af9f94b3e831f2f9de2077a64caacdbb3d4029e2780ff4f044f",
     "packages/sqlike/src/defined/moon.pkg": "6c72c36fb88ebfab45a73ad8d209dcb3f593c9d1bc3ade7c5a6c952c1be947a9",
+    "packages/sqlike/src/delete_cache_wbtest.mbt": "e83f1556868e9eef124d00cfa528f60c5a4fd58a74c2fe2f582ec17b2efe304a",
     "packages/sqlike/src/evaluate.mbt": "67dc9ebde358babef258f002aa53977621a3367edf0934f72f4a7d984e2b11cd",
     "packages/sqlike/src/execute.mbt": "f543b2f2ea49d344d48117d4701d0fe7ca16108d93e71c30bd086de0909da8d9",
     "packages/sqlike/src/experimental-typed/moon.pkg": "084d8ea4cb24e8db437722c851ccca28bafb90b4530e16ec30640c1499754ef7",
@@ -74,10 +75,10 @@
     "packages/sqlike/src/function_collation.mbt": "43974dbcd892a8ed9b508800d9da4ef62fb9e5cd1d146a1b2f8fbb8869253ba3",
     "packages/sqlike/src/glob.mbt": "0013b77a567bbc46f292a63ad620b72ef1c0d8414f1a4777913beff3021759f0",
     "packages/sqlike/src/image.mbt": "86f91b3333bcabd2c8b1b662d6482fedc02f59c436db8d49bf31e4839128104a",
-    "packages/sqlike/src/index_cache.mbt": "28333aee7742ea4bcca840a426b901c2f219b063c65be55dda2c48c0057ed880",
+    "packages/sqlike/src/index_cache.mbt": "251a34ec2908c1c41ff159af6746fb04149f193cb31e0771cf54516e0be3d37d",
     "packages/sqlike/src/index_definition.mbt": "52801862d0eb516e9ac7c5bbd14bfbec86093753bdd92b011564a03d09d7a274",
     "packages/sqlike/src/index_metadata.mbt": "c1a2abd3b7203ca315dd5c907a87ccd2036b54cf6d00ad8c192732de87c69d8c",
-    "packages/sqlike/src/index_pages.mbt": "4cc68ee219f941faf50ddd3cb44e3bfa1c8ccb6211689c8345423b2ae804f063",
+    "packages/sqlike/src/index_pages.mbt": "bf0c06eacc6725f2ad4e595963db6af00a44c48c49d6ce2d1b98d154d67fe5bc",
     "packages/sqlike/src/index_pages_wbtest.mbt": "ff12525fbb548c9923272e7541588bd6bef95c6019667d5001b166804e62cdf3",
     "packages/sqlike/src/index_plan.mbt": "065b4f34edbf294dc3f0d9a16df29aba50d6de1af89e262809664f2f654c89f6",
     "packages/sqlike/src/index_wbtest.mbt": "f1df6de725e0344db2ea76d4662d6652b6b43514cb2a691fa8eaeda3465df3a9",
@@ -110,7 +111,7 @@
     "packages/sqlike/src/primary_index.mbt": "44cb6d7e4b22e1d9c0f367054bf9ba8e9e9733d5241f7f7792f0f2a3685b2a38",
     "packages/sqlike/src/program_compiler.mbt": "fcd9da9a6ed5af289566889ae6279ce3aebc04cebdf545790abd9ed1e22a3e18",
     "packages/sqlike/src/query.mbt": "c7b8d0525f71bedb98870de3b6b403d0635ccc83480319df4684ee68280e0e8e",
-    "packages/sqlike/src/query_plan.mbt": "9c932b02b4257646edd9dfdb146f0c230ffce7682193decdd657a9e7c42469ce",
+    "packages/sqlike/src/query_plan.mbt": "46430a3c4cc49438092ea11124541e2425668773609d0303d06346085f7f4c93",
     "packages/sqlike/src/result_writer.mbt": "0367d7ceea2d3a7e27a3ea8ef00178583f2b17ebcabaebd43e4f3e4580afcfd6",
     "packages/sqlike/src/result_writer_wbtest.mbt": "f9d65c105c685607431c959f27e89fc88bf69136bdfc3ab2f2c8274769ccfcbc",
     "packages/sqlike/src/row_pages.mbt": "35795aa2cc32e84b58e30b07b0f597908a51f1989d3371f9986c2b21188addb5",
@@ -143,8 +144,8 @@
   "artifacts": {
     "generated/optimization-trials/before/sqlike.js": "5c9969f19eaeb420aaf23d3905e71e1b2a27c6ee44d841df7a1185c181d3a1fd",
     "generated/optimization-trials/before/sqlike.wasm": "c7545ee519cc1d4b84b09fb6ada11dc3d79496808f406e3e072709f49eec23a6",
-    "_build/js/release/build/mizchi/sqlike/sqlike.js": "ff6b8f9364d788e36288f158e68f228222693a359a2bc362800c22a56f4b6e64",
-    "_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm": "3c9f585b09d8e80309d9fdaa1419d41078c7ffc17b1b66f55448935f7140ea8b"
+    "_build/js/release/build/mizchi/sqlike/sqlike.js": "b85a04333d41bcbaf7a042d6a97e33361b2b3ad56d595eb28d2c59d7c572dae9",
+    "_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm": "99ee4724b248c86938a46b113973ac039978191ac301c15da1c795575b894efd"
   },
   "results": [
     {
@@ -153,10 +154,10 @@
       "engine": "before/js",
       "run": 0,
       "inserted": 1000,
-      "insertMilliseconds": 35.65341599999999,
+      "insertMilliseconds": 45.85279200000002,
       "insertStatus": "complete",
       "deleted": 500,
-      "deleteMilliseconds": 8.234916999999996,
+      "deleteMilliseconds": 11.382417000000004,
       "verified": true
     },
     {
@@ -165,10 +166,10 @@
       "engine": "before/wasm",
       "run": 0,
       "inserted": 1000,
-      "insertMilliseconds": 17.502040999999963,
+      "insertMilliseconds": 19.437083,
       "insertStatus": "complete",
       "deleted": 500,
-      "deleteMilliseconds": 3.943667000000005,
+      "deleteMilliseconds": 5.247375000000005,
       "verified": true
     },
     {
@@ -177,10 +178,10 @@
       "engine": "after/js",
       "run": 0,
       "inserted": 1000,
-      "insertMilliseconds": 17.323957999999948,
+      "insertMilliseconds": 20.731209000000035,
       "insertStatus": "complete",
       "deleted": 500,
-      "deleteMilliseconds": 8.106583,
+      "deleteMilliseconds": 10.797124999999994,
       "verified": true
     },
     {
@@ -189,10 +190,10 @@
       "engine": "after/wasm",
       "run": 0,
       "inserted": 1000,
-      "insertMilliseconds": 14.111000000000047,
+      "insertMilliseconds": 15.482332999999983,
       "insertStatus": "complete",
       "deleted": 500,
-      "deleteMilliseconds": 4.022207999999978,
+      "deleteMilliseconds": 5.971124999999972,
       "verified": true
     },
     {
@@ -201,10 +202,10 @@
       "engine": "sqlite/prepared",
       "run": 0,
       "inserted": 1000,
-      "insertMilliseconds": 0.13024999999998954,
+      "insertMilliseconds": 0.11675000000002456,
       "insertStatus": "complete",
       "deleted": 500,
-      "deleteMilliseconds": 0.3236660000000029,
+      "deleteMilliseconds": 0.3084169999999631,
       "verified": true
     },
     {
@@ -213,10 +214,10 @@
       "engine": "before/js",
       "run": 1,
       "inserted": 1000,
-      "insertMilliseconds": 19.544250000000034,
+      "insertMilliseconds": 24.942709000000036,
       "insertStatus": "complete",
       "deleted": 500,
-      "deleteMilliseconds": 4.762667000000022,
+      "deleteMilliseconds": 8.744416000000001,
       "verified": true
     },
     {
@@ -225,10 +226,10 @@
       "engine": "sqlite/prepared",
       "run": 1,
       "inserted": 1000,
-      "insertMilliseconds": 0.11945800000000872,
+      "insertMilliseconds": 0.11712499999998727,
       "insertStatus": "complete",
       "deleted": 500,
-      "deleteMilliseconds": 0.3629589999999894,
+      "deleteMilliseconds": 0.3583749999999668,
       "verified": true
     },
     {
@@ -237,10 +238,10 @@
       "engine": "after/wasm",
       "run": 1,
       "inserted": 1000,
-      "insertMilliseconds": 4.33016600000002,
+      "insertMilliseconds": 6.062999999999988,
       "insertStatus": "complete",
       "deleted": 500,
-      "deleteMilliseconds": 4.252165999999988,
+      "deleteMilliseconds": 5.070749999999975,
       "verified": true
     },
     {
@@ -249,10 +250,10 @@
       "engine": "after/js",
       "run": 1,
       "inserted": 1000,
-      "insertMilliseconds": 5.419500000000028,
+      "insertMilliseconds": 7.9102080000000115,
       "insertStatus": "complete",
       "deleted": 500,
-      "deleteMilliseconds": 4.180041999999958,
+      "deleteMilliseconds": 8.58095800000001,
       "verified": true
     },
     {
@@ -261,10 +262,10 @@
       "engine": "before/wasm",
       "run": 1,
       "inserted": 1000,
-      "insertMilliseconds": 5.65954099999999,
+      "insertMilliseconds": 9.293000000000006,
       "insertStatus": "complete",
       "deleted": 500,
-      "deleteMilliseconds": 3.3854160000000206,
+      "deleteMilliseconds": 5.82487500000002,
       "verified": true
     },
     {
@@ -273,10 +274,10 @@
       "engine": "after/js",
       "run": 2,
       "inserted": 1000,
-      "insertMilliseconds": 3.9699580000000196,
+      "insertMilliseconds": 8.670999999999992,
       "insertStatus": "complete",
       "deleted": 500,
-      "deleteMilliseconds": 3.2915419999999926,
+      "deleteMilliseconds": 7.8167080000000055,
       "verified": true
     },
     {
@@ -285,10 +286,10 @@
       "engine": "after/wasm",
       "run": 2,
       "inserted": 1000,
-      "insertMilliseconds": 3.4599999999999795,
+      "insertMilliseconds": 6.539708000000019,
       "insertStatus": "complete",
       "deleted": 500,
-      "deleteMilliseconds": 4.751207999999963,
+      "deleteMilliseconds": 4.855208000000005,
       "verified": true
     },
     {
@@ -297,10 +298,10 @@
       "engine": "sqlite/prepared",
       "run": 2,
       "inserted": 1000,
-      "insertMilliseconds": 0.141666999999984,
+      "insertMilliseconds": 0.25791599999996606,
       "insertStatus": "complete",
       "deleted": 500,
-      "deleteMilliseconds": 0.30820899999997664,
+      "deleteMilliseconds": 0.9072909999999865,
       "verified": true
     },
     {
@@ -309,10 +310,10 @@
       "engine": "before/js",
       "run": 2,
       "inserted": 1000,
-      "insertMilliseconds": 18.698417000000006,
+      "insertMilliseconds": 28.419832999999983,
       "insertStatus": "complete",
       "deleted": 500,
-      "deleteMilliseconds": 3.545667000000037,
+      "deleteMilliseconds": 8.155999999999949,
       "verified": true
     },
     {
@@ -321,10 +322,10 @@
       "engine": "before/wasm",
       "run": 2,
       "inserted": 1000,
-      "insertMilliseconds": 5.31633400000004,
+      "insertMilliseconds": 9.627624999999966,
       "insertStatus": "complete",
       "deleted": 500,
-      "deleteMilliseconds": 2.358624999999961,
+      "deleteMilliseconds": 2.9319580000000087,
       "verified": true
     },
     {
@@ -333,10 +334,10 @@
       "engine": "before/js",
       "run": 0,
       "inserted": 1000,
-      "insertMilliseconds": 16.540500000000065,
+      "insertMilliseconds": 21.97908300000006,
       "insertStatus": "complete",
       "deleted": 500,
-      "deleteMilliseconds": 3.296375000000012,
+      "deleteMilliseconds": 3.775916999999936,
       "verified": true
     },
     {
@@ -345,10 +346,10 @@
       "engine": "before/wasm",
       "run": 0,
       "inserted": 1000,
-      "insertMilliseconds": 4.111250000000041,
+      "insertMilliseconds": 6.067082999999911,
       "insertStatus": "complete",
       "deleted": 500,
-      "deleteMilliseconds": 2.642916000000014,
+      "deleteMilliseconds": 7.641791000000012,
       "verified": true
     },
     {
@@ -357,10 +358,10 @@
       "engine": "after/js",
       "run": 0,
       "inserted": 1000,
-      "insertMilliseconds": 3.215832999999975,
+      "insertMilliseconds": 6.155666999999994,
       "insertStatus": "complete",
       "deleted": 500,
-      "deleteMilliseconds": 3.370207999999934,
+      "deleteMilliseconds": 5.120083000000022,
       "verified": true
     },
     {
@@ -369,10 +370,10 @@
       "engine": "after/wasm",
       "run": 0,
       "inserted": 1000,
-      "insertMilliseconds": 2.8465419999999995,
+      "insertMilliseconds": 4.785624999999982,
       "insertStatus": "complete",
       "deleted": 500,
-      "deleteMilliseconds": 2.923667000000023,
+      "deleteMilliseconds": 4.853749999999991,
       "verified": true
     },
     {
@@ -381,10 +382,10 @@
       "engine": "sqlite/prepared",
       "run": 0,
       "inserted": 1000,
-      "insertMilliseconds": 0.0871670000000222,
+      "insertMilliseconds": 0.092708000000016,
       "insertStatus": "complete",
       "deleted": 500,
-      "deleteMilliseconds": 0.3286249999999882,
+      "deleteMilliseconds": 0.34420799999998053,
       "verified": true
     },
     {
@@ -393,10 +394,10 @@
       "engine": "before/js",
       "run": 1,
       "inserted": 1000,
-      "insertMilliseconds": 13.865458000000103,
+      "insertMilliseconds": 9.750540999999998,
       "insertStatus": "complete",
       "deleted": 500,
-      "deleteMilliseconds": 3.6444999999999936,
+      "deleteMilliseconds": 3.760332999999946,
       "verified": true
     },
     {
@@ -405,10 +406,10 @@
       "engine": "sqlite/prepared",
       "run": 1,
       "inserted": 1000,
-      "insertMilliseconds": 0.08166699999992488,
+      "insertMilliseconds": 0.08562500000005002,
       "insertStatus": "complete",
       "deleted": 500,
-      "deleteMilliseconds": 0.3234580000000733,
+      "deleteMilliseconds": 0.33237499999995634,
       "verified": true
     },
     {
@@ -417,10 +418,10 @@
       "engine": "after/wasm",
       "run": 1,
       "inserted": 1000,
-      "insertMilliseconds": 1.9273749999999836,
+      "insertMilliseconds": 2.3497919999999795,
       "insertStatus": "complete",
       "deleted": 500,
-      "deleteMilliseconds": 2.0293340000000626,
+      "deleteMilliseconds": 4.323291999999924,
       "verified": true
     },
     {
@@ -429,10 +430,10 @@
       "engine": "after/js",
       "run": 1,
       "inserted": 1000,
-      "insertMilliseconds": 2.65366599999993,
+      "insertMilliseconds": 5.536500000000046,
       "insertStatus": "complete",
       "deleted": 500,
-      "deleteMilliseconds": 3.0802079999999705,
+      "deleteMilliseconds": 5.406582999999955,
       "verified": true
     },
     {
@@ -441,10 +442,10 @@
       "engine": "before/wasm",
       "run": 1,
       "inserted": 1000,
-      "insertMilliseconds": 3.620207999999934,
+      "insertMilliseconds": 4.022542000000044,
       "insertStatus": "complete",
       "deleted": 500,
-      "deleteMilliseconds": 1.9446669999999813,
+      "deleteMilliseconds": 4.527541999999926,
       "verified": true
     },
     {
@@ -453,10 +454,10 @@
       "engine": "after/js",
       "run": 2,
       "inserted": 1000,
-      "insertMilliseconds": 2.3958330000000387,
+      "insertMilliseconds": 2.9706249999999272,
       "insertStatus": "complete",
       "deleted": 500,
-      "deleteMilliseconds": 2.8143749999999272,
+      "deleteMilliseconds": 7.102999999999952,
       "verified": true
     },
     {
@@ -465,10 +466,10 @@
       "engine": "after/wasm",
       "run": 2,
       "inserted": 1000,
-      "insertMilliseconds": 1.556791999999973,
+      "insertMilliseconds": 2.2583329999999933,
       "insertStatus": "complete",
       "deleted": 500,
-      "deleteMilliseconds": 1.7067499999999427,
+      "deleteMilliseconds": 1.9037499999999454,
       "verified": true
     },
     {
@@ -477,10 +478,10 @@
       "engine": "sqlite/prepared",
       "run": 2,
       "inserted": 1000,
-      "insertMilliseconds": 0.06870900000001257,
+      "insertMilliseconds": 0.08104200000002493,
       "insertStatus": "complete",
       "deleted": 500,
-      "deleteMilliseconds": 0.31416699999999764,
+      "deleteMilliseconds": 0.35579200000006495,
       "verified": true
     },
     {
@@ -489,10 +490,10 @@
       "engine": "before/js",
       "run": 2,
       "inserted": 1000,
-      "insertMilliseconds": 13.781583999999953,
+      "insertMilliseconds": 10.655665999999997,
       "insertStatus": "complete",
       "deleted": 500,
-      "deleteMilliseconds": 2.98012499999993,
+      "deleteMilliseconds": 3.4443750000000364,
       "verified": true
     },
     {
@@ -501,10 +502,10 @@
       "engine": "before/wasm",
       "run": 2,
       "inserted": 1000,
-      "insertMilliseconds": 3.35775000000001,
+      "insertMilliseconds": 4.541707999999971,
       "insertStatus": "complete",
       "deleted": 500,
-      "deleteMilliseconds": 1.716209000000049,
+      "deleteMilliseconds": 2.710499999999911,
       "verified": true
     },
     {
@@ -513,10 +514,10 @@
       "engine": "before/js",
       "run": 0,
       "inserted": 10000,
-      "insertMilliseconds": 546.042167,
+      "insertMilliseconds": 577.475834,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 34.61241700000005,
+      "deleteMilliseconds": 25.57462499999997,
       "verified": true
     },
     {
@@ -525,10 +526,10 @@
       "engine": "before/wasm",
       "run": 0,
       "inserted": 10000,
-      "insertMilliseconds": 405.08841600000005,
+      "insertMilliseconds": 365.9659999999999,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 10.140250000000151,
+      "deleteMilliseconds": 16.153332999999975,
       "verified": true
     },
     {
@@ -537,10 +538,10 @@
       "engine": "after/js",
       "run": 0,
       "inserted": 10000,
-      "insertMilliseconds": 33.40887500000008,
+      "insertMilliseconds": 57.52925000000005,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 22.546125000000075,
+      "deleteMilliseconds": 16.086000000000013,
       "verified": true
     },
     {
@@ -549,10 +550,10 @@
       "engine": "after/wasm",
       "run": 0,
       "inserted": 10000,
-      "insertMilliseconds": 18.507542000000058,
+      "insertMilliseconds": 34.47329200000013,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 4.444833000000017,
+      "deleteMilliseconds": 5.1809169999999085,
       "verified": true
     },
     {
@@ -561,10 +562,10 @@
       "engine": "sqlite/prepared",
       "run": 0,
       "inserted": 10000,
-      "insertMilliseconds": 1.004415999999992,
+      "insertMilliseconds": 1.1407079999999041,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 0.5395829999999933,
+      "deleteMilliseconds": 0.5688330000000406,
       "verified": true
     },
     {
@@ -573,10 +574,10 @@
       "engine": "before/js",
       "run": 1,
       "inserted": 10000,
-      "insertMilliseconds": 477.828084,
+      "insertMilliseconds": 615.0644590000002,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 19.01616699999977,
+      "deleteMilliseconds": 22.330249999999978,
       "verified": true
     },
     {
@@ -585,10 +586,10 @@
       "engine": "sqlite/prepared",
       "run": 1,
       "inserted": 10000,
-      "insertMilliseconds": 0.994499999999789,
+      "insertMilliseconds": 1.0866659999996955,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 0.5262910000001284,
+      "deleteMilliseconds": 0.5521670000002814,
       "verified": true
     },
     {
@@ -597,10 +598,10 @@
       "engine": "after/wasm",
       "run": 1,
       "inserted": 10000,
-      "insertMilliseconds": 16.696042000000034,
+      "insertMilliseconds": 21.192125000000033,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 4.271458000000166,
+      "deleteMilliseconds": 4.399791999999707,
       "verified": true
     },
     {
@@ -609,10 +610,10 @@
       "engine": "after/js",
       "run": 1,
       "inserted": 10000,
-      "insertMilliseconds": 26.3293749999998,
+      "insertMilliseconds": 31.542249999999967,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 21.9409169999999,
+      "deleteMilliseconds": 5.229499999999916,
       "verified": true
     },
     {
@@ -621,10 +622,10 @@
       "engine": "before/wasm",
       "run": 1,
       "inserted": 10000,
-      "insertMilliseconds": 286.1106669999999,
+      "insertMilliseconds": 317.28025000000025,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 4.052959000000101,
+      "deleteMilliseconds": 10.116708000000017,
       "verified": true
     },
     {
@@ -633,10 +634,10 @@
       "engine": "after/js",
       "run": 2,
       "inserted": 10000,
-      "insertMilliseconds": 26.2057920000002,
+      "insertMilliseconds": 73.09287500000028,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 26.495000000000346,
+      "deleteMilliseconds": 12.295124999999643,
       "verified": true
     },
     {
@@ -645,10 +646,10 @@
       "engine": "after/wasm",
       "run": 2,
       "inserted": 10000,
-      "insertMilliseconds": 17.768583000000035,
+      "insertMilliseconds": 17.996415999999954,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 4.306625000000167,
+      "deleteMilliseconds": 3.783625000000029,
       "verified": true
     },
     {
@@ -657,10 +658,10 @@
       "engine": "sqlite/prepared",
       "run": 2,
       "inserted": 10000,
-      "insertMilliseconds": 0.9798329999998714,
+      "insertMilliseconds": 1.2849579999997331,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 0.5307499999998981,
+      "deleteMilliseconds": 0.6854170000001432,
       "verified": true
     },
     {
@@ -669,10 +670,10 @@
       "engine": "before/js",
       "run": 2,
       "inserted": 10000,
-      "insertMilliseconds": 480.99625000000015,
+      "insertMilliseconds": 588.5009999999997,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 14.214958000000024,
+      "deleteMilliseconds": 26.592208000000028,
       "verified": true
     },
     {
@@ -681,10 +682,10 @@
       "engine": "before/wasm",
       "run": 2,
       "inserted": 10000,
-      "insertMilliseconds": 272.61195899999984,
+      "insertMilliseconds": 285.9880410000005,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 4.219375000000127,
+      "deleteMilliseconds": 4.1582909999997355,
       "verified": true
     },
     {
@@ -693,10 +694,10 @@
       "engine": "before/js",
       "run": 0,
       "inserted": 10000,
-      "insertMilliseconds": 480.8858330000003,
+      "insertMilliseconds": 552.4850839999999,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 11.383458999999675,
+      "deleteMilliseconds": 23.572583000000122,
       "verified": true
     },
     {
@@ -705,10 +706,10 @@
       "engine": "before/wasm",
       "run": 0,
       "inserted": 10000,
-      "insertMilliseconds": 314.9229999999998,
+      "insertMilliseconds": 280.5806249999996,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 3.9098329999997077,
+      "deleteMilliseconds": 5.603375000000597,
       "verified": true
     },
     {
@@ -717,10 +718,10 @@
       "engine": "after/js",
       "run": 0,
       "inserted": 10000,
-      "insertMilliseconds": 24.571625000000495,
+      "insertMilliseconds": 24.870999999999185,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 20.32054100000005,
+      "deleteMilliseconds": 7.938458999999966,
       "verified": true
     },
     {
@@ -729,10 +730,10 @@
       "engine": "after/wasm",
       "run": 0,
       "inserted": 10000,
-      "insertMilliseconds": 15.755291000000398,
+      "insertMilliseconds": 13.282290999999532,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 4.28308399999969,
+      "deleteMilliseconds": 3.2225829999997586,
       "verified": true
     },
     {
@@ -741,10 +742,10 @@
       "engine": "sqlite/prepared",
       "run": 0,
       "inserted": 10000,
-      "insertMilliseconds": 0.6149580000001151,
+      "insertMilliseconds": 0.6157499999999345,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 0.5221670000000813,
+      "deleteMilliseconds": 0.509249999999156,
       "verified": true
     },
     {
@@ -753,10 +754,10 @@
       "engine": "before/js",
       "run": 1,
       "inserted": 10000,
-      "insertMilliseconds": 517.3339169999999,
+      "insertMilliseconds": 490.35362499999974,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 11.178458000000319,
+      "deleteMilliseconds": 22.649708000000828,
       "verified": true
     },
     {
@@ -765,10 +766,10 @@
       "engine": "sqlite/prepared",
       "run": 1,
       "inserted": 10000,
-      "insertMilliseconds": 0.6396249999997963,
+      "insertMilliseconds": 0.6443340000005264,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 0.5409170000002632,
+      "deleteMilliseconds": 0.5437500000007276,
       "verified": true
     },
     {
@@ -777,10 +778,10 @@
       "engine": "after/wasm",
       "run": 1,
       "inserted": 10000,
-      "insertMilliseconds": 14.313000000000102,
+      "insertMilliseconds": 14.847125000000233,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 4.101999999999862,
+      "deleteMilliseconds": 3.1600420000004306,
       "verified": true
     },
     {
@@ -789,10 +790,10 @@
       "engine": "after/js",
       "run": 1,
       "inserted": 10000,
-      "insertMilliseconds": 23.055041999999958,
+      "insertMilliseconds": 26.202790999999706,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 19.633332999999766,
+      "deleteMilliseconds": 7.860666999999921,
       "verified": true
     },
     {
@@ -801,10 +802,10 @@
       "engine": "before/wasm",
       "run": 1,
       "inserted": 10000,
-      "insertMilliseconds": 270.2843750000002,
+      "insertMilliseconds": 276.5728330000002,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 3.8322500000003856,
+      "deleteMilliseconds": 5.4256249999998545,
       "verified": true
     },
     {
@@ -813,10 +814,10 @@
       "engine": "after/js",
       "run": 2,
       "inserted": 10000,
-      "insertMilliseconds": 19.7368749999996,
+      "insertMilliseconds": 27.32587499999954,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 20.249542000000474,
+      "deleteMilliseconds": 8.62762500000008,
       "verified": true
     },
     {
@@ -825,10 +826,10 @@
       "engine": "after/wasm",
       "run": 2,
       "inserted": 10000,
-      "insertMilliseconds": 12.559250000000247,
+      "insertMilliseconds": 16.44154200000048,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 8.231584000000112,
+      "deleteMilliseconds": 4.503374999999323,
       "verified": true
     },
     {
@@ -837,10 +838,10 @@
       "engine": "sqlite/prepared",
       "run": 2,
       "inserted": 10000,
-      "insertMilliseconds": 0.5989159999999174,
+      "insertMilliseconds": 0.6247080000002825,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 0.544875000000502,
+      "deleteMilliseconds": 0.5278749999997672,
       "verified": true
     },
     {
@@ -849,10 +850,10 @@
       "engine": "before/js",
       "run": 2,
       "inserted": 10000,
-      "insertMilliseconds": 467.8166250000004,
+      "insertMilliseconds": 505.6108750000003,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 12.170541999999841,
+      "deleteMilliseconds": 24.04283299999952,
       "verified": true
     },
     {
@@ -861,199 +862,199 @@
       "engine": "before/wasm",
       "run": 2,
       "inserted": 10000,
-      "insertMilliseconds": 263.07279199999994,
+      "insertMilliseconds": 290.61812499999996,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 8.471708000000035,
+      "deleteMilliseconds": 4.751834000000599,
       "verified": true
     },
     {
       "rows": 100000,
       "mode": "explicit",
-      "engine": "before/js",
-      "run": 0,
-      "inserted": 25400,
-      "insertMilliseconds": 3021.541916,
-      "insertStatus": "budget-exceeded",
-      "deleted": 0,
-      "deleteMilliseconds": null,
-      "verified": true
-    },
-    {
-      "rows": 100000,
-      "mode": "explicit",
-      "engine": "before/wasm",
-      "run": 0,
-      "inserted": 32700,
-      "insertMilliseconds": 3002.62925,
-      "insertStatus": "budget-exceeded",
-      "deleted": 0,
-      "deleteMilliseconds": null,
-      "verified": true
-    },
-    {
-      "rows": 100000,
-      "mode": "explicit",
-      "engine": "after/js",
-      "run": 0,
-      "inserted": 100000,
-      "insertMilliseconds": 289.880083,
-      "insertStatus": "complete",
-      "deleted": 1000,
-      "deleteMilliseconds": 166.73525000000154,
-      "verified": true
-    },
-    {
-      "rows": 100000,
-      "mode": "explicit",
-      "engine": "after/wasm",
-      "run": 0,
-      "inserted": 100000,
-      "insertMilliseconds": 179.79670799999985,
-      "insertStatus": "complete",
-      "deleted": 1000,
-      "deleteMilliseconds": 43.87275000000045,
-      "verified": true
-    },
-    {
-      "rows": 100000,
-      "mode": "explicit",
-      "engine": "sqlite/prepared",
-      "run": 0,
-      "inserted": 100000,
-      "insertMilliseconds": 10.66424999999981,
-      "insertStatus": "complete",
-      "deleted": 1000,
-      "deleteMilliseconds": 0.5407500000001164,
-      "verified": true
-    },
-    {
-      "rows": 100000,
-      "mode": "explicit",
-      "engine": "before/js",
-      "run": 1,
-      "inserted": 24700,
-      "insertMilliseconds": 3007.654542,
-      "insertStatus": "budget-exceeded",
-      "deleted": 0,
-      "deleteMilliseconds": null,
-      "verified": true
-    },
-    {
-      "rows": 100000,
-      "mode": "explicit",
-      "engine": "sqlite/prepared",
-      "run": 1,
-      "inserted": 100000,
-      "insertMilliseconds": 11.05754099999831,
-      "insertStatus": "complete",
-      "deleted": 1000,
-      "deleteMilliseconds": 0.535874999997759,
-      "verified": true
-    },
-    {
-      "rows": 100000,
-      "mode": "explicit",
-      "engine": "after/wasm",
-      "run": 1,
-      "inserted": 100000,
-      "insertMilliseconds": 192.8549579999999,
-      "insertStatus": "complete",
-      "deleted": 1000,
-      "deleteMilliseconds": 16.734375,
-      "verified": true
-    },
-    {
-      "rows": 100000,
-      "mode": "explicit",
-      "engine": "after/js",
-      "run": 1,
-      "inserted": 100000,
-      "insertMilliseconds": 303.2239579999987,
-      "insertStatus": "complete",
-      "deleted": 1000,
-      "deleteMilliseconds": 166.78058299999975,
-      "verified": true
-    },
-    {
-      "rows": 100000,
-      "mode": "explicit",
-      "engine": "before/wasm",
-      "run": 1,
-      "inserted": 33400,
-      "insertMilliseconds": 3001.313958999999,
-      "insertStatus": "budget-exceeded",
-      "deleted": 0,
-      "deleteMilliseconds": null,
-      "verified": true
-    },
-    {
-      "rows": 100000,
-      "mode": "explicit",
-      "engine": "after/js",
-      "run": 2,
-      "inserted": 100000,
-      "insertMilliseconds": 280.9037499999977,
-      "insertStatus": "complete",
-      "deleted": 1000,
-      "deleteMilliseconds": 162.42829100000017,
-      "verified": true
-    },
-    {
-      "rows": 100000,
-      "mode": "explicit",
-      "engine": "after/wasm",
-      "run": 2,
-      "inserted": 100000,
-      "insertMilliseconds": 175.09037499999977,
-      "insertStatus": "complete",
-      "deleted": 1000,
-      "deleteMilliseconds": 62.704791000000114,
-      "verified": true
-    },
-    {
-      "rows": 100000,
-      "mode": "explicit",
-      "engine": "sqlite/prepared",
-      "run": 2,
-      "inserted": 100000,
-      "insertMilliseconds": 10.83941699999923,
-      "insertStatus": "complete",
-      "deleted": 1000,
-      "deleteMilliseconds": 0.5600410000006377,
-      "verified": true
-    },
-    {
-      "rows": 100000,
-      "mode": "explicit",
-      "engine": "before/js",
-      "run": 2,
-      "inserted": 23100,
-      "insertMilliseconds": 3011.8154579999973,
-      "insertStatus": "budget-exceeded",
-      "deleted": 0,
-      "deleteMilliseconds": null,
-      "verified": true
-    },
-    {
-      "rows": 100000,
-      "mode": "explicit",
-      "engine": "before/wasm",
-      "run": 2,
-      "inserted": 33400,
-      "insertMilliseconds": 3011.5652499999997,
-      "insertStatus": "budget-exceeded",
-      "deleted": 0,
-      "deleteMilliseconds": null,
-      "verified": true
-    },
-    {
-      "rows": 100000,
-      "mode": "automatic",
       "engine": "before/js",
       "run": 0,
       "inserted": 24400,
-      "insertMilliseconds": 3003.1950830000023,
+      "insertMilliseconds": 3018.1262909999996,
+      "insertStatus": "budget-exceeded",
+      "deleted": 0,
+      "deleteMilliseconds": null,
+      "verified": true
+    },
+    {
+      "rows": 100000,
+      "mode": "explicit",
+      "engine": "before/wasm",
+      "run": 0,
+      "inserted": 31000,
+      "insertMilliseconds": 3014.881958,
+      "insertStatus": "budget-exceeded",
+      "deleted": 0,
+      "deleteMilliseconds": null,
+      "verified": true
+    },
+    {
+      "rows": 100000,
+      "mode": "explicit",
+      "engine": "after/js",
+      "run": 0,
+      "inserted": 100000,
+      "insertMilliseconds": 295.19483299999956,
+      "insertStatus": "complete",
+      "deleted": 1000,
+      "deleteMilliseconds": 7.842667000000802,
+      "verified": true
+    },
+    {
+      "rows": 100000,
+      "mode": "explicit",
+      "engine": "after/wasm",
+      "run": 0,
+      "inserted": 100000,
+      "insertMilliseconds": 180.63324999999895,
+      "insertStatus": "complete",
+      "deleted": 1000,
+      "deleteMilliseconds": 4.116874999999709,
+      "verified": true
+    },
+    {
+      "rows": 100000,
+      "mode": "explicit",
+      "engine": "sqlite/prepared",
+      "run": 0,
+      "inserted": 100000,
+      "insertMilliseconds": 11.874291999998604,
+      "insertStatus": "complete",
+      "deleted": 1000,
+      "deleteMilliseconds": 0.6538340000006428,
+      "verified": true
+    },
+    {
+      "rows": 100000,
+      "mode": "explicit",
+      "engine": "before/js",
+      "run": 1,
+      "inserted": 25400,
+      "insertMilliseconds": 3013.882458,
+      "insertStatus": "budget-exceeded",
+      "deleted": 0,
+      "deleteMilliseconds": null,
+      "verified": true
+    },
+    {
+      "rows": 100000,
+      "mode": "explicit",
+      "engine": "sqlite/prepared",
+      "run": 1,
+      "inserted": 100000,
+      "insertMilliseconds": 12.155666999999085,
+      "insertStatus": "complete",
+      "deleted": 1000,
+      "deleteMilliseconds": 0.5513329999994312,
+      "verified": true
+    },
+    {
+      "rows": 100000,
+      "mode": "explicit",
+      "engine": "after/wasm",
+      "run": 1,
+      "inserted": 100000,
+      "insertMilliseconds": 203.3922500000008,
+      "insertStatus": "complete",
+      "deleted": 1000,
+      "deleteMilliseconds": 4.326333000000886,
+      "verified": true
+    },
+    {
+      "rows": 100000,
+      "mode": "explicit",
+      "engine": "after/js",
+      "run": 1,
+      "inserted": 100000,
+      "insertMilliseconds": 353.606834000002,
+      "insertStatus": "complete",
+      "deleted": 1000,
+      "deleteMilliseconds": 12.48383300000205,
+      "verified": true
+    },
+    {
+      "rows": 100000,
+      "mode": "explicit",
+      "engine": "before/wasm",
+      "run": 1,
+      "inserted": 32300,
+      "insertMilliseconds": 3001.4324579999993,
+      "insertStatus": "budget-exceeded",
+      "deleted": 0,
+      "deleteMilliseconds": null,
+      "verified": true
+    },
+    {
+      "rows": 100000,
+      "mode": "explicit",
+      "engine": "after/js",
+      "run": 2,
+      "inserted": 100000,
+      "insertMilliseconds": 294.3664580000004,
+      "insertStatus": "complete",
+      "deleted": 1000,
+      "deleteMilliseconds": 8.516292000000249,
+      "verified": true
+    },
+    {
+      "rows": 100000,
+      "mode": "explicit",
+      "engine": "after/wasm",
+      "run": 2,
+      "inserted": 100000,
+      "insertMilliseconds": 186.38295800000196,
+      "insertStatus": "complete",
+      "deleted": 1000,
+      "deleteMilliseconds": 3.8202499999970314,
+      "verified": true
+    },
+    {
+      "rows": 100000,
+      "mode": "explicit",
+      "engine": "sqlite/prepared",
+      "run": 2,
+      "inserted": 100000,
+      "insertMilliseconds": 10.899124999999913,
+      "insertStatus": "complete",
+      "deleted": 1000,
+      "deleteMilliseconds": 0.5305839999964519,
+      "verified": true
+    },
+    {
+      "rows": 100000,
+      "mode": "explicit",
+      "engine": "before/js",
+      "run": 2,
+      "inserted": 22800,
+      "insertMilliseconds": 3023.084541,
+      "insertStatus": "budget-exceeded",
+      "deleted": 0,
+      "deleteMilliseconds": null,
+      "verified": true
+    },
+    {
+      "rows": 100000,
+      "mode": "explicit",
+      "engine": "before/wasm",
+      "run": 2,
+      "inserted": 33200,
+      "insertMilliseconds": 3017.88925,
+      "insertStatus": "budget-exceeded",
+      "deleted": 0,
+      "deleteMilliseconds": null,
+      "verified": true
+    },
+    {
+      "rows": 100000,
+      "mode": "automatic",
+      "engine": "before/js",
+      "run": 0,
+      "inserted": 22100,
+      "insertMilliseconds": 3000.0654590000013,
       "insertStatus": "budget-exceeded",
       "deleted": 0,
       "deleteMilliseconds": null,
@@ -1064,8 +1065,8 @@
       "mode": "automatic",
       "engine": "before/wasm",
       "run": 0,
-      "inserted": 33100,
-      "insertMilliseconds": 3001.925874999997,
+      "inserted": 30900,
+      "insertMilliseconds": 3007.3962500000016,
       "insertStatus": "budget-exceeded",
       "deleted": 0,
       "deleteMilliseconds": null,
@@ -1077,10 +1078,10 @@
       "engine": "after/js",
       "run": 0,
       "inserted": 100000,
-      "insertMilliseconds": 216.52158299999428,
+      "insertMilliseconds": 270.3183749999953,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 100.67504100000224,
+      "deleteMilliseconds": 7.02812499999709,
       "verified": true
     },
     {
@@ -1089,10 +1090,10 @@
       "engine": "after/wasm",
       "run": 0,
       "inserted": 100000,
-      "insertMilliseconds": 146.75941700000112,
+      "insertMilliseconds": 192.58758300000045,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 16.678874999997788,
+      "deleteMilliseconds": 4.81804099999863,
       "verified": true
     },
     {
@@ -1101,10 +1102,10 @@
       "engine": "sqlite/prepared",
       "run": 0,
       "inserted": 100000,
-      "insertMilliseconds": 7.2913750000006985,
+      "insertMilliseconds": 6.699542000002111,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 0.5528340000018943,
+      "deleteMilliseconds": 0.6145000000033178,
       "verified": true
     },
     {
@@ -1112,8 +1113,8 @@
       "mode": "automatic",
       "engine": "before/js",
       "run": 1,
-      "inserted": 25700,
-      "insertMilliseconds": 3003.850541,
+      "inserted": 21700,
+      "insertMilliseconds": 3018.432332999997,
       "insertStatus": "budget-exceeded",
       "deleted": 0,
       "deleteMilliseconds": null,
@@ -1125,10 +1126,10 @@
       "engine": "sqlite/prepared",
       "run": 1,
       "inserted": 100000,
-      "insertMilliseconds": 6.402083000000857,
+      "insertMilliseconds": 7.954125000003842,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 0.5266669999982696,
+      "deleteMilliseconds": 0.7449170000036247,
       "verified": true
     },
     {
@@ -1137,10 +1138,10 @@
       "engine": "after/wasm",
       "run": 1,
       "inserted": 100000,
-      "insertMilliseconds": 147.8865420000002,
+      "insertMilliseconds": 201.70616600000358,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 46.06887500000448,
+      "deleteMilliseconds": 5.0925829999978305,
       "verified": true
     },
     {
@@ -1149,10 +1150,10 @@
       "engine": "after/js",
       "run": 1,
       "inserted": 100000,
-      "insertMilliseconds": 254.32620899999893,
+      "insertMilliseconds": 315.22008300000016,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 170.20658299999923,
+      "deleteMilliseconds": 17.226291999999376,
       "verified": true
     },
     {
@@ -1160,8 +1161,8 @@
       "mode": "automatic",
       "engine": "before/wasm",
       "run": 1,
-      "inserted": 33500,
-      "insertMilliseconds": 3010.507292000002,
+      "inserted": 31200,
+      "insertMilliseconds": 3005.643415999999,
       "insertStatus": "budget-exceeded",
       "deleted": 0,
       "deleteMilliseconds": null,
@@ -1173,10 +1174,10 @@
       "engine": "after/js",
       "run": 2,
       "inserted": 100000,
-      "insertMilliseconds": 261.6342080000031,
+      "insertMilliseconds": 236.66916599999968,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 168.18158299999777,
+      "deleteMilliseconds": 8.78125,
       "verified": true
     },
     {
@@ -1185,10 +1186,10 @@
       "engine": "after/wasm",
       "run": 2,
       "inserted": 100000,
-      "insertMilliseconds": 142.71083300000464,
+      "insertMilliseconds": 178.67741599999863,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 14.990250000002561,
+      "deleteMilliseconds": 4.843666000000667,
       "verified": true
     },
     {
@@ -1197,10 +1198,10 @@
       "engine": "sqlite/prepared",
       "run": 2,
       "inserted": 100000,
-      "insertMilliseconds": 6.422624999999243,
+      "insertMilliseconds": 7.137915999999677,
       "insertStatus": "complete",
       "deleted": 1000,
-      "deleteMilliseconds": 0.5600829999966663,
+      "deleteMilliseconds": 0.5699590000003809,
       "verified": true
     },
     {
@@ -1208,8 +1209,8 @@
       "mode": "automatic",
       "engine": "before/js",
       "run": 2,
-      "inserted": 23000,
-      "insertMilliseconds": 3006.3384580000056,
+      "inserted": 22200,
+      "insertMilliseconds": 3006.176542000001,
       "insertStatus": "budget-exceeded",
       "deleted": 0,
       "deleteMilliseconds": null,
@@ -1220,8 +1221,8 @@
       "mode": "automatic",
       "engine": "before/wasm",
       "run": 2,
-      "inserted": 33400,
-      "insertMilliseconds": 3012.6199999999953,
+      "inserted": 32000,
+      "insertMilliseconds": 3013.4468750000015,
       "insertStatus": "budget-exceeded",
       "deleted": 0,
       "deleteMilliseconds": null,

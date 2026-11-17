@@ -1,0 +1,50 @@
+name: Set up SQLike CI
+description: Pinned Node/MoonBit tools with optional native and browser integration tools
+inputs:
+  integration:
+    description: Install Go, Litestream and Chromium for integration tests
+    required: false
+    default: 'false'
+runs:
+  using: composite
+  steps:
+    - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+    - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+      with:
+        node-version: '24.22.2'
+        cache: pnpm
+    - uses: extractions/setup-just@53165ef7e734c5c07cb06b3c8e7b647c5aa16db3 # v4
+      with:
+        just-version: '1.50.0'
+    - name: Install dependencies
+      shell: bash
+      run: pnpm install --frozen-lockfile
+    - name: Install MoonBit
+      shell: bash
+      run: |
+        curl --fail --silent --show-error --location https://cli.moonbitlang.com/install/unix.sh -o "$RUNNER_TEMP/moon-install.sh"
+        bash "$RUNNER_TEMP/moon-install.sh" 0.10.20+65efd5b93
+        echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
+    - name: Resolve MoonBit dependencies
+      shell: bash
+      run: moon update
+    - uses: actions/setup-go@d8cbb8045d7f43706b9177cceb36c1f91a6644d5 # v7.1.0
+      if: inputs.integration == 'true'
+      with:
+        go-version: '1.26.2'
+        cache-dependency-path: scripts/ltx-reference/go.sum
+    - name: Install native integration tools
+      if: inputs.integration == 'true'
+      shell: bash
+      run: |
+        curl --fail --silent --show-error --location https://github.com/benbjohnson/litestream/releases/download/v0.5.18/litestream-0.5.18-linux-x86_64.tar.gz -o "$RUNNER_TEMP/litestream.tar.gz"
+        echo "d3687b9fd0f2e9426bbd3da828429ff3f1dfc5c9b74d54fdf028e4ee510e7dea  $RUNNER_TEMP/litestream.tar.gz" | sha256sum --check
+        mkdir -p "$RUNNER_TEMP/sqlike-tools"
+        tar -xzf "$RUNNER_TEMP/litestream.tar.gz" -C "$RUNNER_TEMP/sqlike-tools" litestream
+        test "$("$RUNNER_TEMP/sqlike-tools/litestream" version)" = '0.5.18'
+        echo "LITESTREAM_BIN=$RUNNER_TEMP/sqlike-tools/litestream" >> "$GITHUB_ENV"
+        go -C scripts/ltx-reference build -o "$RUNNER_TEMP/ltx-reference" .
+    - name: Install Chromium
+      if: inputs.integration == 'true'
+      shell: bash
+      run: pnpm exec playwright install --with-deps chromium

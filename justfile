@@ -15,6 +15,24 @@ check:
     pnpm check
     just sqlite-output-check
 
+# Match independent PR jobs; generated declarations are needed on a fresh checkout.
+ci-typecheck:
+    pnpm build:core
+    pnpm typecheck
+
+ci-node:
+    test -x "${LITESTREAM_BIN:?set LITESTREAM_BIN to a real Litestream executable}"
+    pnpm test:core
+    pnpm test:unit
+
+ci-browser:
+    test -x "${LITESTREAM_BIN:?set LITESTREAM_BIN to a real Litestream executable}"
+    pnpm build
+    pnpm build:moon-wasm
+    pnpm test:e2e
+    just differential-audit
+    just sqlite-output-check
+
 # Check both workspace modules from the repository root.
 moon-check:
     moon check --target js
@@ -86,6 +104,13 @@ bulk-write-bench *args:
     pnpm build:moon-wasm
     pnpm exec tsx --test tests/sqlike-insert-allocation.test.ts
     pnpm exec tsx scripts/bench-bulk-write.ts {{args}}
+
+# Separate cold/warm rowid caches, alternating reads, and optional Node CPU profiles.
+delete-bench *args:
+    pnpm build:core
+    pnpm build:moon-wasm
+    pnpm exec tsx --test tests/sqlike-delete-cache.test.ts
+    pnpm exec tsx scripts/bench-delete.ts {{args}}
 
 # JSON/binary UPDATE: same value, real changes, RETURNING, misses and failures.
 # Optional --before-dir holds runtime.{js,wasm} and defined.{js,wasm} snapshots.

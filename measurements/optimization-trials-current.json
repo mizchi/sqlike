@@ -1,13 +1,13 @@
 {
   "format": "sqlike-optimization-trials@1",
-  "measuredAt": "2026-11-17T09:07:07.993Z",
+  "measuredAt": "2026-11-17T12:32:08.457Z",
   "baselineCommit": "2f1d702",
   "decisions": {
     "indexPages": "adopted",
     "updateStorage": "adopted",
     "nativeJsResults": "experimental-separate-entry",
     "rowidAllocation": "adopted",
-    "pointDelete": "no demonstrated improvement; warm flat rowid-order cache remains"
+    "pointDelete": "adopted: bounded rowid-order leaves and sequential block scans; see delete-current.json"
   },
   "sourceHashes": {
     "examples/aot/moon.mod": "86e6cfb0ba281f0f61093966e433abccf9a1ab8a3bb40265e68a52e65258327a",
@@ -59,6 +59,7 @@
     "packages/sqlike/src/defined-sqlite/moon.pkg": "6d93d349a02f08b9beafb2f344b35bc858dd5b3b1fc81a59e557d2881c091bb7",
     "packages/sqlike/src/defined/defined.mbt": "caf0ae96fd7a7af9f94b3e831f2f9de2077a64caacdbb3d4029e2780ff4f044f",
     "packages/sqlike/src/defined/moon.pkg": "6c72c36fb88ebfab45a73ad8d209dcb3f593c9d1bc3ade7c5a6c952c1be947a9",
+    "packages/sqlike/src/delete_cache_wbtest.mbt": "e83f1556868e9eef124d00cfa528f60c5a4fd58a74c2fe2f582ec17b2efe304a",
     "packages/sqlike/src/evaluate.mbt": "67dc9ebde358babef258f002aa53977621a3367edf0934f72f4a7d984e2b11cd",
     "packages/sqlike/src/execute.mbt": "f543b2f2ea49d344d48117d4701d0fe7ca16108d93e71c30bd086de0909da8d9",
     "packages/sqlike/src/experimental-typed/moon.pkg": "084d8ea4cb24e8db437722c851ccca28bafb90b4530e16ec30640c1499754ef7",
@@ -75,10 +76,10 @@
     "packages/sqlike/src/function_collation.mbt": "43974dbcd892a8ed9b508800d9da4ef62fb9e5cd1d146a1b2f8fbb8869253ba3",
     "packages/sqlike/src/glob.mbt": "0013b77a567bbc46f292a63ad620b72ef1c0d8414f1a4777913beff3021759f0",
     "packages/sqlike/src/image.mbt": "86f91b3333bcabd2c8b1b662d6482fedc02f59c436db8d49bf31e4839128104a",
-    "packages/sqlike/src/index_cache.mbt": "28333aee7742ea4bcca840a426b901c2f219b063c65be55dda2c48c0057ed880",
+    "packages/sqlike/src/index_cache.mbt": "251a34ec2908c1c41ff159af6746fb04149f193cb31e0771cf54516e0be3d37d",
     "packages/sqlike/src/index_definition.mbt": "52801862d0eb516e9ac7c5bbd14bfbec86093753bdd92b011564a03d09d7a274",
     "packages/sqlike/src/index_metadata.mbt": "c1a2abd3b7203ca315dd5c907a87ccd2036b54cf6d00ad8c192732de87c69d8c",
-    "packages/sqlike/src/index_pages.mbt": "4cc68ee219f941faf50ddd3cb44e3bfa1c8ccb6211689c8345423b2ae804f063",
+    "packages/sqlike/src/index_pages.mbt": "bf0c06eacc6725f2ad4e595963db6af00a44c48c49d6ce2d1b98d154d67fe5bc",
     "packages/sqlike/src/index_pages_wbtest.mbt": "ff12525fbb548c9923272e7541588bd6bef95c6019667d5001b166804e62cdf3",
     "packages/sqlike/src/index_plan.mbt": "065b4f34edbf294dc3f0d9a16df29aba50d6de1af89e262809664f2f654c89f6",
     "packages/sqlike/src/index_wbtest.mbt": "f1df6de725e0344db2ea76d4662d6652b6b43514cb2a691fa8eaeda3465df3a9",
@@ -111,7 +112,7 @@
     "packages/sqlike/src/primary_index.mbt": "44cb6d7e4b22e1d9c0f367054bf9ba8e9e9733d5241f7f7792f0f2a3685b2a38",
     "packages/sqlike/src/program_compiler.mbt": "fcd9da9a6ed5af289566889ae6279ce3aebc04cebdf545790abd9ed1e22a3e18",
     "packages/sqlike/src/query.mbt": "c7b8d0525f71bedb98870de3b6b403d0635ccc83480319df4684ee68280e0e8e",
-    "packages/sqlike/src/query_plan.mbt": "9c932b02b4257646edd9dfdb146f0c230ffce7682193decdd657a9e7c42469ce",
+    "packages/sqlike/src/query_plan.mbt": "46430a3c4cc49438092ea11124541e2425668773609d0303d06346085f7f4c93",
     "packages/sqlike/src/result_writer.mbt": "0367d7ceea2d3a7e27a3ea8ef00178583f2b17ebcabaebd43e4f3e4580afcfd6",
     "packages/sqlike/src/result_writer_wbtest.mbt": "f9d65c105c685607431c959f27e89fc88bf69136bdfc3ab2f2c8274769ccfcbc",
     "packages/sqlike/src/row_pages.mbt": "35795aa2cc32e84b58e30b07b0f597908a51f1989d3371f9986c2b21188addb5",
@@ -139,33 +140,396 @@
     "pnpm-lock.yaml": "62a9334c27b9f3876361edc3c9f74a0ed5e11866e28403cc065e1bdba7d70012",
     "scripts/measurement-manifest.ts": "615c0ab32c0b2e01c57ea1be690a2a08d2e9401b9b0c5d93574520253c16acdb",
     "scripts/oxc-runtime.ts": "24406b458799bdb150e1a986353c7d965d57964e60067f1a421e1cc010e57fce",
-    "scripts/report-optimization-trials.ts": "a0411c7a9272a8a91bebd9018f82667eb07f1af436bd02fcf10f56ff8126d10f"
+    "scripts/report-optimization-trials.ts": "0d3aa083e29a4cdd529cd6872e6cdbff28cba5024f4d67d3f1f84fdb8394977e"
   },
   "inputs": {
     "measurements/optimization-trials-before/dynamic-prepare-large-current.json": "3b1ecf5247635bc6641001dd31337510339738f04b2ee9072683012282eabe12",
     "measurements/optimization-trials-before/wasm-build-size-current.json": "f5a4390d323e69c2f5653a6f41c824e41b5980bb39085a0480fd77a9f670551a",
     "measurements/optimization-index-large.json": "b81f8235341b7a0e5ba17458e8f9d007348116785aa67d93c34cdca1190f683a",
     "measurements/optimization-update-large.json": "bcde67a7c9eb61978cf34669b8c70d58d59adc501cba27d2f68eae714068d200",
-    "measurements/dynamic-prepare-large-current.json": "10c00f228335e58a1e0f36a835e484400b9776715f4c15e97c789715a81be59b",
-    "measurements/wasm-build-size-current.json": "c1e9e1c328bc50bccafae6f68750865fd36eba9a5042b4c922e7d47d773c244b",
-    "measurements/optimization-typed-results.json": "016eb6f84a673548b3a0b0c6f743a736d1f0c2cc16388adb050391c442634359",
-    "measurements/optimization-bulk-write.json": "bacd43eb7906ed704eeb6f7a7412fa379b935c1dcb701f6af5b489b66ead61cf"
+    "measurements/dynamic-prepare-large-current.json": "b1b25227c6632b8d7f16716856330f9f29886ca093f297afc5cde5468796e799",
+    "measurements/wasm-build-size-current.json": "946881c4c47b282c2266e8f9d8658dce34be15c32f320f5e5059ba9614eeb64b",
+    "measurements/optimization-typed-results.json": "a5cec4c1cc7cbf3ed07c15cf4850973aef7e9eda724d89c5a14a06d6f1c74e26",
+    "measurements/optimization-bulk-write.json": "c357e09b0a23118a3a64cde85102b838d50272fc6c26e8d091f04feb6cb07981",
+    "measurements/delete-current.json": "432c76f052e7b54321571bb1844598a508d83c5e47d11054f9c8f8b87f3d48a4"
   },
   "metrics": {
+    "pointDelete": [
+      {
+        "rows": 1000,
+        "mode": "cold",
+        "engine": "before/js",
+        "complete": true,
+        "microseconds": 11.709915999999906,
+        "scanMilliseconds": 0.6999590000000353
+      },
+      {
+        "rows": 1000,
+        "mode": "cold",
+        "engine": "before/wasm",
+        "complete": true,
+        "microseconds": 8.21841600000005,
+        "scanMilliseconds": 0.6750410000000215
+      },
+      {
+        "rows": 1000,
+        "mode": "cold",
+        "engine": "after/js",
+        "complete": true,
+        "microseconds": 12.166083999999955,
+        "scanMilliseconds": 1.986250000000041
+      },
+      {
+        "rows": 1000,
+        "mode": "cold",
+        "engine": "after/wasm",
+        "complete": true,
+        "microseconds": 6.732999999999947,
+        "scanMilliseconds": 0.7383750000000191
+      },
+      {
+        "rows": 1000,
+        "mode": "cold",
+        "engine": "sqlite/prepared",
+        "complete": true,
+        "microseconds": 0.5945820000000595,
+        "scanMilliseconds": 0.04795799999999417
+      },
+      {
+        "rows": 1000,
+        "mode": "warm",
+        "engine": "before/js",
+        "complete": true,
+        "microseconds": 9.41224999999997,
+        "scanMilliseconds": 0.4750419999999167
+      },
+      {
+        "rows": 1000,
+        "mode": "warm",
+        "engine": "before/wasm",
+        "complete": true,
+        "microseconds": 5.672249999999849,
+        "scanMilliseconds": 0.42029200000001765
+      },
+      {
+        "rows": 1000,
+        "mode": "warm",
+        "engine": "after/js",
+        "complete": true,
+        "microseconds": 8.992083999999977,
+        "scanMilliseconds": 0.5578340000000139
+      },
+      {
+        "rows": 1000,
+        "mode": "warm",
+        "engine": "after/wasm",
+        "complete": true,
+        "microseconds": 4.700583999999935,
+        "scanMilliseconds": 0.46145799999999326
+      },
+      {
+        "rows": 1000,
+        "mode": "warm",
+        "engine": "sqlite/prepared",
+        "complete": true,
+        "microseconds": 0.6425840000000562,
+        "scanMilliseconds": 0.04862500000001546
+      },
+      {
+        "rows": 1000,
+        "mode": "delete-read",
+        "engine": "before/js",
+        "complete": true,
+        "microseconds": 37.13391799999999,
+        "scanMilliseconds": 0.2796249999998963
+      },
+      {
+        "rows": 1000,
+        "mode": "delete-read",
+        "engine": "before/wasm",
+        "complete": true,
+        "microseconds": 18.165665999999874,
+        "scanMilliseconds": 0.21850000000006276
+      },
+      {
+        "rows": 1000,
+        "mode": "delete-read",
+        "engine": "after/js",
+        "complete": true,
+        "microseconds": 37.2515820000001,
+        "scanMilliseconds": 0.3564579999999751
+      },
+      {
+        "rows": 1000,
+        "mode": "delete-read",
+        "engine": "after/wasm",
+        "complete": true,
+        "microseconds": 17.927417999999992,
+        "scanMilliseconds": 0.22145799999998417
+      },
+      {
+        "rows": 1000,
+        "mode": "delete-read",
+        "engine": "sqlite/prepared",
+        "complete": true,
+        "microseconds": 4.073249999999916,
+        "scanMilliseconds": 0.0493340000000444
+      },
+      {
+        "rows": 10000,
+        "mode": "cold",
+        "engine": "before/js",
+        "complete": true,
+        "microseconds": 5.64183300000002,
+        "scanMilliseconds": 4.828208000000018
+      },
+      {
+        "rows": 10000,
+        "mode": "cold",
+        "engine": "before/wasm",
+        "complete": true,
+        "microseconds": 3.5376660000000584,
+        "scanMilliseconds": 4.168916000000081
+      },
+      {
+        "rows": 10000,
+        "mode": "cold",
+        "engine": "after/js",
+        "complete": true,
+        "microseconds": 4.748749999999973,
+        "scanMilliseconds": 5.44420799999989
+      },
+      {
+        "rows": 10000,
+        "mode": "cold",
+        "engine": "after/wasm",
+        "complete": true,
+        "microseconds": 3.028500000000008,
+        "scanMilliseconds": 4.457832999999937
+      },
+      {
+        "rows": 10000,
+        "mode": "cold",
+        "engine": "sqlite/prepared",
+        "complete": true,
+        "microseconds": 1.6888329999999314,
+        "scanMilliseconds": 0.8153330000000096
+      },
+      {
+        "rows": 10000,
+        "mode": "warm",
+        "engine": "before/js",
+        "complete": true,
+        "microseconds": 21.884500000000116,
+        "scanMilliseconds": 4.657417000000123
+      },
+      {
+        "rows": 10000,
+        "mode": "warm",
+        "engine": "before/wasm",
+        "complete": true,
+        "microseconds": 4.3562500000000455,
+        "scanMilliseconds": 3.6790829999999914
+      },
+      {
+        "rows": 10000,
+        "mode": "warm",
+        "engine": "after/js",
+        "complete": true,
+        "microseconds": 6.862333000000035,
+        "scanMilliseconds": 5.634416999999985
+      },
+      {
+        "rows": 10000,
+        "mode": "warm",
+        "engine": "after/wasm",
+        "complete": true,
+        "microseconds": 3.75,
+        "scanMilliseconds": 4.124165999999832
+      },
+      {
+        "rows": 10000,
+        "mode": "warm",
+        "engine": "sqlite/prepared",
+        "complete": true,
+        "microseconds": 1.6623329999999896,
+        "scanMilliseconds": 0.9034169999999904
+      },
+      {
+        "rows": 10000,
+        "mode": "delete-read",
+        "engine": "before/js",
+        "complete": true,
+        "microseconds": 47.06666700000005,
+        "scanMilliseconds": 4.188458999999966
+      },
+      {
+        "rows": 10000,
+        "mode": "delete-read",
+        "engine": "before/wasm",
+        "complete": true,
+        "microseconds": 18.320666999999958,
+        "scanMilliseconds": 3.55862500000012
+      },
+      {
+        "rows": 10000,
+        "mode": "delete-read",
+        "engine": "after/js",
+        "complete": true,
+        "microseconds": 33.5307499999999,
+        "scanMilliseconds": 3.8936250000001564
+      },
+      {
+        "rows": 10000,
+        "mode": "delete-read",
+        "engine": "after/wasm",
+        "complete": true,
+        "microseconds": 17.529915999999957,
+        "scanMilliseconds": 3.876708000000235
+      },
+      {
+        "rows": 10000,
+        "mode": "delete-read",
+        "engine": "sqlite/prepared",
+        "complete": true,
+        "microseconds": 4.097375000000284,
+        "scanMilliseconds": 0.9288750000000618
+      },
+      {
+        "rows": 100000,
+        "mode": "cold",
+        "engine": "before/js",
+        "complete": true,
+        "microseconds": 4.359124999999949,
+        "scanMilliseconds": 59.21166699999958
+      },
+      {
+        "rows": 100000,
+        "mode": "cold",
+        "engine": "before/wasm",
+        "complete": true,
+        "microseconds": 2.9620410000002266,
+        "scanMilliseconds": 49.757416999999805
+      },
+      {
+        "rows": 100000,
+        "mode": "cold",
+        "engine": "after/js",
+        "complete": true,
+        "microseconds": 4.90179100000023,
+        "scanMilliseconds": 60.383334000000104
+      },
+      {
+        "rows": 100000,
+        "mode": "cold",
+        "engine": "after/wasm",
+        "complete": true,
+        "microseconds": 2.947791999999936,
+        "scanMilliseconds": 44.74241600000005
+      },
+      {
+        "rows": 100000,
+        "mode": "cold",
+        "engine": "sqlite/prepared",
+        "complete": true,
+        "microseconds": 0.566541000000143,
+        "scanMilliseconds": 8.817749999999705
+      },
+      {
+        "rows": 100000,
+        "mode": "warm",
+        "engine": "before/js",
+        "complete": true,
+        "microseconds": 188.3562920000004,
+        "scanMilliseconds": 54.39379200000076
+      },
+      {
+        "rows": 100000,
+        "mode": "warm",
+        "engine": "before/wasm",
+        "complete": true,
+        "microseconds": 50.29749999999967,
+        "scanMilliseconds": 43.75816699999996
+      },
+      {
+        "rows": 100000,
+        "mode": "warm",
+        "engine": "after/js",
+        "complete": true,
+        "microseconds": 5.220416999998633,
+        "scanMilliseconds": 54.388042000000496
+      },
+      {
+        "rows": 100000,
+        "mode": "warm",
+        "engine": "after/wasm",
+        "complete": true,
+        "microseconds": 3.2366669999992155,
+        "scanMilliseconds": 44.10350000000108
+      },
+      {
+        "rows": 100000,
+        "mode": "warm",
+        "engine": "sqlite/prepared",
+        "complete": true,
+        "microseconds": 0.5502499999984138,
+        "scanMilliseconds": 8.559791000001496
+      },
+      {
+        "rows": 100000,
+        "mode": "delete-read",
+        "engine": "before/js",
+        "complete": true,
+        "microseconds": 225.87208399999872,
+        "scanMilliseconds": 62.08733299999949
+      },
+      {
+        "rows": 100000,
+        "mode": "delete-read",
+        "engine": "before/wasm",
+        "complete": true,
+        "microseconds": 67.6959169999991,
+        "scanMilliseconds": 44.190999999998894
+      },
+      {
+        "rows": 100000,
+        "mode": "delete-read",
+        "engine": "after/js",
+        "complete": true,
+        "microseconds": 34.281833000000915,
+        "scanMilliseconds": 55.80058300000019
+      },
+      {
+        "rows": 100000,
+        "mode": "delete-read",
+        "engine": "after/wasm",
+        "complete": true,
+        "microseconds": 14.380833000001076,
+        "scanMilliseconds": 43.79708399999981
+      },
+      {
+        "rows": 100000,
+        "mode": "delete-read",
+        "engine": "sqlite/prepared",
+        "complete": true,
+        "microseconds": 4.106916000000638,
+        "scanMilliseconds": 8.90770799999882
+      }
+    ],
     "indexMovement": [
       {
         "target": "js",
         "beforeUs": 198.01980198019803,
         "indexOnlyUs": 12.566371653283943,
-        "currentUs": 10.955056224422956,
-        "sqliteUs": 13.0609511051574
+        "currentUs": 10.649202760639929,
+        "sqliteUs": 13.410702741661048
       },
       {
         "target": "wasm",
         "beforeUs": 38.40304191574851,
         "indexOnlyUs": 9.380530994550316,
-        "currentUs": 8.372490449829623,
-        "sqliteUs": 13.0609511051574
+        "currentUs": 8.72694561195116,
+        "sqliteUs": 13.410702741661048
       }
     ],
     "sameValueUpdate": [
@@ -173,41 +537,41 @@
         "target": "js",
         "beforeUs": 3.9646233607807257,
         "updateTrialUs": 2.3074423216905617,
-        "currentUs": 2.56779453066118,
-        "sqliteUs": 1.6193502296540805
+        "currentUs": 2.572178486033896,
+        "sqliteUs": 1.4436561623494473
       },
       {
         "target": "wasm",
         "beforeUs": 2.2572178540267345,
         "updateTrialUs": 1.4560000038146972,
-        "currentUs": 1.5555555479867118,
-        "sqliteUs": 1.6193502296540805
+        "currentUs": 1.5118790453848348,
+        "sqliteUs": 1.4436561623494473
       }
     ],
     "nativeResults": [
       {
         "rows": 1000,
         "name": "point",
-        "jsonToNativeUs": 1.2800211200427178,
-        "nativeUs": 0.6148770281706446
+        "jsonToNativeUs": 1.6350947253606611,
+        "nativeUs": 0.7986144474469627
       },
       {
         "rows": 1000,
         "name": "scan",
-        "jsonToNativeUs": 500,
-        "nativeUs": 199.99992847442627
+        "jsonToNativeUs": 550.0000715255737,
+        "nativeUs": 149.9999761581421
       },
       {
         "rows": 100000,
         "name": "point",
-        "jsonToNativeUs": 1.3765182186234817,
-        "nativeUs": 0.6268520629131525
+        "jsonToNativeUs": 1.426473663166831,
+        "nativeUs": 0.7018364721020003
       },
       {
         "rows": 100000,
         "name": "scan",
-        "jsonToNativeUs": 75500,
-        "nativeUs": 16600.000023841858
+        "jsonToNativeUs": 84200.00004768372,
+        "nativeUs": 21099.99990463257
       }
     ],
     "bulkWrites": [
@@ -216,336 +580,336 @@
         "mode": "explicit",
         "engine": "before/js",
         "completeRuns": 3,
-        "insertMilliseconds": 19.544250000000034,
+        "insertMilliseconds": 28.419832999999983,
         "insertedPrefixes": [
           1000,
           1000,
           1000
         ],
-        "deleteUs": 9.525334000000042
+        "deleteUs": 17.488832000000002
       },
       {
         "rows": 1000,
         "mode": "explicit",
         "engine": "after/js",
         "completeRuns": 3,
-        "insertMilliseconds": 5.419500000000028,
+        "insertMilliseconds": 8.670999999999992,
         "insertedPrefixes": [
           1000,
           1000,
           1000
         ],
-        "deleteUs": 8.360083999999915
+        "deleteUs": 17.16191600000002
       },
       {
         "rows": 1000,
         "mode": "explicit",
         "engine": "before/wasm",
         "completeRuns": 3,
-        "insertMilliseconds": 5.65954099999999,
+        "insertMilliseconds": 9.627624999999966,
         "insertedPrefixes": [
           1000,
           1000,
           1000
         ],
-        "deleteUs": 6.770832000000041
+        "deleteUs": 10.49475000000001
       },
       {
         "rows": 1000,
         "mode": "explicit",
         "engine": "after/wasm",
         "completeRuns": 3,
-        "insertMilliseconds": 4.33016600000002,
+        "insertMilliseconds": 6.539708000000019,
         "insertedPrefixes": [
           1000,
           1000,
           1000
         ],
-        "deleteUs": 8.504331999999977
+        "deleteUs": 10.14149999999995
       },
       {
         "rows": 1000,
         "mode": "explicit",
         "engine": "sqlite/prepared",
         "completeRuns": 3,
-        "insertMilliseconds": 0.13024999999998954,
+        "insertMilliseconds": 0.11712499999998727,
         "insertedPrefixes": [
           1000,
           1000,
           1000
         ],
-        "deleteUs": 0.6473320000000058
+        "deleteUs": 0.7167499999999336
       },
       {
         "rows": 1000,
         "mode": "automatic",
         "engine": "before/js",
         "completeRuns": 3,
-        "insertMilliseconds": 13.865458000000103,
+        "insertMilliseconds": 10.655665999999997,
         "insertedPrefixes": [
           1000,
           1000,
           1000
         ],
-        "deleteUs": 6.592750000000024
+        "deleteUs": 7.520665999999892
       },
       {
         "rows": 1000,
         "mode": "automatic",
         "engine": "after/js",
         "completeRuns": 3,
-        "insertMilliseconds": 2.65366599999993,
+        "insertMilliseconds": 5.536500000000046,
         "insertedPrefixes": [
           1000,
           1000,
           1000
         ],
-        "deleteUs": 6.160415999999941
+        "deleteUs": 10.81316599999991
       },
       {
         "rows": 1000,
         "mode": "automatic",
         "engine": "before/wasm",
         "completeRuns": 3,
-        "insertMilliseconds": 3.620207999999934,
+        "insertMilliseconds": 4.541707999999971,
         "insertedPrefixes": [
           1000,
           1000,
           1000
         ],
-        "deleteUs": 3.8893339999999625
+        "deleteUs": 9.055083999999852
       },
       {
         "rows": 1000,
         "mode": "automatic",
         "engine": "after/wasm",
         "completeRuns": 3,
-        "insertMilliseconds": 1.9273749999999836,
+        "insertMilliseconds": 2.3497919999999795,
         "insertedPrefixes": [
           1000,
           1000,
           1000
         ],
-        "deleteUs": 4.058668000000125
+        "deleteUs": 8.646583999999848
       },
       {
         "rows": 1000,
         "mode": "automatic",
         "engine": "sqlite/prepared",
         "completeRuns": 3,
-        "insertMilliseconds": 0.08166699999992488,
+        "insertMilliseconds": 0.08562500000005002,
         "insertedPrefixes": [
           1000,
           1000,
           1000
         ],
-        "deleteUs": 0.6469160000001466
+        "deleteUs": 0.6884159999999611
       },
       {
         "rows": 10000,
         "mode": "explicit",
         "engine": "before/js",
         "completeRuns": 3,
-        "insertMilliseconds": 480.99625000000015,
+        "insertMilliseconds": 588.5009999999997,
         "insertedPrefixes": [
           10000,
           10000,
           10000
         ],
-        "deleteUs": 19.01616699999977
+        "deleteUs": 25.574624999999973
       },
       {
         "rows": 10000,
         "mode": "explicit",
         "engine": "after/js",
         "completeRuns": 3,
-        "insertMilliseconds": 26.3293749999998,
+        "insertMilliseconds": 57.52925000000005,
         "insertedPrefixes": [
           10000,
           10000,
           10000
         ],
-        "deleteUs": 22.54612500000007
+        "deleteUs": 12.295124999999643
       },
       {
         "rows": 10000,
         "mode": "explicit",
         "engine": "before/wasm",
         "completeRuns": 3,
-        "insertMilliseconds": 286.1106669999999,
+        "insertMilliseconds": 317.28025000000025,
         "insertedPrefixes": [
           10000,
           10000,
           10000
         ],
-        "deleteUs": 4.219375000000127
+        "deleteUs": 10.116708000000017
       },
       {
         "rows": 10000,
         "mode": "explicit",
         "engine": "after/wasm",
         "completeRuns": 3,
-        "insertMilliseconds": 17.768583000000035,
+        "insertMilliseconds": 21.192125000000033,
         "insertedPrefixes": [
           10000,
           10000,
           10000
         ],
-        "deleteUs": 4.306625000000167
+        "deleteUs": 4.399791999999707
       },
       {
         "rows": 10000,
         "mode": "explicit",
         "engine": "sqlite/prepared",
         "completeRuns": 3,
-        "insertMilliseconds": 0.994499999999789,
+        "insertMilliseconds": 1.1407079999999041,
         "insertedPrefixes": [
           10000,
           10000,
           10000
         ],
-        "deleteUs": 0.5307499999998981
+        "deleteUs": 0.5688330000000406
       },
       {
         "rows": 10000,
         "mode": "automatic",
         "engine": "before/js",
         "completeRuns": 3,
-        "insertMilliseconds": 480.8858330000003,
+        "insertMilliseconds": 505.6108750000003,
         "insertedPrefixes": [
           10000,
           10000,
           10000
         ],
-        "deleteUs": 11.383458999999675
+        "deleteUs": 23.572583000000122
       },
       {
         "rows": 10000,
         "mode": "automatic",
         "engine": "after/js",
         "completeRuns": 3,
-        "insertMilliseconds": 23.055041999999958,
+        "insertMilliseconds": 26.202790999999706,
         "insertedPrefixes": [
           10000,
           10000,
           10000
         ],
-        "deleteUs": 20.249542000000474
+        "deleteUs": 7.938458999999966
       },
       {
         "rows": 10000,
         "mode": "automatic",
         "engine": "before/wasm",
         "completeRuns": 3,
-        "insertMilliseconds": 270.2843750000002,
+        "insertMilliseconds": 280.5806249999996,
         "insertedPrefixes": [
           10000,
           10000,
           10000
         ],
-        "deleteUs": 3.9098329999997077
+        "deleteUs": 5.4256249999998545
       },
       {
         "rows": 10000,
         "mode": "automatic",
         "engine": "after/wasm",
         "completeRuns": 3,
-        "insertMilliseconds": 14.313000000000102,
+        "insertMilliseconds": 14.847125000000233,
         "insertedPrefixes": [
           10000,
           10000,
           10000
         ],
-        "deleteUs": 4.28308399999969
+        "deleteUs": 3.2225829999997586
       },
       {
         "rows": 10000,
         "mode": "automatic",
         "engine": "sqlite/prepared",
         "completeRuns": 3,
-        "insertMilliseconds": 0.6149580000001151,
+        "insertMilliseconds": 0.6247080000002825,
         "insertedPrefixes": [
           10000,
           10000,
           10000
         ],
-        "deleteUs": 0.5409170000002632
+        "deleteUs": 0.5278749999997672
       },
       {
         "rows": 100000,
         "mode": "explicit",
-        "engine": "before/js",
-        "completeRuns": 0,
-        "insertMilliseconds": null,
-        "insertedPrefixes": [
-          25400,
-          24700,
-          23100
-        ],
-        "deleteUs": null
-      },
-      {
-        "rows": 100000,
-        "mode": "explicit",
-        "engine": "after/js",
-        "completeRuns": 3,
-        "insertMilliseconds": 289.880083,
-        "insertedPrefixes": [
-          100000,
-          100000,
-          100000
-        ],
-        "deleteUs": 166.73525000000154
-      },
-      {
-        "rows": 100000,
-        "mode": "explicit",
-        "engine": "before/wasm",
-        "completeRuns": 0,
-        "insertMilliseconds": null,
-        "insertedPrefixes": [
-          32700,
-          33400,
-          33400
-        ],
-        "deleteUs": null
-      },
-      {
-        "rows": 100000,
-        "mode": "explicit",
-        "engine": "after/wasm",
-        "completeRuns": 3,
-        "insertMilliseconds": 179.79670799999985,
-        "insertedPrefixes": [
-          100000,
-          100000,
-          100000
-        ],
-        "deleteUs": 43.87275000000045
-      },
-      {
-        "rows": 100000,
-        "mode": "explicit",
-        "engine": "sqlite/prepared",
-        "completeRuns": 3,
-        "insertMilliseconds": 10.83941699999923,
-        "insertedPrefixes": [
-          100000,
-          100000,
-          100000
-        ],
-        "deleteUs": 0.5407500000001164
-      },
-      {
-        "rows": 100000,
-        "mode": "automatic",
         "engine": "before/js",
         "completeRuns": 0,
         "insertMilliseconds": null,
         "insertedPrefixes": [
           24400,
-          25700,
-          23000
+          25400,
+          22800
+        ],
+        "deleteUs": null
+      },
+      {
+        "rows": 100000,
+        "mode": "explicit",
+        "engine": "after/js",
+        "completeRuns": 3,
+        "insertMilliseconds": 295.19483299999956,
+        "insertedPrefixes": [
+          100000,
+          100000,
+          100000
+        ],
+        "deleteUs": 8.516292000000249
+      },
+      {
+        "rows": 100000,
+        "mode": "explicit",
+        "engine": "before/wasm",
+        "completeRuns": 0,
+        "insertMilliseconds": null,
+        "insertedPrefixes": [
+          31000,
+          32300,
+          33200
+        ],
+        "deleteUs": null
+      },
+      {
+        "rows": 100000,
+        "mode": "explicit",
+        "engine": "after/wasm",
+        "completeRuns": 3,
+        "insertMilliseconds": 186.38295800000196,
+        "insertedPrefixes": [
+          100000,
+          100000,
+          100000
+        ],
+        "deleteUs": 4.116874999999709
+      },
+      {
+        "rows": 100000,
+        "mode": "explicit",
+        "engine": "sqlite/prepared",
+        "completeRuns": 3,
+        "insertMilliseconds": 11.874291999998604,
+        "insertedPrefixes": [
+          100000,
+          100000,
+          100000
+        ],
+        "deleteUs": 0.5513329999994312
+      },
+      {
+        "rows": 100000,
+        "mode": "automatic",
+        "engine": "before/js",
+        "completeRuns": 0,
+        "insertMilliseconds": null,
+        "insertedPrefixes": [
+          22100,
+          21700,
+          22200
         ],
         "deleteUs": null
       },
@@ -554,13 +918,13 @@
         "mode": "automatic",
         "engine": "after/js",
         "completeRuns": 3,
-        "insertMilliseconds": 254.32620899999893,
+        "insertMilliseconds": 270.3183749999953,
         "insertedPrefixes": [
           100000,
           100000,
           100000
         ],
-        "deleteUs": 168.18158299999777
+        "deleteUs": 8.78125
       },
       {
         "rows": 100000,
@@ -569,9 +933,9 @@
         "completeRuns": 0,
         "insertMilliseconds": null,
         "insertedPrefixes": [
-          33100,
-          33500,
-          33400
+          30900,
+          31200,
+          32000
         ],
         "deleteUs": null
       },
@@ -580,26 +944,26 @@
         "mode": "automatic",
         "engine": "after/wasm",
         "completeRuns": 3,
-        "insertMilliseconds": 146.75941700000112,
+        "insertMilliseconds": 192.58758300000045,
         "insertedPrefixes": [
           100000,
           100000,
           100000
         ],
-        "deleteUs": 16.678874999997788
+        "deleteUs": 4.843666000000667
       },
       {
         "rows": 100000,
         "mode": "automatic",
         "engine": "sqlite/prepared",
         "completeRuns": 3,
-        "insertMilliseconds": 6.422624999999243,
+        "insertMilliseconds": 7.137915999999677,
         "insertedPrefixes": [
           100000,
           100000,
           100000
         ],
-        "deleteUs": 0.5528340000018943
+        "deleteUs": 0.6145000000033178
       }
     ],
     "size": [
@@ -611,11 +975,11 @@
           "brotli": 112370
         },
         "after": {
-          "raw": 600253,
-          "gzip": 143348,
-          "brotli": 113076
+          "raw": 600530,
+          "gzip": 143427,
+          "brotli": 113321
         },
-        "brotliDeltaBytes": 706
+        "brotliDeltaBytes": 951
       },
       {
         "name": "SQLike dynamic SQL",
@@ -625,11 +989,11 @@
           "brotli": 119634
         },
         "after": {
-          "raw": 646123,
-          "gzip": 154113,
-          "brotli": 120694
+          "raw": 646400,
+          "gzip": 154203,
+          "brotli": 120768
         },
-        "brotliDeltaBytes": 1060
+        "brotliDeltaBytes": 1134
       },
       {
         "name": "Litestream",
@@ -649,7 +1013,7 @@
   },
   "experimentalStandalone": {
     "path": "_build/js/release/build/mizchi/sqlike/experimental-typed/experimental-typed.js",
-    "sha256": "b651857e4fd6d5a1ea6eb93448c30a789327a7301dc519b4100e46b05bd0287e",
+    "sha256": "9bdb59abf8bfda9570693f67b0025b2a93477f97db3935c3e5b34a98c4fcb010",
     "exports": [
       "exec",
       "open",
@@ -659,7 +1023,7 @@
       "snapshot",
       "values"
     ],
-    "minifiedBytes": 592773,
-    "brotliBytes": 111831
+    "minifiedBytes": 593050,
+    "brotliBytes": 111992
   }
 }
