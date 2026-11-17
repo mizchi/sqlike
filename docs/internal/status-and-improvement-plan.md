@@ -2,6 +2,10 @@
 
 更新日: 2026-11-17。**0.1.1** の実装・検証を整理した台帳。今後の着手順と完了条件はこのページで管理し、各機能の仕様・実装経緯・測定の全量はリンク先に残す。
 
+0.1.1以降の改善として、[AOT UPDATEのメタデータ再利用](aot-update-metadata.md)を追加した。固定schema由来の行layout・代入先の列番号とaffinityをProgramで共有し、値・接続状態は実行ごとに評価する。[次期最適化Issue](https://github.com/mizchi/sqlike/issues/1)の通常SQL・JSON境界・索引移動は引き続き改善候補。
+
+続いて[準備済み実行計画](prepared-execution-plan.md)を追加。UPDATEの基本式・RETURNINGと、単純なSELECTの主キーアクセスを解析用ASTから分離し、列slot・比較規則・アクセス方式を準備する。一般式や範囲索引等への拡張は同ページで管理する。
+
 0.1.1の変更として、[段階的な互換機能の導入](staged-sqlite-compatibility.md)を開始。軽量な`IS DISTINCT FROM`、`&` / `|` / `~`、`sign()`はcoreへ、JSONの`->` / `->>`は既存の任意機能`sqlJson`へ追加する。後続の不足機能は同ページのチェックリストで管理し、未実装の機能を選択APIへ先行公開しない。
 
 続いて、LIKE ESCAPE・scalar min/max、NULL順序・名前付きSQL bind、索引metadata、FROM subquery・集約FILTER、JSON集約を追加した。大きめの実装は`schemaMetadata` / `aggregateFilter` / `sqlJson`で選択する。[Drizzle事前コンパイルentry](../drizzle-prepared.md)も追加し、query builderとSQL parserを配信せずに固定したクエリを実行できる。
@@ -187,6 +191,16 @@ notes Programは20,049 B、SHA-256 `a6af7a52769d67773842aae483fcb856b46f628e3118
   - 完了条件: まず既存ABIのままprepare / 実行 / marshalを分離計測。named queryの反復で改善し、小DB・scan・更新を退行させない。型・列順・parser除去・Program互換と配信差を確認
   - 依存・費用: V01。小〜中の変更から試し、型付きABIの形式変更は別に評価
   - 結果: [P01](p01-aot-results.md)。immutable metadataを再利用し、PK検索の所要時間をJS 57% / Wasm 67%削減。Statement保持は約0.03µsのため見送った。scanも改善、UPDATEのJS微増はサンプル範囲が重なり改善には数えない。Programは同一、AOTアプリBrotliは+147 B
+
+- [x] **P04 / P1 — AOT UPDATEの固定schemaメタデータを再利用**
+  - 完了条件: JSON / binaryのJS / Wasmで同値・実変更・RETURNING・miss・失敗を分離計測。bind型、制約・FK・trigger、SAVEPOINT、clone / restoreの差分を維持し、readonly catalogから適用処理を除去する
+  - 実装: 行layout・代入先の列番号とaffinity・IPK位置をProgramで共有。同じ表のUPDATE間でlayoutを共有し、行・Store・bind・時計・counterは保持しない
+  - 結果: [AOT UPDATE](aot-update-metadata.md)。通常SQLのparse / prepareとJSON境界、索引移動は[Issue #1](https://github.com/mizchi/sqlike/issues/1)の後続候補
+
+- [x] **P05 / P1 — AOTの実行用IR・主キーアクセスを汎用ASTから分離**
+  - 完了条件: 比較のaffinity / collation・列slot・主キーアクセス・RETURNINGを準備。値・索引・接続状態は実行時に取得し、対応外は既存経路へ戻す。JSON / binaryとcatalog選択のJS / Wasm、型切替・複合キー・LIMIT・trigger / FK・失敗後状態を差分検査する
+  - 実装: `BoundExpression` / `BoundAccess` / `PreparedPoint`を追加。基本式の評価用Environmentは遅延生成。値演算とキー正規化は汎用経路と共有する
+  - 結果: [準備済み実行計画](prepared-execution-plan.md)。SQL断片・HTMLのbindと、通常要素のtextContentによるオフライン表示を別の境界として検査
 
 - [x] **S01 / P1 — 変更列だけの永続差分。大きい未変更TEXT / BLOBまで行after-imageに含まれる**
   - 完了条件: version付き差分と旧形式replayを定義。4 KiB列を持つ1 / 16行更新で提出量を減らし、strict ACK・checkpoint込み時間・reopen・trigger・rollbackを比較。通常の小さい行を退行させない

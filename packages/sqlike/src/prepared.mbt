@@ -21,6 +21,7 @@ struct Program {
   schema : Store
   queries : Map[String, CompiledQuery]
   selections : Map[String, PreparedSelection]
+  updates : Map[String, PreparedUpdatePlan]
   id : String
   storage : StoragePlan?
 }
@@ -30,6 +31,7 @@ struct Query {
   program_id : String
   plan : CompiledQuery
   selection : PreparedSelection?
+  update : PreparedUpdatePlan?
 }
 
 ///|
@@ -38,12 +40,108 @@ struct Query {
 priv struct PreparedSelection {
   output : Environment
   simple : PreparedProjection?
+  point : PreparedPoint?
 }
 
 ///|
 priv struct PreparedProjection {
   layout : Environment
   columns : Array[RowProjection]
+}
+
+///|
+/// Runtime-only metadata from the validated fixed schema. Like PreparedSelection,
+/// this contains no Store/Table, live row, bindings or connection state.
+priv struct PreparedUpdatePlan {
+  table_slot : Int32
+  layout : Environment
+  columns : Array[String]
+  setters : Array[PreparedSetter]
+  integer_primary : Int32
+  predicate : BoundExpression
+  access : BoundAccess
+  returning : BoundProjection
+}
+
+///|
+priv struct PreparedSetter {
+  column : Int32
+  affinity : String
+  expression : BoundExpression
+}
+
+///|
+fn prepare_update(
+  store : Store,
+  name : String,
+  setters : Array[(String, Expr)],
+  predicate : Expr,
+  returning : Array[Projection],
+  parameters : Int32,
+  layouts~ : Map[String, Environment] = Map([]),
+) -> (PreparedUpdatePlan, Array[String]) raise SqlError {
+  guard CAP_STATEMENT_UPDATE else {
+    fail("catalog capability disabled: update")
+  }
+  let table = get_table(store, name)
+  prepare_foreign_table(store, table)
+  let layout = match layouts.get(table.name) {
+    Some(layout) => layout
+    None => {
+      let layout = row_environment(
+        table,
+        { id: 0L, values: Array::make(table.columns.length(), Null), },
+        table.name,
+      )
+      layouts[table.name] = layout
+      layout
+    }
+  }
+  let context = evaluation(store, Array::make(parameters, Null), layout)
+  let resolved = validate_update(table, setters, predicate, returning, context).map(pair => {
+      let (column, expression) = pair
+      {
+        column,
+        affinity: column_affinity(table, table.columns[column]),
+        expression: bind_expression(expression, context),
+      }
+    },
+  )
+  let returning = bind_projection(returning, context)
+  (
+    {
+      table_slot: prepared_table_slot(store, table),
+      layout,
+      columns: setters.map(p => p.0),
+      setters: resolved,
+      integer_primary: integer_primary(table),
+      predicate: bind_expression(predicate, context),
+      access: bind_access(table, predicate, layout),
+      returning,
+    },
+    returning.output.map(b => b.name),
+  )
+}
+
+///|
+/// Semantic validation also serves trigger bodies with live OLD/NEW scopes.
+/// Executable slot binding is a separate step for fixed-schema top-level plans.
+fn validate_update(
+  table : Table,
+  setters : Array[(String, Expr)],
+  predicate : Expr,
+  returning : Array[Projection],
+  context : Evaluation,
+) -> Array[(Int32, Expr)] raise SqlError {
+  prepare_expression(predicate, context, false, false)
+  let resolved = setters.map(pair => {
+    let (name, expression) = pair
+    let column = column_index(table, name)
+    prepare_expression(expression, context, false, false)
+    (column, expression)
+  })
+  prepare_returning(returning, context)
+  resolved
 }
 
 ///|
@@ -57,26 +155,41 @@ fn prepare_selection(
     evaluation(store, Array::make(parameters, Null), []),
   )
   let mut simple : PreparedProjection? = None
+  let mut point : PreparedPoint? = None
   if select.sources.length() == 1 {
     let source = select.sources[0]
     let key = identifier(source.name)
-    for table in store.tables {
+    for slot, table in store.tables {
       if matches_identifier(table.name, key) &&
         simple_projection(select, table, source.qualifier) is Some(columns) &&
         columns.length() == output.length() {
-        simple = Some({
+        let projection : PreparedProjection = {
           layout: row_environment(
             table,
             { id: 0L, values: Array::make(table.columns.length(), Null), },
             source.qualifier,
           ),
           columns,
-        })
+        }
+        simple = Some(projection)
+        point = prepare_point(
+          store, select, table, slot, projection, output, parameters,
+        )
         break
       }
     }
   }
-  { output, simple, }
+  { output, simple, point, }
+}
+
+///|
+fn prepared_table_slot(store : Store, table : Table) -> Int32 raise SqlError {
+  for i, candidate in store.tables {
+    if candidate.name == table.name {
+      return i
+    }
+  }
+  fail("invalid prepared table")
 }
 
 ///|
@@ -185,18 +298,13 @@ fn prepared_names(
       }
       let table = get_table(store, name)
       prepare_foreign_table(store, table)
-      let row = row_environment(
+      let layout = row_environment(
         table,
         { id: 0L, values: Array::make(table.columns.length(), Null), },
-        name,
+        table.name,
       )
-      let context = evaluation(store, params, row)
-      prepare_expression(predicate, context, false, false)
-      for (column, expression) in setters {
-        ignore(column_index(table, column))
-        prepare_expression(expression, context, false, false)
-      }
-      prepare_returning(returning, context)
+      let context = evaluation(store, params, layout)
+      ignore(validate_update(table, setters, predicate, returning, context))
       project_template(returning, context).map(b => b.name)
     }
     PreparedDelete(name, predicate, returning) => {
@@ -253,6 +361,9 @@ fn prepare_compiled_program(
   }
   let queries : Map[String, CompiledQuery] = Map([])
   let selections : Map[String, PreparedSelection] = Map([])
+  let updates : Map[String, PreparedUpdatePlan] = Map([])
+  // Share a table's null-valued layout rather than retaining it per UPDATE.
+  let update_layouts : Map[String, Environment] = Map([])
   for query in program.queries {
     validate_optional_features(query)
     guard query.name != "" &&
@@ -274,6 +385,22 @@ fn prepare_compiled_program(
         selections[query.name] = prepared
         prepared.output.map(b => b.name)
       }
+      PreparedUpdate(name, setters, predicate, returning) => {
+        guard CAP_STATEMENT_UPDATE else {
+          fail("catalog capability disabled: update")
+        }
+        let (prepared, names) = prepare_update(
+          program.schema,
+          name,
+          setters,
+          predicate,
+          returning,
+          query.parameters,
+          layouts=update_layouts,
+        )
+        updates[query.name] = prepared
+        names
+      }
       _ => prepared_names(program.schema, query.statement, query.parameters)
     }
     guard names == query.names else {
@@ -281,7 +408,14 @@ fn prepare_compiled_program(
     }
     queries[query.name] = query
   }
-  { schema: program.schema, queries, selections, id, storage: program.storage, }
+  {
+    schema: program.schema,
+    queries,
+    selections,
+    updates,
+    id,
+    storage: program.storage,
+  }
 }
 
 ///|
@@ -310,7 +444,12 @@ pub fn Program::query(self : Program, name : String) -> Query raise SqliteError 
   guard self.queries.get(name) is Some(plan) else {
     raise sqlite_misuse("unknown query in compiled catalog: " + name)
   }
-  { program_id: self.id, plan, selection: self.selections.get(name), }
+  {
+    program_id: self.id,
+    plan,
+    selection: self.selections.get(name),
+    update: self.updates.get(name),
+  }
 }
 
 ///|
@@ -344,6 +483,7 @@ pub fn Connection::prepare_compiled(
         plan.statement,
         params,
         prepared_selection=query.selection,
+        prepared_update=query.update,
       )
     },
     tracks_changes=!data_readonly(plan.statement),

@@ -260,7 +260,15 @@ fn updated_row(
       column_affinity(table, table.columns[i]),
     )
   }
-  let ipk = integer_primary(table)
+  finish_updated_row(previous, values, integer_primary(table))
+}
+
+///|
+fn finish_updated_row(
+  previous : StoredRow,
+  values : Array[Value],
+  ipk : Int32,
+) -> StoredRow raise SqlError {
   let id = if ipk >= 0 {
     guard values[ipk] is Integer(id) else {
       fail("datatype mismatch: INTEGER PRIMARY KEY")

@@ -63,6 +63,8 @@ test("catalog-selected AOT and binary runtimes remove unused scalar and write im
         "substring__value",
         "sql__round",
         "insert__rows",
+        "prepare__update",
+        "updated__row__from__plan",
         "simple__aggregate",
       ])
         assert.ok(

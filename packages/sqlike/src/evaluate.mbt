@@ -217,83 +217,14 @@ fn evaluate(expression : Expr, ctx : Evaluation) -> Value raise SqlError {
       guard FEATURE_WINDOWS else { fail("feature disabled: windowFunctions") }
       Integer((ctx.position + 1).to_int64())
     }
-    Unary(op, e) => {
-      let value = evaluate(e, ctx)
-      if op == "not" {
-        let t = truth(value)
-        if t == -1 {
-          Null
-        } else {
-          boolean(t == 0)
-        }
-      } else if op == "+" {
-        value
-      } else if op == "~" {
-        if value is Null {
-          Null
-        } else {
-          Integer(integer_value(value) ^ -1L)
-        }
-      } else {
-        match numeric(value, false) {
-          Null => Null
-          Integer(n) =>
-            if n == -9223372036854775808L {
-              Real(9223372036854775808.0)
-            } else {
-              Integer(-n)
-            }
-          Real(n) => Real(-n)
-          _ => Integer(0L)
-        }
-      }
-    }
+    Unary(op, e) => unary_value(op, evaluate(e, ctx))
     Binary(op, left, right) => {
       let a = evaluate(left, ctx)
       let b = evaluate(right, ctx)
-      if op == "and" || op == "or" {
-        let a = truth(a)
-        let b = truth(b)
-        if op == "and" {
-          if a == 0 || b == 0 {
-            Integer(0L)
-          } else if a < 0 || b < 0 {
-            Null
-          } else {
-            Integer(1L)
-          }
-        } else if a == 1 || b == 1 {
-          Integer(1L)
-        } else if a < 0 || b < 0 {
-          Null
-        } else {
-          Integer(0L)
-        }
-      } else if ["+", "-", "*", "/", "%"].contains(op) {
-        arithmetic(op, a, b)
-      } else if op == "<<" || op == ">>" {
-        shift_value(op, a, b)
-      } else if op == "&" || op == "|" {
-        if a is Null || b is Null {
-          Null
-        } else {
-          let x = integer_value(a)
-          let y = integer_value(b)
-          Integer(if op == "&" { x & y } else { x | y })
-        }
-      } else if op == "||" {
-        if a is Null || b is Null {
-          Null
-        } else {
-          Text(checked_text_value(a) + checked_text_value(b))
-        }
-      } else if op == "like" {
-        guard CAP_FUNCTION_LIKE else {
-          fail("catalog capability disabled: like")
-        }
-        like_value([b, a])
-      } else {
+      if comparison_operator(op) {
         compare_expression(op, left, a, right, b, ctx)
+      } else {
+        binary_value(op, a, b)
       }
     }
     Between(e, low, high) => {
@@ -879,22 +810,6 @@ fn compare_expression(
     let ra = expression_affinity(right, ctx)
     let a = merged_comparison_value(left, a, la, ctx)
     let b = merged_comparison_value(right, b, ra, ctx)
-    let a = if ["integer", "numeric", "real"].contains(ra) &&
-      !["integer", "numeric", "real"].contains(la) {
-      apply_affinity(a, "numeric")
-    } else if ra == "text" && la == "" {
-      apply_affinity(a, "text")
-    } else {
-      a
-    }
-    let b = if ["integer", "numeric", "real"].contains(la) &&
-      !["integer", "numeric", "real"].contains(ra) {
-      apply_affinity(b, "numeric")
-    } else if la == "text" && ra == "" {
-      apply_affinity(b, "text")
-    } else {
-      b
-    }
     let collation = match left {
       Collate(_, name) => name
       _ =>
@@ -908,18 +823,7 @@ fn compare_expression(
             }
         }
     }
-    let comparison = compare_stored(ctx.store, a, b, collation)
-    boolean(
-      match op {
-        "=" | "==" | "is" => comparison == 0
-        "<>" | "!=" | "is not" => comparison != 0
-        "<" => comparison < 0
-        ">" => comparison > 0
-        "<=" => comparison <= 0
-        ">=" => comparison >= 0
-        _ => fail("unsupported SQL operator: " + op)
-      },
-    )
+    compare_nonnull(op, a, b, la, ra, collation, ctx.store)
   }
 }
 
@@ -939,4 +843,130 @@ fn aggregate_number(value : Value) -> Value {
     Integer(_) | Real(_) => parsed
     _ => Real(as_double(value))
   }
+}
+
+///|
+fn unary_value(op : String, value : Value) -> Value {
+  if op == "not" {
+    let t = truth(value)
+    if t == -1 {
+      Null
+    } else {
+      boolean(t == 0)
+    }
+  } else if op == "+" {
+    value
+  } else if op == "~" {
+    if value is Null {
+      Null
+    } else {
+      Integer(integer_value(value) ^ -1L)
+    }
+  } else {
+    match numeric(value, false) {
+      Null => Null
+      Integer(n) =>
+        if n == -9223372036854775808L {
+          Real(9223372036854775808.0)
+        } else {
+          Integer(-n)
+        }
+      Real(n) => Real(-n)
+      _ => Integer(0L)
+    }
+  }
+}
+
+///|
+fn binary_value(op : String, a : Value, b : Value) -> Value raise SqlError {
+  if op == "and" || op == "or" {
+    let a = truth(a)
+    let b = truth(b)
+    if op == "and" {
+      if a == 0 || b == 0 {
+        Integer(0L)
+      } else if a < 0 || b < 0 {
+        Null
+      } else {
+        Integer(1L)
+      }
+    } else if a == 1 || b == 1 {
+      Integer(1L)
+    } else if a < 0 || b < 0 {
+      Null
+    } else {
+      Integer(0L)
+    }
+  } else if ["+", "-", "*", "/", "%"].contains(op) {
+    arithmetic(op, a, b)
+  } else if op == "<<" || op == ">>" {
+    shift_value(op, a, b)
+  } else if op == "&" || op == "|" {
+    if a is Null || b is Null {
+      Null
+    } else {
+      let x = integer_value(a)
+      let y = integer_value(b)
+      Integer(if op == "&" { x & y } else { x | y })
+    }
+  } else if op == "||" {
+    if a is Null || b is Null {
+      Null
+    } else {
+      Text(checked_text_value(a) + checked_text_value(b))
+    }
+  } else if op == "like" {
+    guard CAP_FUNCTION_LIKE else { fail("catalog capability disabled: like") }
+    like_value([b, a])
+  } else {
+    fail("unsupported SQL operator: " + op)
+  }
+}
+
+///|
+fn comparison_operator(op : String) -> Bool {
+  match op {
+    "=" | "==" | "!=" | "<>" | "<" | ">" | "<=" | ">=" | "is" | "is not" => true
+    _ => false
+  }
+}
+
+///|
+fn compare_nonnull(
+  op : String,
+  a : Value,
+  b : Value,
+  la : String,
+  ra : String,
+  collation : String,
+  store : Store,
+) -> Value raise SqlError {
+  let a = if ["integer", "numeric", "real"].contains(ra) &&
+    !["integer", "numeric", "real"].contains(la) {
+    apply_affinity(a, "numeric")
+  } else if ra == "text" && la == "" {
+    apply_affinity(a, "text")
+  } else {
+    a
+  }
+  let b = if ["integer", "numeric", "real"].contains(la) &&
+    !["integer", "numeric", "real"].contains(ra) {
+    apply_affinity(b, "numeric")
+  } else if la == "text" && ra == "" {
+    apply_affinity(b, "text")
+  } else {
+    b
+  }
+  let comparison = compare_stored(store, a, b, collation)
+  boolean(
+    match op {
+      "=" | "==" | "is" => comparison == 0
+      "<>" | "!=" | "is not" => comparison != 0
+      "<" => comparison < 0
+      ">" => comparison > 0
+      "<=" => comparison <= 0
+      ">=" => comparison >= 0
+      _ => fail("unsupported SQL operator: " + op)
+    },
+  )
 }

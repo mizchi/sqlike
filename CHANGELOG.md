@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- Execute fixed-schema UPDATEs and simple primary-key SELECTs through a separate prepared IR in JSON AOT and binary defined runtimes. Bind table/column slots, comparison rules, assignment targets, RETURNING projections and primary-key access once; read rows, parameters, indexes and connection state on each execution. Complex expressions retain the validated AST evaluator.
+
 ## [0.1.1] - 2026-11-17
 
 ### Added

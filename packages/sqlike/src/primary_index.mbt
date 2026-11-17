@@ -10,40 +10,53 @@ priv struct PrimaryIndex {
 fn primary_value_key(table : Table, values : Array[Value]) -> String? {
   let parts : Array[Json] = []
   for i in primary_key(table) {
-    let mut value = apply_affinity(
-      values[i],
-      column_affinity(table, table.columns[i]),
-    )
-    if value is Null {
+    guard primary_part_key(
+        values[i],
+        column_affinity(table, table.columns[i]),
+        table.columns[i].collation,
+      )
+      is Some(part) else {
       return None
     }
-    if value is Real(n) &&
-      n >= -9223372036854775808.0 &&
-      n < 9223372036854775808.0 &&
-      n.to_int64().to_double() == n {
-      value = Integer(n.to_int64())
-    }
-    if value is Text(s) {
-      if table.columns[i].collation == "nocase" {
-        parts.push(
-          Json::array([
-            Json::number(@utf8.encode(s).length().to_double()),
-            value_json(Text(nocase_prefix(s))),
-          ]),
-        )
-        continue
-      }
-      if table.columns[i].collation == "rtrim" {
-        value = Text(s.trim_end(chars=" ").to_owned())
-      }
-    }
-    parts.push(value_json(value))
+    parts.push(part)
   }
   if parts.is_empty() {
     None
   } else {
     Some(Json::array(parts).stringify())
   }
+}
+
+///|
+fn primary_part_key(
+  input : Value,
+  affinity : String,
+  collation : String,
+) -> Json? {
+  let mut value = apply_affinity(input, affinity)
+  if value is Null {
+    return None
+  }
+  if value is Real(n) &&
+    n >= -9223372036854775808.0 &&
+    n < 9223372036854775808.0 &&
+    n.to_int64().to_double() == n {
+    value = Integer(n.to_int64())
+  }
+  if value is Text(s) {
+    if collation == "nocase" {
+      return Some(
+        Json::array([
+          Json::number(@utf8.encode(s).length().to_double()),
+          value_json(Text(nocase_prefix(s))),
+        ]),
+      )
+    }
+    if collation == "rtrim" {
+      value = Text(s.trim_end(chars=" ").to_owned())
+    }
+  }
+  Some(value_json(value))
 }
 
 ///|
