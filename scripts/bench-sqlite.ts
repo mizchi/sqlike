@@ -18,32 +18,11 @@ import type {
 } from "./sqlite-bench-workload.ts";
 import { summarizeProfile } from "./profile-summary.ts";
 import { sourceHashes } from "./measurement-manifest.ts";
+import { comparisonOptions, comparisonSampling } from "./sqlite-bench-policy.ts";
 
+const started = performance.now();
 const args = process.argv.slice(2);
-for (const arg of args)
-  if (
-    !/^(--smoke|--prepared|--output=.+|--rows=\d+(,\d+)*|--profiles=false|--profile-queries=[a-z,]+|--profile-engines=[a-z,]+)$/.test(
-      arg,
-    )
-  )
-    throw Error(`unknown option ${arg}`);
-const smoke = args.includes("--smoke"),
-  prepared = args.includes("--prepared"),
-  profiles = !smoke && !args.includes("--profiles=false");
-const output =
-  args.find((a) => a.startsWith("--output="))?.slice(9) ??
-  (smoke
-    ? "/tmp/browser-litestream-sqlite-smoke.json"
-    : prepared ? "measurements/dynamic-prepare-current.json" : "measurements/sqlite-speed-current.json");
-const rowCounts = smoke
-  ? [100]
-  : (args.find((a) => a.startsWith("--rows="))?.slice(7) ?? "100,1000,5000")
-      .split(",")
-      .map(Number);
-assert.ok(
-  rowCounts.every((n) => n >= 100 && n <= 10000 && n % 100 === 0),
-  "rows must be multiples of 100 in 100..10000",
-);
+const { smoke, prepared, profiles, output, datasets } = comparisonOptions(args);
 const hash = (value: string | Uint8Array) =>
   createHash("sha256").update(value).digest("hex");
 const schema = [
@@ -141,6 +120,7 @@ const server = createServer((req, res) => {
 await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
 const origin = `http://127.0.0.1:${(server.address() as { port: number }).port}`;
 function inputFor(rows: number, coldRows: number): ComparisonInput {
+  const sampling = comparisonSampling(rows, smoke);
   const native = new NodeDatabase(":memory:"),
     batches: ComparisonInput["batches"] = [];
   try {
@@ -158,6 +138,10 @@ function inputFor(rows: number, coldRows: number): ComparisonInput {
         native.run(sql, values);
         batches.push({ name, sql, bindings });
       }
+    // Large workloads measure queries, not six repeated INSERT builds. Take the
+    // oracle's committed pre-UPDATE image and restore through public engine APIs.
+    const sqliteImage = sampling.maxResultRowsPerSample === null ? undefined :
+      Buffer.from(native.raw.serialize()).toString("base64");
     const expected = (sql: string, values: Value[]) =>
       nativeValues(native, sql, values).map(
         (row) => JSON.parse(aotBindings(row)) as Cell[],
@@ -193,7 +177,7 @@ function inputFor(rows: number, coldRows: number): ComparisonInput {
         bindings: aotBindings(params),
         expected: expected(query.sql, params),
         iterations,
-        warmup: smoke ? 1 : Math.min(200, iterations),
+        warmup: Math.min(sampling.warmupLimit, iterations),
         ...(query.name === "update"
           ? {
               write: true,
@@ -214,7 +198,8 @@ function inputFor(rows: number, coldRows: number): ComparisonInput {
       rows,
       coldRows,
       queries: workload,
-      runs: smoke ? 1 : 7,
+      sampling,
+      ...(sqliteImage ? { sqliteImage } : {}),
       ...(prepared ? { prepared: true, retentionQuery: {
         sql: queries.find(q => q.name === "point")!.sql,
         bindings: aotBindings([1n]),
@@ -259,13 +244,16 @@ try {
   const browser = await chromium.launch();
   chromiumVersion = browser.version();
   try {
-    for (const [rows, coldRows] of [
-      ...rowCounts.map((n) => [n, 0] as const),
-      ...(smoke ? [] : [[100, 5000] as const]),
-    ]) {
+    for (const [rows, coldRows] of datasets) {
+      const datasetStarted = performance.now();
       console.log(`Setup ${rows} rows + ${coldRows} unrelated rows`);
       const input = inputFor(rows, coldRows),
         page = await browser.newPage();
+      let timedOut = false;
+      const deadline = setTimeout(() => {
+        timedOut = true;
+        void page.close().catch(() => {});
+      }, Math.max(1, input.sampling.datasetTimeoutMilliseconds - (performance.now() - datasetStarted)));
       try {
         await page.goto(origin);
         const info = await page.evaluate(
@@ -278,12 +266,22 @@ try {
         console.log(
           `Measure SQLite ${info.sqliteVersion}, JS/Wasm, prepared/dynamic (${rows}/${coldRows})`,
         );
+        const setupMilliseconds = performance.now() - datasetStarted;
+        const measureStarted = performance.now();
         const measured = await page.evaluate(() =>
           window.sqliteBench.measure(),
         );
         const item = {
           rows,
           coldRows,
+          sampling: input.sampling,
+          initialization: input.sqliteImage ? {
+            method: "native-sqlite-image-import+logical-restore",
+            bytes: Buffer.from(input.sqliteImage, "base64").length,
+            sha256: hash(Buffer.from(input.sqliteImage, "base64")),
+          } : { method: "sql-insert-batches" },
+          timing: { setupMilliseconds, measurementMilliseconds: performance.now() - measureStarted,
+            totalMilliseconds: 0 },
           sqliteVersion: info.sqliteVersion,
           plans: info.plans,
           workloadSHA256: hash(JSON.stringify(input)),
@@ -356,8 +354,14 @@ try {
           Object.assign(item, { retention });
           await session.detach();
         }
+        item.timing.totalMilliseconds = performance.now() - datasetStarted;
         await page.evaluate(() => window.sqliteBench.close());
+      } catch (error) {
+        if (timedOut)
+          throw Error(`benchmark dataset ${rows}/${coldRows} exceeded ${input.sampling.datasetTimeoutMilliseconds}ms`, { cause: error });
+        throw error;
       } finally {
+        clearTimeout(deadline);
         await page.close();
       }
     }
@@ -373,14 +377,17 @@ const report = {
   sourceHashes: sourceHashes([
     "scripts/bench-sqlite.ts",
     "scripts/sqlite-bench-workload.ts",
+    "scripts/sqlite-bench-policy.ts",
     "scripts/profile-summary.ts",
     "src/sql-statement-cache.ts",
+    "src/aot-values.ts",
   ]),
   profileQueries,
   profileEngines,
   prepared,
   format: 1,
   measuredAt: new Date().toISOString(),
+  elapsedMilliseconds: performance.now() - started,
   smoke,
   environment: {
     node: process.version,
@@ -395,7 +402,7 @@ const report = {
     nativeOracle: process.versions.sqlite,
   },
   method: (prepared ? "Additional paths: SQLike JS/Wasm prepared data statements using the production 32-entry / 64 KiB UTF-16 SQL LRU. Same pre-encoded bindings; host value encoding and clock update excluded on all SQLike paths. DDL/transactions/PRAGMA use the uncached executor. Cache preparation is warmed before steady samples. Retention probes run after timing/profiles: force GC, retain 32 distinct PK plans, force GC, clear all cache entries and force GC again; report CDP heap/backing storage, not RSS or a heap bound. " : "") +
-    "Same Chromium page per dataset, memory only, no storage/network/compilation in timed regions. Six paths: SQLike JS/Wasm GC AOT and dynamic; SQLite WASM cached prepared and prepare/finalize each call. Pre-encoded SQLike bindings and pre-decoded SQLite bindings; all results normalized to typed positional Cell arrays. SQLite type queries/BigInt and SQLike response JSON.parse included, not identical ABI. Native SQLite oracle and UPDATE side effects checked before/after timing. Rotated order, 7 samples, adaptive warmups by dataset and two calibration rounds targeting 50ms per engine/sample (actual iterations recorded). UPDATE repeatedly sets the same value after its first verified change. Main range timings are warm. firstRangeRead is one un-warmed API call, including first preparation/index build, not a median. Separate indexLifecycle probes run after main timings: each cycle changes an indexed n value between -7/-8 outside the requested positive range, then performs a range read; timings include both operations and any index maintenance. indexMovement repeats with -7/(rows*3+7), moving between both ends of the index while preserving the range result. Profiles collected separately after measurements, 1ms sampling, 1 second each; profile durations are not benchmark timings. No forced GC during timed samples.",
+    "Same Chromium page per dataset, memory only, no storage/network/compilation in timed regions. Large datasets serialize the pre-UPDATE native SQLite fixture, import once through the public SQLike SQLite reader, and restore checked logical images into the remaining SQLike/AOT connections. SQLite WASM is seeded by the same SQL batches. Setup is recorded separately; this measures query performance, not INSERT throughput or application startup. Six base paths: SQLike JS/Wasm GC AOT and dynamic; SQLite WASM cached prepared and prepare/finalize each call. Pre-encoded SQLike bindings and pre-decoded SQLite bindings; all results normalized to typed positional Cell arrays. SQLite type queries/BigInt and SQLike response JSON.parse included, not identical ABI. Native SQLite oracle and UPDATE side effects checked before/after timing. Rotated order; standard datasets use 7 samples and a 50ms target, datasets over 10000 rows use 3 samples and a 20ms target. Two calibration rounds; minimum 5 standard / 1 large iteration, at most 200000 returned rows per large sample and at most two large warmup calls. Large JSON decode diagnostics use at most 200000 returned rows and one warmup. Budgets are targets, not hard per-call deadlines; actual iterations, setup/measurement/total times and sampling configuration are recorded. Per-dataset watchdog closes the browser page after 180s standard / 120s large, including setup. Smoke uses one sample without calibration. UPDATE repeatedly sets the same value after its first verified change. Main range timings are warm. firstRangeRead is one un-warmed API call, including first preparation/index build, not a median. Separate indexLifecycle probes run after main timings: each cycle changes an indexed n value between -7/-8 outside the requested positive range, then performs a range read; timings include both operations and any index maintenance. indexMovement repeats with -7/(rows*3+7), moving between both ends of the index while preserving the range result. Profiles collected separately after measurements only at 1000 rows or unrelated-table diagnostics, 1ms sampling, 1 second each; profile durations are not benchmark timings. No forced GC during timed samples.",
   artifacts: Object.fromEntries(
     Object.entries(files).map(([name, file]) => [
       name,

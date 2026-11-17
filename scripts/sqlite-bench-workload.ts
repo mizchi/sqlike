@@ -6,8 +6,10 @@ import type {
   PreparedStatement,
 } from "@sqlite.org/sqlite-wasm";
 import type { Cell } from "../src/contract.ts";
-import { aotValue } from "../src/aot-values.ts";
+import { aotValue, fromBase64 } from "../src/aot-values.ts";
 import { createSqlStatementCache } from "../src/sql-statement-cache.ts";
+import { boundComparisonIterations, calibratedComparisonIterations, comparisonDecodeWork,
+  type ComparisonSampling } from "./sqlite-bench-policy.ts";
 
 export interface ComparisonQuery {
   name: string;
@@ -24,7 +26,8 @@ export interface ComparisonInput {
   schema: string[];
   rows: number;
   coldRows: number;
-  runs: number;
+  sampling: ComparisonSampling;
+  sqliteImage?: string;
   prepared?: boolean;
   retentionQuery?: { sql: string; bindings: string; expected: Cell[][] };
   batches: { name: string; sql: string; bindings: string }[];
@@ -141,6 +144,10 @@ export async function createComparison(input: ComparisonInput) {
   for (const sql of input.schema) db.exec(sql);
   const drivers: Driver[] = [];
   const cacheMemory: { engine: string; clear(): void; fill(): { entries: number; sqlBytes: number } }[] = [];
+  // Restore only through the public checked APIs; never manufacture runtime
+  // handles or populate private Store/row/index structures.
+  const sqliteImage = input.sqliteImage ? fromBase64(input.sqliteImage) : undefined;
+  let logicalImage: string | undefined;
   for (const [name, aot, sql] of [
     ["js", jsAot, jsSql],
     ["wasm", wasmAot, wasmSql],
@@ -149,8 +156,20 @@ export async function createComparison(input: ComparisonInput) {
       d = sql.database_open();
     const info = JSON.parse(aot.aot_info(a));
     if (info.error) throw Error(info.error);
-    for (const statement of input.schema)
-      response(sql.database_exec(d, statement, "[]", false));
+    if (sqliteImage) {
+      if (logicalImage === undefined) {
+        response(sql.database_import_sqlite(d, sqliteImage));
+        logicalImage = sql.database_dump(d);
+      } else {
+        response(sql.database_restore(d, logicalImage));
+      }
+      response(aot.aot_restore(a, JSON.stringify({ format: "moon-aot-image@1",
+        programId: info.programId, serial: input.batches.length,
+        state: JSON.parse(logicalImage).state })));
+    } else {
+      for (const statement of input.schema)
+        response(sql.database_exec(d, statement, "[]", false));
+    }
     const rawAot = (q: { name: string; bindings: string }) =>
       aot.aot_execute(a, q.name, q.bindings);
     const rawDynamic = (q: {
@@ -161,10 +180,11 @@ export async function createComparison(input: ComparisonInput) {
       q.write
         ? sql.database_exec(d, q.sql, q.bindings, false)
         : sql.database_query_values(d, q.sql, q.bindings);
-    for (const batch of input.batches) {
-      response(rawAot(batch));
-      response(rawDynamic({ ...batch, write: true }));
-    }
+    if (!sqliteImage)
+      for (const batch of input.batches) {
+        response(rawAot(batch));
+        response(rawDynamic({ ...batch, write: true }));
+      }
     drivers.push(
       {
         name: `sqlike-${name}/aot`,
@@ -181,10 +201,14 @@ export async function createComparison(input: ComparisonInput) {
     );
     if (input.prepared) {
       const cached = sql.database_open();
-      for (const statement of input.schema)
-        response(sql.database_exec(cached, statement, "[]", false));
-      for (const batch of input.batches)
-        response(sql.database_exec(cached, batch.sql, batch.bindings, false));
+      if (logicalImage) {
+        response(sql.database_restore(cached, logicalImage));
+      } else {
+        for (const statement of input.schema)
+          response(sql.database_exec(cached, statement, "[]", false));
+        for (const batch of input.batches)
+          response(sql.database_exec(cached, batch.sql, batch.bindings, false));
+      }
       const cache = createSqlStatementCache({ capacity: 32 }, (text) => sql.database_prepare(cached, text))!;
       const raw = (q: { sql: string; bindings: string; write?: boolean }) => {
         const entry = cache.get(q.sql);
@@ -235,6 +259,15 @@ export async function createComparison(input: ComparisonInput) {
         `${q.name}/side effect/${driver.name}`,
       );
   }
+  function calibrate(call: () => unknown, initial: number, resultRows: number) {
+    let loops = boundComparisonIterations(initial, resultRows, input.sampling);
+    for (let round = 0; round < input.sampling.calibrationRounds; round++) {
+      const start = performance.now();
+      for (let i = 0; i < loops; i++) call();
+      loops = calibratedComparisonIterations(loops, performance.now() - start, resultRows, input.sampling);
+    }
+    return loops;
+  }
   return {
     sqliteVersion: sqlite.capi.sqlite3_libversion(),
     plans,
@@ -259,20 +292,9 @@ export async function createComparison(input: ComparisonInput) {
           for (let i = 0; i < query.warmup; i++) driver.call(query);
         const iterations = new Map<Driver, number>();
         for (const driver of drivers) {
-          let loops = query.iterations;
-          if (input.runs > 1)
-            for (let round = 0; round < 2; round++) {
-              const start = performance.now();
-              for (let i = 0; i < loops; i++) driver.call(query);
-              const elapsed = Math.max(0.05, performance.now() - start);
-              loops = Math.max(
-                5,
-                Math.min(1000000, Math.ceil((loops * 50) / elapsed)),
-              );
-            }
-          iterations.set(driver, loops);
+          iterations.set(driver, calibrate(() => driver.call(query), query.iterations, query.expected.length));
         }
-        for (let run = 0; run < input.runs; run++) {
+        for (let run = 0; run < input.sampling.runs; run++) {
           const order = drivers.map(
             (_, i) => drivers[(run + i) % drivers.length]!,
           );
@@ -304,10 +326,11 @@ export async function createComparison(input: ComparisonInput) {
         .filter((q) => ["constant", "scan"].includes(q.name))
         .map((q) => {
           const text = drivers[0]!.raw!(q),
-            loops = Math.max(50, q.iterations),
+            work = comparisonDecodeWork(q.iterations, q.expected.length, input.sampling),
+            loops = work.iterations,
             samples = [];
-          for (let i = 0; i < 100; i++) response(text);
-          for (let run = 0; run < input.runs; run++) {
+          for (let i = 0; i < work.warmup; i++) response(text);
+          for (let run = 0; run < input.sampling.runs; run++) {
             let count = 0;
             const start = performance.now();
             for (let i = 0; i < loops; i++) count += response(text).rows.length;
@@ -315,7 +338,7 @@ export async function createComparison(input: ComparisonInput) {
             equal(count, loops * q.expected.length, "cached decode count");
             samples.push({ run, milliseconds, iterations: loops });
           }
-          return { name: q.name, characters: text.length, samples };
+          return { name: q.name, characters: text.length, warmup: work.warmup, samples };
         });
       const updateQuery = input.queries.find((q) => q.name === "update");
       const measureIndexWrites = (values: string[]) =>
@@ -334,24 +357,9 @@ export async function createComparison(input: ComparisonInput) {
                 driver.call(writes[turn++ % writes.length]!);
                 return driver.call(rangeQuery).length;
               };
-              let loops = input.runs === 1 ? 5 : 10;
-              if (input.runs > 1)
-                for (let round = 0; round < 2; round++) {
-                  const start = performance.now();
-                  for (let i = 0; i < loops; i++) cycle();
-                  loops = Math.max(
-                    5,
-                    Math.min(
-                      1000000,
-                      Math.ceil(
-                        (loops * 50) /
-                          Math.max(0.05, performance.now() - start),
-                      ),
-                    ),
-                  );
-                }
+              const loops = calibrate(cycle, input.sampling.runs === 1 ? 5 : 10, rangeQuery.expected.length);
               const samples = [];
-              for (let run = 0; run < input.runs; run++) {
+              for (let run = 0; run < input.sampling.runs; run++) {
                 let count = 0;
                 const start = performance.now();
                 for (let i = 0; i < loops; i++) count += cycle();

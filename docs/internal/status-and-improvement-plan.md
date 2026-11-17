@@ -124,7 +124,7 @@ Web標準APIによるBase64 / JSON置換、Turso WASMの外部配信は[試作](
 
 ### 現行の正しさの記録
 
-未リリースの丸め関数・結果writer・通常SQLのprepare再利用を追加した後の回帰はMoonBit **60件×JS / Wasm GC**、Node **387件**、Playwright **59件**と型チェック・本家Litestream復元を通過した。追加の公開型検査、cache / feature選択の11件、独立npm consumerの6件も通過した。件数はこの更新時点の記録で、将来のテスト件数の固定目標ではない。
+未リリースの丸め関数・結果writer・通常SQLのprepare再利用を追加した後の回帰はMoonBit **60件×JS / Wasm GC**、Node **391件**、Playwright **59件**と型チェック・本家Litestream復元を通過した。10万行benchmarkの64組、追加の公開型検査、cache / feature選択の11件、独立npm consumerの6件も通過した。件数はこの更新時点の記録で、将来のテスト件数の固定目標ではない。
 
 | ゲート | 現在の観測 | 合格が意味すること |
 | --- | --- | --- |
@@ -212,8 +212,9 @@ notes Programは20,049 B、SHA-256 `a6af7a52769d67773842aae483fcb856b46f628e3118
 - [x] **P07 / P1 — 通常SQLのparse / prepare固定費を分離し、接続内で再利用**
   - 完了条件: dynamic profileを追加し、parse・prepare・実行・marshalを分ける。接続ごとの上限と破棄、schema変更・restore・接続世代・feature構成の有効性を定義する。可変Statement / Store / bindをグローバル共有しない
   - 実装: opt-inのLRU（最大256件・既定64 KiB SQL text）。DML / SELECTのASTと準備済みmetadataを再利用し、DDL / transaction / PRAGMAは既存経路。保存対象外のschema epochでrollback時のcookie ABAも再準備し、host側の接続差替えではclearする
-  - 結果: [通常SQL prepare再利用](dynamic-sql-prepare.md)。5,000行の主キーhitはJS 26.10→1.03µs、Wasm 5.80→0.86µs。通常SQL単体のBrotli増分2,126 B、AOT +65 B。保持heapを別測定し、SQL text budgetがheap上限ではないことを明記。既存uncached経路も残して8経路を比較、566ケース×12経路の差分不一致0
-  - 後続: [Issue #1](https://github.com/mizchi/sqlike/issues/1)のJSON境界と索引移動。準備済みでもJSの両端移動＋範囲読取は16.51µs（SQLite 12.67µs）、同値UPDATEはJS 2.75 / Wasm 1.74µs（SQLite 1.34µs）。一般plan拡張と直接typed ABIは別項目
+  - 結果: [通常SQL prepare再利用](dynamic-sql-prepare.md)。5,000行の主キーhitはJS 27.41→1.02µs、Wasm 6.36→0.93µs。通常SQL単体のBrotli増分2,126 B、AOT +65 B。保持heapを別測定し、SQL text budgetがheap上限ではないことを明記。既存uncached経路も残して8経路を比較、566ケース×12経路の差分不一致0
+  - 大規模検証: [10万行・8経路](sqlite-large-benchmark.md)を任意タスクへ追加。3サンプル・20ms目標・返却20万行予算・画像からの初期化で全体22.90秒（準備8.54秒）。通常のP0データセットを維持し、全件読取・集約・UPDATE・索引の実変更もnative照合
+  - 後続: [Issue #1](https://github.com/mizchi/sqlike/issues/1)のJSON境界と索引移動。今回の10万行では両端移動＋範囲読取がcached SQL JS 198.02 / Wasm 38.40µs（SQLite 13.28µs）。一般plan拡張と直接typed ABIは別項目
 
 - [x] **S01 / P1 — 変更列だけの永続差分。大きい未変更TEXT / BLOBまで行after-imageに含まれる**
   - 完了条件: version付き差分と旧形式replayを定義。4 KiB列を持つ1 / 16行更新で提出量を減らし、strict ACK・checkpoint込み時間・reopen・trigger・rollbackを比較。通常の小さい行を退行させない

@@ -52,8 +52,15 @@ wasm-bench *args:
 sqlite-bench *args:
     pnpm build:core
     pnpm build:moon-wasm
-    pnpm exec tsx --test tests/profile-summary.test.ts
+    pnpm exec tsx --test tests/profile-summary.test.ts tests/sqlite-bench-policy.test.ts
     pnpm exec tsx scripts/bench-sqlite.ts {{args}}
+
+# Optional 100k rows, all eight paths. Short samples; keep daily/P0 datasets intact.
+sqlite-large-bench *args:
+    pnpm build:core
+    pnpm build:moon-wasm
+    pnpm exec tsx --test tests/sqlite-bench-policy.test.ts
+    pnpm exec tsx scripts/bench-sqlite.ts --prepared --rows=100000 --profiles=false {{args}}
 
 # Separate existing AOT/Statement ABI costs; setup is excluded from timing.
 aot-phase-bench:

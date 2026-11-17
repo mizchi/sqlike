@@ -115,13 +115,13 @@ Each panel starts at zero and uses its own scale. Bars show medians; whiskers sh
 <!-- sqlite-benchmark:start -->
 | Workload | SQLike JS, SQL | SQLike Wasm GC, SQL | SQLite WASM, SQL | SQLite WASM, prepared |
 | --- | ---: | ---: | ---: | ---: |
-| Primary-key lookup | 27.75 | 6.16 | 3.78 | 1.50 |
-| Missing primary key | 25.75 | 5.48 | 2.57 | 0.47 |
-| Indexed range · 10 rows | 40.70 | 11.87 | 14.87 | 10.91 |
-| ORDER BY id · LIMIT 10 | 39.33 | 9.20 | 12.83 | 9.55 |
-| SUM + COUNT · 5,000 rows | 99.79 | 51.05 | 108.37 | 105.23 |
-| Fetch all 5,000 rows | 1,760.00 | 1,959.26 | 4,783.33 | 4,718.18 |
-| Indexed UPDATE + range read | 60.18 | 17.01 | 19.46 | 12.23 |
+| Primary-key lookup | 26.33 | 6.37 | 3.83 | 1.49 |
+| Missing primary key | 26.33 | 5.43 | 2.56 | 0.48 |
+| Indexed range · 10 rows | 42.87 | 11.81 | 14.79 | 10.74 |
+| ORDER BY id · LIMIT 10 | 41.64 | 9.02 | 12.61 | 9.59 |
+| SUM + COUNT · 5,000 rows | 94.58 | 52.71 | 113.89 | 111.75 |
+| Fetch all 5,000 rows | 1,924.14 | 2,037.04 | 4,990.91 | 4,933.33 |
+| Indexed UPDATE + range read | 71.60 | 16.95 | 19.46 | 13.26 |
 <!-- sqlite-benchmark:end -->
 
 </details>
@@ -133,6 +133,8 @@ Primary-key and secondary indexes are warm. The update workload alternates index
 Parsing and the host boundary add overhead to ordinary SQL calls; small lookups still show a gap against SQLite. Application performance also depends on the query, returned row count, and persistence method.
 
 [Raw data, queries, and all samples](measurements/sqlite-speed-current.json). Reproduce with `just sqlite-bench --profiles=false`.
+
+[100,000-row results](docs/internal/sqlite-large-benchmark.md) compare eight execution paths with a shorter sampling budget, including SQLike's optional statement cache.
 
 ## Run SQL
 
