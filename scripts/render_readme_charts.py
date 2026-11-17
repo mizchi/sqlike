@@ -15,8 +15,8 @@ import statistics
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "docs/images"
 MANIFEST = OUTPUT / "comparison-data.json"
-INPUTS = ["measurements/bundle-size-current.json", "measurements/sqlite-speed-current.json", "measurements/catalog-profiles-current.json"]
-FIGURES = ["bundle-size", "catalog-runtime-size", "sqlite-benchmark"]
+INPUTS = ["measurements/bundle-size-current.json", "measurements/sqlite-speed-current.json", "measurements/catalog-profiles-current.json", "measurements/dynamic-prepare-large-current.json"]
+FIGURES = ["bundle-size", "catalog-runtime-size", "sqlite-benchmark", "sqlite-large-benchmark"]
 CATALOG_LABELS = {
     "readonly": "Read only",
     "scalar-read": "GLOB + char",
@@ -58,6 +58,21 @@ QUERIES = [
     ("index-update-range", "Indexed UPDATE + range read"),
 ]
 JAPANESE_LABELS = ["主キーで1行検索", "存在しない主キーの検索", "二次索引の範囲検索・10行", "ORDER BY id LIMIT 10", "sum(n), count(*)", "全5,000行取得", "索引列の更新＋範囲10行取得"]
+LARGE_ENGINES = ["sqlike-js/dynamic", "sqlike-js/prepared", "sqlike-js/aot", "sqlike-wasm/dynamic", "sqlike-wasm/prepared", "sqlike-wasm/aot", "sqlite/dynamic", "sqlite/prepared"]
+LARGE_ENGINE_LABELS = ["JS · SQL", "JS · cached", "JS · AOT", "Wasm · SQL", "Wasm · cached", "Wasm · AOT", "SQLite · SQL", "SQLite · prepared"]
+LARGE_COLORS = ["#93c5fd", "#2563eb", "#1e40af", "#99d8cf", "#0d9488", "#115e59", "#fbbf24", "#b45309"]
+LARGE_QUERIES = [
+    ("constant", "Arithmetic + upper()"),
+    ("point", "Primary-key lookup"),
+    ("miss", "Missing primary key"),
+    ("range", "Indexed range · 10 rows"),
+    ("limit", "ORDER BY id · LIMIT 10"),
+    ("aggregate", "SUM + COUNT · 100,000 rows"),
+    ("scan", "Fetch all 100,000 rows"),
+    ("update", "UPDATE · same value repeatedly"),
+    ("indexLifecycle", "Index local change + range read"),
+    ("indexMovement", "Index end-to-end move + range read"),
+]
 
 
 def positive(value):
@@ -101,9 +116,9 @@ def catalog_data(report):
     return rows
 
 
-def sample_stats(samples):
-    if len(samples) != 7 or sorted(s["run"] for s in samples) != list(range(7)):
-        raise ValueError("expected seven distinct timing runs")
+def sample_stats(samples, runs=7):
+    if len(samples) != runs or sorted(s["run"] for s in samples) != list(range(runs)):
+        raise ValueError(f"expected {runs} distinct timing runs")
     values = [positive(s["milliseconds"]) * 1000 / positive(s["iterations"]) for s in samples]
     return {"median": statistics.median(values), "min": min(values), "max": max(values)}
 
@@ -126,6 +141,36 @@ def benchmark_data(report):
             if name != "index-update-range":
                 stored = next(r for r in data["medians"] if r["name"] == name and r["engine"] == engine)
                 if not math.isclose(stats["median"], stored["microseconds"], rel_tol=1e-12):
+                    raise ValueError("stored median disagrees with individual samples")
+            series.append({"engine": engine, "stats": stats})
+        result.append({"id": name, "label": label, "series": series})
+    return result
+
+
+def large_benchmark_data(report):
+    if report.get("smoke") is not False or report.get("prepared") is not True:
+        raise ValueError("large chart requires non-smoke prepared comparisons")
+    datasets = [r for r in report["results"] if r["rows"] == 100000 and r["coldRows"] == 0]
+    if len(datasets) != 1 or datasets[0].get("verified") != 64:
+        raise ValueError("expected the verified 100,000-row eight-path dataset")
+    data = datasets[0]
+    if data["sampling"]["runs"] != 3 or len(data["samples"]) != 64 * 3 or set(s["engine"] for s in data["samples"]) != set(LARGE_ENGINES):
+        raise ValueError("expected three samples for all eight paths")
+    result = []
+    for name, label in LARGE_QUERIES:
+        series = []
+        for engine in LARGE_ENGINES:
+            if name in ["indexLifecycle", "indexMovement"]:
+                groups = [r for r in data[name] if r["engine"] == engine]
+                if len(groups) != 1:
+                    raise ValueError("missing or duplicate index workload")
+                samples = groups[0]["samples"]
+            else:
+                samples = [r for r in data["samples"] if r["name"] == name and r["engine"] == engine]
+            stats = sample_stats(samples, runs=3)
+            if name not in ["indexLifecycle", "indexMovement"]:
+                stored = [r for r in data["medians"] if r["name"] == name and r["engine"] == engine]
+                if len(stored) != 1 or not math.isclose(stats["median"], positive(stored[0]["microseconds"]), rel_tol=1e-12):
                     raise ValueError("stored median disagrees with individual samples")
             series.append({"engine": engine, "stats": stats})
         result.append({"id": name, "label": label, "series": series})
@@ -285,12 +330,47 @@ def render_benchmark(rows, report, sqlike_version, plt):
     plt.close(fig)
 
 
+def render_large_benchmark(rows, report, plt):
+    fig, axes = plt.subplots(5, 2, figsize=(15, 20))
+    fig.subplots_adjust(left=0.13, right=0.96, top=0.88, bottom=0.10, hspace=0.68, wspace=0.70)
+    fig.text(0.035, 0.965, "SQLite comparison · 100,000 rows", fontsize=24, weight="bold", color="#0f172a")
+    fig.text(0.035, 0.940, "8 execution paths · SQLike JS / Wasm GC and SQLite WASM · in-memory engine calls", fontsize=13, color="#475569")
+    fig.text(0.035, 0.918, "Bars: median of 3 runs. Whiskers: observed min–max, not confidence intervals. Lower is faster.", fontsize=12, color="#475569")
+    for ax, row in zip(axes.flat, rows):
+        factor = 1000 if row["id"] in ["aggregate", "scan"] else 1
+        stats = [s["stats"] for s in row["series"]]
+        medians = [s["median"] / factor for s in stats]
+        errors = [[(s["median"] - s["min"]) / factor for s in stats], [(s["max"] - s["median"]) / factor for s in stats]]
+        for bottom, top, color in [(-0.5, 2.5, "#eff6ff"), (2.5, 5.5, "#f0fdfa"), (5.5, 7.5, "#fffbeb")]:
+            ax.axhspan(bottom, top, color=color, zorder=0)
+        ax.barh(range(8), medians, color=LARGE_COLORS, height=0.60, xerr=errors,
+                error_kw={"ecolor": "#334155", "capsize": 2, "elinewidth": 0.9}, zorder=2)
+        ax.set_yticks(range(8), LARGE_ENGINE_LABELS, fontsize=11)
+        ax.set_ylim(7.65, -0.65)
+        for y, value in enumerate(medians):
+            ax.annotate(f"{value:,.2f}", (stats[y]["max"] / factor, y), xytext=(5, 0), textcoords="offset points", va="center", fontsize=10.5, color="#0f172a")
+        ax.set_xlim(0, max(s["max"] / factor for s in stats) * 1.26)
+        ax.set_title(row["label"], loc="left", fontsize=12.5, weight="bold", pad=12)
+        ax.set_xlabel("ms / operation" if factor == 1000 else "μs / operation", fontsize=11, labelpad=7)
+        ax.tick_params(axis="both", length=0, pad=6)
+        ax.grid(axis="x", color="#cbd5e1", linewidth=0.6, zorder=1)
+        ax.set_axisbelow(True)
+        for spine in ax.spines.values():
+            spine.set_visible(False)
+    env = report["environment"]
+    fig.text(0.035, 0.039, "Each panel starts at zero; scales differ. SUM/COUNT and full fetch use ms. Typed decoding included; ABI costs differ.", fontsize=11, color="#475569")
+    fig.text(0.035, 0.022, f"{env['cpu']} · Chromium {env['chromium']} · {report['measuredAt'][:10]} · Startup, storage and networking excluded.", fontsize=10.5, color="#475569")
+    save_figure(fig, "sqlite-large-benchmark", "100,000-row SQLite comparison: ten workloads and eight execution paths",
+                "Median and observed min/max of three measured samples. All axes start at zero with independent scales. SUM/COUNT and full scan use milliseconds; other workloads use microseconds. Data from measurements/dynamic-prepare-large-current.json.")
+    plt.close(fig)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true", help="verify input data and generated image hashes without redrawing")
     args = parser.parse_args()
-    bundle, benchmark, catalog = [json.loads((ROOT / p).read_text()) for p in INPUTS]
-    data = {"bundle": bundle_data(bundle), "benchmark": benchmark_data(benchmark), "catalog": catalog_data(catalog)}
+    bundle, benchmark, catalog, large = [json.loads((ROOT / p).read_text()) for p in INPUTS]
+    data = {"bundle": bundle_data(bundle), "benchmark": benchmark_data(benchmark), "catalog": catalog_data(catalog), "largeBenchmark": large_benchmark_data(large)}
     inputs = {p: sha(ROOT / p) for p in [*INPUTS, "scripts/render_readme_charts.py"]}
     readmes = [(ROOT / "README.md", "en"), (ROOT / "README.ja.md", "ja")]
     updates = [(path, path.read_text(), update_catalog_table(update_benchmark_table(path.read_text(), data["benchmark"], language), data["catalog"], language)) for path, language in readmes]
@@ -306,7 +386,7 @@ def main():
         for path, before, after in updates:
             if before != after:
                 raise ValueError(f"{path.name} table differs from figure data")
-        print("English/Japanese README figures match all three reports, 12 catalog builds and 28 timing medians")
+        print("English/Japanese README figures match four reports, 12 catalog builds and 108 timing medians")
         return
     import matplotlib
     matplotlib.use("Agg")
@@ -316,12 +396,13 @@ def main():
     render_bundle(data["bundle"], bundle, plt)
     render_catalog(data["catalog"], plt)
     render_benchmark(data["benchmark"], benchmark, bundle["versions"]["sqlike"], plt)
+    render_large_benchmark(data["largeBenchmark"], large, plt)
     for path, before, after in updates:
         if before != after:
             path.write_text(after)
     outputs = {str(p.relative_to(ROOT)): sha(p) for name in FIGURES for extension in ["svg", "png"] for p in [OUTPUT / f"{name}.{extension}"]}
     MANIFEST.write_text(json.dumps({"renderer": f"Matplotlib {matplotlib.__version__}", "inputs": inputs, "outputs": outputs, "data": data}, indent=2) + "\n")
-    print("Rendered bundle-size, catalog-runtime-size and sqlite-benchmark as SVG + PNG")
+    print("Rendered bundle-size, catalog-runtime-size, sqlite-benchmark and sqlite-large-benchmark as SVG + PNG")
 
 
 if __name__ == "__main__":

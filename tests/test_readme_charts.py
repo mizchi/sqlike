@@ -5,12 +5,48 @@ import sys
 import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-from render_readme_charts import bundle_data, benchmark_data, sample_stats, update_benchmark_table, catalog_data, update_catalog_table
+from render_readme_charts import bundle_data, benchmark_data, sample_stats, update_benchmark_table, catalog_data, update_catalog_table, large_benchmark_data, LARGE_ENGINES
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 class ReadmeChartTests(unittest.TestCase):
+    def test_large_chart_covers_all_eight_paths_and_both_real_index_workloads(self):
+        report = json.loads((ROOT / "measurements/dynamic-prepare-large-current.json").read_text())
+        rows = large_benchmark_data(report)
+        self.assertEqual(len(rows), 10)
+        data = report["results"][0]
+        for row in rows:
+            self.assertEqual([s["engine"] for s in row["series"]], LARGE_ENGINES)
+            for series in row["series"]:
+                samples = (next(r for r in data[row["id"]] if r["engine"] == series["engine"])["samples"]
+                           if row["id"] in ["indexLifecycle", "indexMovement"] else
+                           [r for r in data["samples"] if r["name"] == row["id"] and r["engine"] == series["engine"]])
+                self.assertEqual(series["stats"], sample_stats(samples, runs=3))
+        self.assertEqual([r["id"] for r in rows[-2:]], ["indexLifecycle", "indexMovement"])
+
+    def test_large_chart_rejects_incomplete_unverified_or_inconsistent_data(self):
+        report = json.loads((ROOT / "measurements/dynamic-prepare-large-current.json").read_text())
+        for problem in ["smoke", "unverified", "wrong-size", "missing-path", "missing-index", "wrong-median", "wrong-runs"]:
+            invalid = copy.deepcopy(report)
+            data = invalid["results"][0]
+            if problem == "smoke": invalid["smoke"] = True
+            elif problem == "unverified": data["verified"] = 0
+            elif problem == "wrong-size": data["rows"] = 5000
+            elif problem == "missing-path": data["samples"].pop()
+            elif problem == "missing-index": data["indexMovement"].pop()
+            elif problem == "wrong-median": data["medians"][0]["microseconds"] *= 2
+            else: data["sampling"]["runs"] = 7
+            with self.subTest(problem=problem), self.assertRaises(ValueError):
+                large_benchmark_data(invalid)
+
+    def test_three_sample_statistics_normalize_iterations_and_reject_duplicate_runs(self):
+        samples = [{"run": i, "iterations": n, "milliseconds": ms}
+                   for i, (n, ms) in enumerate([(1, 9), (2, 12), (4, 20)])]
+        self.assertEqual(sample_stats(samples, runs=3), {"median": 6000, "min": 5000, "max": 9000})
+        samples[-1]["run"] = 0
+        with self.assertRaises(ValueError): sample_stats(samples, runs=3)
+
     def test_catalog_sizes_cover_both_modes_and_verified_native_execution(self):
         report = json.loads((ROOT / "measurements/catalog-profiles-current.json").read_text())
         rows = catalog_data(report)

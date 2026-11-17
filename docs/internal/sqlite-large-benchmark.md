@@ -39,6 +39,10 @@ just sqlite-bench --smoke --prepared --rows=100000
 
 ## 計測結果
 
+[![10万行・8経路の速度比較。処理ごとに尺度を分け、中央値と3サンプルの最小〜最大を表示。](../images/sqlite-large-benchmark.svg)](../images/sqlite-large-benchmark.png)
+
+短い棒ほど高速。各パネルの軸はゼロから始まり、処理ごとに尺度が異なる。集約と全件取得はms、ほかはµs。ひげは観測した最小〜最大で、信頼区間ではない。画像をクリックするとPNG版を開ける。
+
 <!-- sqlite-large-results:start -->
 2026-11-17、Apple M5 / Chromium 158.0.8127.18、10万行、3サンプルの中央値。単位µs。
 

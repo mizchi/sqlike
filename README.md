@@ -136,6 +136,15 @@ Parsing and the host boundary add overhead to ordinary SQL calls; small lookups 
 
 [100,000-row results](docs/internal/sqlite-large-benchmark.md) compare eight execution paths with a shorter sampling budget, including SQLike's optional statement cache.
 
+<details>
+<summary>100,000-row chart · 8 execution paths</summary>
+
+[![100,000-row SQLite comparison across ten workloads and eight execution paths. Shorter bars are faster; whiskers show the observed range of three samples.](docs/images/sqlite-large-benchmark.svg)](docs/images/sqlite-large-benchmark.png)
+
+Each panel starts at zero and uses its own scale. SUM/COUNT and full-table fetch use milliseconds; other panels use microseconds. Whiskers show observed min–max, not confidence intervals.
+
+</details>
+
 ## Run SQL
 
 ```ts

@@ -136,6 +136,15 @@ catalogは主キー検索、GLOB / char、JSON生成、入れ子JSON、再帰CTE
 
 [10万行での比較](docs/internal/sqlite-large-benchmark.md)も掲載しています。SQLikeの任意statement cacheを含む8経路を、短いサンプル予算で計測します。
 
+<details>
+<summary>10万行・8経路のグラフを見る</summary>
+
+[![10万行・10処理・8経路のSQLite比較。短い棒ほど高速。ひげは3サンプルの最小〜最大。](docs/images/sqlite-large-benchmark.svg)](docs/images/sqlite-large-benchmark.png)
+
+各パネルの軸はゼロ始まりで、尺度は処理ごとに異なります。集約と全件取得はms、ほかはµs。ひげは観測した最小〜最大で、信頼区間ではありません。
+
+</details>
+
 ## SQLを実行する
 
 ```ts
