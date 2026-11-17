@@ -329,6 +329,7 @@ writeFileSync(
         "scripts/bench-aot-update.ts",
         "scripts/aot-update-workload.ts",
         "tests/aot-update.test.ts",
+        "tests/aot-update-workload.test.ts",
         "src/aot-values.ts",
         "adapters/defined-wasm.ts",
         "scripts/build-sqlike-runtime.ts",

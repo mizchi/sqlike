@@ -46,19 +46,19 @@ XSSは画面への出力境界で扱う。DB層でHTMLエスケープすると�
 
 比較対象は前段のmetadata共有を入れたローカルビルドの保存済み成果物。0.1.1 tagそのものとの比較ではない。[変更前の測定記録](../../measurements/bound-plan-before/aot-update-current.json)と成果物hashを照合し、同じページでJSON / binaryのJS / Wasmを比較する。catalog選択後の4経路は新baselineとして別に記録する。
 
-ベンチにはUPDATEだけでなく、主キーSELECTのhit / missも追加した。返り値を計時中の最後の実行から保持し、native SQLiteで全行とSELECT / RETURNINGの型付き結果を検査する。全サンプル・hashは[`aot-update-current.json`](../../measurements/aot-update-current.json)、SQLiteとの比較は[`sqlite-speed-current.json`](../../measurements/sqlite-speed-current.json)。保存・通信・起動はengine内の時間と分ける。
+計測区間をまたいでもbindの順序を継続し、値を交互に変えるUPDATEへ同値書込が混ざらないことを回帰テストで確認する。ベンチにはUPDATEだけでなく、主キーSELECTのhit / missも追加した。返り値を計時中の最後の実行から保持し、native SQLiteで全行とSELECT / RETURNINGの型付き結果を検査する。全サンプル・hashは[`aot-update-current.json`](../../measurements/aot-update-current.json)、SQLiteとの比較は[`sqlite-speed-current.json`](../../measurements/sqlite-speed-current.json)。保存・通信・起動はengine内の時間と分ける。
 
 <!-- bound-plan-results:start -->
 5,000行、µs/操作、7サンプル中央値。同じ経路の前段metadata共有版 → 実行用IR版。
 
 | 経路 | SELECT hit | SELECT miss | UPDATE実変更（非索引列） | UPDATE＋式・RETURNING |
 | --- | ---: | ---: | ---: | ---: |
-| JSON / JS | 2.22 → 2.01 | 1.13 → 0.99 | 3.25 → 2.70 | 5.98 → 3.72 |
-| JSON / Wasm | 1.53 → 1.46 | 0.92 → 0.83 | 2.89 → 2.27 | 5.91 → 3.04 |
-| binary / JS | 2.17 → 2.06 | 1.13 → 1.00 | 3.31 → 2.76 | 6.04 → 3.83 |
-| binary / Wasm | 1.52 → 1.44 | 0.90 → 0.81 | 2.84 → 2.18 | 5.84 → 2.92 |
+| JSON / JS | 2.23 → 2.08 | 1.14 → 1.03 | 3.27 → 2.79 | 6.04 → 3.79 |
+| JSON / Wasm | 1.55 → 1.48 | 0.92 → 0.84 | 2.94 → 2.31 | 6.14 → 3.03 |
+| binary / JS | 2.20 → 2.09 | 1.16 → 1.02 | 3.34 → 2.79 | 6.12 → 3.86 |
+| binary / Wasm | 1.55 → 1.46 | 0.91 → 0.82 | 2.94 → 2.21 | 5.94 → 3.09 |
 
-非索引列の実変更UPDATEは約17〜23%、式＋RETURNINGは約37〜50%短縮した。SELECTの改善は小さく、前後のsample範囲が重なる場合もあるため、全入力への一定の改善率は主張しない。
+非索引列の実変更UPDATEは約15〜25%、式＋RETURNINGは約37〜51%短縮した。SELECTの改善は小さく、前後のsample範囲が重なる場合もあるため、全入力への一定の改善率は主張しない。
 
 容量はengine単体のJS、minify後未圧縮 / Brotli quality 11、単位B。host・Worker・catalogは含めない。
 
@@ -73,7 +73,7 @@ readonlyでもSELECTの実行用IR・主キーアクセスが追加される。�
 
 別に採取した1,000行JS UPDATEのprofileでは、名前解決への帰属が6.1%、行Environmentが4.8%、JSONが26.4%だった。各1秒のsampling結果であり、割合の差をそのまま短縮時間とは解釈しない。
 
-MoonBit各57件、Node 374件、既存Chromium 58件＋追加のフォーム / offline表示1件、型・strict checkを通過。厳密差分566ケース×8経路は不一致0、出力監査も各環境454一致・248 atomic拒否・誤出力0を維持した。新しいnative比較の行列は4経路でINTEGER / REAL / TEXT / NULL / BLOB、比較式とLIMIT / OFFSETを切り替える。SQLite全機能互換の判定は引き続きincompatibleである。
+MoonBit各57件、Node 375件、Chromium 59件、型・strict checkを通過。厳密差分566ケース×8経路は不一致0、出力監査も各環境454一致・248 atomic拒否・誤出力0を維持した。新しいnative比較の行列は4経路でINTEGER / REAL / TEXT / NULL / BLOB、比較式とLIMIT / OFFSETを切り替える。SQLite全機能互換の判定は引き続きincompatibleである。
 <!-- bound-plan-results:end -->
 
 列slot・lazy Environmentは[whiteboxテスト](../../packages/sqlike/src/bound_plan_wbtest.mbt)で確認する。native差分は各storage class、数値変換、NOCASE / BINARY / RTRIM、CAST / unary plus、NULL、shadowされたTRUE / FALSE、hidden rowid、複合主キー、LIMIT型切替を含む。既存の失敗後状態・trigger / FK・savepoint・clone / restore、binary / catalog選択ビルドの検査も維持する。

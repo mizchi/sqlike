@@ -74,7 +74,7 @@ export async function installUpdates(f: UpdateFixture, engines: UpdateEngine[]) 
         const start = performance.now();
         for (let i = 0; i < iterations; i++) {
           const result = JSON.parse(
-            execute(name, operation.bindings[i % operation.bindings.length]),
+            execute(name, operation.bindings[(operation.calls + i) % operation.bindings.length]),
           );
           if (!!result.error !== !!operation.rejects)
             throw Error(`${name}: unexpected ${JSON.stringify(result)}`);
@@ -82,7 +82,7 @@ export async function installUpdates(f: UpdateFixture, engines: UpdateEngine[]) 
         }
         const milliseconds = performance.now() - start;
         operation.calls += iterations;
-        operation.last = (iterations - 1) % operation.bindings.length;
+        operation.last = (operation.calls - 1) % operation.bindings.length;
         operation.lastRows = lastRows;
         return milliseconds;
       },
