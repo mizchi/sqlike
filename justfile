@@ -92,10 +92,11 @@ sql-prepare-bench *args:
     pnpm exec tsx scripts/bench-sqlite.ts --prepared --profile-engines=dynamic,prepared --profile-queries=point,update {{args}}
     pnpm exec tsx scripts/bench-sql-prepare-phases.ts
 
-# Experimental JS-native SELECT results, independent from default npm/runtime entries.
+# Experimental SQL/AOT JS-native SELECT results, independent from default entries.
 typed-result-bench *args:
     pnpm build:core
-    pnpm exec tsx --test tests/sqlike-typed-experiment.test.ts
+    pnpm exec tsx --test tests/sqlike-typed-experiment.test.ts tests/sqlike-aot-typed-experiment.test.ts
+    pnpm exec tsx scripts/build-sqlike-runtime.ts examples/profiles/notes-native-aot.json generated/notes-native
     pnpm exec tsx scripts/bench-typed-results.ts {{args}}
 
 # Optional --before-dir contains sqlike.js and sqlike.wasm; cases have a time budget.

@@ -8,6 +8,8 @@ import {
 // Values
 pub fn exec(@sqlike.Database, String, String) -> String
 
+pub fn native_result(Result[Array[Array[@sqlike.Value]], String]) -> NativeValue
+
 pub fn open() -> @sqlike.Database
 
 pub fn prepare(@sqlike.Database, String) -> @sqlike.SqlPrepared

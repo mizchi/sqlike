@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-11-17T12:31:35.835Z",
+  "measuredAt": "2026-11-17T13:53:56.358Z",
   "node": "v24.22.2",
   "sqlite": "3.53.4",
   "cpu": "Apple M5",
@@ -32,6 +32,8 @@
     "packages/sqlike/src/aggregate_sum.mbt": "e09ec3388045c47098d36cc39efa47abac3ddf73f312cfdd87a75a610e35fcd4",
     "packages/sqlike/src/aot.mbt": "fd2a750128171ca24f921cbcd0b82d5456d212caa8acc048423ed3cced7427b9",
     "packages/sqlike/src/aot_bench_wbtest.mbt": "ea9756d22d1bc37a14b32f7707fa1c018c018d41f76aeddb7e87303950c8125a",
+    "packages/sqlike/src/aot_native.mbt": "00d64939866e0198a4fdd194ffde5c932b13a19d3001f838fdcb1aa541bf460a",
+    "packages/sqlike/src/aot_native_wbtest.mbt": "ff7fb63cfac1605c706c278f886b9833a389f923f9840f6d4a9e806abb848e13",
     "packages/sqlike/src/binary_base64.mbt": "3ff209995156c359a77d5488f278337fb4b58be27785e79e53dfb3c43cb0c6f6",
     "packages/sqlike/src/binary_catalog.mbt": "3bb5a151775612e29d8a657d0d809ac1ae107f6084aa149adb2354151d66947b",
     "packages/sqlike/src/binary_generated.mbt": "1d70c23033c5f4e2c58380db3925bf4f1fc8c22bcba61e35c19d94b5a019cd8a",
@@ -60,8 +62,10 @@
     "packages/sqlike/src/delete_cache_wbtest.mbt": "e83f1556868e9eef124d00cfa528f60c5a4fd58a74c2fe2f582ec17b2efe304a",
     "packages/sqlike/src/evaluate.mbt": "67dc9ebde358babef258f002aa53977621a3367edf0934f72f4a7d984e2b11cd",
     "packages/sqlike/src/execute.mbt": "f543b2f2ea49d344d48117d4701d0fe7ca16108d93e71c30bd086de0909da8d9",
+    "packages/sqlike/src/experimental-aot-typed/aot.mbt": "29230a00ae08cc9c9ab779645c6bf6a842299bd9c29f16fd3d510acaf4375594",
+    "packages/sqlike/src/experimental-aot-typed/moon.pkg": "4e600258c705c2b05e9d898f16ae2877e3d27bb014a3d3c6c0ca39014de2f412",
     "packages/sqlike/src/experimental-typed/moon.pkg": "084d8ea4cb24e8db437722c851ccca28bafb90b4530e16ec30640c1499754ef7",
-    "packages/sqlike/src/experimental-typed/typed.mbt": "6a57da383d1884c2afa6d6ec9712e2a5fc3775b377915bb99b87907ad082af2a",
+    "packages/sqlike/src/experimental-typed/typed.mbt": "ff96c7acc13293bb21910933f30d8bb2dcac94fc3f331c4f792684711ec5f112",
     "packages/sqlike/src/experimental_rows.mbt": "248afbc52749bbfde91ad8a59e06e5fb0f2019cb8449ac8070a11aafcc0167fc",
     "packages/sqlike/src/feature_config.mbt": "8ac72b52c318850f7dc69d63c105496ab6ea7216b6db32532470ee17c19b82f2",
     "packages/sqlike/src/feature_validation.mbt": "511fa120a414b92fdbc840174fd0c08c78c50b206264889a8f040b6a0b9eb6fc",
@@ -144,8 +148,8 @@
   "artifacts": {
     "generated/delete-before/sqlike.js": "ff6b8f9364d788e36288f158e68f228222693a359a2bc362800c22a56f4b6e64",
     "generated/delete-before/sqlike.wasm": "3c9f585b09d8e80309d9fdaa1419d41078c7ffc17b1b66f55448935f7140ea8b",
-    "_build/js/release/build/mizchi/sqlike/sqlike.js": "b85a04333d41bcbaf7a042d6a97e33361b2b3ad56d595eb28d2c59d7c572dae9",
-    "_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm": "99ee4724b248c86938a46b113973ac039978191ac301c15da1c795575b894efd"
+    "_build/js/release/build/mizchi/sqlike/sqlike.js": "79f289d5c8a154b6c95083b448a426b7a8e8a9cba02d560d17acee327da36157",
+    "_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm": "cf4919d89e1125bd4a3715ff884f96d1171ea54215e7c8880bde5a6527ae8a57"
   },
   "fixtures": [
     {
@@ -168,8 +172,8 @@
       "run": 0,
       "engine": "before/js",
       "deleted": 500,
-      "milliseconds": 8.62904199999997,
-      "scanMilliseconds": 3.6852499999999964,
+      "milliseconds": 8.18545899999998,
+      "scanMilliseconds": 3.785125000000022,
       "status": "complete",
       "verified": true
     },
@@ -179,8 +183,8 @@
       "run": 0,
       "engine": "before/wasm",
       "deleted": 500,
-      "milliseconds": 4.467832999999985,
-      "scanMilliseconds": 3.698832999999979,
+      "milliseconds": 4.1792079999999885,
+      "scanMilliseconds": 3.5850829999999974,
       "status": "complete",
       "verified": true
     },
@@ -190,8 +194,8 @@
       "run": 0,
       "engine": "after/js",
       "deleted": 500,
-      "milliseconds": 8.269292000000007,
-      "scanMilliseconds": 6.192207999999994,
+      "milliseconds": 7.620749999999987,
+      "scanMilliseconds": 3.567042000000015,
       "status": "complete",
       "verified": true
     },
@@ -201,8 +205,8 @@
       "run": 0,
       "engine": "after/wasm",
       "deleted": 500,
-      "milliseconds": 4.614666999999997,
-      "scanMilliseconds": 5.101249999999993,
+      "milliseconds": 3.8416249999999934,
+      "scanMilliseconds": 3.522915999999981,
       "status": "complete",
       "verified": true
     },
@@ -212,8 +216,8 @@
       "run": 0,
       "engine": "sqlite/prepared",
       "deleted": 500,
-      "milliseconds": 0.29666700000001356,
-      "scanMilliseconds": 0.053625000000010914,
+      "milliseconds": 0.3109589999999969,
+      "scanMilliseconds": 0.05350000000001387,
       "status": "complete",
       "verified": true
     },
@@ -223,8 +227,8 @@
       "run": 1,
       "engine": "before/js",
       "deleted": 500,
-      "milliseconds": 5.854957999999954,
-      "scanMilliseconds": 0.6999590000000353,
+      "milliseconds": 5.2385830000000055,
+      "scanMilliseconds": 0.6595410000000186,
       "status": "complete",
       "verified": true
     },
@@ -234,8 +238,8 @@
       "run": 1,
       "engine": "sqlite/prepared",
       "deleted": 500,
-      "milliseconds": 0.2972910000000297,
-      "scanMilliseconds": 0.046582999999998265,
+      "milliseconds": 0.29970800000000963,
+      "scanMilliseconds": 0.047624999999982265,
       "status": "complete",
       "verified": true
     },
@@ -245,8 +249,8 @@
       "run": 1,
       "engine": "after/wasm",
       "deleted": 500,
-      "milliseconds": 3.143833000000029,
-      "scanMilliseconds": 0.7383750000000191,
+      "milliseconds": 3.133416000000011,
+      "scanMilliseconds": 0.5007499999999823,
       "status": "complete",
       "verified": true
     },
@@ -256,8 +260,8 @@
       "run": 1,
       "engine": "after/js",
       "deleted": 500,
-      "milliseconds": 6.083041999999978,
-      "scanMilliseconds": 0.7087500000000091,
+      "milliseconds": 4.122625000000028,
+      "scanMilliseconds": 0.5902920000000336,
       "status": "complete",
       "verified": true
     },
@@ -267,8 +271,8 @@
       "run": 1,
       "engine": "before/wasm",
       "deleted": 500,
-      "milliseconds": 2.90545800000001,
-      "scanMilliseconds": 0.6750410000000215,
+      "milliseconds": 2.860125000000039,
+      "scanMilliseconds": 0.49912499999999227,
       "status": "complete",
       "verified": true
     },
@@ -278,8 +282,8 @@
       "run": 2,
       "engine": "after/js",
       "deleted": 500,
-      "milliseconds": 5.782542000000035,
-      "scanMilliseconds": 1.986250000000041,
+      "milliseconds": 3.2775420000000395,
+      "scanMilliseconds": 0.5305000000000177,
       "status": "complete",
       "verified": true
     },
@@ -289,8 +293,8 @@
       "run": 2,
       "engine": "after/wasm",
       "deleted": 500,
-      "milliseconds": 3.3664999999999736,
-      "scanMilliseconds": 0.41800000000000637,
+      "milliseconds": 2.358374999999967,
+      "scanMilliseconds": 0.3624580000000037,
       "status": "complete",
       "verified": true
     },
@@ -300,8 +304,8 @@
       "run": 2,
       "engine": "sqlite/prepared",
       "deleted": 500,
-      "milliseconds": 0.29912500000000364,
-      "scanMilliseconds": 0.04795799999999417,
+      "milliseconds": 0.3235410000000343,
+      "scanMilliseconds": 0.04854199999999764,
       "status": "complete",
       "verified": true
     },
@@ -311,8 +315,8 @@
       "run": 2,
       "engine": "before/js",
       "deleted": 500,
-      "milliseconds": 4.3713750000000005,
-      "scanMilliseconds": 0.6554169999999999,
+      "milliseconds": 3.3122920000000136,
+      "scanMilliseconds": 0.5690000000000168,
       "status": "complete",
       "verified": true
     },
@@ -322,7 +326,73 @@
       "run": 2,
       "engine": "before/wasm",
       "deleted": 500,
-      "milliseconds": 4.109208000000024,
+      "milliseconds": 2.9387499999999704,
+      "scanMilliseconds": 0.390625,
+      "status": "complete",
+      "verified": true
+    },
+    {
+      "rows": 1000,
+      "mode": "warm",
+      "run": 0,
+      "engine": "before/js",
+      "deleted": 500,
+      "milliseconds": 4.3078330000000165,
+      "scanMilliseconds": 0.4643750000000182,
+      "status": "complete",
+      "verified": true
+    },
+    {
+      "rows": 1000,
+      "mode": "warm",
+      "run": 0,
+      "engine": "before/wasm",
+      "deleted": 500,
+      "milliseconds": 2.478999999999985,
+      "scanMilliseconds": 0.38049999999998363,
+      "status": "complete",
+      "verified": true
+    },
+    {
+      "rows": 1000,
+      "mode": "warm",
+      "run": 0,
+      "engine": "after/js",
+      "deleted": 500,
+      "milliseconds": 4.245584000000008,
+      "scanMilliseconds": 0.4848749999999882,
+      "status": "complete",
+      "verified": true
+    },
+    {
+      "rows": 1000,
+      "mode": "warm",
+      "run": 0,
+      "engine": "after/wasm",
+      "deleted": 500,
+      "milliseconds": 2.860500000000002,
+      "scanMilliseconds": 0.3807499999999777,
+      "status": "complete",
+      "verified": true
+    },
+    {
+      "rows": 1000,
+      "mode": "warm",
+      "run": 0,
+      "engine": "sqlite/prepared",
+      "deleted": 500,
+      "milliseconds": 0.46341599999999517,
+      "scanMilliseconds": 0.06966600000004064,
+      "status": "complete",
+      "verified": true
+    },
+    {
+      "rows": 1000,
+      "mode": "warm",
+      "run": 1,
+      "engine": "before/js",
+      "deleted": 500,
+      "milliseconds": 4.540166999999997,
       "scanMilliseconds": 0.42516699999998764,
       "status": "complete",
       "verified": true
@@ -330,77 +400,11 @@
     {
       "rows": 1000,
       "mode": "warm",
-      "run": 0,
-      "engine": "before/js",
-      "deleted": 500,
-      "milliseconds": 4.706124999999986,
-      "scanMilliseconds": 0.6940420000000245,
-      "status": "complete",
-      "verified": true
-    },
-    {
-      "rows": 1000,
-      "mode": "warm",
-      "run": 0,
-      "engine": "before/wasm",
-      "deleted": 500,
-      "milliseconds": 2.469167000000027,
-      "scanMilliseconds": 0.6125830000000292,
-      "status": "complete",
-      "verified": true
-    },
-    {
-      "rows": 1000,
-      "mode": "warm",
-      "run": 0,
-      "engine": "after/js",
-      "deleted": 500,
-      "milliseconds": 5.659167000000025,
-      "scanMilliseconds": 0.5578340000000139,
-      "status": "complete",
-      "verified": true
-    },
-    {
-      "rows": 1000,
-      "mode": "warm",
-      "run": 0,
-      "engine": "after/wasm",
-      "deleted": 500,
-      "milliseconds": 4.193500000000029,
-      "scanMilliseconds": 0.46145799999999326,
-      "status": "complete",
-      "verified": true
-    },
-    {
-      "rows": 1000,
-      "mode": "warm",
-      "run": 0,
-      "engine": "sqlite/prepared",
-      "deleted": 500,
-      "milliseconds": 0.3212920000000281,
-      "scanMilliseconds": 0.04333400000001575,
-      "status": "complete",
-      "verified": true
-    },
-    {
-      "rows": 1000,
-      "mode": "warm",
-      "run": 1,
-      "engine": "before/js",
-      "deleted": 500,
-      "milliseconds": 3.419708000000014,
-      "scanMilliseconds": 0.4593330000000151,
-      "status": "complete",
-      "verified": true
-    },
-    {
-      "rows": 1000,
-      "mode": "warm",
       "run": 1,
       "engine": "sqlite/prepared",
       "deleted": 500,
-      "milliseconds": 0.6310419999999795,
-      "scanMilliseconds": 0.08195899999998346,
+      "milliseconds": 0.34987499999999727,
+      "scanMilliseconds": 0.05104199999999537,
       "status": "complete",
       "verified": true
     },
@@ -410,8 +414,8 @@
       "run": 1,
       "engine": "after/wasm",
       "deleted": 500,
-      "milliseconds": 2.2145839999999453,
-      "scanMilliseconds": 0.3377500000000282,
+      "milliseconds": 2.33137499999998,
+      "scanMilliseconds": 0.3079169999999749,
       "status": "complete",
       "verified": true
     },
@@ -421,8 +425,8 @@
       "run": 1,
       "engine": "after/js",
       "deleted": 500,
-      "milliseconds": 3.232167000000004,
-      "scanMilliseconds": 0.7865419999999403,
+      "milliseconds": 3.3819579999999974,
+      "scanMilliseconds": 0.41866700000002766,
       "status": "complete",
       "verified": true
     },
@@ -432,8 +436,8 @@
       "run": 1,
       "engine": "before/wasm",
       "deleted": 500,
-      "milliseconds": 4.09108399999991,
-      "scanMilliseconds": 0.42029200000001765,
+      "milliseconds": 2.3568329999999946,
+      "scanMilliseconds": 0.310957999999971,
       "status": "complete",
       "verified": true
     },
@@ -443,8 +447,8 @@
       "run": 2,
       "engine": "after/js",
       "deleted": 500,
-      "milliseconds": 4.4960419999999885,
-      "scanMilliseconds": 0.48937499999999545,
+      "milliseconds": 3.033999999999992,
+      "scanMilliseconds": 0.3942079999999919,
       "status": "complete",
       "verified": true
     },
@@ -454,8 +458,8 @@
       "run": 2,
       "engine": "after/wasm",
       "deleted": 500,
-      "milliseconds": 2.3502919999999676,
-      "scanMilliseconds": 0.4840000000000373,
+      "milliseconds": 2.1888329999999883,
+      "scanMilliseconds": 0.30774999999999864,
       "status": "complete",
       "verified": true
     },
@@ -465,8 +469,8 @@
       "run": 2,
       "engine": "sqlite/prepared",
       "deleted": 500,
-      "milliseconds": 0.288332999999966,
-      "scanMilliseconds": 0.04862500000001546,
+      "milliseconds": 0.29920800000002146,
+      "scanMilliseconds": 0.048082999999962794,
       "status": "complete",
       "verified": true
     },
@@ -476,8 +480,8 @@
       "run": 2,
       "engine": "before/js",
       "deleted": 500,
-      "milliseconds": 4.888332999999989,
-      "scanMilliseconds": 0.4750419999999167,
+      "milliseconds": 3.445124999999962,
+      "scanMilliseconds": 0.42516699999998764,
       "status": "complete",
       "verified": true
     },
@@ -487,8 +491,8 @@
       "run": 2,
       "engine": "before/wasm",
       "deleted": 500,
-      "milliseconds": 2.8361249999999245,
-      "scanMilliseconds": 0.3526249999999891,
+      "milliseconds": 1.9748749999999973,
+      "scanMilliseconds": 0.2944170000000099,
       "status": "complete",
       "verified": true
     },
@@ -498,8 +502,8 @@
       "run": 0,
       "engine": "before/js",
       "deleted": 500,
-      "milliseconds": 24.146082999999976,
-      "scanMilliseconds": 0.35895800000002964,
+      "milliseconds": 21.771749999999997,
+      "scanMilliseconds": 0.3799579999999878,
       "status": "complete",
       "verified": true
     },
@@ -509,8 +513,8 @@
       "run": 0,
       "engine": "before/wasm",
       "deleted": 500,
-      "milliseconds": 13.017999999999915,
-      "scanMilliseconds": 0.38295799999991686,
+      "milliseconds": 11.152707999999961,
+      "scanMilliseconds": 0.2637919999999667,
       "status": "complete",
       "verified": true
     },
@@ -520,8 +524,8 @@
       "run": 0,
       "engine": "after/js",
       "deleted": 500,
-      "milliseconds": 27.263458000000014,
-      "scanMilliseconds": 0.3564579999999751,
+      "milliseconds": 21.935834,
+      "scanMilliseconds": 0.366457999999966,
       "status": "complete",
       "verified": true
     },
@@ -531,8 +535,8 @@
       "run": 0,
       "engine": "after/wasm",
       "deleted": 500,
-      "milliseconds": 12.155665999999997,
-      "scanMilliseconds": 0.2622910000000047,
+      "milliseconds": 10.864500000000021,
+      "scanMilliseconds": 0.2684590000000071,
       "status": "complete",
       "verified": true
     },
@@ -542,8 +546,8 @@
       "run": 0,
       "engine": "sqlite/prepared",
       "deleted": 500,
-      "milliseconds": 2.4824160000000575,
-      "scanMilliseconds": 0.0675420000000031,
+      "milliseconds": 2.134208000000001,
+      "scanMilliseconds": 0.05366700000001856,
       "status": "complete",
       "verified": true
     },
@@ -553,8 +557,8 @@
       "run": 1,
       "engine": "before/js",
       "deleted": 500,
-      "milliseconds": 18.566958999999997,
-      "scanMilliseconds": 0.2796249999998963,
+      "milliseconds": 17.612208000000066,
+      "scanMilliseconds": 0.2922080000000733,
       "status": "complete",
       "verified": true
     },
@@ -564,8 +568,8 @@
       "run": 1,
       "engine": "sqlite/prepared",
       "deleted": 500,
-      "milliseconds": 2.036624999999958,
-      "scanMilliseconds": 0.0493340000000444,
+      "milliseconds": 2.010334000000057,
+      "scanMilliseconds": 0.0472500000000764,
       "status": "complete",
       "verified": true
     },
@@ -575,8 +579,8 @@
       "run": 1,
       "engine": "after/wasm",
       "deleted": 500,
-      "milliseconds": 8.723541999999952,
-      "scanMilliseconds": 0.22129199999994853,
+      "milliseconds": 8.586332999999968,
+      "scanMilliseconds": 0.21024999999997362,
       "status": "complete",
       "verified": true
     },
@@ -586,8 +590,8 @@
       "run": 1,
       "engine": "after/js",
       "deleted": 500,
-      "milliseconds": 18.15712499999995,
-      "scanMilliseconds": 0.47050000000001546,
+      "milliseconds": 18.44466699999998,
+      "scanMilliseconds": 0.290834000000018,
       "status": "complete",
       "verified": true
     },
@@ -597,8 +601,8 @@
       "run": 1,
       "engine": "before/wasm",
       "deleted": 500,
-      "milliseconds": 9.082832999999937,
-      "scanMilliseconds": 0.2180829999999787,
+      "milliseconds": 8.910624999999982,
+      "scanMilliseconds": 0.2107500000000755,
       "status": "complete",
       "verified": true
     },
@@ -608,8 +612,8 @@
       "run": 2,
       "engine": "after/js",
       "deleted": 500,
-      "milliseconds": 18.62579100000005,
-      "scanMilliseconds": 0.3242079999999987,
+      "milliseconds": 17.20129099999997,
+      "scanMilliseconds": 0.28345900000010715,
       "status": "complete",
       "verified": true
     },
@@ -619,8 +623,8 @@
       "run": 2,
       "engine": "after/wasm",
       "deleted": 500,
-      "milliseconds": 8.963708999999994,
-      "scanMilliseconds": 0.22145799999998417,
+      "milliseconds": 10.048416999999972,
+      "scanMilliseconds": 0.25587500000006,
       "status": "complete",
       "verified": true
     },
@@ -630,8 +634,8 @@
       "run": 2,
       "engine": "sqlite/prepared",
       "deleted": 500,
-      "milliseconds": 1.9831669999999804,
-      "scanMilliseconds": 0.046333000000004176,
+      "milliseconds": 2.095957999999996,
+      "scanMilliseconds": 0.04854199999999764,
       "status": "complete",
       "verified": true
     },
@@ -641,8 +645,8 @@
       "run": 2,
       "engine": "before/js",
       "deleted": 500,
-      "milliseconds": 16.461000000000013,
-      "scanMilliseconds": 0.27283299999999144,
+      "milliseconds": 17.99695799999995,
+      "scanMilliseconds": 0.28720799999996416,
       "status": "complete",
       "verified": true
     },
@@ -652,8 +656,8 @@
       "run": 2,
       "engine": "before/wasm",
       "deleted": 500,
-      "milliseconds": 8.937457999999992,
-      "scanMilliseconds": 0.21850000000006276,
+      "milliseconds": 8.901207999999997,
+      "scanMilliseconds": 0.21708399999999983,
       "status": "complete",
       "verified": true
     },
@@ -663,8 +667,8 @@
       "run": 0,
       "engine": "before/js",
       "deleted": 1000,
-      "milliseconds": 4.970000000000027,
-      "scanMilliseconds": 4.828208000000018,
+      "milliseconds": 4.661917000000017,
+      "scanMilliseconds": 5.589832999999999,
       "status": "complete",
       "verified": true
     },
@@ -674,8 +678,8 @@
       "run": 0,
       "engine": "before/wasm",
       "deleted": 1000,
-      "milliseconds": 3.5376660000000584,
-      "scanMilliseconds": 4.168916000000081,
+      "milliseconds": 2.8843329999999696,
+      "scanMilliseconds": 4.10354099999995,
       "status": "complete",
       "verified": true
     },
@@ -685,8 +689,8 @@
       "run": 0,
       "engine": "after/js",
       "deleted": 1000,
-      "milliseconds": 6.365958999999975,
-      "scanMilliseconds": 6.822457999999983,
+      "milliseconds": 11.415666999999985,
+      "scanMilliseconds": 6.597000000000094,
       "status": "complete",
       "verified": true
     },
@@ -696,8 +700,8 @@
       "run": 0,
       "engine": "after/wasm",
       "deleted": 1000,
-      "milliseconds": 3.028500000000008,
-      "scanMilliseconds": 3.8369579999999814,
+      "milliseconds": 3.607874999999922,
+      "scanMilliseconds": 4.068583999999987,
       "status": "complete",
       "verified": true
     },
@@ -707,8 +711,8 @@
       "run": 0,
       "engine": "sqlite/prepared",
       "deleted": 1000,
-      "milliseconds": 1.402249999999981,
-      "scanMilliseconds": 0.7956659999999829,
+      "milliseconds": 1.5677919999999403,
+      "scanMilliseconds": 0.7697090000000344,
       "status": "complete",
       "verified": true
     },
@@ -718,8 +722,8 @@
       "run": 1,
       "engine": "before/js",
       "deleted": 1000,
-      "milliseconds": 5.64183300000002,
-      "scanMilliseconds": 4.5020829999999705,
+      "milliseconds": 11.174624999999992,
+      "scanMilliseconds": 8.093042000000082,
       "status": "complete",
       "verified": true
     },
@@ -729,8 +733,8 @@
       "run": 1,
       "engine": "sqlite/prepared",
       "deleted": 1000,
-      "milliseconds": 1.6888329999999314,
-      "scanMilliseconds": 0.8153330000000096,
+      "milliseconds": 1.6763329999999996,
+      "scanMilliseconds": 0.7975000000000136,
       "status": "complete",
       "verified": true
     },
@@ -740,8 +744,8 @@
       "run": 1,
       "engine": "after/wasm",
       "deleted": 1000,
-      "milliseconds": 3.4753339999999753,
-      "scanMilliseconds": 4.457832999999937,
+      "milliseconds": 2.647457999999915,
+      "scanMilliseconds": 4.00770799999998,
       "status": "complete",
       "verified": true
     },
@@ -751,8 +755,8 @@
       "run": 1,
       "engine": "after/js",
       "deleted": 1000,
-      "milliseconds": 4.748749999999973,
-      "scanMilliseconds": 4.6720000000000255,
+      "milliseconds": 5.473082999999974,
+      "scanMilliseconds": 5.43891700000006,
       "status": "complete",
       "verified": true
     },
@@ -762,8 +766,8 @@
       "run": 1,
       "engine": "before/wasm",
       "deleted": 1000,
-      "milliseconds": 2.9127920000000813,
-      "scanMilliseconds": 4.418749999999818,
+      "milliseconds": 2.626041999999984,
+      "scanMilliseconds": 4.082750000000033,
       "status": "complete",
       "verified": true
     },
@@ -773,8 +777,8 @@
       "run": 2,
       "engine": "after/js",
       "deleted": 1000,
-      "milliseconds": 4.710084000000052,
-      "scanMilliseconds": 5.44420799999989,
+      "milliseconds": 5.146334000000024,
+      "scanMilliseconds": 4.512541999999939,
       "status": "complete",
       "verified": true
     },
@@ -784,8 +788,8 @@
       "run": 2,
       "engine": "after/wasm",
       "deleted": 1000,
-      "milliseconds": 3.015292000000045,
-      "scanMilliseconds": 4.930541999999832,
+      "milliseconds": 2.593208000000004,
+      "scanMilliseconds": 3.9557079999999587,
       "status": "complete",
       "verified": true
     },
@@ -795,8 +799,8 @@
       "run": 2,
       "engine": "sqlite/prepared",
       "deleted": 1000,
-      "milliseconds": 1.6974169999998594,
-      "scanMilliseconds": 1.1823749999998654,
+      "milliseconds": 1.6369999999999436,
+      "scanMilliseconds": 0.7901659999999993,
       "status": "complete",
       "verified": true
     },
@@ -806,8 +810,8 @@
       "run": 2,
       "engine": "before/js",
       "deleted": 1000,
-      "milliseconds": 6.273749999999836,
-      "scanMilliseconds": 5.728542000000061,
+      "milliseconds": 9.111583999999993,
+      "scanMilliseconds": 5.54366600000003,
       "status": "complete",
       "verified": true
     },
@@ -817,8 +821,8 @@
       "run": 2,
       "engine": "before/wasm",
       "deleted": 1000,
-      "milliseconds": 5.082667000000129,
-      "scanMilliseconds": 4.1157499999999345,
+      "milliseconds": 3.456583000000137,
+      "scanMilliseconds": 3.963207999999895,
       "status": "complete",
       "verified": true
     },
@@ -828,8 +832,8 @@
       "run": 0,
       "engine": "before/js",
       "deleted": 1000,
-      "milliseconds": 21.884500000000116,
-      "scanMilliseconds": 4.657417000000123,
+      "milliseconds": 25.42254099999991,
+      "scanMilliseconds": 4.838290999999799,
       "status": "complete",
       "verified": true
     },
@@ -839,8 +843,8 @@
       "run": 0,
       "engine": "before/wasm",
       "deleted": 1000,
-      "milliseconds": 4.3562500000000455,
-      "scanMilliseconds": 3.6790829999999914,
+      "milliseconds": 3.959957999999915,
+      "scanMilliseconds": 3.7474580000000515,
       "status": "complete",
       "verified": true
     },
@@ -850,8 +854,8 @@
       "run": 0,
       "engine": "after/js",
       "deleted": 1000,
-      "milliseconds": 6.862333000000035,
-      "scanMilliseconds": 5.801333999999997,
+      "milliseconds": 8.320333000000119,
+      "scanMilliseconds": 5.6195410000000265,
       "status": "complete",
       "verified": true
     },
@@ -861,8 +865,8 @@
       "run": 0,
       "engine": "after/wasm",
       "deleted": 1000,
-      "milliseconds": 3.75,
-      "scanMilliseconds": 4.124165999999832,
+      "milliseconds": 2.925166999999874,
+      "scanMilliseconds": 3.6712500000001,
       "status": "complete",
       "verified": true
     },
@@ -872,8 +876,8 @@
       "run": 0,
       "engine": "sqlite/prepared",
       "deleted": 1000,
-      "milliseconds": 1.6623329999999896,
-      "scanMilliseconds": 0.9034169999999904,
+      "milliseconds": 0.5374589999998989,
+      "scanMilliseconds": 0.7739579999999933,
       "status": "complete",
       "verified": true
     },
@@ -883,8 +887,8 @@
       "run": 1,
       "engine": "before/js",
       "deleted": 1000,
-      "milliseconds": 21.869916000000103,
-      "scanMilliseconds": 4.143583000000035,
+      "milliseconds": 24.65233400000011,
+      "scanMilliseconds": 4.312666999999919,
       "status": "complete",
       "verified": true
     },
@@ -894,8 +898,8 @@
       "run": 1,
       "engine": "sqlite/prepared",
       "deleted": 1000,
-      "milliseconds": 2.275082999999995,
-      "scanMilliseconds": 0.9157079999999951,
+      "milliseconds": 1.6254579999999805,
+      "scanMilliseconds": 0.793666999999914,
       "status": "complete",
       "verified": true
     },
@@ -905,8 +909,8 @@
       "run": 1,
       "engine": "after/wasm",
       "deleted": 1000,
-      "milliseconds": 4.262750000000096,
-      "scanMilliseconds": 5.539707999999791,
+      "milliseconds": 3.413957999999866,
+      "scanMilliseconds": 3.766542000000072,
       "status": "complete",
       "verified": true
     },
@@ -916,8 +920,8 @@
       "run": 1,
       "engine": "after/js",
       "deleted": 1000,
-      "milliseconds": 7.671540999999934,
-      "scanMilliseconds": 5.634416999999985,
+      "milliseconds": 5.2754580000000715,
+      "scanMilliseconds": 4.137749999999869,
       "status": "complete",
       "verified": true
     },
@@ -927,8 +931,8 @@
       "run": 1,
       "engine": "before/wasm",
       "deleted": 1000,
-      "milliseconds": 10.66866600000003,
-      "scanMilliseconds": 4.778208000000177,
+      "milliseconds": 3.8587499999998727,
+      "scanMilliseconds": 3.7101249999998345,
       "status": "complete",
       "verified": true
     },
@@ -938,8 +942,8 @@
       "run": 2,
       "engine": "after/js",
       "deleted": 1000,
-      "milliseconds": 5.085125000000062,
-      "scanMilliseconds": 5.00933299999997,
+      "milliseconds": 5.057541000000128,
+      "scanMilliseconds": 4.484750000000076,
       "status": "complete",
       "verified": true
     },
@@ -949,8 +953,8 @@
       "run": 2,
       "engine": "after/wasm",
       "deleted": 1000,
-      "milliseconds": 2.783292000000074,
-      "scanMilliseconds": 3.6216669999998885,
+      "milliseconds": 2.7699159999999665,
+      "scanMilliseconds": 3.6834160000000793,
       "status": "complete",
       "verified": true
     },
@@ -960,8 +964,8 @@
       "run": 2,
       "engine": "sqlite/prepared",
       "deleted": 1000,
-      "milliseconds": 1.5449169999999413,
-      "scanMilliseconds": 0.79099999999994,
+      "milliseconds": 1.5594160000000556,
+      "scanMilliseconds": 0.7463339999999334,
       "status": "complete",
       "verified": true
     },
@@ -971,8 +975,8 @@
       "run": 2,
       "engine": "before/js",
       "deleted": 1000,
-      "milliseconds": 22.333250000000135,
-      "scanMilliseconds": 5.0753330000000005,
+      "milliseconds": 22.823374999999942,
+      "scanMilliseconds": 4.425375000000031,
       "status": "complete",
       "verified": true
     },
@@ -982,8 +986,8 @@
       "run": 2,
       "engine": "before/wasm",
       "deleted": 1000,
-      "milliseconds": 3.725584000000026,
-      "scanMilliseconds": 3.6790000000000873,
+      "milliseconds": 4.58983400000011,
+      "scanMilliseconds": 3.6525409999999283,
       "status": "complete",
       "verified": true
     },
@@ -993,8 +997,8 @@
       "run": 0,
       "engine": "before/js",
       "deleted": 1000,
-      "milliseconds": 51.11712499999999,
-      "scanMilliseconds": 4.23758399999997,
+      "milliseconds": 55.20012500000007,
+      "scanMilliseconds": 4.218208000000004,
       "status": "complete",
       "verified": true
     },
@@ -1004,8 +1008,8 @@
       "run": 0,
       "engine": "before/wasm",
       "deleted": 1000,
-      "milliseconds": 18.320666999999958,
-      "scanMilliseconds": 3.55862500000012,
+      "milliseconds": 18.400833999999804,
+      "scanMilliseconds": 3.7439170000000104,
       "status": "complete",
       "verified": true
     },
@@ -1015,8 +1019,8 @@
       "run": 0,
       "engine": "after/js",
       "deleted": 1000,
-      "milliseconds": 35.28812499999981,
-      "scanMilliseconds": 6.335207999999966,
+      "milliseconds": 38.0021670000001,
+      "scanMilliseconds": 4.136749999999893,
       "status": "complete",
       "verified": true
     },
@@ -1026,8 +1030,8 @@
       "run": 0,
       "engine": "after/wasm",
       "deleted": 1000,
-      "milliseconds": 17.529915999999957,
-      "scanMilliseconds": 4.426666999999725,
+      "milliseconds": 15.560833000000002,
+      "scanMilliseconds": 3.70699999999988,
       "status": "complete",
       "verified": true
     },
@@ -1037,8 +1041,8 @@
       "run": 0,
       "engine": "sqlite/prepared",
       "deleted": 1000,
-      "milliseconds": 4.203415999999834,
-      "scanMilliseconds": 1.1765829999999369,
+      "milliseconds": 4.042416000000003,
+      "scanMilliseconds": 0.7711249999999836,
       "status": "complete",
       "verified": true
     },
@@ -1048,8 +1052,8 @@
       "run": 1,
       "engine": "before/js",
       "deleted": 1000,
-      "milliseconds": 47.06666700000005,
-      "scanMilliseconds": 3.4011249999998654,
+      "milliseconds": 51.327125000000024,
+      "scanMilliseconds": 3.584124999999858,
       "status": "complete",
       "verified": true
     },
@@ -1059,8 +1063,8 @@
       "run": 1,
       "engine": "sqlite/prepared",
       "deleted": 1000,
-      "milliseconds": 3.8364580000002206,
-      "scanMilliseconds": 0.9288750000000618,
+      "milliseconds": 3.923000000000002,
+      "scanMilliseconds": 0.7799589999999625,
       "status": "complete",
       "verified": true
     },
@@ -1070,8 +1074,8 @@
       "run": 1,
       "engine": "after/wasm",
       "deleted": 1000,
-      "milliseconds": 14.806291999999758,
-      "scanMilliseconds": 3.876708000000235,
+      "milliseconds": 14.29950000000008,
+      "scanMilliseconds": 3.74287500000014,
       "status": "complete",
       "verified": true
     },
@@ -1081,8 +1085,8 @@
       "run": 1,
       "engine": "after/js",
       "deleted": 1000,
-      "milliseconds": 30.86395799999991,
-      "scanMilliseconds": 3.8936250000001564,
+      "milliseconds": 35.19337500000006,
+      "scanMilliseconds": 3.81899999999996,
       "status": "complete",
       "verified": true
     },
@@ -1092,8 +1096,8 @@
       "run": 1,
       "engine": "before/wasm",
       "deleted": 1000,
-      "milliseconds": 20.26445799999965,
-      "scanMilliseconds": 3.571374999999989,
+      "milliseconds": 19.593666000000212,
+      "scanMilliseconds": 3.624249999999847,
       "status": "complete",
       "verified": true
     },
@@ -1103,8 +1107,8 @@
       "run": 2,
       "engine": "after/js",
       "deleted": 1000,
-      "milliseconds": 33.5307499999999,
-      "scanMilliseconds": 3.7000829999997222,
+      "milliseconds": 35.8937920000003,
+      "scanMilliseconds": 3.874499999999898,
       "status": "complete",
       "verified": true
     },
@@ -1114,8 +1118,8 @@
       "run": 2,
       "engine": "after/wasm",
       "deleted": 1000,
-      "milliseconds": 17.80795799999987,
-      "scanMilliseconds": 3.7615419999997357,
+      "milliseconds": 14.545916999999918,
+      "scanMilliseconds": 3.7222500000002583,
       "status": "complete",
       "verified": true
     },
@@ -1125,8 +1129,8 @@
       "run": 2,
       "engine": "sqlite/prepared",
       "deleted": 1000,
-      "milliseconds": 4.097375000000284,
-      "scanMilliseconds": 0.7506250000001273,
+      "milliseconds": 3.9288339999998243,
+      "scanMilliseconds": 0.7857919999996739,
       "status": "complete",
       "verified": true
     },
@@ -1136,8 +1140,8 @@
       "run": 2,
       "engine": "before/js",
       "deleted": 1000,
-      "milliseconds": 46.69704199999978,
-      "scanMilliseconds": 4.188458999999966,
+      "milliseconds": 52.76999999999998,
+      "scanMilliseconds": 4.075749999999971,
       "status": "complete",
       "verified": true
     },
@@ -1147,8 +1151,8 @@
       "run": 2,
       "engine": "before/wasm",
       "deleted": 1000,
-      "milliseconds": 18.154667000000245,
-      "scanMilliseconds": 3.402582999999595,
+      "milliseconds": 18.55479200000036,
+      "scanMilliseconds": 4.055499999999938,
       "status": "complete",
       "verified": true
     },
@@ -1158,8 +1162,8 @@
       "run": 0,
       "engine": "before/js",
       "deleted": 1000,
-      "milliseconds": 4.359124999999949,
-      "scanMilliseconds": 59.21166699999958,
+      "milliseconds": 5.282416000000012,
+      "scanMilliseconds": 64.5673340000003,
       "status": "complete",
       "verified": true
     },
@@ -1169,8 +1173,8 @@
       "run": 0,
       "engine": "before/wasm",
       "deleted": 1000,
-      "milliseconds": 2.9620410000002266,
-      "scanMilliseconds": 51.22541699999965,
+      "milliseconds": 3.535541999999623,
+      "scanMilliseconds": 46.747957999999926,
       "status": "complete",
       "verified": true
     },
@@ -1180,8 +1184,8 @@
       "run": 0,
       "engine": "after/js",
       "deleted": 1000,
-      "milliseconds": 4.50912500000004,
-      "scanMilliseconds": 59.120124999999916,
+      "milliseconds": 4.454334000000017,
+      "scanMilliseconds": 69.55237500000021,
       "status": "complete",
       "verified": true
     },
@@ -1191,8 +1195,8 @@
       "run": 0,
       "engine": "after/wasm",
       "deleted": 1000,
-      "milliseconds": 2.722167000000354,
-      "scanMilliseconds": 44.74241600000005,
+      "milliseconds": 2.852082999999766,
+      "scanMilliseconds": 59.1533330000002,
       "status": "complete",
       "verified": true
     },
@@ -1202,8 +1206,8 @@
       "run": 0,
       "engine": "sqlite/prepared",
       "deleted": 1000,
-      "milliseconds": 0.566541000000143,
-      "scanMilliseconds": 8.817749999999705,
+      "milliseconds": 0.5507920000000013,
+      "scanMilliseconds": 11.653084000000035,
       "status": "complete",
       "verified": true
     },
@@ -1213,8 +1217,8 @@
       "run": 1,
       "engine": "before/js",
       "deleted": 1000,
-      "milliseconds": 26.144624999999905,
-      "scanMilliseconds": 173.18712500000038,
+      "milliseconds": 5.906207999999879,
+      "scanMilliseconds": 62.23725000000013,
       "status": "complete",
       "verified": true
     },
@@ -1224,8 +1228,8 @@
       "run": 1,
       "engine": "sqlite/prepared",
       "deleted": 1000,
-      "milliseconds": 0.5979590000006283,
-      "scanMilliseconds": 11.59650000000056,
+      "milliseconds": 2.3175419999997757,
+      "scanMilliseconds": 8.160957999999937,
       "status": "complete",
       "verified": true
     },
@@ -1235,8 +1239,8 @@
       "run": 1,
       "engine": "after/wasm",
       "deleted": 1000,
-      "milliseconds": 2.947791999999936,
-      "scanMilliseconds": 55.59541700000045,
+      "milliseconds": 3.0042499999999563,
+      "scanMilliseconds": 47.20191699999941,
       "status": "complete",
       "verified": true
     },
@@ -1246,8 +1250,8 @@
       "run": 1,
       "engine": "after/js",
       "deleted": 1000,
-      "milliseconds": 4.981541000000107,
-      "scanMilliseconds": 60.383334000000104,
+      "milliseconds": 4.512792000000445,
+      "scanMilliseconds": 63.05683299999964,
       "status": "complete",
       "verified": true
     },
@@ -1257,8 +1261,8 @@
       "run": 1,
       "engine": "before/wasm",
       "deleted": 1000,
-      "milliseconds": 3.0119999999997162,
-      "scanMilliseconds": 49.757416999999805,
+      "milliseconds": 3.8938749999997526,
+      "scanMilliseconds": 44.938500000000204,
       "status": "complete",
       "verified": true
     },
@@ -1268,8 +1272,8 @@
       "run": 2,
       "engine": "after/js",
       "deleted": 1000,
-      "milliseconds": 4.90179100000023,
-      "scanMilliseconds": 85.03829200000018,
+      "milliseconds": 4.404833000000508,
+      "scanMilliseconds": 59.03358399999979,
       "status": "complete",
       "verified": true
     },
@@ -1279,8 +1283,8 @@
       "run": 2,
       "engine": "after/wasm",
       "deleted": 1000,
-      "milliseconds": 3.368250000000444,
-      "scanMilliseconds": 44.712625000000116,
+      "milliseconds": 3.5005840000003445,
+      "scanMilliseconds": 49.377542000000176,
       "status": "complete",
       "verified": true
     },
@@ -1290,8 +1294,8 @@
       "run": 2,
       "engine": "sqlite/prepared",
       "deleted": 1000,
-      "milliseconds": 0.5496249999996508,
-      "scanMilliseconds": 8.566917000000103,
+      "milliseconds": 0.5834160000003976,
+      "scanMilliseconds": 9.327582999999322,
       "status": "complete",
       "verified": true
     },
@@ -1301,8 +1305,8 @@
       "run": 2,
       "engine": "before/js",
       "deleted": 1000,
-      "milliseconds": 4.02074999999968,
-      "scanMilliseconds": 54.70649999999932,
+      "milliseconds": 5.525832999999693,
+      "scanMilliseconds": 57.689124999999876,
       "status": "complete",
       "verified": true
     },
@@ -1312,8 +1316,8 @@
       "run": 2,
       "engine": "before/wasm",
       "deleted": 1000,
-      "milliseconds": 2.5756249999994907,
-      "scanMilliseconds": 44.89387499999975,
+      "milliseconds": 2.739542000000256,
+      "scanMilliseconds": 48.17979099999957,
       "status": "complete",
       "verified": true
     },
@@ -1323,8 +1327,8 @@
       "run": 0,
       "engine": "before/js",
       "deleted": 1000,
-      "milliseconds": 184.06679199999962,
-      "scanMilliseconds": 54.36541699999998,
+      "milliseconds": 192.39166599999953,
+      "scanMilliseconds": 62.14891699999953,
       "status": "complete",
       "verified": true
     },
@@ -1334,8 +1338,8 @@
       "run": 0,
       "engine": "before/wasm",
       "deleted": 1000,
-      "milliseconds": 50.29749999999967,
-      "scanMilliseconds": 45.04066600000078,
+      "milliseconds": 15.223375000000487,
+      "scanMilliseconds": 44.948709000000235,
       "status": "complete",
       "verified": true
     },
@@ -1345,8 +1349,8 @@
       "run": 0,
       "engine": "after/js",
       "deleted": 1000,
-      "milliseconds": 5.167416999999659,
-      "scanMilliseconds": 54.388042000000496,
+      "milliseconds": 5.618583000000399,
+      "scanMilliseconds": 80.9574590000002,
       "status": "complete",
       "verified": true
     },
@@ -1356,8 +1360,8 @@
       "run": 0,
       "engine": "after/wasm",
       "deleted": 1000,
-      "milliseconds": 4.367000000000189,
-      "scanMilliseconds": 47.466332999999395,
+      "milliseconds": 3.439582999999402,
+      "scanMilliseconds": 45.30400000000009,
       "status": "complete",
       "verified": true
     },
@@ -1367,8 +1371,8 @@
       "run": 0,
       "engine": "sqlite/prepared",
       "deleted": 1000,
-      "milliseconds": 0.5520830000004935,
-      "scanMilliseconds": 8.559791000001496,
+      "milliseconds": 0.5313749999995707,
+      "scanMilliseconds": 8.794165999999677,
       "status": "complete",
       "verified": true
     },
@@ -1378,8 +1382,8 @@
       "run": 1,
       "engine": "before/js",
       "deleted": 1000,
-      "milliseconds": 188.3562920000004,
-      "scanMilliseconds": 54.39379200000076,
+      "milliseconds": 189.23850000000039,
+      "scanMilliseconds": 56.41191699999945,
       "status": "complete",
       "verified": true
     },
@@ -1389,8 +1393,8 @@
       "run": 1,
       "engine": "sqlite/prepared",
       "deleted": 1000,
-      "milliseconds": 0.5502499999984138,
-      "scanMilliseconds": 8.619708000000173,
+      "milliseconds": 0.569999999999709,
+      "scanMilliseconds": 8.95520899999974,
       "status": "complete",
       "verified": true
     },
@@ -1400,8 +1404,8 @@
       "run": 1,
       "engine": "after/wasm",
       "deleted": 1000,
-      "milliseconds": 3.204834000000119,
-      "scanMilliseconds": 43.50208400000156,
+      "milliseconds": 3.5465840000015305,
+      "scanMilliseconds": 51.77941700000156,
       "status": "complete",
       "verified": true
     },
@@ -1411,8 +1415,8 @@
       "run": 1,
       "engine": "after/js",
       "deleted": 1000,
-      "milliseconds": 6.4163749999988795,
-      "scanMilliseconds": 74.28912499999933,
+      "milliseconds": 6.05737500000032,
+      "scanMilliseconds": 60.437708000001294,
       "status": "complete",
       "verified": true
     },
@@ -1422,8 +1426,8 @@
       "run": 1,
       "engine": "before/wasm",
       "deleted": 1000,
-      "milliseconds": 61.22837499999878,
-      "scanMilliseconds": 43.65595799999937,
+      "milliseconds": 15.112875000000713,
+      "scanMilliseconds": 46.24762499999997,
       "status": "complete",
       "verified": true
     },
@@ -1433,8 +1437,8 @@
       "run": 2,
       "engine": "after/js",
       "deleted": 1000,
-      "milliseconds": 5.220416999998633,
-      "scanMilliseconds": 50.775665999999546,
+      "milliseconds": 5.605333999999857,
+      "scanMilliseconds": 54.767916999999215,
       "status": "complete",
       "verified": true
     },
@@ -1444,8 +1448,8 @@
       "run": 2,
       "engine": "after/wasm",
       "deleted": 1000,
-      "milliseconds": 3.2366669999992155,
-      "scanMilliseconds": 44.10350000000108,
+      "milliseconds": 3.7005410000001575,
+      "scanMilliseconds": 49.69475000000057,
       "status": "complete",
       "verified": true
     },
@@ -1455,8 +1459,8 @@
       "run": 2,
       "engine": "sqlite/prepared",
       "deleted": 1000,
-      "milliseconds": 0.5198330000002898,
-      "scanMilliseconds": 8.089292000000569,
+      "milliseconds": 0.562541000001147,
+      "scanMilliseconds": 9.212416999998823,
       "status": "complete",
       "verified": true
     },
@@ -1466,8 +1470,8 @@
       "run": 2,
       "engine": "before/js",
       "deleted": 1000,
-      "milliseconds": 189.936334,
-      "scanMilliseconds": 59.69679200000064,
+      "milliseconds": 185.59170799999993,
+      "scanMilliseconds": 58.81958400000076,
       "status": "complete",
       "verified": true
     },
@@ -1477,8 +1481,8 @@
       "run": 2,
       "engine": "before/wasm",
       "deleted": 1000,
-      "milliseconds": 14.999250000000757,
-      "scanMilliseconds": 43.75816699999996,
+      "milliseconds": 15.280917000000045,
+      "scanMilliseconds": 44.67762500000026,
       "status": "complete",
       "verified": true
     },
@@ -1488,8 +1492,8 @@
       "run": 0,
       "engine": "before/js",
       "deleted": 1000,
-      "milliseconds": 220.42904199999975,
-      "scanMilliseconds": 62.08733299999949,
+      "milliseconds": 219.7252499999995,
+      "scanMilliseconds": 63.44824999999946,
       "status": "complete",
       "verified": true
     },
@@ -1499,8 +1503,8 @@
       "run": 0,
       "engine": "before/wasm",
       "deleted": 1000,
-      "milliseconds": 67.6959169999991,
-      "scanMilliseconds": 44.190999999998894,
+      "milliseconds": 70.99866699999984,
+      "scanMilliseconds": 44.48162500000035,
       "status": "complete",
       "verified": true
     },
@@ -1510,8 +1514,8 @@
       "run": 0,
       "engine": "after/js",
       "deleted": 1000,
-      "milliseconds": 31.885333000000173,
-      "scanMilliseconds": 54.30462499999885,
+      "milliseconds": 37.252167000000554,
+      "scanMilliseconds": 58.08274999999958,
       "status": "complete",
       "verified": true
     },
@@ -1521,8 +1525,8 @@
       "run": 0,
       "engine": "after/wasm",
       "deleted": 1000,
-      "milliseconds": 14.607833000000028,
-      "scanMilliseconds": 45.16108299999905,
+      "milliseconds": 14.979999999999563,
+      "scanMilliseconds": 43.59562499999993,
       "status": "complete",
       "verified": true
     },
@@ -1532,8 +1536,8 @@
       "run": 0,
       "engine": "sqlite/prepared",
       "deleted": 1000,
-      "milliseconds": 4.114459000000352,
-      "scanMilliseconds": 8.90770799999882,
+      "milliseconds": 4.324207999999999,
+      "scanMilliseconds": 8.895082999999431,
       "status": "complete",
       "verified": true
     },
@@ -1543,8 +1547,8 @@
       "run": 1,
       "engine": "before/js",
       "deleted": 1000,
-      "milliseconds": 225.87208399999872,
-      "scanMilliseconds": 60.89283400000022,
+      "milliseconds": 221.6064580000002,
+      "scanMilliseconds": 58.72875000000022,
       "status": "complete",
       "verified": true
     },
@@ -1554,8 +1558,8 @@
       "run": 1,
       "engine": "sqlite/prepared",
       "deleted": 1000,
-      "milliseconds": 4.038916999999856,
-      "scanMilliseconds": 8.999292000000423,
+      "milliseconds": 4.311250000000655,
+      "scanMilliseconds": 8.868791000000783,
       "status": "complete",
       "verified": true
     },
@@ -1565,8 +1569,8 @@
       "run": 1,
       "engine": "after/wasm",
       "deleted": 1000,
-      "milliseconds": 14.380833000001076,
-      "scanMilliseconds": 43.79708399999981,
+      "milliseconds": 14.089167000000089,
+      "scanMilliseconds": 53.53658399999949,
       "status": "complete",
       "verified": true
     },
@@ -1576,8 +1580,8 @@
       "run": 1,
       "engine": "after/js",
       "deleted": 1000,
-      "milliseconds": 34.281833000000915,
-      "scanMilliseconds": 55.80058300000019,
+      "milliseconds": 35.16870799999924,
+      "scanMilliseconds": 62.51616599999943,
       "status": "complete",
       "verified": true
     },
@@ -1587,8 +1591,8 @@
       "run": 1,
       "engine": "before/wasm",
       "deleted": 1000,
-      "milliseconds": 68.87041700000009,
-      "scanMilliseconds": 43.596958000000086,
+      "milliseconds": 65.97599999999875,
+      "scanMilliseconds": 42.72220799999923,
       "status": "complete",
       "verified": true
     },
@@ -1598,8 +1602,8 @@
       "run": 2,
       "engine": "after/js",
       "deleted": 1000,
-      "milliseconds": 74.04408299999886,
-      "scanMilliseconds": 86.0473750000001,
+      "milliseconds": 33.69729200000074,
+      "scanMilliseconds": 52.560208000000785,
       "status": "complete",
       "verified": true
     },
@@ -1609,8 +1613,8 @@
       "run": 2,
       "engine": "after/wasm",
       "deleted": 1000,
-      "milliseconds": 13.922040999999808,
-      "scanMilliseconds": 40.09754199999952,
+      "milliseconds": 13.741167000000132,
+      "scanMilliseconds": 43.45054100000016,
       "status": "complete",
       "verified": true
     },
@@ -1620,8 +1624,8 @@
       "run": 2,
       "engine": "sqlite/prepared",
       "deleted": 1000,
-      "milliseconds": 4.106916000000638,
-      "scanMilliseconds": 8.725625000000946,
+      "milliseconds": 4.170124999998734,
+      "scanMilliseconds": 8.89483300000029,
       "status": "complete",
       "verified": true
     },
@@ -1631,8 +1635,8 @@
       "run": 2,
       "engine": "before/js",
       "deleted": 1000,
-      "milliseconds": 239.94608300000073,
-      "scanMilliseconds": 79.66541700000016,
+      "milliseconds": 213.0614170000008,
+      "scanMilliseconds": 52.968833000000814,
       "status": "complete",
       "verified": true
     },
@@ -1642,8 +1646,8 @@
       "run": 2,
       "engine": "before/wasm",
       "deleted": 1000,
-      "milliseconds": 66.48591699999815,
-      "scanMilliseconds": 56.95570800000132,
+      "milliseconds": 42.39274999999907,
+      "scanMilliseconds": 45.39341699999932,
       "status": "complete",
       "verified": true
     }
@@ -1654,360 +1658,360 @@
       "mode": "cold",
       "engine": "before/js",
       "complete": true,
-      "microseconds": 11.709915999999906,
-      "scanMilliseconds": 0.6999590000000353
+      "microseconds": 10.477166000000013,
+      "scanMilliseconds": 0.6595410000000186
     },
     {
       "rows": 1000,
       "mode": "cold",
       "engine": "before/wasm",
       "complete": true,
-      "microseconds": 8.21841600000005,
-      "scanMilliseconds": 0.6750410000000215
+      "microseconds": 5.877499999999941,
+      "scanMilliseconds": 0.49912499999999227
     },
     {
       "rows": 1000,
       "mode": "cold",
       "engine": "after/js",
       "complete": true,
-      "microseconds": 12.166083999999955,
-      "scanMilliseconds": 1.986250000000041
+      "microseconds": 8.245250000000054,
+      "scanMilliseconds": 0.5902920000000336
     },
     {
       "rows": 1000,
       "mode": "cold",
       "engine": "after/wasm",
       "complete": true,
-      "microseconds": 6.732999999999947,
-      "scanMilliseconds": 0.7383750000000191
+      "microseconds": 6.266832000000022,
+      "scanMilliseconds": 0.5007499999999823
     },
     {
       "rows": 1000,
       "mode": "cold",
       "engine": "sqlite/prepared",
       "complete": true,
-      "microseconds": 0.5945820000000595,
-      "scanMilliseconds": 0.04795799999999417
+      "microseconds": 0.6219179999999938,
+      "scanMilliseconds": 0.04854199999999764
     },
     {
       "rows": 1000,
       "mode": "warm",
       "engine": "before/js",
       "complete": true,
-      "microseconds": 9.41224999999997,
-      "scanMilliseconds": 0.4750419999999167
+      "microseconds": 8.615666000000035,
+      "scanMilliseconds": 0.42516699999998764
     },
     {
       "rows": 1000,
       "mode": "warm",
       "engine": "before/wasm",
       "complete": true,
-      "microseconds": 5.672249999999849,
-      "scanMilliseconds": 0.42029200000001765
+      "microseconds": 4.713665999999989,
+      "scanMilliseconds": 0.310957999999971
     },
     {
       "rows": 1000,
       "mode": "warm",
       "engine": "after/js",
       "complete": true,
-      "microseconds": 8.992083999999977,
-      "scanMilliseconds": 0.5578340000000139
+      "microseconds": 6.763915999999995,
+      "scanMilliseconds": 0.41866700000002766
     },
     {
       "rows": 1000,
       "mode": "warm",
       "engine": "after/wasm",
       "complete": true,
-      "microseconds": 4.700583999999935,
-      "scanMilliseconds": 0.46145799999999326
+      "microseconds": 4.66274999999996,
+      "scanMilliseconds": 0.3079169999999749
     },
     {
       "rows": 1000,
       "mode": "warm",
       "engine": "sqlite/prepared",
       "complete": true,
-      "microseconds": 0.6425840000000562,
-      "scanMilliseconds": 0.04862500000001546
+      "microseconds": 0.6997499999999945,
+      "scanMilliseconds": 0.05104199999999537
     },
     {
       "rows": 1000,
       "mode": "delete-read",
       "engine": "before/js",
       "complete": true,
-      "microseconds": 37.13391799999999,
-      "scanMilliseconds": 0.2796249999998963
+      "microseconds": 35.99391599999989,
+      "scanMilliseconds": 0.2922080000000733
     },
     {
       "rows": 1000,
       "mode": "delete-read",
       "engine": "before/wasm",
       "complete": true,
-      "microseconds": 18.165665999999874,
-      "scanMilliseconds": 0.21850000000006276
+      "microseconds": 17.821249999999964,
+      "scanMilliseconds": 0.21708399999999983
     },
     {
       "rows": 1000,
       "mode": "delete-read",
       "engine": "after/js",
       "complete": true,
-      "microseconds": 37.2515820000001,
-      "scanMilliseconds": 0.3564579999999751
+      "microseconds": 36.889333999999955,
+      "scanMilliseconds": 0.290834000000018
     },
     {
       "rows": 1000,
       "mode": "delete-read",
       "engine": "after/wasm",
       "complete": true,
-      "microseconds": 17.927417999999992,
-      "scanMilliseconds": 0.22145799999998417
+      "microseconds": 20.096833999999944,
+      "scanMilliseconds": 0.25587500000006
     },
     {
       "rows": 1000,
       "mode": "delete-read",
       "engine": "sqlite/prepared",
       "complete": true,
-      "microseconds": 4.073249999999916,
-      "scanMilliseconds": 0.0493340000000444
+      "microseconds": 4.191915999999992,
+      "scanMilliseconds": 0.04854199999999764
     },
     {
       "rows": 10000,
       "mode": "cold",
       "engine": "before/js",
       "complete": true,
-      "microseconds": 5.64183300000002,
-      "scanMilliseconds": 4.828208000000018
+      "microseconds": 9.111583999999993,
+      "scanMilliseconds": 5.589832999999999
     },
     {
       "rows": 10000,
       "mode": "cold",
       "engine": "before/wasm",
       "complete": true,
-      "microseconds": 3.5376660000000584,
-      "scanMilliseconds": 4.168916000000081
+      "microseconds": 2.8843329999999696,
+      "scanMilliseconds": 4.082750000000033
     },
     {
       "rows": 10000,
       "mode": "cold",
       "engine": "after/js",
       "complete": true,
-      "microseconds": 4.748749999999973,
-      "scanMilliseconds": 5.44420799999989
+      "microseconds": 5.473082999999974,
+      "scanMilliseconds": 5.43891700000006
     },
     {
       "rows": 10000,
       "mode": "cold",
       "engine": "after/wasm",
       "complete": true,
-      "microseconds": 3.028500000000008,
-      "scanMilliseconds": 4.457832999999937
+      "microseconds": 2.647457999999915,
+      "scanMilliseconds": 4.00770799999998
     },
     {
       "rows": 10000,
       "mode": "cold",
       "engine": "sqlite/prepared",
       "complete": true,
-      "microseconds": 1.6888329999999314,
-      "scanMilliseconds": 0.8153330000000096
+      "microseconds": 1.6369999999999436,
+      "scanMilliseconds": 0.7901659999999993
     },
     {
       "rows": 10000,
       "mode": "warm",
       "engine": "before/js",
       "complete": true,
-      "microseconds": 21.884500000000116,
-      "scanMilliseconds": 4.657417000000123
+      "microseconds": 24.652334000000113,
+      "scanMilliseconds": 4.425375000000031
     },
     {
       "rows": 10000,
       "mode": "warm",
       "engine": "before/wasm",
       "complete": true,
-      "microseconds": 4.3562500000000455,
-      "scanMilliseconds": 3.6790829999999914
+      "microseconds": 3.959957999999915,
+      "scanMilliseconds": 3.7101249999998345
     },
     {
       "rows": 10000,
       "mode": "warm",
       "engine": "after/js",
       "complete": true,
-      "microseconds": 6.862333000000035,
-      "scanMilliseconds": 5.634416999999985
+      "microseconds": 5.2754580000000715,
+      "scanMilliseconds": 4.484750000000076
     },
     {
       "rows": 10000,
       "mode": "warm",
       "engine": "after/wasm",
       "complete": true,
-      "microseconds": 3.75,
-      "scanMilliseconds": 4.124165999999832
+      "microseconds": 2.925166999999874,
+      "scanMilliseconds": 3.6834160000000793
     },
     {
       "rows": 10000,
       "mode": "warm",
       "engine": "sqlite/prepared",
       "complete": true,
-      "microseconds": 1.6623329999999896,
-      "scanMilliseconds": 0.9034169999999904
+      "microseconds": 1.5594160000000556,
+      "scanMilliseconds": 0.7739579999999933
     },
     {
       "rows": 10000,
       "mode": "delete-read",
       "engine": "before/js",
       "complete": true,
-      "microseconds": 47.06666700000005,
-      "scanMilliseconds": 4.188458999999966
+      "microseconds": 52.76999999999999,
+      "scanMilliseconds": 4.075749999999971
     },
     {
       "rows": 10000,
       "mode": "delete-read",
       "engine": "before/wasm",
       "complete": true,
-      "microseconds": 18.320666999999958,
-      "scanMilliseconds": 3.55862500000012
+      "microseconds": 18.55479200000036,
+      "scanMilliseconds": 3.7439170000000104
     },
     {
       "rows": 10000,
       "mode": "delete-read",
       "engine": "after/js",
       "complete": true,
-      "microseconds": 33.5307499999999,
-      "scanMilliseconds": 3.8936250000001564
+      "microseconds": 35.89379200000031,
+      "scanMilliseconds": 3.874499999999898
     },
     {
       "rows": 10000,
       "mode": "delete-read",
       "engine": "after/wasm",
       "complete": true,
-      "microseconds": 17.529915999999957,
-      "scanMilliseconds": 3.876708000000235
+      "microseconds": 14.545916999999918,
+      "scanMilliseconds": 3.7222500000002583
     },
     {
       "rows": 10000,
       "mode": "delete-read",
       "engine": "sqlite/prepared",
       "complete": true,
-      "microseconds": 4.097375000000284,
-      "scanMilliseconds": 0.9288750000000618
+      "microseconds": 3.9288339999998243,
+      "scanMilliseconds": 0.7799589999999625
     },
     {
       "rows": 100000,
       "mode": "cold",
       "engine": "before/js",
       "complete": true,
-      "microseconds": 4.359124999999949,
-      "scanMilliseconds": 59.21166699999958
+      "microseconds": 5.525832999999693,
+      "scanMilliseconds": 62.23725000000013
     },
     {
       "rows": 100000,
       "mode": "cold",
       "engine": "before/wasm",
       "complete": true,
-      "microseconds": 2.9620410000002266,
-      "scanMilliseconds": 49.757416999999805
+      "microseconds": 3.535541999999623,
+      "scanMilliseconds": 46.747957999999926
     },
     {
       "rows": 100000,
       "mode": "cold",
       "engine": "after/js",
       "complete": true,
-      "microseconds": 4.90179100000023,
-      "scanMilliseconds": 60.383334000000104
+      "microseconds": 4.454334000000017,
+      "scanMilliseconds": 63.05683299999964
     },
     {
       "rows": 100000,
       "mode": "cold",
       "engine": "after/wasm",
       "complete": true,
-      "microseconds": 2.947791999999936,
-      "scanMilliseconds": 44.74241600000005
+      "microseconds": 3.0042499999999563,
+      "scanMilliseconds": 49.377542000000176
     },
     {
       "rows": 100000,
       "mode": "cold",
       "engine": "sqlite/prepared",
       "complete": true,
-      "microseconds": 0.566541000000143,
-      "scanMilliseconds": 8.817749999999705
+      "microseconds": 0.5834160000003976,
+      "scanMilliseconds": 9.327582999999322
     },
     {
       "rows": 100000,
       "mode": "warm",
       "engine": "before/js",
       "complete": true,
-      "microseconds": 188.3562920000004,
-      "scanMilliseconds": 54.39379200000076
+      "microseconds": 189.23850000000039,
+      "scanMilliseconds": 58.81958400000076
     },
     {
       "rows": 100000,
       "mode": "warm",
       "engine": "before/wasm",
       "complete": true,
-      "microseconds": 50.29749999999967,
-      "scanMilliseconds": 43.75816699999996
+      "microseconds": 15.223375000000487,
+      "scanMilliseconds": 44.948709000000235
     },
     {
       "rows": 100000,
       "mode": "warm",
       "engine": "after/js",
       "complete": true,
-      "microseconds": 5.220416999998633,
-      "scanMilliseconds": 54.388042000000496
+      "microseconds": 5.618583000000399,
+      "scanMilliseconds": 60.437708000001294
     },
     {
       "rows": 100000,
       "mode": "warm",
       "engine": "after/wasm",
       "complete": true,
-      "microseconds": 3.2366669999992155,
-      "scanMilliseconds": 44.10350000000108
+      "microseconds": 3.5465840000015305,
+      "scanMilliseconds": 49.69475000000057
     },
     {
       "rows": 100000,
       "mode": "warm",
       "engine": "sqlite/prepared",
       "complete": true,
-      "microseconds": 0.5502499999984138,
-      "scanMilliseconds": 8.559791000001496
+      "microseconds": 0.562541000001147,
+      "scanMilliseconds": 8.95520899999974
     },
     {
       "rows": 100000,
       "mode": "delete-read",
       "engine": "before/js",
       "complete": true,
-      "microseconds": 225.87208399999872,
-      "scanMilliseconds": 62.08733299999949
+      "microseconds": 219.7252499999995,
+      "scanMilliseconds": 58.72875000000022
     },
     {
       "rows": 100000,
       "mode": "delete-read",
       "engine": "before/wasm",
       "complete": true,
-      "microseconds": 67.6959169999991,
-      "scanMilliseconds": 44.190999999998894
+      "microseconds": 65.97599999999875,
+      "scanMilliseconds": 44.48162500000035
     },
     {
       "rows": 100000,
       "mode": "delete-read",
       "engine": "after/js",
       "complete": true,
-      "microseconds": 34.281833000000915,
-      "scanMilliseconds": 55.80058300000019
+      "microseconds": 35.16870799999924,
+      "scanMilliseconds": 58.08274999999958
     },
     {
       "rows": 100000,
       "mode": "delete-read",
       "engine": "after/wasm",
       "complete": true,
-      "microseconds": 14.380833000001076,
-      "scanMilliseconds": 43.79708399999981
+      "microseconds": 14.089167000000089,
+      "scanMilliseconds": 43.59562499999993
     },
     {
       "rows": 100000,
       "mode": "delete-read",
       "engine": "sqlite/prepared",
       "complete": true,
-      "microseconds": 4.106916000000638,
-      "scanMilliseconds": 8.90770799999882
+      "microseconds": 4.311250000000655,
+      "scanMilliseconds": 8.89483300000029
     }
   ],
   "profiles": [
@@ -2015,252 +2019,257 @@
       "engine": "before/js",
       "deletions": 10000,
       "path": "measurements/profiles/delete/before-js.cpuprofile",
-      "sha256": "78b8cdec0b59842c33068976f1ffe1aa2f9451932c41dd5eede606789d50e0d1",
+      "sha256": "e69167609f1f277e487d81a7ad423d7456acea125c66b60229faa987bbad2dd7",
       "summary": {
-        "sampledMs": 1705.3339999999944,
-        "samples": 1219,
+        "sampledMs": 1319.6669999999988,
+        "samples": 807,
         "categories": [
           {
             "name": "other",
-            "milliseconds": 1670.8349999999946,
-            "percent": 97.97699453596775
-          },
-          {
-            "name": "JSON",
-            "milliseconds": 10.083,
-            "percent": 0.5912624740959855
-          },
-          {
-            "name": "column resolution",
-            "milliseconds": 8.833,
-            "percent": 0.5179630500535396
+            "milliseconds": 1295.4999999999993,
+            "percent": 98.1687046808021
           },
           {
             "name": "write backup",
             "milliseconds": 7.541,
-            "percent": 0.4422007653632675
-          },
-          {
-            "name": "row environments",
-            "milliseconds": 5.042,
-            "percent": 0.2956605568176097
+            "percent": 0.5714320355059275
           },
           {
             "name": "GC",
+            "milliseconds": 4.584,
+            "percent": 0.3473603568172883
+          },
+          {
+            "name": "row environments",
+            "milliseconds": 4.5,
+            "percent": 0.3409951146766574
+          },
+          {
+            "name": "column resolution",
+            "milliseconds": 3.042,
+            "percent": 0.2305126975214204
+          },
+          {
+            "name": "JSON",
             "milliseconds": 3,
-            "percent": 0.17591861770187012
+            "percent": 0.22733007645110492
+          },
+          {
+            "name": "sort / compare",
+            "milliseconds": 1.5,
+            "percent": 0.11366503822555246
           }
         ],
         "topFunctions": [
           {
             "name": "_M0MPB18UninitializedArray12unsafe__blitGRP26mizchi6sqlike6SourceE",
             "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
-            "selfMs": 647.7070000000002,
-            "inclusiveMs": 1153.0810000000013,
-            "selfPercent": 37.98124003860841
-          },
-          {
-            "name": "_M0MPC15array10FixedArray12unsafe__blitGRPB17UnsafeMaybeUninitGsEE",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
-            "selfMs": 505.37399999999946,
-            "inclusiveMs": 505.37399999999946,
-            "selfPercent": 29.634898500821606
+            "selfMs": 623.7070000000002,
+            "inclusiveMs": 676.2910000000004,
+            "selfPercent": 47.26245333102978
           },
           {
             "name": "_M0MP26mizchi6sqlike9IndexRows6remove",
             "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
-            "selfMs": 277.3329999999999,
-            "inclusiveMs": 1431.6639999999968,
-            "selfPercent": 16.26267933437091
+            "selfMs": 458.9579999999995,
+            "inclusiveMs": 1139.8320000000008,
+            "selfPercent": 34.7783190759487
           },
           {
             "name": "post",
             "url": "node:inspector",
-            "selfMs": 180.209,
-            "inclusiveMs": 180.209,
-            "selfPercent": 10.567372725812104
+            "selfMs": 121.167,
+            "inclusiveMs": 121.167,
+            "selfPercent": 9.181634457783677
           },
           {
-            "name": "_M0FP26mizchi6sqlike12primary__row",
+            "name": "_M0MPC15array10FixedArray12unsafe__blitGRPB17UnsafeMaybeUninitGsEE",
             "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
-            "selfMs": 5.084,
-            "inclusiveMs": 5.084,
-            "selfPercent": 0.29812341746543586
-          },
-          {
-            "name": "",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/scripts/bench-delete.ts",
-            "selfMs": 3.875,
-            "inclusiveMs": 3.875,
-            "selfPercent": 0.22722821453158223
-          },
-          {
-            "name": "_M0FP26mizchi6sqlike20compare__index__rows",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
-            "selfMs": 3.7090000000000005,
-            "inclusiveMs": 3.7090000000000005,
-            "selfPercent": 0.21749405101874544
-          },
-          {
-            "name": "(garbage collector)",
-            "url": "",
-            "selfMs": 3,
-            "inclusiveMs": 3,
-            "selfPercent": 0.17591861770187012
-          },
-          {
-            "name": "_M0FP26mizchi6sqlike29database__exec__inner_2einner",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
-            "selfMs": 2.542,
-            "inclusiveMs": 1509.582999999996,
-            "selfPercent": 0.14906170873271793
-          },
-          {
-            "name": "_M0FP26mizchi6sqlike22row__environment__from",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
-            "selfMs": 2.542,
-            "inclusiveMs": 5.042,
-            "selfPercent": 0.14906170873271793
-          },
-          {
-            "name": "_M0MPC25immut6vector4Tree3getGRP26mizchi6sqlike7RowPageE",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
-            "selfMs": 2.541,
-            "inclusiveMs": 2.541,
-            "selfPercent": 0.149003069193484
-          },
-          {
-            "name": "_M0MPC15array5Array4copyGORP26mizchi6sqlike9StoredRowE",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
-            "selfMs": 2.5010000000000003,
-            "inclusiveMs": 2.5010000000000003,
-            "selfPercent": 0.14665748762412575
+            "selfMs": 52.584,
+            "inclusiveMs": 52.584,
+            "selfPercent": 3.984641580034967
           },
           {
             "name": "_M0FP26mizchi6sqlike32execute__data__statement_2einner",
             "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
-            "selfMs": 2.5,
-            "inclusiveMs": 1489.416999999996,
-            "selfPercent": 0.14659884808489176
+            "selfMs": 6.041,
+            "inclusiveMs": 1174.3330000000003,
+            "selfPercent": 0.45776699728037495
           },
           {
-            "name": "_M0MPC15array5Array20unsafe__make__uninitGRP26mizchi6sqlike6SourceE",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
-            "selfMs": 2.5,
-            "inclusiveMs": 2.5,
-            "selfPercent": 0.14659884808489176
-          },
-          {
-            "name": "$make_array_len_and_init",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
-            "selfMs": 2.5,
-            "inclusiveMs": 2.5,
-            "selfPercent": 0.14659884808489176
-          },
-          {
-            "name": "_M0FP26mizchi6sqlike19matches__identifier",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
-            "selfMs": 2.5,
-            "inclusiveMs": 2.5,
-            "selfPercent": 0.14659884808489176
-          },
-          {
-            "name": "_M0FP26mizchi6sqlike19prepare__expression",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
-            "selfMs": 2.5,
-            "inclusiveMs": 2.5,
-            "selfPercent": 0.14659884808489176
-          },
-          {
-            "name": "_M0FP26mizchi6sqlike11copy__store",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
-            "selfMs": 2.5,
-            "inclusiveMs": 7.541,
-            "selfPercent": 0.14659884808489176
-          },
-          {
-            "name": "_M0MPB3Map15set__with__hashGsRPB5ArrayGsEE",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
-            "selfMs": 2.5,
-            "inclusiveMs": 2.5,
-            "selfPercent": 0.14659884808489176
-          },
-          {
-            "name": "_M0MPC14json12ParseContext21lex__skip__whitespace",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
-            "selfMs": 2.458,
-            "inclusiveMs": 2.458,
-            "selfPercent": 0.1441359874370656
-          },
-          {
-            "name": "(program)",
+            "name": "(garbage collector)",
             "url": "",
-            "selfMs": 2.417,
-            "inclusiveMs": 2.417,
-            "selfPercent": 0.14173176632847334
-          },
-          {
-            "name": "_M0MPC14json12ParseContext10lex__value",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
-            "selfMs": 1.333,
-            "inclusiveMs": 1.333,
-            "selfPercent": 0.07816650579886429
-          },
-          {
-            "name": "_M0MP26mizchi6sqlike8RowPages12remove__slot",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
-            "selfMs": 1.292,
-            "inclusiveMs": 11.292,
-            "selfPercent": 0.07576228469027207
-          },
-          {
-            "name": "_M0MP26mizchi6sqlike8RowPages9own__page",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
-            "selfMs": 1.292,
-            "inclusiveMs": 1.292,
-            "selfPercent": 0.07576228469027207
-          },
-          {
-            "name": "$make_array_len_and_init",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
-            "selfMs": 1.292,
-            "inclusiveMs": 1.292,
-            "selfPercent": 0.07576228469027207
-          },
-          {
-            "name": "_M0FP26mizchi6sqlike19matches__identifier",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
-            "selfMs": 1.292,
-            "inclusiveMs": 1.292,
-            "selfPercent": 0.07576228469027207
-          },
-          {
-            "name": "_M0FP26mizchi6sqlike12primary__row",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
-            "selfMs": 1.292,
-            "inclusiveMs": 1.292,
-            "selfPercent": 0.07576228469027207
-          },
-          {
-            "name": "$make_array_len_and_init",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
-            "selfMs": 1.292,
-            "inclusiveMs": 1.292,
-            "selfPercent": 0.07576228469027207
-          },
-          {
-            "name": "_M0FPC35immut8internal4path2ofGlE",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
-            "selfMs": 1.291,
-            "inclusiveMs": 1.291,
-            "selfPercent": 0.0757036451510381
+            "selfMs": 4.584,
+            "inclusiveMs": 4.584,
+            "selfPercent": 0.3473603568172883
           },
           {
             "name": "_M0FP26mizchi6sqlike10identifier",
             "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
-            "selfMs": 1.291,
-            "inclusiveMs": 1.291,
-            "selfPercent": 0.0757036451510381
+            "selfMs": 3.042,
+            "inclusiveMs": 3.042,
+            "selfPercent": 0.2305126975214204
+          },
+          {
+            "name": "",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/scripts/bench-delete.ts",
+            "selfMs": 3.042,
+            "inclusiveMs": 3.042,
+            "selfPercent": 0.2305126975214204
+          },
+          {
+            "name": "_M0FP26mizchi6sqlike29database__exec__inner_2einner",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
+            "selfMs": 3,
+            "inclusiveMs": 1187.8740000000003,
+            "selfPercent": 0.22733007645110492
+          },
+          {
+            "name": "_M0MPC15array5Array6removeGRPB5ArrayGRP26mizchi6sqlike9StoredRowEE",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
+            "selfMs": 3,
+            "inclusiveMs": 680.8740000000004,
+            "selfPercent": 0.22733007645110492
+          },
+          {
+            "name": "_M0FP26mizchi6sqlike16row__environment",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
+            "selfMs": 3,
+            "inclusiveMs": 7.542,
+            "selfPercent": 0.22733007645110492
+          },
+          {
+            "name": "_M0MPC15array5Array28unsafe__truncate__to__lengthGRPB5ArrayGRP26mizchi6sqlike9StoredRowEE",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
+            "selfMs": 1.583,
+            "inclusiveMs": 1.583,
+            "selfPercent": 0.11995450367403301
+          },
+          {
+            "name": "_M0MPC16option6Option3mapGRP26mizchi6sqlike9StoredRowbEHRP26mizchi6sqlike8SqlError",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
+            "selfMs": 1.542,
+            "inclusiveMs": 1.542,
+            "selfPercent": 0.11684765929586792
+          },
+          {
+            "name": "_M0FPC25immut6vector14immutable__setGRPC25immut6vector4TreeGRP26mizchi6sqlike7RowPageEE",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
+            "selfMs": 1.542,
+            "inclusiveMs": 1.542,
+            "selfPercent": 0.11684765929586792
+          },
+          {
+            "name": "$make_array_len_and_init",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
+            "selfMs": 1.542,
+            "inclusiveMs": 1.542,
+            "selfPercent": 0.11684765929586792
+          },
+          {
+            "name": "$make_array_len_and_init",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
+            "selfMs": 1.541,
+            "inclusiveMs": 1.541,
+            "selfPercent": 0.11677188260371756
+          },
+          {
+            "name": "_M0MPC25immut7hashmap4Node18remove__with__pathGliE",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
+            "selfMs": 1.5,
+            "inclusiveMs": 2.75,
+            "selfPercent": 0.11366503822555246
+          },
+          {
+            "name": "_M0MPC15array10FixedArray23make__and__blit_2einnerGRPC25immut7hashmap4NodeGliEE",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
+            "selfMs": 1.5,
+            "inclusiveMs": 1.5,
+            "selfPercent": 0.11366503822555246
+          },
+          {
+            "name": "_M0FPC25immut7hashmap16collapse__branchGliE",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
+            "selfMs": 1.5,
+            "inclusiveMs": 1.5,
+            "selfPercent": 0.11366503822555246
+          },
+          {
+            "name": "_M0MPC35immut8internal13sparse__array11SparseArray7replaceGRPC25immut7hashmap4NodeGliEE",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
+            "selfMs": 1.5,
+            "inclusiveMs": 1.5,
+            "selfPercent": 0.11366503822555246
+          },
+          {
+            "name": "_M0FP26mizchi6sqlike14compare__value",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
+            "selfMs": 1.5,
+            "inclusiveMs": 1.5,
+            "selfPercent": 0.11366503822555246
+          },
+          {
+            "name": "_M0MPC15array5Array4copyGORP26mizchi6sqlike9StoredRowE",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
+            "selfMs": 1.5,
+            "inclusiveMs": 1.5,
+            "selfPercent": 0.11366503822555246
+          },
+          {
+            "name": "_M0MPC15array5Array7reallocGRP26mizchi6sqlike6SourceE",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
+            "selfMs": 1.5,
+            "inclusiveMs": 1.5,
+            "selfPercent": 0.11366503822555246
+          },
+          {
+            "name": "_M0FP26mizchi6sqlike10evaluation",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
+            "selfMs": 1.5,
+            "inclusiveMs": 3.042,
+            "selfPercent": 0.11366503822555246
+          },
+          {
+            "name": "_M0FP26mizchi6sqlike19primary__candidates",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
+            "selfMs": 1.5,
+            "inclusiveMs": 3,
+            "selfPercent": 0.11366503822555246
+          },
+          {
+            "name": "_M0MPC25immut6vector6Vector2atGRP26mizchi6sqlike7RowPageE",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
+            "selfMs": 1.5,
+            "inclusiveMs": 1.5,
+            "selfPercent": 0.11366503822555246
+          },
+          {
+            "name": "_M0FP26mizchi6sqlike28foreign__key__errors_2einner",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
+            "selfMs": 1.5,
+            "inclusiveMs": 1.5,
+            "selfPercent": 0.11366503822555246
+          },
+          {
+            "name": "_M0FP26mizchi6sqlike11delete__row",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
+            "selfMs": 1.5,
+            "inclusiveMs": 1.5,
+            "selfPercent": 0.11366503822555246
+          },
+          {
+            "name": "_M0FP26mizchi6sqlike11copy__store",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
+            "selfMs": 1.5,
+            "inclusiveMs": 7.541,
+            "selfPercent": 0.11366503822555246
+          },
+          {
+            "name": "_M0MPB3Map15set__with__hashGsRPB5ArrayGsEE",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/generated/delete-before/sqlike.js",
+            "selfMs": 1.5,
+            "inclusiveMs": 1.5,
+            "selfPercent": 0.11366503822555246
           }
         ]
       }
@@ -2269,252 +2278,252 @@
       "engine": "after/js",
       "deletions": 10000,
       "path": "measurements/profiles/delete/after-js.cpuprofile",
-      "sha256": "4b36e6301ac2f8e23eeb6968fa8186cb91e86facf3bdc20530cc5b0d3930a962",
+      "sha256": "92c66139a038d313689ca4497a231fddef1287dfc4ceb10990e1037c882bcfee",
       "summary": {
-        "sampledMs": 265.12499999999994,
-        "samples": 50,
+        "sampledMs": 218.333,
+        "samples": 36,
         "categories": [
           {
             "name": "other",
-            "milliseconds": 232.584,
-            "percent": 87.72616690240454
-          },
-          {
-            "name": "column resolution",
-            "milliseconds": 8.873000000000001,
-            "percent": 3.346723243752948
-          },
-          {
-            "name": "write backup",
-            "milliseconds": 7.417999999999999,
-            "percent": 2.7979255068363984
-          },
-          {
-            "name": "row environments",
-            "milliseconds": 6.25,
-            "percent": 2.3573785950023582
-          },
-          {
-            "name": "GC",
-            "milliseconds": 5,
-            "percent": 1.8859028760018863
+            "milliseconds": 201.75,
+            "percent": 92.40472122858203
           },
           {
             "name": "JSON",
-            "milliseconds": 5,
-            "percent": 1.8859028760018863
+            "milliseconds": 6,
+            "percent": 2.74809579861954
+          },
+          {
+            "name": "column resolution",
+            "milliseconds": 4.541,
+            "percent": 2.0798505035885553
+          },
+          {
+            "name": "GC",
+            "milliseconds": 3.042,
+            "percent": 1.3932845699001066
+          },
+          {
+            "name": "row environments",
+            "milliseconds": 1.5,
+            "percent": 0.687023949654885
+          },
+          {
+            "name": "write backup",
+            "milliseconds": 1.5,
+            "percent": 0.687023949654885
           }
         ],
         "topFunctions": [
           {
             "name": "post",
             "url": "node:inspector",
-            "selfMs": 204.625,
-            "inclusiveMs": 205.25,
-            "selfPercent": 77.1805752003772
-          },
-          {
-            "name": "_M0MP26mizchi6sqlike9IndexRows6remove",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
-            "selfMs": 6.2509999999999994,
-            "inclusiveMs": 6.2509999999999994,
-            "selfPercent": 2.3577557755775578
-          },
-          {
-            "name": "_M0FP26mizchi6sqlike22row__environment__from",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
-            "selfMs": 6.25,
-            "inclusiveMs": 6.25,
-            "selfPercent": 2.3573785950023582
+            "selfMs": 165.75,
+            "inclusiveMs": 165.75,
+            "selfPercent": 75.91614643686478
           },
           {
             "name": "(garbage collector)",
             "url": "",
-            "selfMs": 5,
-            "inclusiveMs": 5,
-            "selfPercent": 1.8859028760018863
-          },
-          {
-            "name": "_M0MPB3Map3MapGsRPB5ArrayGsEE",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
-            "selfMs": 3.709,
-            "inclusiveMs": 4.918,
-            "selfPercent": 1.3989627534181992
-          },
-          {
-            "name": "_M0MPC15array10FixedArray23make__and__blit_2einnerGRPC25immut7hashmap4NodeGliEE",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
-            "selfMs": 2.583,
-            "inclusiveMs": 5.083,
-            "selfPercent": 0.9742574257425746
-          },
-          {
-            "name": "_M0FP26mizchi6sqlike16resolve__context",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
-            "selfMs": 2.583,
-            "inclusiveMs": 5.124,
-            "selfPercent": 0.9742574257425746
-          },
-          {
-            "name": "_M0FP26mizchi6sqlike19matches__identifier",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
-            "selfMs": 2.541,
-            "inclusiveMs": 2.541,
-            "selfPercent": 0.9584158415841586
-          },
-          {
-            "name": "$make_array_len_and_init",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
-            "selfMs": 2.5,
-            "inclusiveMs": 2.5,
-            "selfPercent": 0.9429514380009432
-          },
-          {
-            "name": "$make_array_len_and_init",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
-            "selfMs": 2.5,
-            "inclusiveMs": 2.5,
-            "selfPercent": 0.9429514380009432
-          },
-          {
-            "name": "_M0FP26mizchi6sqlike10evaluation",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
-            "selfMs": 2.5,
-            "inclusiveMs": 2.5,
-            "selfPercent": 0.9429514380009432
-          },
-          {
-            "name": "_M0FP26mizchi6sqlike12primary__row",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
-            "selfMs": 2.25,
-            "inclusiveMs": 2.25,
-            "selfPercent": 0.8486562942008489
-          },
-          {
-            "name": "_M0FP26mizchi6sqlike19matches__identifier",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
-            "selfMs": 1.291,
-            "inclusiveMs": 1.291,
-            "selfPercent": 0.48694012258368696
+            "selfMs": 3.042,
+            "inclusiveMs": 3.042,
+            "selfPercent": 1.3932845699001066
           },
           {
             "name": "_M0FP26mizchi6sqlike29database__exec__inner_2einner",
             "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
-            "selfMs": 1.25,
-            "inclusiveMs": 52.375,
-            "selfPercent": 0.4714757190004716
-          },
-          {
-            "name": "_M0FP26mizchi6sqlike11delete__row",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
-            "selfMs": 1.25,
-            "inclusiveMs": 17.584,
-            "selfPercent": 0.4714757190004716
+            "selfMs": 3,
+            "inclusiveMs": 46.5,
+            "selfPercent": 1.37404789930977
           },
           {
             "name": "$make_array_len_and_init",
             "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
-            "selfMs": 1.25,
-            "inclusiveMs": 1.25,
-            "selfPercent": 0.4714757190004716
+            "selfMs": 3,
+            "inclusiveMs": 3,
+            "selfPercent": 1.37404789930977
           },
           {
-            "name": "_M0MPC15array5Array4copyGORP26mizchi6sqlike9StoredRowE",
+            "name": "_M0FP26mizchi6sqlike12primary__row",
             "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
-            "selfMs": 1.25,
-            "inclusiveMs": 1.25,
-            "selfPercent": 0.4714757190004716
+            "selfMs": 3,
+            "inclusiveMs": 3,
+            "selfPercent": 1.37404789930977
           },
           {
-            "name": "_M0FP26mizchi6sqlike10identifier",
+            "name": "_M0MP26mizchi6sqlike9IndexRows6remove",
             "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
-            "selfMs": 1.25,
-            "inclusiveMs": 1.25,
-            "selfPercent": 0.4714757190004716
+            "selfMs": 2.958,
+            "inclusiveMs": 2.958,
+            "selfPercent": 1.3548112287194332
           },
           {
-            "name": "_M0FP26mizchi6sqlike23prepare__foreign__table",
+            "name": "_M0MPC14json12ParseContext21lex__skip__whitespace",
             "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
-            "selfMs": 1.25,
-            "inclusiveMs": 1.25,
-            "selfPercent": 0.4714757190004716
+            "selfMs": 2.958,
+            "inclusiveMs": 2.958,
+            "selfPercent": 1.3548112287194332
           },
           {
-            "name": "_M0FP26mizchi6sqlike11copy__store",
+            "name": "_M0MPC25immut7hashmap4Node18remove__with__pathGliE",
             "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
-            "selfMs": 1.25,
-            "inclusiveMs": 7.417999999999999,
-            "selfPercent": 0.4714757190004716
+            "selfMs": 1.542,
+            "inclusiveMs": 1.542,
+            "selfPercent": 0.7062606202452218
           },
           {
-            "name": "_M0TPB5ArrayGRP26mizchi6sqlike16TransactionFrameE",
+            "name": "$make_array_len_and_init",
             "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
-            "selfMs": 1.25,
-            "inclusiveMs": 1.25,
-            "selfPercent": 0.4714757190004716
-          },
-          {
-            "name": "_M0FPC14json12need__escape",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
-            "selfMs": 1.25,
-            "inclusiveMs": 1.25,
-            "selfPercent": 0.4714757190004716
-          },
-          {
-            "name": "_M0MPB3Map15set__with__hashGsRPC14json4JsonE",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
-            "selfMs": 1.25,
-            "inclusiveMs": 1.25,
-            "selfPercent": 0.4714757190004716
-          },
-          {
-            "name": "_M0FP26mizchi6sqlike11json__value",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
-            "selfMs": 1.25,
-            "inclusiveMs": 1.25,
-            "selfPercent": 0.4714757190004716
+            "selfMs": 1.542,
+            "inclusiveMs": 1.542,
+            "selfPercent": 0.7062606202452218
           },
           {
             "name": "_M0MPC14json12ParseContext10lex__value",
             "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
-            "selfMs": 1.25,
-            "inclusiveMs": 1.25,
-            "selfPercent": 0.4714757190004716
-          },
-          {
-            "name": "",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/scripts/bench-delete.ts",
-            "selfMs": 1.25,
-            "inclusiveMs": 1.25,
-            "selfPercent": 0.4714757190004716
-          },
-          {
-            "name": "_M0MPB3Map3MapGsRPB5ArrayGsEE",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
-            "selfMs": 1.25,
-            "inclusiveMs": 1.25,
-            "selfPercent": 0.4714757190004716
-          },
-          {
-            "name": "$make_array_len_and_init",
-            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
-            "selfMs": 1.209,
-            "inclusiveMs": 1.209,
-            "selfPercent": 0.45601131541725615
+            "selfMs": 1.542,
+            "inclusiveMs": 1.542,
+            "selfPercent": 0.7062606202452218
           },
           {
             "name": "_M0FP26mizchi6sqlike19matches__identifier",
             "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
-            "selfMs": 1.208,
-            "inclusiveMs": 1.208,
-            "selfPercent": 0.4556341348420557
+            "selfMs": 1.541,
+            "inclusiveMs": 1.541,
+            "selfPercent": 0.7058026042787852
           },
           {
-            "name": "dispatch",
+            "name": "_M0FP26mizchi6sqlike11delete__row",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
+            "selfMs": 1.5,
+            "inclusiveMs": 20.958000000000002,
+            "selfPercent": 0.687023949654885
+          },
+          {
+            "name": "_M0MPC25immut7hashmap4Node18remove__with__pathGliE",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
+            "selfMs": 1.5,
+            "inclusiveMs": 9,
+            "selfPercent": 0.687023949654885
+          },
+          {
+            "name": "_M0MPC15array10FixedArray23make__and__blit_2einnerGRPC25immut7hashmap4NodeGliEE",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
+            "selfMs": 1.5,
+            "inclusiveMs": 2.958,
+            "selfPercent": 0.687023949654885
+          },
+          {
+            "name": "_M0MPC15array10FixedArray12unsafe__blitGRPB17UnsafeMaybeUninitGsEE",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
+            "selfMs": 1.5,
+            "inclusiveMs": 1.5,
+            "selfPercent": 0.687023949654885
+          },
+          {
+            "name": "_M0MPC15array10FixedArray23make__and__blit_2einnerGRPC25immut7hashmap4NodeGliEE",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
+            "selfMs": 1.5,
+            "inclusiveMs": 1.5,
+            "selfPercent": 0.687023949654885
+          },
+          {
+            "name": "_M0MP26mizchi6sqlike9IndexRows5bound",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
+            "selfMs": 1.5,
+            "inclusiveMs": 1.5,
+            "selfPercent": 0.687023949654885
+          },
+          {
+            "name": "_M0FP26mizchi6sqlike14compare__value",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
+            "selfMs": 1.5,
+            "inclusiveMs": 1.5,
+            "selfPercent": 0.687023949654885
+          },
+          {
+            "name": "$compare_int64",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
+            "selfMs": 1.5,
+            "inclusiveMs": 1.5,
+            "selfPercent": 0.687023949654885
+          },
+          {
+            "name": "_M0MPC16option6Option3mapGRP26mizchi6sqlike9StoredRowbEHRP26mizchi6sqlike8SqlError",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
+            "selfMs": 1.5,
+            "inclusiveMs": 1.5,
+            "selfPercent": 0.687023949654885
+          },
+          {
+            "name": "_M0MPC15array5Array4copyGORP26mizchi6sqlike9StoredRowE",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
+            "selfMs": 1.5,
+            "inclusiveMs": 1.5,
+            "selfPercent": 0.687023949654885
+          },
+          {
+            "name": "_M0FP26mizchi6sqlike19matches__identifier",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
+            "selfMs": 1.5,
+            "inclusiveMs": 1.5,
+            "selfPercent": 0.687023949654885
+          },
+          {
+            "name": "_M0FP26mizchi6sqlike10evaluation",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
+            "selfMs": 1.5,
+            "inclusiveMs": 6.042,
+            "selfPercent": 0.687023949654885
+          },
+          {
+            "name": "_M0FP26mizchi6sqlike19compare__expression",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
+            "selfMs": 1.5,
+            "inclusiveMs": 3,
+            "selfPercent": 0.687023949654885
+          },
+          {
+            "name": "_M0FP26mizchi6sqlike19matches__identifier",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
+            "selfMs": 1.5,
+            "inclusiveMs": 1.5,
+            "selfPercent": 0.687023949654885
+          },
+          {
+            "name": "_M0FP26mizchi6sqlike16row__environment",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
+            "selfMs": 1.5,
+            "inclusiveMs": 1.5,
+            "selfPercent": 0.687023949654885
+          },
+          {
+            "name": "$make_array_len_and_init",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
+            "selfMs": 1.5,
+            "inclusiveMs": 1.5,
+            "selfPercent": 0.687023949654885
+          },
+          {
+            "name": "_M0MPB3Map3MapGsRPB5ArrayGsEE",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
+            "selfMs": 1.5,
+            "inclusiveMs": 1.5,
+            "selfPercent": 0.687023949654885
+          },
+          {
+            "name": "(program)",
             "url": "",
-            "selfMs": 0.625,
-            "inclusiveMs": 0.625,
-            "selfPercent": 0.2357378595002358
+            "selfMs": 1.5,
+            "inclusiveMs": 1.5,
+            "selfPercent": 0.687023949654885
+          },
+          {
+            "name": "$make_array_len_and_init",
+            "url": "file:///Users/mz/ghq/github.com/mizchi/browser-litestream/_build/js/release/build/mizchi/sqlike/sqlike.js",
+            "selfMs": 1.458,
+            "inclusiveMs": 1.458,
+            "selfPercent": 0.6677872790645482
           }
         ]
       }

@@ -124,7 +124,7 @@ Web標準APIによるBase64 / JSON置換、Turso WASMの外部配信は[試作](
 
 ### 現行の正しさの記録
 
-未リリースの丸め関数・結果writer・通常SQLのprepare再利用に続き、索引ブロック化・UPDATE格納・rowid採番と実験typed結果を追加した後の回帰はMoonBit **68件×JS / Wasm GC**、Node **398件**、Playwright **59件**と型チェック・本家Litestream復元を通過した。10万行benchmarkの64組、cache / feature選択、独立npm consumerも通過した。実験typed経路でも対応済み566ケースと上流1,000クエリを照合した。件数はこの更新時点の記録で、将来のテスト件数の固定目標ではない。
+未リリースの丸め関数・結果writer・通常SQLのprepare再利用に続き、索引ブロック化・UPDATE格納・rowid採番・DELETEとSQL / AOTの実験typed結果を追加した後の回帰はMoonBit **70件×JS / Wasm GC**、Node **403件**、Playwright **59件**と型チェック・本家Litestream復元を通過した。10万行benchmarkの64組、cache / feature選択、独立npm consumerも通過した。SQL / AOTの実験typed経路でも対応済み566ケースと上流1,000クエリを照合し、AOTのprepare拒否・対象外DDLは区別した。件数はこの更新時点の記録で、将来のテスト件数の固定目標ではない。
 
 | ゲート | 現在の観測 | 合格が意味すること |
 | --- | --- | --- |
@@ -290,7 +290,11 @@ notes Programは20,049 B、SHA-256 `a6af7a52769d67773842aae483fcb856b46f628e3118
 - [ ] **B05 — Jsonの再構築を省くJS向けbind / 結果ABI**
   - 完了条件: 型・int64 / REAL / BLOB / TEXT・失敗後状態の契約を固定し、既存ABIとの互換性を差分検証。SQLのJSON関数・旧形式codec・Wasm経路から分離し、配信量と速度を実測する
   - 現状: [mizchi/x/jsonの試験](json-abi.md)。bind parseだけの置換は容量が減る一方、小さい問い合わせで遅くなり、不正なサロゲートの拒否が成功へ変わったため未採用
-  - 試行: [JS native結果](optimization-trials.md)をSELECT専用の実験MoonBit packageへ分離。両経路がnative配列を返す比較で10万行取得75.50→16.60ms、主キー検索1.38→0.63µs。対応済み566ケース・上流1,000クエリとBLOB所有権等を検査し、通常SQL / AOTからbridgeが除去されることを確認。npm公開API・AOT・typed bind・streamingは未完了のためチェックを維持する
+  - 試行: [JS native結果](optimization-trials.md)をSELECT専用の実験MoonBit packageへ分離。対応済み566ケース・上流1,000クエリとBLOB所有権等を検査し、通常SQL / AOTからbridgeが除去されることを確認。[AOTのnative結果](aot-native-results.md)ではStatement再利用・エラー時も含むbuffer解放・catalog選択・生成型を追加。npm公開API・typed bind・binary defined・streamingは未完了のためチェックを維持する
+  - [x] 通常SQLのSELECT実験entry
+  - [x] AOT SELECTのprepare / values / finalizeとcatalog選択ビルド
+  - [ ] npm公開entryとadapterへの組込
+  - [ ] typed bind、binary defined、streaming / chunk
 
 - [ ] **V02 / P2 — Firefox / WebKit・モバイルと外部consumer**
   - 完了条件: 対象ブラウザ版・COOP / COEP・Worker / IDB / OPFS・耐障害シナリオを固定しPlaywrightで実行。ORMは版と生成SQL / migrationを固定して追加

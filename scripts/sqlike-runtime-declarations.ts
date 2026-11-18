@@ -77,6 +77,27 @@ const signatures: Record<string, string> = {
   ltx_data: "(result: LtxResult): Uint8Array<ArrayBuffer>",
   ltx_info: "(result: LtxResult): string",
 };
+
+const nativeAotSignatures: Record<string, string> = {
+  open: "(program: string, image: string): NativeAotDatabase",
+  info: "(db: NativeAotDatabase): string",
+  query_info: "(db: NativeAotDatabase, name: string): string",
+  execute: "(db: NativeAotDatabase, name: string, bindings: string): string",
+  prepare: "(db: NativeAotDatabase, name: string): NativeAotQuery",
+  values: "(query: NativeAotQuery, bindings: string): NativeCell[][]",
+  finalize: "(query: NativeAotQuery): string",
+  restore: "(db: NativeAotDatabase, image: string): string",
+  snapshot: "(db: NativeAotDatabase): string",
+  set_clock: "(db: NativeAotDatabase, millis: string): string",
+  clone: "(db: NativeAotDatabase): NativeAotDatabase",
+};
+export const nativeAotExports = Object.keys(nativeAotSignatures);
+export function nativeAotDeclarations() {
+  return `export interface NativeAotDatabase { readonly __nativeAotDatabase: unique symbol }
+export interface NativeAotQuery { readonly __nativeAotQuery: unique symbol }
+export type NativeCell = bigint | number | string | null | Uint8Array;
+` + nativeAotExports.map(name => `export function ${name}${nativeAotSignatures[name]};\n`).join("");
+}
 export function runtimeDeclarations(exports: readonly string[]): string {
   return (
     "// Generated selected runtime ABI.\n" +

@@ -1,7 +1,7 @@
 {
-  "measuredAt": "2026-11-17T12:26:51.350Z",
+  "measuredAt": "2026-11-17T13:49:13.119Z",
   "sourceHashes": {
-    "_build/js/release/build/mizchi/sqlike/sqlike.js": "b85a04333d41bcbaf7a042d6a97e33361b2b3ad56d595eb28d2c59d7c572dae9",
+    "_build/js/release/build/mizchi/sqlike/sqlike.js": "79f289d5c8a154b6c95083b448a426b7a8e8a9cba02d560d17acee327da36157",
     "adapters/drizzle-migrator.ts": "8a63d7fdcde173090d2dc08d08499a267266a01361cfbc685db3fb5b32749b7d",
     "adapters/drizzle.ts": "0fc6bdc87c81de41579fb61a2f7eb627cfb724b858cefa05983d6966f5d6e990",
     "adapters/moon-database.ts": "c3ac972ec089b3ceec4d35ea6368ece1b91cf56998e1491838ac661f7b3c1620",
@@ -29,6 +29,8 @@
     "packages/sqlike/src/aggregate_sum.mbt": "e09ec3388045c47098d36cc39efa47abac3ddf73f312cfdd87a75a610e35fcd4",
     "packages/sqlike/src/aot.mbt": "fd2a750128171ca24f921cbcd0b82d5456d212caa8acc048423ed3cced7427b9",
     "packages/sqlike/src/aot_bench_wbtest.mbt": "ea9756d22d1bc37a14b32f7707fa1c018c018d41f76aeddb7e87303950c8125a",
+    "packages/sqlike/src/aot_native.mbt": "00d64939866e0198a4fdd194ffde5c932b13a19d3001f838fdcb1aa541bf460a",
+    "packages/sqlike/src/aot_native_wbtest.mbt": "ff7fb63cfac1605c706c278f886b9833a389f923f9840f6d4a9e806abb848e13",
     "packages/sqlike/src/binary_base64.mbt": "3ff209995156c359a77d5488f278337fb4b58be27785e79e53dfb3c43cb0c6f6",
     "packages/sqlike/src/binary_catalog.mbt": "3bb5a151775612e29d8a657d0d809ac1ae107f6084aa149adb2354151d66947b",
     "packages/sqlike/src/binary_generated.mbt": "1d70c23033c5f4e2c58380db3925bf4f1fc8c22bcba61e35c19d94b5a019cd8a",
@@ -57,8 +59,10 @@
     "packages/sqlike/src/delete_cache_wbtest.mbt": "e83f1556868e9eef124d00cfa528f60c5a4fd58a74c2fe2f582ec17b2efe304a",
     "packages/sqlike/src/evaluate.mbt": "67dc9ebde358babef258f002aa53977621a3367edf0934f72f4a7d984e2b11cd",
     "packages/sqlike/src/execute.mbt": "f543b2f2ea49d344d48117d4701d0fe7ca16108d93e71c30bd086de0909da8d9",
+    "packages/sqlike/src/experimental-aot-typed/aot.mbt": "29230a00ae08cc9c9ab779645c6bf6a842299bd9c29f16fd3d510acaf4375594",
+    "packages/sqlike/src/experimental-aot-typed/moon.pkg": "4e600258c705c2b05e9d898f16ae2877e3d27bb014a3d3c6c0ca39014de2f412",
     "packages/sqlike/src/experimental-typed/moon.pkg": "084d8ea4cb24e8db437722c851ccca28bafb90b4530e16ec30640c1499754ef7",
-    "packages/sqlike/src/experimental-typed/typed.mbt": "6a57da383d1884c2afa6d6ec9712e2a5fc3775b377915bb99b87907ad082af2a",
+    "packages/sqlike/src/experimental-typed/typed.mbt": "ff96c7acc13293bb21910933f30d8bb2dcac94fc3f331c4f792684711ec5f112",
     "packages/sqlike/src/experimental_rows.mbt": "248afbc52749bbfde91ad8a59e06e5fb0f2019cb8449ac8070a11aafcc0167fc",
     "packages/sqlike/src/feature_config.mbt": "8ac72b52c318850f7dc69d63c105496ab6ea7216b6db32532470ee17c19b82f2",
     "packages/sqlike/src/feature_validation.mbt": "511fa120a414b92fdbc840174fd0c08c78c50b206264889a8f040b6a0b9eb6fc",
@@ -149,10 +153,10 @@
       "assets": [
         {
           "path": "browser-litestream.js",
-          "sha256": "99b08b29ff1258623f028bfa5c3c87540b04fae1abf326b4a5b19445edc11577",
+          "sha256": "d49cb4edace68d98c1736ae233fc60865a8a041dba9afaf0360ce74dfcc449fd",
           "raw": 1171770,
-          "gzip": 240285,
-          "brotli": 157786
+          "gzip": 240275,
+          "brotli": 157693
         },
         {
           "path": "moon-persistence-Cff43ahF.js",
@@ -171,8 +175,8 @@
       ],
       "totals": {
         "raw": 1178532,
-        "gzip": 243095,
-        "brotli": 160273
+        "gzip": 243085,
+        "brotli": 160180
       }
     },
     {
@@ -182,10 +186,10 @@
       "assets": [
         {
           "path": "browser-litestream.js",
-          "sha256": "2b5b4345e84fdf770024943cfbe2d5c9763d3459f4acd683bbb9707c5072066d",
+          "sha256": "9c43bc5f9855dcef26126e470e4ff2a3093558aaeaf70090d4cf843df064eb1d",
           "raw": 1251404,
-          "gzip": 259881,
-          "brotli": 174721
+          "gzip": 259872,
+          "brotli": 174716
         },
         {
           "path": "moon-persistence-Cff43ahF.js",
@@ -204,14 +208,14 @@
       ],
       "totals": {
         "raw": 1258166,
-        "gzip": 262691,
-        "brotli": 177208
+        "gzip": 262682,
+        "brotli": 177203
       }
     }
   ],
   "delta": {
     "raw": 79634,
-    "gzip": 19596,
-    "brotli": 16935
+    "gzip": 19597,
+    "brotli": 17023
   }
 }
