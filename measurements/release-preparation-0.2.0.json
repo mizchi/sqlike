@@ -46,7 +46,7 @@
       "kind": "npm",
       "name": "@mizchi/sqlike",
       "path": "generated/npm/mizchi-sqlike-0.2.0.tgz",
-      "sha256": "ad2ddfb252ce73df5d1d20cc56f20bffb8bdcece3e6b8ffd3f967d94d63ba304",
+      "sha256": "2b866c48002aa1355de101e14caca655d7f93ab1d037f47f53f8fa89034dfcc0",
       "files": 239
     },
     {
@@ -60,7 +60,7 @@
       "kind": "mooncakes-dry-run",
       "name": "mizchi/sqlike",
       "path": "_build/publish/mizchi-sqlike-0.2.0.zip",
-      "sha256": "97f5a9caae155f5ccff76f16442b5b5c4b78d355372def8175b6edbc9d46c6d2",
+      "sha256": "388e35ca4e62a4549809d16be3dd5716284f8fbfbc766346a4837f03726cced8",
       "files": 159
     },
     {
@@ -72,7 +72,7 @@
     }
   ],
   "reportHashes": {
-    "measurements/p0-completion.json": "b1436fef33d481c9c4880ff82df61100f8c901fe9388050d4fcabe0d8783cd81",
+    "measurements/p0-completion.json": "e4be23227b15e6e9f2b62a443c23c2e17538a2b34324bbe6f228d1084b395612",
     "measurements/aot-minimum-current.json": "d57e0eac70a3a0607dd6bca1b9b77d594659728a150ea4b73146c35f0d577cf1",
     "measurements/sqlike-crud-size-current.json": "7bb4f3fd23b8d9e42b39e12518e823a70a4df78a8845d7ad2939f9653d598ebd",
     "measurements/sqlike-entrypoints-current.json": "038791818e165dcc0bf59040e4b73a04d9a6e8f2afc33c604a14389359edcc40",
@@ -83,11 +83,11 @@
     "README.md": "d82232a688ada10aab8604e5fbfe5142e812ea7fadaef5507dbaef6c240ebd5f",
     "README.ja.md": "387e4786642c0a32c16054739613469d1dd1ac1368920f7130d87d2ff5bca3f7",
     "docs/README.md": "316a6005fb15f03fe935bf93163b48c5d65505687f15336502cae014431b353f",
-    "docs/releases/v0.2.0.md": "77fb2208ba630582d2f4b8fb310f8e998c104c80a1617db33bda224cc150034d",
+    "docs/releases/v0.2.0.md": "20e6118a96ad0b288c20ebe2acad54daa6c14e9e50b06c35831af2095cde9920",
     "examples/aot/README.md": "1d123122f8e7c70c2ab782fb80a658e4e62731d57200821bcac5afcfebb28962",
-    "npm/sqlike/README.md": "36605a55a426723d52c59e17d4581ec8e09e19c90637e2402262b11b2dce4293",
+    "npm/sqlike/README.md": "fa62bc36584ee813939715cf89b283532e2e3229269cbe87379474c386cbabf9",
     "npm/litestream/README.md": "106012de6671948675d6cee856deefc0efc4dbd03af0ae86e6c2e11305557f26",
-    "packages/sqlike/README.md": "6d108ddfcf8f39f950b450f8ec027c8185a6a2970e7653386ada58d144019707",
+    "packages/sqlike/README.md": "c40db3990ea158b127e16cc06c278139973204a35aa85ec14cb3224d706ba277",
     "packages/litestream/README.md": "c281444ee5d2dc37d8f040ad8af6ac1de13273aec53caa74b8dbbb9e5588b9c9",
     "CHANGELOG.md": "133b6898147f0a1ea594c5898393f4ed696b41928d32066dbc9effeeec337f5a"
   },
@@ -141,5 +141,32 @@
     "Commit/review the complete candidate and run all four Linux CI jobs on that commit.",
     "Review residual semantic-lint findings tracked in TODO.md.",
     "Publication, anonymous registry consumers, provenance and release assets require a separate release instruction."
+  ],
+  "amendments": [
+    {
+      "verifiedAt": "2026-11-19T16:56:48.308631+00:00",
+      "scope": "CI configuration and public toolchain instructions only; database implementation and benchmark sources unchanged.",
+      "ciToolchain": "0.10.21+06da1ed44",
+      "failurePropagationRegression": {
+        "red": "A failing check exited 0 through tee under the implicit shell.",
+        "green": "All four CI pipelines preserve exit 17 with explicit bash and pipefail.",
+        "tests": 1
+      },
+      "typecheck": "passed",
+      "repackedNpmConsumers": {
+        "tests": 6,
+        "status": "passed"
+      },
+      "repackedMooncakesConsumers": {
+        "tests": 2,
+        "targets": [
+          "js",
+          "wasm-gc"
+        ],
+        "status": "passed"
+      },
+      "invalidPriorCiRun": "https://github.com/mizchi/sqlike/actions/runs/44570756880",
+      "priorCiRunWarning": "Green job labels masked compiler errors. Do not count this run as passing validation."
+    }
   ]
 }

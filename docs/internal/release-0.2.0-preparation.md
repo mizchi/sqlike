@@ -31,6 +31,12 @@ The browser-size comparison now measures the full SQL entry on both JS and Wasm 
 
 The [local evidence manifest](../../measurements/release-preparation-0.2.0.json) records artifact digests and the source revision before committing. npm archives are in `generated/npm/`; Mooncakes dry-run archives and `SHA256SUMS` are in `_build/publish/`. Generated archives must be rebuilt and rechecked if their source or public README changes.
 
+### CI correction before publication
+
+The first [PR #10 CI run](https://github.com/mizchi/sqlike/actions/runs/44570756880) displayed successful jobs while their logs contained compiler errors. The implicit shell allowed `tee` to hide upstream failures. This run is **not passing validation evidence**. CI now selects explicit Bash with pipefail; a regression test first reproduced exit 0 for a deliberate failing check, then verified exit 17 and retained logs for all four pipelines.
+
+The old CI toolchain lacked the `DecodeContext` API. Both CI and npm publishing now pin the locally tested `0.10.21+06da1ed44` toolchain and print its complete version. The additional regression test and typecheck passed. Public toolchain instructions were corrected, both package formats were rebuilt, and six npm checks plus the two independent JS/Wasm Mooncakes consumers passed again. Database implementation and benchmark sources did not change. A fresh Linux run remains required before tagging.
+
 ## Registry and OIDC status
 
 An anonymous npm metadata check found 0.1.2 as `latest` for both `@mizchi/sqlike` and `@mizchi/litestream`; 0.2.0 was absent. This preparation does not publish either package.
