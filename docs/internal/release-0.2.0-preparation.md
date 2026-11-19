@@ -2,6 +2,8 @@
 
 Prepared on November 20, 2026. This is a local release candidate, **not a publication record**. No release tag or registry publication has been performed as part of this preparation.
 
+Publication subsequently completed. See the [0.2.0 publication verification](release-0.2.0-verification.md) for final CI, registry consumers, provenance and release assets. The candidate's generated paths and local archive digests below are historical.
+
 ## Scope and version
 
 The proposed version is 0.2.0 because the default SQLike entry becomes the smaller baseline. Existing applications using JSON, CTEs, triggers or windows must move to `/full`. The English release notes include npm/MoonBit migration examples and the supported-format boundary.

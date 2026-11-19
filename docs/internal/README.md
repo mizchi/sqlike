@@ -37,6 +37,7 @@
 | [predefined-binary.md](predefined-binary.md) | 固定DDLとprepared statementのバイナリ初期化 |
 | [release-acceptance.md](release-acceptance.md) | 0.1.0の受入プロファイルとP0チェックリスト |
 | [release-0.2.0-preparation.md](release-0.2.0-preparation.md) | 0.2.0候補の英語化・配布検証と公開前の残確認 |
+| [release-0.2.0-verification.md](release-0.2.0-verification.md) | 0.2.0のCI・npm / Mooncakes・provenance・公開assetの検証 |
 | [releasing.md](releasing.md) | リリース手順 |
 | [roadmap-0.1.0.md](roadmap-0.1.0.md) | 0.1.0 の対応範囲と受入条件 |
 | [row-store.md](row-store.md) | P02: 変更表内のコピーをページ単位にする |

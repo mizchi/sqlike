@@ -88,4 +88,4 @@ See the [release notes](docs/releases/v0.1.0.md) for coverage and limitations. U
 [0.1.2]: https://github.com/mizchi/sqlike/releases/tag/v0.1.2
 [0.1.1]: https://github.com/mizchi/sqlike/releases/tag/v0.1.1
 [0.2.0]: docs/releases/v0.2.0.md
-[Unreleased]: https://github.com/mizchi/sqlike/compare/v0.1.2...HEAD
+[Unreleased]: https://github.com/mizchi/sqlike/compare/v0.2.0...HEAD

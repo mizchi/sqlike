@@ -1,21 +1,37 @@
 {
-  "verifiedAt": "2026-11-17T02:44:22.546Z",
-  "version": "0.1.2",
+  "verifiedAt": "2026-11-19T17:24:42.087138+00:00",
+  "version": "0.2.0",
   "status": "published",
-  "verificationCommit": "b1982fc73a4e24f299d550bd26e031d427e325fa",
+  "verificationCommit": "e4dcad8860ec60d2d032a966d247c30c0f8125c7",
   "publishing": "GitHub Actions OIDC",
   "workflow": {
-    "url": "https://github.com/mizchi/sqlike/actions/runs/44003805032",
-    "attempt": 3,
+    "attempt": 2,
     "conclusion": "success",
+    "databaseId": 44576013590,
+    "headSha": "e4dcad8860ec60d2d032a966d247c30c0f8125c7",
+    "status": "completed",
+    "url": "https://github.com/mizchi/sqlike/actions/runs/44576013590",
     "publishAttempt": 1
   },
   "npmArchiveArtifact": {
-    "id": 14293751156,
-    "name": "npm-v0.1.2-1",
-    "runId": 44003805032,
-    "attempt": 1,
-    "sha256": "c0bbafd7bb40e558b135d3a12ef3808f7d12dccf90c5a36189465fc36d02bfdc"
+    "id": 14555394222,
+    "node_id": "MDg6QXJ0aWZhY3QxNDU1NTM5NDIyMg==",
+    "name": "npm-v0.2.0-1",
+    "size_in_bytes": 2546321,
+    "url": "https://api.github.com/repos/mizchi/sqlike/actions/artifacts/14555394222",
+    "archive_download_url": "https://api.github.com/repos/mizchi/sqlike/actions/artifacts/14555394222/zip",
+    "expired": false,
+    "digest": "sha256:9728ae524c91f7201f472e7b1fef53ee744ca58fed513f2b50d602fcdddcf679",
+    "created_at": "2026-11-19T17:21:15Z",
+    "updated_at": "2026-11-19T17:21:15Z",
+    "expires_at": "2026-12-03T17:21:14Z",
+    "workflow_run": {
+      "id": 44576013590,
+      "repository_id": 1459231391,
+      "head_repository_id": 1459231391,
+      "head_branch": "v0.2.0",
+      "head_sha": "e4dcad8860ec60d2d032a966d247c30c0f8125c7"
+    }
   },
   "consumerVerification": {
     "anonymous": true,
@@ -26,70 +42,83 @@
     "wasmGC": true,
     "nativeSQLiteQueries": 1000,
     "drizzleMigrationsAndPreparedQueries": true,
-    "catalogAnalysis": true
+    "catalogAnalysis": true,
+    "viteAot": true
   },
   "packages": [
     {
       "name": "@mizchi/sqlike",
-      "version": "0.1.2",
+      "version": "0.2.0",
       "repository": {
         "url": "git+https://github.com/mizchi/sqlike.git",
         "type": "git",
         "directory": "npm/sqlike"
       },
-      "publishedAt": "2026-11-17T02:36:45.069Z",
-      "latest": "0.1.2",
-      "integrity": "sha512-e4OJBQc7aOuXATT5+1lBjrCUO7kjOcgmXMXiCT6LMubmxcq8ZmWtXJMxi3pP3qw3wcqm1UwpydRMlyzD4GlSCw==",
-      "sha256": "c7da732cd1c0a8eebbc2841769ebe7dca387b5cab29e4382fc6b77640ab2972f",
-      "tarball": "https://registry.npmjs.org/@mizchi/sqlike/-/sqlike-0.1.2.tgz",
+      "publishedAt": "2026-11-19T17:24:34.274Z",
+      "latest": "0.2.0",
+      "integrity": "sha512-8cexAFZzgoYZEFrI6quWEV6UXeRoaHe/4a8lnqRmM65d0S5oqbrB0TUOZjpR1ZI7n+xIKFcbUoSonkX4cr4vmw==",
+      "sha256": "f8aa1c2291200cb72777277bfab3d533849b097d62396438a8ebd570f4a98e1c",
+      "tarball": "https://registry.npmjs.org/@mizchi/sqlike/-/sqlike-0.2.0.tgz",
       "attestations": {
-        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@mizchi%2fsqlike@0.1.2",
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@mizchi%2fsqlike@0.2.0",
         "provenance": {
           "predicateType": "https://slsa.dev/provenance/v1"
         }
       },
+      "matchesCheckedArchiveBytes": true,
+      "matchesCheckedArchiveContents": true,
       "provenance": {
         "predicateType": "https://slsa.dev/provenance/v1",
-        "subjectSha512": "7b838905073b68eb970134f9fb59418eb0943bb92339c8265cc5e2093e8b32e6e6c5cabc6665ad5c93318b7a4fdeac37c1caa6d54c29c9d44c972cc3e069520b",
+        "subjectSha512": "f1c7b1005673828619105ac8eaab96115e945de4686877bfe1af259ea46633ae5dd12e68a9bac1d1350e663a51d5923b9fec4828571b5284a89e45f872be2f9b",
         "workflow": {
-          "ref": "refs/tags/v0.1.2",
+          "ref": "refs/tags/v0.2.0",
           "repository": "https://github.com/mizchi/sqlike",
           "path": ".github/workflows/npm-release.yml"
         },
-        "sourceCommit": "b1982fc73a4e24f299d550bd26e031d427e325fa",
-        "invocationId": "https://github.com/mizchi/sqlike/actions/runs/44003805032/attempts/1"
+        "sourceCommit": "e4dcad8860ec60d2d032a966d247c30c0f8125c7",
+        "invocationId": "https://github.com/mizchi/sqlike/actions/runs/44576013590/attempts/1"
       }
     },
     {
       "name": "@mizchi/litestream",
-      "version": "0.1.2",
+      "version": "0.2.0",
       "repository": {
         "url": "git+https://github.com/mizchi/sqlike.git",
         "type": "git",
         "directory": "npm/litestream"
       },
-      "publishedAt": "2026-11-17T02:35:58.506Z",
-      "latest": "0.1.2",
-      "integrity": "sha512-NX0HMn0fJFItuXgn7QK+vUeTAhFlRtMORhNUpUcH6y+mBH88vLqE/xdhOhG/16xnTKsBF8VE5Ajmbv332eKurg==",
-      "sha256": "7b437f4e6de1a3ede3be1012f3c809f8bb7a14dcf8f14a64435f628f2b91ec95",
-      "tarball": "https://registry.npmjs.org/@mizchi/litestream/-/litestream-0.1.2.tgz",
+      "publishedAt": "2026-11-19T17:23:09.984Z",
+      "latest": "0.2.0",
+      "integrity": "sha512-9B66pf/jgolTAg8+4WVb7ISk2KcL3ZcUAgqsXsaywRye5lQYzlVJREnGWq5z/VMW/H2tKI26IpHpB5tSAfW0bQ==",
+      "sha256": "63a864cb43ac67085fcb254ecedb6878024c0b5891b06b2368fd433afd806b74",
+      "tarball": "https://registry.npmjs.org/@mizchi/litestream/-/litestream-0.2.0.tgz",
       "attestations": {
-        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@mizchi%2flitestream@0.1.2",
+        "url": "https://registry.npmjs.org/-/npm/v1/attestations/@mizchi%2flitestream@0.2.0",
         "provenance": {
           "predicateType": "https://slsa.dev/provenance/v1"
         }
       },
+      "matchesCheckedArchiveBytes": true,
+      "matchesCheckedArchiveContents": true,
       "provenance": {
         "predicateType": "https://slsa.dev/provenance/v1",
-        "subjectSha512": "357d07327d1f24522db97827ed02bebd479302116546d30e461354a54707eb2fa6047f3cbcba84ff17613a11bfd7ac674cab0117c544e408e66efdf7d9e2aeae",
+        "subjectSha512": "f41ebaa5ffe3828953020f3ee1655bec84a4d8a70bdd9714020aac5ec6b2c11c9ee65418ce55494449c65aae73fd5316fc7dad288dba2291e9079b5201f5b46d",
         "workflow": {
-          "ref": "refs/tags/v0.1.2",
+          "ref": "refs/tags/v0.2.0",
           "repository": "https://github.com/mizchi/sqlike",
           "path": ".github/workflows/npm-release.yml"
         },
-        "sourceCommit": "b1982fc73a4e24f299d550bd26e031d427e325fa",
-        "invocationId": "https://github.com/mizchi/sqlike/actions/runs/44003805032/attempts/1"
+        "sourceCommit": "e4dcad8860ec60d2d032a966d247c30c0f8125c7",
+        "invocationId": "https://github.com/mizchi/sqlike/actions/runs/44576013590/attempts/1"
       }
     }
-  ]
+  ],
+  "signatureVerification": {
+    "command": "npm audit signatures",
+    "anonymous": true,
+    "registrySignaturesVerified": 3,
+    "attestationsVerified": 3,
+    "includes": "Both released packages and @noble/hashes dependency",
+    "verifiedAt": "2026-11-19T17:25:50.774129+00:00"
+  }
 }

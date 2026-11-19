@@ -1,6 +1,6 @@
 # TODO
 
-更新: 2026-11-20。現在の作業ツリーを基準にした残タスクと着手順。実装済みでも未コミット・未公開の変更を含む。作業ツリーは0.2.0のリリース準備中で、公開版は0.1.2。
+更新: 2026-11-20。現在の作業ツリーを基準にした残タスクと着手順。実装済みでも未コミット・未公開の変更を含む。npm / Mooncakesの公開版は0.2.0。公開artifact・registry consumer・provenanceの[検証記録](measurements/release-0.2.0.json)を保存した。
 
 優先順と完了条件はここで管理し、仕様・過去の測定は[状態台帳](docs/internal/status-and-improvement-plan.md)と各詳細ページへ残す。チェックは実装・必要な検証が完了したときだけ付ける。未対応の明示拒否は許容するが、成功した値・型・列名・順序と失敗後の状態を変えない。
 
@@ -89,8 +89,8 @@ S06a / S06bとP12a / P12bに続き、P12c・P13・C02・S03の初期範囲を実
 - [x] **意味lintの初回判定と採用箇所の修正**。プロファイルからキーを読み込み、8,518対象・回答欠落0で全体判定を記録。誤った拒否理由・private helper名・古いコメントを修正し、変更した15ファイルを3回再判定した。[結果と採用判断](docs/internal/semantic-lint.md)
 - [ ] **意味lintの残余候補をレビュー**。初回530候補すべてを承認したわけではない。変更範囲の再判定にも21候補が残る。FFIのJSON error / sentinel、IDB abort経由のrejectは既存契約を維持し、failure-pathのテストexcerpt不足と実際の未到達分岐、検証と派生値回復を兼ねる関数名などを個別に照合する。cutoff変更で指摘を消さない。
 - [x] **V03 — 0.2.0の性能・配信基準を再採取**。11月20日にP0必須レポート、最小AOT・entry別・CRUD容量、browser bundle・catalog比較と図表、Z3記録を再採取した。`just p0-check`でsource / artifact hashと独立consumerを照合。既存のIN list / IN SELECT・row metadata・UPDATE FROM・DEFAULT・JSON reader・10万行の専用計測は、それぞれの日付のsnapshotとして保持し、現行値としてhashだけ更新しない。[準備記録](docs/internal/release-0.2.0-preparation.md)
-- [ ] **R03 — entry分割を含む現行差分のLinux CIを確認**。ローカルの回帰は通過済み。新しい`build-graph`を含む4 jobのログ・成果物を残し、過去PRの3 job成功を今回の証拠へ流用しない。
-- [x] **R03 — 配布・移行手順を確定**。0.2.0としてmanifestを揃え、Mooncakes dry-run ZIPと独立したnpm tarballのJS / Wasm / browser consumerを確認した。既定機能の縮小に伴う`/full`への移行、各entryの型の独立性、JS engine併用時の重複を[英語の移行ガイド](docs/releases/v0.2.0.md)に記載。公開は別途リリース指示後。
+- [x] **R03 — entry分割を含む現行差分のLinux CIを確認**。公開commit `e4dcad8`で[4 jobが成功](https://github.com/mizchi/sqlike/actions/runs/44574482800)。MoonBit JS / Wasm各96件、Node584件、Chromium73件、601差分caseとZ3依存検証を確認した。ログとartifactのdigestを[公開記録](measurements/release-0.2.0.json)へ保存。CIの失敗を`tee`が隠す問題と、LinuxでのVite SQL即時修正の復旧を回帰テスト付きで修正した。
+- [x] **R03 — 配布・移行手順を確定**。0.2.0としてmanifestを揃え、Mooncakes dry-run ZIPと独立したnpm tarballのJS / Wasm / browser consumerを確認した。既定機能の縮小に伴う`/full`への移行、各entryの型の独立性、JS engine併用時の重複を[英語の移行ガイド](docs/releases/v0.2.0.md)に記載。0.2.0をnpm / Mooncakesへ公開し、registry consumerとGitHub Releaseの全10 assetを確認済み。
 - [ ] **Issue #1の整理**。[既存の最適化Issue](https://github.com/mizchi/sqlike/issues/1)のUPDATE metadata・parse / prepare再利用・JSON writer・索引移動等は実装済み。完了証拠と残るcold build / ABI / plannerを照合して更新または分割する。既存Issue #1の本文は未更新。AOT容量改善の後続は[schemaの除去 #7](https://github.com/mizchi/sqlike/issues/7)・[binary初期化とtyped ABI #8](https://github.com/mizchi/sqlike/issues/8)・[optimizer選択 #9](https://github.com/mizchi/sqlike/issues/9)へ分割した。
 
 ## 機能の残り
