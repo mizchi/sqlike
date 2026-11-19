@@ -1,6 +1,6 @@
 {
   "name": "@mizchi/litestream",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Database-independent offline synchronization, SQLite Session codecs and LTX replication",
   "type": "module",
   "license": "MIT",
@@ -33,7 +33,11 @@
       "import": "./dist/engine.js"
     },
     "./wasm/litestream.wasm": "./dist/wasm/litestream.wasm",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./ltx/core": {
+      "types": "./dist/types/npm/litestream/ltx-core.d.ts",
+      "import": "./dist/ltx-core.js"
+    }
   },
   "files": [
     "dist",

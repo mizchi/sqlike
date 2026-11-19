@@ -46,7 +46,10 @@ const api = {
   checkpoint: () => call<AotCheckpoint>("checkpoint"),
   pending: () => call<Pending>("pending"),
   sync: (endpoint: string) =>
-    call<{ uploaded: number }>("sync", new URL(endpoint, location.origin).href),
+    call<{ uploaded: number; deferred?: AotCheckpoint["deferred"] }>(
+      "sync",
+      new URL(endpoint, location.origin).href,
+    ),
   acknowledge: (head: string, hash: string) =>
     call<void>("acknowledge", head, hash),
   exportSQLite: () => call<Uint8Array>("exportSQLite"),
@@ -76,7 +79,8 @@ function render(state: State) {
   endpoint.readOnly = !!state.upload;
   if (state.upload) endpoint.value = state.upload.endpoint;
   document.querySelector("#status")!.textContent =
-    `保存済み · checkpoint ${state.head} · 未確認 LTX ${state.pending.length} 件`;
+    `保存済み · checkpoint ${state.head} · 未確認 LTX ${state.pending.length} 件` +
+    (state.serial !== state.checkpointSerial ? " · 送信待ちの更新あり" : "");
   const body = document.querySelector("#notes")!;
   body.replaceChildren();
   for (const row of state.rows) {
@@ -107,8 +111,15 @@ function render(state: State) {
 }
 async function action(operation: () => Promise<unknown>) {
   try {
-    await operation();
+    const result = await operation();
     render(await api.state());
+    const deferred = (
+      result as { deferred?: AotCheckpoint["deferred"] } | undefined
+    )?.deferred;
+    if (deferred?.reason === "outbox-full")
+      document
+        .querySelector("#status")!
+        .append(" · ローカル保存済み・次回同期で再試行");
     document.querySelector("#error")!.textContent = "";
   } catch (error) {
     document.querySelector("#error")!.textContent = (error as Error).message;

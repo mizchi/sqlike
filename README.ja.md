@@ -2,6 +2,8 @@
 
 [English](README.md) | **日本語**
 
+このREADMEは0.2.0の内容です。[移行・リリースノート（英語）](docs/releases/v0.2.0.md)。
+
 ブラウザやNode.jsでSQLを実行できる、MoonBit製のSQLiteサブセットです。インメモリDBとして使うほか、あらかじめ定義したSQLをIndexedDBへ保存しながら実行できます。同期には独立した `@mizchi/litestream` を組み合わせます。
 
 ## できること
@@ -25,13 +27,43 @@ pnpm add @mizchi/sqlike
 pnpm add @mizchi/litestream
 ```
 
-[GitHub Releases](https://github.com/mizchi/sqlike/releases/tag/v0.1.2)にも配布用アーカイブを用意しています。
+[GitHub Releases](https://github.com/mizchi/sqlike/releases)にも配布用アーカイブを用意しています。
+
+0.2.0では既定entryをCRUD・JOIN・index・FK・STRICTのbaselineに分け、JSON・CTE・trigger・window等を含む実装済みSQL機能は`@mizchi/sqlike/full`へ移します。[`@mizchi/sqlike/aot`](docs/native-aot.md)はパーサなしのprepared named statementをJS / Wasm GCで実行し、`/aot/native`はJS専用の高速な値受け渡しを提供します。[MoonBitソース出力・選択ビルド・依存検証](docs/build-targets.md)も利用できます。複数の既成engineを併用するとruntimeが重複するため、アプリでは一つ選びます。
+
+baselineでは、整数・文字列用の`format / printf`と単一MIN / MAXの一意な代表行も使えます。曖昧な集約出力、SQLiteの版で結果が異なる空format、未対応の変換は明示的に拒否します。
+
+任意選択の[増分ページ出力](docs/incremental-pager.md)では、rowidを保つ更新をSQLiteページへ反映し、IndexedDBでLTX outboxと原子的に保存できます。`sqlitePages`と`@mizchi/sqlike/pager`を明示指定し、構造変更には全量出力を使います。リポジトリの永続AOT adapterでは`checkpoint()`・論理状態の復元・送信再試行・ACK済みoutbox回収にも接続しています。差分checkpointに対応するproviderでは、論理compaction時に未変更の行chunkを再利用し、全DBのJSON化も避けます。
+
+未確認LTXが上限（既定128件）に達すると、永続adapterはcheckpoint生成を保留し、SQLのローカル保存を継続します。再接続時は検証済みACKを先に回収してから、最新の変更をcheckpoint・送信します。[保留と同期の使い方](docs/incremental-pager.md#existing-durable-checkpoint-adapter)。
 
 ## バンドルサイズ
 
+0.2.0ソースのエンジン単体です。host wrapper・catalogデータ・Litestreamは別です。
+
+| エンジン | JS minified | Brotli |
+| --- | ---: | ---: |
+| tableなし・SELECTのみのAOT | 262.90 KiB | 53.51 KiB |
+| Vite既定構成・SELECTのみのAOT | 281.95 KiB | 56.86 KiB |
+| 実行専用CRUD AOT | 333.26 KiB | 66.16 KiB |
+| 標準APIの最小CRUD AOT | 358.84 KiB | 69.74 KiB |
+| Vite plugin既定構成のCRUD AOT | 364.08 KiB | 71.32 KiB |
+| 主キー索引・optimizerありのCRUD AOT | 389.52 KiB | 74.95 KiB |
+| Baseline | 565.36 KiB | 106.16 KiB |
+| 全SQL実行機能のAOT | 665.25 KiB | 122.52 KiB |
+| SQLパーサを含むFull | 769.08 KiB | 141.28 KiB |
+
+2026-11-20（JST）、OXCでminifyし、Brotli quality 11で計測。1 KiB = 1,024 bytes。SELECTのみのcatalogはtableなしのbind付きSELECTです。CRUDのcatalogは1テーブルのINSERT・主キーSELECT・UPDATE・DELETEの4文です。最小SELECTと最小CRUDでは任意の主キー索引とoptimizerを無効にし、主キー制約は維持します。実行専用版は4 exportに絞り、文単位のatomic性を維持します。Vite構成は既定の索引・optimizerを有効にした実行専用APIです。標準APIのCRUD構成にはsnapshot・restore・clone・delta・prepared handleも残ります。全SQL実行機能のAOTはSQLite/LTX出力を省いています。
+
+実行専用版は`apiCapabilities: []`を指定し、生成runtimeを`@mizchi/sqlike/aot/core`の`openAotExecutor`へ注入します。[公開APIの選択方法](docs/build-targets.md#aotの公開apiを選ぶ)。実行専用CRUDのJSエンジンとhostの合計は**335.00 KiB / Brotli 66.85 KiB**で、catalogデータは別です。
+
+[最小JSの比較](measurements/aot-minimum-current.json) · [CRUDの測定値](measurements/sqlike-crud-size-current.json) · [entry別の測定値](measurements/sqlike-entrypoints-current.json) · [Wasmサイズ・ビルド設定](docs/internal/sqlike-build-contract.md#エンジン単体のサイズ)。`just explore-aot-size`、`just measure-crud-size`、`just measure-entrypoints`で再現できます。
+
+### browser bundle比較
+
 ブラウザ向けの公開entryをOxcでminifyした配布物の合計です。JSローダー・分割chunk・生成されるWorker・Wasmを含み、Brotliは各ファイルをquality 11で圧縮して合算しています。1 KiB = 1,024 bytes。Wasmはrelease出力を使用します。
 
-SQLikeは0.1.2以降の未リリース変更を含むソースで計測しています。[段階的な互換機能の導入](docs/internal/staged-sqlite-compatibility.md)に追加内容とサイズ差を記録します。
+SQLikeは0.2.0ソースで計測しています。通常SQLはJS / Wasmともfullを使い、JSON・CTE・windowの実行を確認しています。[段階的な互換機能の導入](docs/internal/staged-sqlite-compatibility.md)に追加内容とサイズ差を記録します。
 
 [![10構成のバンドルサイズ。青はBrotli、灰色はminify後の未圧縮サイズ。小さいほど軽量。](docs/images/bundle-size.png)](docs/images/bundle-size.png)
 
@@ -45,14 +77,14 @@ SQLikeは0.1.2以降の未リリース変更を含むソースで計測してい
 <!-- bundle-size:start -->
 | ビルド | minified・未圧縮 | Brotli |
 | --- | ---: | ---: |
-| SQLike 0.1.2 (source) / 通常SQL / JS | 635.49 KiB | 119.08 KiB |
-| SQLike 0.1.2 (source) / 通常SQL / Wasm GC | 560.73 KiB | 176.11 KiB |
-| SQLike 0.1.2 (source) / 事前定義・全実行機能 / JS | 520.41 KiB | 102.88 KiB |
-| SQLike 0.1.2 (source) / 事前定義・全実行機能 / Wasm GC | 461.52 KiB | 147.91 KiB |
-| SQLike 0.1.2 (source) / 事前定義・JSON・日時・windowなし / JS | 480.59 KiB | 95.08 KiB |
-| SQLike 0.1.2 (source) / 事前定義・JSON・日時・windowなし / Wasm GC | 432.06 KiB | 137.18 KiB |
-| SQLike 0.1.2 (source) / 事前定義・主キー索引のみ / JS | 459.16 KiB | 90.74 KiB |
-| SQLike 0.1.2 (source) / 事前定義・主キー索引のみ / Wasm GC | 413.66 KiB | 131.69 KiB |
+| SQLike 0.2.0 (source) / 通常SQL・full / JS | 773.74 KiB | 142.52 KiB |
+| SQLike 0.2.0 (source) / 通常SQL・full / Wasm GC | 688.12 KiB | 211.73 KiB |
+| SQLike 0.2.0 (source) / 事前定義・全実行機能 / JS | 669.19 KiB | 127.06 KiB |
+| SQLike 0.2.0 (source) / 事前定義・全実行機能 / Wasm GC | 598.61 KiB | 185.83 KiB |
+| SQLike 0.2.0 (source) / 事前定義・JSON・日時・windowなし / JS | 636.09 KiB | 120.55 KiB |
+| SQLike 0.2.0 (source) / 事前定義・JSON・日時・windowなし / Wasm GC | 571.48 KiB | 177.10 KiB |
+| SQLike 0.2.0 (source) / 事前定義・主キー索引のみ / JS | 526.39 KiB | 101.86 KiB |
+| SQLike 0.2.0 (source) / 事前定義・主キー索引のみ / Wasm GC | 477.92 KiB | 149.66 KiB |
 | sqlite-wasm 3.54.1-build1 | 1313.74 KiB | 462.33 KiB |
 | Turso 0.8.3 | 11709.66 KiB | 2675.96 KiB |
 <!-- bundle-size:end -->
@@ -71,6 +103,8 @@ SQLikeは0.1.2以降の未リリース変更を含むソースで計測してい
 
 ### catalogから絞ったランタイム
 
+この節は0.2.0ソースのcatalogエンジン単体です。上のbrowser配布物の合計とは範囲が異なります。
+
 schemaとクエリが固定されている場合、AOTと事前定義版ではcatalogに必要な実装だけを残せます。AOTはJSONのプログラム定義、`defined`はバイナリ定義を読み込みます。各比較で、意味上の機能・公開exports・主キー索引の設定を揃えています。
 
 [![6つのcatalogのdefined JSランタイム。灰色は手動プロファイル、青はcatalogから選択した構成。minifiedとBrotliの2図で比較。](docs/images/catalog-runtime-size.png)](docs/images/catalog-runtime-size.png)
@@ -85,18 +119,18 @@ schemaとクエリが固定されている場合、AOTと事前定義版ではca
 <!-- catalog-runtime-size:start -->
 | Catalog / モード | minified JS | JS Brotli | release Wasm | Wasm Brotli |
 | --- | ---: | ---: | ---: | ---: |
-| 読取専用 / AOT | 408.02 KiB | 76.55 KiB | 367.28 KiB | 114.05 KiB |
-| 読取専用 / defined | 378.63 KiB | 73.81 KiB | 338.25 KiB | 108.20 KiB |
-| GLOB + char / AOT | 410.79 KiB | 76.92 KiB | 370.24 KiB | 114.70 KiB |
-| GLOB + char / defined | 381.40 KiB | 74.28 KiB | 341.26 KiB | 108.88 KiB |
-| JSON生成 / AOT | 414.31 KiB | 77.40 KiB | 371.79 KiB | 115.74 KiB |
-| JSON生成 / defined | 384.87 KiB | 74.79 KiB | 342.66 KiB | 109.49 KiB |
-| 入れ子JSON / AOT | 419.04 KiB | 78.08 KiB | 376.31 KiB | 116.84 KiB |
-| 入れ子JSON / defined | 389.53 KiB | 75.57 KiB | 347.37 KiB | 110.91 KiB |
-| 再帰CTE＋JSON集約 / AOT | 427.48 KiB | 79.64 KiB | 385.93 KiB | 119.20 KiB |
-| 再帰CTE＋JSON集約 / defined | 397.97 KiB | 77.02 KiB | 357.37 KiB | 113.26 KiB |
-| Notes CRUD / AOT | 438.35 KiB | 82.17 KiB | 392.26 KiB | 122.33 KiB |
-| Notes CRUD / defined | 408.70 KiB | 79.48 KiB | 363.41 KiB | 116.45 KiB |
+| 読取専用 / AOT | 361.14 KiB | 69.88 KiB | 327.07 KiB | 104.12 KiB |
+| 読取専用 / defined | 355.31 KiB | 69.42 KiB | 318.56 KiB | 102.40 KiB |
+| GLOB + char / AOT | 338.92 KiB | 66.73 KiB | 308.25 KiB | 98.62 KiB |
+| GLOB + char / defined | 332.74 KiB | 66.38 KiB | 299.75 KiB | 96.88 KiB |
+| JSON生成 / AOT | 343.13 KiB | 67.51 KiB | 311.05 KiB | 99.35 KiB |
+| JSON生成 / defined | 336.95 KiB | 66.87 KiB | 302.31 KiB | 97.80 KiB |
+| 入れ子JSON / AOT | 347.87 KiB | 68.18 KiB | 314.86 KiB | 100.55 KiB |
+| 入れ子JSON / defined | 341.71 KiB | 67.67 KiB | 306.38 KiB | 98.70 KiB |
+| 再帰CTE＋JSON集約 / AOT | 397.89 KiB | 76.11 KiB | 360.78 KiB | 113.39 KiB |
+| 再帰CTE＋JSON集約 / defined | 391.92 KiB | 75.83 KiB | 352.15 KiB | 111.75 KiB |
+| Notes CRUD / AOT | 422.78 KiB | 80.75 KiB | 381.22 KiB | 120.25 KiB |
+| Notes CRUD / defined | 413.75 KiB | 80.46 KiB | 369.08 KiB | 118.21 KiB |
 <!-- catalog-runtime-size:end -->
 
 </details>
@@ -106,6 +140,8 @@ catalogは主キー検索、GLOB / char、JSON生成、入れ子JSON、再帰CTE
 [catalogの計測結果](measurements/catalog-profiles-current.json) · [ビルド方法・制限](docs/catalog-build.md)。再計測は`just catalog-profiles`、図表の更新は`just readme-charts`で行えます。
 
 ## SQLiteとの速度比較
+
+以下の汎用workloadは0.2.0ソースで計測しています。[IN SELECT](docs/internal/in-select-performance.md)と[UPDATE FROM](docs/internal/update-from.md)は、10万行を含む新しい計測を別に記録しています。
 
 5,000行のテーブルでの**μs/操作**（小さいほど高速）、ウォームアップ後7サンプルの中央値です。通常SQLは毎回SQLをパース・prepareし、prepared列はSQLiteのstatementを再利用します。
 
@@ -121,18 +157,18 @@ catalogは主キー検索、GLOB / char、JSON生成、入れ子JSON、再帰CTE
 <!-- sqlite-benchmark:start -->
 | 処理 | SQLike JS・通常SQL | SQLike Wasm GC・通常SQL | SQLite WASM・通常SQL | SQLite WASM・prepared |
 | --- | ---: | ---: | ---: | ---: |
-| 主キーで1行検索 | 25.97 | 6.06 | 3.74 | 1.43 |
-| 存在しない主キーの検索 | 25.85 | 5.43 | 2.58 | 0.45 |
-| 二次索引の範囲検索・10行 | 44.02 | 11.85 | 14.49 | 10.76 |
-| ORDER BY id LIMIT 10 | 38.20 | 9.00 | 12.50 | 9.57 |
-| sum(n), count(*) | 91.55 | 49.80 | 106.08 | 103.09 |
-| 全5,000行取得 | 1,696.55 | 1,867.86 | 4,516.67 | 4,466.67 |
-| 索引列の更新＋範囲10行取得 | 63.88 | 17.23 | 19.17 | 12.18 |
+| 主キーで1行検索 | 36.84 | 11.34 | 4.03 | 1.61 |
+| 存在しない主キーの検索 | 33.42 | 10.22 | 2.73 | 0.51 |
+| 二次索引の範囲検索・10行 | 50.83 | 13.88 | 15.61 | 11.16 |
+| ORDER BY id LIMIT 10 | 45.53 | 10.65 | 13.14 | 10.05 |
+| sum(n), count(*) | 98.51 | 57.31 | 116.28 | 112.42 |
+| 全5,000行取得 | 1,814.29 | 1,988.00 | 4,840.00 | 4,763.64 |
+| 索引列の更新＋範囲10行取得 | 71.89 | 19.67 | 20.15 | 12.96 |
 <!-- sqlite-benchmark:end -->
 
 </details>
 
-2026-11-17、Apple M5 / macOS arm64 / Chromium 158.0.8127.18で計測。SQLike 0.1.2以降の未リリースソースのMoonBit release出力（JSはminify前）と、SQLite WASM 3.54.1を同じページ内のインメモリDBで実行しています。
+2026-11-20（JST）、Apple M5 / macOS arm64 / Chromium 158.0.8127.18で計測。SQLike 0.2.0ソースのMoonBit release出力（JSはminify前）と、SQLite WASM 3.54.1を同じページ内のインメモリDBで実行しています。
 
 主キー・二次索引はウォーム状態です。更新の行は索引列の値を交互に変更し、その後の範囲検索までを含みます。結果の型変換と復号を含むエンジンAPIの比較で、host wrapper、起動・Wasmコンパイル、IndexedDB、通信は含みません。計測前後にnative SQLite由来の期待値と更新結果を照合しています。
 
@@ -141,6 +177,8 @@ catalogは主キー検索、GLOB / char、JSON生成、入れ子JSON、再帰CTE
 [生データ・クエリ・全サンプル](measurements/sqlite-speed-current.json)。再計測は`just sqlite-bench --profiles=false`で行えます。
 
 [10万行での比較](docs/internal/sqlite-large-benchmark.md)も掲載しています。SQLikeの任意statement cacheを含む8経路を、短いサンプル予算で計測します。
+
+[現行ソースのIN・カーソル計測](docs/internal/in-list-performance.md)では、5千／10万行でoptimizerの有効・無効、本家SQLiteとの差、minified／Brotliの追加容量を比較しています。
 
 <details>
 <summary>10万行・8経路のグラフを見る</summary>
@@ -180,7 +218,13 @@ db.close();
 
 [SQLの対応範囲と値の扱い](docs/sql.md)
 
-未リリースのソースでは、同じSQLを反復する接続に`openDatabase(undefined, { statementCache: { capacity: 32 } })`でcacheを有効にできます。接続ごとに保持する文とSQL本文の量を制限し、schema変更後は再準備します。[利用範囲と計測](docs/internal/dynamic-sql-prepare.md)。
+接続では、同じSQLを反復する接続に`openDatabase(undefined, { statementCache: { capacity: 32 } })`でcacheを有効にできます。接続ごとに保持する文とSQL本文の量を制限し、schema変更後は再準備します。[利用範囲と計測](docs/internal/dynamic-sql-prepare.md)。
+
+## ViteでSQLファイルからAOTを生成する
+
+`@mizchi/sqlike/vite` の `sqlikeAot({ include: 'src/client/**/*.sql', schemaFiles: 'src/schema.sql' })` をViteのpluginsへ追加します。ブラウザ側は `@mizchi/sqlike/aot` から `openDatabase` と `queries` をimportします。SQLの追加・変更・削除に応じて、必要な関数・機能だけを含むJS engineを生成します。
+
+既定は `execute` / `close` の実行専用APIで、`api: 'connection'` ではprepared handle・snapshot・transactionを追加します。同じAOTビルドに通常SQLや別の既成engineを混在させるとエラーになります。ビルド用MoonBitソースとcompilerはブラウザentryへ入りません。[SQLの書き方・型生成・サイズレポート・cache](docs/vite-aot.md)を参照してください。
 
 ## IndexedDBへ保存する
 
@@ -245,10 +289,12 @@ Drizzleは任意のentryです。通常のSQLや固定schemaの実行だけな�
 Mooncakesの2モジュールを単独で使えます。
 
 ```sh
-moon add mizchi/sqlike@0.1.2
-moon add mizchi/litestream@0.1.2
+moon add mizchi/sqlike@0.2.0
+moon add mizchi/litestream@0.2.0
 ```
 
 [SQLikeのAPI](packages/sqlike/README.md) / [LitestreamのAPI](packages/litestream/README.md)
 
 MIT License。[リリース](https://github.com/mizchi/sqlike/releases) / [ユーザー向けガイド](docs/README.md) / [開発者向けドキュメント](docs/internal/README.md)
+
+10万行の汎用チャートは2026-11-17・entry分割前のsnapshotです。0.2.0の定常速度を示すものではありません。

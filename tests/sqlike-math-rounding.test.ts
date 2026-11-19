@@ -52,7 +52,7 @@ test("rounding reuses live bindings across six SQL/AOT/binary paths", async () =
 
 test("rounding arity is validated before empty reads or writes publish changes", async () => {
   const wasm = (await WebAssembly.instantiate(readFileSync(
-    "_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm",
+    "_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm",
   ), {}, { builtins: ["js-string"], importedStringConstants: "_" })).instance.exports;
   const schema = ["CREATE TABLE t(id INTEGER PRIMARY KEY,n INTEGER)"];
   const native = new NodeDatabase(":memory:");

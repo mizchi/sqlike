@@ -1,6 +1,7 @@
 import type { Database } from "./contract.ts";
 import { isInternalTable, quote } from "./protocol.ts";
 import { failure } from "./errors.ts";
+import { readSchemaEntries } from "./schema-entries.ts";
 
 export interface MaterializedDatabase extends Database {
   replicaTransaction<T>(body: () => T): T;
@@ -75,9 +76,7 @@ export function withMaterializedReplication<T extends Database>(
       throw Error("materialized apply requires its replica transaction");
     applying = true;
     try {
-      const triggers = db.all(
-        "SELECT name,tbl_name,sql FROM sqlite_schema WHERE type='trigger' ORDER BY rowid",
-      );
+      const triggers = readSchemaEntries(db).filter(entry => entry.type === "trigger");
       if (
         triggers.some(
           (t) =>

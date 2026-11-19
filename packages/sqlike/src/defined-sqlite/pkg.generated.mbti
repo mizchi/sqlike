@@ -2,15 +2,15 @@
 package "mizchi/sqlike/defined-sqlite"
 
 import {
-  "mizchi/sqlike",
+  "mizchi/sqlike/full",
 }
 
 // Values
-pub fn defined_export_sqlite(Bytes, Bytes, Bytes, Bytes) -> @sqlike.SqliteResult
+pub fn defined_export_sqlite(Bytes, Bytes, Bytes, Bytes) -> @full.SqliteResult
 
-pub fn sqlite_data(@sqlike.SqliteResult) -> Bytes
+pub fn sqlite_data(@full.SqliteResult) -> Bytes
 
-pub fn sqlite_info(@sqlike.SqliteResult) -> String
+pub fn sqlite_info(@full.SqliteResult) -> String
 
 // Errors
 

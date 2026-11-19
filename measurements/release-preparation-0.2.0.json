@@ -1,0 +1,184 @@
+{
+  "format": "sqlike-release-preparation@1",
+  "preparedAt": "2026-11-19T16:44:43.411079+00:00",
+  "version": "0.2.0",
+  "scope": "Local release preparation, including uncommitted source. Not a publication record or final Linux CI result.",
+  "source": {
+    "baseCommit": "8a6f7d9f64494d0316b4ebe6f37fe8783384d1d9",
+    "branch": "feat/aggregate-order-by",
+    "workingTreeDirty": true,
+    "sourceSnapshot": "measurements/p0-completion.json"
+  },
+  "checks": {
+    "p0Measure": "passed",
+    "p0Check": {
+      "status": "passed",
+      "moonbitTestsPerTarget": {
+        "js": 96,
+        "wasm-gc": 96
+      },
+      "nodeTests": 582,
+      "chromiumTests": 73,
+      "differentialCasesPerEnvironment": 601,
+      "differentialResultsPerEnvironment": 3606,
+      "differentialFailingChecks": 0,
+      "universalSQLiteCompatibility": false
+    },
+    "npmExactArchiveConsumers": "passed",
+    "mooncakesDryRunArchiveConsumers": {
+      "status": "passed",
+      "targets": [
+        "js",
+        "wasm-gc"
+      ]
+    },
+    "readmeTablesAndFigures": "passed",
+    "buildGraph": {
+      "status": "passed",
+      "nodes": 125,
+      "dependencyEdges": 160,
+      "z3Obligations": 8
+    },
+    "versionGuard": "passed"
+  },
+  "archives": [
+    {
+      "kind": "npm",
+      "name": "@mizchi/sqlike",
+      "path": "generated/npm/mizchi-sqlike-0.2.0.tgz",
+      "sha256": "a4227161aeba0182156f5b1b7398a251b3e8b9539ef6d0e725d9b38d2c54171e",
+      "files": 239
+    },
+    {
+      "kind": "npm",
+      "name": "@mizchi/litestream",
+      "path": "generated/npm/mizchi-litestream-0.2.0.tgz",
+      "sha256": "561d2112524091b1cceab2bff0d5e405631c14e291a4e843525ff337ce44830a",
+      "files": 39
+    },
+    {
+      "kind": "mooncakes-dry-run",
+      "name": "mizchi/sqlike",
+      "path": "_build/publish/mizchi-sqlike-0.2.0.zip",
+      "sha256": "388e35ca4e62a4549809d16be3dd5716284f8fbfbc766346a4837f03726cced8",
+      "files": 159
+    },
+    {
+      "kind": "mooncakes-dry-run",
+      "name": "mizchi/litestream",
+      "path": "_build/publish/mizchi-litestream-0.2.0.zip",
+      "sha256": "91f4b12757e2fa6314de3a4577f8cb74e1dd69ef82917d39d23d37dc9d6c2bc6",
+      "files": 18
+    }
+  ],
+  "reportHashes": {
+    "measurements/p0-completion.json": "a268081135464cde3de9d48f8d19fa403b17f917ae12c080cf31ec832bfd84fd",
+    "measurements/aot-minimum-current.json": "d57e0eac70a3a0607dd6bca1b9b77d594659728a150ea4b73146c35f0d577cf1",
+    "measurements/sqlike-crud-size-current.json": "7bb4f3fd23b8d9e42b39e12518e823a70a4df78a8845d7ad2939f9653d598ebd",
+    "measurements/sqlike-entrypoints-current.json": "038791818e165dcc0bf59040e4b73a04d9a6e8f2afc33c604a14389359edcc40",
+    "measurements/sqlike-build-graph-proof.json": "6bedf58aa7e211b0812d70b0eb7f57b64a8f0d382b758501203b6c20733531e5",
+    "measurements/bundle-size-current.json": "75fb91b47f841348ebcd8a04683b3a1eea1d7e068c88b7439563721f76a48d0f"
+  },
+  "publicDocumentHashes": {
+    "README.md": "d82232a688ada10aab8604e5fbfe5142e812ea7fadaef5507dbaef6c240ebd5f",
+    "README.ja.md": "387e4786642c0a32c16054739613469d1dd1ac1368920f7130d87d2ff5bca3f7",
+    "docs/README.md": "316a6005fb15f03fe935bf93163b48c5d65505687f15336502cae014431b353f",
+    "docs/releases/v0.2.0.md": "20e6118a96ad0b288c20ebe2acad54daa6c14e9e50b06c35831af2095cde9920",
+    "examples/aot/README.md": "1d123122f8e7c70c2ab782fb80a658e4e62731d57200821bcac5afcfebb28962",
+    "npm/sqlike/README.md": "fa62bc36584ee813939715cf89b283532e2e3229269cbe87379474c386cbabf9",
+    "npm/litestream/README.md": "106012de6671948675d6cee856deefc0efc4dbd03af0ae86e6c2e11305557f26",
+    "packages/sqlike/README.md": "c40db3990ea158b127e16cc06c278139973204a35aa85ec14cb3224d706ba277",
+    "packages/litestream/README.md": "c281444ee5d2dc37d8f040ad8af6ac1de13273aec53caa74b8dbbb9e5588b9c9",
+    "CHANGELOG.md": "62e5ab207d72fbbbc30a041672da433b1a0a64306e4f5eb93cc4c394844aa4ef"
+  },
+  "manifestHashes": {
+    "package.json": "54493a4909a447bd3a8bd8244f21b184133115a986f30a865f50311cad2b7290",
+    "npm/sqlike/package.json": "922518c3f3322797b81e1ac49a4ea8c4c386aeaeb8007ba08c9de49c7e99e8fc",
+    "npm/litestream/package.json": "1c58aca355ce7f4628387151b0993f9ab9f59142609f17b344e8a889e7ffb33d",
+    "packages/sqlike/moon.mod": "8a3bf7910534d9a8cb5a34ad63bfeb9e57c67154000450a32d84e7f17d6eb36d",
+    "packages/litestream/moon.mod": "cd52babd4ea9063cf088d27e3c4871cf3e11ba55e5782172387a41b867b9006e",
+    "examples/aot/moon.mod": "65a064581e9b631b914868af3d5eb0f11a1af96180ebda387e22db2b4404693f"
+  },
+  "publication": {
+    "performed": false,
+    "observedNpmLatest": {
+      "@mizchi/sqlike": "0.1.2",
+      "@mizchi/litestream": "0.1.2"
+    },
+    "trustedPublisherReverified": true,
+    "trustedPublisherVerification": {
+      "verifiedAt": "2026-11-19T16:48:58.861375+00:00",
+      "npmAccount": "mizchi",
+      "command": "npm trust list <package> --json",
+      "authentication": "User npm login followed by successful browser 2FA",
+      "configurations": {
+        "@mizchi/sqlike": {
+          "id": "07cd26aa-4359-4fce-9853-77e997f2300d",
+          "type": "github",
+          "file": "npm-release.yml",
+          "repository": "mizchi/sqlike",
+          "permissions": [
+            "createPackage",
+            "createStagedPackage"
+          ]
+        },
+        "@mizchi/litestream": {
+          "id": "83a005a5-2b9c-4595-8480-406fe1a70efc",
+          "type": "github",
+          "file": "npm-release.yml",
+          "repository": "mizchi/sqlike",
+          "permissions": [
+            "createPackage",
+            "createStagedPackage"
+          ]
+        }
+      },
+      "matchesReleaseWorkflow": true,
+      "settingsChanged": false
+    }
+  },
+  "pending": [
+    "Commit/review the complete candidate and run all four Linux CI jobs on that commit.",
+    "Review residual semantic-lint findings tracked in TODO.md.",
+    "Publication, anonymous registry consumers, provenance and release assets require a separate release instruction."
+  ],
+  "amendments": [
+    {
+      "verifiedAt": "2026-11-19T16:56:48.308631+00:00",
+      "scope": "CI configuration and public toolchain instructions only; database implementation and benchmark sources unchanged.",
+      "ciToolchain": "0.10.21+06da1ed44",
+      "failurePropagationRegression": {
+        "red": "A failing check exited 0 through tee under the implicit shell.",
+        "green": "All four CI pipelines preserve exit 17 with explicit bash and pipefail.",
+        "tests": 1
+      },
+      "typecheck": "passed",
+      "repackedNpmConsumers": {
+        "tests": 6,
+        "status": "passed"
+      },
+      "repackedMooncakesConsumers": {
+        "tests": 2,
+        "targets": [
+          "js",
+          "wasm-gc"
+        ],
+        "status": "passed"
+      },
+      "invalidPriorCiRun": "https://github.com/mizchi/sqlike/actions/runs/44570756880",
+      "priorCiRunWarning": "Green job labels masked compiler errors. Do not count this run as passing validation."
+    },
+    {
+      "verifiedAt": "2026-11-19T17:11:25.782475+00:00",
+      "scope": "Vite Node build plugin recovery and tests; browser engine/query implementation unchanged.",
+      "immediateSqlRepair": {
+        "red": "A correction inside a modeled 50 ms watcher window did not trigger recovery.",
+        "green": "The plugin coalesces saves for 100 ms, then recovers after the corrective save."
+      },
+      "viteAndCiRegressionTests": 12,
+      "repackedNpmTests": 6,
+      "typecheck": "passed",
+      "linuxRunRequiringCorrection": "https://github.com/mizchi/sqlike/actions/runs/44571788682"
+    }
+  ]
+}

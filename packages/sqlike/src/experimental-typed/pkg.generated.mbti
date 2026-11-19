@@ -2,25 +2,25 @@
 package "mizchi/sqlike/experimental-typed"
 
 import {
-  "mizchi/sqlike",
+  "mizchi/sqlike/full",
 }
 
 // Values
-pub fn exec(@sqlike.Database, String, String) -> String
+pub fn exec(@full.Database, String, String) -> String
 
-pub fn native_result(Result[Array[Array[@sqlike.Value]], String]) -> NativeValue
+pub fn native_result(Result[Array[Array[@full.Value]], String]) -> NativeValue
 
-pub fn open() -> @sqlike.Database
+pub fn open() -> @full.Database
 
-pub fn prepare(@sqlike.Database, String) -> @sqlike.SqlPrepared
+pub fn prepare(@full.Database, String) -> @full.SqlPrepared
 
-pub fn restore(@sqlike.Database, String) -> String
+pub fn restore(@full.Database, String) -> String
 
-pub fn set_clock(@sqlike.Database, String) -> String
+pub fn set_clock(@full.Database, String) -> String
 
-pub fn snapshot(@sqlike.Database) -> String
+pub fn snapshot(@full.Database) -> String
 
-pub fn values(@sqlike.SqlPrepared, String) -> NativeValue
+pub fn values(@full.SqlPrepared, String) -> NativeValue
 
 // Errors
 

@@ -64,10 +64,10 @@ for (const [name, path] of [
     "moonbit-js-core",
     "_build/js/release/build/mizchi/litestream/litestream.js",
   ],
-  ["moonbit-js-sql", "_build/js/release/build/mizchi/sqlike/sqlike.js"],
+  ["moonbit-js-sql", "_build/js/release/build/mizchi/sqlike/full/full.js"],
   [
     "moonbit-wasm-gc-sql",
-    "_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm",
+    "_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm",
   ],
   [
     "moonbit-wasm-gc-core",

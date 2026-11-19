@@ -1,6 +1,6 @@
 // Shared unchanged by Node and Chromium. Only the public string/JSON ABI is used.
 import type * as AotRuntime from "../_build/js/release/build/mizchi/litestream-example/runtime/runtime.js";
-import type * as SqlRuntime from "../_build/js/release/build/mizchi/sqlike/sqlike.js";
+import type * as SqlRuntime from "../_build/js/release/build/mizchi/sqlike/full/full.js";
 
 export interface BenchEngines {
   js: { aot: typeof AotRuntime; dynamic: typeof SqlRuntime };

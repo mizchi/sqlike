@@ -282,7 +282,7 @@ try {
   }
   const libraries = [];
   for (const [name, path] of [
-    ["sqlike", "_build/js/release/build/mizchi/sqlike/sqlike.js"],
+    ["sqlike", "_build/js/release/build/mizchi/sqlike/full/full.js"],
     ["litestream", "_build/js/release/build/mizchi/litestream/litestream.js"],
   ] as const) {
     const output = await build({

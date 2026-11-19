@@ -1,20 +1,20 @@
 # mizchi/litestream
 
-DBエンジンに依存しないSQLite同期・LTXのMoonBitモジュールです。JS / Wasm GCに対応し、SQLike・SQLite・Tursoの本体を依存に含めません。
+Database-independent SQLite synchronization and LTX support for MoonBit. Supports JS and Wasm GC without depending on SQLike, SQLite or Turso engines.
 
 ```sh
-moon add mizchi/litestream@0.1.2
+moon add mizchi/litestream@0.2.0
 ```
 
-`moon.pkg`から`"mizchi/litestream"`をimportし、`@litestream`のAPIを使います。
+Import `"mizchi/litestream"` from `moon.pkg` and use the `@litestream` APIs:
 
-- LTX v3の生成・適用、TXIDとchecksumの検査。
-- SQLite Session changesetのdecodeとSQL適用計画。
-- transport frameのencode / decode、revisionと適用可否の判定。
-- LZ4 / CRC64。
+- Generate/apply LTX v3 files and validate TXIDs and checksums.
+- Decode SQLite Session changesets and plan their SQL application.
+- Encode/decode transport frames and evaluate revision/apply decisions.
+- Use LZ4 and CRC64 helpers.
 
-SQLite画像を受け取るLTX APIは、その画像を作るDBドライバーから独立しています。SessionやLTXに必要なdriverの能力は、利用側で提供します。
+LTX APIs accept SQLite images independently of the driver producing them. Applications supply the driver capabilities needed for Session or LTX synchronization.
 
-JavaScript / TypeScriptのhost APIは`@mizchi/litestream`です。HTTP / P2P transport、オフライン編集、再送、利用側policyによる競合処理を組み込めます。
+The `@mizchi/litestream` npm package provides JavaScript/TypeScript hosts for HTTP/P2P transports, offline edits, retries and application-defined conflict policies.
 
-[同期・競合処理・LTXの利用ガイド](https://github.com/mizchi/sqlike/blob/main/docs/sync.md) / [全体の導入](https://github.com/mizchi/sqlike)。MIT。
+[Synchronization, conflicts and LTX](https://github.com/mizchi/sqlike/blob/main/docs/sync.md) · [Getting started](https://github.com/mizchi/sqlike). MIT.

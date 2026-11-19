@@ -31,6 +31,7 @@ test.beforeAll(async () => {
     logLevel: "error",
     build: {
       write: false,
+      rolldownOptions: { output: { codeSplitting: false } },
       minify: true,
       target: "esnext",
       lib: { entry: "e2e/fixtures/app-features-runtime.ts", formats: ["es"] },

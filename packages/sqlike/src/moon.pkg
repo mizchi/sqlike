@@ -11,14 +11,7 @@ import {
   "moonbitlang/core/string",
 }
 
-import {
-  "moonbitlang/core/bench",
-} for "wbtest"
-
-// Match sqlite3.mbt's trait surface without promoting every public trait method.
-// Moon 0.1.20261104 emits warning 79 even for intentional unpromoted impls.
-
-warnings = "-79"
+warnings = "-1-2-4-7-79"
 
 options(
   link: {
@@ -27,8 +20,6 @@ options(
         "database_open",
         "database_autocommit",
         "database_set_clock",
-        "database_import_sqlite",
-        "database_import_sqlite_base64",
         "database_exec",
         "database_prepare",
         "database_prepared_exec",
@@ -37,7 +28,6 @@ options(
         "database_dump",
         "database_restore",
         "database_version",
-        "database_changeset",
         "database_is_readonly",
         "database_clone",
         "database_copy_connection_state",
@@ -53,8 +43,6 @@ options(
         "database_open",
         "database_autocommit",
         "database_set_clock",
-        "database_import_sqlite",
-        "database_import_sqlite_base64",
         "database_exec",
         "database_prepare",
         "database_prepared_exec",
@@ -63,7 +51,6 @@ options(
         "database_dump",
         "database_restore",
         "database_version",
-        "database_changeset",
         "database_is_readonly",
         "database_clone",
         "database_copy_connection_state",

@@ -17,8 +17,8 @@ const rowsList = smoke ? [100] : [1000, 10000, 100000];
 const runs = smoke ? 1 : 3, budgetMilliseconds = smoke ? 1000 : 3000;
 const files = [
   ...(beforeDir ? [["before/js", `${beforeDir}/sqlike.js`], ["before/wasm", `${beforeDir}/sqlike.wasm`]] as const : []),
-  ["after/js", "_build/js/release/build/mizchi/sqlike/sqlike.js"],
-  ["after/wasm", "_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm"],
+  ["after/js", "_build/js/release/build/mizchi/sqlike/full/full.js"],
+  ["after/wasm", "_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm"],
 ] as const;
 interface Connection {
   run(sql: string, values?: Value[], encoded?: string): void;

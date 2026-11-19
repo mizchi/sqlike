@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { createHash } from "node:crypto";
-import * as sql from "../_build/js/release/build/mizchi/sqlike/sqlike.js";
+import * as sql from "../_build/js/release/build/mizchi/sqlike/full/full.js";
 import * as aot from "../_build/js/release/build/mizchi/litestream-example/runtime/runtime.js";
 import { compile_program } from "../_build/js/release/build/mizchi/sqlike/compiler/compiler.js";
 import { differentialCorpus } from "../tests/compatibility/differential-corpus.ts";
@@ -39,7 +39,7 @@ const wasm = async (path: string) =>
 const runtime = { sql, aot, compile: compile_program };
 const wr = {
   sql: (await wasm(
-    "_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm",
+    "_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm",
   )) as unknown as typeof sql,
   aot: (await wasm(
     "_build/wasm-gc/release/build/mizchi/litestream-example/runtime/runtime.wasm",
@@ -92,10 +92,10 @@ const artifacts = Object.fromEntries(
   [
     "tests/compatibility/differential-runtime.ts",
     "src/sql-statement-cache.ts",
-    "_build/js/release/build/mizchi/sqlike/sqlike.js",
+    "_build/js/release/build/mizchi/sqlike/full/full.js",
     "_build/js/release/build/mizchi/sqlike/compiler/compiler.js",
     "_build/js/release/build/mizchi/litestream-example/runtime/runtime.js",
-    "_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm",
+    "_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm",
     "_build/wasm-gc/release/build/mizchi/litestream-example/runtime/runtime.wasm",
   ].map((path) => [
     path,

@@ -18,7 +18,7 @@ import { readMigrationFiles } from "drizzle-orm/migrator";
 test("Kit-generated migration chain preserves rows/FK through every rebuild, rename, reopen and rerun on native/JS/Wasm", async () => {
   const wasm = (
     await WebAssembly.instantiate(
-      readFileSync("_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm"),
+      readFileSync("_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm"),
       {},
       { builtins: ["js-string"], importedStringConstants: "_" },
     )

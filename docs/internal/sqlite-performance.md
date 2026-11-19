@@ -55,11 +55,11 @@ SQLike JS AOT を別に1秒ずつ実行し、Chromium CDP Profiler で1 ms間隔
 
 ## 実装する優先順位
 
-1. **主キーと二次索引で候補行を絞る実行計画を作る。** [source_rows](../../packages/sqlike/src/query.mbt#L42) はテーブル全行をコピー・ソートし、全行の評価環境を作る。[select_relation_in](../../packages/sqlike/src/query.mbt#L159) がその後で WHERE を評価するため、主キーでも全行処理になる。まず単一テーブルの `INTEGER PRIMARY KEY = ?` を探索で実行し、続いて二次索引の等価・範囲検索へ広げる。SQLite の affinity、NULL、rowid と主キーの違いを native 差分テストで固定し、扱えない式は既存経路へ戻す。
-2. **AOT で列参照と列メタデータを解決しておく。** [find_binding](../../packages/sqlike/src/evaluate.mbt#L49) は列参照のたびに配列を filter し、[identifier](../../packages/sqlike/src/model.mbt#L200) を繰り返す。[row_environment](../../packages/sqlike/src/evaluate.mbt#L584) も affinity、主キー、隠し rowid 列を毎行再計算する。事前ビルドで列の位置・スコープ・affinity・collation を確定し、行の値と分離する。曖昧な列、alias、相関サブクエリ、空テーブルでの準備エラーを維持する。プロファイルでは最も大きい共通の改善対象だった。
-3. **LIMIT と射影を必要な行数までで止める。** 現在は [全行を project](../../packages/sqlike/src/query.mbt#L297) してからソートし、[最後に LIMIT](../../packages/sqlike/src/query.mbt#L360) を適用する。rowid 順の単純な SELECT なら必要な10行だけ評価・出力する経路を作る。DISTINCT、GROUP BY、window、JOIN、別の ORDER BY には無条件で適用しない。
-4. **書き込みの全 DB コピーを、変更箇所の退避へ置き換える。** [Statement::step](../../packages/sqlike/src/interface.mbt#L240) と動的 SQL は書き込み前に [copy_store](../../packages/sqlike/src/model.mbt#L345) で全テーブルの行をコピーする。100行の表への UPDATE は、無関係な5,000行を足すと JS が97.01 → 134.72 μs、Wasm が94.53 → 126.63 μsになった。対象行・対象テーブルの copy-on-write または undo journal を検討する。文の途中失敗、制約違反、外部キー処理の rollback を削減条件にする。
-5. **実行量を減らした後で ABI と JSON を詰める。** [aot_execute](../../packages/sqlike/src/aot.mbt#L65) は毎回 bindings を parse し、statement を作り、Cell JSON を返す。prepared handle 再利用、型付きの引数・行の受け渡しを検討する。パーサをランタイムへ戻さず、int64・BLOB・負のゼロを保持する。
+1. **主キーと二次索引で候補行を絞る実行計画を作る。** [source_rows](../../packages/sqlike/src/full/query.mbt#L42) はテーブル全行をコピー・ソートし、全行の評価環境を作る。[select_relation_in](../../packages/sqlike/src/full/query.mbt#L159) がその後で WHERE を評価するため、主キーでも全行処理になる。まず単一テーブルの `INTEGER PRIMARY KEY = ?` を探索で実行し、続いて二次索引の等価・範囲検索へ広げる。SQLite の affinity、NULL、rowid と主キーの違いを native 差分テストで固定し、扱えない式は既存経路へ戻す。
+2. **AOT で列参照と列メタデータを解決しておく。** [find_binding](../../packages/sqlike/src/full/evaluate.mbt#L49) は列参照のたびに配列を filter し、[identifier](../../packages/sqlike/src/full/model.mbt#L200) を繰り返す。[row_environment](../../packages/sqlike/src/full/evaluate.mbt#L584) も affinity、主キー、隠し rowid 列を毎行再計算する。事前ビルドで列の位置・スコープ・affinity・collation を確定し、行の値と分離する。曖昧な列、alias、相関サブクエリ、空テーブルでの準備エラーを維持する。プロファイルでは最も大きい共通の改善対象だった。
+3. **LIMIT と射影を必要な行数までで止める。** 現在は [全行を project](../../packages/sqlike/src/full/query.mbt#L297) してからソートし、[最後に LIMIT](../../packages/sqlike/src/full/query.mbt#L360) を適用する。rowid 順の単純な SELECT なら必要な10行だけ評価・出力する経路を作る。DISTINCT、GROUP BY、window、JOIN、別の ORDER BY には無条件で適用しない。
+4. **書き込みの全 DB コピーを、変更箇所の退避へ置き換える。** [Statement::step](../../packages/sqlike/src/full/interface.mbt#L240) と動的 SQL は書き込み前に [copy_store](../../packages/sqlike/src/full/model.mbt#L345) で全テーブルの行をコピーする。100行の表への UPDATE は、無関係な5,000行を足すと JS が97.01 → 134.72 μs、Wasm が94.53 → 126.63 μsになった。対象行・対象テーブルの copy-on-write または undo journal を検討する。文の途中失敗、制約違反、外部キー処理の rollback を削減条件にする。
+5. **実行量を減らした後で ABI と JSON を詰める。** [aot_execute](../../packages/sqlike/src/full/aot.mbt#L65) は毎回 bindings を parse し、statement を作り、Cell JSON を返す。prepared handle 再利用、型付きの引数・行の受け渡しを検討する。パーサをランタイムへ戻さず、int64・BLOB・負のゼロを保持する。
 
 これらは計測とコードから絞った候補であり、実装後の速度や容量をまだ保証するものではない。索引を追加した場合は、読み出しだけでなく更新・rollback・restore とバンドルサイズも比較する。
 

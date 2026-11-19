@@ -19,16 +19,16 @@
 
 | ID | 修正した問題 | 実装と検査 |
 | --- | --- | --- |
-| B01 | TEXTのhex・binary・octal・桁区切りを誤って数値化し、STRICTも通す | [数値変換](../../packages/sqlike/src/value.mbt)をSQLのdecimal字句に限定。算術のprefix変換と、affinityの全文変換を分離。NULを含むTEXTのINTEGER/REAL分類も照合 |
-| B02 | NOCASE＋NULの比較とPK正規化が異なり、重複キーを保存する | 共有NULまでのASCII比較と元のUTF-8長を使い、[PKキー](../../packages/sqlike/src/primary_index.mbt)にも同じ同値関係を適用。書出したSQLiteの`integrity_check`はBINARY/NOCASEとも`ok` |
+| B01 | TEXTのhex・binary・octal・桁区切りを誤って数値化し、STRICTも通す | [数値変換](../../packages/sqlike/src/full/value.mbt)をSQLのdecimal字句に限定。算術のprefix変換と、affinityの全文変換を分離。NULを含むTEXTのINTEGER/REAL分類も照合 |
+| B02 | NOCASE＋NULの比較とPK正規化が異なり、重複キーを保存する | 共有NULまでのASCII比較と元のUTF-8長を使い、[PKキー](../../packages/sqlike/src/full/primary_index.mbt)にも同じ同値関係を適用。書出したSQLiteの`integrity_check`はBINARY/NOCASEとも`ok` |
 | B03 | STRICT ANYのUSINGで異なる格納クラスを誤って結合 | ANYを、式の無affinityと区別できるBLOB affinityとして扱う。INNER/LEFT/RIGHT/FULLを差分検査 |
-| B04 | USINGで左列のBINARYより右列のNOCASEを優先する | [比較式](../../packages/sqlike/src/evaluate.mbt)の列collation優先度を、数値affinityの有無から分離 |
+| B04 | USINGで左列のBINARYより右列のNOCASEを優先する | [比較式](../../packages/sqlike/src/full/evaluate.mbt)の列collation優先度を、数値affinityの有無から分離 |
 | B05 | 単項`+`で列のNOCASE/RTRIMが失われる | 単項`+`のaffinity除去とcollation継承を分離。CASTの列collation継承も検査 |
 | B06 | 負のrowidだけの表で自動採番を0へ進められない | 非AUTOINCREMENT表では実際の最大rowidを基準にする |
-| B07 | REPLACEのNOT NULL列でDEFAULTを使わず拒否する | [INSERT](../../packages/sqlike/src/execute.mbt)でDEFAULT適用後にNOT NULLを検査。DEFAULTなしのNULLは拒否 |
-| B08 | 文の途中失敗で接続の最終挿入IDまで戻す | データのrollbackと接続カウンターを分離。[Statement](../../packages/sqlike/src/interface.mbt)、動的SQL、永続化アダプター、注入ランタイムのhost transactionも回帰検査 |
-| B09 | SUMの非数値TEXTの結果型とoverflowが異なる | [共通の集約状態](../../packages/sqlike/src/aggregate_sum.mbt)で整数昇格・遅延overflow・誤差補正を実装。通常集約・window・高速経路で共有 |
-| B10 | 重複キーJSONを拒否し、最初の値を抽出できない | [SQL専用JSON木](../../packages/sqlike/src/json_functions.mbt)で順序・重複を保持。最初のキーの抽出・編集・削除、ネスト・patchを検査。保存用JSONとは分離 |
+| B07 | REPLACEのNOT NULL列でDEFAULTを使わず拒否する | [INSERT](../../packages/sqlike/src/full/execute.mbt)でDEFAULT適用後にNOT NULLを検査。DEFAULTなしのNULLは拒否 |
+| B08 | 文の途中失敗で接続の最終挿入IDまで戻す | データのrollbackと接続カウンターを分離。[Statement](../../packages/sqlike/src/full/interface.mbt)、動的SQL、永続化アダプター、注入ランタイムのhost transactionも回帰検査 |
+| B09 | SUMの非数値TEXTの結果型とoverflowが異なる | [共通の集約状態](../../packages/sqlike/src/full/aggregate_sum.mbt)で整数昇格・遅延overflow・誤差補正を実装。通常集約・window・高速経路で共有 |
+| B10 | 重複キーJSONを拒否し、最初の値を抽出できない | [SQL専用JSON木](../../packages/sqlike/src/full/json_functions.mbt)で順序・重複を保持。最初のキーの抽出・編集・削除、ネスト・patchを検査。保存用JSONとは分離 |
 | B11 | 非宣言の隠しrowidをUSINGで結合する | 宣言された可視列に限定し、prepare時に拒否 |
 | B12 | 子表先行のDDLや親表INSERTを過剰に拒否する | DDLとDMLのFK検査時点を分離。空の子表を全件検査で誤判定せず、子表へのDML準備時には親キー定義を検証 |
 
@@ -66,7 +66,7 @@ Chromium内のmemory DB、7サンプル中央値、単位µs/操作。SQLikeはA
 
 | 実施した改善 | 条件・残るコスト |
 | --- | --- |
-| [集約の直接走査](../../packages/sqlike/src/aggregate_plan.mbt) | 固定列・定数のCOUNT/SUM/TOTAL/AVGを一度の走査で処理し、列名解決と全行environmentを省く。JOIN・GROUP BY・DISTINCT・window等は通常経路へ戻す |
+| [集約の直接走査](../../packages/sqlike/src/full/aggregate_plan.mbt) | 固定列・定数のCOUNT/SUM/TOTAL/AVGを一度の走査で処理し、列名解決と全行environmentを省く。JOIN・GROUP BY・DISTINCT・window等は通常経路へ戻す |
 | rowid順の再利用 | LIMITのたびに全候補をcopy/sortせず、既存の上限付き索引cacheへ保存。挿入・rowid変更・削除を差分反映し、rollbackで無効化 |
 | rowid→物理slot | PK索引にslotを保持し、UPDATE後の再探索を省く。DELETEの位置ずれはcacheを破棄して再構築 |
 | 行配列のcopy-on-write | checkpoint/cloneはimmutable行配列を共有し、変更する表だけ初回書込み時にcopy。trigger/FK経由の変更も同じ更新関数を通す |

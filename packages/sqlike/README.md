@@ -1,12 +1,14 @@
 # mizchi/sqlike
 
-MoonBitから使えるSQLiteサブセットです。動的SQLと事前コンパイルした問い合わせを実行でき、SQLite画像の読取・書き出しも扱います。Litestreamへの依存はありません。JS / Wasm GCに対応します。
+A SQLite subset for MoonBit, with dynamic SQL, precompiled statements and SQLite image import/export. Supports JS and Wasm GC without a dependency on Litestream.
+
+Tested with MoonBit `0.10.21+06da1ed44`; older core libraries lack the required JSON decoding API.
 
 ```sh
-moon add mizchi/sqlike@0.1.2
+moon add mizchi/sqlike@0.2.0
 ```
 
-`moon.pkg`から`"mizchi/sqlike"`をimportします。
+Import `"mizchi/sqlike"` from `moon.pkg`:
 
 ```moonbit
 let db = @sqlike.Connection::open(":memory:")
@@ -20,14 +22,18 @@ statement.finalize()
 db.close()
 ```
 
-bindは1始まり、columnは0始まりです。`Connection` / `Statement` / `Bind` / `Column` / `Value`を公開します。
+Bind indices start at 1; column indices start at 0. Public interfaces include `Connection`, `Statement`, `Bind`, `Column` and `Value`.
 
-| パッケージ | 用途 |
+| Package | Purpose |
 | --- | --- |
-| `mizchi/sqlike` | SQL実行、型付き値、事前コンパイルしたProgram、DB画像・SQLiteページ |
-| `mizchi/sqlike/compiler` | schemaとSQLの事前コンパイル |
-| `mizchi/sqlike/fts` | 任意の全文検索。通常のSQL runtimeから独立 |
+| `mizchi/sqlike` | Baseline SQL and typed values: CRUD, RETURNING, JOINs, aggregates, indexes, transactions, FK and STRICT |
+| `mizchi/sqlike/full` | All implemented SQL features, including JSON, CTEs, triggers and windows |
+| `mizchi/sqlike/aot` | Programs and named prepared statements without the SQL parser; JS/Wasm GC |
+| `mizchi/sqlike/compiler` | Build-time schema and SQL compilation |
+| `mizchi/sqlike/fts` | Optional full-text search, separate from the SQL runtime |
 
-CRUD、RETURNING、JOIN、index、制約、基本trigger、transaction等を扱います。SQLite全機能互換ではありません。[SQLの対応範囲](https://github.com/mizchi/sqlike/blob/main/docs/sql.md)を参照してください。
+When upgrading from 0.1.2, imports using JSON, CTEs, triggers or windows must move to `mizchi/sqlike/full`. Entry types are independent; do not pass a `Connection` or `Statement` between entries. AOT connections open compiled program text and prepare queries by their registered name.
 
-JavaScript / TypeScriptからは`@mizchi/sqlike`を使えます。[導入と利用例](https://github.com/mizchi/sqlike) / [固定schema・IndexedDB](https://github.com/mizchi/sqlike/blob/main/docs/prepared.md)。MIT。
+SQLite compatibility is a tested subset. Unsupported SQL is rejected explicitly. [Supported SQL](https://github.com/mizchi/sqlike/blob/main/docs/sql.md) · [Source generation and build targets](https://github.com/mizchi/sqlike/blob/main/docs/build-targets.md).
+
+JavaScript/TypeScript users can install `@mizchi/sqlike`. [Getting started](https://github.com/mizchi/sqlike) · [Predefined schemas and IndexedDB](https://github.com/mizchi/sqlike/blob/main/docs/prepared.md). MIT.

@@ -9,7 +9,7 @@ just probe-json-facade ../x
 
 ## 現在残っている処理
 
-JSホストの`JSON.parse`自体はネイティブだが、[aot_execute](../../packages/sqlike/src/aot.mbt)では毎回`@json.parse(bindings)`を呼び、`Array[Json]`を作ってからSQLの`Value`へ変換する。動的SQLにも同じ境界がある。結果は逆に`Value`から`Json`を組み立てて文字列化し、ホストで再びparseする。バイナリDDL / statement / snapshotへの分離後も、bindと結果のJSON ABIは残る。
+JSホストの`JSON.parse`自体はネイティブだが、[aot_execute](../../packages/sqlike/src/full/aot.mbt)では毎回`@json.parse(bindings)`を呼び、`Array[Json]`を作ってからSQLの`Value`へ変換する。動的SQLにも同じ境界がある。結果は逆に`Value`から`Json`を組み立てて文字列化し、ホストで再びparseする。バイナリDDL / statement / snapshotへの分離後も、bindと結果のJSON ABIは残る。
 
 `mizchi/x/json`の[JS実装](https://github.com/mizchi/x/blob/e7c14c82b28c1aa85e6a6e0ccc45873c763269e6/src/json/json_js.mbt)は、ネイティブ`JSON.parse`の結果を再帰的にMoonBitの`Json`へ変換する。`Json`型やその構築コストをなくすライブラリではない。Wasm / nativeでは[coreへ委譲する](https://github.com/mizchi/x/blob/e7c14c82b28c1aa85e6a6e0ccc45873c763269e6/src/json/json_default.mbt)。
 

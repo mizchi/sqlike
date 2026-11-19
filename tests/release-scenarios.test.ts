@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync, writeFileSync } from "node:fs";
 import { createHash } from "node:crypto";
-import * as sql from "../_build/js/release/build/mizchi/sqlike/sqlike.js";
+import * as sql from "../_build/js/release/build/mizchi/sqlike/full/full.js";
 import * as aot from "../_build/js/release/build/mizchi/litestream-example/runtime/runtime.js";
 import { compile_program as compile } from "../_build/js/release/build/mizchi/sqlike/compiler/compiler.js";
 import { releaseScenarios } from "./compatibility/release-scenarios.ts";
@@ -27,7 +27,7 @@ test("U01-U09 application scenarios preserve typed results and failure state on 
     ).instance.exports;
   const wr = {
     sql: (await load(
-      "_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm",
+      "_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm",
     )) as unknown as typeof sql,
     aot: (await load(
       "_build/wasm-gc/release/build/mizchi/litestream-example/runtime/runtime.wasm",
@@ -79,12 +79,12 @@ test("U01-U09 application scenarios preserve typed results and failure state on 
           "tests/compatibility/differential-core.ts",
           "tests/compatibility/differential-runtime.ts",
           ...[
-            "mizchi/sqlike/sqlike.js",
+            "mizchi/sqlike/full/full.js",
             "mizchi/sqlike/compiler/compiler.js",
             "mizchi/litestream-example/runtime/runtime.js",
           ].map((p) => "_build/js/release/build/" + p),
           ...[
-            "mizchi/sqlike/sqlike.wasm",
+            "mizchi/sqlike/full/full.wasm",
             "mizchi/litestream-example/runtime/runtime.wasm",
           ].map((p) => "_build/wasm-gc/release/build/" + p),
         ]),

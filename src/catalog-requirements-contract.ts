@@ -1,11 +1,13 @@
 import type { SqlikeFeatureName } from "./sqlike-features.ts";
 import type {
   CatalogFunctionGroup,
+  CatalogExpressionGroup,
   CatalogStatementKind,
   CatalogQueryPart,
 } from "./catalog-capabilities.ts";
 export type {
   CatalogFunctionGroup,
+  CatalogExpressionGroup,
   CatalogStatementKind,
   CatalogQueryPart,
 } from "./catalog-capabilities.ts";
@@ -17,6 +19,7 @@ export interface CatalogRequirements {
   readonly features: readonly SqlikeFeatureName[];
   readonly functions: readonly string[];
   readonly functionGroups: readonly CatalogFunctionGroup[];
+  readonly expressionGroups: readonly CatalogExpressionGroup[];
   readonly statements: readonly CatalogStatementKind[];
   readonly queryParts: readonly CatalogQueryPart[];
 }

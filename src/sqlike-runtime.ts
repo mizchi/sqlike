@@ -162,6 +162,7 @@ export function openSql<Handle, PreparedHandle = unknown>(
       return result.rows.map((row) => row.map(aotValue));
     },
     schemaVersion: () => runtime.database_version(db),
+    schemaEntries: () => decodeSchemaEntries(execute("SELECT name,type,tbl_name,sql FROM sqlite_schema WHERE sql IS NOT NULL")),
     dump: () => {
       if (closed) throw Error("Sqlike connection is closed");
       return runtime.database_dump(db);
@@ -245,3 +246,4 @@ export function openSql<Handle, PreparedHandle = unknown>(
   };
   return connection;
 }
+import { decodeSchemaEntries } from "./schema-entries.ts";

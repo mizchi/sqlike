@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import * as sql from "../../_build/js/release/build/mizchi/sqlike/sqlike.js";
+import * as sql from "../../_build/js/release/build/mizchi/sqlike/full/full.js";
 import * as aot from "../../_build/js/release/build/mizchi/litestream-example/runtime/runtime.js";
 import { buildCatalog } from "../../scripts/aot-compiler.ts";
 import { aotBindings, aotValue } from "../../src/aot-values.ts";
@@ -29,7 +29,7 @@ export async function sqlikePaths(
   for (const r of [
     sql,
     (await wasm(
-      "_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm",
+      "_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm",
     )) as unknown as typeof sql,
   ]) {
     const db = r.database_open();

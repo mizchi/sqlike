@@ -6,13 +6,13 @@
 
 ## 行とsnapshotの所有
 
-[RowPages](../../packages/sqlike/src/row_pages.mbt)は64行のページを持ち、ページ一覧には標準ライブラリの永続vectorを使う。Storeをcloneすると、小さなwrapperと所有epochを作り、ページrootを共有する。書込時は共有ページだけをコピーし、そのStoreが所有するページへの続く書込は同じ配列を使う。変更しない行の値やTEXT / BLOBを複製しない。
+[RowPages](../../packages/sqlike/src/full/row_pages.mbt)は64行のページを持ち、ページ一覧には標準ライブラリの永続vectorを使う。Storeをcloneすると、小さなwrapperと所有epochを作り、ページrootを共有する。書込時は共有ページだけをコピーし、そのStoreが所有するページへの続く書込は同じ配列を使う。変更しない行の値やTEXT / BLOBを複製しない。
 
 通常の書込でコピーする行参照は最大64個。それにvectorの経路のコピーが加わり、表の全行数に比例する配列コピーを避ける。Storeのschema / 列metadata等のコピーは残るため、DB全体のclone費用を常にO(1)とするものではない。
 
 行を走査するcursorもページrootを保持し、現在の所有epochを共有済みにする。走査中のcallbackやtrigger処理が表を書き換えても、cursorは以前の行を読む。SQLの候補行配列と、不変のStoredRow / Valueを使う既存の契約も維持する。
 
-[構造のテスト](../../packages/sqlike/src/row_pages_wbtest.mbt)では、5,000行のsnapshotを保持して1行更新したとき、コピーされたページが64行分だけであることを検査する。所有済みページの再利用、cursor保持中の変更、64行境界、削除後の圧縮と古いsnapshotの独立性も検査した。実行時の計測カウンターを増設して数値を作るテストではない。
+[構造のテスト](../../packages/sqlike/src/full/row_pages_wbtest.mbt)では、5,000行のsnapshotを保持して1行更新したとき、コピーされたページが64行分だけであることを検査する。所有済みページの再利用、cursor保持中の変更、64行境界、削除後の圧縮と古いsnapshotの独立性も検査した。実行時の計測カウンターを増設して数値を作るテストではない。
 
 この「ページ」は**メモリ内の行参照のCOW単位**であり、SQLiteのB-treeページ・4 KiB物理ページ・IDBレコードとは別のものになる。
 
@@ -22,13 +22,13 @@ DELETEは物理slotを空にし、他の行のslotをずらさない。通常は
 
 空slotの増加を放置しないため、使用slotが128を超え、かつ生存行数の2倍を超えた場合に詰め直す。空表になった場合もページを解放する。**この圧縮はO(N)**で、そのStoreのslot索引を無効化する。DELETEが常に一定時間になったという主張ではなく、毎回の全表コピーを避けて圧縮費用を償却する設計である。
 
-[主キー索引](../../packages/sqlike/src/primary_index.mbt)は永続HAMTのrowid→slotと、複合主キー→rowidを持つ。行そのものを索引にも重ねて保持せず、現在のページから読む。cloneで索引wrapperを分け、rootは共有する。rowidや主キーが変わらない更新では、slot rootもそのまま使う。削除・キー変更は別のrootを作り、古いStoreのrootは変更しない。
+[主キー索引](../../packages/sqlike/src/full/primary_index.mbt)は永続HAMTのrowid→slotと、複合主キー→rowidを持つ。行そのものを索引にも重ねて保持せず、現在のページから読む。cloneで索引wrapperを分け、rootは共有する。rowidや主キーが変わらない更新では、slot rootもそのまま使う。削除・キー変更は別のrootを作り、古いStoreのrootは変更しない。
 
 二次索引の配列・制約の全走査・FK処理まで永続treeへ変更したものではない。二次索引cacheは従来どおりcloneで再構築対象になり、schema変更もcacheを無効化する。最初の主キー索引構築、bulk DML、DELETEの圧縮、全量画像の再生成には行数に比例する仕事が残る。
 
 ## 保存形式と適用の互換性
 
-ページ・slot・epoch・HAMTは保存しない。[Tableのserializer](../../packages/sqlike/src/strict.mbt)は生存行を従来の順序で配列化し、readerは旧配列からページを構成する。`moon-sql@1` / `moon-aot-image@1`、v1 snapshot / after-image、[S01のv2列patch](column-delta.md)、AOT Programの形式は維持した。v1/v2ログはrowidで適用するため、圧縮や再開でslotが変わっても再生できる。
+ページ・slot・epoch・HAMTは保存しない。[Tableのserializer](../../packages/sqlike/src/full/strict.mbt)は生存行を従来の順序で配列化し、readerは旧配列からページを構成する。`moon-sql@1` / `moon-aot-image@1`、v1 snapshot / after-image、[S01のv2列patch](column-delta.md)、AOT Programの形式は維持した。v1/v2ログはrowidで適用するため、圧縮や再開でslotが変わっても再生できる。
 
 statement失敗時の復旧、SAVEPOINT、hostのprivate candidate、stale writerの公開拒否は同じ境界で行う。古いwriterやsnapshotのページと索引を、現在の書込で変更しない。通常のIDB保存は引き続き列patch＋定期checkpointで、ページごとのIDB書込へは変更していない。
 

@@ -17,7 +17,7 @@ import type { CatalogSource } from "../src/aot-contract.ts";
 import { catalogFunctionConstants } from "../src/catalog-capabilities.ts";
 import { NodeDatabase } from "../adapters/node-database.ts";
 import { nativeValues } from "./compatibility/native-values.ts";
-import * as sqlRuntime from "../_build/js/release/build/mizchi/sqlike/sqlike.js";
+import * as sqlRuntime from "../_build/js/release/build/mizchi/sqlike/full/full.js";
 
 test("flat JSON construction omits SQL JSON parsing, paths, editors and aggregates in AOT/defined JS/Wasm", async () => {
   const source: CatalogSource = {

@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import * as aot from "../_build/js/release/build/mizchi/litestream-example/runtime/runtime.js";
-import * as dynamic from "../_build/js/release/build/mizchi/sqlike/sqlike.js";
+import * as dynamic from "../_build/js/release/build/mizchi/sqlike/full/full.js";
 import { buildCatalog } from "../scripts/aot-compiler.ts";
 import { runSpeedBench } from "../scripts/wasm-bench-workload.ts";
 
@@ -39,7 +39,7 @@ test("speed benchmark checks results and LTX round trips for all four runtimes b
         "_build/wasm-gc/release/build/mizchi/litestream-example/runtime/runtime.wasm",
       )) as unknown as typeof aot,
       dynamic: (await load(
-        "_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm",
+        "_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm",
       )) as unknown as typeof dynamic,
     },
   };

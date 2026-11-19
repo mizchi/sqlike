@@ -98,7 +98,7 @@ dynamic / preparedのCPU profileも別々に採取する。分類は最も内側
 
 ## 検証と残る項目
 
-[`sqlike-sql-cache.test.ts`](../../tests/sqlike-sql-cache.test.ts)でLRU・SQL予算・型切替・同値更新・readonly・FK / trigger・constraint失敗・host rollback・savepoint・同cookieのrestore・clock / counterを照合する。[whitebox](../../packages/sqlike/src/sql_prepared_wbtest.mbt)はDDL rollbackのABAとepochによる再準備を確認する。差分コーパスへNode / ChromiumのJS / Wasm cached SQLを追加し、566ケース×12経路を要求する。npmの独立したconsumerもcacheを有効にして上流1,000 queryとDrizzle migrationを検証する。
+[`sqlike-sql-cache.test.ts`](../../tests/sqlike-sql-cache.test.ts)でLRU・SQL予算・型切替・同値更新・readonly・FK / trigger・constraint失敗・host rollback・savepoint・同cookieのrestore・clock / counterを照合する。[whitebox](../../packages/sqlike/src/full/sql_prepared_wbtest.mbt)はDDL rollbackのABAとepochによる再準備を確認する。差分コーパスへNode / ChromiumのJS / Wasm cached SQLを追加し、566ケース×12経路を要求する。npmの独立したconsumerもcacheを有効にして上流1,000 queryとDrizzle migrationを検証する。
 
 schemaが変わる度にmetadata全体を再準備する。表単位の無効化や、キャッシュサイズの自動調整は未実装。一般のWHERE / JOIN / 範囲索引の専用plan、INSERT / DELETEのmetadata準備、直接typed ABIは別の改善対象として残す。
 

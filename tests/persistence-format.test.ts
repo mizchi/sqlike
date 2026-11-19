@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import * as sql from "../_build/js/release/build/mizchi/sqlike/sqlike.js";
+import * as sql from "../_build/js/release/build/mizchi/sqlike/full/full.js";
 import * as aot from "../_build/js/release/build/mizchi/litestream-example/runtime/runtime.js";
 import { buildCatalog } from "../scripts/aot-compiler.ts";
 import { aotBindings, aotValue } from "../src/aot-values.ts";
@@ -36,7 +36,7 @@ interface Driver {
 const factories: { target: string; open(): Driver }[] = [];
 for (const [target, r] of [
   ["JS", sql],
-  ["Wasm", await wasm("_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm") as unknown as typeof sql],
+  ["Wasm", await wasm("_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm") as unknown as typeof sql],
 ] as const) factories.push({
   target: `dynamic ${target}`,
   open() {

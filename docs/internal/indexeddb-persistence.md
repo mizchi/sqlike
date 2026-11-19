@@ -1,10 +1,10 @@
 # IndexedDB の差分保存とページ保存の比較
 
-現行の計測は[R02](aot-ltx-upload.md)、行ストアの変更は[P02](row-store.md)、保存形式は[S01の列差分](column-delta.md)を参照。P02はメモリ内のコピー単位を変え、IDBの列patch＋定期checkpointを維持する。以下は行after-image導入時点の実装・計測の記録である。
+2026-11-19以降の任意の増分ページ出力と既存checkpoint接続は[増分pager](incremental-pager.md)を参照。現行の計測は[R02](aot-ltx-upload.md)、行ストアの変更は[P02](row-store.md)、保存形式は[S01の列差分](column-delta.md)を参照。P02はメモリ内のコピー単位を変え、IDBの列patch＋定期checkpointを維持する。以下は行after-image導入時点の実装・計測の記録である。
 
 2026-11-15。SQLike / AOT の既定の永続化を、全量 JSON 保存から**行の after-image ジャーナル＋定期スナップショット**へ変更した。保存契約を実装から分離し、IndexedDB 以外のアダプターも注入できる。通常デモの `engine=sqlite` は従来の SQLite WASM / OPFS のまま。
 
-現行 SQLike では行差分が速い。ページ方式は SQLite ファイルを毎回再構築するため不利であり、増分 pager を持つ実装全般の優劣を示す比較ではない。IndexedDB はキーと値のレコード API で、4 KiB のレコードに分けても OS の書込位置や物理ページへの整列を指定する API にはならない。[IndexedDB 仕様](https://w3c.github.io/IndexedDB/#object-store-construct)を前提に、同じ保存層へ2種類の差分を流して比較した。
+この比較時点のSQLikeでは行差分が速い。ページ方式は SQLite ファイルを毎回再構築するため不利であり、増分 pager を持つ実装全般の優劣を示す比較ではない。IndexedDB はキーと値のレコード API で、4 KiB のレコードに分けても OS の書込位置や物理ページへの整列を指定する API にはならない。[IndexedDB 仕様](https://w3c.github.io/IndexedDB/#object-store-construct)を前提に、同じ保存層へ2種類の差分を流して比較した。
 
 ## 速度
 
@@ -80,10 +80,10 @@ const sql = await MoonDatabase.open(name, customSyncPersistenceFactory);
 
 ## 行after-image導入時点の実装（履歴）
 
-- MoonBit の [persistence.mbt](../../packages/sqlike/src/persistence.mbt) が insert / replace / delete の after-image を記録する。schema変更・import・restore は全量へ戻す。変更前後の順序とrowid変更を保持し、非決定的なSQLを再実行しない。4,096編集を超えた場合も全量へ戻す。
+- MoonBit の [persistence.mbt](../../packages/sqlike/src/full/persistence.mbt) が insert / replace / delete の after-image を記録する。schema変更・import・restore は全量へ戻す。変更前後の順序とrowid変更を保持し、非決定的なSQLを再実行しない。4,096編集を超えた場合も全量へ戻す。
 - `database_delta` / `aot_delta`、durable ACK後の `*_ack_delta`、復元用の `*_apply_delta` を追加した。AOTのProgram一致、base serial、行長・rowid・型・制約・FKを検査し、途中失敗では候補を公開しない。parserなしのAOTを維持し、旧論理画像と既存artifactの形式は変えていない。
-- [MoonImageStore](../../adapters/moon-image-store.ts) はIDB v2。小さなroot、checkpoint、順序付きdeltaを分離する。世代確認で全画像を読み戻さず、差分と世代を同じstrict transactionで更新する。128レコードまたは4 MiBで次回checkpointを要求する。snapshotを確定すると旧ログも同じtransactionで消す。
-- [aot-journal.ts](../../adapters/aot-journal.ts) はbase SQLite・LTXを変更時だけバイナリ添付にし、通常の行更新やACKで未変更ファイルを再送しない。互換性のため、**定期checkpointの全量SavedStateにはbase64が残る**。大きなoutboxを含むcheckpointの費用は別の改善対象である。
+- [MoonImageStore](../../adapters/moon-image-store.ts) は当時IDB v2。現行はv1/v2/v3のlogical recordを保ってDB schemaをv4へ更新し、任意のpage / CRC / LTX保存領域を追加した。小さなroot、checkpoint、順序付きdeltaを分離する。世代確認で全画像を読み戻さず、差分と世代を同じstrict transactionで更新する。128レコードまたは4 MiBで次回checkpointを要求する。snapshotを確定すると旧ログも同じtransactionで消す。
+- [aot-journal.ts](../../adapters/aot-journal.ts) はbase SQLite・LTXを変更時だけバイナリ添付にし、通常の行更新やACKで未変更ファイルを再送しない。互換性のため、**定期checkpointの全量SavedStateにはbase64が残る**。大きなoutboxを含むcheckpointの費用は旧inline経路では残る。任意のpage-backed checkpointではoutboxを別recordへ移し、logical snapshotにSQLite / LTX bytesを重複させない。
 - AOTは復元後の全量文字列を保持せず、同期SQLブリッジも初期画像の再適用後にバッファを解放する。行値は従来どおり不変で、rollback / clone の分離を保つ。
 - [IndexedDbImages](../../adapters/indexeddb-images.ts) はSQLikeの生SQLiteレプリカ画像もIDBに保存する。候補の保存完了後に論理cursorを確定し、その後にorphanを回収する。旧OPFS画像は注入した遅延フォールバックから移せる。新規DBはfilesystem APIを必要としない。このキャッシュAPIは現在も全量画像の読み書きで、ページ単位の検索キャッシュではない。
 

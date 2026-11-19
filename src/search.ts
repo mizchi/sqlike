@@ -1,5 +1,5 @@
 import * as runtime from "../_build/js/release/build/mizchi/sqlike/fts/fts.js";
-/** Optional, rebuildable search index. Import separately from the SQL runtime. */
+/** Row identifier and score returned by SearchIndex.search. */
 export interface SearchHit {
   rowid: bigint;
   rank: number;
@@ -10,6 +10,7 @@ function checked<T extends { error?: string }>(text: string): T {
   if (value.error) throw Error(value.error);
   return value;
 }
+/** Optional, rebuildable search index. Import separately from the SQL runtime. */
 export class SearchIndex {
   private readonly handle: ReturnType<typeof runtime.fts_open>;
   constructor(

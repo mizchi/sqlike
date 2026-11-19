@@ -1,16 +1,32 @@
 import { openDatabase } from "@mizchi/sqlike";
+import { openAotDatabase } from "@mizchi/sqlike/aot";
 import { DefinedDatabase } from "@mizchi/sqlike/defined";
 import { createDefinedDatabase } from "@mizchi/sqlike/defined/core";
 import { definedWasm } from "@mizchi/sqlike/defined/wasm";
+import {openAotExecutor,aotExecutorWasm} from "@mizchi/sqlike/aot/core";
 import { encodeFrame, decodeFrame } from "@mizchi/litestream/protocol";
 
 // Replaced by the fixture writer with build-time data before serving.
 const catalog = __NPM_CATALOG__;
+const program = __NPM_NATIVE_PROGRAM__;
 let wasmBytes: ArrayBuffer | undefined;
+let aotBytes: ArrayBuffer | undefined;
 (globalThis as unknown as { npmCheck: () => Promise<unknown> }).npmCheck = async () => {
   const db = openDatabase();
   if (db.values("SELECT 7")[0]?.[0] !== 7n) throw Error("browser SQL mismatch");
   db.close();
+  const native = openAotDatabase(program);
+  const blob = Uint8Array.of(0,255);
+  native.execute("add",[1n,12.5,"typed",blob]);blob[0]=99;
+  const statement = native.prepare("get"), typed = statement.get([1n]);
+  if (typed?.[0] !== 1n || typed[1] !== 12.5 || (typed[3] as Uint8Array)[0] !== 0) throw Error("browser native AOT mismatch");
+  statement.finalize();native.close();
+  const aotBinary=aotBytes??=await fetch('/node_modules/@mizchi/sqlike/dist/wasm/aot.wasm').then(r=>r.arrayBuffer());
+  const aotInstance=(await WebAssembly.instantiate(aotBinary,{},{builtins:['js-string'],importedStringConstants:'_'})).instance;
+  const executor=openAotExecutor(aotExecutorWasm(aotInstance.exports),program);
+  executor.execute('add',[1n,12.5,'executor',new Uint8Array([0,255])]);
+  if(executor.execute('get',[1n]).rows[0]?.[2]!=='executor')throw Error('browser executor mismatch');
+  executor.close();
   const fixed = await DefinedDatabase.open("npmpackage", catalog);
   await fixed.execute("add", [1n, "persistent"]);
   const rows = (await fixed.prepare("get").all()).map(row => row.map(value => typeof value === "bigint" ? String(value) : value));

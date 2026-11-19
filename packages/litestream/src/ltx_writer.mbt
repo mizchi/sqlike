@@ -130,11 +130,53 @@ fn encode_ltx_checked(
   }
   let pre = if min == 1UL { 0UL } else { db_checksum(base, size) }
   let post = db_checksum(data, size)
-  let out = @buffer.Buffer(size_hint=(data.length() / 4).max(256))
+  let mut page = 0
+  let input = Iter::new(fn() {
+    while page < data.length() / size {
+      let current = page
+      page += 1
+      let start = current * size
+      let bytes = data[start:start + size]
+      if min == 1UL ||
+        start + size > base.length() ||
+        bytes != base[start:start + size] {
+        return Some((current + 1, bytes))
+      }
+    }
+    None
+  })
+  ltx_write_pages(
+    size,
+    data.length() / size,
+    minimum,
+    maximum,
+    timestamp,
+    pre,
+    post,
+    data.length() / 4,
+    input,
+  )
+}
+
+///|
+fn ltx_write_pages(
+  size : Int32,
+  count : Int32,
+  minimum : String,
+  maximum : String,
+  timestamp : Int64,
+  pre : UInt64,
+  post : UInt64,
+  hint : Int32,
+  input : Iter[(Int32, BytesView)],
+) -> LtxResult raise {
+  let min = parse_txid(minimum)
+  let max = parse_txid(maximum)
+  let out = @buffer.Buffer(capacity=hint.max(256))
   out.write_bytes(b"LTX1")
   ltx_be(out, 0UL, 4)
   ltx_be(out, size.to_uint64(), 4)
-  ltx_be(out, (data.length() / size).to_uint64(), 4)
+  ltx_be(out, count.to_uint64(), 4)
   ltx_be(out, min, 8)
   ltx_be(out, max, 8)
   ltx_be(out, timestamp.reinterpret_as_uint64(), 8)
@@ -146,17 +188,10 @@ fn encode_ltx_checked(
   crc.write(out.to_bytes()[:])
   let index = @buffer.Buffer()
   let mut pages = 0
-  for page in 0..<(data.length() / size) {
-    let start = page * size
-    let bytes = data[start:start + size]
-    if min != 1UL &&
-      start + size <= base.length() &&
-      bytes == base[start:start + size] {
-      continue
-    }
+  for (page, bytes) in input {
     let offset = out.length()
     let frame = @buffer.Buffer(size_hint=10)
-    ltx_be(frame, (page + 1).to_uint64(), 4)
+    ltx_be(frame, page.to_uint64(), 4)
     ltx_be(frame, 1UL, 2)
     let compressed = lz4_compress(bytes)
     ltx_be(frame, compressed.length().to_uint64(), 4)
@@ -165,7 +200,7 @@ fn encode_ltx_checked(
     out.write_bytes(compressed[:])
     crc.write(header[:])
     crc.write(bytes)
-    ltx_varint(index, page + 1)
+    ltx_varint(index, page)
     ltx_varint(index, offset)
     ltx_varint(index, out.length() - offset)
     pages += 1
@@ -193,7 +228,7 @@ fn encode_ltx_checked(
         "minTXID": minimum,
         "maxTXID": maximum,
         "pageSize": size,
-        "pageCount": data.length() / size,
+        "pageCount": count,
         "pagesApplied": pages,
         "postChecksum": post.to_string(),
       } : Json).stringify(),

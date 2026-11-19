@@ -27,7 +27,8 @@ test("column journal preserves large values, trigger/FK effects and rollback thr
   });
   const output = await build({
     configFile: false, publicDir: false, logLevel: "error",
-    build: { write: false, minify: true, target: "esnext", lib: {
+    build: { write: false,
+      rolldownOptions: { output: { codeSplitting: false } }, minify: true, target: "esnext", lib: {
       entry: "e2e/fixtures/release-runtime.ts", formats: ["es"],
     } },
   });

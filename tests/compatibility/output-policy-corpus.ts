@@ -23,8 +23,6 @@ export function outputPolicyCases(): OutputPolicyCase[] {
     seed = ["INSERT INTO t VALUES(1,10),(2,20)"],
   ) => cases.push({ sql, mustReject, params, schema, seed });
   for (const sql of [
-    "SELECT id,max(v) FROM t",
-    "SELECT id,min(v) FROM t",
     "SELECT id,sum(v) FROM t",
     "SELECT count(*) FROM t HAVING id>1",
     "PRAGMA integrity_check",
@@ -45,6 +43,8 @@ export function outputPolicyCases(): OutputPolicyCase[] {
   ])
     add("SELECT ? LIKE ?", false, [text!, pattern!]);
   for (const sql of [
+    "SELECT id,max(v) FROM t",
+    "SELECT id,min(v) FROM t",
     "SELECT max(v),min(v),sum(v) FROM t",
     "SELECT sum(sum(v)) OVER() FROM t",
     "SELECT v,count(*) FROM t GROUP BY v ORDER BY v",

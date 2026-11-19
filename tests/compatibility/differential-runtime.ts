@@ -1,4 +1,4 @@
-import type * as SQL from "../../_build/js/release/build/mizchi/sqlike/sqlike.js";
+import type * as SQL from "../../_build/js/release/build/mizchi/sqlike/full/full.js";
 import type * as AOT from "../../_build/js/release/build/mizchi/litestream-example/runtime/runtime.js";
 import { aotBindings, aotValue } from "../../src/aot-values.ts";
 import { createSqlStatementCache } from "../../src/sql-statement-cache.ts";

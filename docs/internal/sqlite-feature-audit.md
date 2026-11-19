@@ -14,14 +14,14 @@ just sqlite-audit
 
 ## 実測結果
 
-0.1.2以降の未リリース変更で`ceil` / `ceiling` / `floor` / `trunc`を追加し、JS / Wasm GC / Chromium JSの一致は458件、atomic拒否は244件となった。出力不一致は0件。残る数学関数や他の未対応項目を一致へ繰り入れない。
+0.1.2以降の未リリース変更で`ceil` / `ceiling` / `floor` / `trunc`、集約内ORDER BY、行値比較、UPDATE FROM、VIRTUAL生成列、json_each / json_treeの対応範囲を追加し、2026-11-18のJS / Wasm GC / Chromium JSの一致は466件、atomic拒否は236件となった。出力不一致は0件。残る数学関数や他の未対応項目を一致へ繰り入れない。
 
-追加SQLと既存の文字列・条件関数を含め、一致した固定・生成プローブは458件。各署名だけでなく、境界値の差分コーパスと4実行経路のアプリ機能テストも別途照合する。244件の候補エラーは拒否と非変更の証拠を保持し、出力互換ゲートでは許容するが、全機能監査の一致には数えない。
+追加SQLと既存の文字列・条件関数を含め、一致した固定・生成プローブは466件。各署名だけでなく、境界値の差分コーパスと4実行経路のアプリ機能テストも別途照合する。236件の候補エラーは拒否と非変更の証拠を保持し、出力互換ゲートでは許容するが、全機能監査の一致には数えない。
 
 | 観測 | 件数 | 意味 |
 | --- | ---: | --- |
-| `matched-probe` | 458 | その項目の固定・生成プローブが本家と一致 |
-| `candidate-error` | 244 | 本家が受理した SQL を拒否、または意図したエラー契約と相違 |
+| `matched-probe` | 466 | その項目の固定・生成プローブが本家と一致 |
+| `candidate-error` | 236 | 本家が受理した SQL を拒否、または意図したエラー契約と相違 |
 | `value-mismatch` | 0 | 実行したプローブの値・型・順序の不一致。今回見つけた GROUP BY の差は修正済み |
 | `missing-api` | 306 | 本家の公開 C 関数名に相当するエクスポートがない |
 | `not-tested` | 599 | C の型・定数、未実行の関数・拡張・障害試験など |
@@ -36,10 +36,10 @@ just sqlite-audit
 | SQL 言語の見出し | 42 | 33 | 9 | 0 | 0 |
 | Core scalar の署名 | 60 | 39 | 17 | 2 | 2 |
 | Aggregate の署名 | 14 | 10 | 4 | 0 | 0 |
-| Math の署名 | 30 | 0 | 30 | 0 | 0 |
+| Math の署名 | 30 | 4 | 26 | 0 | 0 |
 | Date/time | 7 | 6 | 1 | 0 | 0 |
 | Window の署名 | 15 | 15 | 0 | 0 | 0 |
-| JSON 関数・演算子 | 36 | 15 | 21 | 0 | 0 |
+| JSON 関数・演算子 | 36 | 19 | 17 | 0 | 0 |
 | PRAGMA | 74 | 12 | 52 | 8 | 2 |
 | 拡張の見出し | 16 | 1 | 5 | 1 | 9 |
 
@@ -54,12 +54,12 @@ ANALYZE;
 
 CREATE VIRTUAL TABLE vt USING fts5(body);
 
-SELECT json_group_array(n ORDER BY id) FROM t;
+SELECT * FROM json_each('{"a":[1,2]}', '$.a[0]');
 ```
 
-CAST、基本日時、再帰CTE、SQLトランザクション、複合SELECT、複合FKと参照動作に加え、scalar min/max、LIKE ESCAPE、NULL順序、FROM subquery、任意の索引metadata・集約FILTER・JSON集約、S02のGLOB・char・数値literalを追加した。生成列、timediff・数学関数、windowの全frame構文、JSON5 / JSONB・table-valued JSONなどは未対応。署名の固定プローブ一致を、全入力・全組合せの互換性へ読み替えない。
+CAST、基本日時、再帰CTE、SQLトランザクション、複合SELECT、複合FKと参照動作に加え、scalar min/max、LIKE ESCAPE、NULL順序、FROM subquery、任意の索引metadata・集約FILTER・JSON集約、S02のGLOB・char・数値literalを追加した。STORED / REAL affinity等の生成列の残り、timediff・数学関数、windowの全frame構文、JSON5 / JSONB・JSON tableの複合root等は未対応。署名の固定プローブ一致を、全入力・全組合せの互換性へ読み替えない。
 
-上のJSON例の準備文は`CREATE TABLE t(id INTEGER PRIMARY KEY,n INTEGER);`。JSON集約自体の差分テストは通過したが、監査プローブは未対応の引数内ORDER BYを含むため候補エラーを維持する。通常のindex_infoは一致へ変わったが、宣言順や方向を復元できない自動索引metadataは明示拒否する。
+未リリースの[集約内ORDER BY](aggregate-order-by.md)により、従来の`SELECT json_group_array(n ORDER BY id) FROM t`（準備文`CREATE TABLE t(id INTEGER PRIMARY KEY,n INTEGER);`）の拒否は解消する。[json_each / json_tree](json-table-functions.md)も初期範囲を追加し、上の複合root等は明示拒否する。通常のindex_infoは一致へ変わったが、宣言順や方向を復元できない自動索引metadataは明示拒否する。
 
 今回、対応済みの GROUP BY でも、NOCASE の列で `'A'` と `'a'` を別グループにする誤りを発見した。比較時に各グループ式の collation を使うよう修正し、BINARY / NOCASE / RTRIM、INTEGER / REAL、NULL、複数キーを native と JS / Wasm GC で照合した。Chromium の監査でも該当ケースが一致する。
 

@@ -2,61 +2,11 @@
 package "mizchi/sqlike"
 
 // Values
-pub fn aot_ack_delta(AotDatabase, Int32) -> String
-
-pub fn aot_apply_delta(AotDatabase, String) -> String
-
-pub fn aot_clone(AotDatabase) -> AotDatabase
-
-pub fn aot_copy_connection_state(AotDatabase, AotDatabase) -> String
-
-pub fn aot_delta(AotDatabase, Bool) -> String
-
-pub fn aot_dump(AotDatabase) -> String
-
-pub fn aot_execute(AotDatabase, String, String) -> String
-
-pub fn aot_export_sqlite(AotDatabase) -> SqliteResult
-
-pub fn aot_finalize_values(AotPreparedValues) -> String
-
-pub fn aot_info(AotDatabase) -> String
-
-pub fn aot_open(String, String) -> AotDatabase
-
-pub fn aot_prepare_values(AotDatabase, String) -> AotPreparedValues
-
-pub fn aot_prepared_values(AotPreparedValues, String) -> Result[Array[Array[Value]], String]
-
-pub fn aot_query_info(AotDatabase, String) -> String
-
-pub fn aot_restore(AotDatabase, String) -> String
-
-pub fn aot_set_clock(AotDatabase, String) -> String
-
-pub fn binary_catalog_info(BinaryCatalog) -> String
-
-pub fn binary_catalog_schema(BinaryCatalog) -> Bytes
-
-pub fn binary_catalog_statements(BinaryCatalog) -> Bytes
-
-pub fn binary_catalog_storage(BinaryCatalog) -> Bytes
-
-pub fn binary_data(BinaryResult) -> Bytes
-
-pub fn binary_data_base64(BinaryResult) -> String
-
-pub fn binary_info(BinaryResult) -> String
-
-pub fn compile_program(String) -> String
-
 pub fn database_ack_delta(Database, Int32) -> String
 
 pub fn database_apply_delta(Database, String) -> String
 
 pub fn database_autocommit(Database) -> Bool
-
-pub fn database_changeset(Database, Database) -> String
 
 pub fn database_clone(Database) -> Database
 
@@ -69,10 +19,6 @@ pub fn database_dump(Database) -> String
 pub fn database_exec(Database, String, String, Bool) -> String
 
 pub fn database_exec_values(Database, String, String) -> String
-
-pub fn database_import_sqlite(Database, Bytes) -> String
-
-pub fn database_import_sqlite_base64(Database, String) -> String
 
 pub fn database_is_readonly(String) -> Bool
 
@@ -92,50 +38,6 @@ pub fn database_set_clock(Database, String) -> String
 
 pub fn database_version(Database) -> Int32
 
-pub fn defined_ack_delta(DefinedDatabase, Int32) -> String
-
-pub fn defined_apply_delta(DefinedDatabase, Bytes) -> String
-
-pub fn defined_apply_delta_base64(DefinedDatabase, String) -> String
-
-pub fn defined_clone(DefinedDatabase) -> DefinedDatabase
-
-pub fn defined_copy_connection_state(DefinedDatabase, DefinedDatabase) -> String
-
-pub fn defined_delta(DefinedDatabase, Bool) -> BinaryResult
-
-pub fn defined_execute(DefinedDatabase, String, String) -> String
-
-pub fn defined_export_sqlite(Bytes, Bytes, Bytes, Bytes) -> SqliteResult
-
-pub fn defined_info(DefinedDatabase) -> String
-
-pub fn defined_open(Bytes, Bytes, Bytes) -> DefinedDatabase
-
-pub fn defined_open_base64(String, String, String) -> DefinedDatabase
-
-pub fn defined_query_info(DefinedDatabase, String) -> String
-
-pub fn defined_restore(DefinedDatabase, Bytes) -> String
-
-pub fn defined_restore_base64(DefinedDatabase, String) -> String
-
-pub fn defined_set_clock(DefinedDatabase, String) -> String
-
-pub fn defined_snapshot(DefinedDatabase) -> BinaryResult
-
-pub fn pack_program_binary(String) -> BinaryCatalog
-
-pub fn program_runtime_requirements(String) -> String
-
-pub fn query_prepared_values(SqlPrepared, String) -> Result[Array[Array[Value]], String]
-
-pub fn sqlite_data(SqliteResult) -> Bytes
-
-pub fn sqlite_data_base64(SqliteResult) -> String
-
-pub fn sqlite_info(SqliteResult) -> String
-
 // Errors
 pub suberror SqliteError {
   SqliteError(code~ : ErrorCode, extended~ : ExtendedCode?, msg~ : String)
@@ -153,11 +55,8 @@ type BinaryResult
 type Connection
 pub fn Connection::changes(Self) -> Int64 raise SqliteError
 pub fn Connection::close(Self) -> Unit raise SqliteError
-pub fn Connection::export_sqlite(Self) -> Bytes raise SqliteError
-pub fn Connection::from_program(Program) -> Self
 pub fn Connection::open(String) -> Self raise SqliteError
 pub fn Connection::prepare(Self, String) -> Statement raise SqliteError
-pub fn Connection::prepare_compiled(Self, Query) -> Statement raise SqliteError
 pub fn Connection::set_clock(Self, Int64) -> Unit raise SqliteError
 
 type Database
@@ -191,9 +90,6 @@ pub(all) enum ExtendedCode {
 }
 
 type Program
-pub fn Program::load(String) -> Self raise SqliteError
-pub fn Program::load_binary(Bytes, Bytes) -> Self raise SqliteError
-pub fn Program::query(Self, String) -> Query raise SqliteError
 
 type Query
 

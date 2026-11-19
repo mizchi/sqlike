@@ -1,4 +1,8 @@
-import type { DefinedRuntime, DefinedExecution, DefinedDatabaseFactory } from "../src/defined-database-contract.ts";
+import type {
+  DefinedRuntime,
+  DefinedExecution,
+  DefinedDatabaseFactory,
+} from "../src/defined-database-contract.ts";
 import type { DefinedCatalog } from "../src/defined-contract.ts";
 import type { Value, ResultCell } from "../src/contract.ts";
 import type {
@@ -12,7 +16,10 @@ import {
   toBase64,
   fromBase64,
 } from "../src/aot-values.ts";
-export type { DefinedRuntime, DefinedExecution } from "../src/defined-database-contract.ts";
+export type {
+  DefinedRuntime,
+  DefinedExecution,
+} from "../src/defined-database-contract.ts";
 interface Info {
   schemaId: string;
   programId: string;
@@ -45,11 +52,13 @@ const decode = <T>(text: string): T => {
   return value;
 };
 /** Bind a runtime once, without importing a default engine. */
-export function createDefinedDatabase(defaultRuntime: DefinedRuntime): DefinedDatabaseFactory {
+export function createDefinedDatabase(
+  defaultRuntime: DefinedRuntime,
+): DefinedDatabaseFactory {
   /** Fixed-schema, named-statement execution. Persistent publication uses the
    * existing strict ImageStore/CAS boundary; core images contain no schema. */
   class DefinedDatabase {
-    private queue: Promise<unknown> = Promise.resolve();
+    private queue: Promise<void> = Promise.resolve();
     private closed = false;
     private poisoned = false;
     private plans = new Map<string, Plan>();
@@ -164,7 +173,11 @@ export function createDefinedDatabase(defaultRuntime: DefinedRuntime): DefinedDa
           throw Error("defined commit outcome requires reopen");
         return body();
       });
-      this.queue = task.catch(() => {});
+      // The caller receives the outcome; scheduling must not retain result buffers.
+      this.queue = task.then(
+        () => {},
+        () => {},
+      );
       return task;
     }
     private plan(name: string): Plan {

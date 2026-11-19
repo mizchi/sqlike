@@ -6,6 +6,7 @@ import { assertReads, bootstrapSafety, bumpSchema, decodeOperation, digest, immu
 import { failure, SyncFailure } from "./errors.ts";
 import { parseStatements } from "./protocol.ts";
 import { MAX_RESPONSE } from "./http.ts";
+import { readSchemaEntries } from "./schema-entries.ts";
 
 export const APP_SCHEMA = "CREATE TABLE IF NOT EXISTS notes(id TEXT PRIMARY KEY NOT NULL,title TEXT NOT NULL,score INTEGER NOT NULL DEFAULT 0,payload BLOB)";
 export class SyncError extends SyncFailure {
@@ -145,7 +146,7 @@ export class SyncEngine {
   snapshot(): Snapshot {
     return this.db.transaction(() => {
       const stamp = this.initialize ? reconcileSchema(this.db) : schemaStamp(this.db);
-      const schema = this.db.all("SELECT name,type,sql FROM sqlite_schema WHERE sql IS NOT NULL ORDER BY rowid").filter(r => !isInternalTable(String(r.name)));
+      const schema = readSchemaEntries(this.db).filter(r => !isInternalTable(r.name));
       const tables = schema.filter(r => r.type === "table").map(r => {
         const name = String(r.name);
         if (/CREATE\s+VIRTUAL/i.test(String(r.sql))) throw new SyncError("unsupported", "snapshot requires ordinary tables");

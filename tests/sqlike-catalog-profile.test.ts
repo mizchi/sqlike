@@ -42,17 +42,23 @@ async function runtimes(directory: string) {
 test("catalog-selected AOT and binary runtimes remove unused scalar and write implementations", async () => {
   const dir = await mkdtemp(join(tmpdir(), "sqlike-catalog-test-"));
   const writer = await DefinedDatabase.memory(
-    buildDefinedCatalog({ schema, queries: [{ name: "add", sql: "INSERT INTO t VALUES(?,?)" }] }),
+    buildDefinedCatalog({
+      schema,
+      queries: [{ name: "add", sql: "INSERT INTO t VALUES(?,?)" }],
+    }),
   );
   try {
     await writer.execute("add", [1n, "retained"]);
     const image = await writer.snapshot();
     for (const mode of ["aot", "defined"] as const) {
-      const built = await buildSqlikeRuntime(defineSqlike({ mode, features: [primaryKeyIndex] }), {
-        outDir: join(dir, mode),
-        catalog: source,
-        minify: false,
-      });
+      const built = await buildSqlikeRuntime(
+        defineSqlike({ mode, features: [primaryKeyIndex] }),
+        {
+          outDir: join(dir, mode),
+          catalog: source,
+          minify: false,
+        },
+      );
       assert.ok(built.requirements);
       assert.deepEqual(built.requirements.statements, ["select"]);
       assert.deepEqual(built.requirements.functionGroups, []);
@@ -63,6 +69,7 @@ test("catalog-selected AOT and binary runtimes remove unused scalar and write im
         "substring__value",
         "sql__round",
         "math__rounding__value",
+        "format__value",
         "database__prepare",
         "database__prepared__exec",
         "prepare__sql__metadata",
@@ -70,23 +77,34 @@ test("catalog-selected AOT and binary runtimes remove unused scalar and write im
         "prepare__update",
         "updated__row__from__plan",
         "simple__aggregate",
+        "runtime__call__capability",
       ])
         assert.ok(
           !code
             .split("\n")
-            .some((line) => line.startsWith("function ") && line.includes(symbol + "(")),
+            .some(
+              (line) =>
+                line.startsWith("function ") && line.includes(symbol + "("),
+            ),
           symbol,
         );
       assert.doesNotMatch(code, /function [^\n]*parse__statement\(/);
+      assert.doesNotMatch(code, /function [^\n]*Insertion[^\n(]*FromJson/);
       for (const [index, raw] of (await runtimes(built.directory)).entries()) {
         if (mode === "defined") {
-          const DB = createDefinedDatabase(index === 0 ? raw : definedWasm(raw));
+          const DB = createDefinedDatabase(
+            index === 0 ? raw : definedWasm(raw),
+          );
           const db = await DB.memory(buildDefinedCatalog(source), { image });
           assert.deepEqual((await db.execute("get")).rows, [[1n, "retained"]]);
           const snapshot = await db.snapshot();
           if ("close" in db && typeof db.close === "function") await db.close();
-          const reopened = await DB.memory(buildDefinedCatalog(source), { image: snapshot });
-          assert.deepEqual((await reopened.execute("get")).rows, [[1n, "retained"]]);
+          const reopened = await DB.memory(buildDefinedCatalog(source), {
+            image: snapshot,
+          });
+          assert.deepEqual((await reopened.execute("get")).rows, [
+            [1n, "retained"],
+          ]);
           await reopened.close();
           for (const sql of [
             "SELECT CASE WHEN 0 THEN glob('*',v) ELSE 1 END FROM t WHERE 0",
@@ -94,12 +112,24 @@ test("catalog-selected AOT and binary runtimes remove unused scalar and write im
             "INSERT INTO t VALUES(2,'x')",
           ])
             await assert.rejects(
-              DB.memory(buildDefinedCatalog({ schema, queries: [{ name: "q", sql }] })),
+              DB.memory(
+                buildDefinedCatalog({ schema, queries: [{ name: "q", sql }] }),
+              ),
               /catalog capability disabled/,
             );
         } else {
           const artifact = buildCatalog(source).artifact;
           assert.deepEqual(openCompiled(raw, artifact).execute("get").rows, []);
+          for (const expression of [
+            ["Literal"],
+            ["Literal", "Null", "extra"],
+            ["Column", "", 42],
+            ["UnknownExpression"],
+          ]) {
+            const malformed = JSON.parse(artifact);
+            malformed.queries[0].statement[1].projections[0].expression = expression;
+            assert.throws(() => openCompiled(raw, JSON.stringify(malformed)));
+          }
           for (const sql of [
             "SELECT CASE WHEN 0 THEN glob('*',v) ELSE 1 END FROM t WHERE 0",
             "SELECT CASE WHEN 0 THEN ceil(1.5) ELSE 1 END FROM t WHERE 0",
@@ -107,7 +137,11 @@ test("catalog-selected AOT and binary runtimes remove unused scalar and write im
           ])
             assert.throws(
               () =>
-                openCompiled(raw, buildCatalog({ schema, queries: [{ name: "q", sql }] }).artifact),
+                openCompiled(
+                  raw,
+                  buildCatalog({ schema, queries: [{ name: "q", sql }] })
+                    .artifact,
+                ),
               /catalog capability disabled/,
             );
         }
@@ -133,7 +167,10 @@ test("catalog inference includes schema, unused CASE, views, index expressions a
       { name: "json", sql: "SELECT json_array(1)" },
       { name: "filter", sql: "SELECT count(*) FILTER(WHERE id>0) FROM t" },
       { name: "window", sql: "SELECT row_number() OVER() FROM t" },
-      { name: "outer", sql: "SELECT p.id AS a,t.id AS b FROM p FULL JOIN t ON p.id=t.id" },
+      {
+        name: "outer",
+        sql: "SELECT p.id AS a,t.id AS b FROM p FULL JOIN t ON p.id=t.id",
+      },
       { name: "metadata", sql: "PRAGMA index_info(ix)" },
     ],
   };
@@ -175,7 +212,9 @@ test("catalog inference includes schema, unused CASE, views, index expressions a
     const db = openCompiled(runtime, buildCatalog(catalog).artifact);
     assert.deepEqual(db.execute("json").rows, [["[1]"]]);
     assert.deepEqual(db.execute("filter").rows, [[0n]]);
-    const manifest = JSON.parse(await readFile(join(dir, "profile.json"), "utf8"));
+    const manifest = JSON.parse(
+      await readFile(join(dir, "profile.json"), "utf8"),
+    );
     assert.deepEqual(manifest.requirements, r);
   } finally {
     await rm(dir, { recursive: true, force: true });
@@ -196,7 +235,10 @@ test("typed requirements ignore SQL text, literal defaults and comments, and cov
   const r = analyzeCatalogRequirements({
     schema: ["CREATE TABLE t(glob TEXT DEFAULT 'CURRENT_TIMESTAMP')"],
     queries: [
-      { name: "q", sql: "SELECT 'json_array() DELETE char()' /* glob() */ AS value FROM t" },
+      {
+        name: "q",
+        sql: "SELECT 'json_array() DELETE char()' /* glob() */ AS value FROM t",
+      },
     ],
   });
   assert.deepEqual(r.features, []);
@@ -220,8 +262,14 @@ test("all core function families, trigger writes and transactions retain native 
     ],
     queries: [
       { name: "begin", sql: "BEGIN" },
-      { name: "add", sql: "INSERT INTO t VALUES(1,'a'),(2,'b') RETURNING id,v" },
-      { name: "update", sql: "UPDATE t SET v=upper(v) WHERE id=1 RETURNING id,v" },
+      {
+        name: "add",
+        sql: "INSERT INTO t VALUES(1,'a'),(2,'b') RETURNING id,v",
+      },
+      {
+        name: "update",
+        sql: "UPDATE t SET v=upper(v) WHERE id=1 RETURNING id,v",
+      },
       { name: "delete", sql: "DELETE FROM t WHERE id=2 RETURNING id,v" },
       { name: "commit", sql: "COMMIT" },
       { name: "meta", sql: "PRAGMA table_info(t)" },
@@ -232,7 +280,7 @@ test("all core function families, trigger writes and transactions retain native 
       },
       {
         name: "scalar",
-        sql: "SELECT octet_length('😀'),quote('a'),unicode('é'),sign(-5),round(1.25,1),ceil(1.25),floor(-1.25),trunc(1.25),nullif(1,1),coalesce(NULL,2),ifnull(NULL,3),iif(1,4,5),if(0,4,5),changes(),last_insert_rowid(),typeof(1),hex('a'),length('😀'),lower('A'),upper('a'),abs(-5),1 IN(1,2),min(1,2),max(1,2)",
+        sql: "SELECT octet_length('😀'),quote('a'),unicode('é'),sign(-5),round(1.25,1),ceil(1.25),floor(-1.25),trunc(1.25),nullif(1,1),coalesce(NULL,2),ifnull(NULL,3),iif(1,4,5),if(0,4,5),changes(),last_insert_rowid(),typeof(1),hex('a'),length('😀'),lower('A'),upper('a'),abs(-5),1 IN(1,2),min(1,2),max(1,2),format('%d',42),printf('%s','x')",
       },
       {
         name: "aggregate",
@@ -265,9 +313,9 @@ test("all core function families, trigger writes and transactions retain native 
         const db =
           mode === "aot"
             ? openCompiled(raw, buildCatalog(catalog).artifact)
-            : await createDefinedDatabase(index === 0 ? raw : definedWasm(raw)).memory(
-                buildDefinedCatalog(catalog),
-              );
+            : await createDefinedDatabase(
+                index === 0 ? raw : definedWasm(raw),
+              ).memory(buildDefinedCatalog(catalog));
         try {
           for (const ddl of catalog.schema) native.raw.exec(ddl);
           for (const q of catalog.queries)
@@ -291,7 +339,10 @@ test("CLI resolves catalog paths relative to its profile file and emits reproduc
   const dir = await mkdtemp(join(tmpdir(), "sqlike-catalog-cli-"));
   try {
     await mkdir(join(dir, "source"));
-    await writeFile(join(dir, "source", "catalog.json"), JSON.stringify(source));
+    await writeFile(
+      join(dir, "source", "catalog.json"),
+      JSON.stringify(source),
+    );
     await writeFile(
       join(dir, "profile.json"),
       JSON.stringify({
@@ -311,7 +362,9 @@ test("CLI resolves catalog paths relative to its profile file and emits reproduc
       ],
       { stdio: "pipe", timeout: 60000 },
     );
-    const p = JSON.parse(await readFile(join(dir, "output", "profile.json"), "utf8"));
+    const p = JSON.parse(
+      await readFile(join(dir, "output", "profile.json"), "utf8"),
+    );
     assert.deepEqual(p.requirements, analyzeCatalogRequirements(source));
     assert.deepEqual(p.features, ["primaryKeyIndex"]);
   } finally {
@@ -320,11 +373,22 @@ test("CLI resolves catalog paths relative to its profile file and emits reproduc
 });
 
 test("generated catalog traversals and capability constants cover the current versioned contracts", () => {
-  const hash = (p: string) => createHash("sha256").update(readFileSync(p)).digest("hex");
-  for (const file of ["capability_config_generated.mbt", "runtime_usage_generated.mbt"]) {
-    const text = readFileSync(`packages/sqlike/src/${file}`, "utf8");
-    assert.ok(text.includes(`Capability SHA256: ${hash("src/runtime-capabilities.json")}`));
-    assert.ok(text.includes(`Contract SHA256: ${hash("src/binary-wire.json")}`));
+  const hash = (p: string) =>
+    createHash("sha256").update(readFileSync(p)).digest("hex");
+  for (const file of [
+    "capability_config_generated.mbt",
+    "runtime_usage_generated.mbt",
+    "json_decode_generated.mbt",
+  ]) {
+    const text = readFileSync(`packages/sqlike/src/full/${file}`, "utf8");
+    assert.ok(
+      text.includes(
+        `Capability SHA256: ${hash("src/runtime-capabilities.json")}`,
+      ),
+    );
+    assert.ok(
+      text.includes(`Contract SHA256: ${hash("src/binary-wire.json")}`),
+    );
   }
 });
 
@@ -350,14 +414,18 @@ test("FK cascades remain reachable when the catalog has no DELETE or UPDATE stat
     assert.deepEqual(built.requirements?.statements, ["insert", "select"]);
     assert.deepEqual(built.profile.features, ["foreignKeys"]);
     for (const [index, raw] of (await runtimes(dir)).entries()) {
-      const db = await createDefinedDatabase(index === 0 ? raw : definedWasm(raw)).memory(
-        buildDefinedCatalog(catalog),
-      );
+      const db = await createDefinedDatabase(
+        index === 0 ? raw : definedWasm(raw),
+      ).memory(buildDefinedCatalog(catalog));
       const native = new NodeDatabase(":memory:");
       try {
         for (const ddl of catalog.schema) native.raw.exec(ddl);
         for (const q of catalog.queries)
-          assert.deepEqual((await db.execute(q.name)).rows, nativeValues(native, q.sql), q.name);
+          assert.deepEqual(
+            (await db.execute(q.name)).rows,
+            nativeValues(native, q.sql),
+            q.name,
+          );
         assert.deepEqual((await db.execute("read")).rows, []);
       } finally {
         native.close();
@@ -388,6 +456,7 @@ test("each core function family is independently selectable from catalog IR", as
     sign: "SELECT sign(-1)",
     round: "SELECT round(1.25,1)",
     mathRounding: "SELECT ceil(1.25),ceiling(-1.25),floor(-1.25),trunc(1.25)",
+    format: "SELECT format('%d',42),printf('%Q','a')",
     nullif: "SELECT nullif(1,1)",
     coalesce: "SELECT coalesce(NULL,1)",
     conditional: "SELECT iif(1,2,3)",
@@ -422,7 +491,9 @@ test("each core function family is independently selectable from catalog IR", as
         targets: ["js"],
       });
       assert.deepEqual(built.requirements?.functionGroups, [name]);
-      const runtime = await import(pathToFileURL(join(built.directory, "runtime.js")).href);
+      const runtime = await import(
+        pathToFileURL(join(built.directory, "runtime.js")).href
+      );
       const db = openCompiled(runtime, buildCatalog(catalog).artifact);
       const native = new NodeDatabase(":memory:");
       try {

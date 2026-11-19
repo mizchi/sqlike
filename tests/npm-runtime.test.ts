@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import * as runtime from "../_build/js/release/build/mizchi/sqlike/sqlike.js";
+import * as runtime from "../_build/js/release/build/mizchi/sqlike/full/full.js";
 import { openSql } from "../src/sqlike-runtime.ts";
 import { drizzle } from "../adapters/drizzle.ts";
 import { sql } from "drizzle-orm";

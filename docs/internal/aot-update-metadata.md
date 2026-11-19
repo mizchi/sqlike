@@ -57,7 +57,7 @@ catalogから関数・文を選択してOxcでminifyしたJSON / definedのJS / 
 
 ## 互換性と次の対象
 
-[`prepared_update_wbtest.mbt`](../../packages/sqlike/src/prepared_update_wbtest.mbt)でplanの再利用・query間のlayout共有・clone / restore後も値を保持しないことを確認する。[native差分](../../tests/aot-update.test.ts)はJSON / バイナリのJS / Wasm各経路で、bind型の切替、REAL affinity、NOCASE、BLOB / NULL、重複代入・列名、隠しrowidとそのshadow、STRICT / WITHOUT ROWID、相関subquery、時計とcounter、同値UPDATEのtrigger、FK cascade、複数行の途中失敗、SAVEPOINT、clone / restoreを検査する。
+[`prepared_update_wbtest.mbt`](../../packages/sqlike/src/full/prepared_update_wbtest.mbt)でplanの再利用・query間のlayout共有・clone / restore後も値を保持しないことを確認する。[native差分](../../tests/aot-update.test.ts)はJSON / バイナリのJS / Wasm各経路で、bind型の切替、REAL affinity、NOCASE、BLOB / NULL、重複代入・列名、隠しrowidとそのshadow、STRICT / WITHOUT ROWID、相関subquery、時計とcounter、同値UPDATEのtrigger、FK cascade、複数行の途中失敗、SAVEPOINT、clone / restoreを検査する。
 
 一般式の列名解決、RETURNINGの評価・JSON marshal、候補索引の解釈は残る。今回は式を列slotへ書き換える独自評価器や新しいABIは導入していない。通常SQLのparse / prepare固定費とJSON割当はIssue #1の後続候補として維持する。
 

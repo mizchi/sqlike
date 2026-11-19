@@ -33,7 +33,7 @@ const date = new Date("2026-01-02T03:04:05.000Z");
 test("Drizzle CRUD, RETURNING, placeholders and duplicate JOIN columns agree on native/JS/Wasm", async () => {
   const wasm = (
     await WebAssembly.instantiate(
-      readFileSync("_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm"),
+      readFileSync("_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm"),
       {},
       { builtins: ["js-string"], importedStringConstants: "_" },
     )

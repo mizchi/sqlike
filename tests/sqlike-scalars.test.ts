@@ -16,7 +16,7 @@ import type { Cell } from "../src/contract.ts";
 
 test("string and conditional scalars match SQLite in JS, Wasm GC and parser-free AOT without exclusions", async () => {
   const { instance } = await WebAssembly.instantiate(
-    readFileSync("_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm"),
+    readFileSync("_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm"),
     {},
     { builtins: ["js-string"], importedStringConstants: "_" },
   );

@@ -1,0 +1,253 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "mizchi/sqlike/full"
+
+// Values
+pub fn aot_ack_delta(AotDatabase, Int32) -> String
+
+pub fn aot_apply_delta(AotDatabase, String) -> String
+
+pub fn aot_clone(AotDatabase) -> AotDatabase
+
+pub fn aot_copy_connection_state(AotDatabase, AotDatabase) -> String
+
+pub fn aot_delta(AotDatabase, Bool) -> String
+
+pub fn aot_dump(AotDatabase) -> String
+
+pub fn aot_execute(AotDatabase, String, String) -> String
+
+pub fn aot_export_sqlite(AotDatabase) -> SqliteResult
+
+pub fn aot_finalize_values(AotPreparedValues) -> String
+
+pub fn aot_info(AotDatabase) -> String
+
+pub fn aot_native_execute(AotDatabase, String, Array[Value]) -> Result[AotNativeResult, String]
+
+pub fn aot_native_values(AotPreparedValues, Array[Value]) -> Result[Array[Array[Value]], String]
+
+pub fn aot_open(String, String) -> AotDatabase
+
+pub fn aot_prepare_values(AotDatabase, String) -> AotPreparedValues
+
+pub fn aot_prepared_execute(AotPreparedValues, String) -> String
+
+pub fn aot_prepared_values(AotPreparedValues, String) -> Result[Array[Array[Value]], String]
+
+pub fn aot_query_info(AotDatabase, String) -> String
+
+pub fn aot_restore(AotDatabase, String) -> String
+
+pub fn aot_set_clock(AotDatabase, String) -> String
+
+pub fn binary_catalog_info(BinaryCatalog) -> String
+
+pub fn binary_catalog_schema(BinaryCatalog) -> Bytes
+
+pub fn binary_catalog_statements(BinaryCatalog) -> Bytes
+
+pub fn binary_catalog_storage(BinaryCatalog) -> Bytes
+
+pub fn binary_data(BinaryResult) -> Bytes
+
+pub fn binary_data_base64(BinaryResult) -> String
+
+pub fn binary_info(BinaryResult) -> String
+
+pub fn compile_program(String) -> String
+
+pub fn database_ack_delta(Database, Int32) -> String
+
+pub fn database_apply_delta(Database, String) -> String
+
+pub fn database_autocommit(Database) -> Bool
+
+pub fn database_changeset(Database, Database) -> String
+
+pub fn database_clone(Database) -> Database
+
+pub fn database_copy_connection_state(Database, Database) -> Unit
+
+pub fn database_delta(Database, Bool) -> String
+
+pub fn database_dump(Database) -> String
+
+pub fn database_exec(Database, String, String, Bool) -> String
+
+pub fn database_exec_values(Database, String, String) -> String
+
+pub fn database_import_sqlite(Database, Bytes) -> String
+
+pub fn database_import_sqlite_base64(Database, String) -> String
+
+pub fn database_is_readonly(String) -> Bool
+
+pub fn database_open() -> Database
+
+pub fn database_prepare(Database, String) -> SqlPrepared
+
+pub fn database_prepared_exec(SqlPrepared, String, Bool, Bool) -> String
+
+pub fn database_query_values(Database, String, String) -> String
+
+pub fn database_restore(Database, String) -> String
+
+pub fn database_serial(Database) -> Int32
+
+pub fn database_set_clock(Database, String) -> String
+
+pub fn database_version(Database) -> Int32
+
+pub fn defined_ack_delta(DefinedDatabase, Int32) -> String
+
+pub fn defined_apply_delta(DefinedDatabase, Bytes) -> String
+
+pub fn defined_apply_delta_base64(DefinedDatabase, String) -> String
+
+pub fn defined_clone(DefinedDatabase) -> DefinedDatabase
+
+pub fn defined_copy_connection_state(DefinedDatabase, DefinedDatabase) -> String
+
+pub fn defined_delta(DefinedDatabase, Bool) -> BinaryResult
+
+pub fn defined_execute(DefinedDatabase, String, String) -> String
+
+pub fn defined_export_sqlite(Bytes, Bytes, Bytes, Bytes) -> SqliteResult
+
+pub fn defined_info(DefinedDatabase) -> String
+
+pub fn defined_open(Bytes, Bytes, Bytes) -> DefinedDatabase
+
+pub fn defined_open_base64(String, String, String) -> DefinedDatabase
+
+pub fn defined_query_info(DefinedDatabase, String) -> String
+
+pub fn defined_restore(DefinedDatabase, Bytes) -> String
+
+pub fn defined_restore_base64(DefinedDatabase, String) -> String
+
+pub fn defined_set_clock(DefinedDatabase, String) -> String
+
+pub fn defined_snapshot(DefinedDatabase) -> BinaryResult
+
+pub fn pack_program_binary(String) -> BinaryCatalog
+
+pub fn program_runtime_requirements(String) -> String
+
+pub fn query_prepared_values(SqlPrepared, String) -> Result[Array[Array[Value]], String]
+
+pub fn sqlite_data(SqliteResult) -> Bytes
+
+pub fn sqlite_data_base64(SqliteResult) -> String
+
+pub fn sqlite_info(SqliteResult) -> String
+
+// Errors
+pub suberror SqliteError {
+  SqliteError(code~ : ErrorCode, extended~ : ExtendedCode?, msg~ : String)
+}
+
+// Types and methods
+type AotDatabase
+
+pub struct AotNativeResult {
+  names : Array[String]
+  rows : Array[Array[Value]]
+  read_only : Bool
+  changes : Int32
+}
+
+type AotPreparedValues
+
+type BinaryCatalog
+
+type BinaryResult
+
+type Connection
+pub fn Connection::changes(Self) -> Int64 raise SqliteError
+pub fn Connection::close(Self) -> Unit raise SqliteError
+pub fn Connection::export_sqlite(Self) -> Bytes raise SqliteError
+pub fn Connection::from_program(Program) -> Self
+pub fn Connection::open(String) -> Self raise SqliteError
+pub fn Connection::prepare(Self, String) -> Statement raise SqliteError
+pub fn Connection::prepare_compiled(Self, Query) -> Statement raise SqliteError
+pub fn Connection::set_clock(Self, Int64) -> Unit raise SqliteError
+
+type Database
+
+type DefinedDatabase
+
+#derive(Eq)
+pub(all) enum ErrorCode {
+  Error
+  Busy
+  ReadOnly
+  Corrupt
+  Constraint
+  Mismatch
+  Misuse
+  Range
+  CantOpen
+  Unknown(Int32)
+}
+
+#derive(Eq)
+pub(all) enum ExtendedCode {
+  ConstraintCheck
+  ConstraintForeignKey
+  ConstraintNotNull
+  ConstraintPrimaryKey
+  ConstraintUnique
+  ConstraintTrigger
+  ConstraintDatatype
+  Unknown(Int32)
+}
+
+type Program
+pub fn Program::load(String) -> Self raise SqliteError
+pub fn Program::load_binary(Bytes, Bytes) -> Self raise SqliteError
+pub fn Program::query(Self, String) -> Query raise SqliteError
+
+type Query
+
+type SqlPrepared
+
+type SqliteResult
+
+type Statement
+pub fn[T : Bind] Statement::bind(Self, index~ : Int32, T) -> Unit raise SqliteError
+pub fn[T : Column] Statement::column(Self, index~ : Int32) -> T raise SqliteError
+pub fn Statement::column_count(Self) -> Int32 raise SqliteError
+pub fn Statement::column_name(Self, index~ : Int32) -> String raise SqliteError
+pub fn Statement::finalize(Self) -> Unit raise SqliteError
+pub fn Statement::reset(Self, clear_bindings? : Bool) -> Unit raise SqliteError
+pub fn Statement::step(Self) -> Bool raise SqliteError
+
+#derive(Eq)
+pub(all) enum Value {
+  Null
+  Integer(Int64)
+  Real(Double)
+  Text(String)
+  Blob(Bytes)
+}
+pub impl Bind for Value
+pub impl Column for Value
+
+// Type aliases
+
+// Traits
+trait Bind
+pub impl Bind for Int32
+pub impl Bind for Int64
+pub impl Bind for Double
+pub impl Bind for String
+pub impl Bind for Bytes
+pub impl Bind for BytesView
+pub impl Bind for StringView
+
+trait Column
+pub impl Column for Int64
+pub impl Column for Double
+pub impl Column for String
+pub impl Column for Bytes

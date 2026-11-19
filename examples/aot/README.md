@@ -1,7 +1,7 @@
-# AOT 統合サンプル
+# AOT integration example
 
-`mizchi/litestream-example` は SQLike と Litestream を組み合わせるアプリ用モジュール。`src/runtime` がブラウザ向けの DB 実行・SQLite writer・LTX reader / writer を export する。SQL parser は配信ランタイムに含めない。
+`mizchi/litestream-example` composes SQLike and Litestream into an application module. `src/runtime` exports browser database execution, the SQLite writer and LTX reader/writer. The distributed runtime excludes the SQL parser.
 
-ライブラリの `mizchi/sqlike` と `mizchi/litestream` は相互に依存せず、サンプルが両者に依存する。`moon.work` からまとめてビルドする。
+The `mizchi/sqlike` and `mizchi/litestream` libraries remain independent; this example depends on both and builds through `moon.work`.
 
-`just build-lite` 後に `/lite/` を開く。[カタログ](../notes/catalog.json)、[利用手順](../../docs/internal/aot-ltx-plan.md)を参照。
+Run `just build-lite`, then open `/lite/`. See the [catalog](../notes/catalog.json) and [integration design (Japanese)](../../docs/internal/aot-ltx-plan.md).

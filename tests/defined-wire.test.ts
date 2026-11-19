@@ -22,15 +22,21 @@ const instantiate = async (path: string) =>
 test("generated binary codecs match the explicit versioned wire contract", () => {
   const contract = readFileSync("src/binary-wire.json");
   const hash = createHash("sha256").update(contract).digest("hex");
+  const capabilities = createHash("sha256").update(readFileSync("src/runtime-capabilities.json")).digest("hex");
   for (const file of [
     "binary_generated.mbt",
     "feature_validation_generated.mbt",
-  ])
+    "json_decode_generated.mbt",
+  ]) {
     assert.ok(
-      readFileSync(`packages/sqlike/src/${file}`, "utf8").includes(
+      readFileSync(`packages/sqlike/src/full/${file}`, "utf8").includes(
         `Contract SHA256: ${hash}`,
       ),
     );
+    assert.ok(readFileSync(`packages/sqlike/src/full/${file}`, "utf8").includes(
+      `Capability SHA256: ${capabilities}`,
+    ));
+  }
 });
 test("binary definition and row image bytes agree on JS/Wasm and SHA256 matches Node", async () => {
   const wasm = definedWasm(
@@ -42,7 +48,9 @@ test("binary definition and row image bytes agree on JS/Wasm and SHA256 matches 
     "_build/wasm-gc/release/build/mizchi/sqlike/compiler/compiler.wasm",
   )) as unknown as typeof compiler;
   const request = JSON.stringify({
-    schema: ["CREATE TABLE t(id INTEGER PRIMARY KEY,body TEXT,n REAL,b BLOB)"],
+    // No numeric affinity on n: the codec must retain -0 bits. REAL columns
+    // normalize it to +0, covered by the native differential write tests.
+    schema: ["CREATE TABLE t(id INTEGER PRIMARY KEY,body TEXT,n BLOB,b BLOB)"],
     queries: [
       { name: "put", sql: "INSERT INTO t VALUES(?,?,?,?) RETURNING *" },
       { name: "read", sql: "SELECT * FROM t" },

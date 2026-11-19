@@ -1,4 +1,4 @@
-import * as runtime from "../../_build/js/release/build/mizchi/sqlike/sqlike.js";
+import * as runtime from "./engine.ts";
 import { openSql } from "../../src/sqlike-runtime.ts";
 import type { SqlConnectionOptions } from "../../src/sqlike-runtime.ts";
 export type { SqlConnection, SqlConnectionOptions } from "../../src/sqlike-runtime.ts";

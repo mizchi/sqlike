@@ -1,7 +1,7 @@
 import { spawn, execFile, type ChildProcess } from "node:child_process";
 import { promisify } from "node:util";
 import { mkdirSync, mkdtempSync, readFileSync, writeFileSync, rmSync, statSync } from "node:fs";
-import { readFile, readdir } from "node:fs/promises";
+import { readdir } from "node:fs/promises";
 import { createHash, randomUUID } from "node:crypto";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
@@ -11,6 +11,7 @@ import { NodeDatabase } from "./node-database.ts";
 import { SyncEngine } from "../src/engine.ts";
 import type { Snapshot } from "../src/contract.ts";
 import type { LtxCatalog, LtxCatalogFile } from "../src/ltx-contract.ts";
+import { readReplicaLtx } from "./litestream-files.ts";
 
 const execute = promisify(execFile);
 
@@ -73,11 +74,7 @@ export class LitestreamReplica {
     return { format: 3, epoch: this.epoch, minRevision, targetTXID, files };
   }
   async file(id: string): Promise<Buffer> {
-    if (!/^[0-9]\/[0-9a-f]{16}-[0-9a-f]{16}\.ltx$/.test(id)) throw new Error("invalid LTX file ID");
-    const path = join(this.root, "ltx", id);
-    const stat = statSync(path);
-    if (!stat.isFile() || stat.size > 64 * 1024 * 1024) throw new Error("LTX file exceeds 64 MiB limit");
-    return readFile(path);
+    return readReplicaLtx(this.root, id);
   }
   async snapshot(minRevision: number): Promise<Snapshot> {
     const dir = mkdtempSync(join(tmpdir(), "browser-litestream-restore-"));

@@ -63,9 +63,9 @@ test("the native-result bridge is absent from default SQL and AOT runtimes", () 
     assert.doesNotMatch(readFileSync(`_build/js/release/build/mizchi/${path}.js`, "utf8"), /query__prepared__values|NativeValue/);
 });
 
-test("experimental SELECT results preserve all 566 supported differential traces", () => {
+test("experimental SELECT results preserve the complete supported differential corpus", () => {
   const cases = differentialCorpus();
-  assert.equal(cases.length, 566);
+  assert.ok(cases.length >= 586, "the differential corpus must not shrink");
   for (const c of cases) {
     const native = oracleDriver(), db = runtime.open();
     try {

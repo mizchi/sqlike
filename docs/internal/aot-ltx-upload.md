@@ -16,12 +16,14 @@
 DOを選ぶ場合は初回送信前に保存先を変更する。`?upload=/do-aot-ltx/my-notes`でも初期値を指定できる。一度送信先を固定したローカルDBは、別の送信先へ自動で付け替えない。再起動時は保存済みの送信先を入力欄へ復元して編集不可にし、同じ保存先へ再送できる。
 
 ```ts
-// デモのWorkerを通し、最新checkpointと未確認ファイルを順番に送る。
+// デモのWorkerを通し、未確認ファイルを回収して最新checkpointを送る。
 await window.liteDemo.sync("/do-aot-ltx/my-notes");
 // => { uploaded: 2 }
 ```
 
-ライブラリでは[AotDatabase](../../adapters/aot-database.ts)の`checkpoint()`後に[uploadAotLtx](../../src/aot-upload.ts)へDB・絶対URL・任意のfetch実装を渡す。通信処理はMoonBitの同期評価や保存adapterから分離した。`sync()`は明示呼出しであり、常駐する背景同期・定期retryはまだ設けていない。失敗後は同じ送信先で再呼出しする。
+ライブラリでは[syncAotLtx](../../src/aot-upload.ts)へ[AotDatabase](../../adapters/aot-database.ts)・絶対URL・任意のfetch実装を渡す。未確認ファイルの送信・ACK回収→最新SQLのcheckpoint→もう一巡の送信を行い、`{ uploaded, checkpoint }`を返す。Workerは既存の`{ uploaded }`を維持し、保留時だけ`deferred`を追加する。`uploadAotLtx()`単体は取得時点のpendingだけを送る。通信処理はMoonBitの同期評価や保存adapterから分離した。同期は明示呼出しであり、常駐する背景同期・定期retryはまだ設けていない。失敗後は同じ送信先で再呼出しする。
+
+未リリースの追加として、永続AOTは既定128件のpendingでcheckpointを保留し、SQLの論理保存を継続する。`outboxLimit`は1〜128。保留は`created: false`と`deferred: { reason: 'outbox-full', pending, limit }`で返し、既存のbytesやTXIDは変更しない。再接続は先にACKを回収するため、満杯からでも最新SQLへ追いつける。各同期はupload最大2巡とcheckpoint1回で終了し、その後の書込は次回へ残す。[契約と回帰検証](aot-outbox-backpressure.md)
 
 ## 一つの物理履歴の所有
 

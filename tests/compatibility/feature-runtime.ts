@@ -5,7 +5,7 @@ import {
   MoonDatabase,
   type MoonSqlRuntime,
 } from "../../adapters/moon-database.ts";
-import * as jsRuntime from "../../_build/js/release/build/mizchi/sqlike/sqlike.js";
+import * as jsRuntime from "../../_build/js/release/build/mizchi/sqlike/full/full.js";
 import type { Value } from "../../src/contract.ts";
 import {
   catalogFeatures,
@@ -69,7 +69,7 @@ export function moonDriver(runtime: MoonSqlRuntime = jsRuntime): AuditDriver {
 }
 export async function wasmRuntime(): Promise<MoonSqlRuntime> {
   const { instance, module } = await WebAssembly.instantiate(
-    readFileSync("_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm"),
+    readFileSync("_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm"),
     {},
     { builtins: ["js-string"], importedStringConstants: "_" },
   );
@@ -174,11 +174,11 @@ export function auditPlan() {
       oracleSHA256: hash(serialize(oracle)),
       artifacts: {
         js: hash(
-          readFileSync("_build/js/release/build/mizchi/sqlike/sqlike.js"),
+          readFileSync("_build/js/release/build/mizchi/sqlike/full/full.js"),
         ),
         wasmGC: hash(
           readFileSync(
-            "_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm",
+            "_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm",
           ),
         ),
       },

@@ -76,7 +76,7 @@ readonlyでもSELECTの実行用IR・主キーアクセスが追加される。�
 MoonBit各57件、Node 375件、Chromium 59件、型・strict checkを通過。厳密差分566ケース×8経路は不一致0、出力監査も各環境454一致・248 atomic拒否・誤出力0を維持した。新しいnative比較の行列は4経路でINTEGER / REAL / TEXT / NULL / BLOB、比較式とLIMIT / OFFSETを切り替える。SQLite全機能互換の判定は引き続きincompatibleである。
 <!-- bound-plan-results:end -->
 
-列slot・lazy Environmentは[whiteboxテスト](../../packages/sqlike/src/bound_plan_wbtest.mbt)で確認する。native差分は各storage class、数値変換、NOCASE / BINARY / RTRIM、CAST / unary plus、NULL、shadowされたTRUE / FALSE、hidden rowid、複合主キー、LIMIT型切替を含む。既存の失敗後状態・trigger / FK・savepoint・clone / restore、binary / catalog選択ビルドの検査も維持する。
+列slot・lazy Environmentは[whiteboxテスト](../../packages/sqlike/src/full/bound_plan_wbtest.mbt)で確認する。native差分は各storage class、数値変換、NOCASE / BINARY / RTRIM、CAST / unary plus、NULL、shadowされたTRUE / FALSE、hidden rowid、複合主キー、LIMIT型切替を含む。既存の失敗後状態・trigger / FK・savepoint・clone / restore、binary / catalog選択ビルドの検査も維持する。
 
 次は、範囲索引・sort / LIMITの準備済み計画、関数やCASEの引数内部のslot化、INSERT / DELETEへの拡張が候補。runtimeのサイズと差分結果を各段階で確認する。
 

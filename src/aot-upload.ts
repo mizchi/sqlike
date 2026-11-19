@@ -1,14 +1,15 @@
-import type { AotDatabase } from "../adapters/aot-database.ts";
 import { sha256 } from "./aot-values.ts";
 import { responseBytes, timedRequest } from "./http.ts";
 import {
   ltxFilename,
   parseLtxUpload,
   verifyLtxAck,
+  type AotLtxUploadSource,
+  type AotLtxSyncSource,
 } from "./aot-upload-contract.ts";
 
 export async function uploadAotLtx(
-  db: Pick<AotDatabase, "bindUpload" | "pending" | "acknowledge">,
+  db: AotLtxUploadSource,
   endpoint: string,
   request: typeof fetch = (...args) => fetch(...args),
 ) {
@@ -58,4 +59,18 @@ export async function uploadAotLtx(
     uploaded++;
   }
   return { uploaded };
+}
+
+/** Bounded synchronization: drain a captured outbox, checkpoint current durable
+ * SQL, then drain one more captured outbox. Writes arriving after that checkpoint
+ * stay local for the next call; network retries remain explicitly caller-owned. */
+export async function syncAotLtx(
+  db: AotLtxSyncSource,
+  endpoint: string,
+  request: typeof fetch = (...args) => fetch(...args),
+) {
+  const first = await uploadAotLtx(db, endpoint, request);
+  const checkpoint = await db.checkpoint();
+  const second = await uploadAotLtx(db, endpoint, request);
+  return { uploaded: first.uploaded + second.uploaded, checkpoint };
 }

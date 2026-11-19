@@ -16,7 +16,7 @@ import { bootstrapSafety, observeSQL } from "../src/safety.ts";
 import { packResult, unpack, parseStatements } from "../src/protocol.ts";
 
 test("the same MoonBit SQL core runs as Wasm GC and matches all 842 oracle steps", async () => {
-  const bytes = await readFile("_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm");
+  const bytes = await readFile("_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm");
   const { instance, module } = await WebAssembly.instantiate(
     bytes,
     {},

@@ -45,7 +45,7 @@ engine単体のJS、minified未圧縮 / Brotli quality 11、単位B。丸め4関
 
 ## 検証と後続
 
-[`result_writer_wbtest.mbt`](../../packages/sqlike/src/result_writer_wbtest.mbt)で旧Cell encoderとの一致、int64境界、最小非ゼロREAL・最大REAL、無限大、負のゼロ、NUL / 制御文字 / Unicode、全256 byte、hidden bindingと重複位置を検査する。既存のAOT・positional・Drizzle・native差分・Chromium / offlineテストも通す。
+[`result_writer_wbtest.mbt`](../../packages/sqlike/src/full/result_writer_wbtest.mbt)で旧Cell encoderとの一致、int64境界、最小非ゼロREAL・最大REAL、無限大、負のゼロ、NUL / 制御文字 / Unicode、全256 byte、hidden bindingと重複位置を検査する。既存のAOT・positional・Drizzle・native差分・Chromium / offlineテストも通す。
 
 CPU集計器も新しい`write__result__row` / `write__result__cell`のスタックをJSONへ分類するよう更新した。子の整数変換・buffer処理が単にotherへ落ちる回帰を固定テストで検出する。サンプリングと最も内側の分類を使うため、厳密なフェーズ時間や削減可能率ではない。
 

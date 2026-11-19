@@ -12,7 +12,7 @@ test("reserved IR calls cannot be injected through SQL function names", async ()
   native.exec(schema[0]!);
   const wasm = (
     await WebAssembly.instantiate(
-      readFileSync("_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm"),
+      readFileSync("_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm"),
       {},
       { builtins: ["js-string"], importedStringConstants: "_" },
     )

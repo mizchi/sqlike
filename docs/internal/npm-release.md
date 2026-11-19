@@ -66,7 +66,7 @@ npm trust list @mizchi/litestream
 
 いずれもGitHubの`mizchi/sqlike` / `npm-release.yml`に対して、publishとstage publishを許可する。GitHub上でもworkflowがactiveであることを確認した。OIDC経由の実公開とprovenanceの照合は0.1.1で完了した。
 
-workflowはNode 24、pnpm 10.28.2、npm 11.19.1、MoonBit `0.10.20+65efd5b93`を使い、actionはcommit SHAで固定する。タグ、ルートと両packageのversionを照合し、MoonBit JS / Wasm、独立したnpm consumerのNode / Chromium、型検査を通してから検査済みtarballを公開する。pre-releaseは`next`、通常版は`latest`を使用する。公開後に匿名のregistry consumer検査を実行する。
+workflowはNode 24、pnpm 10.28.2、npm 11.19.1、MoonBit `0.10.21+06da1ed44`を使い、actionはcommit SHAで固定する。タグ、ルートと両packageのversionを照合し、MoonBit JS / Wasm、独立したnpm consumerのNode / Chromium、型検査を通してから検査済みtarballを公開する。pre-releaseは`next`、通常版は`latest`を使用する。公開後に匿名のregistry consumer検査を実行する。
 
 検査済みのtarballと`audit.json`は、`npm-v<version>-<run_attempt>`のActions artifactへ14日間保存する。GitHub Releaseには公開した回のartifactを使い、registryのSRIと一致するファイルを添付する。ローカルで再ビルドした別のWasm成果物を、CIが公開したtarballと同一だと仮定しない。
 

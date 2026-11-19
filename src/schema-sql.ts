@@ -1,4 +1,4 @@
-/** Compare stored DDL across engines that pretty-print sqlite_schema.sql.
+/** Tokenize stored DDL for comparison across engines that pretty-print sqlite_schema.sql.
  * Tokens preserve boundaries, quoted contents, Unicode case and compound
  * operators. This deliberately does not try to prove semantic equivalence.
  */

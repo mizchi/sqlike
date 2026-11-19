@@ -216,6 +216,7 @@ fn decode_changeset_checked(data : Bytes) -> String raise {
 
 ///|
 /// Stable JS ABI: no dependency on the compiler's Result representation.
+/// Invalid input returns empty bytes; the host encoder converts that sentinel to an error.
 pub fn encode_frame(
   kind : Int32,
   base : Int32,

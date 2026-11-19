@@ -15,8 +15,8 @@ function validPageSize(size: number): void {
   )
     throw Error("invalid page size");
 }
-/** Full-buffer comparison is deliberately included: the current SQLike writer
- * rebuilds SQLite images, and has no pager providing a dirty-page bitmap. */
+/** Reference path for complete SQLite images. This includes full-buffer
+ * comparison; the optional incremental pager supplies page writes separately. */
 export function pageDelta(
   before: Uint8Array,
   after: Uint8Array,

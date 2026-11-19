@@ -1,43 +1,175 @@
 {
   "format": "sqlike-runtime-capabilities@1",
   "functionGroups": {
-    "glob": ["glob"],
-    "like": ["like"],
-    "character": ["char"],
-    "substring": ["substr", "substring"],
-    "trim": ["trim", "ltrim", "rtrim"],
-    "instr": ["instr"],
-    "replace": ["replace"],
-    "concat": ["concat", "concat_ws"],
-    "octetLength": ["octet_length"],
-    "quote": ["quote"],
-    "unicode": ["unicode"],
-    "sign": ["sign"],
-    "round": ["round"],
-    "mathRounding": ["ceil", "ceiling", "floor", "trunc"],
-    "nullif": ["nullif"],
-    "coalesce": ["coalesce", "ifnull"],
-    "conditional": ["iif", "if"],
-    "connectionCounters": ["changes", "last_insert_rowid"],
-    "typeof": ["typeof"],
-    "hex": ["hex"],
-    "length": ["length"],
-    "caseConversion": ["lower", "upper"],
-    "abs": ["abs"],
-    "inList": ["in"],
-    "extrema": ["min", "max"],
-    "aggregates": ["count", "sum", "total", "avg"],
-    "groupConcat": ["group_concat", "string_agg"],
-    "raise": ["raise"],
-    "jsonNormalize": ["json", "json_valid"],
-    "jsonConstruct": ["json_quote", "json_array", "json_object"],
-    "jsonRead": ["json_extract", "json_type", "json_array_length"],
-    "jsonArrow": ["->", "->>"],
-    "jsonEdit": ["json_set", "json_insert", "json_replace", "json_remove"],
-    "jsonPatch": ["json_patch"],
-    "jsonAggregate": ["json_group_array", "json_group_object"]
+    "glob": [
+      "glob"
+    ],
+    "like": [
+      "like"
+    ],
+    "character": [
+      "char"
+    ],
+    "substring": [
+      "substr",
+      "substring"
+    ],
+    "trim": [
+      "trim",
+      "ltrim",
+      "rtrim"
+    ],
+    "instr": [
+      "instr"
+    ],
+    "replace": [
+      "replace"
+    ],
+    "concat": [
+      "concat",
+      "concat_ws"
+    ],
+    "octetLength": [
+      "octet_length"
+    ],
+    "quote": [
+      "quote"
+    ],
+    "unicode": [
+      "unicode"
+    ],
+    "sign": [
+      "sign"
+    ],
+    "round": [
+      "round"
+    ],
+    "mathRounding": [
+      "ceil",
+      "ceiling",
+      "floor",
+      "trunc"
+    ],
+    "nullif": [
+      "nullif"
+    ],
+    "coalesce": [
+      "coalesce",
+      "ifnull"
+    ],
+    "conditional": [
+      "iif",
+      "if"
+    ],
+    "connectionCounters": [
+      "changes",
+      "last_insert_rowid"
+    ],
+    "typeof": [
+      "typeof"
+    ],
+    "hex": [
+      "hex"
+    ],
+    "length": [
+      "length"
+    ],
+    "caseConversion": [
+      "lower",
+      "upper"
+    ],
+    "abs": [
+      "abs"
+    ],
+    "inList": [
+      "in"
+    ],
+    "extrema": [
+      "min",
+      "max"
+    ],
+    "aggregates": [
+      "count",
+      "sum",
+      "total",
+      "avg"
+    ],
+    "groupConcat": [
+      "group_concat",
+      "string_agg"
+    ],
+    "raise": [
+      "raise"
+    ],
+    "jsonNormalize": [
+      "json",
+      "json_valid"
+    ],
+    "jsonConstruct": [
+      "json_quote",
+      "json_array",
+      "json_object"
+    ],
+    "jsonRead": [
+      "json_extract",
+      "json_type",
+      "json_array_length"
+    ],
+    "jsonArrow": [
+      "->",
+      "->>"
+    ],
+    "jsonEdit": [
+      "json_set",
+      "json_insert",
+      "json_replace",
+      "json_remove"
+    ],
+    "jsonPatch": [
+      "json_patch"
+    ],
+    "jsonAggregate": [
+      "json_group_array",
+      "json_group_object"
+    ],
+    "format": [
+      "format",
+      "printf"
+    ]
   },
-  "queryParts": ["jsonSubtype", "cte", "recursiveCte", "join", "compound"],
+  "expressionGroups": {
+    "call": [
+      "Call"
+    ],
+    "subquery": [
+      "InSelect",
+      "ScalarSelect",
+      "Exists"
+    ],
+    "cast": [
+      "Cast"
+    ],
+    "case": [
+      "Case"
+    ],
+    "between": [
+      "Between"
+    ]
+  },
+  "queryParts": [
+    "source",
+    "orderBy",
+    "distinct",
+    "limitOffset",
+    "groupBy",
+    "jsonSubtype",
+    "cte",
+    "recursiveCte",
+    "join",
+    "compound",
+    "inSelect",
+    "aggregateRepresentative"
+  ],
   "statements": {
     "select": "PreparedSelect",
     "insert": "PreparedInsert",

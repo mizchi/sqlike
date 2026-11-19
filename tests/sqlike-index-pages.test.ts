@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import * as js from "../_build/js/release/build/mizchi/sqlike/sqlike.js";
+import * as js from "../_build/js/release/build/mizchi/sqlike/full/full.js";
 import { openSql } from "../src/sqlike-runtime.ts";
 import { NodeDatabase } from "../adapters/node-database.ts";
 import { nativeValues } from "./compatibility/native-values.ts";
@@ -18,7 +18,7 @@ test("large index leaves preserve composite ties, partial membership and rollbac
     });
     const image = native.raw.serialize();
     const wasm = (await WebAssembly.instantiate(readFileSync(
-      "_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm"), {},
+      "_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm"), {},
       { builtins: ["js-string"], importedStringConstants: "_" })).instance.exports as unknown as typeof js;
     const databases = [js, wasm].map(runtime => {
       const handle = runtime.database_open();

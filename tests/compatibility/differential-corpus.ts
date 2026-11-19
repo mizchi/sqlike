@@ -35,6 +35,300 @@ export function differentialCorpus(seed = 0x51a17e): DifferentialCase[] {
         ? "exploratory"
         : "supported",
     });
+  read(
+    "format",
+    "SELECT format(),printf(NULL),format('%d/%u/%x/%o',-42,-1,-1,8),printf('%04d:%Q',42,'a''b')",
+  );
+  read(
+    "format",
+    "SELECT format('%s|%q|%Q|%w',NULL,NULL,NULL,NULL),format('%!.2s|%.3c|%n%d','あいう','😀',9),format('%#08x|%0,8d',42,-1234)",
+  );
+  read(
+    "format",
+    "SELECT format('%.*Q|%*d',2,NULL,-5,7),format('%c',NULL),format('%lld',9007199254740993)",
+  );
+  add("aggregate-representative", {
+    schema: ["CREATE TABLE t(id INTEGER PRIMARY KEY,g TEXT,n INTEGER,s TEXT)"],
+    seed: [
+      op(
+        "INSERT INTO t VALUES(1,'a',2,'low'),(2,'a',9,'high'),(3,'b',NULL,'same'),(4,'b',NULL,'same')",
+      ),
+    ],
+    steps: [
+      op("SELECT g,s,max(n),sum(n),count(*) FROM t GROUP BY g ORDER BY g"),
+      op("SELECT id,s,min(n*?1) FROM t", -1n),
+      op("SELECT id,s,max(n),max(n) FROM t WHERE 0"),
+    ],
+  });
+  add("in-select-cache", {
+    schema: [
+      "CREATE TABLE t(id INTEGER PRIMARY KEY,n NUMERIC,s TEXT COLLATE NOCASE)",
+      "CREATE TABLE r(n NUMERIC,s TEXT COLLATE NOCASE)",
+    ],
+    seed: [
+      op(
+        "INSERT INTO t VALUES(1,1,'A'),(2,2,'b'),(3,NULL,'x'),(4,9007199254740993,'hi')",
+      ),
+      op("INSERT INTO r VALUES(1,'a'),(NULL,'b'),(9007199254740993,'hi')"),
+    ],
+    steps: [
+      op(
+        "SELECT n IN(SELECT n FROM r WHERE n>=?1 OR n IS NULL),(n,s) IN(SELECT n,s FROM r) FROM t ORDER BY id",
+        0n,
+      ),
+      op(
+        "SELECT count(*),sum(id),avg(id),total(id) FROM t WHERE (n,s) IN(SELECT n,s FROM r)",
+      ),
+      op(
+        "SELECT id FROM t WHERE n IN(SELECT n FROM r WHERE s=t.s) ORDER BY id",
+      ),
+      op("DELETE FROM r WHERE n=1"),
+      op(
+        "SELECT id FROM t WHERE n IN(SELECT n FROM r WHERE n>=?1) ORDER BY id",
+        2n,
+      ),
+    ],
+  });
+  add("in-select-general-source", {
+    schema: [
+      "CREATE TABLE t(id INTEGER PRIMARY KEY,n INTEGER)",
+      "CREATE TABLE r(n INTEGER)",
+      "CREATE VIEW v AS SELECT * FROM t",
+    ],
+    seed: [
+      op("INSERT INTO t VALUES(1,1),(2,2),(3,NULL)"),
+      op("INSERT INTO r VALUES(1),(NULL)"),
+    ],
+    steps: [
+      op(
+        "SELECT v.id,v.n IN(SELECT n FROM r),r.n IN(SELECT n FROM t) FROM v LEFT JOIN r ON v.n=r.n ORDER BY v.id",
+      ),
+      op(
+        "WITH c AS(SELECT * FROM t) SELECT id,(n,0) IN(SELECT n,0 FROM r) FROM c ORDER BY id",
+      ),
+    ],
+  });
+  add("schema-affinity", {
+    schema: ['CREATE TABLE "3"(a)', 'CREATE VIEW v AS SELECT a FROM "3"'],
+    steps: [
+      op(
+        "SELECT name,name=3,tbl_name=3,name IN(3) FROM sqlite_schema WHERE name=3",
+      ),
+      op("SELECT 3 IN(SELECT name FROM sqlite_master)"),
+    ],
+  });
+  add("schema-name-namespace", {
+    schema: [
+      "CREATE TABLE t(a)",
+      "CREATE TABLE audit(a)",
+      "CREATE TRIGGER t AFTER INSERT ON t BEGIN INSERT INTO audit VALUES(new.a); END",
+      "CREATE TABLE IF NOT EXISTS t(b)",
+      "CREATE VIEW IF NOT EXISTS t AS SELECT 1",
+    ],
+    steps: [
+      op("INSERT INTO t VALUES(7)"),
+      op("SELECT * FROM audit ORDER BY a"),
+      op("SELECT type,name,tbl_name FROM sqlite_schema ORDER BY type,name"),
+    ],
+  });
+  add("default-expression", {
+    schema: [
+      "CREATE TABLE t(id INTEGER PRIMARY KEY,n INT DEFAULT((1+2)*3),v TEXT DEFAULT(lower('HELLO')),previous DEFAULT(last_insert_rowid()))",
+    ],
+    steps: [
+      op("INSERT INTO t(id) VALUES(1),(2),(3) RETURNING *"),
+      op("SELECT *,typeof(n),typeof(v) FROM t ORDER BY id"),
+      op("PRAGMA table_info(t)"),
+    ],
+  });
+  add("default-unused-error", {
+    schema: [
+      "CREATE TABLE t(id INTEGER PRIMARY KEY,n DEFAULT(abs(-9223372036854775808)))",
+    ],
+    steps: [
+      op("INSERT INTO t VALUES(1,7)"),
+      op("INSERT INTO t(id) VALUES(2),(3)"),
+    ],
+    observe: [op("SELECT * FROM t ORDER BY id")],
+  });
+  add("create-table-as", {
+    schema: [
+      "CREATE TABLE t AS SELECT CAST(7 AS INTEGER) AS id,lower('HELLO') AS v",
+    ],
+    steps: [
+      op("SELECT rowid,* FROM t"),
+      op("PRAGMA table_info(t)"),
+      op("INSERT INTO t DEFAULT VALUES RETURNING rowid,*"),
+    ],
+  });
+  read(
+    "in-exact-real",
+    "SELECT CAST(9007199254740993 AS REAL) IN (9007199254740993),CAST(9223372036854775807 AS REAL) IN (9223372036854775807)",
+  );
+  read(
+    "subquery-affinity",
+    "SELECT (SELECT '1' UNION ALL SELECT CAST('2' AS TEXT))=1,(SELECT CAST('1' AS TEXT) UNION ALL SELECT '2')=1,CAST(9007199254740993 AS REAL) IN(SELECT 9007199254740993)",
+  );
+  read(
+    "derived-affinity",
+    "SELECT v,typeof(v),(v,0) IN((9007199254740993,0)) FROM(SELECT CAST(9007199254740993 AS REAL) AS v UNION ALL SELECT CAST(2 AS REAL))q",
+  );
+  const inParameters = Array.from({ length: 32 }, (_, i) => `?${i + 1}`).join(
+    ",",
+  );
+  const rowParameters = Array.from(
+    { length: 16 },
+    (_, i) => `(?${i * 2 + 1},?${i * 2 + 2})`,
+  ).join(",");
+  add("large-in-list", {
+    schema: ["CREATE TABLE t(n NUMERIC,s TEXT COLLATE NOCASE)"],
+    seed: [op("INSERT INTO t VALUES(1,'A'),(2,'b'),(NULL,NULL)")],
+    steps: [
+      op(
+        `SELECT n IN(${inParameters}),s IN(${inParameters}) FROM t ORDER BY rowid`,
+        ...Array.from({ length: 32 }, (_, i) => (i % 2 ? "a" : 1n)),
+      ),
+      op(
+        `SELECT count(*),count(n),sum(n),avg(n),total(n) FROM t WHERE n IN(${inParameters})`,
+        ...Array.from({ length: 32 }, (_, i) => (i % 2 ? "a" : 1n)),
+      ),
+      op(
+        `SELECT count(*),count(n),sum(n),avg(n),total(n) FROM t WHERE (n,s) IN(${rowParameters})`,
+        ...Array.from({ length: 32 }, (_, i) => (i % 2 ? "a" : null)),
+      ),
+      op(
+        `SELECT (n,s) IN(${rowParameters}) FROM t ORDER BY rowid`,
+        ...Array.from({ length: 32 }, (_, i) => (i % 2 ? "a" : null)),
+      ),
+    ],
+  });
+  add("json-table", {
+    schema: [],
+    steps: [
+      op(
+        `SELECT rowid,* FROM json_tree('{"a":[1,2.0],"a.b":true,"empty":[]}')`,
+      ),
+    ],
+  });
+  add("json-table", {
+    schema: [],
+    steps: [
+      op(`SELECT rowid,* FROM json_each('{"a":[10,20]}','$.a')`),
+      op(
+        `SELECT key,value,id,parent,fullkey,path FROM json_tree('[10,[20,30]]','$[1]')`,
+      ),
+    ],
+  });
+  add("json-table", {
+    schema: ["CREATE TABLE docs(id INTEGER PRIMARY KEY,doc TEXT)"],
+    seed: [
+      op(`INSERT INTO docs VALUES(1,'[1,2]'),(2,'{bad'),(3,NULL),(4,'[]')`),
+    ],
+    steps: [
+      op(
+        "SELECT docs.id,j.key,j.value,j.id FROM docs LEFT JOIN json_each(docs.doc) j ON 1 WHERE json_valid(docs.doc) ORDER BY docs.id,j.rowid",
+      ),
+    ],
+  });
+  add("json-table", {
+    schema: ["CREATE TABLE target(id INTEGER PRIMARY KEY,n INT)"],
+    steps: [
+      op(
+        "INSERT INTO target SELECT key+1,value FROM json_each('[3,4]') RETURNING *",
+      ),
+      op(
+        "UPDATE target SET n=j.value FROM json_each('[10,20]') j WHERE target.id=j.key+1 RETURNING *",
+      ),
+    ],
+    observe: [op("SELECT * FROM target ORDER BY id")],
+  });
+  for (const sql of [
+    "UPDATE t SET n=t.n-s.n FROM s WHERE t.id=s.id RETURNING id,n",
+    "UPDATE t SET n=t.n-daily.n FROM (SELECT id,sum(n) AS n FROM sales GROUP BY id) AS daily WHERE t.id=daily.id RETURNING id,n",
+    "UPDATE t AS dst SET n=src.n+100 FROM t AS src WHERE dst.id=src.id+1 RETURNING id,n",
+    "UPDATE t SET n=s.n FROM s WHERE t.id=s.id RETURNING id,n",
+  ])
+    add("update-from", {
+      schema: [
+        "CREATE TABLE t(id INTEGER PRIMARY KEY,n INTEGER)",
+        "CREATE TABLE s(id INTEGER PRIMARY KEY,n INTEGER)",
+        "CREATE TABLE sales(id INTEGER,n INTEGER)",
+        "CREATE TABLE audit(id INTEGER,n INTEGER)",
+        "CREATE TRIGGER changed AFTER UPDATE ON t BEGIN INSERT INTO audit VALUES(NEW.id,NEW.n); UPDATE s SET n=n+100; END",
+      ],
+      seed: [
+        op("INSERT INTO t VALUES(1,100),(2,200),(3,300)"),
+        op("INSERT INTO s VALUES(1,10),(2,20)"),
+        op("INSERT INTO sales VALUES(1,3),(1,4),(2,5)"),
+      ],
+      steps: [op(sql)],
+      observe: [
+        op("SELECT * FROM t ORDER BY id"),
+        op("SELECT * FROM s ORDER BY id"),
+        op("SELECT * FROM audit ORDER BY id"),
+      ],
+    });
+  for (const sql of [
+    "UPDATE generated SET n=n+1 WHERE id=1 RETURNING *",
+    "SELECT id,v,label FROM generated WHERE label='ALPHA' ORDER BY v DESC,id",
+    "UPDATE generated SET n=CASE id WHEN 1 THEN 9 ELSE -1 END RETURNING id,v",
+  ])
+    add("generated-columns", {
+      schema: [
+        "CREATE TABLE generated(id INTEGER PRIMARY KEY,v INT AS(n*2) UNIQUE CHECK(v>=0),n INT,raw TEXT,label TEXT COLLATE NOCASE AS(lower(raw)))",
+        "CREATE INDEX by_generated ON generated(v DESC,id)",
+      ],
+      seed: [op("INSERT INTO generated VALUES(1,2,'Alpha'),(2,3,'Beta')")],
+      steps: [op(sql)],
+      observe: [op("SELECT * FROM generated ORDER BY id")],
+    });
+  add("generated-columns", {
+    schema: [
+      "CREATE TABLE generated(k TEXT PRIMARY KEY,doc TEXT,n INT AS(json_extract(doc,'$.n'))) WITHOUT ROWID",
+    ],
+    seed: [
+      op("INSERT INTO generated VALUES('b','{\"n\":2}'),('a','{\"n\":1}')"),
+    ],
+    steps: [
+      op("UPDATE generated SET doc='{\"n\":3}' WHERE k='a' RETURNING *"),
+      op("SELECT k,n FROM generated ORDER BY k"),
+    ],
+  });
+  for (const sql of [
+    "SELECT id FROM cursor_rows WHERE (s,id)>(?,?) ORDER BY s,id LIMIT 3",
+    "SELECT (n,id)=(1,1),(n,id) IS (NULL,2),(n,id) BETWEEN (0,0) AND (2,4) FROM cursor_rows ORDER BY id",
+    "SELECT ('1',0) IN ((1,0),(s,1)),(1,0) IN (('1',0),(n,1)) FROM cursor_rows ORDER BY id",
+    "SELECT id,CASE (n,id) WHEN (1,1) THEN 'first' ELSE 'other' END,(n,id) IN (SELECT n,id FROM cursor_rows other WHERE other.id<cursor_rows.id) FROM cursor_rows ORDER BY id",
+  ])
+    add("row-values", {
+      schema: [
+        "CREATE TABLE cursor_rows(id INTEGER PRIMARY KEY,s TEXT COLLATE NOCASE,n NUMERIC)",
+        "CREATE INDEX cursor_ix ON cursor_rows(s,id)",
+      ],
+      seed: [
+        op(
+          "INSERT INTO cursor_rows VALUES(1,'a',1),(2,'A',NULL),(3,'b',2),(4,'c',1)",
+        ),
+      ],
+      steps: [sql.includes("?") ? op(sql, "a", 1n) : op(sql)],
+    });
+  for (const sql of [
+    "SELECT group_concat(v ORDER BY n DESC NULLS FIRST,id),string_agg(v,':' ORDER BY n,id DESC) FROM ordered",
+    "SELECT group_concat(DISTINCT k ORDER BY k),json_group_array(DISTINCT k ORDER BY id DESC) FROM ordered",
+    "SELECT json_group_array(json(v) ORDER BY n,id),json_group_object(k,json(v) ORDER BY id DESC) FILTER(WHERE n>1) FROM ordered",
+    "SELECT k,sum(n ORDER BY id DESC) FILTER(WHERE n>1),count(n ORDER BY n),group_concat(v ORDER BY id) FROM ordered GROUP BY k ORDER BY k",
+  ])
+    add("aggregate-order", {
+      schema: [
+        "CREATE TABLE ordered(id INTEGER PRIMARY KEY,k TEXT COLLATE NOCASE,v TEXT,n INTEGER)",
+      ],
+      seed: [
+        op(
+          `INSERT INTO ordered VALUES(1,'a','1',3),(2,'A','{"x":2}',1),(3,'b','"s"',2),(4,'a',NULL,NULL)`,
+        ),
+      ],
+      steps: [op(sql)],
+    });
   // Literal and bound values deliberately retain different SQLite storage classes.
   for (const [a, b] of [
     ["9223372036854775807", "1"],

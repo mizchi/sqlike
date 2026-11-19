@@ -11,7 +11,7 @@ import { readFileSync } from "node:fs";
 test("mutable positional execution preserves duplicate names, RETURNING types and rollback on JS/Wasm", async () => {
   const wasm = (
     await WebAssembly.instantiate(
-      readFileSync("_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm"),
+      readFileSync("_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm"),
       {},
       { builtins: ["js-string"], importedStringConstants: "_" },
     )

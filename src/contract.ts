@@ -1,4 +1,4 @@
-/** BLS1 is our transport envelope; its kind=2 payload is native SQLite Session. */
+/** Replicate guarded SQL or native SQLite Session changesets inside a BLS1 frame. */
 export type Mode = "sql" | "changeset";
 export type Cell =
   | { t: "null" | "undefined" }
@@ -71,8 +71,18 @@ export interface ClientState {
   rows: Record<string, Cell>[];
   replica?: ReplicaState;
 }
+/** User DDL in an order suitable for snapshot restoration. Tables precede
+ * dependent objects; relative trigger creation order must be preserved. */
+export interface SchemaEntry {
+  name: string;
+  type: "table" | "index" | "view" | "trigger";
+  tbl_name: string;
+  sql: string;
+}
 /** Platform boundary. Transactions must roll back data and journal together. */
 export interface Database {
+  /** Logical backends may provide this without exposing physical schema rowids. */
+  schemaEntries?(): SchemaEntry[];
   /** Optional SQLite Session capture. SQL-only drivers omit it. */
   capture?(body: () => void): Uint8Array;
   /** INTEGER uses bigint, REAL uses number (including integral values).

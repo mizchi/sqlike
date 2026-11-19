@@ -21,6 +21,7 @@ test.beforeAll(async () => {
     logLevel: "error",
     build: {
       write: false,
+      rolldownOptions: { output: { codeSplitting: false } },
       minify: true,
       target: "esnext",
       lib: { entry: "e2e/fixtures/aot-trigger-runtime.ts", formats: ["es"] },

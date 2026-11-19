@@ -30,7 +30,7 @@ just compile-defined catalog.json generated/notes --sqlite-export
 | `.statements.bin` | schemaId、登録名、bind数、結果列、解析済みstatement IR |
 | `.manifest.json` | 形式・schemaId / programId・各ファイルのSHA-256・query metadata |
 | `.ts` | schema / statementsのUint8Array、manifest、catalog。実行コードやcompiler importを含まない |
-| `.sqlite.bin` | `--sqlite-export`時だけ生成する物理layoutと空SQLiteテンプレート。`.ts`には含めない |
+| `.sqlite.bin` | `--sqlite-export`時だけ生成する物理layoutとSQLiteテンプレート（CTASの初期行があれば含む）。`.ts`には含めない |
 
 ```ts
 import { DefinedDatabase } from "../adapters/defined-database.ts";
@@ -116,7 +116,7 @@ offset  size
 end-32  32     SHA-256(header + payload)
 ```
 
-kindはschema=1、statements=2、SQLite layout=3、snapshot=4、delta=5。string poolはUTF-8、参照・長さ・variant tagはcanonical unsigned LEB128、Int32はZigZag、int64 / IEEE754 float64はlittle endian。NULL / INTEGER / REAL / TEXT / BLOBを明示tagで区別し、整数をNumberへ丸めない。REALの負のゼロ・無限大を保持し、NaNは拒否する。BOM / NULも文字列の一部として保持する。
+kindはschema=1、statements=2、SQLite layout=3、snapshot=4、delta=5、[AOTの論理row chunk](logical-snapshot-chunks.md)=6、初期行を含むschema=7、[再利用するAOT row chunk](incremental-logical-checkpoint.md)=8。kind 7のpayloadと旧readerの拒否は[式DEFAULTとCTAS](schema-expressions.md)を参照。空schemaのkind 1は維持する。string poolはUTF-8、参照・長さ・variant tagはcanonical unsigned LEB128、Int32はZigZag、int64 / IEEE754 float64はlittle endian。NULL / INTEGER / REAL / TEXT / BLOBを明示tagで区別し、整数をNumberへ丸めない。REALの負のゼロ・無限大を保持し、NaNは拒否する。BOM / NULも文字列の一部として保持する。
 
 必須機能bitはFK=1、trigger=2、STRICT=4、拡張JOIN=8、SQL JSON=16、日時=32、window=64。実際に読んだ定義から再計算してheaderと照合する。未知の必須bit・version / kind / tag、非canonical整数、壊れたUTF-8・参照・長さ、末尾の余剰bytesは拒否する。readerのネスト上限256、array / string pool上限100,000、schema / statement / layout各1 MiB、snapshot / delta各64 MiB。保存先の上限はwrapper・Base64を含む保存サイズにも適用される。
 

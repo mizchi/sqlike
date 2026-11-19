@@ -1,14 +1,14 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import * as js from "../_build/js/release/build/mizchi/sqlike/sqlike.js";
+import * as js from "../_build/js/release/build/mizchi/sqlike/full/full.js";
 import { aotBindings, aotValue } from "../src/aot-values.ts";
 import { NodeDatabase } from "../adapters/node-database.ts";
 import { nativeValues } from "./compatibility/native-values.ts";
 
 test("rowid cache deletion preserves reads, rollback, triggers and replicated deltas on JS/Wasm", async () => {
   const wasm = (await WebAssembly.instantiate(readFileSync(
-    "_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm"), {},
+    "_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm"), {},
     { builtins: ["js-string"], importedStringConstants: "_" })).instance.exports as unknown as typeof js;
   for (const runtime of [js, wasm]) {
     const native = new NodeDatabase(":memory:");

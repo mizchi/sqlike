@@ -123,7 +123,7 @@ test("Drizzle Kit migrations and RETURNING persist through IndexedDB Worker reop
           "e2e/drizzle.spec.ts",
           "e2e/fixtures/drizzle-worker.ts",
           "tests/fixtures/drizzle/migrations.generated.ts",
-          "_build/js/release/build/mizchi/sqlike/sqlike.js",
+          "_build/js/release/build/mizchi/sqlike/full/full.js",
         ]),
         migrations: 8,
         kitGenerated: 6,

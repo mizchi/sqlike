@@ -3,35 +3,41 @@ package "mizchi/litestream-example/runtime"
 
 import {
   "mizchi/litestream",
-  "mizchi/sqlike",
+  "mizchi/sqlike/full",
 }
 
 // Values
-pub fn aot_ack_delta(@sqlike.AotDatabase, Int32) -> String
+pub fn aot_ack_delta(@full.AotDatabase, Int32) -> String
 
-pub fn aot_apply_delta(@sqlike.AotDatabase, String) -> String
+pub fn aot_apply_delta(@full.AotDatabase, String) -> String
 
-pub fn aot_clone(@sqlike.AotDatabase) -> @sqlike.AotDatabase
+pub fn aot_clone(@full.AotDatabase) -> @full.AotDatabase
 
-pub fn aot_copy_connection_state(@sqlike.AotDatabase, @sqlike.AotDatabase) -> String
+pub fn aot_copy_connection_state(@full.AotDatabase, @full.AotDatabase) -> String
 
-pub fn aot_delta(@sqlike.AotDatabase, Bool) -> String
+pub fn aot_delta(@full.AotDatabase, Bool) -> String
 
-pub fn aot_dump(@sqlike.AotDatabase) -> String
+pub fn aot_dump(@full.AotDatabase) -> String
 
-pub fn aot_execute(@sqlike.AotDatabase, String, String) -> String
+pub fn aot_execute(@full.AotDatabase, String, String) -> String
 
-pub fn aot_export_sqlite(@sqlike.AotDatabase) -> @sqlike.SqliteResult
+pub fn aot_export_sqlite(@full.AotDatabase) -> @full.SqliteResult
 
-pub fn aot_info(@sqlike.AotDatabase) -> String
+pub fn aot_finalize_values(@full.AotPreparedValues) -> String
 
-pub fn aot_open(String, String) -> @sqlike.AotDatabase
+pub fn aot_info(@full.AotDatabase) -> String
 
-pub fn aot_query_info(@sqlike.AotDatabase, String) -> String
+pub fn aot_open(String, String) -> @full.AotDatabase
 
-pub fn aot_restore(@sqlike.AotDatabase, String) -> String
+pub fn aot_prepare_values(@full.AotDatabase, String) -> @full.AotPreparedValues
 
-pub fn aot_set_clock(@sqlike.AotDatabase, String) -> String
+pub fn aot_prepared_execute(@full.AotPreparedValues, String) -> String
+
+pub fn aot_query_info(@full.AotDatabase, String) -> String
+
+pub fn aot_restore(@full.AotDatabase, String) -> String
+
+pub fn aot_set_clock(@full.AotDatabase, String) -> String
 
 pub fn apply_ltx(Bytes, String, Bytes, Int32) -> @litestream.LtxResult
 
@@ -47,11 +53,11 @@ pub fn ltx_data_base64(@litestream.LtxResult) -> String
 
 pub fn ltx_info(@litestream.LtxResult) -> String
 
-pub fn sqlite_data(@sqlike.SqliteResult) -> Bytes
+pub fn sqlite_data(@full.SqliteResult) -> Bytes
 
-pub fn sqlite_data_base64(@sqlike.SqliteResult) -> String
+pub fn sqlite_data_base64(@full.SqliteResult) -> String
 
-pub fn sqlite_info(@sqlike.SqliteResult) -> String
+pub fn sqlite_info(@full.SqliteResult) -> String
 
 // Errors
 

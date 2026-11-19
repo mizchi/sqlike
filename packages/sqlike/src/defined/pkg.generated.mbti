@@ -2,45 +2,45 @@
 package "mizchi/sqlike/defined"
 
 import {
-  "mizchi/sqlike",
+  "mizchi/sqlike/full",
 }
 
 // Values
-pub fn binary_data(@sqlike.BinaryResult) -> Bytes
+pub fn binary_data(@full.BinaryResult) -> Bytes
 
-pub fn binary_data_base64(@sqlike.BinaryResult) -> String
+pub fn binary_data_base64(@full.BinaryResult) -> String
 
-pub fn binary_info(@sqlike.BinaryResult) -> String
+pub fn binary_info(@full.BinaryResult) -> String
 
-pub fn defined_ack_delta(@sqlike.DefinedDatabase, Int32) -> String
+pub fn defined_ack_delta(@full.DefinedDatabase, Int32) -> String
 
-pub fn defined_apply_delta(@sqlike.DefinedDatabase, Bytes) -> String
+pub fn defined_apply_delta(@full.DefinedDatabase, Bytes) -> String
 
-pub fn defined_apply_delta_base64(@sqlike.DefinedDatabase, String) -> String
+pub fn defined_apply_delta_base64(@full.DefinedDatabase, String) -> String
 
-pub fn defined_clone(@sqlike.DefinedDatabase) -> @sqlike.DefinedDatabase
+pub fn defined_clone(@full.DefinedDatabase) -> @full.DefinedDatabase
 
-pub fn defined_copy_connection_state(@sqlike.DefinedDatabase, @sqlike.DefinedDatabase) -> String
+pub fn defined_copy_connection_state(@full.DefinedDatabase, @full.DefinedDatabase) -> String
 
-pub fn defined_delta(@sqlike.DefinedDatabase, Bool) -> @sqlike.BinaryResult
+pub fn defined_delta(@full.DefinedDatabase, Bool) -> @full.BinaryResult
 
-pub fn defined_execute(@sqlike.DefinedDatabase, String, String) -> String
+pub fn defined_execute(@full.DefinedDatabase, String, String) -> String
 
-pub fn defined_info(@sqlike.DefinedDatabase) -> String
+pub fn defined_info(@full.DefinedDatabase) -> String
 
-pub fn defined_open(Bytes, Bytes, Bytes) -> @sqlike.DefinedDatabase
+pub fn defined_open(Bytes, Bytes, Bytes) -> @full.DefinedDatabase
 
-pub fn defined_open_base64(String, String, String) -> @sqlike.DefinedDatabase
+pub fn defined_open_base64(String, String, String) -> @full.DefinedDatabase
 
-pub fn defined_query_info(@sqlike.DefinedDatabase, String) -> String
+pub fn defined_query_info(@full.DefinedDatabase, String) -> String
 
-pub fn defined_restore(@sqlike.DefinedDatabase, Bytes) -> String
+pub fn defined_restore(@full.DefinedDatabase, Bytes) -> String
 
-pub fn defined_restore_base64(@sqlike.DefinedDatabase, String) -> String
+pub fn defined_restore_base64(@full.DefinedDatabase, String) -> String
 
-pub fn defined_set_clock(@sqlike.DefinedDatabase, String) -> String
+pub fn defined_set_clock(@full.DefinedDatabase, String) -> String
 
-pub fn defined_snapshot(@sqlike.DefinedDatabase) -> @sqlike.BinaryResult
+pub fn defined_snapshot(@full.DefinedDatabase) -> @full.BinaryResult
 
 // Errors
 

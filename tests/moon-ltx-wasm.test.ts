@@ -12,7 +12,7 @@ test("pure MoonBit Wasm GC applies real Litestream files and reads the resulting
     options,
   );
   const sql = await WebAssembly.instantiate(
-    readFileSync("_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm"),
+    readFileSync("_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm"),
     {},
     options,
   );

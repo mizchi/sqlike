@@ -111,7 +111,7 @@ test("runtime module has no SQL lexer/parser, SQL text execution or foreign data
   );
   // The negative control ensures the same gate rejects the development engine.
   assert.match(
-    readFileSync("_build/js/release/build/mizchi/sqlike/sqlike.js", "utf8"),
+    readFileSync("_build/js/release/build/mizchi/sqlike/full/full.js", "utf8"),
     /SQL syntax: expected|unterminated SQL quote|unterminated SQL comment/,
   );
   assert.equal("database_exec" in runtime, false);

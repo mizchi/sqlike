@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync, mkdtempSync, writeFileSync, rmSync } from "node:fs";
 import { DatabaseSync } from "node:sqlite";
-import * as sql from "../_build/js/release/build/mizchi/sqlike/sqlike.js";
+import * as sql from "../_build/js/release/build/mizchi/sqlike/full/full.js";
 import * as aot from "../_build/js/release/build/mizchi/litestream-example/runtime/runtime.js";
 import * as compiler from "../_build/js/release/build/mizchi/sqlike/compiler/compiler.js";
 import {
@@ -25,7 +25,7 @@ test("audit fixes preserve boundary behavior across JS/Wasm and SQL/AOT", async 
   const options = { builtins: ["js-string"], importedStringConstants: "_" };
   const wasmSQL = (
     await WebAssembly.instantiate(
-      readFileSync("_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm"),
+      readFileSync("_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm"),
       {},
       options,
     )

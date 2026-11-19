@@ -3,6 +3,7 @@ import { buildCatalog } from "./aot-compiler.ts";
 import * as compiler from "../_build/js/release/build/mizchi/sqlike/compiler/compiler.js";
 import {
   catalogFunctionConstants,
+  catalogExpressionConstants,
   catalogStatementConstants,
   catalogQueryConstants,
 } from "../src/catalog-capabilities.ts";
@@ -20,6 +21,11 @@ const features: readonly [number, SqlikeFeatureName][] = [
   [64, "windowFunctions"],
   [128, "schemaMetadata"],
   [256, "aggregateFilter"],
+  [512, "aggregateOrderBy"],
+  [1024, "rowValues"],
+  [2048, "updateFrom"],
+  [4096, "generatedColumns"],
+  [8192, "jsonTableFunctions"],
 ];
 export function analyzeCatalogRequirements(source: CatalogSource): CatalogRequirements {
   if (!source || !Array.isArray(source.schema) || !Array.isArray(source.queries))
@@ -29,10 +35,10 @@ export function analyzeCatalogRequirements(source: CatalogSource): CatalogRequir
   if (data.error) throw Error(data.error);
   assert.equal(data.format, "sqlike-runtime-requirements@1");
   assert.ok(
-    Number.isInteger(data.featureBits) && data.featureBits >= 0 && data.featureBits <= 511,
+    Number.isInteger(data.featureBits) && data.featureBits >= 0 && data.featureBits <= 16383,
     "unknown catalog feature bits",
   );
-  for (const name of ["functions", "functionGroups", "statements", "queryParts"]) {
+  for (const name of ["functions", "functionGroups", "expressionGroups", "statements", "queryParts"]) {
     const values = data[name];
     assert.ok(Array.isArray(values) && values.every((v) => typeof v === "string"));
     assert.deepEqual(values, [...new Set(values)].sort(), `non-canonical catalog ${name}`);
@@ -40,6 +46,10 @@ export function analyzeCatalogRequirements(source: CatalogSource): CatalogRequir
   assert.ok(
     data.functionGroups.every((n: string) => Object.hasOwn(catalogFunctionConstants, n)),
     "unknown function group",
+  );
+  assert.ok(
+    data.expressionGroups.every((n: string) => Object.hasOwn(catalogExpressionConstants, n)),
+    "unknown expression group",
   );
   assert.ok(
     data.statements.every((n: string) => Object.hasOwn(catalogStatementConstants, n)),
@@ -61,6 +71,7 @@ export function analyzeCatalogRequirements(source: CatalogSource): CatalogRequir
     ),
     functions: Object.freeze(data.functions),
     functionGroups: Object.freeze(data.functionGroups),
+    expressionGroups: Object.freeze(data.expressionGroups),
     statements: Object.freeze(data.statements),
     queryParts: Object.freeze(data.queryParts),
   });

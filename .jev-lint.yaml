@@ -1,0 +1,50 @@
+# Semantic checks supplement the compiler, SQLite differential tests and CAS tests.
+# Keep shipped cutoffs/severities: findings need review before they become gates.
+model: jev-1.14.0
+files:
+  [src, adapters, scripts, tests, e2e, npm, packages, examples, package.json]
+exclude:
+  - "**/*.generated.*"
+  - "**/*_generated.mbt"
+  - packages/sqlike/src/engine.mbt
+  - packages/sqlike/src/aot/engine.mbt
+  - tests/fixtures
+  - e2e/fixtures
+  - docs
+  - measurements
+
+# `just lint-setup` builds this native parser from a pinned upstream revision.
+# dlopen accepts the same .so filename on macOS and Linux.
+languages:
+  moonbit:
+    libraryPath: .jev-lint/parsers/moonbit.so
+    extensions: [mbt]
+    expandoChar: _
+
+rules:
+  typescript/fn-name-promises: on
+  typescript/method-name-promises: on
+  typescript/comment-describes-declaration: on
+  typescript/comment-describes-block: on
+  typescript/doc-errors-match-body: on
+  typescript/catch-hides-failure: on
+  typescript/error-message-matches-condition: on
+  typescript/safe-name-is-safe: on
+  typescript/idempotent-name: on
+  typescript/type-name-describes-shape: on
+  typescript/test-name-verifies-claim: on
+  typescript/test-mocks-subject: on
+  typescript/snapshot-only-behaviour-claim: on
+  typescript/tests-cover-failure-paths: on
+  moonbit/fn-name-promises: on
+  moonbit/comment-describes-declaration: on
+  moonbit/comment-describes-block: on
+  moonbit/doc-errors-match-body: on
+  moonbit/catch-hides-failure: on
+  moonbit/error-message-matches-condition: on
+  moonbit/type-name-describes-shape: on
+  moonbit/trait-name-describes-methods: on
+  moonbit/test-name-verifies-claim: on
+  moonbit/snapshot-only-behaviour-claim: on
+  moonbit/tests-cover-failure-paths: on
+  json/script-name-does: on
