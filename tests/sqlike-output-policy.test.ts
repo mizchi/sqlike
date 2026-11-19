@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { DatabaseSync } from "node:sqlite";
-import * as js from "../_build/js/release/build/mizchi/sqlike/sqlike.js";
+import * as js from "../_build/js/release/build/mizchi/sqlike/full/full.js";
 import * as aot from "../_build/js/release/build/mizchi/litestream-example/runtime/runtime.js";
 import * as compiler from "../_build/js/release/build/mizchi/sqlike/compiler/compiler.js";
 import { aotValue, aotBindings } from "../src/aot-values.ts";
@@ -24,7 +24,7 @@ test("successful outputs agree with SQLite; explicit rejections leave data and s
       )
     ).instance.exports;
   const wr = (await wasm(
-    "_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm",
+    "_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm",
   )) as unknown as typeof js;
   const wa = (await wasm(
     "_build/wasm-gc/release/build/mizchi/litestream-example/runtime/runtime.wasm",

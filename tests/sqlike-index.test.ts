@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import * as sql from "../_build/js/release/build/mizchi/sqlike/sqlike.js";
+import * as sql from "../_build/js/release/build/mizchi/sqlike/full/full.js";
 import * as aot from "../_build/js/release/build/mizchi/litestream-example/runtime/runtime.js";
 import { buildCatalog } from "../scripts/aot-compiler.ts";
 import { aotBindings, aotValue } from "../src/aot-values.ts";
@@ -308,7 +308,7 @@ async function engines(schema: string[], queries: Query[]): Promise<Driver[]> {
     [
       "wasm",
       (await wasm(
-        "_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm",
+        "_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm",
       )) as unknown as typeof sql,
     ],
   ] as const) {
@@ -597,7 +597,7 @@ test("legacy logical images keep identical bytes after cached queries and schema
     "utf8",
   ).trim();
   const { instance } = await WebAssembly.instantiate(
-    readFileSync("_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm"),
+    readFileSync("_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm"),
     {},
     { builtins: ["js-string"], importedStringConstants: "_" },
   );

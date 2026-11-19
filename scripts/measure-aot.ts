@@ -37,7 +37,7 @@ for (const [name, path] of [
     "aot-runtime-js",
     "_build/js/release/build/mizchi/litestream-example/runtime/runtime.js",
   ],
-  ["dynamic-sql-js", "_build/js/release/build/mizchi/sqlike/sqlike.js"],
+  ["dynamic-sql-js", "_build/js/release/build/mizchi/sqlike/full/full.js"],
   [
     "aot-runtime-wasm-gc",
     "_build/wasm-gc/release/build/mizchi/litestream-example/runtime/runtime.wasm",

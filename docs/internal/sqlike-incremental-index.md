@@ -32,7 +32,7 @@ Apple M5 / Chromium 158 / Moon 0.1.20261104 release、前段階と同じ環境�
 
 ## 実装と計算量
 
-[index_cache.mbt](../../packages/sqlike/src/index_cache.mbt) は索引列の格納値を既存の `compare_stored` で比較し、同値の場合は rowid で区別する。この比較を初回ソート、変更前の行の探索、変更後の挿入位置の探索で共有する。NULL、数値とテキスト、BLOB、BINARY / NOCASE / RTRIM の順序を変更しない。
+[index_cache.mbt](../../packages/sqlike/src/full/index_cache.mbt) は索引列の格納値を既存の `compare_stored` で比較し、同値の場合は rowid で区別する。この比較を初回ソート、変更前の行の探索、変更後の挿入位置の探索で共有する。NULL、数値とテキスト、BLOB、BINARY / NOCASE / RTRIM の順序を変更しない。
 
 更新前の行を二分探索し、変更後も前後の行の間に収まる場合は行参照をその場で差し替える。索引キーが同値でも、索引列以外の最新値を返せるよう参照を更新する。並び順が変わる場合は古い参照を削除し、新しい位置へ挿入する。行の挿入・削除、UPSERT、REPLACE、外部キー cascade も同じ行変更用 helper を通る。
 
@@ -44,7 +44,7 @@ Apple M5 / Chromium 158 / Moon 0.1.20261104 release、前段階と同じ環境�
 
 ## 互換性の検証
 
-- [MoonBit テスト](../../packages/sqlike/src/index_wbtest.mbt)は「書き込み後も同じ索引配列を保持する」ことを Red → Green で固定した。2本の索引に対する挿入・同値キー・rowid変更・非索引列変更・UPSERT・REPLACE・全行削除・再挿入と、容量縮小、途中で失敗する複数行更新、clone 分離を検証する。
+- [MoonBit テスト](../../packages/sqlike/src/full/index_wbtest.mbt)は「書き込み後も同じ索引配列を保持する」ことを Red → Green で固定した。2本の索引に対する挿入・同値キー・rowid変更・非索引列変更・UPSERT・REPLACE・全行削除・再挿入と、容量縮小、途中で失敗する複数行更新、clone 分離を検証する。
 - [native 差分テスト](../../tests/sqlike-index.test.ts)は既存の型付き結果9,472比較に加え、3本の索引を温めた状態で固定 seed の240操作を実行する。混在する格納型・照合順序の重複キー・範囲と LIMIT / OFFSET・複数行更新と削除・NOT NULL / 主キー違反・clone / restore を、JS / Wasm GC の動的 SQL / AOT の4経路で SQLite と照合する。
 - `LITESTREAM_BIN=… just check` は MoonBit **26件×JS / Wasm GC**、Node **130件**、Playwright **38件**、型チェックを通過した。本家 Litestream での生成 LTX の復元も含み、従来の論理画像のバイト互換性も検証した。
 

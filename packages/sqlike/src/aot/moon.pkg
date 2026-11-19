@@ -1,0 +1,60 @@
+import {
+  "moonbitlang/x/crypto",
+  "moonbitlang/core/bigint",
+  "moonbitlang/core/buffer",
+  "moonbitlang/core/encoding/utf8",
+  "moonbitlang/core/encoding/base64",
+  "moonbitlang/core/encoding/utf16",
+  "moonbitlang/core/json",
+  "moonbitlang/core/immut/vector" @rowvector,
+  "moonbitlang/core/immut/hashmap" @rowmap,
+  "moonbitlang/core/string",
+}
+
+warnings = "-1-2-4-7-79"
+
+options(
+  link: {
+    "js": {
+      "exports": [
+        "aot_open",
+        "aot_info",
+        "aot_set_clock",
+        "aot_execute",
+        "aot_dump",
+        "aot_restore",
+        "aot_query_info",
+        "aot_clone",
+        "aot_copy_connection_state",
+        "aot_delta",
+        "aot_ack_delta",
+        "aot_apply_delta",
+        "aot_prepare_values",
+        "aot_prepared_execute",
+        "aot_finalize_values",
+      ],
+      "format": "esm",
+    },
+    "wasm-gc": {
+      "exports": [
+        "aot_open",
+        "aot_info",
+        "aot_set_clock",
+        "aot_execute",
+        "aot_dump",
+        "aot_restore",
+        "aot_query_info",
+        "aot_clone",
+        "aot_copy_connection_state",
+        "aot_delta",
+        "aot_ack_delta",
+        "aot_apply_delta",
+        "aot_prepare_values",
+        "aot_prepared_execute",
+        "aot_finalize_values",
+      ],
+      "use-js-builtin-string": true,
+      "imported-string-constants": "_",
+    },
+  },
+)

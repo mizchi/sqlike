@@ -12,11 +12,15 @@ import {
 } from "./aot-upload-contract.ts";
 
 export class AotLtxGateway {
-  private queue: Promise<unknown> = Promise.resolve();
+  private queue: Promise<void> = Promise.resolve();
   constructor(private store: AotLtxStore) {}
   private serial<T>(fn: () => Promise<T>): Promise<T> {
     const task = this.queue.then(fn);
-    this.queue = task.catch(() => {});
+    // The caller receives the outcome; scheduling must not retain file/image bytes.
+    this.queue = task.then(
+      () => {},
+      () => {},
+    );
     return task;
   }
   async accept(
@@ -207,7 +211,9 @@ export async function aotLtxResponse(
       throw new AotUploadError(
         405,
         "method",
-        "LTX gateway requires GET or PUT",
+        name
+          ? "LTX gateway requires GET or PUT"
+          : "LTX catalog requires GET; uploads require a filename",
       );
     const header = request.headers.get("X-Aot-Ltx") ?? "";
     if (header.length > 2048)

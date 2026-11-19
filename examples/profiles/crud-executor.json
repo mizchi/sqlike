@@ -1,0 +1,15 @@
+{
+  "mode": "aot",
+  "features": [],
+  "apiCapabilities": [],
+  "optimizers": [],
+  "catalog": {
+    "schema": ["CREATE TABLE item(id INTEGER PRIMARY KEY,title TEXT,n INTEGER)"],
+    "queries": [
+      {"name": "create", "sql": "INSERT INTO item VALUES(?,?,?)"},
+      {"name": "read", "sql": "SELECT id,title,n FROM item WHERE id=?"},
+      {"name": "update", "sql": "UPDATE item SET title=?,n=? WHERE id=?"},
+      {"name": "delete", "sql": "DELETE FROM item WHERE id=?"}
+    ]
+  }
+}

@@ -1,6 +1,6 @@
 # AOTの型付き結果とprepared handle
 
-2026-11-17。SQLの[型付き結果実験](optimization-trials.md)をAOTにも追加した。`mizchi/sqlike/experimental-aot-typed`はJS専用の別entryで、通常SQL / AOTのexportやnpm entryへ混ぜない。
+2026-11-17の初回導入記録。SQLの[型付き結果実験](optimization-trials.md)をAOTにも追加した。`mizchi/sqlike/experimental-aot-typed`はJS専用の別entryで、通常SQL / AOTの既定exportやnpm既定entryへ混ぜない。2026-11-18に[型付きbind・独立npm entryとhost adapter](performance-next.md)を追加した。現在の公開APIは[利用方法](../native-aot.md)を参照する。
 
 ## 契約
 
@@ -52,7 +52,7 @@ try {
 }
 ```
 
-nativeResultsは現在AOT / JS用。Wasm、binary defined、typed bind、streaming / chunk、npm公開entryは後続とする。SQLite page / LTX / binary syncのexportを同時に要求するprofileも、現段階ではビルド時に拒否する。
+nativeResultsはAOT / JS用。型付きbind・npmの独立entryは後続の[実装](performance-next.md)で追加した。Wasm、binary defined、streaming / chunkは残る。SQLite page / LTX / binary syncのexportを同時に要求するprofileはビルド時に拒否する。
 
 ## 検証・計測
 

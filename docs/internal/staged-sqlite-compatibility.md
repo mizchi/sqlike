@@ -1,6 +1,8 @@
 # SQLite互換機能の段階的な導入
 
-更新日: 2026-11-17。0.1.1での追加機能。全SQLite互換の宣言ではない。
+更新日: 2026-11-18。0.1.1以降の追加機能を含む。全SQLite互換の宣言ではない。
+
+全体の着手順・容量削減・リリース前検証は[TODO.md](../../TODO.md)へ集約する。このページはSQL機能ごとの受入範囲と導入履歴を管理する。
 
 小さい基本機能はcoreに加え、大きい機能は必要な利用者だけがビルド時に選ぶ。既存の`defineSqlike({ mode, features })`と`buildSqlikeRuntime()`を使い、SQL文字列・JSON AOT・バイナリ事前定義の3モードで同じ機能境界を保つ。利用例は[機能選択](sqlike-feature-profiles.md)。
 
@@ -148,7 +150,30 @@ SQLite側も約6〜11%変動しており、絶対時間の増分を機能追加�
 - [x] `mathRounding`を独立したcore関数群としてcatalogから自動収集し、不使用のAOT / definedから実装を除去する。未実行CASE・空tableでも必要な群を除外したcatalogをロード時に拒否する。
 - [x] 通常SQL / AOT / binaryのJS・Wasm計6経路でbind型切替を比較し、誤arityは空結果・書込の前に拒否する。
 
-小さい3演算・4関数名の追加であり、数学関数群全体の実装ではない。format / printf、random / randomblob、三角・対数等の残りはS03として維持する。大きな書式処理や乱数源をこのcore群へ含めない。[回帰テスト](../../tests/sqlike-math-rounding.test.ts)、[catalog別の除去検査](../../tests/sqlike-catalog-profile.test.ts)。仕様は[SQLite math functions](https://www.sqlite.org/lang_mathfunc.html)と[ceilingFunc](https://github.com/sqlite/sqlite/blob/master/src/func.c)を参照する。
+小さい3演算・4関数名の追加であり、数学関数群全体の実装ではない。[format / printfの整数・文字列変換](format-functions.md)を独立した関数群で追加した。浮動小数点の書式、random / randomblob、三角・対数等の残りはS03として維持する。大きな書式処理や乱数源をこのcore群へ含めない。[回帰テスト](../../tests/sqlike-math-rounding.test.ts)、[catalog別の除去検査](../../tests/sqlike-catalog-profile.test.ts)。仕様は[SQLite math functions](https://www.sqlite.org/lang_mathfunc.html)と[ceilingFunc](https://github.com/sqlite/sqlite/blob/master/src/func.c)を参照する。
+
+### アプリで使う機能を優先する順序
+
+実利用catalogの頻度統計はまだないため、用途の広さと既存の監査・ORMでの不足を基準にした暫定順。実際のconsumerで必要になったSQLが見つかれば、その再現テストを先に追加して順位を見直す。構文が似ていても一つの巨大な拡張として配信しない。
+
+- [x] **1. 集約内ORDER BY** — 文字列連結・JSON配列の順序指定。既存のJSON監査probeの拒否も解消する。任意機能`aggregateOrderBy`として追加。[対応範囲と容量](aggregate-order-by.md)
+- [x] **2. 行値比較** — 複合キー・カーソルページング、比較・BETWEEN・CASE・複合INを任意機能`rowValues`へ追加。NULL・affinity・collation・短絡評価を差分検証し、適合する索引では複合キー全体を探索する。[対応範囲と残り](row-values.md)
+- [x] **3. UPDATE FROM** — 任意機能`updateFrom`として、別表・集計結果・自己結合の更新、snapshot、trigger / FK、RETURNINGに対応。複数の元行が一致する入力は書き込み前に拒否する。[対応範囲・容量・計測](update-from.md)
+- [x] **4. 生成列（VIRTUALの初期範囲）** — 任意機能`generatedColumns`。依存順、JSON由来の値、制約・索引、再開、SQLite画像 / LTXを検証。STORED・REAL affinity・ALTER等は残す。[対応範囲と費用](generated-columns.md)
+- [x] **5. json_each / json_treeの初期範囲** — 任意機能`jsonTableFunctions`。通常SQL JSONから独立し、相関JOIN・path・型・ID・失敗時rollbackを検証。JSONBや複合root等は残す。[対応範囲と費用](json-table-functions.md)
+- [x] **6. 式DEFAULT / CREATE TABLE AS SELECTの初期範囲** — 行ごとの不足列評価、CTASのmetadataと初期行、JSON / binary AOT、IndexedDB再開、SQLite画像 / LTXを比較。[対応・拒否範囲と測定](schema-expressions.md)。CTAS compound affinity等の後続はS06へ残す
+- [ ] **7. format / printf・日時等の追加関数** — consumerで必要な関数群から追加。書式処理・乱数・timezone・数学関数を一括でcoreへ入れない
+
+named WINDOW / EXCLUDE、triggerの残り、ATTACH / TEMP、管理コマンド、仮想tableは下記の不足として維持する。生成列等も、対応前にfeature tokenだけを公開しない。行値のsubquery operand・UPDATE SET・IN右辺のcompound等は未対応として残す。
+
+### 集約内ORDER BY（未リリース）
+
+- [x] `group_concat` / `string_agg`、数値集約、JSON集約に対応。ASC / DESC、複数キー、NULLS FIRST / LAST、collation、安定した同値順、行ごとのseparatorを本家と照合する
+- [x] FILTERを先に評価し、通常DISTINCTの最初の代表値と、引数・単一ソート式が同じ場合の最後の代表値を区別する。min / maxは本家同様にソート式を解決するが実行しない
+- [x] `aggregateOrderBy`をcatalogから収集。requiredFeatures bit 512を記録し、無効ビルド・旧binary readerは初期化前に拒否。未実行CASE・空表・viewでも検査する
+- [x] SQL / JSON AOT / binary定義のJS・Wasmで差分検証し、無効ビルドからsorterを除去する。AOTへSQL parserを含めない
+
+window関数への引数内ORDER BY、`count(* ORDER BY …)`、scalar関数のORDER BYは本家と同様に拒否する。単一引数・単一ソートキーでUSING / NATURALの統合列と別の修飾を混在させ、内部の式同一性を確定できない場合も準備時に明示拒否する。集約bare columnは後続で[単一MIN / MAXの一意な代表行](aggregate-representative.md)を追加した。named WINDOW、EXCLUDEと曖昧な代表行は含めない。
 
 ### 残る導入単位
 
@@ -157,12 +182,12 @@ SQLite側も約6〜11%変動しており、絶対時間の増分を機能追加�
 | 段階 | 機能 | 導入先と条件 |
 | --- | --- | --- |
 | [x] S02 基本式 | GLOB、char、16進・桁区切り数値literal | 上記の範囲でcore / compilerへ導入。サロゲート値は明示拒否し、数値parserを事前定義runtimeへ含めない |
-| [ ] S03 scalar拡張 | format / printf、random / randomblob、残る数学関数 | 書式処理・乱数源・数学関数群を別の任意実装にする。丸め・型・overflow、乱数源の注入と同期時の扱いを固定する |
-| [ ] S04 問い合わせの残り | UPDATE FROM、row value、CTE MATERIALIZED指定 | 必要なIRだけcompilerから記録。大きい実行器変更は任意のquery拡張へ分ける。名前解決、複数一致、順序、実体化と非決定関数の評価回数を検証する |
-| [ ] S05 集約・windowの残り | 引数内ORDER BY、named WINDOW、EXCLUDE、集約bare column | window拡張は既存windowFunctions内。集約拡張は容量に応じて分離し、既存の小さい集約を維持する。tie・NULL・frame・代表行の規則を本家と比較する |
-| [ ] S06 schema | VIRTUAL / STORED生成列、expression DEFAULT、CREATE TABLE AS SELECT、TEMP、ATTACH / DETACH | schema compilerとruntime評価を分離。生成列は保存形式・再開時の再計算・table_xinfo・制約を含めて設計する。複数DB名前空間は独立した拡張にする |
+| [ ] S03 scalar拡張 | format / printfの残り、random / randomblob、残る数学関数 | 書式処理・乱数源・数学関数群を別の任意実装にする。丸め・型・overflow、乱数源の注入と同期時の扱いを固定する |
+| [ ] S04 問い合わせの残り | WITH UPDATE・trigger本体のUPDATE FROM、row valueのsubquery / SET等の残り、CTE MATERIALIZED指定 | 行値の通常比較・BETWEEN・CASE・INは上記で追加。必要なIRだけcompilerから記録。名前解決、複数一致、順序、実体化と非決定関数の評価回数を検証する |
+| [ ] S05 集約・windowの残り | named WINDOW、EXCLUDE、代表行規則の残り | 引数内ORDER BYは上記で追加。window拡張は既存windowFunctions内。集約拡張は容量に応じて分離し、既存の小さい集約を維持する。tie・NULL・frame・代表行の規則を本家と比較する |
+| [ ] S06 schema | VIRTUALのREAL affinity / ALTER・STORED生成列、引用付きDEFAULT式、CTAS compound affinity等の後続、TEMP、ATTACH / DETACH | schema compilerとruntime評価を分離。生成列は保存形式・再開時の再計算・table_xinfo・制約を含めて設計する。複数DB名前空間は独立した拡張にする |
 | [ ] S07 trigger・競合 | BEFOREの書込、INSTEAD OF、RAISE(FAIL / ROLLBACK)、INSERT OR FAIL / ROLLBACK | 既存triggersに必要な追加能力を明示する。部分成功・文rollback・transaction rollbackを区別し、host transactionと同期journalの契約も検証する |
-| [ ] S08 JSON・日時の残り | JSON集約window・NULL label、json_each/tree、JSON5 / JSONB、timediff・timezone modifier | 通常JSONの小さい追加とtable-valued / JSONB / timezone実装を別に扱う。sqlJsonやdateTimeを選ぶだけで全拡張が入らない構成を目指す |
+| [ ] S08 JSON・日時の残り | JSON集約window・NULL label、json_each/treeの複合root等の残り、JSON5 / JSONB、timediff・timezone modifier | 通常JSONの小さい追加とtable-valued / JSONB / timezone実装を別に扱う。sqlJsonやdateTimeを選ぶだけで全拡張が入らない構成を目指す |
 | [ ] S09 管理・診断の残り | 索引宣言順・方向の保存、その他PRAGMA、ANALYZE、REINDEX、VACUUM、EXPLAIN、integrity_check | 不足するmetadataはversionと移行を含めて追加する。planner・整合性検査・保守処理は別entry。実際に検査・再構築せず成功扱いにする実装はしない |
 | [ ] S10 仮想table | SQLite FTS5、RTree、汎用virtual table API | 既存の任意FTS APIとは別のSQL / 保存互換。登録APIと実装を別モジュールにし、未登録は明示拒否する |
 | [ ] S11 保存・native接続 | 上限付きpager、WAL writer / recovery、VFS lock、backup、native ABI | SQL evaluatorとは別のインフラ契約・adapter。IndexedDBの行差分は維持し、SQLite page互換・LTX・多接続の耐障害差分を追加する |

@@ -216,6 +216,31 @@ test("HTTP upload bounds the body, verifies filename and uses an identical recei
   }
 });
 
+test("HTTP method rejection distinguishes catalog uploads from unsupported file methods without claiming a history", async () => {
+  const g = gateway();
+  const endpoint = "http://gateway/aot-ltx/room";
+  try {
+    const before = await g.gateway.catalog();
+    for (const [url, method, message] of [
+      [endpoint, "PUT", /filename/],
+      [endpoint, "POST", /catalog/],
+      [`${endpoint}/${ltxFilename("1", "1")}`, "DELETE", /GET or PUT/],
+    ] as const) {
+      const response = await aotLtxResponse(
+        g.gateway,
+        new Request(url, { method }),
+      );
+      assert.equal(response.status, 405);
+      const body = await response.json();
+      assert.equal(body.code, "method");
+      assert.match(body.error, message);
+      assert.deepEqual(await g.gateway.catalog(), before);
+    }
+  } finally {
+    g.db.close();
+  }
+});
+
 test("publisher durably binds the endpoint and keeps pending bytes after lost/malformed ACK", async () => {
   const local = new Store(),
     g = gateway();
@@ -388,5 +413,104 @@ test("local binding must commit before sending and a manually acknowledged legac
     await assert.rejects(db.bindUpload(endpoint), /already acknowledged/);
   } finally {
     await db.close();
+  }
+});
+
+test("sync drains a full outbox before capturing latest SQL and survives a lost remote ACK", async () => {
+  const { syncAotLtx } = await import("../src/aot-upload.ts");
+  const local = new Store(),
+    g = gateway(),
+    options = { outboxLimit: 2 };
+  const endpoint = "http://gateway/aot-ltx/full";
+  let db = await AotDatabase.withStore(
+    built.artifact,
+    built.manifest.artifactSHA256,
+    local,
+    options,
+  );
+  const fetcher: typeof fetch = async (input, init) =>
+    aotLtxResponse(g.gateway, new Request(String(input), init));
+  try {
+    for (let i = 1; i <= 2; i++) {
+      await db.execute("add", [BigInt(i), "offline"]);
+      await db.checkpoint();
+    }
+    const original = await db.pending();
+    for (let i = 3; i <= 10; i++) await db.execute("add", [BigInt(i), "later"]);
+    assert.equal((await db.checkpoint()).deferred?.reason, "outbox-full");
+    let lose = true;
+    await assert.rejects(
+      syncAotLtx(db, endpoint, async (...args) => {
+        const response = await fetcher(...args);
+        if (lose) {
+          lose = false;
+          throw Error("ACK lost");
+        }
+        return response;
+      }),
+      /ACK lost/,
+    );
+    assert.deepEqual(await db.pending(), original);
+    assert.equal((await db.inspect("list")).rows.length, 10);
+    await db.close();
+    db = await AotDatabase.withStore(
+      built.artifact,
+      built.manifest.artifactSHA256,
+      local,
+      options,
+    );
+    const result = await syncAotLtx(db, endpoint, fetcher);
+    assert.equal(result.uploaded, 3);
+    assert.equal(result.checkpoint.head, "3");
+    assert.equal(result.checkpoint.created, true);
+    assert.equal((await db.pending()).length, 0);
+    assert.deepEqual(await g.store.image(), await db.exportSQLite());
+    assert.deepEqual(
+      await g.gateway.file(original[0]!.name),
+      original[0]!.data,
+    );
+    const noOp = await syncAotLtx(db, endpoint, fetcher);
+    assert.equal(noOp.uploaded, 0);
+    assert.equal(noOp.checkpoint.created, false);
+  } finally {
+    await db.close();
+    g.db.close();
+  }
+});
+
+test("sync makes two bounded upload passes while later SQL remains durably available for the next sync", async () => {
+  const { syncAotLtx } = await import("../src/aot-upload.ts");
+  const local = new Store(),
+    g = gateway(),
+    endpoint = "http://gateway/aot-ltx/concurrent";
+  const db = await AotDatabase.withStore(
+    built.artifact,
+    built.manifest.artifactSHA256,
+    local,
+    { outboxLimit: 1 },
+  );
+  const fetcher: typeof fetch = async (input, init) =>
+    aotLtxResponse(g.gateway, new Request(String(input), init));
+  try {
+    await db.execute("add", [1n, "initial"]);
+    await db.checkpoint();
+    await db.execute("add", [2n, "waiting"]);
+    let requests = 0;
+    const first = await syncAotLtx(db, endpoint, async (...args) => {
+      if (++requests > 2) throw Error("sync did not terminate");
+      const response = await fetcher(...args);
+      await db.execute("add", [BigInt(requests + 2), "during upload"]);
+      return response;
+    });
+    assert.equal(requests, 2);
+    assert.equal(first.uploaded, 2);
+    assert.equal((await db.inspect("list")).rows.length, 4);
+    assert.equal((await db.pending()).length, 0);
+    const second = await syncAotLtx(db, endpoint, fetcher);
+    assert.equal(second.uploaded, 1);
+    assert.deepEqual(await g.store.image(), await db.exportSQLite());
+  } finally {
+    await db.close();
+    g.db.close();
   }
 });

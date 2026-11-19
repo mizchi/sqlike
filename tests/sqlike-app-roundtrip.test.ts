@@ -6,7 +6,7 @@ import { join } from "node:path";
 import { DatabaseSync } from "node:sqlite";
 import { buildCatalog } from "../scripts/aot-compiler.ts";
 import * as js from "../_build/js/release/build/mizchi/litestream-example/runtime/runtime.js";
-import * as dynamic from "../_build/js/release/build/mizchi/sqlike/sqlike.js";
+import * as dynamic from "../_build/js/release/build/mizchi/sqlike/full/full.js";
 import { aotBindings, aotValue } from "../src/aot-values.ts";
 import { result } from "./compatibility/sqlike-paths.ts";
 test("new ASTs, composite deferred FKs and clock defaults survive AOT JS/Wasm SQLite export and native import", async () => {

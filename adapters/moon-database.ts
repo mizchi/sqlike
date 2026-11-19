@@ -1,11 +1,12 @@
 import { aotBindings } from "../src/aot-values.ts";
 import type { BrowserDatabase } from "../src/backend-contract.ts";
 import type { SyncPersistenceFactory } from "../src/persistence-contract.ts";
-import * as jsRuntime from "../_build/js/release/build/mizchi/sqlike/sqlike.js";
+import * as jsRuntime from "../_build/js/release/build/mizchi/sqlike/full/full.js";
 export type MoonSqlRuntime = typeof jsRuntime;
 import { SyncEngine, validateChanges } from "../src/engine.ts";
 import type { ResultCell, Database, Snapshot, Value } from "../src/contract.ts";
 import { unpack, decodeChangeset } from "../src/protocol.ts";
+import { decodeSchemaEntries } from "../src/schema-entries.ts";
 
 /** SQL parsing, storage classes, execution and constraints are all implemented in
  * MoonBit. This boundary only marshals values and owns transaction publication. */
@@ -32,6 +33,8 @@ export class MoonDatabase implements BrowserDatabase {
       provider ?? (await import("./moon-persistence.ts")).MoonPersistence.open
     )(name);
     try {
+      if (persistence.initial.snapshot)
+        throw Error("unsupported SQL host chunk snapshot");
       const db = new MoonDatabase(
         persistence.initial.image,
         (image, delta) => persistence.commit(image, delta),
@@ -102,6 +105,13 @@ export class MoonDatabase implements BrowserDatabase {
   dump(): string {
     this.healthy();
     return this.runtime.database_dump(this.connection);
+  }
+  schemaEntries() {
+    return decodeSchemaEntries(
+      this.all(
+        "SELECT name,type,tbl_name,sql FROM sqlite_schema WHERE sql IS NOT NULL",
+      ),
+    );
   }
   schemaVersion(): number {
     this.healthy();

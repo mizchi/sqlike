@@ -1,6 +1,6 @@
 {
   "name": "@mizchi/sqlike",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "MoonBit SQLite subset with typed SQL, precompiled binary schemas and IndexedDB persistence",
   "type": "module",
   "license": "MIT",
@@ -12,9 +12,21 @@
   "module": "./dist/index.js",
   "types": "./dist/types/npm/sqlike/index.d.ts",
   "exports": {
+    "./vite": {
+      "types": "./dist/types/npm/sqlike/vite.d.ts",
+      "import": "./dist/vite.js"
+    },
     ".": {
       "types": "./dist/types/npm/sqlike/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./aot": {
+      "types": "./dist/types/npm/sqlike/aot.d.ts",
+      "import": "./dist/aot.js"
+    },
+    "./aot/core": {
+      "types": "./dist/types/npm/sqlike/aot-core.d.ts",
+      "import": "./dist/aot-core.js"
     },
     "./defined": {
       "types": "./dist/types/npm/sqlike/defined.d.ts",
@@ -61,12 +73,30 @@
       "import": "./dist/drizzle-prepared.js"
     },
     "./engine": {
-      "types": "./dist/types/_build/js/release/build/mizchi/sqlike/sqlike.d.ts",
+      "types": "./dist/types/npm/sqlike/engine.d.ts",
       "import": "./dist/engine.js"
     },
     "./wasm/defined.wasm": "./dist/wasm/defined.wasm",
     "./wasm/sql.wasm": "./dist/wasm/sql.wasm",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./full": {
+      "types": "./dist/types/npm/sqlike/full.d.ts",
+      "import": "./dist/full.js"
+    },
+    "./full/engine": {
+      "types": "./dist/types/npm/sqlike/full-engine.d.ts",
+      "import": "./dist/full-engine.js"
+    },
+    "./aot/native": {
+      "types": "./dist/types/npm/sqlike/aot-native.d.ts",
+      "import": "./dist/aot-native.js"
+    },
+    "./wasm/aot.wasm": "./dist/wasm/aot.wasm",
+    "./wasm/full.wasm": "./dist/wasm/full.wasm",
+    "./pager": {
+      "types": "./dist/types/npm/sqlike/pager.d.ts",
+      "import": "./dist/pager.js"
+    }
   },
   "files": [
     "dist",
@@ -86,9 +116,13 @@
     "url": "https://github.com/mizchi/sqlike/issues"
   },
   "peerDependencies": {
+    "vite": "^8.0.0",
     "drizzle-orm": "0.45.4"
   },
   "peerDependenciesMeta": {
+    "vite": {
+      "optional": true
+    },
     "drizzle-orm": {
       "optional": true
     }

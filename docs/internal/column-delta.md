@@ -6,7 +6,7 @@
 
 ## 記録する範囲
 
-[行の置換](../../packages/sqlike/src/index_cache.mbt)で変更前後の値を比較し、[dirty状態](../../packages/sqlike/src/persistence.mbt)へ変更列と新しい値だけを記録する。全DBをdumpしてからdiffを取る実装ではない。比較は格納型も区別し、REALはbit単位で比較する。変更のないValue参照は比較を短絡する。
+[行の置換](../../packages/sqlike/src/full/index_cache.mbt)で変更前後の値を比較し、[dirty状態](../../packages/sqlike/src/full/persistence.mbt)へ変更列と新しい値だけを記録する。全DBをdumpしてからdiffを取る実装ではない。比較は格納型も区別し、REALはbit単位で比較する。変更のないValue参照は比較を短絡する。
 
 変更後の値は不変で、patch配列も公開後は変更しない。古い行・Store・全量文字列をログ生成のために保持しない。列数に比例する比較と、小さなpatch配列の割当は増える。変更したTEXT / BLOB自体は列全体を保存する。変更対象表の行配列のcopy-on-writeと、全行のメモリ常駐は残る。
 
@@ -47,7 +47,7 @@ JSONの標準Int32デコーダーが小数を切り捨てるため、増分ロ�
 
 ## 検証と計測
 
-- [MoonBitの回帰](../../packages/sqlike/src/column_delta_wbtest.mbt): 大きな未変更値の省略、同値更新、格納型と負のゼロ、snapshot / patchの往復。
+- [MoonBitの回帰](../../packages/sqlike/src/full/column_delta_wbtest.mbt): 大きな未変更値の省略、同値更新、格納型と負のゼロ、snapshot / patchの往復。
 - [形式の回帰](../../tests/persistence-format.test.ts): JS / Wasmの動的 / AOTでv1→v2を再生。壊れた列番号、NaN、不正version、途中まで有効なログをatomicに拒否する。
 - [既存のnative比較](../../tests/persistence-delta.test.ts): 型・主キー更新・UPSERT・cascade・失敗後状態を照合する。
 - [実IDBのE2E](../../e2e/persistence-columns.spec.ts): 4 KiB BLOBと大きなTEXT、ACK待ちの公開、中断・ACK消失・stale writer、trigger / FK・savepoint rollback・130更新後のcompaction・再読込を検査する。

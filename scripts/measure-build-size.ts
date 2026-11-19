@@ -27,7 +27,7 @@ function sizes(value: Uint8Array) {
 const results = [];
 for (const [name, module] of [
   ["AOT + SQLite writer + LTX", "mizchi/litestream-example/runtime/runtime"],
-  ["SQLike dynamic SQL", "mizchi/sqlike/sqlike"],
+  ["SQLike dynamic SQL", "mizchi/sqlike/full/full"],
   ["Litestream", "mizchi/litestream/litestream"],
 ]) {
   const jsPath = `_build/js/release/build/${module}.js`;

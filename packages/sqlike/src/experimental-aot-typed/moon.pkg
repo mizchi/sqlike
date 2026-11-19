@@ -1,5 +1,5 @@
 import {
-  "mizchi/sqlike",
+  "mizchi/sqlike/full" @sqlike,
   "mizchi/sqlike/experimental-typed" @native,
 }
 
@@ -14,6 +14,9 @@ options(
         "execute",
         "prepare",
         "values",
+        "values_typed",
+        "execute_typed",
+        "copy_connection_state",
         "finalize",
         "restore",
         "snapshot",

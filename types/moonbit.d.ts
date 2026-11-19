@@ -18,8 +18,42 @@ declare module "*litestream/litestream.js" {
   export interface LtxResult {
     readonly __ltxResult: unique symbol;
   }
-  export function encode_ltx(base:Uint8Array,data:Uint8Array,min:string,max:string,timestamp:string):LtxResult;
-  export function encode_ltx_base64(base:string,data:string,min:string,max:string,timestamp:string):LtxResult;
+  export function encode_ltx_pages(
+    state: string,
+    metadata: string,
+    data: Uint8Array,
+  ): LtxResult;
+  export function encode_ltx_pages_base64(
+    state: string,
+    metadata: string,
+    data: string,
+  ): LtxResult;
+  export function encode_ltx_pages_binary(
+    state: string,
+    metadata: string,
+    data: Uint8Array,
+    previous: Uint8Array,
+  ): LtxResult;
+  export function encode_ltx_pages_binary_base64(
+    state: string,
+    metadata: string,
+    data: string,
+    previous: string,
+  ): LtxResult;
+  export function encode_ltx(
+    base: Uint8Array,
+    data: Uint8Array,
+    min: string,
+    max: string,
+    timestamp: string,
+  ): LtxResult;
+  export function encode_ltx_base64(
+    base: string,
+    data: string,
+    min: string,
+    max: string,
+    timestamp: string,
+  ): LtxResult;
   export function apply_ltx(
     base: Uint8Array,
     txid: string,

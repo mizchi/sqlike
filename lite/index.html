@@ -18,7 +18,7 @@ body{font:16px/1.6 system-ui,sans-serif;max-width:960px;margin:48px auto;padding
 <table><thead><tr><th>ID</th><th>タイトル</th><th>スコア</th></tr></thead><tbody id="notes"></tbody></table>
 <h2>未確認の LTX</h2><ul id="pending"></ul>
 <label>保存先<input id="upload-endpoint" aria-label="LTX 保存先" size="40"></label><button type="button" id="upload">LTX を送信</button>
-<p><small>送信時に最新の差分を作り、保存先の受理を確認します。同じ履歴の送信先は初回に固定されます。DO を使う場合は /do-aot-ltx/ルーム名 を指定します。</small></p>
+<p><small>送信時は未確認の LTX を先に送り、最新の変更も保存先へ反映します。未確認が128件に達してもメモはローカルへ保存できます。同じ履歴の送信先は初回に固定されます。DO を使う場合は /do-aot-ltx/ルーム名 を指定します。</small></p>
 <p><small>初回の snapshot と、その後の差分を順番に使って復元します。ファイルのダウンロードだけでは、復元先が受理したという確認にはしません。</small></p>
 <script type="module" src="/src/lite.ts"></script>
 </html>

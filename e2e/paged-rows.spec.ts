@@ -17,7 +17,8 @@ test("paged candidates keep committed versions through multi-page writes, compac
     ],
   });
   const output = await build({ configFile: false, publicDir: false, logLevel: "error", build: {
-    write: false, minify: true, target: "esnext", lib: { entry: "e2e/fixtures/release-runtime.ts", formats: ["es"] },
+    write: false,
+      rolldownOptions: { output: { codeSplitting: false } }, minify: true, target: "esnext", lib: { entry: "e2e/fixtures/release-runtime.ts", formats: ["es"] },
   } });
   let code = "";
   for (const o of Array.isArray(output) ? output : [output])

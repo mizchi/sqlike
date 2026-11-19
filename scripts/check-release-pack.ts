@@ -57,7 +57,7 @@ try {
     timeout: 180000,
   });
   writeFileSync("_build/publish/SHA256SUMS", `${checksums.join("\n")}\n`);
-  console.log(`v${version}: both published archives passed external JS / Wasm GC consumers`);
+  console.log(`v${version}: both dry-run archives passed external JS / Wasm GC consumers`);
 } finally {
   rmSync(temp, { recursive: true, force: true });
 }

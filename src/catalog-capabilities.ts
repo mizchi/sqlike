@@ -34,7 +34,15 @@ export const catalogFunctionConstants = {
   "jsonArrow": "CAP_FUNCTION_JSON_ARROW",
   "jsonEdit": "CAP_FUNCTION_JSON_EDIT",
   "jsonPatch": "CAP_FUNCTION_JSON_PATCH",
-  "jsonAggregate": "CAP_FUNCTION_JSON_AGGREGATE"
+  "jsonAggregate": "CAP_FUNCTION_JSON_AGGREGATE",
+  "format": "CAP_FUNCTION_FORMAT"
+} as const;
+export const catalogExpressionConstants = {
+  "call": "CAP_EXPRESSION_CALL",
+  "subquery": "CAP_EXPRESSION_SUBQUERY",
+  "cast": "CAP_EXPRESSION_CAST",
+  "case": "CAP_EXPRESSION_CASE",
+  "between": "CAP_EXPRESSION_BETWEEN"
 } as const;
 export const catalogStatementConstants = {
   "select": "CAP_STATEMENT_SELECT",
@@ -45,12 +53,20 @@ export const catalogStatementConstants = {
   "pragma": "CAP_STATEMENT_PRAGMA"
 } as const;
 export const catalogQueryConstants = {
+  "source": "CAP_QUERY_SOURCE",
+  "orderBy": "CAP_QUERY_ORDER_BY",
+  "distinct": "CAP_QUERY_DISTINCT",
+  "limitOffset": "CAP_QUERY_LIMIT_OFFSET",
+  "groupBy": "CAP_QUERY_GROUP_BY",
   "jsonSubtype": "CAP_QUERY_JSON_SUBTYPE",
   "cte": "CAP_QUERY_CTE",
   "recursiveCte": "CAP_QUERY_RECURSIVE_CTE",
   "join": "CAP_QUERY_JOIN",
-  "compound": "CAP_QUERY_COMPOUND"
+  "compound": "CAP_QUERY_COMPOUND",
+  "inSelect": "CAP_QUERY_IN_SELECT",
+  "aggregateRepresentative": "CAP_QUERY_AGGREGATE_REPRESENTATIVE"
 } as const;
 export type CatalogFunctionGroup = keyof typeof catalogFunctionConstants;
+export type CatalogExpressionGroup = keyof typeof catalogExpressionConstants;
 export type CatalogStatementKind = keyof typeof catalogStatementConstants;
 export type CatalogQueryPart = keyof typeof catalogQueryConstants;

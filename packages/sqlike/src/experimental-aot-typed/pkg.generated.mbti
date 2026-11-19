@@ -2,32 +2,38 @@
 package "mizchi/sqlike/experimental-aot-typed"
 
 import {
-  "mizchi/sqlike",
   "mizchi/sqlike/experimental-typed",
+  "mizchi/sqlike/full",
 }
 
 // Values
-pub fn clone(@sqlike.AotDatabase) -> @sqlike.AotDatabase
+pub fn clone(@full.AotDatabase) -> @full.AotDatabase
 
-pub fn execute(@sqlike.AotDatabase, String, String) -> String
+pub fn copy_connection_state(@full.AotDatabase, @full.AotDatabase) -> String
 
-pub fn finalize(@sqlike.AotPreparedValues) -> String
+pub fn execute(@full.AotDatabase, String, String) -> String
 
-pub fn info(@sqlike.AotDatabase) -> String
+pub fn execute_typed(@full.AotDatabase, String, @experimental-typed.NativeValue) -> @experimental-typed.NativeValue
 
-pub fn open(String, String) -> @sqlike.AotDatabase
+pub fn finalize(@full.AotPreparedValues) -> String
 
-pub fn prepare(@sqlike.AotDatabase, String) -> @sqlike.AotPreparedValues
+pub fn info(@full.AotDatabase) -> String
 
-pub fn query_info(@sqlike.AotDatabase, String) -> String
+pub fn open(String, String) -> @full.AotDatabase
 
-pub fn restore(@sqlike.AotDatabase, String) -> String
+pub fn prepare(@full.AotDatabase, String) -> @full.AotPreparedValues
 
-pub fn set_clock(@sqlike.AotDatabase, String) -> String
+pub fn query_info(@full.AotDatabase, String) -> String
 
-pub fn snapshot(@sqlike.AotDatabase) -> String
+pub fn restore(@full.AotDatabase, String) -> String
 
-pub fn values(@sqlike.AotPreparedValues, String) -> @experimental-typed.NativeValue
+pub fn set_clock(@full.AotDatabase, String) -> String
+
+pub fn snapshot(@full.AotDatabase) -> String
+
+pub fn values(@full.AotPreparedValues, String) -> @experimental-typed.NativeValue
+
+pub fn values_typed(@full.AotPreparedValues, @experimental-typed.NativeValue) -> @experimental-typed.NativeValue
 
 // Errors
 

@@ -36,7 +36,7 @@ test("an external MoonBit consumer uses sqlike and its compiler without the lite
     );
     writeFileSync(
       join(consumer, "moon.pkg"),
-      'import { "mizchi/sqlike", "mizchi/sqlike/compiler" }\n',
+      'import { "mizchi/sqlike", "mizchi/sqlike/aot", "mizchi/sqlike/compiler" }\n',
     );
     writeFileSync(
       join(consumer, "consumer_test.mbt"),
@@ -52,8 +52,8 @@ test "typed and compiled public interfaces work across module boundaries" {
   statement.finalize()
   connection.close()
   let artifact = @compiler.compile_program("{\"schema\":[],\"queries\":[{\"name\":\"one\",\"sql\":\"SELECT 1\"}]}")
-  let program = @sqlike.Program::load(artifact)
-  let compiled = @sqlike.Connection::from_program(program)
+  let program = @aot.Program::load(artifact)
+  let compiled = @aot.Connection::from_program(program)
   let select = compiled.prepare_compiled(program.query("one"))
   assert_true(select.step())
   let one : Int64 = select.column(index=0)

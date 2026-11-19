@@ -96,7 +96,7 @@ writeFileSync(
         "adapters/drizzle-migrator.ts",
         "src/migration-statements.ts",
         "adapters/moon-database.ts",
-        "_build/js/release/build/mizchi/sqlike/sqlike.js",
+        "_build/js/release/build/mizchi/sqlike/full/full.js",
       ]),
       method:
         "All exported API retained, minified ES, includes dynamic persistence chunks/workers; compressed per asset then summed; paired build, not demo initial transfer or ORM performance",

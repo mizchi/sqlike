@@ -41,12 +41,12 @@ const wasmLoad = `const {instance}=await WebAssembly.instantiateStreaming(fetch(
 const definedHost = JSON.stringify(resolve("adapters/defined-database-core.ts"));
 const wasmHost = JSON.stringify(resolve("adapters/defined-wasm.ts"));
 const sqlHost = JSON.stringify(resolve("src/sqlike-runtime.ts"));
-entries.push({ id: "sql-js", name: `SQLike ${displayVersion} / 通常SQL / JS`, entry: resolve("npm/sqlike/index.ts"), kind: "sql", wasm: false });
+entries.push({ id: "sql-js", name: `SQLike ${displayVersion} / 通常SQL・full / JS`, entry: resolve("npm/sqlike/full.ts"), kind: "sql", wasm: false });
 const sqlWasmDir = join(directory, "sql-wasm");
 await mkdir(sqlWasmDir, { recursive: true });
-await copyFile("_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm", join(sqlWasmDir, "runtime.wasm"));
+await copyFile("_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm", join(sqlWasmDir, "runtime.wasm"));
 await writeFile(join(sqlWasmDir, "entry.ts"), `import {openSql,type SqlRuntime} from ${sqlHost};\n${wasmLoad}\nexport const openDatabase=(image?:string)=>openSql(instance.exports as unknown as SqlRuntime,image);\n`);
-entries.push({ id: "sql-wasm", name: `SQLike ${displayVersion} / 通常SQL / Wasm GC`, entry: join(sqlWasmDir, "entry.ts"), kind: "sql", wasm: true });
+entries.push({ id: "sql-wasm", name: `SQLike ${displayVersion} / 通常SQL・full / Wasm GC`, entry: join(sqlWasmDir, "entry.ts"), kind: "sql", wasm: true });
 for (const profile of profiles) {
   const profileDir = join(directory, profile.id);
   await buildSqlikeRuntime(defineSqlike({ mode: "defined", features: profile.features }), { outDir: profileDir });
@@ -136,6 +136,11 @@ try {
         }
         const db = module.openDatabase();
         try {
+          // The dynamic SQL comparison represents the full engine on both
+          // targets, independently of the package's smaller default entry.
+          const full = db.values("WITH c(v) AS(SELECT json_extract('{\"n\":2}','$.n')) SELECT v,row_number() OVER(ORDER BY v) FROM c");
+          if (full.length !== 1 || full[0]?.[0] !== 2n || full[0]?.[1] !== 1n)
+            throw Error("full SQL bundle capabilities differ between targets");
           db.run("CREATE TABLE t(id INTEGER PRIMARY KEY,v TEXT NOT NULL)");
           db.values("INSERT INTO t VALUES(?,?) RETURNING id,v", [1n, "verified"]);
           return db.values("SELECT id,v FROM t").map((r: unknown[]) => r.map((v) => typeof v === "bigint" ? String(v) : v));
@@ -154,13 +159,13 @@ try {
 
 const report = {
   format: 1, measuredAt: new Date().toISOString(), node: process.version, browser: browserVersion,
-  method: "Browser ESM public entry exports retained; Vite/Oxc minification, esnext, ES workers, legal/purity comments retained, assetsInlineLimit=0. Every emitted JS chunk, Worker and Wasm asset counted once, including optional emitted workers. Brotli quality 11 applied per asset with decompression round trip. Wasm is compiler/package release output, without additional wasm-opt. Excludes app code/HTML, precompiled schema/statements, build-time compiler, optional SQLite exporter, Litestream and source maps. Not feature-equivalent engines or a minimal startup-download measurement.",
+  method: "Browser ESM public entry exports retained; Vite/Oxc minification, esnext, ES workers, legal/purity comments retained, assetsInlineLimit=0. Dynamic SQL uses the full SQLike engine on JS and Wasm, verified with JSON, CTE and window execution. Every emitted JS chunk, Worker and Wasm asset counted once, including optional emitted workers. Brotli quality 11 applied per asset with decompression round trip. Wasm is compiler/package release output, without additional wasm-opt. Excludes app code/HTML, precompiled schema/statements, build-time compiler, optional SQLite exporter, Litestream and source maps. Not feature-equivalent engines or a minimal startup-download measurement.",
   versions: { sqlike: displayVersion, sqlikePackage: version, sqlite: sqlite.version, turso: turso.version },
   sourceHashes: sourceHashes([
     ...engineSourcePaths(), "scripts/bundle-size.ts", "scripts/measure-bundle-size.ts", "scripts/build-sqlike-runtime.ts", "scripts/oxc-runtime.ts", "scripts/sqlike-runtime-declarations.ts", "scripts/defined-compiler.ts", "scripts/aot-compiler.ts",
     "src/sqlike-features.ts", "src/sqlike-runtime.ts", "src/aot-values.ts", "src/defined-contract.ts", "src/defined-database-contract.ts", "src/persistence-contract.ts",
-    "adapters/defined-database-core.ts", "adapters/defined-database.ts", "adapters/defined-wasm.ts", "adapters/moon-image-store.ts", "npm/sqlike/index.ts", "npm/sqlike/defined.ts", "npm/sqlike/package.json",
-    "_build/js/release/build/mizchi/sqlike/sqlike.js", "_build/js/release/build/mizchi/sqlike/defined/defined.js", "_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm",
+    "adapters/defined-database-core.ts", "adapters/defined-database.ts", "adapters/defined-wasm.ts", "adapters/moon-image-store.ts", "npm/sqlike/full.ts", "npm/sqlike/defined.ts", "npm/sqlike/package.json",
+    "_build/js/release/build/mizchi/sqlike/full/full.js", "_build/js/release/build/mizchi/sqlike/defined/defined.js", "_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm",
     ...profiles.flatMap((p) => [join(directory, p.id, "runtime.js"), join(directory, p.id, "runtime.wasm")].map((path) => path.replace(resolve(".") + "/", ""))),
     "node_modules/@sqlite.org/sqlite-wasm/package.json", "node_modules/@sqlite.org/sqlite-wasm/dist/index.mjs", "node_modules/@sqlite.org/sqlite-wasm/dist/sqlite3.wasm",
     "node_modules/@tursodatabase/database-wasm/package.json", "node_modules/@tursodatabase/database-wasm/dist/promise-default.js", "node_modules/@tursodatabase/database-wasm/dist/index-default.js", "node_modules/@tursodatabase/database-wasm/dist/turso.wasm32-wasi.wasm",

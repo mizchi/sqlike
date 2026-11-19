@@ -119,7 +119,7 @@ const report = {
   workloadSHA256: hash(JSON.stringify(workload)),
   artifacts: {
     sqlike: hash(
-      readFileSync("_build/js/release/build/mizchi/sqlike/sqlike.js"),
+      readFileSync("_build/js/release/build/mizchi/sqlike/full/full.js"),
     ),
     runtime: hash(
       readFileSync(

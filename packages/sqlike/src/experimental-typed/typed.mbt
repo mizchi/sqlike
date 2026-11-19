@@ -21,7 +21,7 @@ extern "js" fn text_value(s : String) -> NativeValue =
 
 ///|
 extern "js" fn blob_value(b : Bytes) -> NativeValue =
-  #| b => b.slice()
+  #| b => new Uint8Array(b)
 
 ///|
 fn array_value(a : FixedArray[NativeValue]) -> NativeValue = "%identity"

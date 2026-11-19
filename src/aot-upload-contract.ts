@@ -1,3 +1,5 @@
+import type { AotCheckpoint } from "./aot-checkpoint-contract.ts";
+
 /** A single publisher owns one physical SQLite/LTX history. SQL replication is
  * a separate protocol; these files cannot merge independent writers. */
 export const AOT_LTX_MAX_BYTES = 64 * 1024 * 1024;
@@ -7,6 +9,21 @@ export interface AotUploadBinding {
   historyId: string;
   token: string;
   artifactSHA256: string;
+}
+/** Captured outbox bytes; storage and SQL execution remain the provider's concern. */
+export interface AotLtxPendingFile {
+  minTXID: string;
+  maxTXID: string;
+  sha256: string;
+  data: Uint8Array;
+}
+export interface AotLtxUploadSource {
+  bindUpload(endpoint: string): Promise<AotUploadBinding>;
+  pending(): Promise<readonly AotLtxPendingFile[]>;
+  acknowledge(head: string, sha256: string): Promise<void>;
+}
+export interface AotLtxSyncSource extends AotLtxUploadSource {
+  checkpoint(): Promise<AotCheckpoint>;
 }
 export interface AotLtxUpload {
   format: "aot-ltx-upload@1";

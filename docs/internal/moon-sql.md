@@ -2,7 +2,7 @@
 
 現在の対応・明示拒否・実施済み最適化と、次の改善は[対応範囲と改善台帳](status-and-improvement-plan.md)に集約する。
 
-`engine=sqlike` を実装した。SQL の解析、値、評価、制約、行ストア、SQLite Session 形式の差分生成と SQLite ファイル reader を `packages/sqlike/src/*.mbt` に新規実装している。`backend=ltx` の受信・展開・SQLite イメージの検査も MoonBit で行う。SQL を既存 SQLite に転送する処理や、未対応 SQL を別エンジンに渡す fallback はない。
+`engine=sqlike` を実装した。SQL の解析、値、評価、制約、行ストア、SQLite Session 形式の差分生成と SQLite ファイル reader を `packages/sqlike/src/full/*.mbt` に新規実装している。`backend=ltx` の受信・展開・SQLite イメージの検査も MoonBit で行う。SQL を既存 SQLite に転送する処理や、未対応 SQL を別エンジンに渡す fallback はない。
 
 [SQLike の開発方針](sqlike-development.md)に従い、速度と既存の差分テストを維持しながら SQLite 互換の SQL を拡張する。現在は SQLite の完全な移植ではない。互換性は `browser-sqlite@1` の **42 ケース・842 ステップ**に加え、[本家 sqllogictest 1,000件・生成式7,776件・REAL 文字列化528件](sqlite-conformance.md)を native SQLite と照合する。JS / Wasm GC / Chromium で同じ入力を検証する。既存の SQLite engine も選択でき、既定値は引き続き `sqlite`。
 
@@ -96,7 +96,7 @@ just ltx-moon /absolute/path/to/litestream
 
 サーバーの正本はネイティブ SQLite であり、上りは既存の SQL / Session changeset、下りが LTX になる。MoonBit engine が自分で WAL / LTX を生成する経路ではない。
 
-ファイル reader は [SQLite の file format](https://www.sqlite.org/fileformat2.html) に従い、次を扱う。実装は [sqlite_file.mbt](../../packages/sqlike/src/sqlite_file.mbt) と [sqlite_import.mbt](../../packages/sqlike/src/sqlite_import.mbt)。
+ファイル reader は [SQLite の file format](https://www.sqlite.org/fileformat2.html) に従い、次を扱う。実装は [sqlite_file.mbt](../../packages/sqlike/src/full/sqlite_file.mbt) と [sqlite_import.mbt](../../packages/sqlike/src/full/sqlite_import.mbt)。
 
 - 512〜65,536 bytes のページ、table / index の leaf と interior を読む。WITHOUT ROWID は interior のレコードも含め、主キーを先頭にした物理列順を宣言順に戻す。
 - 1〜9 bytes の varint、signed rowid、各整数幅、REAL、TEXT / BLOB、overflow chain を読む。REAL affinity の整数格納や ALTER ADD 後の省略列も戻す。
@@ -122,8 +122,8 @@ INSTEAD OF / TEMP trigger、仮想テーブルのSQL構文、拡張ロード、A
 
 ## コードと測定記録
 
-- [値と状態・公開 ABI](../../packages/sqlike/src/model.mbt)、[parser](../../packages/sqlike/src/parser.mbt)、[準備](../../packages/sqlike/src/prepare.mbt)、[値の意味](../../packages/sqlike/src/value.mbt)
-- [評価器](../../packages/sqlike/src/evaluate.mbt)、[問い合わせ](../../packages/sqlike/src/query.mbt)、[変更と制約](../../packages/sqlike/src/execute.mbt)、[changeset](../../packages/sqlike/src/changeset.mbt)、[再読込の検査](../../packages/sqlike/src/image.mbt)
+- [値と状態・公開 ABI](../../packages/sqlike/src/full/model.mbt)、[parser](../../packages/sqlike/src/full/parser.mbt)、[準備](../../packages/sqlike/src/full/prepare.mbt)、[値の意味](../../packages/sqlike/src/full/value.mbt)
+- [評価器](../../packages/sqlike/src/full/evaluate.mbt)、[問い合わせ](../../packages/sqlike/src/full/query.mbt)、[変更と制約](../../packages/sqlike/src/full/execute.mbt)、[changeset](../../packages/sqlike/src/full/changeset.mbt)、[再読込の検査](../../packages/sqlike/src/full/image.mbt)
 - [共通 Database アダプター](../../adapters/moon-database.ts)、[IndexedDB](../../adapters/moon-image-store.ts)、[保存 Worker](../../adapters/moon-persistence-worker.ts)
 - [物理 reader の SQLite 差分テスト](../../tests/sqlite-file.test.ts)、[Wasm GC の LTX → SQL テスト](../../tests/moon-ltx-wasm.test.ts)、[実 LTX のブラウザ E2E](../../e2e/moon-ltx.spec.ts)
 - [ブラウザ互換性結果](../../measurements/compatibility-chromium-moonbit.json)、[ランタイム測定](../../measurements/runtime-current.json)

@@ -53,7 +53,7 @@ const mapper = (
     ): unknown;
   }
 ).mapResultRow;
-function safeNumber(value: bigint): number {
+function checkedNumber(value: bigint): number {
   const number = Number(value);
   if (!Number.isSafeInteger(number))
     throw RangeError(
@@ -76,11 +76,11 @@ function params(values: unknown[]): Value[] {
     );
   });
 }
-function syncCallback(callback: Function) {
+function assertSynchronousCallback(callback: Function) {
   if (callback.constructor.name === "AsyncFunction")
     throw Error("Drizzle transaction callback must be synchronous");
 }
-function synchronous<T>(result: T): T {
+function requireSynchronousResult<T>(result: T): T {
   if (result && typeof (result as { then?: unknown }).then === "function")
     throw Error("Drizzle transaction callback must be synchronous");
   return result;
@@ -138,7 +138,7 @@ export class DrizzleSession<
     return this.client.transaction(() => {
       this.depth++;
       try {
-        return synchronous(body());
+        return requireSynchronousResult(body());
       } finally {
         this.depth--;
       }
@@ -166,13 +166,13 @@ export class DrizzleSession<
     ) => T,
     config?: SQLiteTransactionConfig,
   ): T {
-    syncCallback(callback);
+    assertSynchronousCallback(callback);
     if (config?.behavior)
       throw Error(
         "explicit Drizzle transaction behavior is unsupported by the portable driver",
       );
     const run = () =>
-      synchronous(
+      requireSynchronousResult(
         callback(
           new DrizzleTransaction(
             "sync",
@@ -248,7 +248,7 @@ class DrizzlePrepared<
             is(field, Column) &&
             (field.dataType === "number" || field.dataType === "date")
           )
-            return safeNumber(value);
+            return checkedNumber(value);
           return value;
         }),
         this.joinsNotNullableMap,
@@ -264,7 +264,7 @@ class DrizzlePrepared<
       )[0]!;
       if (typeof row[0] !== "bigint" || typeof row[1] !== "bigint")
         throw Error("invalid SQLite mutation counters");
-      return { changes: safeNumber(row[0]), lastInsertRowid: row[1] };
+      return { changes: checkedNumber(row[0]), lastInsertRowid: row[1] };
     });
   }
   all(values?: Record<string, unknown>): T["all"] {

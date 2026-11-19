@@ -55,13 +55,13 @@
 
 ### 実装と互換性
 
-- [名前解決](../../packages/sqlike/src/evaluate.mbt)は投影列の優先順位、曖昧な列、excluded の扱いを保ったまま、一時配列を除去した。行のメタデータは値と分離して再利用する。
-- [実行用の補助処理](../../packages/sqlike/src/query_plan.mbt)は単純な実表 SELECT に限定する。整数 rowid / INTEGER PRIMARY KEY の等価条件では候補だけを評価し、rowid 順を証明できる場合は LIMIT までで停止する。ORDER BY の alias と `*` の優先順位、実列による rowid のシャドーイング、相関参照を検証した。
+- [名前解決](../../packages/sqlike/src/full/evaluate.mbt)は投影列の優先順位、曖昧な列、excluded の扱いを保ったまま、一時配列を除去した。行のメタデータは値と分離して再利用する。
+- [実行用の補助処理](../../packages/sqlike/src/full/query_plan.mbt)は単純な実表 SELECT に限定する。整数 rowid / INTEGER PRIMARY KEY の等価条件では候補だけを評価し、rowid 順を証明できる場合は LIMIT までで停止する。ORDER BY の alias と `*` の優先順位、実列による rowid のシャドーイング、相関参照を検証した。
 - 単純な射影は列位置を実行開始時に決定し、行ループでは格納値・rowid・定数だけを読む。artifact 形式、public API、パーサなしの AOT は維持した。
 - 公開済み `StoredRow.values` は書き換えず、UPDATE と ALTER ADD COLUMN は行を作り直す。rollback / clone は mutable な容器だけを複製し、行値を共有する。スキーマ変更後の snapshot 分離、multi-row 制約違反、外部キー cascade、主キー更新と RETURNING を検証した。
 - UPDATE の一意性は変更されたキーだけを再検査する。CHECK、外部キー、変更された UNIQUE キーの検査は引き続き実行する。
 
-[追加の MoonBit テスト](../../packages/sqlike/src/optimization_wbtest.mbt)と [native 差分テスト](../../tests/sqlike-optimization.test.ts)で Red → Green を確認した。`LIMIT` の後に評価不要になる行が overflow を起こすケースも native と一致するようになった。
+[追加の MoonBit テスト](../../packages/sqlike/src/full/optimization_wbtest.mbt)と [native 差分テスト](../../tests/sqlike-optimization.test.ts)で Red → Green を確認した。`LIMIT` の後に評価不要になる行が overflow を起こすケースも native と一致するようになった。
 
 最終の `LITESTREAM_BIN=… just check` は MoonBit **18件×JS / Wasm GC**、Node **126件**、Playwright **38件**、型チェックを通過した。本家 Litestream による生成 LTX の復元も含む。既存コーパスと、計26 workload ×6経路の型付き結果・更新後状態を確認した。
 
@@ -101,7 +101,7 @@ AOT ライブラリの Brotli は JS **+0.48 KiB** / Wasm **+0.46 KiB**、実 AO
 
 ## 第4段階：行参照配列の差し替え
 
-2026-11-15、[replace_table_row](../../packages/sqlike/src/index_cache.mbt) の全体 map を除去した。rowid が一致する位置を見つけ、その接続が所有する配列の1要素だけを差し替えて終了する。UPDATE と UPSERT の共通処理に適用し、JS / Wasm GC、動的 SQL / AOT の両方で使う。行値は引き続き不変として扱い、索引には従来どおり行差分を適用する。
+2026-11-15、[replace_table_row](../../packages/sqlike/src/full/index_cache.mbt) の全体 map を除去した。rowid が一致する位置を見つけ、その接続が所有する配列の1要素だけを差し替えて終了する。UPDATE と UPSERT の共通処理に適用し、JS / Wasm GC、動的 SQL / AOT の両方で使う。行値は引き続き不変として扱い、索引には従来どおり行差分を適用する。
 
 `candidate_rows` の候補配列と `copy_store` の退避配列は別に所有するため、走査中の候補や clone / rollback の復元先は書き換えない。公開 API・論理画像・コンパイル済み artifact の形式は変えていない。主キー候補の線形探索・差し替え位置の線形探索・文の退避コピーは残るため、書き込み全体が O(1) になる変更ではない。
 
@@ -130,7 +130,7 @@ AOT ライブラリの Brotli は JS **+0.48 KiB** / Wasm **+0.46 KiB**、実 AO
 
 全公開 API を残した AOT ライブラリ単体の Brotli は JS **77.69 → 77.72 KiB（+26 bytes）**、Wasm **98.09 → 98.03 KiB（-59 bytes）**。実 AOT アプリの初回転送は **77,892 → 78,030 bytes（76.07 → 76.20 KiB、+138 bytes）**。新しい Chromium プロセスと空の保存領域で各3回測り、オフライン再読込も通過した。Litestream 単体は変わらない。
 
-[MoonBit テスト](../../packages/sqlike/src/optimization_wbtest.mbt)で、配列を再利用しながら変更前の候補・checkpoint・clone の値を維持することを Red → Green で固定した。[native 差分テスト](../../tests/sqlike-index.test.ts)では複数行の主キー変更、同じ行への連続 UPSERT と RETURNING、CHECK / NOT NULL / 主キー違反後の rollback、索引・snapshot・restore を4経路で照合した。
+[MoonBit テスト](../../packages/sqlike/src/full/optimization_wbtest.mbt)で、配列を再利用しながら変更前の候補・checkpoint・clone の値を維持することを Red → Green で固定した。[native 差分テスト](../../tests/sqlike-index.test.ts)では複数行の主キー変更、同じ行への連続 UPSERT と RETURNING、CHECK / NOT NULL / 主キー違反後の rollback、索引・snapshot・restore を4経路で照合した。
 
 `LITESTREAM_BIN=… just check` は MoonBit **27件×JS / Wasm GC**、Node **131件**、Playwright **38件**、型チェック、本家 Litestream での生成 LTX の復元を通過した。
 

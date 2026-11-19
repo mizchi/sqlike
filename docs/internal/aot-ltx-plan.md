@@ -52,7 +52,7 @@ db.close()
 
 bind は1始まり、column は0始まり。`Int64` / `Double` / `String` / `Bytes` と `Value::{Null,Integer,Real,Text,Blob}` を扱う。型変換して取り出した後も、`Column[Value]` は元の storage class を返す。現行行がない状態・範囲外・finalize 後の操作はエラーにする。生きている Statement がある接続の close は Busy。finalize は繰り返せる。
 
-`Connection::open(":memory:")` と SQL 文字列の `prepare` は開発用。固定 Program の接続は SQL 文字列を拒否し、`prepare_compiled` を使う。別 Program の Query も拒否する。参照実装の全 async API・C ABI・エラーコードを実装したという意味ではない。[型付き API の実行テスト](../../packages/sqlike/src/interface_test.mbt)が契約例になる。
+`Connection::open(":memory:")` と SQL 文字列の `prepare` は開発用。固定 Program の接続は SQL 文字列を拒否し、`prepare_compiled` を使う。別 Program の Query も拒否する。参照実装の全 async API・C ABI・エラーコードを実装したという意味ではない。[型付き API の実行テスト](../../packages/sqlike/src/full/interface_test.mbt)が契約例になる。
 
 ## ブラウザの保存と LTX
 

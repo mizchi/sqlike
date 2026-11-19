@@ -1,22 +1,24 @@
 # 現在の対応範囲・最適化と改善対象
 
-更新日: 2026-11-17。**0.1.2と未リリースの追加**の実装・検証を整理した台帳。今後の着手順と完了条件はこのページで管理し、各機能の仕様・実装経緯・測定の全量はリンク先に残す。
+更新日: 2026-11-19。**0.1.2と未リリースの追加**の実装・検証を整理した台帳。最新の着手順と残タスクは[TODO.md](../../TODO.md)で管理する。このページは既存IDの実施結果と対応範囲を保持し、各機能の仕様・測定の全量はリンク先に残す。
+
+未リリースのentry分割としてbaseline / full / portable AOTを追加し、JS直接出力とMoonBitソース出力を共通の依存グラフから生成する。portable AOTの公開API選択（B03c）、[式DEFAULT / CTASの初期範囲](schema-expressions.md)、[行値metadataとINリスト索引](row-values.md)、[IN集約のslot走査](in-list-performance.md)、[schema名・列挙の修正](schema-metadata.md)を実装した。続いて[非相関IN SELECTとDMLのIN cache](in-select-performance.md)、[UPDATE FROMの列slot](update-from.md)、[単一MIN / MAXの代表行](aggregate-representative.md)、[format / printfの初期範囲](format-functions.md)を追加した。続いて[増分pagerの初期範囲](incremental-pager.md)を追加した。rowid維持UPDATEのページ生成・上限付きclean cache・page providerとLTXの原子保存を任意選択し、構造変更は全量writerへ戻す。既存の`checkpoint()`、logical stateの原子保存とupload / receiptによるoutbox回収も接続した。一般RHS・一般結合・window等の残りはTODOの順に進める。[ビルド契約](sqlike-build-contract.md)と[利用方法](../build-targets.md)を参照。
 
 未リリースの追加として、丸め4関数を独立した`mathRounding`関数群で選択可能にした。JSON境界では[AOT / positional結果の直接writer](result-json-writer.md)を導入し、既存のCell JSON形式のまま中間Json / Map生成を減らす。bind decoderやobject形式の結果は既存経路を維持する。
 
-0.1.2の改善として、[AOT UPDATEのメタデータ再利用](aot-update-metadata.md)を追加した。固定schema由来の行layout・代入先の列番号とaffinityをProgramで共有し、値・接続状態は実行ごとに評価する。[次期最適化Issue](https://github.com/mizchi/sqlike/issues/1)の通常SQL・JSON境界・索引移動は引き続き改善候補。
+0.1.2の改善として、[AOT UPDATEのメタデータ再利用](aot-update-metadata.md)を追加した。固定schema由来の行layout・代入先の列番号とaffinityをProgramで共有し、値・接続状態は実行ごとに評価する。[当時の最適化Issue](https://github.com/mizchi/sqlike/issues/1)にあった通常SQL・JSON境界・索引移動も後続段階で改善した。Issueの未チェック部分と現在の残りの照合はTODOで管理する。
 
 続いて[準備済み実行計画](prepared-execution-plan.md)を追加。UPDATEの基本式・RETURNINGと、単純なSELECTの主キーアクセスを解析用ASTから分離し、列slot・比較規則・アクセス方式を準備する。一般式や範囲索引等への拡張は同ページで管理する。
 
 0.1.1の変更として、[段階的な互換機能の導入](staged-sqlite-compatibility.md)を開始。軽量な`IS DISTINCT FROM`、`&` / `|` / `~`、`sign()`はcoreへ、JSONの`->` / `->>`は既存の任意機能`sqlJson`へ追加する。後続の不足機能は同ページのチェックリストで管理し、未実装の機能を選択APIへ先行公開しない。
 
-続いて、LIKE ESCAPE・scalar min/max、NULL順序・名前付きSQL bind、索引metadata、FROM subquery・集約FILTER、JSON集約を追加した。大きめの実装は`schemaMetadata` / `aggregateFilter` / `sqlJson`で選択する。[Drizzle事前コンパイルentry](../drizzle-prepared.md)も追加し、query builderとSQL parserを配信せずに固定したクエリを実行できる。
+続いて、LIKE ESCAPE・scalar min/max、NULL順序・名前付きSQL bind、索引metadata、FROM subquery・集約FILTER、JSON集約を追加した。大きめの実装は`schemaMetadata` / `aggregateFilter` / `sqlJson`で選択する。[Drizzle事前コンパイルentry](../drizzle-prepared.md)も追加し、query builderとSQL parserを配信せずに固定したクエリを実行できる。未リリースの[集約内ORDER BY](aggregate-order-by.md)、[行値比較・ページング](row-values.md)、[UPDATE FROM](update-from.md)、[VIRTUAL生成列](generated-columns.md)、[JSON table関数](json-table-functions.md)は`aggregateOrderBy` / `rowValues` / `updateFrom` / `generatedColumns` / `jsonTableFunctions`として分離し、catalogから選択する。後続は[用途を基準にした優先順](staged-sqlite-compatibility.md#アプリで使う機能を優先する順序)で式DEFAULT・CREATE TABLE AS SELECT等へ進める。
 
 S02ではGLOB・charをcoreへ追加し、16進・桁区切り数値literalをcompiler側で既存の値へ変換する。charのサロゲート値はTEXTで正確に表現できないため拒否する。GLOB・LIKE・unicodeがU+FFFE / U+FFFFを読むときの本家との差も修正した。
 
 [catalogからの自動選択](../catalog-build.md)を追加。schemaと登録queryの型付きIRから必須feature・coreの28関数群・6種類の文を収集し、AOT / definedのJS・Wasmを絞る。主キー索引・SQLite出力・LTXは明示指定を維持する。続いてJOIN・通常CTE・再帰CTE・compound、JSON内部の7関数群とsubtype再解析を分割した。未使用の処理は削除し、別catalogによる追加利用はロード時に拒否する。演算子・日時・window内部の細分化と、JSONのscalar subquery / min-maxを経由するsubtype追跡は次の改善対象。
 
-P0のV01 / C01 / R01と、P1のP01 / S01 / P02 / R02は完了。C02の[DO対応](do-consumer-sql.md)に続き、[Drizzle driver・RETURNING式・migration](drizzle.md)を追加した。[P0の基準](p0-results.md)、[P01](p01-aot-results.md)、[S01の列差分](column-delta.md)、[P02の行ページ](row-store.md)、[R02のLTX送信](aot-ltx-upload.md)、[受入条件](release-acceptance.md)、[現行の回帰・計測証拠](../../measurements/p0-completion.json)を保存した。C02の集約代表行などは未完了として維持する。
+P0のV01 / C01 / R01と、P1のP01 / S01 / P02 / R02は完了。C02の[DO対応](do-consumer-sql.md)に続き、[Drizzle driver・RETURNING式・migration](drizzle.md)を追加した。[P0の基準](p0-results.md)、[P01](p01-aot-results.md)、[S01の列差分](column-delta.md)、[P02の行ページ](row-store.md)、[R02のLTX送信](aot-ltx-upload.md)、[受入条件](release-acceptance.md)、[現行の回帰・計測証拠](../../measurements/p0-completion.json)を保存した。C02の集約代表行は後続で単一MIN / MAXの一意な範囲を追加し、曖昧な規則は明示拒否のまま残す。
 
 目標は、**SQLite互換の出力を保ち、軽量なブラウザ実行とオフライン同期を実現すること**。未対応は明示拒否できるが、成功した結果を別の値・型へ読み替えない。[出力互換の契約](sqlite-output-compatibility.md)を優先し、速度のためにこの条件を緩めない。0.1.0は[U01〜U09のアプリシナリオ](roadmap-0.1.0.md)の横断検証で判断する。SQLite全機能互換を0.1.0の条件とはしない。
 
@@ -26,7 +28,9 @@ P0のV01 / C01 / R01と、P1のP01 / S01 / P02 / R02は完了。C02の[DO対応]
 
 | 境界 | 現在の実装 | 維持する契約 |
 | --- | --- | --- |
-| `mizchi/sqlike` | MoonBit製SQLiteサブセット。値・評価・制約・行ストア・SQLite reader/writer、動的SQLとAOT | Litestreamに依存しない。公開APIは`Connection` / `Statement` / `Bind` / `Column` / `Value` |
+| `mizchi/sqlike` | 基本の動的SQL。CRUD・JOIN・index・FK・STRICTのbaseline | Litestreamに依存しない。公開APIは`Connection` / `Statement` / `Bind` / `Column` / `Value` |
+| `mizchi/sqlike/full` | canonicalな実装。JSON・CTE・trigger・window等を含む実装済みSQL機能 | SQLite全機能互換を意味しない。rootから省いた機能を使う既存consumerはここへ移行 |
+| `mizchi/sqlike/aot` | Programとnamed prepared statement。JS / Wasm GC共通の実行 | SQL parserを含めない。各entryの型は独立。catalog専用ソースも生成できる |
 | `mizchi/sqlike/compiler` | SQL・固定schemaをビルド時に解析し、`moon-aot@1`を生成 | 配信ランタイムへSQL lexer/parserを含めない |
 | `mizchi/litestream` | LTX v3生成・適用、LZ4 / CRC64、Session codec、revision・適用可否 | SQLike・SQLite・Tursoに依存しない |
 | `examples/aot` | SQLikeとLTXの統合、SQLite画像とLTXの生成 | アプリ側で両モジュールを構成する |
@@ -49,16 +53,20 @@ P0のV01 / C01 / R01と、P1のP01 / S01 / P02 / R02は完了。C02の[DO対応]
 | 分野 | 対応している範囲 | 制約・残る範囲 | 主な検証・詳細 |
 | --- | --- | --- | --- |
 | 値・式 | NULL / int64 / REAL / TEXT / BLOB、16進・桁区切り数値literal、affinity・三値論理、BINARY / ASCII NOCASE / RTRIM、CAST・CASE・IN・BETWEEN・GLOB・相関subquery | 独自collation・関数は不可。表現できないTEXT変換は拒否 | [値・式の差分](../../tests/sqlite-expressions.test.ts)、[基本式の追加](../../tests/sqlike-basic-expressions.test.ts)、[出力契約](sqlite-output-compatibility.md) |
+| 行値 | 任意機能`rowValues`。列・bind等の行値比較・BETWEEN・CASE・複合IN、対応する索引での複合キー探索 | 行値subquery operand・SET代入・IN右辺compound / USING等のmetadata未対応範囲は明示拒否 | [範囲・容量・5千 / 10万行の計測](row-values.md) |
+| UPDATE FROM | 任意機能`updateFrom`。別表・集約・自己結合、snapshot、trigger / FK、RETURNING。rowid元表の等値探索 | 複数一致は文全体を変更前に拒否。先頭WITH・trigger本体・行値SET等は未対応 | [範囲・容量・5千 / 10万行](update-from.md) |
+| 生成列 | 任意機能`generatedColumns`。VIRTUALの依存・制約・索引・再開・SQLite / LTX | STORED、REAL affinity、ALTER、日時・非決定的な式、Session同期は明示拒否。生成値はメモリにcacheする | [範囲・容量・費用](generated-columns.md) |
+| JSON table関数 | 任意機能`jsonTableFunctions`。json_each / json_tree、相関INNER / CROSS / LEFT JOIN、型・path・ID | JSONB、複合root、hidden入力の追加制約、曖昧なsubtype伝播等は明示拒否。展開行は一時保持 | [範囲・容量・費用](json-table-functions.md) |
 | CRUD | 複数VALUES、INSERT SELECT、UPDATE / DELETE、UPSERT、IGNORE / REPLACE、RETURNING、bind | 全conflict構文・任意のSQLite拡張を受理するものではない | [4実行経路の差分](../../tests/compatibility/sqlike-paths.ts)、[追加差分](sqlite-differential-findings.md) |
-| SELECT | INNER / CROSS / LEFT / RIGHT / FULL、ON / USING / NATURAL、WHERE・DISTINCT・ORDER BY・NULLS FIRST / LAST・LIMIT、GROUP BY / HAVING、複合SELECT、CTE、FROM subquery | 集約のbare column・derived tableの重複列名は保守的に拒否。複雑な問い合わせの高速化は限定的 | [外部結合・STRICT](../../tests/sqlike-outer-strict.test.ts)、[複合SELECT](../../tests/sqlike-compound.test.ts)、[FROM subquery](../../tests/sqlike-derived-table.test.ts) |
-| 集約・window | COUNT / SUM / TOTAL / AVG / MIN / MAX、group_concat / string_agg、DISTINCT引数、FILTER（選択機能）、順位・lag/lead・値参照、ROWS / RANGE / GROUPSの対応frame | named WINDOW / EXCLUDE / 引数内ORDER BY等は未対応 | [windowの差分](../../tests/sqlike-window.test.ts)、[FILTER](../../tests/sqlike-aggregate-filter.test.ts) |
-| JSON・日時・文字列 | JSON構築・抽出・編集・patch、順序と重複キーの保持、UTC日時・基本modifier・clock注入、charを含む基本scalar | JSON5 / JSONB、json_each / json_tree、timediff・ホストtimezone変換、全関数・全arityは未対応 | [関数の範囲](sqlike-app-features.md)、[重複JSON等の修正](sqlite-differential-findings.md) |
+| SELECT | INNER / CROSS / LEFT / RIGHT / FULL、ON / USING / NATURAL、WHERE・DISTINCT・ORDER BY・NULLS FIRST / LAST・LIMIT、GROUP BY / HAVING、複合SELECT、CTE、FROM subquery | 単一MIN / MAXの一意な代表行を追加。その他のbare column・derived tableの重複列名は保守的に拒否。複雑な問い合わせの高速化は限定的 | [外部結合・STRICT](../../tests/sqlike-outer-strict.test.ts)、[複合SELECT](../../tests/sqlike-compound.test.ts)、[FROM subquery](../../tests/sqlike-derived-table.test.ts) |
+| 集約・window | COUNT / SUM / TOTAL / AVG / MIN / MAX、group_concat / string_agg、DISTINCT引数、FILTER・引数内ORDER BY（選択機能）、順位・lag/lead・値参照、ROWS / RANGE / GROUPSの対応frame | named WINDOW / EXCLUDEは未対応。引数内ORDER BYは統合join列の式同一性を確定できない組合せを明示拒否 | [windowの差分](../../tests/sqlike-window.test.ts)、[FILTER](../../tests/sqlike-aggregate-filter.test.ts)、[ORDER BY](aggregate-order-by.md) |
+| JSON・日時・文字列 | JSON構築・抽出・編集・patch、順序と重複キーの保持、UTC日時・基本modifier・clock注入、char・整数 / 文字列formatを含む基本scalar | JSON5 / JSONB、JSON table関数の複合root等、timediff・ホストtimezone変換、浮動小数点format・全関数・全arityは未対応。版差のある空formatは拒否 | [関数の範囲](sqlike-app-features.md)、[重複JSON等の修正](sqlite-differential-findings.md) |
 | schema・制約 | 通常 / STRICT / WITHOUT ROWID、IPK / AUTOINCREMENT、複合PK / UNIQUE、NOT NULL / CHECK、VIEW、基本ALTER | ATTACH / TEMP / 仮想table、任意のALTER、C ABI全体は未対応 | [移行](../../tests/sqlike-migration.test.ts)、[STRICT・機能選択](sqlike-feature-profiles.md) |
 | index | 複合列・ASC / DESC / COLLATE、部分 / 式indexの宣言・一意性・保存、PK等値探索、列indexの等値prefix＋次列範囲 | 式indexによる検索高速化、複雑なORのplanner最適化、EXPLAIN計画互換は未対応 | [index範囲](sqlike-index-trigger.md)、[PK索引](../../tests/sqlike-primary-index.test.ts) |
 | trigger | AFTER 3イベント、BEFOREのSELECT検証、OLD / NEW・WHEN・UPDATE OF、RAISE(ABORT / IGNORE)、再帰上限32 | BEFOREの書込、INSTEAD OF / TEMP、RAISE(FAIL / ROLLBACK)、本体RETURNINGは未対応 | [trigger範囲](sqlike-index-trigger.md)、[差分](../../tests/sqlike-trigger.test.ts) |
 | FK | 複合 / 暗黙親PK、CASCADE / SET NULL / SET DEFAULT / RESTRICT / NO ACTION、遅延制約 | 他機能との全組合せの検証は未完了 | [参照動作の差分](../../tests/sqlike-foreign-actions.test.ts) |
 | transaction | BEGIN / COMMIT / ROLLBACK / SAVEPOINT、文単位の取消と継続、host transaction | ネイティブVFSのロック方式を再現しない。別接続は保存世代CASで競合検出 | [ローカルtransaction](sqlike-app-features.md)、[保存契約](indexeddb-persistence.md) |
-| metadata | sqlite_schema、table_info / table_xinfo、任意のindex_list / index_info / index_xinfo、FK検査、schema cookie、DEFAULT宣言の元表記 | 索引宣言順・方向を旧形式から復元できない場合は拒否。全PRAGMAではない。integrity_check / quick_checkは明示拒否 | [索引metadata](../../tests/sqlike-index-metadata.test.ts)、[監査台帳](sqlite-feature-audit.md) |
+| metadata | sqlite_schemaの論理DDL・TEXT affinity、table_info / table_xinfo、任意のindex_list / index_info / index_xinfo、FK検査、schema cookie、DEFAULT宣言の元表記 | 索引宣言順・方向を旧形式から復元できない場合は拒否。全PRAGMAではない。物理rootpage / rowid、integrity_check / quick_checkは明示拒否 | [schema列挙](schema-metadata.md)、[索引metadata](../../tests/sqlike-index-metadata.test.ts)、[監査台帳](sqlite-feature-audit.md) |
 
 JSONの重複キーは、初期実装での拒否から**保持する実装へ修正済み**。主キー専用hash索引も実装済み。これらを未着手の改善として重ねて扱わない。
 
@@ -82,7 +90,7 @@ JSONの重複キーは、初期実装での拒否から**保持する実装へ�
 | SQLike / AOTのIndexedDB保存 | 変更列patch / 追加行 / 削除、定期checkpoint、schema・revision・outbox・receiptの原子確定。strict complete後にACK、世代CAS、中断・ACK消失・再読込 | 全行をメモリに保持。変更した大きな列とcheckpointは全量。v1ログも読めるが、新しいv2ログの再開には新readerが必要 |
 | 保存インフラの差替え | `ImageStore` / `SyncImagePersistence` / `ReplicaImageStore`とfactory注入。SQLの型・順序・replay検査は上位層が所有 | 任意の差替え先が同じdurabilityを持つと仮定しない。接続間の自動mergeはない |
 | SQLite reader | committed imageのtable / index B-tree、WITHOUT ROWID、overflow、UTF-8 / UTF-16、freelist / pointer map等を検査 | 対応SQLを超えるschema・壊れた画像は拒否。hot WAL / journal復旧、VFSロック、online backup互換は未実装 |
-| SQLite writer / LTX生成 | AOTの固定schemaからSQLiteページを生成。LTX v3のsnapshot / delta / shrink / no-op。JS / Wasmの同一bytes、native integrityと上流Go / 実Litestream復元を照合 | checkpoint時にSQLite画像を全体再生成。増分pager / WAL writerではない |
+| SQLite writer / LTX生成 | 固定schemaからSQLiteページを生成。任意の増分pagerはrowid維持UPDATEをページ生成し、IndexedDBでlogical cursor・LTX file / checksum状態と原子保存。既存checkpoint / upload / ACK回収も接続。JS / Wasm・native integrity・Go / 実Litestream復元を照合 | 旧checkpoint・初回・cold reopen・構造変更は全量生成。SQLの全論理行保持、WAL / lazy VFSは未対応。[範囲](incremental-pager.md) |
 | SQL同期 | Node / DO正本、ブラウザ正本＋Node / DOリレー。schema stamp・結果 / 変更proof・件数条件・receiptを確認。staleや曖昧な対象は保留 | SQLの非決定性や曖昧さを自動で正しい変更へ変えない。ネットワークからtransaction制御・trigger本体DDLは受け付けない |
 | Session同期 | 非NULLの宣言済みPK、old-value検査、nativeとMoonBitの相互適用 | DDLはSQL経路。Tursoは生成不可。PKなしや不完全な捕捉は受け付けない |
 | trigger / FK付きbinary適用 | 任意の`withMaterializedReplication`で副作用を抑制し、全体FK・schema・利用側after条件を確認。Node / SQLike / SQLite WASMで検証 | wrapperなしでは拒否。Turso / DOに同等の抑制能力は保証しない。任意のchangesetが正しいtrigger結果かの証明ではない |
@@ -94,7 +102,7 @@ JSONの重複キーは、初期実装での拒否から**保持する実装へ�
 
 ### 任意機能と資源上限
 
-- ビルド時プロファイルでRIGHT/FULL・STRICT・PK索引・trigger・FK・SQL JSON・日時・window・索引metadata・集約FILTER・binary捕捉・SQLiteページ・LTXを選択する。無効機能のschema / ASTは拒否し、PK索引なしは走査へ戻す。バイナリ定義の`defined`モードも選択可能。通常の集約・CTE等の細分化は未実施。
+- ビルド時プロファイルでRIGHT/FULL・STRICT・PK索引・trigger・FK・SQL JSON・日時・window・索引metadata・集約FILTER・binary捕捉・SQLiteページ・LTX等を選択する。無効機能のschema / ASTは拒否し、PK索引なしは走査へ戻す。`defined`も選択可能。通常の関数群・集約・CTE / JOIN / compound、8種類のoptimizerはcatalogから選択済み。日時・window内部や共有評価器の細分化は残る。portable AOTの公開APIはexecute / prepared / snapshot / host transaction / deltaを選択できる。
 - `mizchi/sqlike/fts`は独立した検索API。ascii / trigram・phrase / prefix / boolean・BM25を比較検証した。FTS5のSQL構文・ファイル形式の互換実装ではなく、SQL更新と別々に行った検索index更新は原子的ではない。
 - LSMは独立したordered KVの**実験**。SQLike / LTXへ未接続で、reader保護付き物理GCも未実装。既定の行ジャーナルと通常 / lite / Workerのバンドルに含めない。
 - 主な上限はSQL 1 MiB・10,000 tokens・式深さ64・SELECT深さ16・関数1,000引数、表 / 中間結果100,000行、画像64 MiB、AOT Program 1 MiB / 1,000 queries。経路ごとの追加制限もある。上限までの低メモリ・一定時間動作を保証する値ではない。Firefox / WebKitは未検証。
@@ -108,15 +116,21 @@ JSONの重複キーは、初期実装での拒否から**保持する実装へ�
 | ID | 実施した変更 | 省いた処理 | 残る費用・根拠 |
 | --- | --- | --- | --- |
 | O01 | 名前解決・表metadata・単純projectionの列位置を再利用。AOTは固定schemaの出力templateもProgramで共有 | 行ごとのfilter配列、名前正規化、呼出しごとの再検証と列位置計算 | 複雑な式・JOINは一般評価。行・Store・bind値はcacheしない。[P01](p01-aot-results.md) |
-| O02 | 単純SELECTの候補限定、LIMIT早期停止、rowid順cache | 全行environment、不要なprojection、毎回のcopy / sort | JOIN / DISTINCT等は一般経路。rowid cacheはDMLで更新しrollbackで無効化。[実装](../../packages/sqlike/src/query_plan.mbt) |
+| O02 | 単純SELECTの候補限定、LIMIT早期停止、rowid順cache | 全行environment、不要なprojection、毎回のcopy / sort | JOIN / DISTINCT等は一般経路。rowid cacheはDMLで更新しrollbackで無効化。[実装](../../packages/sqlike/src/full/query_plan.mbt) |
 | O03 | PKの永続HAMT、安定したrowid→slotと列indexの探索 | PK等値の線形探索、更新対象slotの再探索、clone後のPK索引再構築 | 初回構築・保持メモリ・圧縮後の再構築は残る。二次索引は配列。[P02](row-store.md) |
 | O04 | 複合・降順index、増分index更新、部分indexの限定的な含意判定 | 範囲候補の全走査、毎回の全index再構築 | 配列の挿入 / 移動は残る。最大4列indexと4表のPK cacheを保持。式index検索は未実装。[増分更新](sqlike-incremental-index.md) |
 | O05 | DML候補限定、変更した一意キーだけの検査、行参照の差替え | 全行の式評価、不要な一意性再検査、表全体のmap | 大量変更・制約・trigger / cascadeの評価は必要。[経緯](sqlike-optimization-plan.md) |
 | O06 | 64行単位のcopy-on-write、永続vector、DELETEの空slot | cloneと通常の1行変更での表全体コピー、DELETEごとのslot移動 | 変更ページの最大64行参照＋vector経路をコピー。空slotの圧縮はO(N)、全行保持・全量checkpointは残る。[P02](row-store.md) |
-| O07 | COUNT / SUM / TOTAL / AVGの直接走査と共通集約状態 | 単純集約での列解決・行environmentの割当 | GROUP BY / JOIN / DISTINCT / window等は一般経路。overflow・誤差補正は共有。[実装](../../packages/sqlike/src/aggregate_plan.mbt) |
+| O07 | COUNT / SUM / TOTAL / AVGの直接走査と共通集約状態 | 単純集約での列解決・行environmentの割当 | GROUP BY / JOIN / DISTINCT / window等は一般経路。overflow・誤差補正は共有。[実装](../../packages/sqlike/src/full/aggregate_plan.mbt) |
 | O08 | 変更列patch、定期checkpoint、base / LTXのbinary添付 | 通常commitの全量dump、未変更列の再保存、変更のない大きな画像のbase64再保存 | schema変更・定期checkpoint・変更した列は全量。v1 after-imageもreplay。[S01](column-delta.md) |
 | O09 | AOTのSQL / schema事前コンパイル、JSON bind / 結果の直接変換 | SQL parseとparser配信、中間bind配列・結果列ごとのfilter・内部BLOB再コピー | JSON ABI・AST評価・画像再生成は残る。[AOT](aot-ltx-plan.md) / [P01](p01-aot-results.md) |
 | O10 | 機能プロファイル、SDKの遅延import、FTS / LSM分離 | 不要な分岐・export・選択していないDB SDKの配信 | 通常bundlerのtree shakingだけでevaluator全体を細分化するものではない。[選択API](sqlike-feature-profiles.md) |
+| O11 | VIRTUAL生成値と依存順・列slotを再構築可能なcacheへ分離 | 反復読み取りの式評価、生成値のsnapshot / patch出力 | 生成列分のValueを保持し、書き込み・再開時に計算。[範囲と計測](generated-columns.md) |
+| O12 | 通常式projectionへの主キーaccess・列slot評価 | 算術式等のPK検索での全行environment生成 | 集約・window・subquery・一般ORDER BY等は既存経路。[実装と前後比較](performance-next.md) |
+| O13 | JSON tableの単純集約visitor | 展開行environment・JSONB配置用の補助木 | JSON DOMは保持。WHERE / JOIN / ID・path等は既存の展開器。[実装と前後比較](performance-next.md) |
+| O14 | 行値metadata、literal / bind IN・非相関IN SELECTのcache、IN集約slot走査 | 反復metadata解決、同じRHSの再実行・線形比較、単純集約のEnvironment / group生成 | 4,096 entry / 推定256 KiBを共有。一般RHS・書込中のIN SELECT・NULL候補走査・全heapの上限は別。[範囲と計測](in-select-performance.md) |
+| O15 | UPDATE FROMの一意source lookupと列slot評価 | rowid元表の全走査、対象 / source列のEnvironment生成 | 全SETの先行確定・保持は維持。一般結合・汎用式・割当量の測定は残る。[前後比較](update-from.md) |
+| O16 | rowid維持UPDATEのSQLiteページ生成、非同期page providerと増分LTX | 全行からの画像再生成・全buffer比較・全ページCRC再計算 | 初回 / 構造変更は全量、論理行と前後recordはメモリ保持。変更検出はDB規模に比例。binary CRCは変更ページ分だけを保存し、旧JSON経路は一覧処理を残す。[実装・同条件の計測](incremental-pager.md) |
 
 Web標準APIによるBase64 / JSON置換、Turso WASMの外部配信は[試作](web-platform-size.md)であり、**本番の削減実績には数えない**。AOTのSHA-256はWeb Cryptoを使用済みだが、同期transaction内のproof hashはそのまま非同期APIへ移せない。
 
@@ -124,21 +138,25 @@ Web標準APIによるBase64 / JSON置換、Turso WASMの外部配信は[試作](
 
 ### 現行の正しさの記録
 
-未リリースの丸め関数・結果writer・通常SQLのprepare再利用に続き、索引ブロック化・UPDATE格納・rowid採番・DELETEとSQL / AOTの実験typed結果を追加した後の回帰はMoonBit **70件×JS / Wasm GC**、Node **403件**、Playwright **59件**と型チェック・本家Litestream復元を通過した。10万行benchmarkの64組、cache / feature選択、独立npm consumerも通過した。SQL / AOTの実験typed経路でも対応済み566ケースと上流1,000クエリを照合し、AOTのprepare拒否・対象外DDLは区別した。件数はこの更新時点の記録で、将来のテスト件数の固定目標ではない。
+未リリースの丸め関数・結果writer・通常SQLのprepare再利用に続き、索引ブロック化・UPDATE格納・rowid採番・DELETEとSQL / AOTの実験typed結果、集約内ORDER BY・行値比較・UPDATE FROM・VIRTUAL生成列・JSON table関数、通常式PK検索・JSON集約visitor・JS/AOT型付きbindを追加した。さらにbaseline / full / AOTのentry分割、portable AOTとMoonBitソース出力、式DEFAULT・CTAS初期行・行値metadata / IN索引 / IN集約、schema名と列挙契約、非相関IN SELECT・UPDATE FROMのslot・単一極値の代表行・formatと増分pagerを加えた直近のローカル回帰はMoonBit **93件×JS / Wasm GC**、Node **552件**、Chromium **66件**と型チェック・本家Litestream復元を通過した。cache / feature選択、独立npm consumerも通過した。SQL / AOTの実験typed経路でも対応済み601ケースと上流1,000クエリを照合し、AOTのprepare拒否・対象外DDLは区別した。従来の10万行benchmarkの64組は集約内ORDER BY追加前の記録として保持し、行値の5千 / 10万行ページングは[別の計測](row-values.md)へ記録する。件数はこの更新時点の記録で、将来のテスト件数の固定目標ではない。
 
 | ゲート | 現在の観測 | 合格が意味すること |
 | --- | --- | --- |
-| `just sqlite-output-check` | JS / Wasm GC / Chromium JSそれぞれ458 probe一致、244 atomic拒否、出力不一致0 | 324生成ケースを追加。観測した成功出力と拒否時の非変更が一致。未対応を一致へ合算せず、誤受理・内部例外・証拠欠落も検出 |
-| `just differential-audit` | 566ケース・12経路。各環境3,388一致、4件の双方AOT prepare拒否、4件のAOT対象外DDL、不一致0。通常SQLのJS / Wasm cache経路を含む | 対応済みコーパスの新たな拒否も退行として検出。行・型・列位置・失敗後状態・接続カウンターを照合 |
-| `just sqlite-audit` | **不合格を維持**。台帳1,618件中、未公開API 306・未検証599・参照ビルドになし11などが残る | 全機能互換と判定しない。出力互換ゲートの通過とは別の条件 |
+| `just build-graph-check` | 宣言した115ノード・146依存辺をZ3で検査し、10件のgraph / staging / 外部consumer / optimizer / portable AOT / API選択テストを通過 | 宣言したDAGの閉包・最小性等、実際の型・export・除去を照合。全call graphや全SQL意味論の証明とはしない。新jobのLinux実行はTODOのR03で確認 |
+| `just sqlite-output-check` | JS / Wasm GC / Chromium JSそれぞれ508 probe一致、230 atomic拒否、出力不一致0 | 360生成ケースを含む。観測した成功出力と拒否時の非変更が一致。未対応を一致へ合算せず、誤受理・内部例外・証拠欠落も検出 |
+| `just differential-audit` | 601ケース・12経路。各環境3,598一致、4件の双方AOT prepare拒否、4件のAOT対象外DDL、不一致0。通常SQLのJS / Wasm cache経路を含む | 対応済みコーパスの新たな拒否も退行として検出。行・型・列位置・失敗後状態・接続カウンターを照合 |
+| `just sqlite-audit` | **不合格を維持**。台帳1,654件中、未公開API 306・未検証599・参照ビルドになし11などが残る | 全機能互換と判定しない。出力互換ゲートの通過とは別の条件 |
 | `just do-consumer-check` | 実workerdの6シナリオ・53ステップ。33一致・19明示拒否・1双方制約エラー | 型付き行と各操作後の表・監査表をnative SQLiteと照合。絶対値の初期total_changesは一致すると仮定しない |
 | `just drizzle-check` | Kit生成6本＋custom 2本。Node / SQLike JS・Wasm / SQLite WASM、ブラウザIDB、実DOで通過 | 各段階のデータ・FK保持、RETURNING、再適用、履歴・失敗時rollback、オフライン再開。[制限](drizzle.md)を含む固定consumerの検証 |
+| `just pager-check` | JS / Wasm・外部MoonBit、native SQLite、IndexedDB abort / stale / ACK消失、binary CRCの破損 / 移行、LTX全画像encoderとのbyte一致・Go / 実Litestream復元 | 初期UPDATE範囲・fallback・providerの原子性を検査。WAL / lazy VFSや全B-tree構造変更の増分対応は保証しない |
 | `just defined-check` | 固定バイナリDDL / named statement、JS / Wasm、IDBオフライン再開 | 上流1,000クエリをJSON / binaryのJS / Wasmで本家と照合。型・FK / trigger・wire破損・snapshot / patch・失敗時の非公開を検査 |
-| `just optional-functions-check` | SQL JSON / 日時 / window / 索引metadata / 集約FILTERの個別選択・一括除去 | 必要機能不足の初期化時拒否、3モードのJS / Wasm、上流1,000クエリの6経路照合、選択したcoreだけの配信とIDBオフライン再開 |
+| `just optional-functions-check` | SQL JSON / 日時 / window / 索引metadata / 集約FILTER / 集約ORDER BY / 行値 / UPDATE FROM / VIRTUAL生成列 / JSON table関数の個別選択・一括除去 | 必要機能不足の初期化時拒否、3モードのJS / Wasm、上流1,000クエリの6経路照合、選択したcoreだけの配信とIDBオフライン再開 |
 | `just staged-compat-check` | 基本演算・優先6項目・S02・丸め関数・catalog自動選択の固定テスト | 型・NULL・collation・優先順位・JSON表記・GLOB・char・数値literal、機能選択、JS / Wasm・バイナリcatalog・Drizzle事前定義・Chromiumの最小ビルドとIDB再開を確認 |
 | `just catalog-profiles` | core 28群＋JSON 7群、6文種、JOIN / CTE / compound、schema / queryの依存、JS / Wasmの差分と2件のChromium保存検証 | 不要な実装の除去、必要な実装の保持、除外した機能を使う別catalogのロード時拒否。[通常 / 自動選択の計測](../../measurements/catalog-profiles-current.json) |
 
-現行の証拠: [全機能監査Node](../../measurements/sqlite-feature-audit-node.json) / [Chromium](../../measurements/sqlite-feature-audit-chromium.json)、[差分Node](../../measurements/sqlike-differential-node.json) / [Chromium](../../measurements/sqlike-differential-chromium.json)。Node SQLite 3.53.4 / Chromium SQLite WASM 3.54.1を使用した。checkerは台帳・入力・ソース・成果物のhashを検査する。未検証の入力までの数学的な互換性証明ではない。
+現行の証拠: [全機能監査Node](../../measurements/sqlite-feature-audit-node.json) / [Chromium](../../measurements/sqlite-feature-audit-chromium.json)、[差分Node](../../measurements/sqlike-differential-node.json) / [Chromium](../../measurements/sqlike-differential-chromium.json)、[ビルドグラフ検証](../../measurements/sqlike-build-graph-proof.json)。Node SQLite 3.53.4 / Chromium SQLite WASM 3.54.1を使用した。checkerは台帳・入力・ソース・成果物のhashを検査する。未検証の入力までの数学的な互換性証明ではない。
+
+entry分割後に再計測した容量は[entry別](../../measurements/sqlike-entrypoints-current.json)と[CRUD](../../measurements/sqlike-crud-size-current.json)。これらとZ3記録は今回のsource hashと一致する。以前の速度・browser bundle・catalog別・typed ABI・[P0完了記録](../../measurements/p0-completion.json)には古いpath / hashが残るため、現行の性能証拠には流用しない。必要な再採取は[TODOのV03](../../TODO.md)で管理する。
 
 ### 任意機能分割時の基準と現行レポート
 
@@ -171,7 +189,7 @@ notes Programは20,049 B、SHA-256 `a6af7a52769d67773842aae483fcb856b46f628e3118
 
 ## 6. 今後の改善台帳
 
-チェックは完了条件を満たした時点で更新する。P0は受入に必要な検証、P1は一般アプリでの費用削減、P2は拡張 / 大規模化。実測後に費用対効果で並び替える。
+チェックは完了条件を満たした時点で更新する。ここは既存IDの実施履歴を保持する。現在の優先順、新しい部分タスクとリリース前の残りは[TODO.md](../../TODO.md)を参照。過去のP0完了チェックは、entry分割後の再計測・Linux CIまで完了したという意味ではない。
 
 ### P0
 
@@ -219,7 +237,7 @@ notes Programは20,049 B、SHA-256 `a6af7a52769d67773842aae483fcb856b46f628e3118
   - 実装: opt-inのLRU（最大256件・既定64 KiB SQL text）。DML / SELECTのASTと準備済みmetadataを再利用し、DDL / transaction / PRAGMAは既存経路。保存対象外のschema epochでrollback時のcookie ABAも再準備し、host側の接続差替えではclearする
   - 結果: [通常SQL prepare再利用](dynamic-sql-prepare.md)。5,000行の主キーhitはJS 27.41→1.02µs、Wasm 6.36→0.93µs。通常SQL単体のBrotli増分2,126 B、AOT +65 B。保持heapを別測定し、SQL text budgetがheap上限ではないことを明記。既存uncached経路も残して8経路を比較、566ケース×12経路の差分不一致0
   - 大規模検証: [10万行・8経路](sqlite-large-benchmark.md)を任意タスクへ追加。3サンプル・20ms目標・返却20万行予算・画像からの初期化。通常のP0データセットを維持し、全件読取・集約・UPDATE・索引の実変更もnative照合。P07単体の数値は[固定した記録](dynamic-sql-prepare.md)で、現行の最適化後とは分ける
-  - 後続: [Issue #1](https://github.com/mizchi/sqlike/issues/1)の索引移動・JSON境界はP08 / B05で試行。一般plan拡張はP03、typed結果の公開API化・bindはB05に残る
+  - 後続: [Issue #1](https://github.com/mizchi/sqlike/issues/1)の索引移動・JSON境界はP08 / B05で試行。一般plan拡張はP03。JS / AOTのtyped結果・bindは後続の[独立entry](performance-next.md)へ追加した
 
 - [x] **P08 / P1 — 大きい二次索引の更新をブロック化**
   - 実装: 8,192行超を128行leafへ分割し、256行超でsplit、小さいleafは隣接merge。leaf末尾と内部の二段階探索を共有する。rowid順の走査cacheはflatを維持
@@ -257,7 +275,7 @@ notes Programは20,049 B、SHA-256 `a6af7a52769d67773842aae483fcb856b46f628e3118
 - [ ] **C02 / P1 — consumerが必要とする明示拒否の解消。例: DOのWITH / RETURNING、metadata PRAGMA、集約代表行**
   - 完了条件: consumerの固定SQLを先に追加。正しい型・代表行・拒否時の非変更を証明できる部分だけ受理を広げる。Tursoのtyped bindはSDK能力を確認してから変更
   - 依存・費用: C01 / R01。項目単位で見積もり、現行の拒否は互換性バグとして成功へ偽装しない
-  - 結果: [C02実施時の記録](do-consumer-sql.md)に続き、[Drizzle対応](drizzle.md)で決定的なRETURNING式・bindを拡張。実DOの53ステップで33一致・19明示拒否・1双方制約エラー。非決定的な式・subquery・ホストの禁止PRAGMAは維持する。生成migrationとownerのcustom trigger導入は別consumerで検証し、既定bundleへORMを含めない
+  - 結果: [単一極値の代表行](aggregate-representative.md)を追加し、一意な出力と拒否後の状態を差分検証。[C02実施時の記録](do-consumer-sql.md)に続き、[Drizzle対応](drizzle.md)で決定的なRETURNING式・bindを拡張。実DOの53ステップで33一致・19明示拒否・1双方制約エラー。非決定的な式・subquery・ホストの禁止PRAGMAは維持する。生成migrationとownerのcustom trigger導入は別consumerで検証し、既定bundleへORMを含めない
   - [x] DOのCTEと列ベースRETURNING
   - [x] DOでホストが提供するindex / table metadata
   - [x] DOの決定的なRETURNING式・bind、SQLikeの修飾付きUPSERT対象
@@ -277,12 +295,15 @@ notes Programは20,049 B、SHA-256 `a6af7a52769d67773842aae483fcb856b46f628e3118
   - 完了条件: plannerが式・collation・affinity・部分条件を証明できる範囲を定義。index有無の出力差分とread / write / rollback・保持メモリ・容量を測る
   - 依存・費用: V01 / C01。中〜大。式indexの宣言 / 一意性の実装はやり直さない
 
-- [ ] **S02 / P2 — 増分SQLite pager / writerと上限付きcache。画像再生成・全行保持が残る**
-  - 完了条件: dirty pageだけの生成・保存・LTX化を設計し、native integrityと同一復元結果を検査。DBサイズ別にpeak / I/O / checkpoint / read missを計測。WAL writerは別契約
-  - 依存・費用: P02等を評価後。大。現在の行差分とページ試作の速度だけで採用を決めない
+- [ ] **S02後続 / P2 — 増分SQLite pager / writerの構造変更と運用**
+  - 初期範囲は完了: rowid維持UPDATE、上限付きclean cache、page providerとLTXの原子保存。JS / Wasm / MoonBit、native integrity・実Litestream・中断を検査。[範囲と測定](incremental-pager.md)
+  - 残り: insert / delete / split / merge / freelist、cold reopen、変更検出の増分化、logical snapshotの初回 / cold再開後のstream保存。差分更新と旧partの原子的GCは追加済み。CRC状態は変更ページだけのbinary保存を、logical snapshotはbinary行chunkを追加済み。全論理行の保持と、初回 / cold再開後のsnapshot全chunk bytesは維持している。差分時も全manifestを処理する。詳細は[logical snapshot](logical-snapshot-chunks.md)
+  - 接続・計測済み: logical stateの原子保存と既存upload / receiptによるoutbox回収。pending上限時のcheckpoint保留・SQL保存継続と、ACK回収後に追いつくbounded syncも追加。[契約](aot-outbox-backpressure.md)。実IndexedDBの時間・提出record推定量・CDP観測peakは[結果](incremental-pager-idb.md)へ保存。物理I/Oと厳密なpeak上限は未計測
+  - 完了条件: 対応する構造変更の復元一致、DBサイズ別の実IndexedDB時間・I/O・peak / read missを検査。WAL / lazy VFSは別契約
 
 - [ ] **B03 / P2 — 残るcoreの機能分割とWeb API / 配信の削減案**
-  - 完了条件: 通常の集約・CTE・汎用評価器等の分割を検討。Base64 malformed入力・int64 / JSON字句 / canonical IDを維持し、Node / ブラウザ / Wasmの選択ビルドで実配信差を測る
+  - 実施済み: 関数群・文・JOIN / CTE / compound・JSON処理の選択、baseline / full / AOT、9 optimizerと2種類の出力、依存グラフ・Z3・実ビルド検査。portable AOTでは公開APIを15→4 exportまで選択でき、同条件でJS 412.68→387.00 KiB / Brotli 77.49→74.09 KiBへ削減。通常の集約やCTEの分割を未実装へ戻さない
+  - 完了条件: 残る日時・window内部・共有評価器と公開APIの分割を評価。Base64 malformed入力・int64 / JSON字句 / canonical IDを維持し、Node / ブラウザ / Wasmの実配信差を測る。portable AOTのB03cは完了。SQL / defined / JS nativeのAPI選択は後続候補
   - 依存・費用: V01 / B02a。個別に小〜大。個別の除去量を足し合わせない
 
 - [x] **B04 — Oxcによる生成JSの圧縮**
@@ -290,11 +311,12 @@ notes Programは20,049 B、SHA-256 `a6af7a52769d67773842aae483fcb856b46f628e3118
 - [ ] **B05 — Jsonの再構築を省くJS向けbind / 結果ABI**
   - 完了条件: 型・int64 / REAL / BLOB / TEXT・失敗後状態の契約を固定し、既存ABIとの互換性を差分検証。SQLのJSON関数・旧形式codec・Wasm経路から分離し、配信量と速度を実測する
   - 現状: [mizchi/x/jsonの試験](json-abi.md)。bind parseだけの置換は容量が減る一方、小さい問い合わせで遅くなり、不正なサロゲートの拒否が成功へ変わったため未採用
-  - 試行: [JS native結果](optimization-trials.md)をSELECT専用の実験MoonBit packageへ分離。対応済み566ケース・上流1,000クエリとBLOB所有権等を検査し、通常SQL / AOTからbridgeが除去されることを確認。[AOTのnative結果](aot-native-results.md)ではStatement再利用・エラー時も含むbuffer解放・catalog選択・生成型を追加。npm公開API・typed bind・binary defined・streamingは未完了のためチェックを維持する
+  - 試行: [JS native結果](optimization-trials.md)をSELECT専用の実験MoonBit packageへ分離。[AOTのnative結果](aot-native-results.md)に続き、[JS / AOTの型付きbind・named execute・公開host](performance-next.md)を追加。共有586ケース・上流1,000問い合わせ、BLOB所有権・bind失敗・rollback・restore・close・catalog除去とnpmのNode / Chromium consumerを検査した。binary defined・streamingは未完了のため親のチェックを維持する
   - [x] 通常SQLのSELECT実験entry
   - [x] AOT SELECTのprepare / values / finalizeとcatalog選択ビルド
-  - [ ] npm公開entryとadapterへの組込
-  - [ ] typed bind、binary defined、streaming / chunk
+  - [x] npm独立entryとadapterへの組込（ソース実装。npm公開は未実施）
+  - [x] JS / AOTのtyped bindとnamed execute
+  - [ ] binary defined、streaming / chunk
 
 - [ ] **V02 / P2 — Firefox / WebKit・モバイルと外部consumer**
   - 完了条件: 対象ブラウザ版・COOP / COEP・Worker / IDB / OPFS・耐障害シナリオを固定しPlaywrightで実行。ORMは版と生成SQL / migrationを固定して追加
@@ -332,4 +354,4 @@ just aot-upload-check /path/to/litestream
 just do-consumer-check
 ```
 
-変更履歴と過去の倍率は[従来の最適化記録](sqlike-optimization-plan.md)、個々の測定方法は[SQL速度](sqlite-performance.md)・[IDB](column-delta.md)・[行ストア](row-store.md)・[LTX送信](aot-ltx-upload.md)・[DO consumer](do-consumer-sql.md)に残す。P0 / P01 / S01 / P02 / R02は完了。C02のDO対応分を完了し、次は残る集約代表行などの固定SQLと拒否時の非変更を先に追加して進める。
+変更履歴と過去の倍率は[従来の最適化記録](sqlike-optimization-plan.md)、個々の測定方法は[SQL速度](sqlite-performance.md)・[IDB](column-delta.md)・[行ストア](row-store.md)・[LTX送信](aot-ltx-upload.md)・[DO consumer](do-consumer-sql.md)に残す。P0 / P01 / S01 / P02 / R02とC02のDO対応分は各段階で完了。現在の次の作業は[TODO.md](../../TODO.md)の順に選び、代表行・formatの未対応規則や行値SET等も固定SQLと拒否時の非変更から進める。

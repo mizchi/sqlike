@@ -1,0 +1,1316 @@
+// Generated from sqlike-build-graph.json.
+export const sqlikeBuildGraph = {
+  "format": "sqlike-build-graph@1",
+  "nodes": [
+    {
+      "id": "unit/value",
+      "kind": "implementation",
+      "requires": [],
+      "files": [
+        "value.mbt",
+        "ordering.mbt",
+        "function_collation.mbt"
+      ]
+    },
+    {
+      "id": "unit/store",
+      "kind": "implementation",
+      "requires": [
+        "unit/value"
+      ],
+      "files": [
+        "model.mbt",
+        "row_pages.mbt",
+        "primary_index.mbt"
+      ]
+    },
+    {
+      "id": "unit/codec",
+      "kind": "implementation",
+      "requires": [
+        "unit/store"
+      ],
+      "files": [
+        "binary_io.mbt",
+        "binary_generated.mbt",
+        "store_image.mbt",
+        "image.mbt"
+      ]
+    },
+    {
+      "id": "unit/parser",
+      "kind": "implementation",
+      "requires": [
+        "unit/engine"
+      ],
+      "files": [
+        "parser.mbt",
+        "migration_sql.mbt",
+        "sql_prepared.mbt",
+        "create_table_as.mbt"
+      ]
+    },
+    {
+      "id": "unit/json",
+      "kind": "implementation",
+      "requires": [
+        "unit/value"
+      ],
+      "files": [
+        "json_functions.mbt",
+        "json_aggregate.mbt"
+      ]
+    },
+    {
+      "id": "unit/jsonTable",
+      "kind": "implementation",
+      "requires": [
+        "unit/json"
+      ],
+      "files": [
+        "json_table.mbt"
+      ]
+    },
+    {
+      "id": "unit/dateTime",
+      "kind": "implementation",
+      "requires": [
+        "unit/value"
+      ],
+      "files": [
+        "datetime.mbt"
+      ]
+    },
+    {
+      "id": "unit/window",
+      "kind": "implementation",
+      "requires": [
+        "unit/value"
+      ],
+      "files": [
+        "window.mbt"
+      ]
+    },
+    {
+      "id": "unit/rowValues",
+      "kind": "implementation",
+      "requires": [
+        "unit/value"
+      ],
+      "files": [
+        "row_values.mbt"
+      ]
+    },
+    {
+      "id": "unit/generated",
+      "kind": "implementation",
+      "requires": [
+        "unit/boundPlan"
+      ],
+      "files": [
+        "generated_columns.mbt"
+      ]
+    },
+    {
+      "id": "unit/updateFrom",
+      "kind": "implementation",
+      "requires": [
+        "unit/boundPlan"
+      ],
+      "files": [
+        "update_from.mbt"
+      ]
+    },
+    {
+      "id": "unit/triggers",
+      "kind": "implementation",
+      "requires": [
+        "unit/engine"
+      ],
+      "files": [
+        "trigger.mbt"
+      ]
+    },
+    {
+      "id": "unit/foreignKeys",
+      "kind": "implementation",
+      "requires": [
+        "unit/store"
+      ],
+      "files": [
+        "foreign_key.mbt"
+      ]
+    },
+    {
+      "id": "unit/secondaryPlan",
+      "kind": "implementation",
+      "requires": [
+        "unit/indexCache",
+        "unit/value"
+      ],
+      "files": [
+        "index_plan.mbt"
+      ]
+    },
+    {
+      "id": "unit/indexCache",
+      "kind": "implementation",
+      "requires": [
+        "unit/store"
+      ],
+      "files": [
+        "index_cache.mbt",
+        "index_pages.mbt"
+      ]
+    },
+    {
+      "id": "unit/boundPlan",
+      "kind": "implementation",
+      "requires": [
+        "unit/store",
+        "unit/value",
+        "unit/keyValue",
+        "unit/inListLookup",
+        "unit/inSelectLookup",
+        "unit/aggregateRepresentative"
+      ],
+      "files": [
+        "bound_point.mbt",
+        "bound_access.mbt",
+        "bound_expression.mbt",
+        "prepared.mbt"
+      ]
+    },
+    {
+      "id": "unit/scan",
+      "kind": "implementation",
+      "requires": [
+        "unit/store"
+      ],
+      "files": [
+        "query_plan.mbt"
+      ]
+    },
+    {
+      "id": "unit/aggregateScan",
+      "kind": "implementation",
+      "requires": [
+        "unit/value",
+        "unit/scan",
+        "unit/store"
+      ],
+      "files": [
+        "aggregate_plan.mbt",
+        "aggregate_sum.mbt"
+      ]
+    },
+    {
+      "id": "unit/jsonTableAggregate",
+      "kind": "implementation",
+      "requires": [
+        "unit/jsonTable",
+        "unit/aggregateScan"
+      ],
+      "files": [
+        "json_table_aggregate.mbt"
+      ]
+    },
+    {
+      "id": "unit/aggregateOrder",
+      "kind": "implementation",
+      "requires": [
+        "unit/value"
+      ],
+      "files": [
+        "aggregate_order.mbt"
+      ]
+    },
+    {
+      "id": "unit/aggregateFilter",
+      "kind": "implementation",
+      "requires": [
+        "unit/value"
+      ],
+      "files": [
+        "aggregate_filter.mbt"
+      ]
+    },
+    {
+      "id": "unit/sqlitePages",
+      "kind": "implementation",
+      "requires": [
+        "unit/store"
+      ],
+      "files": [
+        "sqlite_writer.mbt",
+        "sqlite_import.mbt"
+      ]
+    },
+    {
+      "id": "unit/binarySync",
+      "kind": "implementation",
+      "requires": [
+        "unit/store"
+      ],
+      "files": [
+        "changeset.mbt"
+      ]
+    },
+    {
+      "id": "unit/scalar",
+      "kind": "implementation",
+      "requires": [
+        "unit/value"
+      ],
+      "files": [
+        "scalar.mbt",
+        "math_rounding.mbt"
+      ]
+    },
+    {
+      "id": "unit/engine",
+      "kind": "implementation",
+      "requires": [
+        "unit/store",
+        "unit/codec",
+        "unit/value"
+      ],
+      "files": [
+        "aot.mbt",
+        "aot_native.mbt",
+        "binary_base64.mbt",
+        "binary_catalog.mbt",
+        "binary_state.mbt",
+        "capability_config_generated.mbt",
+        "cast.mbt",
+        "compound.mbt",
+        "cte.mbt",
+        "data.mbt",
+        "evaluate.mbt",
+        "execute.mbt",
+        "experimental_rows.mbt",
+        "feature_config.mbt",
+        "feature_validation.mbt",
+        "feature_validation_generated.mbt",
+        "float_text.mbt",
+        "glob.mbt",
+        "index_definition.mbt",
+        "index_metadata.mbt",
+        "interface.mbt",
+        "interface_compiler.mbt",
+        "join.mbt",
+        "json_decode_generated.mbt",
+        "migration.mbt",
+        "optimizer_config.mbt",
+        "output_policy.mbt",
+        "persistence.mbt",
+        "persistence_edits.mbt",
+        "prepare.mbt",
+        "program_compiler.mbt",
+        "query.mbt",
+        "result_writer.mbt",
+        "runtime_query_requirements.mbt",
+        "runtime_usage_compiler.mbt",
+        "runtime_usage_generated.mbt",
+        "sql_render.mbt",
+        "sqlite_file.mbt",
+        "storage_plan.mbt",
+        "strict.mbt",
+        "transaction.mbt",
+        "update.mbt",
+        "update_row.mbt",
+        "api_config.mbt",
+        "aot_snapshot.mbt"
+      ]
+    },
+    {
+      "id": "feature/rightFullJoin",
+      "kind": "feature",
+      "requires": [
+        "unit/engine"
+      ],
+      "constant": "FEATURE_OUTER_JOIN"
+    },
+    {
+      "id": "feature/strictTables",
+      "kind": "feature",
+      "requires": [
+        "unit/store"
+      ],
+      "constant": "FEATURE_STRICT"
+    },
+    {
+      "id": "feature/primaryKeyIndex",
+      "kind": "feature",
+      "requires": [
+        "unit/indexCache"
+      ],
+      "constant": "FEATURE_PRIMARY_INDEX"
+    },
+    {
+      "id": "feature/triggers",
+      "kind": "feature",
+      "requires": [
+        "unit/triggers"
+      ],
+      "constant": "FEATURE_TRIGGERS"
+    },
+    {
+      "id": "feature/foreignKeys",
+      "kind": "feature",
+      "requires": [
+        "unit/foreignKeys"
+      ],
+      "constant": "FEATURE_FOREIGN_KEYS"
+    },
+    {
+      "id": "feature/sqlJson",
+      "kind": "feature",
+      "requires": [
+        "unit/json"
+      ],
+      "constant": "FEATURE_SQL_JSON"
+    },
+    {
+      "id": "feature/dateTime",
+      "kind": "feature",
+      "requires": [
+        "unit/dateTime"
+      ],
+      "constant": "FEATURE_DATETIME"
+    },
+    {
+      "id": "feature/windowFunctions",
+      "kind": "feature",
+      "requires": [
+        "unit/window",
+        "expression/call"
+      ],
+      "constant": "FEATURE_WINDOWS"
+    },
+    {
+      "id": "feature/schemaMetadata",
+      "kind": "feature",
+      "requires": [
+        "unit/engine"
+      ],
+      "constant": "FEATURE_SCHEMA_METADATA"
+    },
+    {
+      "id": "feature/aggregateFilter",
+      "kind": "feature",
+      "requires": [
+        "unit/aggregateFilter"
+      ],
+      "constant": "FEATURE_AGGREGATE_FILTER"
+    },
+    {
+      "id": "feature/aggregateOrderBy",
+      "kind": "feature",
+      "requires": [
+        "unit/aggregateOrder"
+      ],
+      "constant": "FEATURE_AGGREGATE_ORDER"
+    },
+    {
+      "id": "feature/rowValues",
+      "kind": "feature",
+      "requires": [
+        "unit/rowValues"
+      ],
+      "constant": "FEATURE_ROW_VALUES"
+    },
+    {
+      "id": "feature/updateFrom",
+      "kind": "feature",
+      "requires": [
+        "unit/updateFrom"
+      ],
+      "constant": "FEATURE_UPDATE_FROM"
+    },
+    {
+      "id": "feature/generatedColumns",
+      "kind": "feature",
+      "requires": [
+        "unit/generated"
+      ],
+      "constant": "FEATURE_GENERATED_COLUMNS"
+    },
+    {
+      "id": "feature/jsonTableFunctions",
+      "kind": "feature",
+      "requires": [
+        "unit/jsonTable"
+      ],
+      "constant": "FEATURE_JSON_TABLE"
+    },
+    {
+      "id": "feature/binarySync",
+      "kind": "feature",
+      "requires": [
+        "unit/binarySync"
+      ],
+      "constant": "FEATURE_BINARY_SYNC"
+    },
+    {
+      "id": "feature/sqlitePages",
+      "kind": "feature",
+      "requires": [
+        "unit/sqlitePages",
+        "unit/sqlitePager"
+      ]
+    },
+    {
+      "id": "feature/ltx",
+      "kind": "feature",
+      "requires": [
+        "unit/sqlitePages"
+      ]
+    },
+    {
+      "id": "function/glob",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_GLOB",
+      "requires": [
+        "unit/scalar"
+      ]
+    },
+    {
+      "id": "function/like",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_LIKE",
+      "requires": [
+        "unit/scalar"
+      ]
+    },
+    {
+      "id": "function/character",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_CHARACTER",
+      "requires": [
+        "unit/scalar"
+      ]
+    },
+    {
+      "id": "function/substring",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_SUBSTRING",
+      "requires": [
+        "unit/scalar"
+      ]
+    },
+    {
+      "id": "function/trim",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_TRIM",
+      "requires": [
+        "unit/scalar"
+      ]
+    },
+    {
+      "id": "function/instr",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_INSTR",
+      "requires": [
+        "unit/scalar"
+      ]
+    },
+    {
+      "id": "function/replace",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_REPLACE",
+      "requires": [
+        "unit/scalar"
+      ]
+    },
+    {
+      "id": "function/concat",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_CONCAT",
+      "requires": [
+        "unit/scalar"
+      ]
+    },
+    {
+      "id": "function/octetLength",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_OCTET_LENGTH",
+      "requires": [
+        "unit/scalar"
+      ]
+    },
+    {
+      "id": "function/quote",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_QUOTE",
+      "requires": [
+        "unit/scalar"
+      ]
+    },
+    {
+      "id": "function/unicode",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_UNICODE",
+      "requires": [
+        "unit/scalar"
+      ]
+    },
+    {
+      "id": "function/sign",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_SIGN",
+      "requires": [
+        "unit/scalar"
+      ]
+    },
+    {
+      "id": "function/round",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_ROUND",
+      "requires": [
+        "unit/scalar"
+      ]
+    },
+    {
+      "id": "function/mathRounding",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_MATH_ROUNDING",
+      "requires": [
+        "unit/scalar"
+      ]
+    },
+    {
+      "id": "function/nullif",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_NULLIF",
+      "requires": [
+        "unit/scalar"
+      ]
+    },
+    {
+      "id": "function/coalesce",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_COALESCE",
+      "requires": [
+        "unit/scalar"
+      ]
+    },
+    {
+      "id": "function/conditional",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_CONDITIONAL",
+      "requires": [
+        "unit/scalar"
+      ]
+    },
+    {
+      "id": "function/connectionCounters",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_CONNECTION_COUNTERS",
+      "requires": [
+        "unit/scalar"
+      ]
+    },
+    {
+      "id": "function/typeof",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_TYPEOF",
+      "requires": [
+        "unit/scalar"
+      ]
+    },
+    {
+      "id": "function/hex",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_HEX",
+      "requires": [
+        "unit/scalar"
+      ]
+    },
+    {
+      "id": "function/length",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_LENGTH",
+      "requires": [
+        "unit/scalar"
+      ]
+    },
+    {
+      "id": "function/caseConversion",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_CASE_CONVERSION",
+      "requires": [
+        "unit/scalar"
+      ]
+    },
+    {
+      "id": "function/abs",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_ABS",
+      "requires": [
+        "unit/scalar"
+      ]
+    },
+    {
+      "id": "function/inList",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_IN_LIST",
+      "requires": [
+        "unit/scalar"
+      ]
+    },
+    {
+      "id": "function/extrema",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_EXTREMA",
+      "requires": [
+        "unit/scalar"
+      ]
+    },
+    {
+      "id": "function/aggregates",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_AGGREGATES",
+      "requires": [
+        "unit/aggregateScan"
+      ]
+    },
+    {
+      "id": "function/groupConcat",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_GROUP_CONCAT",
+      "requires": [
+        "unit/aggregateScan"
+      ]
+    },
+    {
+      "id": "function/raise",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_RAISE",
+      "requires": [
+        "unit/scalar"
+      ]
+    },
+    {
+      "id": "function/jsonNormalize",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_JSON_NORMALIZE",
+      "requires": [
+        "unit/json",
+        "feature/sqlJson"
+      ]
+    },
+    {
+      "id": "function/jsonConstruct",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_JSON_CONSTRUCT",
+      "requires": [
+        "unit/json",
+        "feature/sqlJson"
+      ]
+    },
+    {
+      "id": "function/jsonRead",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_JSON_READ",
+      "requires": [
+        "unit/json",
+        "feature/sqlJson"
+      ]
+    },
+    {
+      "id": "function/jsonArrow",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_JSON_ARROW",
+      "requires": [
+        "unit/json",
+        "feature/sqlJson"
+      ]
+    },
+    {
+      "id": "function/jsonEdit",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_JSON_EDIT",
+      "requires": [
+        "unit/json",
+        "feature/sqlJson"
+      ]
+    },
+    {
+      "id": "function/jsonPatch",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_JSON_PATCH",
+      "requires": [
+        "unit/json",
+        "feature/sqlJson"
+      ]
+    },
+    {
+      "id": "function/jsonAggregate",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_JSON_AGGREGATE",
+      "requires": [
+        "unit/json",
+        "feature/sqlJson"
+      ]
+    },
+    {
+      "id": "statement/select",
+      "kind": "statement",
+      "constant": "CAP_STATEMENT_SELECT",
+      "requires": [
+        "unit/engine"
+      ]
+    },
+    {
+      "id": "statement/insert",
+      "kind": "statement",
+      "constant": "CAP_STATEMENT_INSERT",
+      "requires": [
+        "unit/engine"
+      ]
+    },
+    {
+      "id": "statement/update",
+      "kind": "statement",
+      "constant": "CAP_STATEMENT_UPDATE",
+      "requires": [
+        "unit/engine"
+      ]
+    },
+    {
+      "id": "statement/delete",
+      "kind": "statement",
+      "constant": "CAP_STATEMENT_DELETE",
+      "requires": [
+        "unit/engine"
+      ]
+    },
+    {
+      "id": "statement/transaction",
+      "kind": "statement",
+      "constant": "CAP_STATEMENT_TRANSACTION",
+      "requires": [
+        "unit/engine"
+      ]
+    },
+    {
+      "id": "statement/pragma",
+      "kind": "statement",
+      "constant": "CAP_STATEMENT_PRAGMA",
+      "requires": [
+        "unit/engine"
+      ]
+    },
+    {
+      "id": "query/jsonSubtype",
+      "kind": "query",
+      "constant": "CAP_QUERY_JSON_SUBTYPE",
+      "requires": [
+        "unit/json"
+      ]
+    },
+    {
+      "id": "query/cte",
+      "kind": "query",
+      "constant": "CAP_QUERY_CTE",
+      "requires": [
+        "unit/engine"
+      ]
+    },
+    {
+      "id": "query/recursiveCte",
+      "kind": "query",
+      "constant": "CAP_QUERY_RECURSIVE_CTE",
+      "requires": [
+        "unit/engine",
+        "query/cte"
+      ]
+    },
+    {
+      "id": "query/join",
+      "kind": "query",
+      "constant": "CAP_QUERY_JOIN",
+      "requires": [
+        "unit/engine",
+        "query/source"
+      ]
+    },
+    {
+      "id": "unit/compoundMetadata",
+      "kind": "implementation",
+      "requires": [
+        "unit/engine"
+      ],
+      "files": [
+        "compound_metadata.mbt"
+      ]
+    },
+    {
+      "id": "query/compound",
+      "kind": "query",
+      "constant": "CAP_QUERY_COMPOUND",
+      "requires": [
+        "unit/engine",
+        "unit/compoundMetadata"
+      ]
+    },
+    {
+      "id": "optimizer/pointProjection",
+      "kind": "optimizer",
+      "constant": "OPT_POINT_PROJECTION",
+      "requires": [
+        "unit/boundPlan"
+      ]
+    },
+    {
+      "id": "optimizer/simpleScan",
+      "kind": "optimizer",
+      "constant": "OPT_SIMPLE_SCAN",
+      "requires": [
+        "unit/scan"
+      ]
+    },
+    {
+      "id": "optimizer/secondaryRange",
+      "kind": "optimizer",
+      "constant": "OPT_SECONDARY_RANGE",
+      "requires": [
+        "unit/secondaryPlan"
+      ]
+    },
+    {
+      "id": "optimizer/aggregateScan",
+      "kind": "optimizer",
+      "constant": "OPT_AGGREGATE_SCAN",
+      "requires": [
+        "unit/aggregateScan"
+      ]
+    },
+    {
+      "id": "optimizer/jsonTableAggregate",
+      "kind": "optimizer",
+      "constant": "OPT_JSON_TABLE_AGGREGATE",
+      "requires": [
+        "unit/jsonTableAggregate"
+      ]
+    },
+    {
+      "id": "optimizer/updateFromLookup",
+      "kind": "optimizer",
+      "constant": "OPT_UPDATE_FROM_LOOKUP",
+      "requires": [
+        "unit/updateFrom"
+      ]
+    },
+    {
+      "id": "optimizer/rowMetadata",
+      "kind": "optimizer",
+      "constant": "OPT_ROW_METADATA",
+      "requires": [
+        "unit/rowValues"
+      ]
+    },
+    {
+      "id": "unit/inListLookup",
+      "kind": "implementation",
+      "requires": [
+        "unit/keyValue",
+        "unit/scan",
+        "unit/rowValues"
+      ],
+      "files": [
+        "in_list_lookup.mbt"
+      ]
+    },
+    {
+      "id": "optimizer/inListLookup",
+      "kind": "optimizer",
+      "constant": "OPT_IN_LIST_LOOKUP",
+      "requires": [
+        "unit/inListLookup"
+      ]
+    },
+    {
+      "id": "api/execute",
+      "kind": "api",
+      "requires": [
+        "unit/engine"
+      ],
+      "exports": [
+        "aot_open",
+        "aot_info",
+        "aot_set_clock",
+        "aot_execute"
+      ],
+      "nativeExports": [
+        "open",
+        "info",
+        "set_clock",
+        "execute",
+        "execute_typed"
+      ]
+    },
+    {
+      "id": "api/prepared",
+      "kind": "api",
+      "requires": [
+        "api/execute",
+        "unit/boundPlan"
+      ],
+      "exports": [
+        "aot_query_info",
+        "aot_prepare_values",
+        "aot_prepared_execute",
+        "aot_finalize_values"
+      ],
+      "nativeExports": [
+        "query_info",
+        "prepare",
+        "values",
+        "values_typed",
+        "finalize"
+      ]
+    },
+    {
+      "id": "api/snapshot",
+      "kind": "api",
+      "requires": [
+        "api/execute",
+        "unit/codec"
+      ],
+      "constant": "CAP_API_SNAPSHOT",
+      "exports": [
+        "aot_dump",
+        "aot_restore"
+      ],
+      "nativeExports": [
+        "snapshot",
+        "restore"
+      ]
+    },
+    {
+      "id": "api/snapshotChunks",
+      "kind": "api",
+      "requires": [
+        "api/snapshot"
+      ],
+      "exports": [
+        "aot_snapshot_open",
+        "aot_snapshot_info",
+        "aot_snapshot_chunk",
+        "aot_snapshot_restore",
+        "aot_snapshot_supply",
+        "aot_snapshot_finish",
+        "aot_snapshot_supply_base64",
+        "sqlite_data",
+        "sqlite_data_base64",
+        "sqlite_info"
+      ]
+    },
+    {
+      "id": "api/snapshotIncremental",
+      "kind": "api",
+      "requires": [
+        "api/snapshotChunks"
+      ],
+      "exports": [
+        "aot_snapshot_incremental",
+        "aot_snapshot_reuse"
+      ]
+    },
+    {
+      "id": "api/transaction",
+      "kind": "api",
+      "requires": [
+        "api/execute",
+        "unit/store"
+      ],
+      "exports": [
+        "aot_clone",
+        "aot_copy_connection_state"
+      ],
+      "nativeExports": [
+        "clone",
+        "copy_connection_state"
+      ]
+    },
+    {
+      "id": "api/delta",
+      "kind": "api",
+      "requires": [
+        "api/execute",
+        "unit/codec"
+      ],
+      "exports": [
+        "aot_delta",
+        "aot_ack_delta",
+        "aot_apply_delta"
+      ]
+    },
+    {
+      "id": "query/inSelect",
+      "kind": "query",
+      "constant": "CAP_QUERY_IN_SELECT",
+      "requires": [
+        "unit/engine",
+        "expression/subquery"
+      ]
+    },
+    {
+      "id": "unit/inSelectLookup",
+      "kind": "implementation",
+      "requires": [
+        "unit/inListLookup",
+        "unit/engine"
+      ],
+      "files": [
+        "in_select_lookup.mbt"
+      ]
+    },
+    {
+      "id": "optimizer/inSelectLookup",
+      "kind": "optimizer",
+      "constant": "OPT_IN_SELECT_LOOKUP",
+      "requires": [
+        "unit/inSelectLookup"
+      ]
+    },
+    {
+      "id": "unit/keyValue",
+      "kind": "implementation",
+      "requires": [
+        "unit/store"
+      ],
+      "files": [
+        "bound_value.mbt"
+      ]
+    },
+    {
+      "id": "unit/aggregateRepresentative",
+      "kind": "implementation",
+      "requires": [
+        "unit/store",
+        "unit/value"
+      ],
+      "files": [
+        "aggregate_representative.mbt"
+      ]
+    },
+    {
+      "id": "query/aggregateRepresentative",
+      "kind": "query",
+      "constant": "CAP_QUERY_AGGREGATE_REPRESENTATIVE",
+      "requires": [
+        "unit/engine",
+        "unit/aggregateRepresentative"
+      ]
+    },
+    {
+      "id": "query/groupBy",
+      "kind": "query",
+      "constant": "CAP_QUERY_GROUP_BY",
+      "requires": [
+        "unit/engine"
+      ]
+    },
+    {
+      "id": "query/source",
+      "kind": "query",
+      "constant": "CAP_QUERY_SOURCE",
+      "requires": [
+        "unit/engine"
+      ]
+    },
+    {
+      "id": "query/orderBy",
+      "kind": "query",
+      "constant": "CAP_QUERY_ORDER_BY",
+      "requires": [
+        "unit/engine"
+      ]
+    },
+    {
+      "id": "query/distinct",
+      "kind": "query",
+      "constant": "CAP_QUERY_DISTINCT",
+      "requires": [
+        "unit/engine"
+      ]
+    },
+    {
+      "id": "query/limitOffset",
+      "kind": "query",
+      "constant": "CAP_QUERY_LIMIT_OFFSET",
+      "requires": [
+        "unit/engine"
+      ]
+    },
+    {
+      "id": "unit/format",
+      "kind": "implementation",
+      "requires": [
+        "unit/value"
+      ],
+      "files": [
+        "format.mbt"
+      ]
+    },
+    {
+      "id": "function/format",
+      "kind": "function",
+      "constant": "CAP_FUNCTION_FORMAT",
+      "requires": [
+        "unit/scalar",
+        "unit/format"
+      ]
+    },
+    {
+      "id": "unit/sqlitePager",
+      "kind": "implementation",
+      "requires": [
+        "unit/sqlitePages",
+        "unit/codec"
+      ],
+      "files": [
+        "sqlite_pager.mbt"
+      ]
+    },
+    {
+      "id": "expression/call",
+      "kind": "expression",
+      "constant": "CAP_EXPRESSION_CALL",
+      "requires": [
+        "unit/engine"
+      ]
+    },
+    {
+      "id": "expression/subquery",
+      "kind": "expression",
+      "constant": "CAP_EXPRESSION_SUBQUERY",
+      "requires": [
+        "unit/engine",
+        "statement/select"
+      ]
+    },
+    {
+      "id": "expression/cast",
+      "kind": "expression",
+      "constant": "CAP_EXPRESSION_CAST",
+      "requires": [
+        "unit/engine"
+      ]
+    },
+    {
+      "id": "expression/case",
+      "kind": "expression",
+      "constant": "CAP_EXPRESSION_CASE",
+      "requires": [
+        "unit/engine"
+      ]
+    },
+    {
+      "id": "expression/between",
+      "kind": "expression",
+      "constant": "CAP_EXPRESSION_BETWEEN",
+      "requires": [
+        "unit/engine"
+      ]
+    }
+  ],
+  "baseline": {
+    "features": [
+      "primaryKeyIndex",
+      "foreignKeys",
+      "strictTables"
+    ],
+    "functions": [
+      "glob",
+      "like",
+      "character",
+      "substring",
+      "trim",
+      "instr",
+      "replace",
+      "concat",
+      "octetLength",
+      "quote",
+      "unicode",
+      "sign",
+      "round",
+      "mathRounding",
+      "nullif",
+      "coalesce",
+      "conditional",
+      "connectionCounters",
+      "typeof",
+      "hex",
+      "length",
+      "caseConversion",
+      "abs",
+      "inList",
+      "extrema",
+      "aggregates",
+      "groupConcat",
+      "format"
+    ],
+    "statements": [
+      "select",
+      "insert",
+      "update",
+      "delete",
+      "transaction",
+      "pragma"
+    ],
+    "queryParts": [
+      "source",
+      "orderBy",
+      "distinct",
+      "limitOffset",
+      "groupBy",
+      "join",
+      "inSelect",
+      "aggregateRepresentative"
+    ],
+    "optimizers": [
+      "pointProjection",
+      "simpleScan",
+      "aggregateScan",
+      "inListLookup",
+      "inSelectLookup"
+    ],
+    "expressionGroups": [
+      "between",
+      "call",
+      "case",
+      "cast",
+      "subquery"
+    ]
+  },
+  "constraints": [
+    {
+      "if": "feature/ltx",
+      "requires": "feature/sqlitePages"
+    },
+    {
+      "if": "optimizer/jsonTableAggregate",
+      "requires": "feature/jsonTableFunctions"
+    },
+    {
+      "if": "optimizer/updateFromLookup",
+      "requires": "feature/updateFrom"
+    },
+    {
+      "if": "optimizer/rowMetadata",
+      "requires": "feature/rowValues"
+    },
+    {
+      "if": "optimizer/inListLookup",
+      "requires": "function/inList"
+    },
+    {
+      "if": "optimizer/inSelectLookup",
+      "requires": "query/inSelect"
+    }
+  ]
+} as const;

@@ -32,6 +32,7 @@ const built = await build({
   logLevel: "error",
   build: {
     write: false,
+      rolldownOptions: { output: { codeSplitting: false } },
     minify: true,
     target: "esnext",
     lib: { entry: "scripts/release-app-workload.ts", formats: ["es"] },

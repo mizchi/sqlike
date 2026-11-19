@@ -34,8 +34,8 @@ CATALOG_JAPANESE = {
     "notes": "Notes CRUD",
 }
 LABELS = {
-    "sql-js": "SQLike · SQL · JS",
-    "sql-wasm": "SQLike · SQL · Wasm GC",
+    "sql-js": "SQLike · full SQL · JS",
+    "sql-wasm": "SQLike · full SQL · Wasm GC",
     "defined-all-js": "SQLike · predefined · full · JS",
     "defined-all-wasm": "SQLike · predefined · full · Wasm GC",
     "defined-without-three-js": "SQLike · predefined · trimmed · JS",
@@ -222,6 +222,9 @@ def save_figure(fig, name, title, description="Generated from repository measure
         if extension == "svg":
             metadata["Date"] = None
         fig.savefig(OUTPUT / f"{name}.{extension}", dpi=170, facecolor="white", metadata=metadata)
+        if extension == "svg":
+            path = OUTPUT / f"{name}.{extension}"
+            path.write_text("\n".join(line.rstrip() for line in path.read_text().splitlines()) + "\n")
 
 
 def render_bundle(rows, report, plt):

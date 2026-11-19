@@ -123,3 +123,73 @@ pub fn defined_apply_delta_base64(
 ) -> String {
   @sqlike.defined_apply_delta_base64(db, image)
 }
+
+///|
+pub fn sqlite_pager_open() -> @sqlike.SqlitePager {
+  @sqlike.sqlite_pager_open()
+}
+
+///|
+pub fn defined_pager_prepare(
+  db : @sqlike.DefinedDatabase,
+  layout : Bytes,
+  pager : @sqlike.SqlitePager,
+) -> @sqlike.SqlitePageBatch {
+  @sqlike.defined_pager_prepare(db, layout, pager)
+}
+
+///|
+pub fn defined_pager_prepare_base64(
+  db : @sqlike.DefinedDatabase,
+  layout : String,
+  pager : @sqlike.SqlitePager,
+) -> @sqlike.SqlitePageBatch {
+  @sqlike.defined_pager_prepare_base64(db, layout, pager)
+}
+
+///|
+pub fn sqlite_pager_info(batch : @sqlike.SqlitePageBatch) -> String {
+  @sqlike.sqlite_pager_info(batch)
+}
+
+///|
+pub fn sqlite_pager_supply(
+  batch : @sqlike.SqlitePageBatch,
+  page : Int32,
+  data : Bytes,
+) -> String {
+  @sqlike.sqlite_pager_supply(batch, page, data)
+}
+
+///|
+pub fn sqlite_pager_supply_base64(
+  batch : @sqlike.SqlitePageBatch,
+  page : Int32,
+  data : String,
+) -> String {
+  @sqlike.sqlite_pager_supply_base64(batch, page, data)
+}
+
+///|
+pub fn sqlite_pager_page(
+  batch : @sqlike.SqlitePageBatch,
+  index : Int32,
+) -> Bytes {
+  @sqlike.sqlite_pager_page(batch, index)
+}
+
+///|
+pub fn sqlite_pager_page_base64(
+  batch : @sqlike.SqlitePageBatch,
+  index : Int32,
+) -> String {
+  @sqlike.sqlite_pager_page_base64(batch, index)
+}
+
+///|
+pub fn sqlite_pager_ack(
+  pager : @sqlike.SqlitePager,
+  batch : @sqlike.SqlitePageBatch,
+) -> String {
+  @sqlike.sqlite_pager_ack(pager, batch)
+}

@@ -43,17 +43,17 @@ Apple M5 / Chromium 158 / Moon 0.1.20261104 release。既存と同じデータ�
 
 ## 状態と保存形式
 
-[index_cache.mbt](../../packages/sqlike/src/index_cache.mbt) が接続内の実行用索引を保持する。最大4索引とし、行値は複製せず参照を保持する。上限到達時にはキャッシュを捨てて必要に応じて再構築する。ディスクの SQLite B-tree をそのまま実行するものではない。
+[index_cache.mbt](../../packages/sqlike/src/full/index_cache.mbt) が接続内の実行用索引を保持する。最大4索引とし、行値は複製せず参照を保持する。上限到達時にはキャッシュを捨てて必要に応じて再構築する。ディスクの SQLite B-tree をそのまま実行するものではない。
 
 第2段階では行の追加・置換・削除を共通 helper に集約し、対象テーブルの索引だけを無効化していた。現在は構築済みの索引に行差分を適用する。outbox のような無関係のテーブルへの書き込みでは保持する。スキーマ変更時には全索引を無効化し、schema cookie でも検査する。文の rollback、clone、論理画像の restore、SQLite import ではキャッシュを共有・復元せず、読み直す。
 
-[StoreImage](../../packages/sqlike/src/store_image.mbt) は従来の永続データだけを定義し、実行用キャッシュと分離した。変更前に保存した [論理画像](../../tests/fixtures/sqlike/pre-index-cache-image.json)は、JS / Wasm の読み込み・キャッシュ利用後も**同じバイト列**で書き出せる。パーサなしの AOT と既存 artifact の互換性も保つ。
+[StoreImage](../../packages/sqlike/src/full/store_image.mbt) は従来の永続データだけを定義し、実行用キャッシュと分離した。変更前に保存した [論理画像](../../tests/fixtures/sqlike/pre-index-cache-image.json)は、JS / Wasm の読み込み・キャッシュ利用後も**同じバイト列**で書き出せる。パーサなしの AOT と既存 artifact の互換性も保つ。
 
-[index_plan.mbt](../../packages/sqlike/src/index_plan.mbt) が条件全体を認識し、索引区間を二分探索する。条件の一部だけを取り出して、残りの式評価を省くことはしない。型変換と順序の基準は [SQLite の datatype / affinity の説明](https://sqlite.org/datatype3.html)と native 差分テストに置く。
+[index_plan.mbt](../../packages/sqlike/src/full/index_plan.mbt) が条件全体を認識し、索引区間を二分探索する。条件の一部だけを取り出して、残りの式評価を省くことはしない。型変換と順序の基準は [SQLite の datatype / affinity の説明](https://sqlite.org/datatype3.html)と native 差分テストに置く。
 
 ## 検証と容量
 
-[MoonBit の索引テスト](../../packages/sqlike/src/index_wbtest.mbt)で構築・境界・無効化・容量上限・画像分離を Red → Green で確認した。[native 差分テスト](../../tests/sqlike-index.test.ts)は型付き結果9,472比較に加え、INSERT / UPDATE / DELETE / UPSERT / REPLACE、制約違反後の rollback、外部キー cascade、clone、restore、DROP / CREATE INDEX、ALTER を検証する。
+[MoonBit の索引テスト](../../packages/sqlike/src/full/index_wbtest.mbt)で構築・境界・無効化・容量上限・画像分離を Red → Green で確認した。[native 差分テスト](../../tests/sqlike-index.test.ts)は型付き結果9,472比較に加え、INSERT / UPDATE / DELETE / UPSERT / REPLACE、制約違反後の rollback、外部キー cascade、clone、restore、DROP / CREATE INDEX、ALTER を検証する。
 
 `LITESTREAM_BIN=… just check` は MoonBit **24件×JS / Wasm GC**、Node **129件**、Playwright **38件**、型チェックを通過した。生成 LTX の本家 Litestream での復元も含む。
 

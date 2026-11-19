@@ -17,8 +17,8 @@ const smoke = args.includes("--smoke"), profiles = args.includes("--profile");
 const beforeDir = args.find(a => a.startsWith("--before-dir="))?.slice(13);
 const files = [
   ...(beforeDir ? [["before/js", `${beforeDir}/sqlike.js`], ["before/wasm", `${beforeDir}/sqlike.wasm`]] as const : []),
-  ["after/js", "_build/js/release/build/mizchi/sqlike/sqlike.js"],
-  ["after/wasm", "_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm"],
+  ["after/js", "_build/js/release/build/mizchi/sqlike/full/full.js"],
+  ["after/wasm", "_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm"],
 ] as const;
 interface Connection {
   run(sql: string, params?: Value[], encoded?: string): void;

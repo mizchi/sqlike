@@ -40,7 +40,7 @@ test("pure MoonBit in Chromium matches original SQLite sqllogictest and typed na
     route.fulfill({
       contentType: "application/javascript",
       body: readFileSync(
-        "_build/js/release/build/mizchi/sqlike/sqlike.js",
+        "_build/js/release/build/mizchi/sqlike/full/full.js",
         "utf8",
       ),
     }),
@@ -58,7 +58,7 @@ test("pure MoonBit in Chromium matches original SQLite sqllogictest and typed na
       const path = "/moon-conformance.js";
       const runtime = (await import(
         /* @vite-ignore */ path
-      )) as typeof import("../_build/js/release/build/mizchi/sqlike/sqlike.js");
+      )) as typeof import("../_build/js/release/build/mizchi/sqlike/full/full.js");
       const db = runtime.database_open();
       function execute(sql: string): void {
         const result = JSON.parse(

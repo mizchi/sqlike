@@ -1,12 +1,16 @@
-# ユーザー向けガイド
+# User guides
 
-- [SQL・値の型・対応範囲](sql.md)
-- [事前定義したSQL・IndexedDB・SQLite出力](prepared.md)
-- [登録クエリから必要なruntimeを生成（0.1.1）](catalog-build.md)
-- [Drizzleとmigration](drizzle.md)
-- [Drizzleクエリの事前コンパイル（0.1.1）](drizzle-prepared.md)
-- [同期・競合処理・LTX](sync.md)
+- [SQL, values and supported features (Japanese)](sql.md)
+- [Predefined SQL, IndexedDB and SQLite export (Japanese)](prepared.md)
+- [Catalog-selected runtime builds (Japanese)](catalog-build.md)
+- [Generate AOT engines from SQL files with Vite](vite-aot.md)
+- [Baseline/full/AOT and MoonBit/JS/Wasm builds (Japanese)](build-targets.md)
+- [Drizzle and migrations (Japanese)](drizzle.md)
+- [Precompiled Drizzle queries (Japanese)](drizzle-prepared.md)
+- [Incremental SQLite pages, IndexedDB and the LTX outbox](incremental-pager.md)
+- [Synchronization, conflict handling and LTX (Japanese)](sync.md)
+- [0.2.0 migration and release notes](releases/v0.2.0.md)
 
-[導入と最小コード](../README.md) / [MoonBitのSQLike API](../packages/sqlike/README.md) / [MoonBitのLitestream API](../packages/litestream/README.md)
+[Getting started](../README.md) · [MoonBit SQLike API](../packages/sqlike/README.md) · [MoonBit Litestream API](../packages/litestream/README.md)
 
-実装経緯、監査、計測、改善計画、開発・公開手順は[開発者向けドキュメント](internal/README.md)にまとめています。
+Implementation history, audits, measurements, improvement plans and release procedures are in the [developer documentation (Japanese)](internal/README.md).

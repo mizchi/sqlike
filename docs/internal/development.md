@@ -328,7 +328,7 @@ just sqlike-bench      # 同じ SQL の速度を記録
 
 ワークスペースのビルド成果物は `_build/<target>/release/build/mizchi/` 以下に置かれる。TypeScript のアダプター・ブラウザ・検証スクリプトはこの成果物を参照する。
 
-- `packages/sqlike/src/*.mbt`: 独立した SQL parser・評価器・行ストア・制約・Session encoder・SQLite file reader。SQL / LTX とも JS FFI を含まず、JS / Wasm GC を生成。
+- `packages/sqlike/src/full/*.mbt`: 独立した SQL parser・評価器・行ストア・制約・Session encoder・SQLite file reader。SQL / LTX とも JS FFI を含まず、JS / Wasm GC を生成。
 - `adapters/moon-*.ts`: MoonBit の ABI、トランザクション境界、IndexedDB の保存と世代検査。
 - `packages/litestream/src/*.mbt`: バイナリ codec、SQLite changeset decoder、SQL 制約、revision 判定、DO 用の競合検査・適用計画。JS backend の ESM を生成。
 - `packages/litestream/src/ltx*.mbt`: LTX / LZ4 / CRC64 reader、ページ適用、圧縮レベルをまたぐ復元計画。

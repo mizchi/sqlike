@@ -7,6 +7,41 @@ install:
 build:
     pnpm build
 
+# Native parser is development-only; pin its grammar independently of the runtime.
+lint-setup:
+    pnpm lint:setup
+
+# Free matcher/scope checks for local development and CI; no API key required.
+lint-check:
+    pnpm lint:check
+
+lint-plan:
+    pnpm lint:plan
+
+# Findings remain advisory. Request failures still exit nonzero.
+lint *paths: lint-setup
+    mkdir -p generated/jev-lint
+    pnpm exec jev-lint check {{paths}} --fail-on error --record generated/jev-lint/check.json
+
+lint-review *args: lint-setup
+    mkdir -p generated/jev-lint
+    pnpm exec jev-lint review {{args}} --fail-on error --record generated/jev-lint/review.json
+
+# Scan SQL, verify catalog-sized bundles, dev/build watch and a packed consumer.
+vite-aot-check:
+    pnpm build:npm
+    node --import tsx --test tests/sqlike-vite*.test.ts
+
+# Measure minimal JS AOT engines/hosts and inspect retained function bodies.
+explore-aot-size output="measurements/aot-minimum-current.json":
+    pnpm build:core
+    pnpm exec tsx scripts/explore-aot-size.ts {{quote(output)}}
+
+# Compare compact struct readers with compiler-derived readers; no JSON parsing.
+bench-json-structs:
+    moon bench packages/sqlike/src/full/json_struct_decode_wbtest.mbt --target js --release
+    moon bench packages/sqlike/src/full/json_struct_decode_wbtest.mbt --target wasm-gc --release
+
 test:
     pnpm test:core
     pnpm test:unit
@@ -17,6 +52,7 @@ check:
 
 # Match independent PR jobs; generated declarations are needed on a fresh checkout.
 ci-typecheck:
+    pnpm lint:check
     pnpm build:core
     pnpm typecheck
 
@@ -38,15 +74,88 @@ moon-check:
     moon check --target js
     moon check --target wasm-gc
 
-# Lightweight core additions and opt-in JSON operators, including binary profiles.
+# Lightweight core additions, JSON operators and aggregate extensions, including binary profiles.
 staged-compat-check:
     pnpm build:core
     pnpm build:moon-wasm
+    pnpm exec tsx --test tests/sqlike-aggregate-order*.test.ts
+    pnpm exec tsx --test tests/sqlike-row-values*.test.ts
+    pnpm exec tsx --test tests/sqlike-update-from*.test.ts
+    pnpm exec tsx --test tests/sqlike-generated*.test.ts
+    pnpm exec tsx --test tests/sqlike-json-table*.test.ts
     pnpm exec tsx --test tests/sqlike-basic-compat.test.ts tests/sqlike-basic-expressions.test.ts tests/sqlike-math-rounding.test.ts tests/sqlike-json-operators.test.ts tests/sqlike-app-functions.test.ts tests/sqlike-like-extrema.test.ts tests/sqlike-null-order.test.ts tests/sqlike-named-bind.test.ts tests/sqlike-index-metadata.test.ts tests/sqlike-derived-table.test.ts tests/sqlike-aggregate-filter.test.ts tests/sqlike-json-aggregate.test.ts tests/sqlike-optional-functions.test.ts tests/drizzle-defined.test.ts tests/sqlike-catalog-profile.test.ts tests/sqlike-json-profile.test.ts tests/sqlike-query-profile.test.ts
 
 test-sqlike:
-    moon test packages/sqlike/src packages/sqlike/src/compiler --target js
-    moon test packages/sqlike/src packages/sqlike/src/compiler --target wasm-gc
+    moon test packages/sqlike/src/full packages/sqlike/src/compiler --target js
+    moon test packages/sqlike/src/full packages/sqlike/src/compiler --target wasm-gc
+
+generate-packages:
+    pnpm exec tsx scripts/generate-build-graph.ts
+    pnpm exec tsx scripts/generate-sqlike-packages.ts
+
+# Z3 proves the declared closure contract; compilers/consumers check emitted artifacts.
+build-graph-check:
+    pnpm exec tsx scripts/generate-build-graph.ts --check
+    pnpm exec tsx scripts/generate-sqlike-packages.ts --check
+    pnpm exec tsx scripts/verify-sqlike-build-graph.ts
+    pnpm build:core
+    pnpm build:moon-wasm
+    pnpm exec tsx --test tests/build-staging.test.ts tests/sqlike-build-graph.test.ts tests/sqlike-entrypoints.test.ts tests/sqlike-moonbit-emitter.test.ts tests/sqlike-optimizer-profile.test.ts tests/sqlike-portable-aot.test.ts tests/sqlike-aot-capabilities.test.ts
+
+measure-entrypoints:
+    pnpm build:core
+    pnpm exec tsx scripts/measure-entrypoints.ts
+
+# DEFAULT evaluation: bounded 100-row prepared batches at 5k and 100k rows.
+measure-defaults:
+    pnpm build:core
+    pnpm build:moon-wasm
+    node --expose-gc --import tsx scripts/measure-default-expressions.ts
+
+bench-row-metadata:
+    pnpm build:core
+    pnpm exec tsx scripts/bench-row-metadata.ts
+
+bench-in-list:
+    pnpm build:core
+    node --expose-gc --import tsx scripts/bench-in-list.ts
+    pnpm exec tsx scripts/measure-in-list-size.ts
+
+bench-in-select:
+    pnpm build:core
+    node --expose-gc --import tsx scripts/bench-in-select.ts
+
+measure-crud-size:
+    pnpm build:core
+    pnpm exec tsx scripts/measure-crud-size.ts
+
+# Optional page exporter, page-store CAS/abort and real Litestream restore.
+pager-check:
+    test -x "${LITESTREAM_BIN:?set LITESTREAM_BIN to a real Litestream executable}"
+    pnpm build:core
+    pnpm build:moon-wasm
+    pnpm exec tsx --test tests/sqlike-pager*.test.ts tests/sqlite-page-store.test.ts tests/sqlite-page-checksums.test.ts tests/ltx-pages.test.ts tests/ltx-binary-pages.test.ts tests/ltx-checksum-host.test.ts tests/sqlike-moonbit-emitter.test.ts tests/aot-pager-checkpoint.test.ts tests/aot-logical-snapshot.test.ts tests/sqlike-aot-capabilities.test.ts tests/aot-persistence.test.ts tests/aot-upload.test.ts
+    pnpm exec playwright test e2e/sqlite-pager.spec.ts e2e/sqlite-checksums.spec.ts e2e/aot-pager-checkpoint.spec.ts e2e/aot-logical-snapshot.spec.ts e2e/aot-differential-snapshot.spec.ts e2e/aot-outbox.spec.ts e2e/aot-upload.spec.ts e2e/moon-storage.spec.ts
+
+# Bounded 5k / 100k updates; memory page provider, no network or IndexedDB timing.
+bench-sqlite-pager:
+    pnpm build:core
+    node --expose-gc --import tsx scripts/bench-sqlite-pager.ts
+
+# Strict IndexedDB, natural/compaction phases; separate timing/I/O/heap probes.
+bench-idb-pager *args:
+    pnpm build:core
+    pnpm exec tsx scripts/bench-idb-pager.ts {{args}}
+
+# Bounded end-to-end smoke with SQLite/LTX/reopen validation.
+idb-pager-check:
+    pnpm build:core
+    pnpm exec tsx --test tests/idb-pager-metrics.test.ts
+    pnpm exec tsx scripts/bench-idb-pager.ts --smoke
+
+emit-moonbit catalog output module="app/sqlike-aot":
+    pnpm build:core
+    pnpm exec tsx scripts/emit-sqlike-moonbit.ts {{quote(catalog)}} {{quote(output)}} {{quote(module)}}
 
 # Native SQLite differential gates, including dynamic and precompiled execution.
 sqlike-check: test-sqlike
@@ -82,8 +191,8 @@ sqlite-large-bench *args:
 
 # Separate existing AOT/Statement ABI costs; setup is excluded from timing.
 aot-phase-bench:
-    moon bench packages/sqlike/src/aot_bench_wbtest.mbt --target js --release
-    moon bench packages/sqlike/src/aot_bench_wbtest.mbt --target wasm-gc --release
+    moon bench packages/sqlike/src/full/aot_bench_wbtest.mbt --target js --release
+    moon bench packages/sqlike/src/full/aot_bench_wbtest.mbt --target wasm-gc --release
 
 # Opt-in SQL prepared execution: isolated phases, plus the unchanged SQL baselines.
 sql-prepare-bench *args:
@@ -276,6 +385,91 @@ measure-optional-functions:
     pnpm build:core
     pnpm exec tsx scripts/measure-optional-functions.ts
 
+# Identical manual AOT/binary JS exports with the aggregate sorter on/off.
+measure-aggregate-order:
+    pnpm build:core
+    pnpm exec tsx scripts/measure-aggregate-order.ts
+
+# Row comparisons, cursor bounds, mixed IN metadata and optional runtime removal.
+row-values-check:
+    pnpm build:core
+    pnpm build:moon-wasm
+    moon test packages/sqlike/src/full/row_values_wbtest.mbt --target js
+    moon test packages/sqlike/src/full/row_values_wbtest.mbt --target wasm-gc
+    pnpm exec tsx --test tests/sqlike-row-values*.test.ts tests/sqlike-optional-functions.test.ts
+
+measure-row-values:
+    pnpm build:core
+    pnpm exec tsx scripts/measure-row-values.ts
+
+# Snapshot UPDATE FROM, deterministic rejection and optional AOT/binary builds.
+update-from-check:
+    pnpm build:core
+    pnpm build:moon-wasm
+    moon test packages/sqlike/src/full/update_from_wbtest.mbt --target js
+    moon test packages/sqlike/src/full/update_from_wbtest.mbt --target wasm-gc
+    pnpm exec tsx --test tests/sqlike-update-from*.test.ts tests/sqlike-optional-functions.test.ts
+
+measure-update-from:
+    pnpm build:core
+    pnpm exec tsx scripts/measure-update-from.ts
+
+# VIRTUAL derived state, optional parser-free runtime and SQLite/LTX storage.
+generated-columns-check:
+    pnpm build:core
+    pnpm build:moon-wasm
+    moon test packages/sqlike/src/full/generated_columns_wbtest.mbt --target js
+    moon test packages/sqlike/src/full/generated_columns_wbtest.mbt --target wasm-gc
+    pnpm exec tsx --test tests/sqlike-generated*.test.ts tests/sqlike-optional-functions.test.ts
+
+measure-generated-columns:
+    pnpm build:core
+    pnpm exec tsx scripts/measure-generated-columns.ts
+
+# Optional JSON table expansion, lateral scope, subtype and binary feature guards.
+json-table-check:
+    pnpm build:core
+    pnpm build:moon-wasm
+    moon test packages/sqlike/src/full/json_table_wbtest.mbt --target js
+    moon test packages/sqlike/src/full/json_table_wbtest.mbt --target wasm-gc
+    pnpm exec tsx --test tests/sqlike-json-table*.test.ts tests/sqlike-optional-functions.test.ts
+
+measure-json-table:
+    pnpm build:core
+    pnpm exec tsx scripts/measure-json-table.ts
+
+json-table-bench:
+    pnpm build:core
+    pnpm build:moon-wasm
+    pnpm exec node --expose-gc --import tsx scripts/bench-json-table.ts
+
+# Three opt-in performance changes: point projections, streaming JSON aggregates, native AOT ABI.
+performance-next-check:
+    moon test packages/sqlike/src/full/bound_plan_wbtest.mbt packages/sqlike/src/full/json_table_wbtest.mbt packages/sqlike/src/full/aot_native_wbtest.mbt --target js
+    moon test packages/sqlike/src/full/bound_plan_wbtest.mbt packages/sqlike/src/full/json_table_wbtest.mbt packages/sqlike/src/full/aot_native_wbtest.mbt --target wasm-gc
+    pnpm build:npm
+    pnpm exec tsx --test tests/sqlike-point-projection.test.ts tests/sqlike-json-table*.test.ts tests/sqlike-native-runtime.test.ts tests/sqlike-aot-typed-experiment.test.ts tests/npm-packages.test.ts
+
+native-aot-bench *args:
+    pnpm build:core
+    pnpm exec tsx scripts/bench-typed-results.ts --output=measurements/native-aot-bindings-current.json {{args}}
+
+generated-columns-bench:
+    pnpm build:core
+    pnpm build:moon-wasm
+    pnpm exec node --expose-gc --import tsx scripts/bench-generated-columns.ts
+
+update-from-bench *args:
+    pnpm build:core
+    pnpm build:moon-wasm
+    pnpm exec node --expose-gc --import tsx scripts/bench-update-from.ts {{args}}
+
+# Short prepared cursor samples at 5k/100k rows, including optional frozen baseline.
+row-values-bench *args:
+    pnpm build:core
+    pnpm build:moon-wasm
+    pnpm exec node --expose-gc --import tsx scripts/bench-row-values.ts {{args}}
+
 # Keep minifier tools out of the project lockfile and runtime dependencies.
 probe-minification tools="/tmp/browser-litestream-terser-tools":
     pnpm build:core
@@ -307,8 +501,8 @@ aot-upload-check litestream:
     test -x {{quote(litestream)}}
     pnpm build
     pnpm typecheck
-    pnpm exec tsx --test tests/aot-upload.test.ts
-    LITESTREAM_BIN={{quote(litestream)}} pnpm exec playwright test e2e/aot-upload.spec.ts
+    pnpm exec tsx --test tests/aot-upload.test.ts tests/aot-pager-checkpoint.test.ts
+    LITESTREAM_BIN={{quote(litestream)}} pnpm exec playwright test e2e/aot-upload.spec.ts e2e/aot-outbox.spec.ts
 
 measure-aot:
     pnpm measure:aot

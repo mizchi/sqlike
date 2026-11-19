@@ -91,10 +91,14 @@ export function generatedOutputPolicyCases(
     add("bare-aggregate", {
       sql: pick([
         "SELECT id,sum(v) FROM t",
-        "SELECT id,max(v) FROM t",
+        "SELECT id,max(v),min(v) FROM t",
         "SELECT count(*) FROM t HAVING id>1",
       ]),
       mustReject: true,
+    });
+    add("extremum-representative", {
+      sql: "SELECT id,g,max(id),sum(v) FROM t",
+      mustSucceed: true,
     });
     const json = `{"a":${a},"a":${b},"text":${JSON.stringify(pick(texts))}}`;
     add("json", {

@@ -1,5 +1,5 @@
 import { mkdirSync, writeFileSync } from "node:fs";
-import * as runtime from "../_build/js/release/build/mizchi/sqlike/sqlike.js";
+import * as runtime from "../_build/js/release/build/mizchi/sqlike/full/full.js";
 import {
   auditPlan,
   auditRuntime,

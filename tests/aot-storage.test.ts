@@ -8,7 +8,7 @@ import { buildCatalog } from "../scripts/aot-compiler.ts";
 import * as runtime from "../_build/js/release/build/mizchi/litestream-example/runtime/runtime.js";
 import { pack } from "../src/protocol.ts";
 import type { Value } from "../src/contract.ts";
-import * as dynamic from "../_build/js/release/build/mizchi/sqlike/sqlike.js";
+import * as dynamic from "../_build/js/release/build/mizchi/sqlike/full/full.js";
 import { aotBindings, aotValue } from "../src/aot-values.ts";
 
 test("mixed-direction and explicit-collation composite indexes survive JS/Wasm SQLite export and import", async () => {

@@ -6,15 +6,34 @@ export interface ImageDelta {
   text: string;
   blobs?: Uint8Array[];
 }
+/** Opaque checkpoint parts, published together in one generation. Owned on read;
+ * providers capture caller buffers before asynchronous work. Total limit 64 MiB. */
+export interface ImageSnapshot {
+  text: string;
+  chunks: Uint8Array[];
+}
+/** Numeric entries reuse an old checkpoint ordinal. base is its logical generation;
+ * only new byte buffers are copied. Publication resets the journal atomically. */
+export interface ImageCheckpoint {
+  text: string;
+  chunks: (Uint8Array | number)[];
+  base?: number;
+}
 export interface PersistedImage {
   generation: number;
   image?: string;
+  snapshot?: ImageSnapshot;
   deltas?: ImageDelta[];
 }
 export interface ImageStore {
   read(): Promise<PersistedImage>;
   commit(expected: number, image: string): Promise<number>;
   /** Optional for existing snapshot-only stores. Input is captured at call time. */
+  commitCheckpoint?(
+    expected: number,
+    checkpoint: ImageCheckpoint,
+  ): Promise<number>;
+  commitSnapshot?(expected: number, snapshot: ImageSnapshot): Promise<number>;
   commitDelta?(expected: number, delta: ImageDelta): Promise<number>;
   checkpointNeeded?(): boolean;
   close(): void;

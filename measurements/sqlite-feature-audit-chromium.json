@@ -1,15 +1,15 @@
 {
   "format": 1,
-  "measuredAt": "2026-11-17T13:40:24.245Z",
+  "measuredAt": "2026-11-19T16:36:49.593Z",
   "scope": "Audit execution completed; use each feature status and the separate strict gate for compatibility",
   "catalogSHA256": "f2c74c7141ad2dcec40a9c1275aadf3b6864b2ad356d3ed36aa3ad445910adfb",
-  "planSHA256": "6c935a1bcef2c6ae9219ac41a1879366f673b0876ab546ffa7e142036d93e378",
-  "sourceSHA256": "1ba7c65bee6fe4a4373cb7195fe225054510f58bfca832b3eaca0f7d79218b69",
-  "harnessSHA256": "53f05faa08f2ff889afddd6fdf499465c4baa522ef5351709432ef2385a9a104",
+  "planSHA256": "7552adb5374f25edceee0fa491b35a7649452a14993953610abef1298eeea390",
+  "sourceSHA256": "88777a86df0b0ccc3ed43f0d5c0298732fe68a76e07ca3416e854c4a06d58a0d",
+  "harnessSHA256": "91cd60b8cf3eb877b2294c6ddbc27caacfff12c2a66b073e40d4e673fdeb6f10",
   "oracleSHA256": "52601ee35951c46becd53a00cf88129ff42c7544b91c2a9dc98fd7906bc96c61",
   "artifacts": {
-    "js": "79f289d5c8a154b6c95083b448a426b7a8e8a9cba02d560d17acee327da36157",
-    "wasmGC": "cf4919d89e1125bd4a3715ff884f96d1171ea54215e7c8880bde5a6527ae8a57"
+    "js": "2a024698cddcda81695d13e6332644607bea7696d93c118a0b27c7d9e4297539",
+    "wasmGC": "028a956af3669c7da60f15d1221d902fff3929d7e7384b5d349d1ed446c4d9f5"
   },
   "target": "chromium-js",
   "browserVersion": "158.0.8127.18",
@@ -1899,11 +1899,11 @@
     }
   },
   "summary": {
-    "total": 1618,
+    "total": 1654,
     "counts": {
-      "matched-probe": 458,
+      "matched-probe": 508,
       "value-mismatch": 0,
-      "candidate-error": 244,
+      "candidate-error": 230,
       "oracle-error": 0,
       "oracle-unavailable": 11,
       "not-tested": 599,
@@ -1932,9 +1932,9 @@
     "scalar": {
       "total": 60,
       "counts": {
-        "matched-probe": 39,
+        "matched-probe": 41,
         "value-mismatch": 0,
-        "candidate-error": 17,
+        "candidate-error": 15,
         "oracle-error": 0,
         "oracle-unavailable": 2,
         "not-tested": 2,
@@ -2022,9 +2022,9 @@
     "json": {
       "total": 36,
       "counts": {
-        "matched-probe": 15,
+        "matched-probe": 19,
         "value-mismatch": 0,
-        "candidate-error": 21,
+        "candidate-error": 17,
         "oracle-error": 0,
         "oracle-unavailable": 0,
         "not-tested": 0,
@@ -2097,9 +2097,9 @@
     "expression": {
       "total": 16,
       "counts": {
-        "matched-probe": 14,
+        "matched-probe": 15,
         "value-mismatch": 0,
-        "candidate-error": 2,
+        "candidate-error": 1,
         "oracle-error": 0,
         "oracle-unavailable": 0,
         "not-tested": 0,
@@ -2112,9 +2112,9 @@
     "select": {
       "total": 30,
       "counts": {
-        "matched-probe": 26,
+        "matched-probe": 27,
         "value-mismatch": 0,
-        "candidate-error": 4,
+        "candidate-error": 3,
         "oracle-error": 0,
         "oracle-unavailable": 0,
         "not-tested": 0,
@@ -2127,9 +2127,9 @@
     "ddl": {
       "total": 13,
       "counts": {
-        "matched-probe": 7,
+        "matched-probe": 10,
         "value-mismatch": 0,
-        "candidate-error": 6,
+        "candidate-error": 3,
         "oracle-error": 0,
         "oracle-unavailable": 0,
         "not-tested": 0,
@@ -2142,16 +2142,16 @@
     "dml": {
       "total": 5,
       "counts": {
-        "matched-probe": 4,
+        "matched-probe": 5,
         "value-mismatch": 0,
-        "candidate-error": 1,
+        "candidate-error": 0,
         "oracle-error": 0,
         "oracle-unavailable": 0,
         "not-tested": 0,
         "missing-api": 0
       },
-      "verdict": "incompatible",
-      "allCatalogProbesMatched": false,
+      "verdict": "all-probes-matched",
+      "allCatalogProbesMatched": true,
       "universalEquivalenceProven": false
     },
     "constraint": {
@@ -2215,11 +2215,11 @@
       "universalEquivalenceProven": false
     },
     "output-policy": {
-      "total": 350,
+      "total": 386,
       "counts": {
-        "matched-probe": 264,
+        "matched-probe": 302,
         "value-mismatch": 0,
-        "candidate-error": 86,
+        "candidate-error": 84,
         "oracle-error": 0,
         "oracle-unavailable": 0,
         "not-tested": 0,
@@ -2734,14 +2734,8 @@
       "category": "scalar",
       "title": "format(FORMAT,...)",
       "source": "https://www.sqlite.org/lang_corefunc.html#format",
-      "status": "candidate-error",
-      "witness": {
-        "step": 4,
-        "sql": "SELECT format('%s-%d','a',2)",
-        "error": "unsupported SQL function or arity: format",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "scalar/glob(X,Y)",
@@ -2928,14 +2922,8 @@
       "category": "scalar",
       "title": "printf(FORMAT,...)",
       "source": "https://www.sqlite.org/lang_corefunc.html#printf",
-      "status": "candidate-error",
-      "witness": {
-        "step": 4,
-        "sql": "SELECT printf('%s-%d','a',2)",
-        "error": "unsupported SQL function or arity: printf",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "scalar/quote(X)",
@@ -5188,14 +5176,8 @@
       "category": "json",
       "title": "json_group_array",
       "source": "https://www.sqlite.org/json1.html#jgrouparray",
-      "status": "candidate-error",
-      "witness": {
-        "step": 4,
-        "sql": "SELECT json_group_array(n ORDER BY id) FROM t",
-        "error": "SQL syntax: expected ), found ORDER",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "json/jsonb_group_array",
@@ -5206,7 +5188,7 @@
       "witness": {
         "step": 4,
         "sql": "SELECT jsonb_group_array(n ORDER BY id) FROM t",
-        "error": "SQL syntax: expected ), found ORDER",
+        "error": "ORDER BY requires an aggregate argument",
         "candidateRejected": true,
         "rejectionAtomic": true
       }
@@ -5216,14 +5198,8 @@
       "category": "json",
       "title": "json_group_object",
       "source": "https://www.sqlite.org/json1.html#jgroupobject",
-      "status": "candidate-error",
-      "witness": {
-        "step": 4,
-        "sql": "SELECT json_group_object(id,n ORDER BY id) FROM t",
-        "error": "SQL syntax: expected ), found ORDER",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "json/jsonb_group_object",
@@ -5234,7 +5210,7 @@
       "witness": {
         "step": 4,
         "sql": "SELECT jsonb_group_object(id,n ORDER BY id) FROM t",
-        "error": "SQL syntax: expected ), found ORDER",
+        "error": "ORDER BY requires an aggregate argument",
         "candidateRejected": true,
         "rejectionAtomic": true
       }
@@ -5244,28 +5220,16 @@
       "category": "json",
       "title": "json_each",
       "source": "https://www.sqlite.org/json1.html#jeach",
-      "status": "candidate-error",
-      "witness": {
-        "step": 4,
-        "sql": "SELECT key,value,type FROM json_each('[1,null]') ORDER BY id",
-        "error": "unsupported or trailing SQL: (",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "json/json_tree",
       "category": "json",
       "title": "json_tree",
       "source": "https://www.sqlite.org/json1.html#jtree",
-      "status": "candidate-error",
-      "witness": {
-        "step": 4,
-        "sql": "SELECT key,value,type FROM json_tree('[1,null]') ORDER BY id",
-        "error": "unsupported or trailing SQL: (",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "json/jsonb_each",
@@ -5276,7 +5240,7 @@
       "witness": {
         "step": 4,
         "sql": "SELECT key,value,type FROM jsonb_each('[1,null]') ORDER BY id",
-        "error": "unsupported or trailing SQL: (",
+        "error": "unsupported table-valued function: jsonb_each",
         "candidateRejected": true,
         "rejectionAtomic": true
       }
@@ -5290,7 +5254,7 @@
       "witness": {
         "step": 4,
         "sql": "SELECT key,value,type FROM jsonb_tree('[1,null]') ORDER BY id",
-        "error": "unsupported or trailing SQL: (",
+        "error": "unsupported table-valued function: jsonb_tree",
         "candidateRejected": true,
         "rejectionAtomic": true
       }
@@ -12154,14 +12118,8 @@
       "category": "expression",
       "title": "row-values",
       "source": "https://www.sqlite.org/rowvalue.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 4,
-        "sql": "SELECT (1,2)<(1,3),(1,2) IN((1,2),(2,3))",
-        "error": "SQL syntax: expected ), found ,",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "behavior/numeric-hex",
@@ -12390,14 +12348,8 @@
       "category": "select",
       "title": "aggregate-order",
       "source": "https://www.sqlite.org/lang_aggfunc.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 4,
-        "sql": "SELECT group_concat(s,',' ORDER BY id DESC) FROM t",
-        "error": "SQL syntax: expected ), found ORDER",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "behavior/empty-aggregate",
@@ -12533,14 +12485,8 @@
       "category": "ddl",
       "title": "generated-virtual",
       "source": "https://www.sqlite.org/gencol.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 4,
-        "sql": "CREATE TABLE generated(a INTEGER,b INTEGER GENERATED ALWAYS AS(a+1) VIRTUAL)",
-        "error": "unsupported SQL column constraint: generated",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "behavior/generated-stored",
@@ -12551,7 +12497,7 @@
       "witness": {
         "step": 4,
         "sql": "CREATE TABLE generated(a INTEGER,b INTEGER GENERATED ALWAYS AS(a+1) STORED)",
-        "error": "unsupported SQL column constraint: generated",
+        "error": "unsupported STORED generated column",
         "candidateRejected": true,
         "rejectionAtomic": true
       }
@@ -12575,14 +12521,8 @@
       "category": "ddl",
       "title": "create-as-select",
       "source": "https://www.sqlite.org/lang_createtable.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 4,
-        "sql": "CREATE TABLE copied AS SELECT id,n FROM t",
-        "error": "SQL syntax: expected (, found AS",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "behavior/without-rowid",
@@ -12605,14 +12545,8 @@
       "category": "ddl",
       "title": "default-expression",
       "source": "https://www.sqlite.org/lang_createtable.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 4,
-        "sql": "CREATE TABLE defaults(n INTEGER DEFAULT(1+2))",
-        "error": "unsupported SQL DEFAULT expression",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "behavior/partial-index",
@@ -12667,14 +12601,8 @@
       "category": "dml",
       "title": "update-from",
       "source": "https://www.sqlite.org/lang_update.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 6,
-        "sql": "UPDATE t SET n=changes.n FROM changes WHERE t.id=changes.id",
-        "error": "unsupported or trailing SQL: FROM",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "behavior/upsert-target-where",
@@ -12807,7 +12735,7 @@
       "witness": {
         "step": 4,
         "sql": "SELECT name,type,pk FROM pragma_table_info('t') ORDER BY cid",
-        "error": "unsupported or trailing SQL: (",
+        "error": "unsupported table-valued function: pragma_table_info",
         "candidateRejected": true,
         "rejectionAtomic": true
       }
@@ -12881,34 +12809,6 @@
     {
       "id": "output-policy/0",
       "category": "output-policy",
-      "title": "SELECT id,max(v) FROM t",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "SELECT id,max(v) FROM t",
-        "error": "unsupported SQL: bare column in aggregate output",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
-    },
-    {
-      "id": "output-policy/1",
-      "category": "output-policy",
-      "title": "SELECT id,min(v) FROM t",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "SELECT id,min(v) FROM t",
-        "error": "unsupported SQL: bare column in aggregate output",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
-    },
-    {
-      "id": "output-policy/2",
-      "category": "output-policy",
       "title": "SELECT id,sum(v) FROM t",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "candidate-error",
@@ -12921,7 +12821,7 @@
       }
     },
     {
-      "id": "output-policy/3",
+      "id": "output-policy/1",
       "category": "output-policy",
       "title": "SELECT count(*) FROM t HAVING id>1",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -12935,7 +12835,7 @@
       }
     },
     {
-      "id": "output-policy/4",
+      "id": "output-policy/2",
       "category": "output-policy",
       "title": "PRAGMA integrity_check",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -12949,7 +12849,7 @@
       }
     },
     {
-      "id": "output-policy/5",
+      "id": "output-policy/3",
       "category": "output-policy",
       "title": "PRAGMA integrity_check(t)",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -12963,7 +12863,7 @@
       }
     },
     {
-      "id": "output-policy/6",
+      "id": "output-policy/4",
       "category": "output-policy",
       "title": "PRAGMA quick_check",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -12977,7 +12877,7 @@
       }
     },
     {
-      "id": "output-policy/7",
+      "id": "output-policy/5",
       "category": "output-policy",
       "title": "SELECT hex(CAST(x'80' AS TEXT))",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -12991,7 +12891,7 @@
       }
     },
     {
-      "id": "output-policy/8",
+      "id": "output-policy/6",
       "category": "output-policy",
       "title": "SELECT CAST(x'00ff' AS TEXT)",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -13005,7 +12905,7 @@
       }
     },
     {
-      "id": "output-policy/9",
+      "id": "output-policy/7",
       "category": "output-policy",
       "title": "SELECT hex(lower(x'80'))",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -13019,7 +12919,7 @@
       }
     },
     {
-      "id": "output-policy/10",
+      "id": "output-policy/8",
       "category": "output-policy",
       "title": "SELECT hex(x'80'||'a')",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -13031,6 +12931,22 @@
         "candidateRejected": true,
         "rejectionAtomic": true
       }
+    },
+    {
+      "id": "output-policy/9",
+      "category": "output-policy",
+      "title": "SELECT ? LIKE ?",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/10",
+      "category": "output-policy",
+      "title": "SELECT ? LIKE ?",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "output-policy/11",
@@ -13059,7 +12975,7 @@
     {
       "id": "output-policy/14",
       "category": "output-policy",
-      "title": "SELECT ? LIKE ?",
+      "title": "SELECT id,max(v) FROM t",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -13067,7 +12983,7 @@
     {
       "id": "output-policy/15",
       "category": "output-policy",
-      "title": "SELECT ? LIKE ?",
+      "title": "SELECT id,min(v) FROM t",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -13185,12 +13101,12 @@
     {
       "id": "output-policy/29",
       "category": "output-policy",
-      "title": "SELECT id,max(v) FROM t",
+      "title": "SELECT id,max(v),min(v) FROM t",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "candidate-error",
       "witness": {
         "step": 2,
-        "sql": "SELECT id,max(v) FROM t",
+        "sql": "SELECT id,max(v),min(v) FROM t",
         "error": "unsupported SQL: bare column in aggregate output",
         "candidateRejected": true,
         "rejectionAtomic": true
@@ -13199,7 +13115,7 @@
     {
       "id": "output-policy/30",
       "category": "output-policy",
-      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -13207,6 +13123,14 @@
     {
       "id": "output-policy/31",
       "category": "output-policy",
+      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/32",
+      "category": "output-policy",
       "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "candidate-error",
@@ -13219,17 +13143,9 @@
       }
     },
     {
-      "id": "output-policy/32",
-      "category": "output-policy",
-      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
       "id": "output-policy/33",
       "category": "output-policy",
-      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
+      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -13237,7 +13153,7 @@
     {
       "id": "output-policy/34",
       "category": "output-policy",
-      "title": "PRAGMA table_xinfo(defaults)",
+      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -13245,7 +13161,7 @@
     {
       "id": "output-policy/35",
       "category": "output-policy",
-      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
+      "title": "PRAGMA table_xinfo(defaults)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -13253,7 +13169,7 @@
     {
       "id": "output-policy/36",
       "category": "output-policy",
-      "title": "SELECT ? COLLATE RTRIM=?,? COLLATE RTRIM<?,? LIKE ?",
+      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -13261,7 +13177,7 @@
     {
       "id": "output-policy/37",
       "category": "output-policy",
-      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
+      "title": "SELECT ? COLLATE RTRIM=?,? COLLATE RTRIM<?,? LIKE ?",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -13269,6 +13185,14 @@
     {
       "id": "output-policy/38",
       "category": "output-policy",
+      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/39",
+      "category": "output-policy",
       "title": "SELECT count(*) FROM t HAVING id>1",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "candidate-error",
@@ -13281,31 +13205,17 @@
       }
     },
     {
-      "id": "output-policy/39",
+      "id": "output-policy/40",
       "category": "output-policy",
-      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/40",
-      "category": "output-policy",
-      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
-    },
-    {
       "id": "output-policy/41",
       "category": "output-policy",
-      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
+      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -13313,15 +13223,21 @@
     {
       "id": "output-policy/42",
       "category": "output-policy",
-      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
+      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
       "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
     },
     {
       "id": "output-policy/43",
       "category": "output-policy",
-      "title": "PRAGMA table_xinfo(defaults)",
+      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -13329,7 +13245,7 @@
     {
       "id": "output-policy/44",
       "category": "output-policy",
-      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
+      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -13337,7 +13253,7 @@
     {
       "id": "output-policy/45",
       "category": "output-policy",
-      "title": "SELECT ? COLLATE BINARY=?,? COLLATE BINARY<?,? LIKE ?",
+      "title": "PRAGMA table_xinfo(defaults)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -13345,7 +13261,7 @@
     {
       "id": "output-policy/46",
       "category": "output-policy",
-      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
+      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -13353,21 +13269,15 @@
     {
       "id": "output-policy/47",
       "category": "output-policy",
-      "title": "SELECT id,max(v) FROM t",
+      "title": "SELECT ? COLLATE BINARY=?,? COLLATE BINARY<?,? LIKE ?",
       "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "SELECT id,max(v) FROM t",
-        "error": "unsupported SQL: bare column in aggregate output",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "output-policy/48",
       "category": "output-policy",
-      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
+      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -13375,13 +13285,13 @@
     {
       "id": "output-policy/49",
       "category": "output-policy",
-      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+      "title": "SELECT id,max(v),min(v) FROM t",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "candidate-error",
       "witness": {
         "step": 2,
-        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
+        "sql": "SELECT id,max(v),min(v) FROM t",
+        "error": "unsupported SQL: bare column in aggregate output",
         "candidateRejected": true,
         "rejectionAtomic": true
       }
@@ -13389,7 +13299,7 @@
     {
       "id": "output-policy/50",
       "category": "output-policy",
-      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -13397,7 +13307,7 @@
     {
       "id": "output-policy/51",
       "category": "output-policy",
-      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
+      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -13405,15 +13315,21 @@
     {
       "id": "output-policy/52",
       "category": "output-policy",
-      "title": "PRAGMA table_xinfo(defaults)",
+      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
       "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
     },
     {
       "id": "output-policy/53",
       "category": "output-policy",
-      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
+      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -13421,7 +13337,7 @@
     {
       "id": "output-policy/54",
       "category": "output-policy",
-      "title": "SELECT ? COLLATE RTRIM=?,? COLLATE RTRIM<?,? LIKE ?",
+      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -13429,7 +13345,7 @@
     {
       "id": "output-policy/55",
       "category": "output-policy",
-      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
+      "title": "PRAGMA table_xinfo(defaults)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -13437,241 +13353,13 @@
     {
       "id": "output-policy/56",
       "category": "output-policy",
-      "title": "SELECT id,max(v) FROM t",
+      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
       "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "SELECT id,max(v) FROM t",
-        "error": "unsupported SQL: bare column in aggregate output",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "output-policy/57",
-      "category": "output-policy",
-      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/58",
-      "category": "output-policy",
-      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
-    },
-    {
-      "id": "output-policy/59",
-      "category": "output-policy",
-      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/60",
-      "category": "output-policy",
-      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/61",
-      "category": "output-policy",
-      "title": "PRAGMA table_xinfo(defaults)",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/62",
-      "category": "output-policy",
-      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/63",
-      "category": "output-policy",
-      "title": "SELECT ? COLLATE NOCASE=?,? COLLATE NOCASE<?,? LIKE ?",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/64",
-      "category": "output-policy",
-      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/65",
-      "category": "output-policy",
-      "title": "SELECT id,sum(v) FROM t",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "SELECT id,sum(v) FROM t",
-        "error": "unsupported SQL: bare column in aggregate output",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
-    },
-    {
-      "id": "output-policy/66",
-      "category": "output-policy",
-      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/67",
-      "category": "output-policy",
-      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
-    },
-    {
-      "id": "output-policy/68",
-      "category": "output-policy",
-      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/69",
-      "category": "output-policy",
-      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/70",
-      "category": "output-policy",
-      "title": "PRAGMA table_xinfo(defaults)",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/71",
-      "category": "output-policy",
-      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/72",
-      "category": "output-policy",
-      "title": "SELECT ? COLLATE NOCASE=?,? COLLATE NOCASE<?,? LIKE ?",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/73",
-      "category": "output-policy",
-      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/74",
-      "category": "output-policy",
-      "title": "SELECT id,sum(v) FROM t",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "SELECT id,sum(v) FROM t",
-        "error": "unsupported SQL: bare column in aggregate output",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
-    },
-    {
-      "id": "output-policy/75",
-      "category": "output-policy",
-      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/76",
-      "category": "output-policy",
-      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
-    },
-    {
-      "id": "output-policy/77",
-      "category": "output-policy",
-      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/78",
-      "category": "output-policy",
-      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/79",
-      "category": "output-policy",
-      "title": "PRAGMA table_xinfo(defaults)",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/80",
-      "category": "output-policy",
-      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/81",
       "category": "output-policy",
       "title": "SELECT ? COLLATE RTRIM=?,? COLLATE RTRIM<?,? LIKE ?",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -13679,7 +13367,7 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/82",
+      "id": "output-policy/58",
       "category": "output-policy",
       "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -13687,21 +13375,29 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/83",
+      "id": "output-policy/59",
       "category": "output-policy",
-      "title": "SELECT id,sum(v) FROM t",
+      "title": "SELECT id,max(v),min(v) FROM t",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "candidate-error",
       "witness": {
         "step": 2,
-        "sql": "SELECT id,sum(v) FROM t",
+        "sql": "SELECT id,max(v),min(v) FROM t",
         "error": "unsupported SQL: bare column in aggregate output",
         "candidateRejected": true,
         "rejectionAtomic": true
       }
     },
     {
-      "id": "output-policy/84",
+      "id": "output-policy/60",
+      "category": "output-policy",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/61",
       "category": "output-policy",
       "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -13709,7 +13405,7 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/85",
+      "id": "output-policy/62",
       "category": "output-policy",
       "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -13723,7 +13419,7 @@
       }
     },
     {
-      "id": "output-policy/86",
+      "id": "output-policy/63",
       "category": "output-policy",
       "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -13731,7 +13427,7 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/87",
+      "id": "output-policy/64",
       "category": "output-policy",
       "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -13739,7 +13435,7 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/88",
+      "id": "output-policy/65",
       "category": "output-policy",
       "title": "PRAGMA table_xinfo(defaults)",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -13747,7 +13443,7 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/89",
+      "id": "output-policy/66",
       "category": "output-policy",
       "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -13755,7 +13451,7 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/90",
+      "id": "output-policy/67",
       "category": "output-policy",
       "title": "SELECT ? COLLATE NOCASE=?,? COLLATE NOCASE<?,? LIKE ?",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -13763,7 +13459,7 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/91",
+      "id": "output-policy/68",
       "category": "output-policy",
       "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -13771,7 +13467,283 @@
       "rejectionsVerified": true
     },
     {
+      "id": "output-policy/69",
+      "category": "output-policy",
+      "title": "SELECT id,sum(v) FROM t",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "SELECT id,sum(v) FROM t",
+        "error": "unsupported SQL: bare column in aggregate output",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
+    },
+    {
+      "id": "output-policy/70",
+      "category": "output-policy",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/71",
+      "category": "output-policy",
+      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/72",
+      "category": "output-policy",
+      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
+    },
+    {
+      "id": "output-policy/73",
+      "category": "output-policy",
+      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/74",
+      "category": "output-policy",
+      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/75",
+      "category": "output-policy",
+      "title": "PRAGMA table_xinfo(defaults)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/76",
+      "category": "output-policy",
+      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/77",
+      "category": "output-policy",
+      "title": "SELECT ? COLLATE NOCASE=?,? COLLATE NOCASE<?,? LIKE ?",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/78",
+      "category": "output-policy",
+      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/79",
+      "category": "output-policy",
+      "title": "SELECT id,sum(v) FROM t",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "SELECT id,sum(v) FROM t",
+        "error": "unsupported SQL: bare column in aggregate output",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
+    },
+    {
+      "id": "output-policy/80",
+      "category": "output-policy",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/81",
+      "category": "output-policy",
+      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/82",
+      "category": "output-policy",
+      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
+    },
+    {
+      "id": "output-policy/83",
+      "category": "output-policy",
+      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/84",
+      "category": "output-policy",
+      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/85",
+      "category": "output-policy",
+      "title": "PRAGMA table_xinfo(defaults)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/86",
+      "category": "output-policy",
+      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/87",
+      "category": "output-policy",
+      "title": "SELECT ? COLLATE RTRIM=?,? COLLATE RTRIM<?,? LIKE ?",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/88",
+      "category": "output-policy",
+      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/89",
+      "category": "output-policy",
+      "title": "SELECT id,sum(v) FROM t",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "SELECT id,sum(v) FROM t",
+        "error": "unsupported SQL: bare column in aggregate output",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
+    },
+    {
+      "id": "output-policy/90",
+      "category": "output-policy",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/91",
+      "category": "output-policy",
+      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
       "id": "output-policy/92",
+      "category": "output-policy",
+      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
+    },
+    {
+      "id": "output-policy/93",
+      "category": "output-policy",
+      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/94",
+      "category": "output-policy",
+      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/95",
+      "category": "output-policy",
+      "title": "PRAGMA table_xinfo(defaults)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/96",
+      "category": "output-policy",
+      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/97",
+      "category": "output-policy",
+      "title": "SELECT ? COLLATE NOCASE=?,? COLLATE NOCASE<?,? LIKE ?",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/98",
+      "category": "output-policy",
+      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/99",
       "category": "output-policy",
       "title": "SELECT count(*) FROM t HAVING id>1",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -13785,71 +13757,9 @@
       }
     },
     {
-      "id": "output-policy/93",
-      "category": "output-policy",
-      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/94",
-      "category": "output-policy",
-      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
-    },
-    {
-      "id": "output-policy/95",
-      "category": "output-policy",
-      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/96",
-      "category": "output-policy",
-      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/97",
-      "category": "output-policy",
-      "title": "PRAGMA table_xinfo(defaults)",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/98",
-      "category": "output-policy",
-      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/99",
-      "category": "output-policy",
-      "title": "SELECT ? COLLATE NOCASE=?,? COLLATE NOCASE<?,? LIKE ?",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
       "id": "output-policy/100",
       "category": "output-policy",
-      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -13857,27 +13767,13 @@
     {
       "id": "output-policy/101",
       "category": "output-policy",
-      "title": "SELECT id,sum(v) FROM t",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "SELECT id,sum(v) FROM t",
-        "error": "unsupported SQL: bare column in aggregate output",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
-    },
-    {
-      "id": "output-policy/102",
-      "category": "output-policy",
       "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/103",
+      "id": "output-policy/102",
       "category": "output-policy",
       "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -13891,7 +13787,7 @@
       }
     },
     {
-      "id": "output-policy/104",
+      "id": "output-policy/103",
       "category": "output-policy",
       "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -13899,7 +13795,7 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/105",
+      "id": "output-policy/104",
       "category": "output-policy",
       "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -13907,7 +13803,7 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/106",
+      "id": "output-policy/105",
       "category": "output-policy",
       "title": "PRAGMA table_xinfo(defaults)",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -13915,7 +13811,7 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/107",
+      "id": "output-policy/106",
       "category": "output-policy",
       "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -13923,7 +13819,7 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/108",
+      "id": "output-policy/107",
       "category": "output-policy",
       "title": "SELECT ? COLLATE NOCASE=?,? COLLATE NOCASE<?,? LIKE ?",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -13931,7 +13827,7 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/109",
+      "id": "output-policy/108",
       "category": "output-policy",
       "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -13939,7 +13835,7 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/110",
+      "id": "output-policy/109",
       "category": "output-policy",
       "title": "SELECT id,sum(v) FROM t",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -13951,6 +13847,14 @@
         "candidateRejected": true,
         "rejectionAtomic": true
       }
+    },
+    {
+      "id": "output-policy/110",
+      "category": "output-policy",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "output-policy/111",
@@ -14009,7 +13913,7 @@
     {
       "id": "output-policy/117",
       "category": "output-policy",
-      "title": "SELECT ? COLLATE BINARY=?,? COLLATE BINARY<?,? LIKE ?",
+      "title": "SELECT ? COLLATE NOCASE=?,? COLLATE NOCASE<?,? LIKE ?",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -14025,12 +13929,12 @@
     {
       "id": "output-policy/119",
       "category": "output-policy",
-      "title": "SELECT count(*) FROM t HAVING id>1",
+      "title": "SELECT id,sum(v) FROM t",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "candidate-error",
       "witness": {
         "step": 2,
-        "sql": "SELECT count(*) FROM t HAVING id>1",
+        "sql": "SELECT id,sum(v) FROM t",
         "error": "unsupported SQL: bare column in aggregate output",
         "candidateRejected": true,
         "rejectionAtomic": true
@@ -14039,7 +13943,7 @@
     {
       "id": "output-policy/120",
       "category": "output-policy",
-      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -14047,6 +13951,14 @@
     {
       "id": "output-policy/121",
       "category": "output-policy",
+      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/122",
+      "category": "output-policy",
       "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "candidate-error",
@@ -14059,17 +13971,9 @@
       }
     },
     {
-      "id": "output-policy/122",
-      "category": "output-policy",
-      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
       "id": "output-policy/123",
       "category": "output-policy",
-      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
+      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -14077,7 +13981,7 @@
     {
       "id": "output-policy/124",
       "category": "output-policy",
-      "title": "PRAGMA table_xinfo(defaults)",
+      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -14085,7 +13989,7 @@
     {
       "id": "output-policy/125",
       "category": "output-policy",
-      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
+      "title": "PRAGMA table_xinfo(defaults)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -14093,7 +13997,7 @@
     {
       "id": "output-policy/126",
       "category": "output-policy",
-      "title": "SELECT ? COLLATE NOCASE=?,? COLLATE NOCASE<?,? LIKE ?",
+      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -14101,7 +14005,7 @@
     {
       "id": "output-policy/127",
       "category": "output-policy",
-      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
+      "title": "SELECT ? COLLATE BINARY=?,? COLLATE BINARY<?,? LIKE ?",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -14109,6 +14013,14 @@
     {
       "id": "output-policy/128",
       "category": "output-policy",
+      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/129",
+      "category": "output-policy",
       "title": "SELECT count(*) FROM t HAVING id>1",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "candidate-error",
@@ -14121,31 +14033,17 @@
       }
     },
     {
-      "id": "output-policy/129",
+      "id": "output-policy/130",
       "category": "output-policy",
-      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/130",
-      "category": "output-policy",
-      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
-    },
-    {
       "id": "output-policy/131",
       "category": "output-policy",
-      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
+      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -14153,15 +14051,21 @@
     {
       "id": "output-policy/132",
       "category": "output-policy",
-      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
+      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
       "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
     },
     {
       "id": "output-policy/133",
       "category": "output-policy",
-      "title": "PRAGMA table_xinfo(defaults)",
+      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -14169,21 +14073,15 @@
     {
       "id": "output-policy/134",
       "category": "output-policy",
-      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
+      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
       "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
-        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "output-policy/135",
       "category": "output-policy",
-      "title": "SELECT ? COLLATE BINARY=?,? COLLATE BINARY<?,? LIKE ?",
+      "title": "PRAGMA table_xinfo(defaults)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -14191,7 +14089,7 @@
     {
       "id": "output-policy/136",
       "category": "output-policy",
-      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
+      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -14199,21 +14097,15 @@
     {
       "id": "output-policy/137",
       "category": "output-policy",
-      "title": "SELECT id,sum(v) FROM t",
+      "title": "SELECT ? COLLATE NOCASE=?,? COLLATE NOCASE<?,? LIKE ?",
       "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "SELECT id,sum(v) FROM t",
-        "error": "unsupported SQL: bare column in aggregate output",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "output-policy/138",
       "category": "output-policy",
-      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
+      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -14221,13 +14113,13 @@
     {
       "id": "output-policy/139",
       "category": "output-policy",
-      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+      "title": "SELECT count(*) FROM t HAVING id>1",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "candidate-error",
       "witness": {
         "step": 2,
-        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
+        "sql": "SELECT count(*) FROM t HAVING id>1",
+        "error": "unsupported SQL: bare column in aggregate output",
         "candidateRejected": true,
         "rejectionAtomic": true
       }
@@ -14235,7 +14127,7 @@
     {
       "id": "output-policy/140",
       "category": "output-policy",
-      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -14243,7 +14135,7 @@
     {
       "id": "output-policy/141",
       "category": "output-policy",
-      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
+      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -14251,15 +14143,21 @@
     {
       "id": "output-policy/142",
       "category": "output-policy",
-      "title": "PRAGMA table_xinfo(defaults)",
+      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
       "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
     },
     {
       "id": "output-policy/143",
       "category": "output-policy",
-      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
+      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -14267,7 +14165,7 @@
     {
       "id": "output-policy/144",
       "category": "output-policy",
-      "title": "SELECT ? COLLATE RTRIM=?,? COLLATE RTRIM<?,? LIKE ?",
+      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -14275,325 +14173,13 @@
     {
       "id": "output-policy/145",
       "category": "output-policy",
-      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
+      "title": "PRAGMA table_xinfo(defaults)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
     },
     {
       "id": "output-policy/146",
-      "category": "output-policy",
-      "title": "SELECT count(*) FROM t HAVING id>1",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "SELECT count(*) FROM t HAVING id>1",
-        "error": "unsupported SQL: bare column in aggregate output",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
-    },
-    {
-      "id": "output-policy/147",
-      "category": "output-policy",
-      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/148",
-      "category": "output-policy",
-      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
-    },
-    {
-      "id": "output-policy/149",
-      "category": "output-policy",
-      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/150",
-      "category": "output-policy",
-      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/151",
-      "category": "output-policy",
-      "title": "PRAGMA table_xinfo(defaults)",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/152",
-      "category": "output-policy",
-      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/153",
-      "category": "output-policy",
-      "title": "SELECT ? COLLATE RTRIM=?,? COLLATE RTRIM<?,? LIKE ?",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/154",
-      "category": "output-policy",
-      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/155",
-      "category": "output-policy",
-      "title": "SELECT id,sum(v) FROM t",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "SELECT id,sum(v) FROM t",
-        "error": "unsupported SQL: bare column in aggregate output",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
-    },
-    {
-      "id": "output-policy/156",
-      "category": "output-policy",
-      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/157",
-      "category": "output-policy",
-      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
-    },
-    {
-      "id": "output-policy/158",
-      "category": "output-policy",
-      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/159",
-      "category": "output-policy",
-      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/160",
-      "category": "output-policy",
-      "title": "PRAGMA table_xinfo(defaults)",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/161",
-      "category": "output-policy",
-      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/162",
-      "category": "output-policy",
-      "title": "SELECT ? COLLATE RTRIM=?,? COLLATE RTRIM<?,? LIKE ?",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/163",
-      "category": "output-policy",
-      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/164",
-      "category": "output-policy",
-      "title": "SELECT id,max(v) FROM t",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "SELECT id,max(v) FROM t",
-        "error": "unsupported SQL: bare column in aggregate output",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
-    },
-    {
-      "id": "output-policy/165",
-      "category": "output-policy",
-      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/166",
-      "category": "output-policy",
-      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
-    },
-    {
-      "id": "output-policy/167",
-      "category": "output-policy",
-      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/168",
-      "category": "output-policy",
-      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/169",
-      "category": "output-policy",
-      "title": "PRAGMA table_xinfo(defaults)",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/170",
-      "category": "output-policy",
-      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/171",
-      "category": "output-policy",
-      "title": "SELECT ? COLLATE RTRIM=?,? COLLATE RTRIM<?,? LIKE ?",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/172",
-      "category": "output-policy",
-      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/173",
-      "category": "output-policy",
-      "title": "SELECT count(*) FROM t HAVING id>1",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "SELECT count(*) FROM t HAVING id>1",
-        "error": "unsupported SQL: bare column in aggregate output",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
-    },
-    {
-      "id": "output-policy/174",
-      "category": "output-policy",
-      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/175",
-      "category": "output-policy",
-      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
-    },
-    {
-      "id": "output-policy/176",
-      "category": "output-policy",
-      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/177",
-      "category": "output-policy",
-      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/178",
-      "category": "output-policy",
-      "title": "PRAGMA table_xinfo(defaults)",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/179",
       "category": "output-policy",
       "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -14607,7 +14193,7 @@
       }
     },
     {
-      "id": "output-policy/180",
+      "id": "output-policy/147",
       "category": "output-policy",
       "title": "SELECT ? COLLATE BINARY=?,? COLLATE BINARY<?,? LIKE ?",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -14615,9 +14201,315 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/181",
+      "id": "output-policy/148",
       "category": "output-policy",
       "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/149",
+      "category": "output-policy",
+      "title": "SELECT id,sum(v) FROM t",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "SELECT id,sum(v) FROM t",
+        "error": "unsupported SQL: bare column in aggregate output",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
+    },
+    {
+      "id": "output-policy/150",
+      "category": "output-policy",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/151",
+      "category": "output-policy",
+      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/152",
+      "category": "output-policy",
+      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
+    },
+    {
+      "id": "output-policy/153",
+      "category": "output-policy",
+      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/154",
+      "category": "output-policy",
+      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/155",
+      "category": "output-policy",
+      "title": "PRAGMA table_xinfo(defaults)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/156",
+      "category": "output-policy",
+      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/157",
+      "category": "output-policy",
+      "title": "SELECT ? COLLATE RTRIM=?,? COLLATE RTRIM<?,? LIKE ?",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/158",
+      "category": "output-policy",
+      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/159",
+      "category": "output-policy",
+      "title": "SELECT count(*) FROM t HAVING id>1",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "SELECT count(*) FROM t HAVING id>1",
+        "error": "unsupported SQL: bare column in aggregate output",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
+    },
+    {
+      "id": "output-policy/160",
+      "category": "output-policy",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/161",
+      "category": "output-policy",
+      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/162",
+      "category": "output-policy",
+      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
+    },
+    {
+      "id": "output-policy/163",
+      "category": "output-policy",
+      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/164",
+      "category": "output-policy",
+      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/165",
+      "category": "output-policy",
+      "title": "PRAGMA table_xinfo(defaults)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/166",
+      "category": "output-policy",
+      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/167",
+      "category": "output-policy",
+      "title": "SELECT ? COLLATE RTRIM=?,? COLLATE RTRIM<?,? LIKE ?",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/168",
+      "category": "output-policy",
+      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/169",
+      "category": "output-policy",
+      "title": "SELECT id,sum(v) FROM t",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "SELECT id,sum(v) FROM t",
+        "error": "unsupported SQL: bare column in aggregate output",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
+    },
+    {
+      "id": "output-policy/170",
+      "category": "output-policy",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/171",
+      "category": "output-policy",
+      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/172",
+      "category": "output-policy",
+      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
+    },
+    {
+      "id": "output-policy/173",
+      "category": "output-policy",
+      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/174",
+      "category": "output-policy",
+      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/175",
+      "category": "output-policy",
+      "title": "PRAGMA table_xinfo(defaults)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/176",
+      "category": "output-policy",
+      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/177",
+      "category": "output-policy",
+      "title": "SELECT ? COLLATE RTRIM=?,? COLLATE RTRIM<?,? LIKE ?",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/178",
+      "category": "output-policy",
+      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/179",
+      "category": "output-policy",
+      "title": "SELECT id,max(v),min(v) FROM t",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "SELECT id,max(v),min(v) FROM t",
+        "error": "unsupported SQL: bare column in aggregate output",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
+    },
+    {
+      "id": "output-policy/180",
+      "category": "output-policy",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/181",
+      "category": "output-policy",
+      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -14625,13 +14517,13 @@
     {
       "id": "output-policy/182",
       "category": "output-policy",
-      "title": "SELECT id,max(v) FROM t",
+      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "candidate-error",
       "witness": {
         "step": 2,
-        "sql": "SELECT id,max(v) FROM t",
-        "error": "unsupported SQL: bare column in aggregate output",
+        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
         "candidateRejected": true,
         "rejectionAtomic": true
       }
@@ -14639,7 +14531,7 @@
     {
       "id": "output-policy/183",
       "category": "output-policy",
-      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
+      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -14647,21 +14539,15 @@
     {
       "id": "output-policy/184",
       "category": "output-policy",
-      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
       "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "output-policy/185",
       "category": "output-policy",
-      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
+      "title": "PRAGMA table_xinfo(defaults)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -14669,7 +14555,7 @@
     {
       "id": "output-policy/186",
       "category": "output-policy",
-      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
+      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -14677,7 +14563,7 @@
     {
       "id": "output-policy/187",
       "category": "output-policy",
-      "title": "PRAGMA table_xinfo(defaults)",
+      "title": "SELECT ? COLLATE RTRIM=?,? COLLATE RTRIM<?,? LIKE ?",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -14685,29 +14571,13 @@
     {
       "id": "output-policy/188",
       "category": "output-policy",
-      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/189",
-      "category": "output-policy",
-      "title": "SELECT ? COLLATE RTRIM=?,? COLLATE RTRIM<?,? LIKE ?",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/190",
-      "category": "output-policy",
       "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/191",
+      "id": "output-policy/189",
       "category": "output-policy",
       "title": "SELECT count(*) FROM t HAVING id>1",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -14721,7 +14591,15 @@
       }
     },
     {
-      "id": "output-policy/192",
+      "id": "output-policy/190",
+      "category": "output-policy",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/191",
       "category": "output-policy",
       "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -14729,7 +14607,7 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/193",
+      "id": "output-policy/192",
       "category": "output-policy",
       "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -14743,7 +14621,7 @@
       }
     },
     {
-      "id": "output-policy/194",
+      "id": "output-policy/193",
       "category": "output-policy",
       "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -14751,7 +14629,7 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/195",
+      "id": "output-policy/194",
       "category": "output-policy",
       "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -14759,7 +14637,7 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/196",
+      "id": "output-policy/195",
       "category": "output-policy",
       "title": "PRAGMA table_xinfo(defaults)",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -14767,9 +14645,23 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/197",
+      "id": "output-policy/196",
       "category": "output-policy",
       "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
+        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
+    },
+    {
+      "id": "output-policy/197",
+      "category": "output-policy",
+      "title": "SELECT ? COLLATE BINARY=?,? COLLATE BINARY<?,? LIKE ?",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -14777,7 +14669,7 @@
     {
       "id": "output-policy/198",
       "category": "output-policy",
-      "title": "SELECT ? COLLATE RTRIM=?,? COLLATE RTRIM<?,? LIKE ?",
+      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -14785,24 +14677,24 @@
     {
       "id": "output-policy/199",
       "category": "output-policy",
-      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/200",
-      "category": "output-policy",
-      "title": "SELECT count(*) FROM t HAVING id>1",
+      "title": "SELECT id,max(v),min(v) FROM t",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "candidate-error",
       "witness": {
         "step": 2,
-        "sql": "SELECT count(*) FROM t HAVING id>1",
+        "sql": "SELECT id,max(v),min(v) FROM t",
         "error": "unsupported SQL: bare column in aggregate output",
         "candidateRejected": true,
         "rejectionAtomic": true
       }
+    },
+    {
+      "id": "output-policy/200",
+      "category": "output-policy",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "output-policy/201",
@@ -14891,7 +14783,7 @@
     {
       "id": "output-policy/210",
       "category": "output-policy",
-      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -14899,6 +14791,14 @@
     {
       "id": "output-policy/211",
       "category": "output-policy",
+      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/212",
+      "category": "output-policy",
       "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "candidate-error",
@@ -14911,17 +14811,9 @@
       }
     },
     {
-      "id": "output-policy/212",
-      "category": "output-policy",
-      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
       "id": "output-policy/213",
       "category": "output-policy",
-      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
+      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -14929,7 +14821,7 @@
     {
       "id": "output-policy/214",
       "category": "output-policy",
-      "title": "PRAGMA table_xinfo(defaults)",
+      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -14937,7 +14829,7 @@
     {
       "id": "output-policy/215",
       "category": "output-policy",
-      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
+      "title": "PRAGMA table_xinfo(defaults)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -14945,7 +14837,7 @@
     {
       "id": "output-policy/216",
       "category": "output-policy",
-      "title": "SELECT ? COLLATE RTRIM=?,? COLLATE RTRIM<?,? LIKE ?",
+      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -14953,7 +14845,7 @@
     {
       "id": "output-policy/217",
       "category": "output-policy",
-      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
+      "title": "SELECT ? COLLATE RTRIM=?,? COLLATE RTRIM<?,? LIKE ?",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -14961,43 +14853,37 @@
     {
       "id": "output-policy/218",
       "category": "output-policy",
-      "title": "SELECT id,max(v) FROM t",
+      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/219",
+      "category": "output-policy",
+      "title": "SELECT count(*) FROM t HAVING id>1",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "candidate-error",
       "witness": {
         "step": 2,
-        "sql": "SELECT id,max(v) FROM t",
+        "sql": "SELECT count(*) FROM t HAVING id>1",
         "error": "unsupported SQL: bare column in aggregate output",
         "candidateRejected": true,
         "rejectionAtomic": true
       }
     },
     {
-      "id": "output-policy/219",
+      "id": "output-policy/220",
       "category": "output-policy",
-      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/220",
-      "category": "output-policy",
-      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
-    },
-    {
       "id": "output-policy/221",
       "category": "output-policy",
-      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
+      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15005,15 +14891,21 @@
     {
       "id": "output-policy/222",
       "category": "output-policy",
-      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
+      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
       "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
     },
     {
       "id": "output-policy/223",
       "category": "output-policy",
-      "title": "PRAGMA table_xinfo(defaults)",
+      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15021,7 +14913,7 @@
     {
       "id": "output-policy/224",
       "category": "output-policy",
-      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
+      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15029,7 +14921,7 @@
     {
       "id": "output-policy/225",
       "category": "output-policy",
-      "title": "SELECT ? COLLATE BINARY=?,? COLLATE BINARY<?,? LIKE ?",
+      "title": "PRAGMA table_xinfo(defaults)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15037,7 +14929,7 @@
     {
       "id": "output-policy/226",
       "category": "output-policy",
-      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
+      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15045,21 +14937,15 @@
     {
       "id": "output-policy/227",
       "category": "output-policy",
-      "title": "SELECT id,max(v) FROM t",
+      "title": "SELECT ? COLLATE RTRIM=?,? COLLATE RTRIM<?,? LIKE ?",
       "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "SELECT id,max(v) FROM t",
-        "error": "unsupported SQL: bare column in aggregate output",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "output-policy/228",
       "category": "output-policy",
-      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
+      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15067,13 +14953,13 @@
     {
       "id": "output-policy/229",
       "category": "output-policy",
-      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+      "title": "SELECT count(*) FROM t HAVING id>1",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "candidate-error",
       "witness": {
         "step": 2,
-        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
+        "sql": "SELECT count(*) FROM t HAVING id>1",
+        "error": "unsupported SQL: bare column in aggregate output",
         "candidateRejected": true,
         "rejectionAtomic": true
       }
@@ -15081,7 +14967,7 @@
     {
       "id": "output-policy/230",
       "category": "output-policy",
-      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15089,7 +14975,7 @@
     {
       "id": "output-policy/231",
       "category": "output-policy",
-      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
+      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15097,15 +14983,21 @@
     {
       "id": "output-policy/232",
       "category": "output-policy",
-      "title": "PRAGMA table_xinfo(defaults)",
+      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
       "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
     },
     {
       "id": "output-policy/233",
       "category": "output-policy",
-      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
+      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15113,7 +15005,7 @@
     {
       "id": "output-policy/234",
       "category": "output-policy",
-      "title": "SELECT ? COLLATE BINARY=?,? COLLATE BINARY<?,? LIKE ?",
+      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15121,7 +15013,7 @@
     {
       "id": "output-policy/235",
       "category": "output-policy",
-      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
+      "title": "PRAGMA table_xinfo(defaults)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15129,21 +15021,15 @@
     {
       "id": "output-policy/236",
       "category": "output-policy",
-      "title": "SELECT count(*) FROM t HAVING id>1",
+      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
       "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "SELECT count(*) FROM t HAVING id>1",
-        "error": "unsupported SQL: bare column in aggregate output",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "output-policy/237",
       "category": "output-policy",
-      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
+      "title": "SELECT ? COLLATE RTRIM=?,? COLLATE RTRIM<?,? LIKE ?",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15151,29 +15037,29 @@
     {
       "id": "output-policy/238",
       "category": "output-policy",
-      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
-    },
-    {
-      "id": "output-policy/239",
-      "category": "output-policy",
-      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
+      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
     },
     {
+      "id": "output-policy/239",
+      "category": "output-policy",
+      "title": "SELECT id,max(v),min(v) FROM t",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "SELECT id,max(v),min(v) FROM t",
+        "error": "unsupported SQL: bare column in aggregate output",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
+    },
+    {
       "id": "output-policy/240",
       "category": "output-policy",
-      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15181,7 +15067,7 @@
     {
       "id": "output-policy/241",
       "category": "output-policy",
-      "title": "PRAGMA table_xinfo(defaults)",
+      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15189,15 +15075,21 @@
     {
       "id": "output-policy/242",
       "category": "output-policy",
-      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
+      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
       "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
     },
     {
       "id": "output-policy/243",
       "category": "output-policy",
-      "title": "SELECT ? COLLATE BINARY=?,? COLLATE BINARY<?,? LIKE ?",
+      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15205,7 +15097,7 @@
     {
       "id": "output-policy/244",
       "category": "output-policy",
-      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
+      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15213,21 +15105,15 @@
     {
       "id": "output-policy/245",
       "category": "output-policy",
-      "title": "SELECT count(*) FROM t HAVING id>1",
+      "title": "PRAGMA table_xinfo(defaults)",
       "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "SELECT count(*) FROM t HAVING id>1",
-        "error": "unsupported SQL: bare column in aggregate output",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "output-policy/246",
       "category": "output-policy",
-      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
+      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15235,21 +15121,15 @@
     {
       "id": "output-policy/247",
       "category": "output-policy",
-      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+      "title": "SELECT ? COLLATE BINARY=?,? COLLATE BINARY<?,? LIKE ?",
       "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "output-policy/248",
       "category": "output-policy",
-      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
+      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15257,15 +15137,21 @@
     {
       "id": "output-policy/249",
       "category": "output-policy",
-      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
+      "title": "SELECT id,max(v),min(v) FROM t",
       "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "SELECT id,max(v),min(v) FROM t",
+        "error": "unsupported SQL: bare column in aggregate output",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
     },
     {
       "id": "output-policy/250",
       "category": "output-policy",
-      "title": "PRAGMA table_xinfo(defaults)",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15273,7 +15159,7 @@
     {
       "id": "output-policy/251",
       "category": "output-policy",
-      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
+      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15281,15 +15167,21 @@
     {
       "id": "output-policy/252",
       "category": "output-policy",
-      "title": "SELECT ? COLLATE RTRIM=?,? COLLATE RTRIM<?,? LIKE ?",
+      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
       "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
     },
     {
       "id": "output-policy/253",
       "category": "output-policy",
-      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
+      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15297,21 +15189,15 @@
     {
       "id": "output-policy/254",
       "category": "output-policy",
-      "title": "SELECT id,sum(v) FROM t",
+      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
       "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "SELECT id,sum(v) FROM t",
-        "error": "unsupported SQL: bare column in aggregate output",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "output-policy/255",
       "category": "output-policy",
-      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
+      "title": "PRAGMA table_xinfo(defaults)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15319,21 +15205,15 @@
     {
       "id": "output-policy/256",
       "category": "output-policy",
-      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
       "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "output-policy/257",
       "category": "output-policy",
-      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
+      "title": "SELECT ? COLLATE BINARY=?,? COLLATE BINARY<?,? LIKE ?",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15341,7 +15221,7 @@
     {
       "id": "output-policy/258",
       "category": "output-policy",
-      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
+      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15349,15 +15229,21 @@
     {
       "id": "output-policy/259",
       "category": "output-policy",
-      "title": "PRAGMA table_xinfo(defaults)",
+      "title": "SELECT count(*) FROM t HAVING id>1",
       "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "SELECT count(*) FROM t HAVING id>1",
+        "error": "unsupported SQL: bare column in aggregate output",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
     },
     {
       "id": "output-policy/260",
       "category": "output-policy",
-      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15365,7 +15251,7 @@
     {
       "id": "output-policy/261",
       "category": "output-policy",
-      "title": "SELECT ? COLLATE RTRIM=?,? COLLATE RTRIM<?,? LIKE ?",
+      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15373,29 +15259,29 @@
     {
       "id": "output-policy/262",
       "category": "output-policy",
-      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/263",
-      "category": "output-policy",
-      "title": "SELECT id,sum(v) FROM t",
+      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "candidate-error",
       "witness": {
         "step": 2,
-        "sql": "SELECT id,sum(v) FROM t",
-        "error": "unsupported SQL: bare column in aggregate output",
+        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
         "candidateRejected": true,
         "rejectionAtomic": true
       }
     },
     {
+      "id": "output-policy/263",
+      "category": "output-policy",
+      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
       "id": "output-policy/264",
       "category": "output-policy",
-      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
+      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15403,6 +15289,68 @@
     {
       "id": "output-policy/265",
       "category": "output-policy",
+      "title": "PRAGMA table_xinfo(defaults)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/266",
+      "category": "output-policy",
+      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/267",
+      "category": "output-policy",
+      "title": "SELECT ? COLLATE BINARY=?,? COLLATE BINARY<?,? LIKE ?",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/268",
+      "category": "output-policy",
+      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/269",
+      "category": "output-policy",
+      "title": "SELECT count(*) FROM t HAVING id>1",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "SELECT count(*) FROM t HAVING id>1",
+        "error": "unsupported SQL: bare column in aggregate output",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
+    },
+    {
+      "id": "output-policy/270",
+      "category": "output-policy",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/271",
+      "category": "output-policy",
+      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/272",
+      "category": "output-policy",
       "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "candidate-error",
@@ -15415,7 +15363,7 @@
       }
     },
     {
-      "id": "output-policy/266",
+      "id": "output-policy/273",
       "category": "output-policy",
       "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -15423,7 +15371,7 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/267",
+      "id": "output-policy/274",
       "category": "output-policy",
       "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -15431,7 +15379,7 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/268",
+      "id": "output-policy/275",
       "category": "output-policy",
       "title": "PRAGMA table_xinfo(defaults)",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -15439,7 +15387,7 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/269",
+      "id": "output-policy/276",
       "category": "output-policy",
       "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -15447,15 +15395,15 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/270",
+      "id": "output-policy/277",
       "category": "output-policy",
-      "title": "SELECT ? COLLATE NOCASE=?,? COLLATE NOCASE<?,? LIKE ?",
+      "title": "SELECT ? COLLATE RTRIM=?,? COLLATE RTRIM<?,? LIKE ?",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/271",
+      "id": "output-policy/278",
       "category": "output-policy",
       "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -15463,7 +15411,7 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/272",
+      "id": "output-policy/279",
       "category": "output-policy",
       "title": "SELECT id,sum(v) FROM t",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -15477,71 +15425,9 @@
       }
     },
     {
-      "id": "output-policy/273",
-      "category": "output-policy",
-      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/274",
-      "category": "output-policy",
-      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
-    },
-    {
-      "id": "output-policy/275",
-      "category": "output-policy",
-      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/276",
-      "category": "output-policy",
-      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/277",
-      "category": "output-policy",
-      "title": "PRAGMA table_xinfo(defaults)",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/278",
-      "category": "output-policy",
-      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/279",
-      "category": "output-policy",
-      "title": "SELECT ? COLLATE RTRIM=?,? COLLATE RTRIM<?,? LIKE ?",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
       "id": "output-policy/280",
       "category": "output-policy",
-      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15549,27 +15435,13 @@
     {
       "id": "output-policy/281",
       "category": "output-policy",
-      "title": "SELECT count(*) FROM t HAVING id>1",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "SELECT count(*) FROM t HAVING id>1",
-        "error": "unsupported SQL: bare column in aggregate output",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
-    },
-    {
-      "id": "output-policy/282",
-      "category": "output-policy",
       "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/283",
+      "id": "output-policy/282",
       "category": "output-policy",
       "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -15583,7 +15455,7 @@
       }
     },
     {
-      "id": "output-policy/284",
+      "id": "output-policy/283",
       "category": "output-policy",
       "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -15591,7 +15463,7 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/285",
+      "id": "output-policy/284",
       "category": "output-policy",
       "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -15599,7 +15471,7 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/286",
+      "id": "output-policy/285",
       "category": "output-policy",
       "title": "PRAGMA table_xinfo(defaults)",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -15607,7 +15479,7 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/287",
+      "id": "output-policy/286",
       "category": "output-policy",
       "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -15615,15 +15487,15 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/288",
+      "id": "output-policy/287",
       "category": "output-policy",
-      "title": "SELECT ? COLLATE NOCASE=?,? COLLATE NOCASE<?,? LIKE ?",
+      "title": "SELECT ? COLLATE RTRIM=?,? COLLATE RTRIM<?,? LIKE ?",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/289",
+      "id": "output-policy/288",
       "category": "output-policy",
       "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -15631,18 +15503,26 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/290",
+      "id": "output-policy/289",
       "category": "output-policy",
-      "title": "SELECT count(*) FROM t HAVING id>1",
+      "title": "SELECT id,sum(v) FROM t",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "candidate-error",
       "witness": {
         "step": 2,
-        "sql": "SELECT count(*) FROM t HAVING id>1",
+        "sql": "SELECT id,sum(v) FROM t",
         "error": "unsupported SQL: bare column in aggregate output",
         "candidateRejected": true,
         "rejectionAtomic": true
       }
+    },
+    {
+      "id": "output-policy/290",
+      "category": "output-policy",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "output-policy/291",
@@ -15701,7 +15581,7 @@
     {
       "id": "output-policy/297",
       "category": "output-policy",
-      "title": "SELECT ? COLLATE BINARY=?,? COLLATE BINARY<?,? LIKE ?",
+      "title": "SELECT ? COLLATE NOCASE=?,? COLLATE NOCASE<?,? LIKE ?",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15717,12 +15597,12 @@
     {
       "id": "output-policy/299",
       "category": "output-policy",
-      "title": "SELECT count(*) FROM t HAVING id>1",
+      "title": "SELECT id,sum(v) FROM t",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "candidate-error",
       "witness": {
         "step": 2,
-        "sql": "SELECT count(*) FROM t HAVING id>1",
+        "sql": "SELECT id,sum(v) FROM t",
         "error": "unsupported SQL: bare column in aggregate output",
         "candidateRejected": true,
         "rejectionAtomic": true
@@ -15731,7 +15611,7 @@
     {
       "id": "output-policy/300",
       "category": "output-policy",
-      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15739,6 +15619,14 @@
     {
       "id": "output-policy/301",
       "category": "output-policy",
+      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/302",
+      "category": "output-policy",
       "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "candidate-error",
@@ -15751,17 +15639,9 @@
       }
     },
     {
-      "id": "output-policy/302",
-      "category": "output-policy",
-      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
       "id": "output-policy/303",
       "category": "output-policy",
-      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
+      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15769,7 +15649,7 @@
     {
       "id": "output-policy/304",
       "category": "output-policy",
-      "title": "PRAGMA table_xinfo(defaults)",
+      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15777,7 +15657,7 @@
     {
       "id": "output-policy/305",
       "category": "output-policy",
-      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
+      "title": "PRAGMA table_xinfo(defaults)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15785,7 +15665,7 @@
     {
       "id": "output-policy/306",
       "category": "output-policy",
-      "title": "SELECT ? COLLATE NOCASE=?,? COLLATE NOCASE<?,? LIKE ?",
+      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15793,7 +15673,7 @@
     {
       "id": "output-policy/307",
       "category": "output-policy",
-      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
+      "title": "SELECT ? COLLATE RTRIM=?,? COLLATE RTRIM<?,? LIKE ?",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15801,6 +15681,14 @@
     {
       "id": "output-policy/308",
       "category": "output-policy",
+      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/309",
+      "category": "output-policy",
       "title": "SELECT count(*) FROM t HAVING id>1",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "candidate-error",
@@ -15813,31 +15701,17 @@
       }
     },
     {
-      "id": "output-policy/309",
+      "id": "output-policy/310",
       "category": "output-policy",
-      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/310",
-      "category": "output-policy",
-      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
-    },
-    {
       "id": "output-policy/311",
       "category": "output-policy",
-      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
+      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15845,15 +15719,21 @@
     {
       "id": "output-policy/312",
       "category": "output-policy",
-      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
+      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
       "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
     },
     {
       "id": "output-policy/313",
       "category": "output-policy",
-      "title": "PRAGMA table_xinfo(defaults)",
+      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15861,7 +15741,7 @@
     {
       "id": "output-policy/314",
       "category": "output-policy",
-      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
+      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15869,7 +15749,7 @@
     {
       "id": "output-policy/315",
       "category": "output-policy",
-      "title": "SELECT ? COLLATE BINARY=?,? COLLATE BINARY<?,? LIKE ?",
+      "title": "PRAGMA table_xinfo(defaults)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15877,7 +15757,7 @@
     {
       "id": "output-policy/316",
       "category": "output-policy",
-      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
+      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15885,21 +15765,15 @@
     {
       "id": "output-policy/317",
       "category": "output-policy",
-      "title": "SELECT count(*) FROM t HAVING id>1",
+      "title": "SELECT ? COLLATE NOCASE=?,? COLLATE NOCASE<?,? LIKE ?",
       "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "SELECT count(*) FROM t HAVING id>1",
-        "error": "unsupported SQL: bare column in aggregate output",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
+      "status": "matched-probe",
+      "rejectionsVerified": true
     },
     {
       "id": "output-policy/318",
       "category": "output-policy",
-      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
+      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15907,13 +15781,13 @@
     {
       "id": "output-policy/319",
       "category": "output-policy",
-      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+      "title": "SELECT count(*) FROM t HAVING id>1",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "candidate-error",
       "witness": {
         "step": 2,
-        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
+        "sql": "SELECT count(*) FROM t HAVING id>1",
+        "error": "unsupported SQL: bare column in aggregate output",
         "candidateRejected": true,
         "rejectionAtomic": true
       }
@@ -15921,7 +15795,7 @@
     {
       "id": "output-policy/320",
       "category": "output-policy",
-      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15929,7 +15803,7 @@
     {
       "id": "output-policy/321",
       "category": "output-policy",
-      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
+      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15937,15 +15811,21 @@
     {
       "id": "output-policy/322",
       "category": "output-policy",
-      "title": "PRAGMA table_xinfo(defaults)",
+      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
       "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
     },
     {
       "id": "output-policy/323",
       "category": "output-policy",
-      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
+      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15953,7 +15833,7 @@
     {
       "id": "output-policy/324",
       "category": "output-policy",
-      "title": "SELECT ? COLLATE RTRIM=?,? COLLATE RTRIM<?,? LIKE ?",
+      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15961,7 +15841,7 @@
     {
       "id": "output-policy/325",
       "category": "output-policy",
-      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
+      "title": "PRAGMA table_xinfo(defaults)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
@@ -15969,73 +15849,13 @@
     {
       "id": "output-policy/326",
       "category": "output-policy",
-      "title": "SELECT count(*) FROM t HAVING id>1",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "SELECT count(*) FROM t HAVING id>1",
-        "error": "unsupported SQL: bare column in aggregate output",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
-    },
-    {
-      "id": "output-policy/327",
-      "category": "output-policy",
-      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/328",
-      "category": "output-policy",
-      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "candidate-error",
-      "witness": {
-        "step": 2,
-        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
-        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
-        "candidateRejected": true,
-        "rejectionAtomic": true
-      }
-    },
-    {
-      "id": "output-policy/329",
-      "category": "output-policy",
-      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/330",
-      "category": "output-policy",
-      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/331",
-      "category": "output-policy",
-      "title": "PRAGMA table_xinfo(defaults)",
-      "source": "https://www.sqlite.org/lang_expr.html",
-      "status": "matched-probe",
-      "rejectionsVerified": true
-    },
-    {
-      "id": "output-policy/332",
-      "category": "output-policy",
       "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/333",
+      "id": "output-policy/327",
       "category": "output-policy",
       "title": "SELECT ? COLLATE BINARY=?,? COLLATE BINARY<?,? LIKE ?",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -16043,7 +15863,7 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/334",
+      "id": "output-policy/328",
       "category": "output-policy",
       "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -16051,7 +15871,7 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/335",
+      "id": "output-policy/329",
       "category": "output-policy",
       "title": "SELECT count(*) FROM t HAVING id>1",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -16065,7 +15885,15 @@
       }
     },
     {
-      "id": "output-policy/336",
+      "id": "output-policy/330",
+      "category": "output-policy",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/331",
       "category": "output-policy",
       "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -16073,7 +15901,7 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/337",
+      "id": "output-policy/332",
       "category": "output-policy",
       "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -16087,7 +15915,7 @@
       }
     },
     {
-      "id": "output-policy/338",
+      "id": "output-policy/333",
       "category": "output-policy",
       "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -16095,7 +15923,7 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/339",
+      "id": "output-policy/334",
       "category": "output-policy",
       "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -16103,7 +15931,7 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/340",
+      "id": "output-policy/335",
       "category": "output-policy",
       "title": "PRAGMA table_xinfo(defaults)",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -16111,7 +15939,7 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/341",
+      "id": "output-policy/336",
       "category": "output-policy",
       "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -16119,15 +15947,15 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/342",
+      "id": "output-policy/337",
       "category": "output-policy",
-      "title": "SELECT ? COLLATE RTRIM=?,? COLLATE RTRIM<?,? LIKE ?",
+      "title": "SELECT ? COLLATE NOCASE=?,? COLLATE NOCASE<?,? LIKE ?",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "matched-probe",
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/343",
+      "id": "output-policy/338",
       "category": "output-policy",
       "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -16135,21 +15963,29 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/344",
+      "id": "output-policy/339",
       "category": "output-policy",
-      "title": "SELECT id,max(v) FROM t",
+      "title": "SELECT count(*) FROM t HAVING id>1",
       "source": "https://www.sqlite.org/lang_expr.html",
       "status": "candidate-error",
       "witness": {
         "step": 2,
-        "sql": "SELECT id,max(v) FROM t",
+        "sql": "SELECT count(*) FROM t HAVING id>1",
         "error": "unsupported SQL: bare column in aggregate output",
         "candidateRejected": true,
         "rejectionAtomic": true
       }
     },
     {
-      "id": "output-policy/345",
+      "id": "output-policy/340",
+      "category": "output-policy",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/341",
       "category": "output-policy",
       "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -16157,7 +15993,7 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/346",
+      "id": "output-policy/342",
       "category": "output-policy",
       "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -16171,7 +16007,7 @@
       }
     },
     {
-      "id": "output-policy/347",
+      "id": "output-policy/343",
       "category": "output-policy",
       "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -16179,7 +16015,7 @@
       "rejectionsVerified": true
     },
     {
-      "id": "output-policy/348",
+      "id": "output-policy/344",
       "category": "output-policy",
       "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
       "source": "https://www.sqlite.org/lang_expr.html",
@@ -16187,7 +16023,375 @@
       "rejectionsVerified": true
     },
     {
+      "id": "output-policy/345",
+      "category": "output-policy",
+      "title": "PRAGMA table_xinfo(defaults)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/346",
+      "category": "output-policy",
+      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/347",
+      "category": "output-policy",
+      "title": "SELECT ? COLLATE BINARY=?,? COLLATE BINARY<?,? LIKE ?",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/348",
+      "category": "output-policy",
+      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
       "id": "output-policy/349",
+      "category": "output-policy",
+      "title": "SELECT count(*) FROM t HAVING id>1",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "SELECT count(*) FROM t HAVING id>1",
+        "error": "unsupported SQL: bare column in aggregate output",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
+    },
+    {
+      "id": "output-policy/350",
+      "category": "output-policy",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/351",
+      "category": "output-policy",
+      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/352",
+      "category": "output-policy",
+      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
+    },
+    {
+      "id": "output-policy/353",
+      "category": "output-policy",
+      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/354",
+      "category": "output-policy",
+      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/355",
+      "category": "output-policy",
+      "title": "PRAGMA table_xinfo(defaults)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/356",
+      "category": "output-policy",
+      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/357",
+      "category": "output-policy",
+      "title": "SELECT ? COLLATE RTRIM=?,? COLLATE RTRIM<?,? LIKE ?",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/358",
+      "category": "output-policy",
+      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/359",
+      "category": "output-policy",
+      "title": "SELECT count(*) FROM t HAVING id>1",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "SELECT count(*) FROM t HAVING id>1",
+        "error": "unsupported SQL: bare column in aggregate output",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
+    },
+    {
+      "id": "output-policy/360",
+      "category": "output-policy",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/361",
+      "category": "output-policy",
+      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/362",
+      "category": "output-policy",
+      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
+    },
+    {
+      "id": "output-policy/363",
+      "category": "output-policy",
+      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/364",
+      "category": "output-policy",
+      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/365",
+      "category": "output-policy",
+      "title": "PRAGMA table_xinfo(defaults)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/366",
+      "category": "output-policy",
+      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/367",
+      "category": "output-policy",
+      "title": "SELECT ? COLLATE BINARY=?,? COLLATE BINARY<?,? LIKE ?",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/368",
+      "category": "output-policy",
+      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/369",
+      "category": "output-policy",
+      "title": "SELECT count(*) FROM t HAVING id>1",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "SELECT count(*) FROM t HAVING id>1",
+        "error": "unsupported SQL: bare column in aggregate output",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
+    },
+    {
+      "id": "output-policy/370",
+      "category": "output-policy",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/371",
+      "category": "output-policy",
+      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/372",
+      "category": "output-policy",
+      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
+    },
+    {
+      "id": "output-policy/373",
+      "category": "output-policy",
+      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/374",
+      "category": "output-policy",
+      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/375",
+      "category": "output-policy",
+      "title": "PRAGMA table_xinfo(defaults)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/376",
+      "category": "output-policy",
+      "title": "SELECT typeof(?),?,?+0,CAST(? AS TEXT)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/377",
+      "category": "output-policy",
+      "title": "SELECT ? COLLATE RTRIM=?,? COLLATE RTRIM<?,? LIKE ?",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/378",
+      "category": "output-policy",
+      "title": "SELECT g,sum(v),count(*),total(v),avg(v) FROM t GROUP BY g ORDER BY g",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/379",
+      "category": "output-policy",
+      "title": "SELECT id,max(v),min(v) FROM t",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "SELECT id,max(v),min(v) FROM t",
+        "error": "unsupported SQL: bare column in aggregate output",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
+    },
+    {
+      "id": "output-policy/380",
+      "category": "output-policy",
+      "title": "SELECT id,g,max(id),sum(v) FROM t",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/381",
+      "category": "output-policy",
+      "title": "SELECT json_extract(?,'$.a'),json_set(?,'$.a',?),json_remove(?,'$.a'),json_patch(?,?)",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/382",
+      "category": "output-policy",
+      "title": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "candidate-error",
+      "witness": {
+        "step": 2,
+        "sql": "UPDATE t SET v=CASE WHEN id=1 THEN 'ok' ELSE CAST(? AS TEXT) END RETURNING id,v",
+        "error": "unsupported SQL: non-UTF-8 BLOB to TEXT conversion",
+        "candidateRejected": true,
+        "rejectionAtomic": true
+      }
+    },
+    {
+      "id": "output-policy/383",
+      "category": "output-policy",
+      "title": "UPDATE t SET v=? WHERE id=1 RETURNING id,typeof(v),v",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/384",
+      "category": "output-policy",
+      "title": "UPDATE t SET g=CASE WHEN id=1 THEN 'C' ELSE 'c' END RETURNING id,g",
+      "source": "https://www.sqlite.org/lang_expr.html",
+      "status": "matched-probe",
+      "rejectionsVerified": true
+    },
+    {
+      "id": "output-policy/385",
       "category": "output-policy",
       "title": "PRAGMA table_xinfo(defaults)",
       "source": "https://www.sqlite.org/lang_expr.html",

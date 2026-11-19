@@ -38,7 +38,7 @@ test("audits typed behavior and failed-write state against real SQLite WASM in C
     ["sqlite3.wasm", "node_modules/@sqlite.org/sqlite-wasm/dist/sqlite3.wasm"],
     [
       "sqlike-diff.wasm",
-      "_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm",
+      "_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm",
     ],
     [
       "aot-diff.wasm",
@@ -144,10 +144,10 @@ test("audits typed behavior and failed-write state against real SQLite WASM in C
     [
       "tests/compatibility/differential-runtime.ts",
       "src/sql-statement-cache.ts",
-      "_build/js/release/build/mizchi/sqlike/sqlike.js",
+      "_build/js/release/build/mizchi/sqlike/full/full.js",
       "_build/js/release/build/mizchi/sqlike/compiler/compiler.js",
       "_build/js/release/build/mizchi/litestream-example/runtime/runtime.js",
-      "_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm",
+      "_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm",
       "_build/wasm-gc/release/build/mizchi/litestream-example/runtime/runtime.wasm",
     ].map((path) => [
       path,

@@ -8,7 +8,7 @@ import { createServer } from "node:http";
 import { chromium } from "@playwright/test";
 import { build } from "vite";
 import * as aot from "../_build/js/release/build/mizchi/litestream-example/runtime/runtime.js";
-import * as dynamic from "../_build/js/release/build/mizchi/sqlike/sqlike.js";
+import * as dynamic from "../_build/js/release/build/mizchi/sqlike/full/full.js";
 import { NodeDatabase } from "../adapters/node-database.ts";
 import { aotBindings } from "../src/aot-values.ts";
 import { applyLtx } from "../src/ltx.ts";
@@ -30,10 +30,10 @@ const options = Object.fromEntries(
 );
 const paths = {
   aotJS: "_build/js/release/build/mizchi/litestream-example/runtime/runtime.js",
-  sqlJS: "_build/js/release/build/mizchi/sqlike/sqlike.js",
+  sqlJS: "_build/js/release/build/mizchi/sqlike/full/full.js",
   aotWasm:
     "_build/wasm-gc/release/build/mizchi/litestream-example/runtime/runtime.wasm",
-  sqlWasm: "_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm",
+  sqlWasm: "_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm",
 };
 const hash = (data: string | Uint8Array) =>
   createHash("sha256").update(data).digest("hex");

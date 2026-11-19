@@ -19,7 +19,7 @@ import { nativeValues } from "./compatibility/native-values.ts";
 import { verifyPreparationErrors } from "./compatibility/preparation.ts";
 
 test("Wasm GC matches native SQLite and all upstream select1 expectations, generated expressions and float conversions", async () => {
-  const bytes = readFileSync("_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm");
+  const bytes = readFileSync("_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm");
   const { instance, module } = await WebAssembly.instantiate(
     bytes,
     {},

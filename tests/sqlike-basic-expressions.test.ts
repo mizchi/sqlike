@@ -13,7 +13,7 @@ const literal = (s: string) =>
 
 async function candidates() {
   const { instance } = await WebAssembly.instantiate(
-    readFileSync("_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm"),
+    readFileSync("_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm"),
     {},
     { builtins: ["js-string"], importedStringConstants: "_" },
   );

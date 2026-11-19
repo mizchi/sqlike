@@ -6,7 +6,7 @@ import { engineSourcePaths, sourceHashes } from "./measurement-manifest.ts";
 
 const results = [];
 for (const target of ["js", "wasm-gc"]) {
-  const stdout = execFileSync("moon", ["bench", "packages/sqlike/src/sql_prepare_bench_wbtest.mbt",
+  const stdout = execFileSync("moon", ["bench", "packages/sqlike/src/full/sql_prepare_bench_wbtest.mbt",
     "--target", target, "--release"], { encoding: "utf8", timeout: 180000 });
   assert.match(stdout, /SQL phase parse/);
   assert.match(stdout, /SQL phase prepared JSON ABI/);

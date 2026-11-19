@@ -6,15 +6,15 @@
 
 ## 採用した変更
 
-[Program / Query](../../packages/sqlike/src/prepared.mbt)に、シリアライズしないprepared metadataを追加した。Program読み込み時の検証で得た出力を保持し、反復実行時の`selection_template()`と単純射影の列位置解決を省く。行・Table・Store・bind値・時計・connection counterは保持しない。cloneでProgramを共有しても、各実行は現在のStoreから候補を取得する。schemaの変わる動的SQLは従来の検証を続ける。
+[Program / Query](../../packages/sqlike/src/full/prepared.mbt)に、シリアライズしないprepared metadataを追加した。Program読み込み時の検証で得た出力を保持し、反復実行時の`selection_template()`と単純射影の列位置解決を省く。行・Table・Store・bind値・時計・connection counterは保持しない。cloneでProgramを共有しても、各実行は現在のStoreから候補を取得する。schemaの変わる動的SQLは従来の検証を続ける。
 
-[JSON入口](../../packages/sqlike/src/aot.mbt)は、decode済みの値をStatementのbind領域へ直接入れる。JSONから新しく生成したBLOBを再コピーせず、途中のValue配列と各bindの重複した状態検査を省く。結果は可視bindingを一度走査してCell化する。利用側が所有するBLOBを受け取る公開`Statement::bind()` / `column()`のコピー契約は維持する。公開column取得でもfilter用配列を作らない。
+[JSON入口](../../packages/sqlike/src/full/aot.mbt)は、decode済みの値をStatementのbind領域へ直接入れる。JSONから新しく生成したBLOBを再コピーせず、途中のValue配列と各bindの重複した状態検査を省く。結果は可視bindingを一度走査してCell化する。利用側が所有するBLOBを受け取る公開`Statement::bind()` / `column()`のコピー契約は維持する。公開column取得でもfilter用配列を作らない。
 
 Statement自体の保持は採用しなかった。生成・破棄は変更前の分離計測で約0.03µsで、実行中の名前解決より小さい。現在も呼び出しごとにfinalizeし、失敗したbindや大きな結果をnamed queryのキャッシュへ残さない。WHEREの一般式・JOIN・更新の式まで列位置へ変換する実装や、型付きABIの新設は今回の範囲に含めない。
 
 ## 分離計測
 
-[whiteboxベンチ](../../packages/sqlike/src/aot_bench_wbtest.mbt)を変更前に追加して採取した。1,000行のPK検索、3列を返すケース。JSはNode 24.22.2、Wasm GCは`moon bench`の標準runner、Moon 0.1.20261104のrelease build。平均µs/操作。**各行は独立したmicrobenchmarkで、合算した値をABI全体の内訳としない。** setupは計時外、必要なreset / finalizeと`keep()`は計時内に含む。
+[whiteboxベンチ](../../packages/sqlike/src/full/aot_bench_wbtest.mbt)を変更前に追加して採取した。1,000行のPK検索、3列を返すケース。JSはNode 24.22.2、Wasm GCは`moon bench`の標準runner、Moon 0.1.20261104のrelease build。平均µs/操作。**各行は独立したmicrobenchmarkで、合算した値をABI全体の内訳としない。** setupは計時外、必要なreset / finalizeと`keep()`は計時内に含む。
 
 | 区間 | JS 前→後 | Wasm GC 前→後 |
 | --- | ---: | ---: |

@@ -144,6 +144,7 @@ const built = await build({
   logLevel: "error",
   build: {
     write: false,
+      rolldownOptions: { output: { codeSplitting: false } },
     minify: false,
     target: "esnext",
     lib: {

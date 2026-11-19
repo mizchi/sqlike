@@ -1,7 +1,7 @@
 import { AotDatabase } from "../adapters/aot-database.ts";
 import { artifact, manifest } from "../examples/notes/program.generated.ts";
 import type { Value } from "./contract.ts";
-import { uploadAotLtx } from "./aot-upload.ts";
+import { syncAotLtx } from "./aot-upload.ts";
 const scope = self as unknown as DedicatedWorkerGlobalScope;
 let database: AotDatabase | undefined;
 scope.onmessage = async (
@@ -36,10 +36,16 @@ scope.onmessage = async (
         case "pending":
           result = await database.pending();
           break;
-        case "sync":
-          await database.checkpoint();
-          result = await uploadAotLtx(database, String(args[0]));
+        case "sync": {
+          const synced = await syncAotLtx(database, String(args[0]));
+          result = {
+            uploaded: synced.uploaded,
+            ...(synced.checkpoint.deferred
+              ? { deferred: synced.checkpoint.deferred }
+              : {}),
+          };
           break;
+        }
         case "acknowledge":
           result = await database.acknowledge(String(args[0]), String(args[1]));
           break;

@@ -38,7 +38,7 @@ for (const target of ["js", "wasm"] as const) {
       const raw = await readFile(
         join(built.directory, target === "js" ? "runtime.js" : "runtime.wasm"),
       );
-      expect(built.requirements?.queryParts).toEqual(["cte"]);
+      expect(built.requirements?.queryParts).toEqual(["cte", "orderBy", "source"]);
       expect(built.requirements?.functionGroups).toEqual([
         "caseConversion",
         "glob",

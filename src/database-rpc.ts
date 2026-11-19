@@ -3,7 +3,7 @@ import { failure, SyncFailure } from "./errors.ts";
 import { MAX_RESPONSE } from "./http.ts";
 import { unpack } from "./protocol.ts";
 
-/** The async driver owns its connection; only the sync-engine Worker may call it. */
+/** SQL and bound values sent from the sync-engine Worker to the async driver's owner. */
 export type DatabaseCommand = { sql: string; params: Value[] };
 export interface DatabaseReply {
   rows?: Record<string, ResultCell>[];

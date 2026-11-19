@@ -90,3 +90,21 @@ test("SQLike synchronous persistence factory replays materialized edits without 
   assert.equal(closed, 2);
   assert.throws(() => db.queryValues("SELECT * FROM t"), /closed/);
 });
+
+test("SQL host rejects an unsupported chunk snapshot instead of opening an empty DB", async () => {
+  let closed = false;
+  await assert.rejects(
+    MoonDatabase.open("chunks", async () => ({
+      initial: { generation: 1, snapshot: { text: "header", chunks: [] } },
+      checkpointNeeded: () => false,
+      commit() {
+        throw Error("unexpected publication");
+      },
+      close() {
+        closed = true;
+      },
+    })),
+    /unsupported.*snapshot/i,
+  );
+  assert.equal(closed, true);
+});

@@ -41,7 +41,7 @@ test("qualified CHECK columns rename after a Kit-style temporary-table rebuild",
 test("rename separates ON UPDATE reference actions and uppercase trigger INSERT columns from table scope", async () => {
   const wasm = (
     await WebAssembly.instantiate(
-      readFileSync("_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm"),
+      readFileSync("_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm"),
       {},
       { builtins: ["js-string"], importedStringConstants: "_" },
     )
@@ -84,7 +84,7 @@ test("rename separates ON UPDATE reference actions and uppercase trigger INSERT 
 test("table/column renames preserve dependent indexes, views, triggers and foreign keys through reopen", async () => {
   const wasm = (
     await WebAssembly.instantiate(
-      readFileSync("_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm"),
+      readFileSync("_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm"),
       {},
       { builtins: ["js-string"], importedStringConstants: "_" },
     )

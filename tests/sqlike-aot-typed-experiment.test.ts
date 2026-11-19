@@ -27,6 +27,8 @@ const runtime = await import(pathToFileURL(resolve(
   execute(db: unknown, name: string, bindings: string): string;
   prepare(db: unknown, name: string): unknown;
   values(query: unknown, bindings: string): Value[][];
+  values_typed(query: unknown, bindings: readonly Value[]): Value[][];
+  execute_typed(db: unknown, name: string, bindings: readonly Value[]): { names: string[]; rows: Value[][]; readonly: boolean; changes: number };
   finalize(query: unknown): string;
   snapshot(db: unknown): string;
   restore(db: unknown, image: string): string;
@@ -114,6 +116,7 @@ test("native AOT results match all 1000 upstream select1 queries", () => {
         try {
           const actual = runtime.values(handle, "[]"), expected = nativeValues(native, q.sql);
           verifyLogicResult(q, actual); assert.deepEqual(actual, expected, `line ${q.line}`);
+          assert.deepEqual(runtime.values_typed(handle, []), expected, `typed bind line ${q.line}`);
         } finally { checked(runtime.finalize(handle)); }
       });
     }
@@ -121,7 +124,7 @@ test("native AOT results match all 1000 upstream select1 queries", () => {
   } finally { native.close(); }
 });
 
-test("native AOT traces preserve all 566 supported cases and explicit compile boundaries", () => {
+for (const nativeBindings of [false,true]) test(`native AOT ${nativeBindings?"typed":"JSON"} bindings preserve the complete corpus and explicit compile boundaries`, () => {
   const cases = differentialCorpus(), oracle = oracleTraces(cases);
   const counts = { matched: 0, compileRejection: 0, notApplicable: 0 };
   for (const c of cases) {
@@ -138,12 +141,18 @@ test("native AOT traces preserve all 566 supported cases and explicit compile bo
         close() {},
         execute(op) {
           try {
-            const name = names.get(op.sql)!, bindings = aotBindings((op.params ?? []).map(value));
+            const name = names.get(op.sql)!, params = (op.params ?? []).map(value);
+            const bindings = nativeBindings ? "" : aotBindings(params);
             const info = checked(runtime.query_info(db, name));
             try {
-              return { kind: "rows", columns: info.names, rows: runtime.values(plans.get(op.sql), bindings).map(row => row.map(datum)) };
+              const rows=nativeBindings?runtime.values_typed(plans.get(op.sql),params):runtime.values(plans.get(op.sql),bindings);
+              return { kind: "rows", columns: info.names, rows: rows.map(row => row.map(datum)) };
             } catch (e) {
               if (!(e instanceof Error) || !/typed AOT results accept SELECT only/.test(e.message)) throw e;
+            }
+            if(nativeBindings) {
+              const r=runtime.execute_typed(db,name,params);
+              return {kind:"rows",columns:r.names,rows:r.rows.map(row=>row.map(datum))};
             }
             const r = checked(runtime.execute(db, name, bindings));
             return { kind: "rows", columns: r.names, rows: r.rows.map((row: any[]) => row.map(aotValue).map(datum)) };
@@ -155,8 +164,8 @@ test("native AOT traces preserve all 566 supported cases and explicit compile bo
       counts.matched++;
     } finally { for (const plan of plans.values()) checked(runtime.finalize(plan)); }
   }
-  assert.equal(cases.length, 566);
-  assert.deepEqual(counts, { matched: 562, compileRejection: 2, notApplicable: 2 });
+  assert.ok(cases.length >= 586, "the differential corpus must not shrink");
+  assert.deepEqual(counts, { matched: cases.length - 4, compileRejection: 2, notApplicable: 2 });
 });
 
 test("native AOT runtime omits the SQL parser and default runtimes omit its bridge", () => {
@@ -179,6 +188,8 @@ test("catalog-selected native AOT runtimes retain typed contracts and reject omi
     const db = selected.open(compile(catalog.schema, { q: "SELECT ? AS v" }), ""); checked(selected.info(db));
     const query = selected.prepare(db, "q");
     assert.deepEqual(selected.values(query, aotBindings([9223372036854775807n])), [[9223372036854775807n]]);
+    assert.deepEqual(selected.values_typed(query, [9223372036854775807n]), [[9223372036854775807n]]);
+    assert.deepEqual(selected.execute_typed(db,"q",[-0]).rows,[[-0]]);
     checked(selected.finalize(query));
     const rejected = selected.open(compile(catalog.schema, { add: "INSERT INTO t VALUES(?)" }), "");
     assert.match(JSON.parse(selected.info(rejected)).error, /capability disabled/);

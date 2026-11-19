@@ -13,6 +13,8 @@ export interface SavedState {
   format: "moon-aot-store@1";
   programId: string;
   image: string;
+  /** Small header for the binary chunks in the same logical publication. */
+  logical?: string;
   head: string;
   acked: string;
   checkpointSerial: number;
@@ -20,6 +22,8 @@ export interface SavedState {
   baseHash: string;
   pending: PendingFile[];
   upload?: AotUploadBinding;
+  /** Page-backed bases/outbox use empty data strings in this logical envelope. */
+  pager?: { format: "aot-pages@1"; generation: number };
 }
 interface Journal {
   format: "aot-journal@1";
@@ -33,6 +37,7 @@ interface Journal {
   put: (Omit<PendingFile, "data"> & { blob: number })[];
   remove: string[];
   upload?: AotUploadBinding;
+  pager?: SavedState["pager"];
 }
 /** Only changed side records are submitted; unchanged base/outbox bytes are
  * never serialized on a row write or acknowledgement. */
@@ -57,6 +62,8 @@ export function aotJournal(
     if (before[key] !== after[key])
       Object.assign(journal, { [key]: after[key] });
   if (before.base !== after.base) journal.base = attach(after.base);
+  if (JSON.stringify(before.pager) !== JSON.stringify(after.pager))
+    journal.pager = after.pager;
   if (JSON.stringify(before.upload) !== JSON.stringify(after.upload)) {
     if (before.upload || !after.upload)
       throw Error("cannot replace LTX upload binding");
@@ -89,6 +96,16 @@ export function applyAotJournal(
   )
     throw Error("invalid AOT journal");
   const next = { ...saved, pending: saved.pending.slice() };
+  if (j.pager !== undefined) {
+    if (
+      j.pager.format !== "aot-pages@1" ||
+      !Number.isSafeInteger(j.pager.generation) ||
+      j.pager.generation < 1 ||
+      j.pager.generation !== (saved.pager?.generation ?? 0) + 1
+    )
+      throw Error("invalid AOT page journal generation");
+    next.pager = j.pager;
+  }
   if (j.upload !== undefined) {
     if (saved.upload !== undefined)
       throw Error("cannot replace saved LTX upload binding");

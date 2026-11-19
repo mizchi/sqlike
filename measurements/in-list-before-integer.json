@@ -1,0 +1,511 @@
+{
+  "format": "sqlike-in-list-bench@1",
+  "measuredAt": "2026-11-18T11:54:58.204Z",
+  "node": "v24.22.2",
+  "scope": "In-memory prepared aggregate over non-indexed scalar/row columns; two warmups and three bounded samples; binding encoding and setup excluded. Same source, exports and other optimizer flags per pair. Row inputs include NULL and NOCASE strings.",
+  "fixtures": [
+    {
+      "kind": "scalar",
+      "count": 5000,
+      "width": 256,
+      "source": {
+        "schema": [
+          "CREATE TABLE t(id INTEGER PRIMARY KEY,n INTEGER)"
+        ],
+        "queries": [
+          {
+            "name": "seed",
+            "sql": "INSERT INTO t VALUES (?1,?2),(?3,?4),(?5,?6),(?7,?8),(?9,?10),(?11,?12),(?13,?14),(?15,?16),(?17,?18),(?19,?20),(?21,?22),(?23,?24),(?25,?26),(?27,?28),(?29,?30),(?31,?32),(?33,?34),(?35,?36),(?37,?38),(?39,?40),(?41,?42),(?43,?44),(?45,?46),(?47,?48),(?49,?50),(?51,?52),(?53,?54),(?55,?56),(?57,?58),(?59,?60),(?61,?62),(?63,?64),(?65,?66),(?67,?68),(?69,?70),(?71,?72),(?73,?74),(?75,?76),(?77,?78),(?79,?80),(?81,?82),(?83,?84),(?85,?86),(?87,?88),(?89,?90),(?91,?92),(?93,?94),(?95,?96),(?97,?98),(?99,?100),(?101,?102),(?103,?104),(?105,?106),(?107,?108),(?109,?110),(?111,?112),(?113,?114),(?115,?116),(?117,?118),(?119,?120),(?121,?122),(?123,?124),(?125,?126),(?127,?128),(?129,?130),(?131,?132),(?133,?134),(?135,?136),(?137,?138),(?139,?140),(?141,?142),(?143,?144),(?145,?146),(?147,?148),(?149,?150),(?151,?152),(?153,?154),(?155,?156),(?157,?158),(?159,?160),(?161,?162),(?163,?164),(?165,?166),(?167,?168),(?169,?170),(?171,?172),(?173,?174),(?175,?176),(?177,?178),(?179,?180),(?181,?182),(?183,?184),(?185,?186),(?187,?188),(?189,?190),(?191,?192),(?193,?194),(?195,?196),(?197,?198),(?199,?200)"
+          },
+          {
+            "name": "read",
+            "sql": "SELECT count(*) FROM t WHERE n IN (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12,?13,?14,?15,?16,?17,?18,?19,?20,?21,?22,?23,?24,?25,?26,?27,?28,?29,?30,?31,?32,?33,?34,?35,?36,?37,?38,?39,?40,?41,?42,?43,?44,?45,?46,?47,?48,?49,?50,?51,?52,?53,?54,?55,?56,?57,?58,?59,?60,?61,?62,?63,?64,?65,?66,?67,?68,?69,?70,?71,?72,?73,?74,?75,?76,?77,?78,?79,?80,?81,?82,?83,?84,?85,?86,?87,?88,?89,?90,?91,?92,?93,?94,?95,?96,?97,?98,?99,?100,?101,?102,?103,?104,?105,?106,?107,?108,?109,?110,?111,?112,?113,?114,?115,?116,?117,?118,?119,?120,?121,?122,?123,?124,?125,?126,?127,?128,?129,?130,?131,?132,?133,?134,?135,?136,?137,?138,?139,?140,?141,?142,?143,?144,?145,?146,?147,?148,?149,?150,?151,?152,?153,?154,?155,?156,?157,?158,?159,?160,?161,?162,?163,?164,?165,?166,?167,?168,?169,?170,?171,?172,?173,?174,?175,?176,?177,?178,?179,?180,?181,?182,?183,?184,?185,?186,?187,?188,?189,?190,?191,?192,?193,?194,?195,?196,?197,?198,?199,?200,?201,?202,?203,?204,?205,?206,?207,?208,?209,?210,?211,?212,?213,?214,?215,?216,?217,?218,?219,?220,?221,?222,?223,?224,?225,?226,?227,?228,?229,?230,?231,?232,?233,?234,?235,?236,?237,?238,?239,?240,?241,?242,?243,?244,?245,?246,?247,?248,?249,?250,?251,?252,?253,?254,?255,?256)"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "scalar",
+      "count": 100000,
+      "width": 16,
+      "source": {
+        "schema": [
+          "CREATE TABLE t(id INTEGER PRIMARY KEY,n INTEGER)"
+        ],
+        "queries": [
+          {
+            "name": "seed",
+            "sql": "INSERT INTO t VALUES (?1,?2),(?3,?4),(?5,?6),(?7,?8),(?9,?10),(?11,?12),(?13,?14),(?15,?16),(?17,?18),(?19,?20),(?21,?22),(?23,?24),(?25,?26),(?27,?28),(?29,?30),(?31,?32),(?33,?34),(?35,?36),(?37,?38),(?39,?40),(?41,?42),(?43,?44),(?45,?46),(?47,?48),(?49,?50),(?51,?52),(?53,?54),(?55,?56),(?57,?58),(?59,?60),(?61,?62),(?63,?64),(?65,?66),(?67,?68),(?69,?70),(?71,?72),(?73,?74),(?75,?76),(?77,?78),(?79,?80),(?81,?82),(?83,?84),(?85,?86),(?87,?88),(?89,?90),(?91,?92),(?93,?94),(?95,?96),(?97,?98),(?99,?100),(?101,?102),(?103,?104),(?105,?106),(?107,?108),(?109,?110),(?111,?112),(?113,?114),(?115,?116),(?117,?118),(?119,?120),(?121,?122),(?123,?124),(?125,?126),(?127,?128),(?129,?130),(?131,?132),(?133,?134),(?135,?136),(?137,?138),(?139,?140),(?141,?142),(?143,?144),(?145,?146),(?147,?148),(?149,?150),(?151,?152),(?153,?154),(?155,?156),(?157,?158),(?159,?160),(?161,?162),(?163,?164),(?165,?166),(?167,?168),(?169,?170),(?171,?172),(?173,?174),(?175,?176),(?177,?178),(?179,?180),(?181,?182),(?183,?184),(?185,?186),(?187,?188),(?189,?190),(?191,?192),(?193,?194),(?195,?196),(?197,?198),(?199,?200)"
+          },
+          {
+            "name": "read",
+            "sql": "SELECT count(*) FROM t WHERE n IN (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12,?13,?14,?15,?16)"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "row",
+      "count": 5000,
+      "width": 64,
+      "source": {
+        "schema": [
+          "CREATE TABLE t(id INTEGER PRIMARY KEY,n INTEGER,s TEXT COLLATE NOCASE)"
+        ],
+        "queries": [
+          {
+            "name": "seed",
+            "sql": "INSERT INTO t VALUES (?1,?2,?3),(?4,?5,?6),(?7,?8,?9),(?10,?11,?12),(?13,?14,?15),(?16,?17,?18),(?19,?20,?21),(?22,?23,?24),(?25,?26,?27),(?28,?29,?30),(?31,?32,?33),(?34,?35,?36),(?37,?38,?39),(?40,?41,?42),(?43,?44,?45),(?46,?47,?48),(?49,?50,?51),(?52,?53,?54),(?55,?56,?57),(?58,?59,?60),(?61,?62,?63),(?64,?65,?66),(?67,?68,?69),(?70,?71,?72),(?73,?74,?75),(?76,?77,?78),(?79,?80,?81),(?82,?83,?84),(?85,?86,?87),(?88,?89,?90),(?91,?92,?93),(?94,?95,?96),(?97,?98,?99),(?100,?101,?102),(?103,?104,?105),(?106,?107,?108),(?109,?110,?111),(?112,?113,?114),(?115,?116,?117),(?118,?119,?120),(?121,?122,?123),(?124,?125,?126),(?127,?128,?129),(?130,?131,?132),(?133,?134,?135),(?136,?137,?138),(?139,?140,?141),(?142,?143,?144),(?145,?146,?147),(?148,?149,?150),(?151,?152,?153),(?154,?155,?156),(?157,?158,?159),(?160,?161,?162),(?163,?164,?165),(?166,?167,?168),(?169,?170,?171),(?172,?173,?174),(?175,?176,?177),(?178,?179,?180),(?181,?182,?183),(?184,?185,?186),(?187,?188,?189),(?190,?191,?192),(?193,?194,?195),(?196,?197,?198),(?199,?200,?201),(?202,?203,?204),(?205,?206,?207),(?208,?209,?210),(?211,?212,?213),(?214,?215,?216),(?217,?218,?219),(?220,?221,?222),(?223,?224,?225),(?226,?227,?228),(?229,?230,?231),(?232,?233,?234),(?235,?236,?237),(?238,?239,?240),(?241,?242,?243),(?244,?245,?246),(?247,?248,?249),(?250,?251,?252),(?253,?254,?255),(?256,?257,?258),(?259,?260,?261),(?262,?263,?264),(?265,?266,?267),(?268,?269,?270),(?271,?272,?273),(?274,?275,?276),(?277,?278,?279),(?280,?281,?282),(?283,?284,?285),(?286,?287,?288),(?289,?290,?291),(?292,?293,?294),(?295,?296,?297),(?298,?299,?300)"
+          },
+          {
+            "name": "read",
+            "sql": "SELECT count(*) FROM t WHERE (n,s) IN ((?1,?2),(?3,?4),(?5,?6),(?7,?8),(?9,?10),(?11,?12),(?13,?14),(?15,?16),(?17,?18),(?19,?20),(?21,?22),(?23,?24),(?25,?26),(?27,?28),(?29,?30),(?31,?32),(?33,?34),(?35,?36),(?37,?38),(?39,?40),(?41,?42),(?43,?44),(?45,?46),(?47,?48),(?49,?50),(?51,?52),(?53,?54),(?55,?56),(?57,?58),(?59,?60),(?61,?62),(?63,?64),(?65,?66),(?67,?68),(?69,?70),(?71,?72),(?73,?74),(?75,?76),(?77,?78),(?79,?80),(?81,?82),(?83,?84),(?85,?86),(?87,?88),(?89,?90),(?91,?92),(?93,?94),(?95,?96),(?97,?98),(?99,?100),(?101,?102),(?103,?104),(?105,?106),(?107,?108),(?109,?110),(?111,?112),(?113,?114),(?115,?116),(?117,?118),(?119,?120),(?121,?122),(?123,?124),(?125,?126),(?127,?128))"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "row",
+      "count": 100000,
+      "width": 16,
+      "source": {
+        "schema": [
+          "CREATE TABLE t(id INTEGER PRIMARY KEY,n INTEGER,s TEXT COLLATE NOCASE)"
+        ],
+        "queries": [
+          {
+            "name": "seed",
+            "sql": "INSERT INTO t VALUES (?1,?2,?3),(?4,?5,?6),(?7,?8,?9),(?10,?11,?12),(?13,?14,?15),(?16,?17,?18),(?19,?20,?21),(?22,?23,?24),(?25,?26,?27),(?28,?29,?30),(?31,?32,?33),(?34,?35,?36),(?37,?38,?39),(?40,?41,?42),(?43,?44,?45),(?46,?47,?48),(?49,?50,?51),(?52,?53,?54),(?55,?56,?57),(?58,?59,?60),(?61,?62,?63),(?64,?65,?66),(?67,?68,?69),(?70,?71,?72),(?73,?74,?75),(?76,?77,?78),(?79,?80,?81),(?82,?83,?84),(?85,?86,?87),(?88,?89,?90),(?91,?92,?93),(?94,?95,?96),(?97,?98,?99),(?100,?101,?102),(?103,?104,?105),(?106,?107,?108),(?109,?110,?111),(?112,?113,?114),(?115,?116,?117),(?118,?119,?120),(?121,?122,?123),(?124,?125,?126),(?127,?128,?129),(?130,?131,?132),(?133,?134,?135),(?136,?137,?138),(?139,?140,?141),(?142,?143,?144),(?145,?146,?147),(?148,?149,?150),(?151,?152,?153),(?154,?155,?156),(?157,?158,?159),(?160,?161,?162),(?163,?164,?165),(?166,?167,?168),(?169,?170,?171),(?172,?173,?174),(?175,?176,?177),(?178,?179,?180),(?181,?182,?183),(?184,?185,?186),(?187,?188,?189),(?190,?191,?192),(?193,?194,?195),(?196,?197,?198),(?199,?200,?201),(?202,?203,?204),(?205,?206,?207),(?208,?209,?210),(?211,?212,?213),(?214,?215,?216),(?217,?218,?219),(?220,?221,?222),(?223,?224,?225),(?226,?227,?228),(?229,?230,?231),(?232,?233,?234),(?235,?236,?237),(?238,?239,?240),(?241,?242,?243),(?244,?245,?246),(?247,?248,?249),(?250,?251,?252),(?253,?254,?255),(?256,?257,?258),(?259,?260,?261),(?262,?263,?264),(?265,?266,?267),(?268,?269,?270),(?271,?272,?273),(?274,?275,?276),(?277,?278,?279),(?280,?281,?282),(?283,?284,?285),(?286,?287,?288),(?289,?290,?291),(?292,?293,?294),(?295,?296,?297),(?298,?299,?300)"
+          },
+          {
+            "name": "read",
+            "sql": "SELECT count(*) FROM t WHERE (n,s) IN ((?1,?2),(?3,?4),(?5,?6),(?7,?8),(?9,?10),(?11,?12),(?13,?14),(?15,?16),(?17,?18),(?19,?20),(?21,?22),(?23,?24),(?25,?26),(?27,?28),(?29,?30),(?31,?32))"
+          }
+        ]
+      }
+    }
+  ],
+  "results": [
+    {
+      "kind": "scalar",
+      "count": 5000,
+      "width": 256,
+      "engine": "sqlite/prepared",
+      "medianMs": 0.24869160000000648,
+      "samplesMs": [
+        0.2675334000000021,
+        0.24869160000000648,
+        0.2450584000000049
+      ]
+    },
+    {
+      "kind": "scalar",
+      "count": 5000,
+      "width": 256,
+      "engine": "js/linear",
+      "medianMs": 95.06220800000006,
+      "samplesMs": [
+        95.75137500000005,
+        95.06220800000006,
+        94.040166
+      ]
+    },
+    {
+      "kind": "scalar",
+      "count": 5000,
+      "width": 256,
+      "engine": "wasm/linear",
+      "medianMs": 93.71929200000022,
+      "samplesMs": [
+        93.62645900000007,
+        93.94345799999974,
+        93.71929200000022
+      ]
+    },
+    {
+      "kind": "scalar",
+      "count": 5000,
+      "width": 256,
+      "engine": "js/lookup",
+      "medianMs": 2.9698583999999757,
+      "samplesMs": [
+        3.7906331999999567,
+        2.9698583999999757,
+        2.7532750000000306
+      ]
+    },
+    {
+      "kind": "scalar",
+      "count": 5000,
+      "width": 256,
+      "engine": "wasm/lookup",
+      "medianMs": 2.1491334000000277,
+      "samplesMs": [
+        2.504374999999982,
+        2.1491334000000277,
+        1.9769250000000285
+      ]
+    },
+    {
+      "kind": "scalar",
+      "count": 100000,
+      "width": 16,
+      "engine": "sqlite/prepared",
+      "medianMs": 1.7526583999999275,
+      "samplesMs": [
+        1.7424584000000323,
+        1.7526583999999275,
+        1.7667167999999946
+      ]
+    },
+    {
+      "kind": "scalar",
+      "count": 100000,
+      "width": 16,
+      "engine": "js/linear",
+      "medianMs": 199.71612499999992,
+      "samplesMs": [
+        198.97662500000024,
+        199.8714170000003,
+        199.71612499999992
+      ]
+    },
+    {
+      "kind": "scalar",
+      "count": 100000,
+      "width": 16,
+      "engine": "wasm/linear",
+      "medianMs": 195.83645799999977,
+      "samplesMs": [
+        207.760542,
+        195.83645799999977,
+        193.8722090000001
+      ]
+    },
+    {
+      "kind": "scalar",
+      "count": 100000,
+      "width": 16,
+      "engine": "js/lookup",
+      "medianMs": 69.76704100000097,
+      "samplesMs": [
+        69.76704100000097,
+        70.8930419999997,
+        69.34479100000135
+      ]
+    },
+    {
+      "kind": "scalar",
+      "count": 100000,
+      "width": 16,
+      "engine": "wasm/lookup",
+      "medianMs": 56.26850000000013,
+      "samplesMs": [
+        56.26850000000013,
+        55.9419170000001,
+        56.72791700000016
+      ]
+    },
+    {
+      "kind": "row",
+      "count": 5000,
+      "width": 64,
+      "engine": "sqlite/prepared",
+      "medianMs": 0.16656660000007834,
+      "samplesMs": [
+        0.16656660000007834,
+        0.17055000000000292,
+        0.15734159999992697
+      ]
+    },
+    {
+      "kind": "row",
+      "count": 5000,
+      "width": 64,
+      "engine": "js/linear",
+      "medianMs": 81.35570800000096,
+      "samplesMs": [
+        81.45229199999994,
+        81.35570800000096,
+        81.31045799999993
+      ]
+    },
+    {
+      "kind": "row",
+      "count": 5000,
+      "width": 64,
+      "engine": "wasm/linear",
+      "medianMs": 58.32829200000015,
+      "samplesMs": [
+        59.90716699999939,
+        58.32829200000015,
+        57.18329200000153
+      ]
+    },
+    {
+      "kind": "row",
+      "count": 5000,
+      "width": 64,
+      "engine": "js/lookup",
+      "medianMs": 8.075736000000083,
+      "samplesMs": [
+        10.312646000000314,
+        8.075736000000083,
+        7.935694666666677
+      ]
+    },
+    {
+      "kind": "row",
+      "count": 5000,
+      "width": 64,
+      "engine": "wasm/lookup",
+      "medianMs": 4.638850000000093,
+      "samplesMs": [
+        5.361583249999967,
+        4.638850000000093,
+        4.439450000000216
+      ]
+    },
+    {
+      "kind": "row",
+      "count": 100000,
+      "width": 16,
+      "engine": "sqlite/prepared",
+      "medianMs": 2.7089083999999275,
+      "samplesMs": [
+        2.606433200000174,
+        2.7089083999999275,
+        2.730883399999948
+      ]
+    },
+    {
+      "kind": "row",
+      "count": 100000,
+      "width": 16,
+      "engine": "js/linear",
+      "medianMs": 416.23516599999857,
+      "samplesMs": [
+        437.87383299999965,
+        396.510624999999,
+        416.23516599999857
+      ]
+    },
+    {
+      "kind": "row",
+      "count": 100000,
+      "width": 16,
+      "engine": "wasm/linear",
+      "medianMs": 267.4161669999994,
+      "samplesMs": [
+        270.61916700000074,
+        266.526249999999,
+        267.4161669999994
+      ]
+    },
+    {
+      "kind": "row",
+      "count": 100000,
+      "width": 16,
+      "engine": "js/lookup",
+      "medianMs": 168.8135000000002,
+      "samplesMs": [
+        168.8135000000002,
+        167.77845899999738,
+        193.98962499999834
+      ]
+    },
+    {
+      "kind": "row",
+      "count": 100000,
+      "width": 16,
+      "engine": "wasm/lookup",
+      "medianMs": 113.6492909999979,
+      "samplesMs": [
+        126.58279200000106,
+        113.6492909999979,
+        112.58133299999827
+      ]
+    }
+  ],
+  "artifacts": {
+    "/Users/mz/ghq/github.com/mizchi/browser-litestream/generated/in-list-before-integer/scalar-5000-false/runtime.js": "38ba556e20b8e1188890b0601838d2f204cbc22fb86407a3425ce143a02f5067",
+    "/Users/mz/ghq/github.com/mizchi/browser-litestream/generated/in-list-before-integer/scalar-5000-false/runtime.wasm": "1423462a00970bfa2b34b33d093486ba4847bf9d5e5b53780a03e91c7d6ce8a4",
+    "/Users/mz/ghq/github.com/mizchi/browser-litestream/generated/in-list-before-integer/scalar-5000-true/runtime.js": "2f6572fe049ccad4befdabf36c041b5b417422360eeb8fad3743bcef1f39159f",
+    "/Users/mz/ghq/github.com/mizchi/browser-litestream/generated/in-list-before-integer/scalar-5000-true/runtime.wasm": "8a9bc0de244d87647f4a0faf1cc763d0319121035dc4e54d6a6d30cf3661111f",
+    "/Users/mz/ghq/github.com/mizchi/browser-litestream/generated/in-list-before-integer/scalar-100000-false/runtime.js": "38ba556e20b8e1188890b0601838d2f204cbc22fb86407a3425ce143a02f5067",
+    "/Users/mz/ghq/github.com/mizchi/browser-litestream/generated/in-list-before-integer/scalar-100000-false/runtime.wasm": "1423462a00970bfa2b34b33d093486ba4847bf9d5e5b53780a03e91c7d6ce8a4",
+    "/Users/mz/ghq/github.com/mizchi/browser-litestream/generated/in-list-before-integer/scalar-100000-true/runtime.js": "2f6572fe049ccad4befdabf36c041b5b417422360eeb8fad3743bcef1f39159f",
+    "/Users/mz/ghq/github.com/mizchi/browser-litestream/generated/in-list-before-integer/scalar-100000-true/runtime.wasm": "8a9bc0de244d87647f4a0faf1cc763d0319121035dc4e54d6a6d30cf3661111f",
+    "/Users/mz/ghq/github.com/mizchi/browser-litestream/generated/in-list-before-integer/row-5000-false/runtime.js": "bb7a650f1fb98095172dca0e542fe75dbcd52f42abbbcbcd97ad3eb92e188e53",
+    "/Users/mz/ghq/github.com/mizchi/browser-litestream/generated/in-list-before-integer/row-5000-false/runtime.wasm": "2295081aac0447d78b3ba9d4534514278e5462e524c398d4cf9cc916c58be966",
+    "/Users/mz/ghq/github.com/mizchi/browser-litestream/generated/in-list-before-integer/row-5000-true/runtime.js": "b6c51335b6d9e95c2e53f3183ef54bb6c5eb1c310c665800dda6c3b4ce474c6c",
+    "/Users/mz/ghq/github.com/mizchi/browser-litestream/generated/in-list-before-integer/row-5000-true/runtime.wasm": "5ec7546384861378c5ebcf46191a1c46504db7e6938edfc1a5fffcfddf22b4e3",
+    "/Users/mz/ghq/github.com/mizchi/browser-litestream/generated/in-list-before-integer/row-100000-false/runtime.js": "bb7a650f1fb98095172dca0e542fe75dbcd52f42abbbcbcd97ad3eb92e188e53",
+    "/Users/mz/ghq/github.com/mizchi/browser-litestream/generated/in-list-before-integer/row-100000-false/runtime.wasm": "2295081aac0447d78b3ba9d4534514278e5462e524c398d4cf9cc916c58be966",
+    "/Users/mz/ghq/github.com/mizchi/browser-litestream/generated/in-list-before-integer/row-100000-true/runtime.js": "b6c51335b6d9e95c2e53f3183ef54bb6c5eb1c310c665800dda6c3b4ce474c6c",
+    "/Users/mz/ghq/github.com/mizchi/browser-litestream/generated/in-list-before-integer/row-100000-true/runtime.wasm": "5ec7546384861378c5ebcf46191a1c46504db7e6938edfc1a5fffcfddf22b4e3"
+  },
+  "sources": {
+    "examples/aot/moon.mod": "86e6cfb0ba281f0f61093966e433abccf9a1ab8a3bb40265e68a52e65258327a",
+    "examples/aot/src/runtime/moon.pkg": "4ed6aa1789d2e0927c6c42fa6887cc3e5aec559c3bee875b750e78117e3bdf84",
+    "examples/aot/src/runtime/runtime.mbt": "3e492813ee59f4266a690204a3353f02198e3171ec05972e88de8d62c8323f47",
+    "package.json": "e847159d75edee98387eebf617cb7b505b25606bdff6206efdf67f0ffdca84ff",
+    "packages/litestream/moon.mod": "68f56730f8a3901562929fd3f792fe95f463bae05140178e41aea718a5d4c81a",
+    "packages/litestream/src/example_policy.mbt": "ca5c4c3e0588ae48745e1111ea36391cef1fc3757fde44b0733079913d1fff02",
+    "packages/litestream/src/ltx.mbt": "7fc614a5336b431695cfa16dfb30f4de644592f9b09c63eb2f969c980076edd6",
+    "packages/litestream/src/ltx_plan.mbt": "ca26cd90cbd66e0e49c6176d18d7b7c035d54910733bd46b2aa3141e737df0b4",
+    "packages/litestream/src/ltx_wbtest.mbt": "4ebbe363c9b25215fb5d6500b67c4681c82cf9f989b2a7ae2d780ea6d9b8ba3f",
+    "packages/litestream/src/ltx_writer.mbt": "25c8cdd8792a8be2434c608af57698775d220bb71b4c98d5a0a64f60c838b4f9",
+    "packages/litestream/src/moon.pkg": "7154455e9e26d2310cdc97a4ac740aefcda171b2b8b023fe9a72bb414582f15b",
+    "packages/litestream/src/plan.mbt": "464cd32c96e0d113f8cbb1d08e3676f99cf8e383b7d0263df803bf6ff0126c16",
+    "packages/litestream/src/protocol.mbt": "7113814f7a2fa10b5aed38d9fce318bd253c2114a12186fcd5a863e97bd2d429",
+    "packages/litestream/src/protocol_test.mbt": "b1314e3f577194ae7284cbe875e52a73b4dd539e6d72ee42622d83f9cde76352",
+    "packages/litestream/src/safety.mbt": "f8f50aea1c224457916c080ff6cd324eb96ed86134fb3243affcaaf24f20d958",
+    "packages/litestream/src/safety_test.mbt": "6f3f4eeba64ca1fb089c70d6f6a0f1c601197cc1bfd188700c42dba07967f97f",
+    "packages/litestream/src/sql.mbt": "af1388fbf3ffa5629d87ccdfff2b452a270dbfd882fb489444bd1ee9a7896680",
+    "packages/sqlike/moon.mod": "5ddc7527a088b0dac7ccd0bdd32ba867132bd645d7b26571a1e9aeb0ddf71d21",
+    "packages/sqlike/src/aot/engine.mbt": "63489cf7f63ff9ad18181b3e140eb897ae13ecbff9ea424cfb8117adae2e9bd4",
+    "packages/sqlike/src/aot/moon.pkg": "9af885a9dd8506937ac348abebc25bc6e7e4c1f5ee9ac9bcda805c570c9c43f2",
+    "packages/sqlike/src/compiler/compiler.mbt": "48d22ce34a131af4f2f03bfd1f423fc29a0bcde5e33f4ad0a8f243c20c4b53f3",
+    "packages/sqlike/src/compiler/moon.pkg": "ecedfe51fbedec902749805da4eaf27b3f84caf34d12601a7c4873f688449b21",
+    "packages/sqlike/src/defined-sqlite/defined.mbt": "5a81aa4db62ee9f22610223ffce77cbc95602bc4cc3593241ea299471b1a3f7d",
+    "packages/sqlike/src/defined-sqlite/moon.pkg": "5ff9c6d296335f429aed02079b56f04c032eca6267d0a227195f2dd6fb998548",
+    "packages/sqlike/src/defined/defined.mbt": "caf0ae96fd7a7af9f94b3e831f2f9de2077a64caacdbb3d4029e2780ff4f044f",
+    "packages/sqlike/src/defined/moon.pkg": "bf0f2f6bd9928e74ca0f437c8769c84a81269b0acab95d36d258cd7319dabd23",
+    "packages/sqlike/src/engine.mbt": "e56ad47e2bcc69804ef5f215623f3db89162ed2d8d10e7d18e64cd02fdc68326",
+    "packages/sqlike/src/experimental-aot-typed/aot.mbt": "18d571f56a100645400a3613fe8d4629f5eb271e13533d9d05736a6e4021be5b",
+    "packages/sqlike/src/experimental-aot-typed/moon.pkg": "fdc9495f1f4f01316fcdf2b044bedd8f8f3a7f3b047d5114f2d4e3a5be9bf8a9",
+    "packages/sqlike/src/experimental-typed/moon.pkg": "bd81be00351ab4af79a9ac8ce7565104d87e54aada87dcba02583492238ae936",
+    "packages/sqlike/src/experimental-typed/typed.mbt": "1536857be9d942aa5beeb9572f5cd9ab05bdfa2f69dc3cca4f75dd2c7a62051e",
+    "packages/sqlike/src/fts/fts.mbt": "f6b170921d7df982c53fe7f188aed2183b087ca79b8754b319752ff8b234712f",
+    "packages/sqlike/src/fts/moon.pkg": "a7d9d1cc19824ae57fb66d46f446edec75df49d66c58d6c65fdbb42ccb39d3fc",
+    "packages/sqlike/src/fts/unicode_fold.mbt": "8bb107d39c9a9fba63fa4e2fd67a7a8d58ff8ddc2a4381e623abaa6a91d8db3e",
+    "packages/sqlike/src/full/advanced_index_wbtest.mbt": "20048343ad71c6abbcefb545eb304b09aad9f733a78ed2b4ddf52f8e72198239",
+    "packages/sqlike/src/full/aggregate_filter.mbt": "cdcacc11b7ed524daca9493c036d71356f3651cbf93bd0cec362315b27db1c5d",
+    "packages/sqlike/src/full/aggregate_order.mbt": "ce7b14592cfb703e5e00f2ba953b84fa50fe1a2cbf5dd9a9dbab9513f096fe3c",
+    "packages/sqlike/src/full/aggregate_plan.mbt": "309b4ad08e26bf4cf487c46b83ffa49b674099c9c7cd791b25e58dd77964f514",
+    "packages/sqlike/src/full/aggregate_sum.mbt": "e09ec3388045c47098d36cc39efa47abac3ddf73f312cfdd87a75a610e35fcd4",
+    "packages/sqlike/src/full/aot.mbt": "44f3f034b37400e892f45decfe4d6a0252832ba8883dee0a1498a3d758fd3169",
+    "packages/sqlike/src/full/aot_bench_wbtest.mbt": "ea9756d22d1bc37a14b32f7707fa1c018c018d41f76aeddb7e87303950c8125a",
+    "packages/sqlike/src/full/aot_native.mbt": "ac16bb1f009cc23e6f44fa5ba820c2a5e23c65f2b9e7ad1904faa9fa13aab598",
+    "packages/sqlike/src/full/aot_native_wbtest.mbt": "fa0394da8995c3c6331d8ebba23c3e9d86e9263f05d8253aa4bf718f93ac6a2c",
+    "packages/sqlike/src/full/api_config.mbt": "5e9a16ed55cc7f085ed3ee7e14e14fee6f9111b20e174296a19482668c2b89d2",
+    "packages/sqlike/src/full/binary_base64.mbt": "3ff209995156c359a77d5488f278337fb4b58be27785e79e53dfb3c43cb0c6f6",
+    "packages/sqlike/src/full/binary_catalog.mbt": "db0b701daecf18ba019eb87d3f565024c66838dd4907a2d7270abcbcd5a91f80",
+    "packages/sqlike/src/full/binary_generated.mbt": "4d934386c0fa002666b12ba9817925d6f7856435e55a6525a37c5c14394e6393",
+    "packages/sqlike/src/full/binary_io.mbt": "41b89eba204b589e9b03c4cc8483f13255c6341543e8922fc0939ec21156fdea",
+    "packages/sqlike/src/full/binary_state.mbt": "668752202939a3a57ae4c5423dcefaf116edd681f1f45d7e38149751d20e231a",
+    "packages/sqlike/src/full/binary_wbtest.mbt": "78641640c6f5758944441cf649f55501ea4a4965c32da37812dbd6f59bbbd43d",
+    "packages/sqlike/src/full/bound_access.mbt": "eaad499f8926f5b7b21853ef72ab5b9b4e4a123d8f1653d7fb2e10e258185746",
+    "packages/sqlike/src/full/bound_expression.mbt": "bd5362347cbc896a541ebc54241de05815d424c97c25eb464cc00b3d24fb7de6",
+    "packages/sqlike/src/full/bound_plan_wbtest.mbt": "4423197f17432c9cb530273ab257ad971d042fa834f5bce91037d2d4aab31ed2",
+    "packages/sqlike/src/full/bound_point.mbt": "66db24261b87f15ffffe4cbe184490eaffaeac3b518baafc683456ee6d3a96f4",
+    "packages/sqlike/src/full/capability_config_generated.mbt": "0fd67aa4747473c7daa5d52a0bbfc13c893b4c31d9078eee02db57ea48d12544",
+    "packages/sqlike/src/full/cast.mbt": "e2feebc791c8daa6c18435ba8a271140dfe66a107ee4b9e0f5978d162180a2ec",
+    "packages/sqlike/src/full/changeset.mbt": "87d68561ebb691590a6db124abe76676b5c3209a13a1c5d078acba8f22588ac5",
+    "packages/sqlike/src/full/column_delta_wbtest.mbt": "58fef01472dfbe883cac3b4345d2fd5e6219d6d27b25c8a7eecfd13d4d31a6fa",
+    "packages/sqlike/src/full/composite_index_wbtest.mbt": "5e20a1b276eb2ad421ed0e3e5b3e55e575d0a7a42d9df84e702aad16f5363321",
+    "packages/sqlike/src/full/compound.mbt": "4b133f7e94fd7a1cc1739dcf74f3d81613d5b748de6595040a1d4c330fce8f40",
+    "packages/sqlike/src/full/compound_metadata.mbt": "610bb9ee36c666c189154b8e08a6cf3b900e2884ba5e7a50dcd7c79f66dcf770",
+    "packages/sqlike/src/full/create_table_as.mbt": "15eafaf3e1e6b78a9f2a5477b8b826dd08017813a11944b4b7a0abc473d4c121",
+    "packages/sqlike/src/full/cte.mbt": "e595e995cc70bfd9d78a60af7b0eea974d5f72a0c594909eb818824cd4050811",
+    "packages/sqlike/src/full/data.mbt": "8127d36e92bf4a7f48cead888eec0268bbeec62e7e5af993a01df209fffee72c",
+    "packages/sqlike/src/full/datetime.mbt": "bf7c6b6983cfc2fe0e17dc74c26de270c5414203d982a5bec53f2ebf33459d59",
+    "packages/sqlike/src/full/delete_cache_wbtest.mbt": "e83f1556868e9eef124d00cfa528f60c5a4fd58a74c2fe2f582ec17b2efe304a",
+    "packages/sqlike/src/full/evaluate.mbt": "dab21ecc0c9bacb6c86fa1648fdd41245a81e3c962a0e0a2a45887ed1fdca99d",
+    "packages/sqlike/src/full/execute.mbt": "1b8dea0544917b17218f4d936c3ac6db54246d2ff3925fce173ad8ac2b65753a",
+    "packages/sqlike/src/full/experimental_rows.mbt": "248afbc52749bbfde91ad8a59e06e5fb0f2019cb8449ac8070a11aafcc0167fc",
+    "packages/sqlike/src/full/feature_config.mbt": "f9c27f8130dbe8ad2508fcb40f002952410c0d56b9640a579d072796c453b680",
+    "packages/sqlike/src/full/feature_validation.mbt": "19557512a4229fe2396d5d4570beb667d96a5dd2d3288c414b580e3ce984f2c0",
+    "packages/sqlike/src/full/feature_validation_generated.mbt": "16256f2c63c5d76e9a91670052af16d9c324157db0c6f783f9d5dc24d267d2f9",
+    "packages/sqlike/src/full/float_text.mbt": "a188f50c6a4c41e2fc154cdc690514a5b9c945dce8a0cd8ccde2d7745e7f7895",
+    "packages/sqlike/src/full/foreign_key.mbt": "ac6f8f0c7d96b4e0ee796b97b30c26a2789b12ef21fddecd44fb0b26e7d4e0b7",
+    "packages/sqlike/src/full/function_collation.mbt": "4f568de395b2e654e05a3acde066a50f0def110348cc67ee5efdd8889c1a96e3",
+    "packages/sqlike/src/full/generated_columns.mbt": "45c7c3fe8d37698451dc009162dfba9d56c509dc374dbf62b6cc4160b9251e6a",
+    "packages/sqlike/src/full/generated_columns_wbtest.mbt": "93a638cd91e000872864fc2a8f14a42687ef3225bf0c99ef802c89571c416562",
+    "packages/sqlike/src/full/glob.mbt": "0013b77a567bbc46f292a63ad620b72ef1c0d8414f1a4777913beff3021759f0",
+    "packages/sqlike/src/full/image.mbt": "2d7f8e6d8c42673947e52cc30101ef4fcadb2858a7e772d14e3d718a2e123571",
+    "packages/sqlike/src/full/in_list_lookup.mbt": "cd160671ca6eddf20710cb6870bf913af1030b45f460f8994a84bf0736777a50",
+    "packages/sqlike/src/full/in_lookup_wbtest.mbt": "0373be9b1ee57100d8433f5fe793017f734f9c6110851370df71fd1b75a21217",
+    "packages/sqlike/src/full/index_cache.mbt": "ff86d8dfee7278b2c8c97306cb7c6924883830e8f560512739b67ddef11ed369",
+    "packages/sqlike/src/full/index_definition.mbt": "52801862d0eb516e9ac7c5bbd14bfbec86093753bdd92b011564a03d09d7a274",
+    "packages/sqlike/src/full/index_metadata.mbt": "c1a2abd3b7203ca315dd5c907a87ccd2036b54cf6d00ad8c192732de87c69d8c",
+    "packages/sqlike/src/full/index_pages.mbt": "bf0c06eacc6725f2ad4e595963db6af00a44c48c49d6ce2d1b98d154d67fe5bc",
+    "packages/sqlike/src/full/index_pages_wbtest.mbt": "ff12525fbb548c9923272e7541588bd6bef95c6019667d5001b166804e62cdf3",
+    "packages/sqlike/src/full/index_plan.mbt": "ff4b177e06dc566f3158fba340e47d2b58780e730b50ad2556f31d35c8e0677c",
+    "packages/sqlike/src/full/index_wbtest.mbt": "f1df6de725e0344db2ea76d4662d6652b6b43514cb2a691fa8eaeda3465df3a9",
+    "packages/sqlike/src/full/insert_allocation_wbtest.mbt": "4db82a04d4e4ae8219346ef6a8e9b11484b40b86fdfb357731156dbcf6ebb9b7",
+    "packages/sqlike/src/full/interface.mbt": "2f4e169f910cc03314e167f65890e11c13eabae78832fe4e90d0ca6a6f4f6c12",
+    "packages/sqlike/src/full/interface_compiler.mbt": "652e12aa261f308feab25e8ba983835b7ec8d979cd12c2799eb75d75dd5c131d",
+    "packages/sqlike/src/full/interface_test.mbt": "f06c0e4e1a217f1902e07de733e1df4be7d69585c5990646a9801a838e0545ff",
+    "packages/sqlike/src/full/join.mbt": "b2fd2c5fd92925c42f5aa87963acaecadfef5e07816c84f1ea5435e2ecd7f2a7",
+    "packages/sqlike/src/full/json_aggregate.mbt": "f09a637c585f83bdbc0dfc123e3b191ae19e690c3961d813fb924b0c3228e5f6",
+    "packages/sqlike/src/full/json_functions.mbt": "8e99c3bda12d07d1c4aeed0b6743158b675e6ca908e9e9d3d8e53e321ef95e59",
+    "packages/sqlike/src/full/json_table.mbt": "f1f4db1429084d667cdc4bb8c5b40c1ac26e286753f398caef8d96b53293ee3e",
+    "packages/sqlike/src/full/json_table_aggregate.mbt": "1ebaf4ef57cd01280fada56c847abe16022c424a0bca5686efe3d19375e0066f",
+    "packages/sqlike/src/full/json_table_wbtest.mbt": "43110e487a5244e375d72a068b7d71b0b41368eea8f41ff0366e8c570290c83f",
+    "packages/sqlike/src/full/math_rounding.mbt": "51eeeed48fdc28f2e8db9900dafdf26bf411296c1be8ba9a42a0c4ee2267ed8a",
+    "packages/sqlike/src/full/migration.mbt": "f806f8f98b183c9666d6f791238ddc443bd9d11665ef57ea7ac79565b5974c48",
+    "packages/sqlike/src/full/migration_sql.mbt": "94dc3651b6b17f2c946daf7adea040a2d404c714a6a51aa338767d7ae8172b37",
+    "packages/sqlike/src/full/model.mbt": "10bb29744f9494f58920e56edd4512c9c9e9067913ad9864b0a598157533e356",
+    "packages/sqlike/src/full/moon.pkg": "1a353fa5ca7fc9efbe030604d3cc1a95ad28f90f0700b70146fb6656ce46808a",
+    "packages/sqlike/src/full/optimization_wbtest.mbt": "612f870958611e4f7c499e8fd0ea445c0e1181f629001afc157cd2970d819201",
+    "packages/sqlike/src/full/optimizer_config.mbt": "d2df245512e370a60b458de905de86fdc29bf70f9835f19863f3b41b464ed5f3",
+    "packages/sqlike/src/full/ordering.mbt": "4f70b041ade37d660feec636bafe8fced7265b1eeacc85897073c17e9ec65e47",
+    "packages/sqlike/src/full/output_policy.mbt": "ce8691f2e7a4efc167611200e184603eff646926e9a24938f372c83bc817d23c",
+    "packages/sqlike/src/full/parser.mbt": "7a06f113816b24e6381b2918eda064afb8e3bbfd758ef50448e1416b438a5dc0",
+    "packages/sqlike/src/full/persistence.mbt": "22672275ebb21d0c7eaeee79dd1ab6f8ca06ddefbf2fd39dc985fd1788d4186a",
+    "packages/sqlike/src/full/persistence_edits.mbt": "5fd7866411361b1da3de3f7dcb110c5136193a6fc8032a6b0206e2dc8e57fc3e",
+    "packages/sqlike/src/full/persistence_wbtest.mbt": "3d981dac002f117107f4b60a6397807dcaff5b8a15d45ec3b96388ca83be3344",
+    "packages/sqlike/src/full/prepare.mbt": "23e7ac19cbe99f5e8023b018f954717730e336c5306fe0a423151fc52257e16d",
+    "packages/sqlike/src/full/prepared.mbt": "93a0c99c39a2be3ab4905b53de8eac429cea89f7ca0d3bdff9b8ee7f30a63f6c",
+    "packages/sqlike/src/full/prepared_selection_wbtest.mbt": "b4624c89bae3b7181f1444cd251556e054453bed98062bd5b6a19d151977c209",
+    "packages/sqlike/src/full/prepared_update_wbtest.mbt": "04f0818b13d3ce4a1b291e8431082cad72efcbc85af516f77b4fdd26d730a191",
+    "packages/sqlike/src/full/primary_index.mbt": "44cb6d7e4b22e1d9c0f367054bf9ba8e9e9733d5241f7f7792f0f2a3685b2a38",
+    "packages/sqlike/src/full/program_compiler.mbt": "00b1ea7f72f365f89f478e680dce58ddc2902c40685f89006544746fe17c74ad",
+    "packages/sqlike/src/full/query.mbt": "f8692b8bf46aef6cd33e69d6dbb5f283f5a383c33f00042e9ccbbea8804785d7",
+    "packages/sqlike/src/full/query_plan.mbt": "71bf446c876fc0412aac8fd48368b33a13555bcbbc98bf474269ba005f6de70f",
+    "packages/sqlike/src/full/result_writer.mbt": "0367d7ceea2d3a7e27a3ea8ef00178583f2b17ebcabaebd43e4f3e4580afcfd6",
+    "packages/sqlike/src/full/result_writer_wbtest.mbt": "f9d65c105c685607431c959f27e89fc88bf69136bdfc3ab2f2c8274769ccfcbc",
+    "packages/sqlike/src/full/row_metadata_wbtest.mbt": "0b74d8fe2bb96d1d285f4ed0ed1ce70e78d8e5fa72a84950e1609a631c2d3601",
+    "packages/sqlike/src/full/row_pages.mbt": "35795aa2cc32e84b58e30b07b0f597908a51f1989d3371f9986c2b21188addb5",
+    "packages/sqlike/src/full/row_pages_wbtest.mbt": "d48a5d1e5454dda34e25829bda13996d5a94e140191818eacf08f5ecc609b744",
+    "packages/sqlike/src/full/row_values.mbt": "0837cbd7e5d862a16a0f48d646684b405fc73e8bbd27f2901eb1698ad7e857c3",
+    "packages/sqlike/src/full/row_values_wbtest.mbt": "f5aa5cf714a7dc24677d1cbb05f049728504da7e4ef62569efdfd72387b1aba0",
+    "packages/sqlike/src/full/runtime_query_requirements.mbt": "41d470acbcf7c8fd01585ac5670b617178820814dc589b14f2e42146784c65bb",
+    "packages/sqlike/src/full/runtime_usage_compiler.mbt": "8767ac9f24365bd1aa110959bfcecb50a0f10c7c5e66f87bd9b2fb9c15f2a202",
+    "packages/sqlike/src/full/runtime_usage_generated.mbt": "42b2e50d37d3f54cdf06605601d87e13dd55ac11ba3cd5103157a3f73d6f14bc",
+    "packages/sqlike/src/full/scalar.mbt": "971dc21f27e29e010c9d8add4cb40d7c4be60d762ee998e36fc67b60b9bca3c0",
+    "packages/sqlike/src/full/sql_prepare_bench_wbtest.mbt": "7bddebe4a3cf10d6e85f4a478d5c399d31503accd4bb0aeada187e4fff3941bf",
+    "packages/sqlike/src/full/sql_prepared.mbt": "09e8ae61006f70844951585302a4db59eb11ee48d173755554110057b5188bd9",
+    "packages/sqlike/src/full/sql_prepared_wbtest.mbt": "0afe14f54bb6c38ad64cb9ca1b27c00174797fa52df5af64cd0f396deec31a1a",
+    "packages/sqlike/src/full/sql_render.mbt": "b7264b0685e50dbf0237a58b23970a617bfbaac2c8a588216ea552e110218146",
+    "packages/sqlike/src/full/sqlite_file.mbt": "f1208916e4cb70e91360ca851f7cf81b4889baee9c100bfbbf6d7c0d6aabb7ee",
+    "packages/sqlike/src/full/sqlite_import.mbt": "0e24c47c09e41fecdc9082e9884ce30ce7313419779a617415635c281a431331",
+    "packages/sqlike/src/full/sqlite_writer.mbt": "de410ffaba4ab10a4ac8cc79d7c02658c493f7e3f0e6840cfc1c77626e96f5b8",
+    "packages/sqlike/src/full/storage_plan.mbt": "667391208cd559b64394764ddbb62de36a302d3c65d6dc9c9373358e607fb608",
+    "packages/sqlike/src/full/store_image.mbt": "bfba81ef03a4d80906c392be4b60bb29733ef009160eeaeebfc49de3eef61936",
+    "packages/sqlike/src/full/strict.mbt": "111d64a49feb89caa5d96a0e4276fe16dd0f51165e70f40d398907c4cf4affdb",
+    "packages/sqlike/src/full/transaction.mbt": "3311a5a7bc15e3f2a14db357d43ae76b18abe11c883fa0c5c12cfc9094283e39",
+    "packages/sqlike/src/full/trigger.mbt": "fd9b83a3cc32c3ff3e773b4fd3af83124e167c4f83880c460c75426a336d66d9",
+    "packages/sqlike/src/full/trigger_wbtest.mbt": "54bd11584824c53d3d94ce5bb5baf36555bbb262850fbd026aea225c9812c49b",
+    "packages/sqlike/src/full/update.mbt": "02eb8e0eb45dc5403061a834da9513cbc49ab17eb4139d99a91869104c67a183",
+    "packages/sqlike/src/full/update_from.mbt": "d7f6a662d8a475abc7d655e554799f882409816422634cc285df53cffcee6476",
+    "packages/sqlike/src/full/update_from_wbtest.mbt": "99643c57b61330a741e1002ef9795f62dd9dc6c23759a269a7eac78101bc8541",
+    "packages/sqlike/src/full/update_row.mbt": "4c9c834f594a4573a9f46c838a7c358901a9c9ddc97ad54e2c7425167221f8f7",
+    "packages/sqlike/src/full/update_storage_wbtest.mbt": "0350af6aba1aedfe05c3273470cae7b6610ed0738f1a97d8deb5544ce5c41467",
+    "packages/sqlike/src/full/value.mbt": "c2bbdb630352d49e51c201ff6a9b9ea47bb525a33b4f0168626f02b642f6b8e4",
+    "packages/sqlike/src/full/window.mbt": "25b144661bf5c0ee9e3650d6072fc97b2a13812831af3ae395f95dfca3b82f47",
+    "packages/sqlike/src/lsm/lsm.mbt": "9e88824dc0b449e7c15209beb7e0dc8fdf34aab5e77c405bf1ef6d5040aad924",
+    "packages/sqlike/src/lsm/lsm_wbtest.mbt": "0bd332033c4a16ba4ba0dd3e0a6cd640a0e6aef777f2b2e8f4cf464cef568a19",
+    "packages/sqlike/src/lsm/moon.pkg": "5ede3703157bb09f075866319cd3c29867ccefdc0446e508925a2a9fd0407da9",
+    "packages/sqlike/src/moon.pkg": "61936fa67161fce2db5acab188dcfa294604c0615fbf2276948f66cee522a5ad",
+    "pnpm-lock.yaml": "62a9334c27b9f3876361edc3c9f74a0ed5e11866e28403cc065e1bdba7d70012",
+    "scripts/bench-in-list.ts": "b9747b5e8b3864e22b1bf56358c4fc919fde08b39783683adabbf16d80ff2bea",
+    "scripts/build-sqlike-runtime.ts": "79d5bc875f7ca4a45825e83a494e6f20c54c945ae16e43b01ee89b69bfba9492",
+    "scripts/measurement-manifest.ts": "615c0ab32c0b2e01c57ea1be690a2a08d2e9401b9b0c5d93574520253c16acdb",
+    "src/sqlike-build-graph.json": "fe2e657ecb8ae2b289b95d539c26b506f8709069d10550a6418d5d0e00f86045",
+    "src/sqlike-build-plan.ts": "526ecbaaa621fbe7754414731ce974e2c2d6249b351f155695e6ddc4f1ddf192"
+  },
+  "snapshot": "Before integer hash-key specialization; measured artifacts copied without rebuilding."
+}

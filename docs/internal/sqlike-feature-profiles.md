@@ -56,6 +56,11 @@ just feature-profiles
 | `sqlJson` | `json()` / `json_*()`によるSQLのJSON解析・構築・編集。0.1.1では`->` / `->>`、`json_group_array` / `json_group_object`も含む。bind / 結果のJSON ABIはcoreに残る |
 | `schemaMetadata` | 0.1.1から。`PRAGMA index_list` / `index_info` / `index_xinfo`。通常・部分・式・対応範囲の自動索引とWITHOUT ROWIDのmetadata |
 | `aggregateFilter` | 0.1.1から。通常 / DISTINCT / window集約の`FILTER(WHERE …)`。JSON集約と併用するときは`sqlJson`も選ぶ |
+| `aggregateOrderBy` | 未リリース。通常 / DISTINCT / JSON集約の引数内ORDER BY。FILTERは`aggregateFilter`、JSONは`sqlJson`も必要。catalogから自動収集し、無効ビルドではsorterを除去する。[制限・容量](aggregate-order-by.md) |
+| `rowValues` | 未リリース。列・bind等から作る行値の比較・BETWEEN・CASE・複合INと、適合する二次索引の候補絞り込み。catalogから自動収集する。[対応範囲・制限・容量](row-values.md) |
+| `updateFrom` | 未リリース。別表・集約結果・自己結合によるUPDATE、対象alias、RETURNING。全SET値を確定してから適用し、複数元行の一致は書き込み前に拒否する。[対応範囲・容量](update-from.md) |
+| `generatedColumns` | 未リリース。VIRTUAL生成列、依存解決、制約・索引・再開時の再計算。生成値は永続化しない派生cache。STORED / REAL affinity / ALTER / Session同期は未対応。[範囲・容量・費用](generated-columns.md) |
+| `jsonTableFunctions` | 未リリース。json_each / json_tree、相関INNER / CROSS / LEFT JOIN、型・path・ID。通常のSQL JSONとは別に選択し、JSON木・展開器を除去できる。[範囲・容量・費用](json-table-functions.md) |
 | `dateTime` | `date` / `time` / `datetime` / `strftime` / `unixepoch` / `julianday`とCURRENT_DATE / TIME / TIMESTAMP |
 | `windowFunctions` | ROW_NUMBER、順位・参照・集約windowとframe評価。通常の集約はcoreに残る |
 | `binarySync` | SQLモードのSQLite Session互換changeset捕捉。受信側の抑制APIは別entry |

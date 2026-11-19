@@ -70,10 +70,10 @@ const files: Record<
 > = {};
 for (const [name, path] of Object.entries({
   aotJS: "_build/js/release/build/mizchi/litestream-example/runtime/runtime.js",
-  sqlJS: "_build/js/release/build/mizchi/sqlike/sqlike.js",
+  sqlJS: "_build/js/release/build/mizchi/sqlike/full/full.js",
   aotWasm:
     "_build/wasm-gc/release/build/mizchi/litestream-example/runtime/runtime.wasm",
-  sqlWasm: "_build/wasm-gc/release/build/mizchi/sqlike/sqlike.wasm",
+  sqlWasm: "_build/wasm-gc/release/build/mizchi/sqlike/full/full.wasm",
   sqliteSDK: "node_modules/@sqlite.org/sqlite-wasm/dist/index.mjs",
   "sqlite3.wasm": "node_modules/@sqlite.org/sqlite-wasm/dist/sqlite3.wasm",
 }))

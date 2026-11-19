@@ -60,7 +60,7 @@ test("UTC date/time functions match SQLite at leap days, timezone offsets, epoch
 });
 test("host clock is statement-local and CURRENT_TIMESTAMP defaults persist as concrete values", async () => {
   const sql = await import(
-    "../_build/js/release/build/mizchi/sqlike/sqlike.js"
+    "../_build/js/release/build/mizchi/sqlike/full/full.js"
   );
   const { result } = await import("./compatibility/sqlike-paths.ts");
   const { aotValue } = await import("../src/aot-values.ts");

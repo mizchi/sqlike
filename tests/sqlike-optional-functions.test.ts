@@ -20,6 +20,11 @@ const optional = [
   "windowFunctions",
   "schemaMetadata",
   "aggregateFilter",
+  "aggregateOrderBy",
+  "rowValues",
+  "updateFrom",
+  "generatedColumns",
+  "jsonTableFunctions",
 ] as const;
 const schema = ["CREATE TABLE t(id INTEGER PRIMARY KEY,v TEXT)"];
 const cases: {
@@ -27,6 +32,37 @@ const cases: {
   bit: number;
   source: CatalogSource;
 }[] = [
+  {feature:"jsonTableFunctions",bit:8192,source:{schema:[],queries:[{name:"q",sql:"SELECT value FROM json_each('[1]') WHERE 0"}]}},
+  {feature:"jsonTableFunctions",bit:8192,source:{schema:["CREATE VIEW j AS SELECT value FROM json_tree('[1]')"],queries:[]}},
+  { feature: "generatedColumns", bit: 4096, source: { schema: ["CREATE TABLE g(a INTEGER,b INTEGER AS(a+1))"], queries: [] } },
+  {
+    feature: "updateFrom", bit: 2048,
+    source: { schema: [...schema, "CREATE TABLE s(id INTEGER PRIMARY KEY,v TEXT)"],
+      queries: [{ name: "q", sql: "UPDATE t SET v=s.v FROM s WHERE 0 RETURNING id,v" }] },
+  },
+  ...["(id,v)>(0,'')", "CASE WHEN 0 THEN (id,v)=(1,'x') ELSE 1 END"].map(expression => ({
+    feature: "rowValues" as const, bit: 1024,
+    source: { schema, queries: [{ name: "q", sql: `SELECT ${expression} FROM t WHERE 0` }] },
+  })),
+  {
+    feature: "rowValues", bit: 1024,
+    source: { schema: ["CREATE TABLE guarded(a INTEGER,b INTEGER,CHECK((a,b)>(0,0)))"], queries: [] },
+  },
+  ...["group_concat(v ORDER BY id DESC)", "CASE WHEN 0 THEN sum(id ORDER BY id) ELSE 1 END"].map(
+    expression => ({
+      feature: "aggregateOrderBy" as const,
+      bit: 512,
+      source: { schema, queries: [{ name: "q", sql: `SELECT ${expression} FROM t WHERE 0` }] },
+    }),
+  ),
+  {
+    feature: "aggregateOrderBy",
+    bit: 512,
+    source: {
+      schema: [...schema, "CREATE VIEW ordered AS SELECT group_concat(v ORDER BY id) AS v FROM t"],
+      queries: [],
+    },
+  },
   ...["sum(id) FILTER(WHERE id>1)", "CASE WHEN 0 THEN count(*) FILTER(WHERE id>1) ELSE 1 END"].map(
     (expression) => ({
       feature: "aggregateFilter" as const,
@@ -168,6 +204,14 @@ test("optional execution features reject at load, including unused schema expres
           "json__call",
           "compute__windows",
           "index__metadata",
+          "ordered__aggregate",
+          "ordered__aggregate__entries",
+          "compare__row__values",
+          "row__in__select",
+          "execute__update__from",
+          "generated__visit",
+          "json__table__node",
+          "json__table__join",
         ])
           assert.equal(new RegExp(`function [^\\n]*${symbol}\\(`).test(code), enabled, symbol);
         if (mode !== "sql") {
@@ -212,6 +256,7 @@ test("optional execution features reject at load, including unused schema expres
             if (!enabled) {
               for (const f of fixtures.filter((f) => f.source.queries.length))
                 assert.throws(() => db.all(f.source.queries[0]!.sql), /feature disabled/);
+              assert.throws(() => db.run("CREATE TABLE generated_disabled(a INT,b AS(a+1))"), /feature disabled/);
               assert.throws(
                 () => db.run("CREATE TABLE bad(v DEFAULT CURRENT_TIMESTAMP)"),
                 /feature disabled/,
@@ -393,10 +438,24 @@ test("each optional feature can be enabled independently on JS and Wasm", async 
                 ? "PRAGMA index_xinfo(ix)"
                 : name === "aggregateFilter"
                   ? "SELECT sum(1) FILTER(WHERE 1),count(*) FILTER(WHERE 0)"
+                  : name === "aggregateOrderBy"
+                    ? "SELECT group_concat(1 ORDER BY 1),sum(1 ORDER BY 1)"
+                  : name === "rowValues"
+                    ? "SELECT (1,2)<(2,0),(1,NULL) IS (1,NULL),(1,2) IN ((1,2))"
+                  : name === "jsonTableFunctions"
+                    ? "SELECT key,value,type,id FROM json_each('[1,2]')"
+                  : name === "generatedColumns"
+                    ? "SELECT b FROM g"
+                  : name === "updateFrom"
+                    ? "UPDATE t SET v=s.v FROM s WHERE t.id=s.id RETURNING id,v"
                   : "SELECT row_number() OVER (),sum(1) OVER ()";
         const sourceSchema =
           name === "schemaMetadata"
             ? ["CREATE TABLE t(id INTEGER PRIMARY KEY,v TEXT)", "CREATE INDEX ix ON t(v)"]
+            : name === "generatedColumns"
+              ? ["CREATE TABLE g(a INTEGER,b INTEGER AS(a+1))"]
+            : name === "updateFrom"
+              ? [...schema, "CREATE TABLE s(id INTEGER PRIMARY KEY,v TEXT)"]
             : [];
         const db = await DB.memory(
           buildDefinedCatalog({ schema: sourceSchema, queries: [{ name: "q", sql }] }),

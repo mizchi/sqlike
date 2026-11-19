@@ -11,8 +11,9 @@ import { engineSourcePaths, sourceHashes, fileHash } from "./measurement-manifes
 import { compile_program } from "../_build/js/release/build/mizchi/sqlike/compiler/compiler.js";
 
 const smoke = process.argv.includes("--smoke");
+const output=process.argv.find(a=>a.startsWith("--output="))?.slice(9)??(smoke?"/tmp/sqlike-typed-result-smoke.json":"measurements/optimization-typed-results.json");
 const files: Record<string, string> = {
-  "/sql.js": "_build/js/release/build/mizchi/sqlike/sqlike.js",
+  "/sql.js": "_build/js/release/build/mizchi/sqlike/full/full.js",
   "/typed.js": "_build/js/release/build/mizchi/sqlike/experimental-typed/experimental-typed.js",
   "/aot.js": "_build/js/release/build/mizchi/litestream-example/runtime/runtime.js",
   "/aot-typed.js": "_build/js/release/build/mizchi/sqlike/experimental-aot-typed/experimental-aot-typed.js",
@@ -71,11 +72,13 @@ try {
         const samples = [];
         for (const query of queries) {
           const lp = legacy.database_prepare(ldb, query.sql), tp = typed.prepare(tdb, query.sql), ap = nativeAot.prepare(ndb, query.name);
+          const params=JSON.parse(query.bindings).map(cell);
           const drivers = [
             { name: "json-to-native-values", call: () => checked(legacy.database_prepared_exec(lp, query.bindings, true, true)).rows.map((row: any[]) => row.map(cell)) },
             { name: "native-values", call: () => typed.values(tp, query.bindings) },
             { name: "aot-json-to-native-values", call: () => checked(aot.aot_execute(adb, query.name, query.bindings)).rows.map((row: any[]) => row.map(cell)) },
             { name: "aot-native-values", call: () => nativeAot.values(ap, query.bindings) },
+            { name: "aot-native-typed-bindings", call: () => nativeAot.values_typed(ap, params) },
           ];
           const loops = new Map<string, number>();
           for (const driver of drivers) {
@@ -103,14 +106,14 @@ try {
         }
         return samples;
       }, { image, queries, smoke, program });
-      assert.equal(samples.length, smoke ? 8 : 24);
+      assert.equal(samples.length, smoke ? 10 : 30);
       results.push({ rows, verified: true, programSHA256: createHash("sha256").update(program).digest("hex"), samples });
       console.log(`native result ABI: ${rows} rows verified`);
     } finally { clearTimeout(watchdog); await page.close(); }
   }
-  writeFileSync(smoke ? "/tmp/sqlike-typed-result-smoke.json" : "measurements/optimization-typed-results.json", JSON.stringify({
+  writeFileSync(output, JSON.stringify({
     measuredAt: new Date().toISOString(), smoke, cpu: cpus()[0]?.model, chromium: browser.version(),
-    method: "Four JS paths return native Value[][]: SQL prepared JSON/native and AOT JSON/native. JSON includes JSON.parse plus per-cell conversion; AOT JSON retains its named execution API. Native AOT reuses one Statement, returns native rows and clears transient bindings/results on each call. Both native paths keep JSON bindings and share primitive/FixedArray FFI with copied blobs. Setup excluded: import the native SQLite fixture once, restore row data into each AOT program's own validated schema, check exact typed native results before/after timing. Three samples targeting 20ms, scan at most two iterations, 120s page watchdog. Separate from Cell[][] legacy benchmark; no identical-ABI claim.",
+    method: "Five JS paths return native Value[][]: SQL prepared JSON/native and AOT JSON/native, plus AOT native bindings/results. JSON includes JSON.parse plus per-cell conversion; AOT JSON retains its named execution API. Native AOT reuses one Statement, returns native rows and clears transient bindings/results on each call; native-typed-bindings also avoids Cell JSON decoding on input. Bind arrays are prepared outside timing; no public host adapter/clock call is timed. Primitive/FixedArray FFI copies result blobs; typed input uses Statement.bind ownership. Setup excluded: import the native SQLite fixture once, restore row data into each AOT program's own validated schema, check exact typed native results before/after timing. Three samples targeting 20ms, scan at most two iterations, 120s page watchdog. Separate from Cell[][] legacy benchmark; no identical-ABI claim.",
     sourceHashes: sourceHashes([...engineSourcePaths(), "scripts/bench-typed-results.ts", "src/aot-values.ts"]),
     artifacts: Object.fromEntries(Object.values(files).map(path => [path, fileHash(path)])), results,
   }, null, 2) + "\n");

@@ -21,8 +21,11 @@ test("packed npm packages work without this workspace and keep optional entries 
   for (const item of audit.packages) {
     assert.ok(
       item.files.every(
-        (file: string) =>
-          !/node_modules|\.mbt$|\.ts$|lsm|\/fts\//.test(file.replace(/\.d\.ts$/, ".declaration")),
+        (file: string) => {
+          if (item.name === "@mizchi/sqlike" && file.startsWith("dist/build-sources/"))
+            return (file === "dist/build-sources/compiler-id.json" || /(?:\.mbt|moon\.pkg|moon\.mod)$/.test(file)) && !/node_modules|\.mooncakes|_build|_w?b?test\.mbt$|\/lsm\/|\/fts\//.test(file);
+          return !/node_modules|\.mbt$|\.ts$|lsm|\/fts\//.test(file.replace(/\.d\.ts$/, ".declaration"));
+        },
       ),
     );
     assert.ok(item.files.includes("LICENSE"));
@@ -45,7 +48,7 @@ test("packed npm packages work without this workspace and keep optional entries 
   };
   assert.ok(
     modules("@mizchi/sqlike", "index.js").every(
-      (m) => !m.includes("litestream/") && !m.includes("compiler/"),
+      (m) => !m.includes("litestream/") && !m.includes("compiler/") && !m.includes("experimental-aot-typed/") && !m.includes("sqlike-native-runtime"),
     ),
   );
   assert.ok(
@@ -53,12 +56,20 @@ test("packed npm packages work without this workspace and keep optional entries 
       (m) => !m.includes("compiler/") && !m.includes("sqlike/sqlike.js"),
     ),
   );
-  for (const entry of ["runtime.js", "features.js", "defined-core.js", "drizzle-prepared.js"])
+  for (const entry of ["runtime.js", "features.js", "defined-core.js", "drizzle-prepared.js", "aot-core.js", "pager.js"])
     assert.ok(
       modules("@mizchi/sqlike", entry).every((m) => !m.includes("_build/")),
       entry,
     );
   assert.ok(modules("@mizchi/litestream", "index.js").every((m) => !m.includes("mizchi/sqlike/")));
+  assert.ok(modules("@mizchi/sqlike", "aot.js").every(m=>!m.includes("compiler/")&&!m.includes("sqlike/sqlike.js")));
+  for (const entry of ["index.js", "aot.js", "aot-core.js", "full.js", "defined.js"])
+    assert.ok(modules("@mizchi/sqlike", entry).every((m) => !/scripts\/(?:sqlike-vite|build-sqlike-runtime)|node_modules\/vite\//.test(m)), `${entry}: build tools must stay outside browser entries`);
+  for(const [entry,selected] of [["index.js","baseline"],["full.js","full"],["aot.js","aot"],["aot-native.js","aot-native"]] as const) {
+    const engines=modules("@mizchi/sqlike",entry).filter(m=>/npm-runtimes\/.*\/runtime\.js$/.test(m));
+    assert.equal(engines.length,1,`${entry} must import exactly one prebuilt engine`);
+    assert.match(engines[0]!,new RegExp(`npm-runtimes/${selected}/runtime\\.js$`));
+  }
   const dir = await mkdtemp(join(tmpdir(), "sqlike-npm-consumer-"));
   try {
     await writeFile(
@@ -151,6 +162,32 @@ const custom = openSql<ReturnType<typeof engine.database_open>>(engine);
 custom.close();
 const db: Database = openDatabase(undefined, {statementCache: {capacity: 16, maxSqlBytes: 65536}});
 const values: Value[][] = openDatabase().values('SELECT 1');
+import {openAotDatabase} from '@mizchi/sqlike/aot';
+import {createPageLtxEncoder,type LtxPageCodec,type LtxPageBatch,type LtxPagePublication} from '@mizchi/litestream/ltx/core';
+declare const pageCodec: LtxPageCodec;
+declare const pageBatch: LtxPageBatch;
+const syncLegacyPublication: LtxPagePublication=createPageLtxEncoder(pageCodec).prepareCommit(undefined,pageBatch);
+import {IndexedDbAotPageStore,type AotPageImageStore} from '@mizchi/sqlike/pager';
+declare const pageStore: IndexedDbAotPageStore;
+const atomicPages: AotPageImageStore = pageStore;
+atomicPages.pages.readPage(1,1);
+// @ts-expect-error page mutations must share the logical publication transaction
+pageStore.pages.commit(0,{});
+import {openNativeCompiled,type NativeAotRuntime} from '@mizchi/sqlike/aot/core';
+import {openAotExecutor,type AotExecutionRuntime} from '@mizchi/sqlike/aot/core';
+declare const executionRuntime: AotExecutionRuntime;
+const executor=openAotExecutor(executionRuntime,'');
+const executed: Value[][]=executor.execute('get',[1n]).rows;
+// @ts-expect-error execute-only host has no storage API
+executor.dump();
+// @ts-expect-error booleans are not SQLite bind values
+executor.execute('get',[true]);
+declare const nativeRuntime: NativeAotRuntime;
+const native = openNativeCompiled(nativeRuntime, '');
+const nativeValues: Value[][] = native.prepare('get').values([1n]);
+const fullNative = openAotDatabase('');
+// @ts-expect-error boolean is not a native SQLite bind value
+fullNative.values('get', [true]);
 declare const catalog: DefinedCatalog;
 declare const runtime: DefinedRuntime;
 const fixed = await DefinedDatabase.memory(catalog);
@@ -194,7 +231,7 @@ void [db, values, rows, encodeFrame];
       (await readFile("tests/fixtures/npm-browser.ts.txt", "utf8")).replace(
         "__NPM_CATALOG__",
         literal,
-      ),
+      ).replace("__NPM_NATIVE_PROGRAM__", JSON.stringify(await readFile(join(dir,"native-program.json"),"utf8"))),
     );
     await writeFile(join(dir, "index.html"), '<script type="module" src="/browser.ts"></script>');
     const server = await createServer({

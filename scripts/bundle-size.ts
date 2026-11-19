@@ -45,8 +45,8 @@ export async function measureBrowserBundle(entry: string) {
 
 export type ReadmeLanguage = "en" | "ja";
 const englishBuilds: Record<string, string> = {
-  "sql-js": "SQL / JS",
-  "sql-wasm": "SQL / Wasm GC",
+  "sql-js": "Full SQL / JS",
+  "sql-wasm": "Full SQL / Wasm GC",
   "defined-all-js": "Predefined, all execution features / JS",
   "defined-all-wasm": "Predefined, all execution features / Wasm GC",
   "defined-without-three-js": "Predefined, no JSON/date/window / JS",

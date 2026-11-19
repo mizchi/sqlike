@@ -1,4 +1,4 @@
-import * as sql from "../../_build/js/release/build/mizchi/sqlike/sqlike.js";
+import * as sql from "../../_build/js/release/build/mizchi/sqlike/full/full.js";
 import * as aot from "../../_build/js/release/build/mizchi/litestream-example/runtime/runtime.js";
 export { sql, aot };
 export { compile_program as compile } from "../../_build/js/release/build/mizchi/sqlike/compiler/compiler.js";

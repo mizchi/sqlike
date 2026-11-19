@@ -36,7 +36,7 @@ test("records every catalog feature in real Chromium without SQLite fallback", a
     route.fulfill({
       contentType: "application/javascript",
       body: readFileSync(
-        "_build/js/release/build/mizchi/sqlike/sqlike.js",
+        "_build/js/release/build/mizchi/sqlike/full/full.js",
         "utf8",
       ),
     }),
@@ -47,7 +47,7 @@ test("records every catalog feature in real Chromium without SQLite fallback", a
       const path = "/moon-feature-audit.js";
       const runtime = (await import(
         /* @vite-ignore */ path
-      )) as typeof import("../_build/js/release/build/mizchi/sqlike/sqlike.js");
+      )) as typeof import("../_build/js/release/build/mizchi/sqlike/full/full.js");
       return features.map((feature) => {
         const db = runtime.database_open();
         const exports = Object.keys(runtime).filter(

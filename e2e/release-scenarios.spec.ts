@@ -40,6 +40,7 @@ test("U08: combined indexed/trigger/FK application survives real IDB abort, stal
     logLevel: "error",
     build: {
       write: false,
+      rolldownOptions: { output: { codeSplitting: false } },
       minify: true,
       target: "esnext",
       lib: { entry: "e2e/fixtures/release-runtime.ts", formats: ["es"] },

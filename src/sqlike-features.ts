@@ -10,6 +10,11 @@ export type SqlikeFeatureName =
   | "windowFunctions"
   | "schemaMetadata"
   | "aggregateFilter"
+  | "aggregateOrderBy"
+  | "rowValues"
+  | "updateFrom"
+  | "generatedColumns"
+  | "jsonTableFunctions"
   | "binarySync"
   | "sqlitePages"
   | "ltx";
@@ -28,6 +33,11 @@ export const dateTime = feature("dateTime");
 export const windowFunctions = feature("windowFunctions");
 export const schemaMetadata = feature("schemaMetadata");
 export const aggregateFilter = feature("aggregateFilter");
+export const aggregateOrderBy = feature("aggregateOrderBy");
+export const rowValues = feature("rowValues");
+export const updateFrom = feature("updateFrom");
+export const generatedColumns = feature("generatedColumns");
+export const jsonTableFunctions = feature("jsonTableFunctions");
 export const binarySync = feature("binarySync");
 export const sqlitePages = feature("sqlitePages");
 export const ltx = feature("ltx");
@@ -42,6 +52,11 @@ export const allSqlikeFeatures: readonly SqlikeFeature[] = Object.freeze([
   windowFunctions,
   schemaMetadata,
   aggregateFilter,
+  aggregateOrderBy,
+  rowValues,
+  updateFrom,
+  generatedColumns,
+  jsonTableFunctions,
   binarySync,
   sqlitePages,
   ltx,
@@ -49,6 +64,32 @@ export const allSqlikeFeatures: readonly SqlikeFeature[] = Object.freeze([
 export interface SqlikeProfile {
   readonly mode: "aot" | "sql" | "defined";
   readonly features: readonly SqlikeFeatureName[];
+  readonly preset?: "baseline" | "full";
+}
+export function baselineSqlike(): SqlikeProfile {
+  return Object.freeze({
+    ...defineSqlike({
+      mode: "sql",
+      features: [primaryKeyIndex, foreignKeys, strictTables],
+    }),
+    preset: "baseline",
+  });
+}
+export function fullSqlike(
+  mode: "sql" | "aot" | "defined" = "sql",
+): SqlikeProfile {
+  return Object.freeze({
+    ...defineSqlike({
+      mode,
+      features: allSqlikeFeatures.filter(
+        (f) =>
+          f.name !== "ltx" &&
+          (mode === "sql" || f.name !== "binarySync") &&
+          (mode !== "defined" || f.name !== "sqlitePages"),
+      ),
+    }),
+    preset: "full",
+  });
 }
 export function defineSqlike({
   mode = "aot",
@@ -70,10 +111,7 @@ export function defineSqlike({
     throw Error(
       "binarySync requires the sql runtime; AOT uses SQLite pages/LTX",
     );
-  if (
-    mode === "defined" &&
-    names.some((n) => n === "sqlitePages" || n === "ltx")
-  )
-    throw Error("defined runtime uses the separate SQLite exporter");
+  if (mode === "defined" && names.includes("ltx"))
+    throw Error("defined runtime uses the separate LTX codec");
   return Object.freeze({ mode, features: Object.freeze(names) });
 }
