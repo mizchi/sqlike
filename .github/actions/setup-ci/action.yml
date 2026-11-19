@@ -23,8 +23,11 @@ runs:
       shell: bash
       run: |
         curl --fail --silent --show-error --location https://cli.moonbitlang.com/install/unix.sh -o "$RUNNER_TEMP/moon-install.sh"
-        bash "$RUNNER_TEMP/moon-install.sh" 0.10.20+65efd5b93
+        bash "$RUNNER_TEMP/moon-install.sh" 0.10.21+06da1ed44
         echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
+    - name: Record MoonBit toolchain
+      shell: bash
+      run: moon version --all
     - name: Resolve MoonBit dependencies
       shell: bash
       run: moon update

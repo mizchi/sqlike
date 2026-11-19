@@ -2,7 +2,7 @@
 
 The Vite plugin scans SQL files, compiles their schema and named statements, and builds one JS engine containing the required SQL features. Add JSON, date/time, CTE or other supported SQL to the catalog and the next build includes the corresponding implementation. Remove it and the implementation can be omitted again. The browser receives a precompiled catalog and a parser-free engine.
 
-This entry is available in the working tree for the next release. The published `@mizchi/sqlike@0.1.2` does not yet contain it. Node 24+, Vite 8 and the MoonBit CLI (`moon` on PATH) are required on the build machine. The first compiler invocation may resolve MoonBit dependencies. Browsers need no compiler or build tools.
+Available in `@mizchi/sqlike@0.2.0`. Node 24+, Vite 8 and the MoonBit CLI (`moon` on PATH) are required on the build machine. The tested MoonBit toolchain is `0.10.21+06da1ed44`; older versions lack the JSON decoding API used by the compiler. The first compiler invocation may resolve MoonBit dependencies. Browsers need no compiler or build tools.
 
 ```ts
 // vite.config.ts

@@ -51,7 +51,7 @@ export default {
 
 Browser code imports `openDatabase` and `queries` from `@mizchi/sqlike/aot`. The plugin infers features from SQL files and generates a JS engine, query types and size reports. Changes, additions and deletions rebuild the catalog. Mixing dynamic SQL or another prebuilt engine into that AOT build fails with an import diagnostic.
 
-The build requires Node.js 24+, Vite 8 and the MoonBit CLI on PATH. The compiler and build sources stay outside the browser bundle. [Vite AOT guide](https://github.com/mizchi/sqlike/blob/main/docs/vite-aot.md).
+The build requires Node.js 24+, Vite 8 and the MoonBit CLI on PATH (tested toolchain: `0.10.21+06da1ed44`). The compiler and build sources stay outside the browser bundle. [Vite AOT guide](https://github.com/mizchi/sqlike/blob/main/docs/vite-aot.md).
 
 ## Binary catalogs and IndexedDB
 

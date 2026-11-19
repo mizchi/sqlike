@@ -2,6 +2,8 @@
 
 A SQLite subset for MoonBit, with dynamic SQL, precompiled statements and SQLite image import/export. Supports JS and Wasm GC without a dependency on Litestream.
 
+Tested with MoonBit `0.10.21+06da1ed44`; older core libraries lack the required JSON decoding API.
+
 ```sh
 moon add mizchi/sqlike@0.2.0
 ```
