@@ -37,6 +37,8 @@ The first [PR #10 CI run](https://github.com/mizchi/sqlike/actions/runs/44570756
 
 The old CI toolchain lacked the `DecodeContext` API. Both CI and npm publishing now pin the locally tested `0.10.21+06da1ed44` toolchain and print its complete version. The additional regression test and typecheck passed. Public toolchain instructions were corrected, both package formats were rebuilt, and six npm checks plus the two independent JS/Wasm Mooncakes consumers passed again. Database implementation and benchmark sources did not change. A fresh Linux run remains required before tagging.
 
+The next [Linux run](https://github.com/mizchi/sqlike/actions/runs/44571788682) passed types, dependency graphs and browser checks, but its Node job correctly failed on Vite SQL error recovery. Chokidar can suppress a corrective save inside its 50 ms change-event throttle window. A deterministic test reproduced the missing recovery reload before the fix. The plugin now coalesces saves for 100 ms before compiling, and cancels its timer on close. The existing real-browser recovery test and the new immediate-repair test passed, together with all 12 Vite/CI regression checks, six repacked npm checks and typecheck. The browser engine and measured query implementations remain unchanged; the final Linux run must include this plugin fix.
+
 ## Registry and OIDC status
 
 An anonymous npm metadata check found 0.1.2 as `latest` for both `@mizchi/sqlike` and `@mizchi/litestream`; 0.2.0 was absent. This preparation does not publish either package.

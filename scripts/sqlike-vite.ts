@@ -65,6 +65,7 @@ export function sqlikeAotPlugin(
     closed = false,
     failed = false,
     refreshTail = Promise.resolve();
+  let refreshTimer: ReturnType<typeof setTimeout> | undefined;
   const relevant = (file: string) => {
     const path = relative(root, file).replaceAll("\\", "/");
     return (
@@ -73,8 +74,7 @@ export function sqlikeAotPlugin(
       !excludes.some((p) => matchesGlob(path, p))
     );
   };
-  const changed = (file: string) => {
-    if (!relevant(file)) return;
+  const refresh = () => {
     refreshTail = refreshTail
       .then(async () => {
         if (closed) return;
@@ -103,6 +103,16 @@ export function sqlikeAotPlugin(
           },
         });
       });
+  };
+  const changed = (file: string) => {
+    if (closed || !relevant(file)) return;
+    clearTimeout(refreshTimer);
+    // Coalesce editor save bursts before compiling. Reporting an error inside
+    // Chokidar's 50 ms throttle window can hide an immediate corrective save.
+    refreshTimer = setTimeout(() => {
+      refreshTimer = undefined;
+      refresh();
+    }, 100);
   };
   const watchRoots = () => [
     ...new Set(
@@ -201,6 +211,7 @@ export function sqlikeAotPlugin(
     },
     async closeBundle() {
       closed = true;
+      clearTimeout(refreshTimer);
       server?.watcher
         .off("add", changed)
         .off("change", changed)

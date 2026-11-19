@@ -6,12 +6,13 @@ import {
   readFile,
   rm,
   readdir,
+  realpath,
 } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 import { pathToFileURL } from "node:url";
 import { test } from "node:test";
-import { build, createServer, createLogger } from "vite";
+import { build, createServer, createLogger, type HMRPayload } from "vite";
 import { chromium, expect } from "@playwright/test";
 import { sqlikeAotPlugin } from "../scripts/sqlike-vite.ts";
 import type { SqlikeAotBuildInfo } from "../src/sqlike-vite-contract.ts";
@@ -372,6 +373,91 @@ test(
 );
 
 test(
+  "Vite dev observes a SQL correction made immediately after an error is reported",
+  { timeout: 30_000 },
+  async () => {
+    const root = await realpath(
+      await mkdtemp(join(tmpdir(), "sqlike-vite-fast-repair-")),
+    );
+    let server: Awaited<ReturnType<typeof createServer>> | undefined;
+    let repair: Promise<void> | undefined;
+    try {
+      await mkdir(join(root, "src/client"), { recursive: true });
+      await writeFile(join(root, "package.json"), '{"type":"module"}');
+      await writeFile(
+        join(root, "src/main.ts"),
+        "export * from '@mizchi/sqlike/aot';",
+      );
+      const query = join(root, "src/client/get.sql");
+      await writeFile(query, "SELECT 1 AS v;");
+      server = await createServer({
+        root,
+        configFile: false,
+        logLevel: "silent",
+        cacheDir: join(root, ".cache"),
+        plugins: [sqlikeAotPlugin({}, resolve("."))],
+        server: { host: "127.0.0.1", port: 0, watch: { useFsEvents: false } },
+      });
+      const messages: string[] = [];
+      const send = server.ws.send.bind(server.ws);
+      server.ws.send = (payload: HMRPayload | string, data?: unknown) => {
+        if (typeof payload === "object") {
+          messages.push(
+            payload.type === "full-reload" && payload.triggeredBy
+              ? "file-reload"
+              : payload.type,
+          );
+          if (payload.type === "error" && !repair)
+            repair = writeFile(query, "SELECT 2 AS v;").then(() => {
+              server!.watcher.emit("change", query);
+            });
+          send(payload);
+        } else {
+          send(payload, data);
+        }
+      };
+      // Model Chokidar's 50 ms change-event coalescing on every test host.
+      const emit = server.watcher.emit.bind(server.watcher);
+      let lastChange = -Infinity;
+      server.watcher.emit = (event, ...args: unknown[]) => {
+        if (event === "change" && args[0] === query) {
+          const now = performance.now();
+          if (now - lastChange < 50) return false;
+          lastChange = now;
+        }
+        return emit(event, ...args);
+      };
+      await server.listen();
+      await server.transformRequest("/src/main.ts");
+      await server.pluginContainer.load("\0sqlike:aot/client");
+      await expect
+        .poll(() => Object.values(server!.watcher.getWatched()).some(
+          (files) => files.includes("get.sql"),
+        ))
+        .toBe(true);
+      // Drive query events explicitly so macOS batching cannot hide fast Linux saves.
+      await server.watcher.unwatch(query);
+      messages.length = 0;
+      await writeFile(query, "SELECT missing_sql_function();");
+      server.watcher.emit("change", query);
+      await expect.poll(() => messages.includes("error")).toBe(true);
+      await repair;
+      await expect
+        .poll(
+          () => messages.lastIndexOf("full-reload") > messages.indexOf("error"),
+          { timeout: 2_000 },
+        )
+        .toBe(true);
+      assert.equal(await readFile(query, "utf8"), "SELECT 2 AS v;");
+    } finally {
+      await repair;
+      await server?.close();
+      await rm(root, { recursive: true, force: true });
+    }
+  },
+);
+
+test(
   "Vite dev rebuilds changed, added and deleted SQL and recovers from invalid SQL without serving a stale catalog",
   { timeout: 60_000 },
   async () => {
@@ -412,6 +498,7 @@ const db=openDatabase(); window.demo={value:db.execute(queries.get,['x']).rows[0
         server: {
           host: "127.0.0.1",
           port: 0,
+          watch: { useFsEvents: false },
           fs: { allow: [root, resolve(".")] },
         },
       });

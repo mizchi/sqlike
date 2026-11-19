@@ -29,6 +29,7 @@
 
 ### Fixed
 
+- Recover Vite development builds after rapid corrective SQL saves by coalescing watcher events before compilation. Preserve failed CI check statuses through log pipelines and align CI/publishing with the tested MoonBit toolchain.
 - Correct schema object-kind checks, reserved names, trigger namespaces and schema TEXT affinity. Reject unsupported physical `sqlite_schema` metadata instead of returning placeholders.
 - Preserve schema/trigger replay ordering, statement atomicity and rejected-write state across the storage and synchronization adapters.
 

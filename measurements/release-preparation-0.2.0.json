@@ -46,7 +46,7 @@
       "kind": "npm",
       "name": "@mizchi/sqlike",
       "path": "generated/npm/mizchi-sqlike-0.2.0.tgz",
-      "sha256": "2b866c48002aa1355de101e14caca655d7f93ab1d037f47f53f8fa89034dfcc0",
+      "sha256": "a4227161aeba0182156f5b1b7398a251b3e8b9539ef6d0e725d9b38d2c54171e",
       "files": 239
     },
     {
@@ -72,7 +72,7 @@
     }
   ],
   "reportHashes": {
-    "measurements/p0-completion.json": "e4be23227b15e6e9f2b62a443c23c2e17538a2b34324bbe6f228d1084b395612",
+    "measurements/p0-completion.json": "a268081135464cde3de9d48f8d19fa403b17f917ae12c080cf31ec832bfd84fd",
     "measurements/aot-minimum-current.json": "d57e0eac70a3a0607dd6bca1b9b77d594659728a150ea4b73146c35f0d577cf1",
     "measurements/sqlike-crud-size-current.json": "7bb4f3fd23b8d9e42b39e12518e823a70a4df78a8845d7ad2939f9653d598ebd",
     "measurements/sqlike-entrypoints-current.json": "038791818e165dcc0bf59040e4b73a04d9a6e8f2afc33c604a14389359edcc40",
@@ -89,7 +89,7 @@
     "npm/litestream/README.md": "106012de6671948675d6cee856deefc0efc4dbd03af0ae86e6c2e11305557f26",
     "packages/sqlike/README.md": "c40db3990ea158b127e16cc06c278139973204a35aa85ec14cb3224d706ba277",
     "packages/litestream/README.md": "c281444ee5d2dc37d8f040ad8af6ac1de13273aec53caa74b8dbbb9e5588b9c9",
-    "CHANGELOG.md": "133b6898147f0a1ea594c5898393f4ed696b41928d32066dbc9effeeec337f5a"
+    "CHANGELOG.md": "62e5ab207d72fbbbc30a041672da433b1a0a64306e4f5eb93cc4c394844aa4ef"
   },
   "manifestHashes": {
     "package.json": "54493a4909a447bd3a8bd8244f21b184133115a986f30a865f50311cad2b7290",
@@ -167,6 +167,18 @@
       },
       "invalidPriorCiRun": "https://github.com/mizchi/sqlike/actions/runs/44570756880",
       "priorCiRunWarning": "Green job labels masked compiler errors. Do not count this run as passing validation."
+    },
+    {
+      "verifiedAt": "2026-11-19T17:11:25.782475+00:00",
+      "scope": "Vite Node build plugin recovery and tests; browser engine/query implementation unchanged.",
+      "immediateSqlRepair": {
+        "red": "A correction inside a modeled 50 ms watcher window did not trigger recovery.",
+        "green": "The plugin coalesces saves for 100 ms, then recovers after the corrective save."
+      },
+      "viteAndCiRegressionTests": 12,
+      "repackedNpmTests": 6,
+      "typecheck": "passed",
+      "linuxRunRequiringCorrection": "https://github.com/mizchi/sqlike/actions/runs/44571788682"
     }
   ]
 }
